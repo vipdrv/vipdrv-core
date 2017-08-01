@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace QantumLogic.Application
+namespace QuantumLogic.Tests
 {
     public class Class1
     {

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace QuantumLogic.Core
+namespace QuantumLogic.Data
 {
     public class Class1
     {
