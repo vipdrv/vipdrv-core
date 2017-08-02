@@ -1,0 +1,42 @@
+.fusionredux_field_search {
+  position: absolute;
+  width: 250px !important;
+  right: 30px;
+  padding: 4px 7px;
+}
+.fusionredux-has-sections .fusionredux_field_search {
+  right: 10px;
+}
+.fusionredux-main.fusionredux-search .fusionredux-section-field,
+.fusionredux-main.fusionredux-search .fusionredux-info-field,
+.fusionredux-main.fusionredux-search .fusionredux-notice-field,
+.fusionredux-main.fusionredux-search .fusionredux-container-group,
+.fusionredux-main.fusionredux-search .fusionredux-container-raw,
+.fusionredux-main.fusionredux-search .fusionredux-section-desc,
+.fusionredux-main.fusionredux-search .fusionredux-group-tab h3,
+.fusionredux-main.fusionredux-search .hr,
+.fusionredux-main.fusionredux-search .fusionredux-field-info,
+.fusionredux-main.fusionredux-search tr {
+  display: none;
+}
+.fusionredux-main.fusionredux-search #import_export_default_section_group,
+.fusionredux-main.fusionredux-search #dev_mode_default_section_group {
+  display: none !important;
+}
+.fusionredux-main.fusionredux-search .fusionredux-group-tab {
+  margin-bottom: 0;
+}
+.fusionredux-main.fusionredux-search .fusionredux-group-tab .form-table-section-indented {
+  margin-left: 0 !important;
+  width: 100%;
+}
+.fusionredux-main.fusionredux-search .fusionredux-group-tab .form-table-section-indented .fusionredux-group-tab .form-table-section tr:first-of-type th:first-of-type {
+  padding: inherit !important;
+}
+.fusionredux-main.fusionredux-search .fusionredux-group-tab .form-table-section-indented .fusionredux-group-tab h3 {
+  margin-top: inherit !important;
+}
+.fusion-redux-search .fusionredux-accordian-wrap{
+	border:none !important;
+	padding:0px !important;
+}
