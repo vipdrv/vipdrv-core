@@ -1,0 +1,37 @@
+.fusionredux_field_search {
+    position: absolute;
+    width: 250px !important;
+    right: 30px;
+    padding: 4px 7px;
+}
+.fusionredux-has-sections {
+    .fusionredux_field_search {
+        right: 10px;
+    }
+}
+.fusionredux-main.fusionredux-search {
+
+    .fusionredux-section-field, .fusionredux-info-field, .fusionredux-notice-field, .fusionredux-container-group,
+    .fusionredux-container-raw, .fusionredux-section-desc, .fusionredux-group-tab h3, .hr, .fusionredux-field-info, tr {
+        display: none;
+    }
+    #import_export_default_section_group, #dev_mode_default_section_group {
+        display:none !important;
+    }
+
+    .fusionredux-group-tab {
+        margin-bottom: 0;
+    }
+    .fusionredux-group-tab .form-table-section-indented {
+        margin-left: 0 !important;
+        width: 100%;
+
+        .fusionredux-group-tab .form-table-section tr:first-of-type th:first-of-type {
+          padding: inherit !important;
+        }
+        .fusionredux-group-tab h3 {
+          margin-top: inherit !important;
+        }
+
+    }
+}

@@ -1,0 +1,81 @@
+.fusionredux-container-slider {
+    .fusionredux-slider-container {
+        margin-left: 25px;
+        margin-right: 25px;
+        width: 200px;
+        display: inline-block;
+        vertical-align: middle;
+    }
+
+    .fusionredux-slider-input,
+    .fusionredux-slider-select-one,
+    .fusionredux-slider-select-two {
+        width: 100px !important;
+        text-align: center;
+    }
+
+    .fusionredux-slider-label {
+        position: absolute;
+        margin-left: -5px;
+    }
+
+    .fusionredux-slider-label-one {
+        position: absolute;
+        margin-left: -22px;
+    }
+
+    .fusionredux-slider-label-two {
+        position: absolute;
+        margin-top: -21px;
+        margin-left: 245px;
+    }
+}
+
+@media screen and (max-width: 782px) {
+    .fusionredux-container-slider {
+        input {
+            display: inline-block !important;
+        }
+    }
+}
+
+// Select Slider
+@media screen and (max-width: 570px) {
+    .fusionredux-container-slider {
+        text-align: center;
+
+        input,
+        select,
+        .fusionredux-slider-label,
+        .select3-container {
+            display: block !important;
+            position: inherit;
+            margin: 10px auto;
+        }
+
+        .fusionredux-slider-container {
+            margin-top: 3px;
+            width: 80%;
+        }
+    }
+}
+
+.wp-customizer {
+    .fusionredux-container-slider {
+        .fusionredux-slider-label {
+            float: left;
+            position: inherit;
+            width: 25%;
+            text-align: center;
+            margin-left:0;
+        }
+        .fusionredux-slider-input, .fusionredux-slider-select-one, .fusionredux-slider-select-two {
+            width: 25% !important;
+        }
+        .fusionredux-slider-container {
+            width: 70%;
+            margin-right: 0;
+            margin-left: 5%;
+        }
+    }
+}
