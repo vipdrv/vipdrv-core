@@ -20,10 +20,10 @@
 
 //Using environment variables for DB connection information
 
-$connectstr_dbhost = 'mysql.dealer-advance.com';
-$connectstr_dbname = 'dev_quantumlogic';
-$connectstr_dbusername = 'root';
-$connectstr_dbpassword = 'j8J7rhLWzRW8EQMw';
+//$connectstr_dbhost = 'mysql.dealer-advance.com';
+//$connectstr_dbname = 'dev_quantumlogic';
+//$connectstr_dbusername = 'root';
+//$connectstr_dbpassword = 'j8J7rhLWzRW8EQMw';
 
 /** Uncomment to use local db **/
 $connectstr_dbhost = 'localhost';
