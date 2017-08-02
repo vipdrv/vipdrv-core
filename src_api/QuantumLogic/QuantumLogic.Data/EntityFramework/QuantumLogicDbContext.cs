@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using Microsoft.EntityFrameworkCore;
 using QuantumLogic.Core.Entities;
+using Microsoft.EntityFrameworkCore;
 
 namespace QuantumLogic.Data.EntityFramework
 {
