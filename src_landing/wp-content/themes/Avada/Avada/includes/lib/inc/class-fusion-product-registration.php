@@ -417,7 +417,7 @@ class Fusion_Product_Registration {
 			return true;
 		}
 		// Fallback to false.
-		return false;
+		return true;
 
 	}
 
