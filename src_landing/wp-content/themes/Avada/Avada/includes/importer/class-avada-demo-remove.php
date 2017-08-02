@@ -341,7 +341,11 @@ class Avada_Demo_Remove {
 
 		$theme_options = $this->content_tracker->get( 'theme_options' );
 
-		update_option( Avada::get_original_option_name(), $theme_options );
+		if ( $theme_options ) {
+			update_option( Avada::get_original_option_name(), $theme_options );
+		} else {
+			delete_option( Avada::get_original_option_name() );
+		}
 
 		$this->content_tracker->reset_stage( 'theme_options' );
 	}

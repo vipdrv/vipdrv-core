@@ -50,33 +50,33 @@ if ( ! class_exists( 'FusionSC_Container' ) ) {
 					'id'                    => '',
 					'class'                 => '',
 
-					// Background.
-					'background_color'      => '',
-					'background_image'      => '',
-					'background_position'   => 'center center',
-					'background_repeat'     => 'no-repeat',
-					'background_parallax'   => 'none',
-					'parallax_speed'        => '0.3',
-					'opacity'               => '100',
-					'break_parents'         => '0',
-					'fade'                  => 'no',
+						// Background.
+						'background_color'      => $fusion_settings->get( 'full_width_bg_color' ),
+						'background_image'      => '',
+						'background_position'   => 'center center',
+						'background_repeat'     => 'no-repeat',
+						'background_parallax'   => 'none',
+						'parallax_speed'        => '0.3',
+						'opacity'               => '100',
+						'break_parents'         => '0',
+						'fade'                  => 'no',
 
-					// Style.
-					'hundred_percent'       => 'no',
-					'padding_bottom'        => '',
-					'padding_left'          => '',
-					'padding_right'         => '',
-					'padding_top'           => '',
-					'border_color'          => '',
-					'border_size'           => '',
-					'border_style'          => 'solid',
-					'equal_height_columns'  => 'no',
-					'data_bg_height'        => '',
-					'data_bg_width'         => '',
-					'enable_mobile'         => 'no',
-					'menu_anchor'           => '',
-					'margin_top'            => '',
-					'margin_bottom'         => '',
+						// Style.
+						'hundred_percent'       => 'no',
+						'padding_bottom'        => '',
+						'padding_left'          => '',
+						'padding_right'         => '',
+						'padding_top'           => '',
+						'border_color'          => $fusion_settings->get( 'full_width_border_color' ),
+						'border_size'           => $fusion_settings->get( 'full_width_border_size' ),
+						'border_style'          => 'solid',
+						'equal_height_columns'  => 'no',
+						'data_bg_height'        => '',
+						'data_bg_width'         => '',
+						'enable_mobile'         => 'no',
+						'menu_anchor'           => '',
+						'margin_top'            => '',
+						'margin_bottom'         => '',
 
 					// Video Background.
 					'video_mp4'             => '',
@@ -127,10 +127,6 @@ if ( ! class_exists( 'FusionSC_Container' ) ) {
 				}
 			}
 
-			$border_color     = ( empty( $border_color ) ) ? $fusion_settings->get( 'full_width_border_color' ) : $border_color;
-			$background_color = ( empty( $background_color ) ) ? $fusion_settings->get( 'full_width_bg_color' ) : $background_color;
-			$border_size      = ( empty( $border_size ) && '0' != $border_size ) ? $fusion_settings->get( 'border_size' ) : $border_size;
-
 			$background_color = ( '' !== $overlay_color ) ? $fusion_library->sanitize->get_rgba( $overlay_color, $overlay_opacity ) : $background_color;
 
 			$alpha = 1;
@@ -138,7 +134,7 @@ if ( ! class_exists( 'FusionSC_Container' ) ) {
 				$alpha = Fusion_Color::new_color( $background_color )->alpha;
 			}
 
-			if ( 1 > $alpha ) {
+			if ( 1 > $alpha && 0 !== $alpha ) {
 				$classes .= ' fusion-blend-mode';
 			}
 

@@ -466,7 +466,7 @@ var FusionPageBuilderEvents = _.extend( {}, Backbone.Events );
 					} );
 
 					// Set the media dialog box state as 'gallery' if the element is gallery.
-					if ( multiImages && 'fusion_gallery' == $thisEl.data( 'element' ) ) {
+					if ( multiImages && 'fusion_gallery' === $thisEl.data( 'element' ) ) {
 						ids         = multiImageInput.val().split( ',' );
 						attachments = [];
 						attachment  = '';
@@ -571,13 +571,13 @@ var FusionPageBuilderEvents = _.extend( {}, Backbone.Events );
 
 							// Remove default item.
 							if ( multiUpload ) {
-								firstElementNode = jQuery( document ).find( '.fusion-builder-sortable-options li:first-child' );
+								firstElementNode = jQuery( $thisEl ).parents( '.fusion-builder-main-settings' ).find( '.fusion-builder-sortable-options li:first-child' );
 								if ( firstElementNode.length ) {
 									firstElement = FusionPageBuilderElements.find( function( model ) {
 										return model.get( 'cid' ) == firstElementNode.data( 'cid' );
 									} );
 									if ( firstElement && undefined === firstElement.attributes.params[ $thisEl.data( 'param' ) ] ) {
-										jQuery( document ).find( '.fusion-builder-sortable-options li:first-child .fusion-builder-multi-setting-remove' ).trigger( 'click' );
+										jQuery( $thisEl ).parents( '.fusion-builder-main-settings' ).find( '.fusion-builder-sortable-options li:first-child .fusion-builder-multi-setting-remove' ).trigger( 'click' );
 									}
 								}
 							}
@@ -602,9 +602,8 @@ var FusionPageBuilderEvents = _.extend( {}, Backbone.Events );
 
 								// If its a multi upload element, add the image to defaults and trigger a new item to be added.
 								if ( multiUpload ) {
-
 									fusionAllElements[ $thisEl.data( 'element' ) ].params[ $thisEl.data( 'param' ) ].value = imageURL;
-									jQuery( '.fusion-builder-add-multi-child' ).trigger( 'click' );
+									jQuery( $thisEl ).parents( '.fusion-builder-main-settings' ).find( '.fusion-builder-add-multi-child' ).trigger( 'click' );
 									FusionPageBuilderEvents.trigger( 'fusion-multi-child-update-preview' );
 									fusionAllElements[ $thisEl.data( 'element' ) ].params[ $thisEl.data( 'param' ) ].value = defaultParam;
 								}

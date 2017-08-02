@@ -329,7 +329,9 @@ if ( fusion_is_element_enabled( 'fusion_accordion' ) ) {
 				global $fusion_library, $fusion_settings, $dynamic_css_helpers;
 
 				$main_elements = apply_filters( 'fusion_builder_element_classes', array( '.fusion-accordian' ), '.fusion-accordian' );
-				$elements = $dynamic_css_helpers->map_selector( $main_elements, ' .fusion-toggle-boxed-mode:hover .panel-title a, .panel-title a:hover' );
+				$elements = $dynamic_css_helpers->map_selector( $main_elements, ' .panel-title a:hover' );
+				$elements = array_merge( $elements, $dynamic_css_helpers->map_selector( $main_elements, ' .fusion-toggle-boxed-mode:hover .panel-title a' ) );
+
 				$css['global'][ $dynamic_css_helpers->implode( $elements ) ]['color'] = $fusion_library->sanitize->color( $fusion_settings->get( 'accordian_active_color' ) );
 
 				$elements = $dynamic_css_helpers->map_selector( $main_elements, ' .panel-title a .fa-fusion-box' );

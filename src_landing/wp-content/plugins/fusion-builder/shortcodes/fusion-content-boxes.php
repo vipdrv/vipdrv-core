@@ -968,6 +968,8 @@ if ( fusion_is_element_enabled( 'fusion_content_boxes' ) ) {
 							$attr['style'] .= 'border-color:' . $this->child_args['circlebordercolor'] . ';';
 						}
 
+						$icon_circle_dimension = intval( $this->parent_args['icon_size'] ) * 2;
+
 						$this->child_args['circlebordersize'] = FusionBuilder::validate_shortcode_attr_value( $this->child_args['circlebordersize'], 'px' );
 
 						if ( $this->child_args['circlebordersize'] ) {
@@ -978,7 +980,7 @@ if ( fusion_is_element_enabled( 'fusion_content_boxes' ) ) {
 							$attr['style'] .= 'background-color:' . $this->child_args['circlecolor'] . ';';
 						}
 
-						$attr['style'] .= 'height:' . ( intval( $this->parent_args['icon_size'] ) * 2 ) . 'px;width:' . ( intval( $this->parent_args['icon_size'] ) * 2 ) . 'px;line-height:' . ( intval( $this->parent_args['icon_size'] ) * 2 ) . 'px;';
+						$attr['style'] .= 'box-sizing:content-box;height:' . $icon_circle_dimension . 'px;width:' . $icon_circle_dimension . 'px;line-height:' . $icon_circle_dimension . 'px;';
 
 						if ( 'icon-boxed' === $this->parent_args['layout'] && ( ! $this->child_args['outercirclebordercolor'] || ! $this->child_args['outercirclebordersize'] || ! intval( $this->child_args['outercirclebordersize'] ) ) ) {
 							$attr['style'] .= 'top:-' . ( 50 + $this->parent_args['icon_size'] ) . 'px;margin-left:-' . intval( $this->parent_args['icon_size'] ) . 'px;';
@@ -993,9 +995,6 @@ if ( fusion_is_element_enabled( 'fusion_content_boxes' ) ) {
 						if ( $this->child_args['outercirclebordercolor'] && $this->child_args['outercirclebordersize'] && intval( $this->child_args['outercirclebordersize'] ) ) {
 							// If there is a thick border, kill border width and make it center aligned positioned.
 							$attr['style'] .= 'position:relative;';
-							$attr['style'] .= 'line-height: calc(' . ( $this->parent_args['icon_size'] * 2 ) . 'px-' . ( $this->child_args['circlebordersize'] * 2 . 'px' ) . ');';
-							$attr['style'] .= 'top:' . $this->child_args['circlebordersize'] . ';';
-							$attr['style'] .= 'left:' . $this->child_args['circlebordersize'] . ';';
 							$attr['style'] .= 'margin:0;';
 							$attr['style'] .= 'border-radius:' . $this->parent_args['icon_circle_radius'] . ';';
 						}

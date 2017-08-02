@@ -785,6 +785,7 @@ function avada_dynamic_css_array( $original_css = array() ) {
 
 	$elements = array(
 		'#wrapper #main .post > h2.fusion-post-title',
+		'#wrapper #main .post > .fusion-post-title-meta-wrap > h2.fusion-post-title',
 		'#wrapper #main .fusion-post-content > .blog-shortcode-post-title',
 		'#wrapper #main .fusion-post-content > h2.fusion-post-title',
 		'#wrapper #main .fusion-portfolio-content > h2.fusion-post-title',
@@ -5680,7 +5681,7 @@ function avada_dynamic_css_array( $original_css = array() ) {
 				'table.tribe-events-tickets tr .tickets_price',
 				'table.tribe-events-tickets tr td.add-to-cart',
 				'table.tribe-events-tickets tr td.tribe-tickets-attendees',
-				'table.tribe-events-tickets .tribe-tickets-attendees-list-optout > td'
+				'table.tribe-events-tickets .tribe-tickets-attendees-list-optout > td',
 			);
 			$css[ $content_media_query ][ $dynamic_css_helpers->implode( $elements ) ]['display'] = 'inline-block';
 			$css[ $content_media_query ][ $dynamic_css_helpers->implode( $elements ) ]['width'] = '100%';
@@ -5691,9 +5692,7 @@ function avada_dynamic_css_array( $original_css = array() ) {
 
 			$css[ $content_media_query ]['table.tribe-events-tickets tr td.add-to-cart']['border-bottom'] = 'none';
 
-
 			$css[ $content_media_query ]['.fusion-body .tribe-events-tickets-rsvp .quantity input']['padding'] = '0';
-
 
 		} // End if().
 

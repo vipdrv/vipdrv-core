@@ -269,7 +269,9 @@ if ( ! class_exists( 'FusionSC_Column' ) ) {
 				if ( class_exists( 'Fusion_Color' ) ) {
 					$alpha = Fusion_Color::new_color( $background_color )->alpha;
 				}
-				if ( empty( $background_image ) || 1 > $alpha ) {
+				if ( empty( $background_image ) || 1 > $alpha && 0 !== $alpha ) {
+
+					$classes .= ' fusion-blend-mode';
 					$background_color_style = 'background-color:' . esc_attr( $background_color ) . ';';
 					if ( ( 'none' === $hover_type || empty( $hover_type ) ) && empty( $link ) ) {
 						$wrapper_style .= $background_color_style;
@@ -508,7 +510,7 @@ if ( ! class_exists( 'FusionSC_Column' ) ) {
 				);
 				$css[ $content_media_query ][ $dynamic_css_helpers->implode( $elements ) ]['margin-left'] = '0';
 
-				$css[ $content_media_query ]['.fusion-columns .fusion-column']['width'] 	   = '100% !important';
+				$css[ $content_media_query ]['.fusion-columns .fusion-column']['width']        = '100% !important';
 				$css[ $content_media_query ]['.fusion-columns .fusion-column']['float']      = 'none';
 				$css[ $content_media_query ]['.fusion-columns .fusion-column:not(.fusion-column-last)']['margin']     = '0 0 50px';
 				$css[ $content_media_query ]['.fusion-columns .fusion-column']['box-sizing'] = 'border-box';

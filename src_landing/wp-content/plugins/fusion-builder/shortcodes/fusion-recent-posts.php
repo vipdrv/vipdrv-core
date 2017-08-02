@@ -200,6 +200,11 @@ if ( fusion_is_element_enabled( 'fusion_recent_posts' ) ) {
 
 				extract( $defaults );
 
+				// Deprecated 5.2.1 hide value, mapped to no.
+				if ( 'hide' === $excerpt ) {
+					$excerpt = 'no';
+				}
+
 				$this->args = $defaults;
 
 				$recent_posts = fusion_cached_query( $args );
@@ -328,8 +333,10 @@ if ( fusion_is_element_enabled( 'fusion_recent_posts' ) ) {
 
 					}
 
-					if ( 'hide' !== $excerpt ) {
-						$content .= fusion_builder_get_post_content( '', $excerpt, $excerpt_words, $strip_html );
+					if ( 'yes' === $excerpt ) {
+						$content .= fusion_builder_get_post_content( '', 'yes', $excerpt_words, $strip_html );
+					} else if ( 'full' === $excerpt ) {
+						$content .= fusion_builder_get_post_content( '', 'no', $excerpt_words, $strip_html );
 					}
 
 					if ( $count == $this->args['columns'] ) {
@@ -712,8 +719,8 @@ function fusion_element_recent_posts() {
 				'param_name'  => 'excerpt',
 				'value'   => array(
 					'yes'   => esc_attr__( 'Excerpt', 'fusion-builder' ),
-					'no'    => esc_attr__( 'Full Content', 'fusion-builder' ),
-					'hide'  => esc_attr__( 'None', 'fusion-builder' ),
+					'full'  => esc_attr__( 'Full Content', 'fusion-builder' ),
+					'no'    => esc_attr__( 'None', 'fusion-builder' ),
 				),
 				'default'     => 'yes',
 			),
