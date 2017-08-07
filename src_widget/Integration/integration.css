@@ -1,0 +1,93 @@
+.vipdrv__button {
+    background-image: url('http://widget.dev.test-drive.tech/Integration/TestDrive_Button.png');
+    height: 48px;
+    background-size: 130px;
+    background-repeat: no-repeat;
+    cursor: pointer;
+}
+
+.vipdrv--disable-scroll {
+    overflow: hidden;
+}
+
+.test-drive {
+    width: 100vw;
+    height: 100vh;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: rgba(33, 33, 33, 0.48);
+    z-index: 1000;
+    transform: scale(0);
+    will-change: transform;
+}
+
+.test-drive-visible {
+    transform: scale(1);
+    transition: transform 300ms;
+}
+
+.test-drive__content {
+    width: 1022px;
+    height: 700px;
+    background-color: white;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.2), 0 1px 1px 0 rgba(0, 0, 0, 0.14), 0 2px 1px -1px rgba(0, 0, 0, 0.12);
+    border-radius: 4px;
+    overflow: hidden;
+    transform: scale(0);
+    transition: transform 300ms;
+    will-change: transform;
+}
+
+.test-drive__content-visible {
+    transform: translate(-50%, -50%);
+}
+
+@media (max-width: 1022px) {
+    .test-drive__content {
+        width: 100%;
+        height: 100%;
+    }
+}
+
+.frame-header {
+    height: 50px;
+    width: 100%;
+    background-color: #2178cf;
+    display: block;
+    color: #fff;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+    font-weight: 300;
+    font-size: 20px;
+    text-shadow: 0px 1px 1px #868686;
+}
+
+.frame-header__title {
+    width: 95%;
+    padding-left: 5%;
+    text-align: center;
+    float: left;
+    line-height: 50px;
+}
+
+.frame-header__cross {
+    width: 5%;
+    float: left;
+    line-height: 50px;
+    text-align: center;
+    cursor: pointer;
+}
+
+.frame-header__cross:hover {
+    font-weight: bold;
+}
+
+.test-drive__frame {
+    width: 100%;
+    height: 100%;
+}

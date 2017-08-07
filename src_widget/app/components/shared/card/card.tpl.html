@@ -1,0 +1,15 @@
+<div class="td-card" ng-class="$ctrl.isActiveCard ? 'td-card--active' : ''">
+    <div class="row align-items-center">
+        <div class="td-card__image-column col-12 col-sm-3">
+            <div class="td-card__image-container" ng-class="{'td-card__image-container--no-image' : !$ctrl.cardImage}">
+
+
+                <img ng-if="$ctrl.cardImage" class="td-card__image" src="{{$ctrl.cardImage}}">
+            </div>
+        </div>
+        <div class="td-card__content col-12 col-sm-9">
+            <div class="td-card__title">{{$ctrl.cardTitle}}</div>
+            <div class="td-card__desc">{{$ctrl.cardDesc}}</div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,35 @@
+//.test-drive-widget__root {
+//  margin: 0;
+//  padding: 0;
+//
+//  -webkit-font-smoothing: antialiased;
+//  -moz-osx-font-smoothing: grayscale;
+//  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+//
+//}
+//
+.test-drive-widget__root * {
+  box-sizing: border-box;
+}
+//
+//.test-drive-widget__root *:focus {
+//  outline: none;
+//}
+//
+//.clearfix:before,
+//.clearfix:after {
+//  content: " "; /* 1 */
+//  display: table; /* 2 */
+//}
+//
+//.clearfix:after {
+//  clear: both;
+//}
+//
+///**
+// * For IE 6/7 only
+// * Include this rule to trigger hasLayout and contain floats.
+// */
+//.clearfix {
+//  *zoom: 1;
+//}

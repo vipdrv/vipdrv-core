@@ -1,0 +1,22 @@
+<div class="row user-details">
+    <div class="col">
+        <div class="user-details__heading">Select an expert</div>
+        <div class="user-details__subheading">He or she will be there to assist you on the day of your test drive.</div>
+    </div>
+</div>
+<div class="row td-card-container">
+    <td-card class="col-md-6 col-sm-12 td-card-root"
+             ng-repeat="expert in $ctrl.experts"
+             card-image="expert.photo_url"
+             card-title="expert.title"
+             card-desc="expert.description"
+             is-active-card="expert.title == $ctrl.userData.expert.title"
+             ng-click="$ctrl.expertChanged(expert.title)">
+    </td-card>
+</div>
+
+<div class="row">
+    <div class="col-12">
+        <div class="td-next-step-btn" ng-click="$ctrl.completeStepInner()">Next step</div>
+    </div>
+</div>

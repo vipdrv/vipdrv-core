@@ -3,9 +3,17 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.26430.6
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QuantumLogic.WebApi", "QuantumLogic.WebApi\QuantumLogic.WebApi.csproj", "{BF61AF0A-424B-4774-A7D2-68878C3324E5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "QuantumLogic.WebApi", "QuantumLogic.WebApi\QuantumLogic.WebApi.csproj", "{144CEAAC-0A2E-4BDB-B015-CD3A02448433}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QuantumLogic.Tests", "QuantumLogic.Tests\QuantumLogic.Tests.csproj", "{39AB86DC-E99B-4C30-99D8-1F428F92BEB6}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{9AE1CA92-39CB-4D5A-AAEB-B3A7B349C8D1}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{872B3A0F-DB5D-475D-9FCC-C406FF4BAC04}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "QuantumLogic.Data", "QuantumLogic.Data\QuantumLogic.Data.csproj", "{66929F62-7E43-4575-BF89-793D323F19B6}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "QuantumLogic.Core", "QuantumLogic.Core\QuantumLogic.Core.csproj", "{4AA468D2-EC4D-428F-BE42-8F3B89EEC818}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "QuantumLogic.Tests", "QuantumLogic.Tests\QuantumLogic.Tests.csproj", "{0AC799A9-BFE4-4ACE-A3E3-C7E7EF2BD88F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -13,16 +21,30 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{BF61AF0A-424B-4774-A7D2-68878C3324E5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{BF61AF0A-424B-4774-A7D2-68878C3324E5}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{BF61AF0A-424B-4774-A7D2-68878C3324E5}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{BF61AF0A-424B-4774-A7D2-68878C3324E5}.Release|Any CPU.Build.0 = Release|Any CPU
-		{39AB86DC-E99B-4C30-99D8-1F428F92BEB6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{39AB86DC-E99B-4C30-99D8-1F428F92BEB6}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{39AB86DC-E99B-4C30-99D8-1F428F92BEB6}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{39AB86DC-E99B-4C30-99D8-1F428F92BEB6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{144CEAAC-0A2E-4BDB-B015-CD3A02448433}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{144CEAAC-0A2E-4BDB-B015-CD3A02448433}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{144CEAAC-0A2E-4BDB-B015-CD3A02448433}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{144CEAAC-0A2E-4BDB-B015-CD3A02448433}.Release|Any CPU.Build.0 = Release|Any CPU
+		{66929F62-7E43-4575-BF89-793D323F19B6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{66929F62-7E43-4575-BF89-793D323F19B6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{66929F62-7E43-4575-BF89-793D323F19B6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{66929F62-7E43-4575-BF89-793D323F19B6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4AA468D2-EC4D-428F-BE42-8F3B89EEC818}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4AA468D2-EC4D-428F-BE42-8F3B89EEC818}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4AA468D2-EC4D-428F-BE42-8F3B89EEC818}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4AA468D2-EC4D-428F-BE42-8F3B89EEC818}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0AC799A9-BFE4-4ACE-A3E3-C7E7EF2BD88F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0AC799A9-BFE4-4ACE-A3E3-C7E7EF2BD88F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0AC799A9-BFE4-4ACE-A3E3-C7E7EF2BD88F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0AC799A9-BFE4-4ACE-A3E3-C7E7EF2BD88F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{144CEAAC-0A2E-4BDB-B015-CD3A02448433} = {872B3A0F-DB5D-475D-9FCC-C406FF4BAC04}
+		{66929F62-7E43-4575-BF89-793D323F19B6} = {872B3A0F-DB5D-475D-9FCC-C406FF4BAC04}
+		{4AA468D2-EC4D-428F-BE42-8F3B89EEC818} = {872B3A0F-DB5D-475D-9FCC-C406FF4BAC04}
+		{0AC799A9-BFE4-4ACE-A3E3-C7E7EF2BD88F} = {9AE1CA92-39CB-4D5A-AAEB-B3A7B349C8D1}
 	EndGlobalSection
 EndGlobal
