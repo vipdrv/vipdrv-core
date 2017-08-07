@@ -28,14 +28,13 @@ var vendorJs = [
     'node_modules/angular-messages/angular-messages.min.js',
     'node_modules/angular-route/angular-route.min.js',
     'node_modules/angular-material/angular-material.min.js',
-    'vendor/svg-assets-cache.js'
+    'src/sass/vendor/svg-assets-cache.js'
 ];
 
 var vendorCss = [
-    'vendor/angular-material.css',
-
-    'vendor/bootstrap.min.css',
-    'vendor/roboto-fonts.css'
+    'src/sass/vendor/angular-material.css',
+    'src/sass/vendor/bootstrap.min.css',
+    'src/sass/vendor/roboto-fonts.css'
 ];
 
 var appScss = [

@@ -1,4 +1,4 @@
-<div class="row  ">
+<div class="row">
     <div class="col-12">
         <img class="img-fluid" src="{{$ctrl.userData.car.img}}">
     </div>
@@ -62,19 +62,19 @@
         <div class="row td-drive-details__content">
             <div class="col-12 td-car-details__options-row"
                  ng-if="$ctrl.userData.calendar.date ||  $ctrl.userData.calendar.time">
-                <img class="td-drive-details__row-image" src="/img/icon-date.jpg">
+                <img class="td-drive-details__row-image" src="/src/img/icon-date.jpg">
                 <span class="td-drive-details__row-text">{{$ctrl.userData.calendar.date}} - {{$ctrl.userData.calendar.time}}</span>
             </div>
             <div class="col-12 td-car-details__options-row" ng-if="$ctrl.userData.expert.title">
-                <img class="td-drive-details__row-image" src="/img/icon-expert.jpg">
+                <img class="td-drive-details__row-image" src="/src/img/icon-expert.jpg">
                 <span class="td-drive-details__row-text">{{$ctrl.userData.expert.title}}</span>
             </div>
             <div class="col-12 td-car-details__options-row" ng-if="$ctrl.userData.beverage.title">
-                <img class="td-drive-details__row-image" src="/img/icon-beverage.jpg">
+                <img class="td-drive-details__row-image" src="/src/img/icon-beverage.jpg">
                 <span class="td-drive-details__row-text">{{$ctrl.userData.beverage.title}}</span>
             </div>
             <div class="col-12 td-car-details__options-row-last" ng-if="$ctrl.userData.road.title">
-                <img class="td-drive-details__row-image" src="/img/icon-road.jpg">
+                <img class="td-drive-details__row-image" src="/src/img/icon-road.jpg">
                 <span class="td-drive-details__row-text">{{$ctrl.userData.road.title}}</span>
             </div>
         </div>
