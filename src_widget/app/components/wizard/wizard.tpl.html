@@ -1,0 +1,34 @@
+<td-date
+        ng-if="$ctrl.widgetTabs['time'].isActive"
+        tab-id="'time'"
+        complete-step="$ctrl.completeStep(tabId)"
+        user-data="$ctrl.userData">
+</td-date>
+<td-expert
+        ng-if="$ctrl.widgetTabs['expert'].isActive"
+        complete-step="$ctrl.completeStep(tabId)"
+        tab-id="'expert'"
+        user-data="$ctrl.userData">
+</td-expert>
+<td-beverage
+        ng-if="$ctrl.widgetTabs['beverage'].isActive"
+        complete-step="$ctrl.completeStep(tabId)"
+        tab-id="'beverage'"
+        user-data="$ctrl.userData">
+</td-beverage>
+<td-road
+        ng-if="$ctrl.widgetTabs['road'].isActive"
+        complete-step="$ctrl.completeStep(tabId)"
+        tab-id="'road'"
+        user-data="$ctrl.userData">
+</td-road>
+<td-user-details
+        ng-if="$ctrl.widgetTabs['details'].isActive"
+        complete-step="$ctrl.completeStep(tabId)"
+        complete-form="$ctrl.completeForm()"
+        tab-id="'details'"
+        user-data="$ctrl.userData">
+</td-user-details>
+
+
+

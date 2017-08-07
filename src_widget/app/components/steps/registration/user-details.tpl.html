@@ -1,0 +1,37 @@
+<div class="user-details">
+    <div class="user-details__heading">New customer</div>
+    <div class="user-details__subheading">Create an account to track and edit the details of your test drive booking</div>
+</div>
+
+<br>
+
+<div >
+    <md-input-container class="md-block">
+        <label>First Name</label>
+        <input md-maxlength="30" required name="name" ng-model="$ctrl.userData.user.firstName"/>
+    </md-input-container>
+
+    <md-input-container class="md-block">
+        <label>Last Name</label>
+        <input name="social" required ng-model="$ctrl.userData.user.lastName"/>
+    </md-input-container>
+</div>
+<div>
+    <md-input-container class="md-block" >
+        <label>Email</label>
+        <input name="email" ng-model="$ctrl.userData.user.email"
+               required minlength="4" maxlength="100" ng-pattern="/^.+@.+\..+$/" />
+    </md-input-container>
+
+    <md-input-container class="md-block">
+        <label>Phone Number: (000) 000-0000</label>
+        <input name="phone" ng-model="$ctrl.userData.user.phone" ng-pattern="/^[(][0-9]{3}[)] [0-9]{3}-[0-9]{4}$/" />
+    </md-input-container>
+</div>
+
+
+
+<div class="user-details__button-container">
+    <div class="user-details__next-button" ng-click="$ctrl.createAccountAndMakeBooking()">Create account & make my booking</div>
+
+</div>

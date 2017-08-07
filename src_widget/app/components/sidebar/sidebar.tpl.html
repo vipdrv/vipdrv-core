@@ -1,0 +1,82 @@
+<div class="row  ">
+    <div class="col-12">
+        <img class="img-fluid" src="{{$ctrl.userData.car.img}}">
+    </div>
+    <div class="col-12">
+        <span class="td-car-details__title">{{$ctrl.userData.car.title}}</span>
+    </div>
+    <div class="row td-car-details__content">
+        <div class="col-12">
+            <div class="top-buffer-14">
+                <div>
+                    <div class="td-car-details__option-title">
+                        Engine
+                    </div>
+                    <div class="td-car-details__option-text">
+                        {{$ctrl.userData.car.engine}}
+                        <!--3.8 litre twin-turbo V6-->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="top-buffer-14">
+            <div class="col-6">
+                <div class="td-car-details__option-title">
+                    Year
+                </div>
+                <div class="td-car-details__option-text">
+                    {{$ctrl.userData.car.year}}
+                    <!--2016-->
+                </div>
+            </div>
+            <div class="col-6">
+                <div class="td-car-details__option-title">
+                    Colour
+                </div>
+                <div class="td-car-details__option-text">
+                    {{$ctrl.userData.car.colour}}
+                </div>
+            </div>
+        </div>
+        <div class="top-buffer-14">
+            <div class="col-6" ng-if="!!$ctrl.userData.car.transmission">
+                <div class="td-car-details__option-title">
+                    Transmission
+                </div>
+                <div class="td-car-details__option-text">
+                    {{$ctrl.userData.car.transmission}}
+                </div>
+            </div>
+            <div class="col-6" ng-if="$ctrl.userData.car.fuel">
+                <div class="td-car-details__option-title">
+                    Fuel
+                </div>
+                <div class="td-car-details__option-text">
+                    {{$ctrl.userData.car.fuel}}
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-12 td-drive-details">
+        <div class="row td-drive-details__content">
+            <div class="col-12 td-car-details__options-row"
+                 ng-if="$ctrl.userData.calendar.date ||  $ctrl.userData.calendar.time">
+                <img class="td-drive-details__row-image" src="/img/icon-date.jpg">
+                <span class="td-drive-details__row-text">{{$ctrl.userData.calendar.date}} - {{$ctrl.userData.calendar.time}}</span>
+            </div>
+            <div class="col-12 td-car-details__options-row" ng-if="$ctrl.userData.expert.title">
+                <img class="td-drive-details__row-image" src="/img/icon-expert.jpg">
+                <span class="td-drive-details__row-text">{{$ctrl.userData.expert.title}}</span>
+            </div>
+            <div class="col-12 td-car-details__options-row" ng-if="$ctrl.userData.beverage.title">
+                <img class="td-drive-details__row-image" src="/img/icon-beverage.jpg">
+                <span class="td-drive-details__row-text">{{$ctrl.userData.beverage.title}}</span>
+            </div>
+            <div class="col-12 td-car-details__options-row-last" ng-if="$ctrl.userData.road.title">
+                <img class="td-drive-details__row-image" src="/img/icon-road.jpg">
+                <span class="td-drive-details__row-text">{{$ctrl.userData.road.title}}</span>
+            </div>
+        </div>
+    </div>
+</div>

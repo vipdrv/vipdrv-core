@@ -1,0 +1,27 @@
+<div class="row">
+    <div class="col-md-6 col-sm-12">
+        <div class="tab-title">Select Date</div>
+        <md-calendar ng-if="$ctrl.openHours" class="fixed-calendar td-calendar"
+                     md-min-date="$ctrl.minDate"
+                     md-max-date="$ctrl.maxDate"
+                     md-date-filter="$ctrl.dateFilter"
+                     ng-model="$ctrl.myDate" ng-change="$ctrl.dateChanged()"></md-calendar>
+    </div>
+    <div class="col-md-6 col-sm-12">
+        <div class="tab-title td-time-select__title">Select Time</div>
+        <div class="td-time-select__container">
+            <div class="row">
+                <div class="col td-time-select__item"
+                     ng-repeat="time in $ctrl.timeIntervals"
+                     ng-click="$ctrl.timeChanged(time)"
+                     ng-class="{'td-time-select__item--active' : $ctrl.userData.calendar.time == time}">{{time}}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-12">
+        <div class="td-next-step-btn" ng-click="$ctrl.completeStepInner()">Next step</div>
+    </div>
+</div>

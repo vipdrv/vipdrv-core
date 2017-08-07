@@ -1,0 +1,20 @@
+<div class="row user-details">
+<div class="col">
+    <div class="user-details__heading">Select Beverage</div>
+    <div class="user-details__subheading">While you taking a Test Drive you can get free drinks</div>
+</div>
+</div>
+<div class="row td-card-container">
+    <td-card class="col-md-6 col-sm-12 td-card-root"
+             ng-repeat="beverage in $ctrl.beverages"
+             card-image="beverage.photo_url"
+             card-title="beverage.title"
+             card-desc="beverage.description"
+             is-active-card="beverage.title == $ctrl.userData.beverage.title"
+             ng-click="$ctrl.beverageChanged(beverage.title)">
+    </td-card>
+</div>
+
+<div class="row">
+    <div class="col td-next-step-btn" ng-click="$ctrl.completeStepInner()">Next step</div>
+</div>
