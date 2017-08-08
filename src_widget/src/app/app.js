@@ -1,5 +1,5 @@
 (function () {
-    var app = angular.module('myApp', ["templates", 'ngMaterial', 'ngMessages', 'material.svgAssetsCache']);
+    var app = angular.module('myApp', ["templates", 'ngMaterial', 'ngMessages']);
 
     /* ========================================= App Data ========================================== */
 

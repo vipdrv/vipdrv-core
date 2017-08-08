@@ -6,7 +6,7 @@
                 console.log('completed');
 
             },
-            templateUrl: 'app/components/complete-step/complete-step.tpl.html',
+            templateUrl: 'src/app/components/complete-step/complete-step.tpl.html',
             bindings: {
                 car: '<',
                 userData: '<'

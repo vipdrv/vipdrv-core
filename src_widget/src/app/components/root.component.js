@@ -6,7 +6,7 @@
                 self.userData = userData;
                 self.globalState = globalState;
             },
-            templateUrl: 'app/components/root.tpl.html'
+            templateUrl: 'src/app/components/root.tpl.html'
         });
 })();
 

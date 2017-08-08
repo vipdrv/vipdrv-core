@@ -8,7 +8,7 @@
                     self.switchTab({tabId: this.tabId});
                 };
             },
-            templateUrl: 'app/components/shared/tabs/tab.tpl.html',
+            templateUrl: 'src/app/components/shared/tabs/tab.tpl.html',
             bindings: {
                 title: '<',
                 tabId: '<',

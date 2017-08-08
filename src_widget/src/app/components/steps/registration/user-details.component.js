@@ -29,7 +29,7 @@
                     }
                 };
             },
-            templateUrl: 'app/components/steps/registration/user-details.tpl.html',
+            templateUrl: 'src/app/components/steps/registration/user-details.tpl.html',
             bindings: {
                 userData: '=',
                 tabId: '<',

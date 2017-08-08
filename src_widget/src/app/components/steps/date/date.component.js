@@ -141,7 +141,7 @@
                     return [year, month, day].join('/');
                 }
             },
-            templateUrl: 'app/components/steps/date/date.tpl.html',
+            templateUrl: 'src/app/components/steps/date/date.tpl.html',
             bindings: {
                 userData: '=',
                 tabId: '<',

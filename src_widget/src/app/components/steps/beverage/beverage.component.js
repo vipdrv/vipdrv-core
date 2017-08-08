@@ -37,7 +37,7 @@
                     }
                 };
             },
-            templateUrl: 'app/components/steps/beverage/beverage.tpl.html',
+            templateUrl: 'src/app/components/steps/beverage/beverage.tpl.html',
             bindings: {
                 userData: '=',
                 tabId: '<',

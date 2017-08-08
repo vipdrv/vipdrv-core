@@ -59,7 +59,7 @@
                 };
 
             },
-            templateUrl: 'app/components/wizard/wizard.tpl.html',
+            templateUrl: 'src/app/components/wizard/wizard.tpl.html',
             bindings: {}
         });
 })();

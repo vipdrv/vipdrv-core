@@ -4,7 +4,7 @@
             controller: function () {
 
             },
-            templateUrl: 'app/components/sidebar/sidebar.tpl.html',
+            templateUrl: 'src/app/components/sidebar/sidebar.tpl.html',
             bindings: {
                 car: '<',
                 userData: '<'

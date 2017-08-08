@@ -4,7 +4,7 @@
             controller: function () {
                 var vm = this;
             },
-            templateUrl: 'app/components/shared/card/card.tpl.html',
+            templateUrl: 'src/app/components/shared/card/card.tpl.html',
             bindings: {
                 cardTitle: '<',
                 cardDesc: '<',

@@ -50,7 +50,7 @@
                 this.satisfyStep = function () {
                     if (self.userData.expert.title === null) {
                         this.isSatisfy = false;
-                    } else {123
+                    } else {
                         this.isSatisfy = true;
                     }
                 };
@@ -61,7 +61,7 @@
                     }
                 };
             },
-            templateUrl: 'app/components/steps/expert/expert.tpl.html',
+            templateUrl: 'src/app/components/steps/expert/expert.tpl.html',
             bindings: {
                 userData: '=',
                 tabId: '<',

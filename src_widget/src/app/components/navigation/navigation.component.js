@@ -25,7 +25,7 @@
                     self.widgetTabs[tabId].isActive = true;
                 };
             },
-            templateUrl: 'app/components/navigation/navigation.tpl.html'
+            templateUrl: 'src/app/components/navigation/navigation.tpl.html'
         });
 })();
 

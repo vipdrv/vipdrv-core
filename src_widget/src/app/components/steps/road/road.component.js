@@ -53,7 +53,7 @@
                     }
                 };
             },
-            templateUrl: 'app/components/steps/road/road.tpl.html',
+            templateUrl: 'src/app/components/steps/road/road.tpl.html',
             bindings: {
                 userData: '=',
                 tabId: '<',
