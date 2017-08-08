@@ -273,23 +273,18 @@ src_node/client/test/screenshots/*
 !src_node/client/test/screenshots/README.md
 src_node/client/test/unit-results/*
 !src_node/client/test/unit-results/README.md
-src_api/dev_dist/**
 
 # package control
 node_modules
 
 # src_widget
-src_site1/client/test/screenshots/*
-!src_site1/client/test/screenshots/README.md
-src_site1/client/test/unit-results/*
-!src_site1/client/test/unit-results/README.md
-src_site1/client/index.html
-src_site1/build/tmp
-src_site1/build/dist
-!src_site1/build
+rc_widget/build
+rc_widget/tmp
 
 # src_api
-# src_api/DealerActive/DealerActive.WebApi/Uploads/*
+src_api/dev_dist/**
+
+# src_admin
 src_admin/dist/**
 src_admin/typings/**
 

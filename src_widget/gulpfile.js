@@ -1,9 +1,12 @@
 'use strict';
 
+var browserSync = require('browser-sync').create();
+var reload = browserSync.reload;
+
 var gulp = require('gulp');
 var $ = require('gulp-load-plugins')();
 var plumber = require('gulp-plumber');
-
+var gulpCopy = require('gulp-copy');
 var html2js = require('gulp-html2js');
 var changed = require('gulp-changed');
 var util = require('gulp-util');
@@ -15,11 +18,14 @@ var uglify = require('gulp-uglify');
 var cssnano = require('gulp-cssnano');
 var inject = require('gulp-inject');
 var concat = require('gulp-concat');
-var browserSync = require('browser-sync').create();
-var reload = browserSync.reload;
 var sourcemaps = require('gulp-sourcemaps');
 var del = require('del');
 var clean = require('gulp-clean');
+
+var config = {
+    templates: './src/app/**/*.tpl.html',
+    angularAppFiles: ['tmp/templates.js', './src/app/prototypes/**/*.js', './src/app/**/*module.js', './src/app/app.js', './src/app/**/*.js', '!./src/app/**/*spec.js']
+};
 
 var vendorJs = [
     'node_modules/angular/angular.min.js',
@@ -27,24 +33,26 @@ var vendorJs = [
     'node_modules/angular-aria/angular-aria.min.js',
     'node_modules/angular-messages/angular-messages.min.js',
     'node_modules/angular-route/angular-route.min.js',
-    'node_modules/angular-material/angular-material.min.js',
-    'vendor/svg-assets-cache.js'
+    'node_modules/angular-material/angular-material.min.js'
 ];
 
 var vendorCss = [
-    'vendor/angular-material.css',
-
-    'vendor/bootstrap.min.css',
-    'vendor/roboto-fonts.css'
+    'src/sass/vendor/angular-material.css',
+    'src/sass/vendor/bootstrap.min.css',
+    'src/sass/vendor/roboto-fonts.css'
 ];
 
 var appScss = [
-    './sass/app.scss'
+    './src/sass/app.scss'
 ];
 
 var appScssWatch = [
-    './sass/*.scss'
+    './src/sass/*.scss'
 ];
+
+gulp.task('clean', function () {
+    return del.sync('./build/*');
+});
 
 gulp.task('bundle_vendor_js', function () {
     gulp.src(vendorJs)
@@ -80,11 +88,6 @@ gulp.task('copy_app_scss', function () {
         .pipe(gulp.dest('./build'));
 });
 
-var config = {
-    templates: 'app/**/*.tpl.html',
-    angularAppFiles : ['tmp/templates.js', './app/prototypes/**/*.js','./app/**/*module.js', './app/app.js', './app/**/*.js', '!./app/**/*spec.js']
-};
-
 gulp.task('bundle_app', function () {
     gulp.src(config.angularAppFiles)
         .pipe(plumber())
@@ -112,7 +115,7 @@ gulp.task('bundle_app_debug', function () {
 //generate angular templates using html2js
 gulp.task('templates', function () {
     return gulp.src(config.templates)
-        // .pipe(changed(config.tmp))
+    // .pipe(changed(config.tmp))
         .pipe(plumber())
         .pipe(debug())
         .pipe(html2js('templates.js', {
@@ -131,19 +134,31 @@ gulp.task('templates', function () {
         }));
 });
 
+gulp.task('copy_index', function () {
+    gulp.src('./src/app/index.html')
+        .pipe(gulp.dest('./build/'));
+});
+
 gulp.task('build', function (callback) {
-    runSequence('clean', 'bundle_vendor_js', 'bundle_vendor_css', 'templates', 'bundle_app', 'copy_app_scss', callback);
+    runSequence('clean',
+        'bundle_vendor_js',
+        'bundle_vendor_css',
+        'templates',
+        'bundle_app',
+        'copy_app_scss',
+        'copy_index',
+        callback);
 });
 
 gulp.task('build_debug', function (callback) {
-    runSequence('clean', 'bundle_vendor_js', 'bundle_vendor_css', 'templates', 'bundle_app_debug', 'copy_app_scss', callback);
-});
-
-gulp.task('watch', ['build_debug'], function () {
-    gulp.watch(config.templates, ['templates', reload]);
-    gulp.watch(vendorJs, ['bundle_vendor_js', reload]);
-    gulp.watch(config.angularAppFiles, ['bundle_app_debug', reload]);
-    gulp.watch(appScssWatch, ['copy_app_scss', reload]);
+    runSequence('clean',
+        'bundle_vendor_js',
+        'bundle_vendor_css',
+        'templates',
+        'bundle_app_debug',
+        'copy_app_scss',
+        'copy_index',
+        callback);
 });
 
 gulp.task('serve', ['build_debug'], function () {
@@ -155,16 +170,13 @@ gulp.task('serve', ['build_debug'], function () {
         notify: false,
         logPrefix: 'serve',
         server: {
-            baseDir: ['build', '.'],
+            baseDir: ['./build', '.'],
             middleware: []
         }
     });
+
     gulp.watch(config.templates, ['templates', reload]);
     gulp.watch(vendorJs, ['bundle_vendor_js', reload]);
     gulp.watch(config.angularAppFiles, ['bundle_app_debug', reload]);
     gulp.watch(appScssWatch, ['copy_app_scss', reload]);
-});
-
-gulp.task('clean', function () {
-    return del.sync('build');
 });

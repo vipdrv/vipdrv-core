@@ -41,7 +41,7 @@ $templateCache.put("app/components/navigation/navigation.tpl.html","<div class=\
     "    </td-tab>\n" +
     "</div>")
 
-$templateCache.put("app/components/sidebar/sidebar.tpl.html","<div class=\"row  \">\n" +
+$templateCache.put("app/components/sidebar/sidebar.tpl.html","<div class=\"row\">\n" +
     "    <div class=\"col-12\">\n" +
     "        <img class=\"img-fluid\" src=\"{{$ctrl.userData.car.img}}\">\n" +
     "    </div>\n" +
