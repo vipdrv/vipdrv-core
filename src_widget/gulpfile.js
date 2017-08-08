@@ -1,6 +1,7 @@
 'use strict';
 
 var browserSync = require('browser-sync').create();
+var reload = browserSync.reload;
 
 var gulp = require('gulp');
 var $ = require('gulp-load-plugins')();
@@ -160,14 +161,6 @@ gulp.task('build_debug', function (callback) {
         callback);
 });
 
-
-var reload = browserSync.reload;
-
-gulp.task('test_reload', function () {
-    reload()
-});
-
-
 gulp.task('serve', ['build_debug'], function () {
     browserSync.init({
         port: 8080,
@@ -182,8 +175,8 @@ gulp.task('serve', ['build_debug'], function () {
         }
     });
 
-    gulp.watch(config.templates, ['templates', 'reload']);
-    gulp.watch(vendorJs, ['bundle_vendor_js', 'reload']);
-    gulp.watch(config.angularAppFiles, ['bundle_app_debug', 'reload']);
-    gulp.watch(appScssWatch, ['copy_app_scss', 'test_reload']);
+    gulp.watch(config.templates, ['templates', reload]);
+    gulp.watch(vendorJs, ['bundle_vendor_js', reload]);
+    gulp.watch(config.angularAppFiles, ['bundle_app_debug', reload]);
+    gulp.watch(appScssWatch, ['copy_app_scss', reload]);
 });
