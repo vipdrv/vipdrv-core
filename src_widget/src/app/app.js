@@ -108,11 +108,8 @@
     userData.car.transmission = transmission;
     userData.car.fuel = fuel;
 
-    console.log(userData.car);
-
     app.value('widgetTabs', widgetTabs);
     app.value('globalState', globalState);
-
     app.value('userData', userData);
     app.value('apiBaseUrl', apiBaseUrl);
     app.value('siteId', siteId);

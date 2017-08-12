@@ -24,7 +24,9 @@ var clean = require('gulp-clean');
 
 var config = {
     templates: './src/app/**/*.tpl.html',
-    angularAppFiles: ['./build/tmp/templates.js', './src/app/prototypes/**/*.js', './src/app/**/*module.js', './src/app/app.js', './src/app/**/*.js', '!./src/app/**/*spec.js']
+    templates_watch: './src/app/**/*.tpl.html',
+    angularAppFiles: ['./build/tmp/templates.js', './src/app/prototypes/**/*.js', './src/app/**/*module.js', './src/app/app.js', './src/app/**/*.js', '!./src/app/**/*spec.js'],
+    angularAppFiles_watch: ['./src/app/prototypes/**/*.js', './src/app/**/*module.js', './src/app/app.js']
 };
 
 var vendorJs = [
@@ -32,14 +34,11 @@ var vendorJs = [
     'node_modules/angular-animate/angular-animate.min.js',
     'node_modules/angular-aria/angular-aria.min.js',
     'node_modules/angular-messages/angular-messages.min.js',
-    'node_modules/angular-route/angular-route.min.js',
-    'node_modules/angular-material/angular-material.min.js'
+    'node_modules/angular-route/angular-route.min.js'
 ];
 
 var vendorCss = [
-    'src/vendor/css/angular-material.css',
     'src/vendor/css/bootstrap.min.css',
-    'src/vendor/css/roboto-fonts.css'
 ];
 
 var appScss = [
@@ -167,6 +166,13 @@ gulp.task('build_debug', function (callback) {
         callback);
 });
 
+gulp.task('reload_copy', function (callback) {
+    runSequence('clean',
+        'compile_templates',
+        'bundle_app_debug',
+        callback);
+});
+
 gulp.task('serve', ['build_debug'], function () {
     browserSync.init({
         port: 8080,
@@ -181,8 +187,8 @@ gulp.task('serve', ['build_debug'], function () {
         }
     });
 
-    gulp.watch(config.templates, ['templates', reload]);
+    gulp.watch(config.templates_watch, ['reload_copy', reload]);
     gulp.watch(vendorJs, ['bundle_vendor_js', reload]);
-    gulp.watch(config.angularAppFiles, ['bundle_app_debug', reload]);
+    gulp.watch(config.angularAppFiles_watch, ['bundle_app_debug', reload]);
     gulp.watch(appScssWatch, ['copy_app_scss', reload]);
 });

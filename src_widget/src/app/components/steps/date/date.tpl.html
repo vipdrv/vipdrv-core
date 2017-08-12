@@ -9,13 +9,13 @@
     </div>
     <div class="col-md-6 col-sm-12">
         <div class="tab-title td-time-select__title">Select Time</div>
-        <div class="td-time-select__container">
-            <div class="row">
-                <div class="col td-time-select__item"
-                     ng-repeat="time in $ctrl.timeIntervals"
-                     ng-click="$ctrl.timeChanged(time)"
-                     ng-class="{'td-time-select__item--active' : $ctrl.userData.calendar.time == time}">{{time}}
-                </div>
+
+        <div class="row">
+            <div class="col-md-4 td-time-select__item"
+                 ng-repeat="time in $ctrl.timeIntervals"
+                 ng-click="$ctrl.timeChanged(time)"
+                 ng-class="{'td-time-select__item--active' : $ctrl.userData.calendar.time == time}">
+                {{time}}123345556
             </div>
         </div>
     </div>
