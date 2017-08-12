@@ -6,17 +6,12 @@ var reload = browserSync.reload;
 var gulp = require('gulp');
 var $ = require('gulp-load-plugins')();
 var plumber = require('gulp-plumber');
-var gulpCopy = require('gulp-copy');
 var html2js = require('gulp-html2js');
-var changed = require('gulp-changed');
-var util = require('gulp-util');
 var runSequence = require('run-sequence');
 var debug = require('gulp-debug');
 var sass = require('gulp-sass');
-var useref = require('gulp-useref');
 var uglify = require('gulp-uglify');
 var cssnano = require('gulp-cssnano');
-var inject = require('gulp-inject');
 var concat = require('gulp-concat');
 var sourcemaps = require('gulp-sourcemaps');
 var del = require('del');
@@ -24,9 +19,8 @@ var clean = require('gulp-clean');
 
 var config = {
     templates: './src/app/**/*.tpl.html',
-    templates_watch: './src/app/**/*.tpl.html',
     angularAppFiles: ['./build/tmp/templates.js', './src/app/prototypes/**/*.js', './src/app/**/*module.js', './src/app/app.js', './src/app/**/*.js', '!./src/app/**/*spec.js'],
-    angularAppFiles_watch: ['./src/app/prototypes/**/*.js', './src/app/**/*module.js', './src/app/app.js']
+    angularAppFiles_watch: ['./src/app/prototypes/**/*.js', './src/app/**/*module.js', './src/app/app.js', './src/app/**/*.js', '!./src/app/**/*spec.js'],
 };
 
 var vendorJs = [
@@ -95,7 +89,6 @@ gulp.task('copy_app_scss', function () {
 gulp.task('bundle_app', function () {
     gulp.src(config.angularAppFiles)
         .pipe(plumber())
-        // .pipe(debug('da-inventory-plugin'))
         .pipe(concat('app.js'))
         .pipe(uglify({mangle: false}))
         .pipe(gulp.dest('./build'))
@@ -112,16 +105,15 @@ gulp.task('bundle_app_debug', function () {
         // .pipe(uglify({mangle: false}))
         .pipe(gulp.dest('./build'))
         .pipe($.size({
-            title: 'da-inventory-plugin app.js'
+            title: 'size of app.js: '
         }));
 });
 
 //generate angular templates using html2js
 gulp.task('compile_templates', function () {
     return gulp.src(config.templates)
-    // .pipe(changed(config.tmp))
         .pipe(plumber())
-        .pipe(debug())
+        .pipe(debug('tigr'))
         .pipe(html2js('templates.js', {
             name: 'templates',
             base: '.',
@@ -129,13 +121,13 @@ gulp.task('compile_templates', function () {
             useStrict: true
         }))
         // .pipe($.concat('templates.js'))
-        .pipe(gulp.dest('./build/tmp'))
-        .pipe($.size({
-            title: 'templates'
-        }))
-        .pipe($.size({
-            title: 'app.js'
-        }));
+        .pipe(gulp.dest('./build/tmp'));
+    // .pipe($.size({
+    //     title: 'templates'
+    // }))
+    // .pipe($.size({
+    //     title: 'app.js'
+    // }));
 });
 
 gulp.task('copy_index', function () {
@@ -166,18 +158,19 @@ gulp.task('build_debug', function (callback) {
         callback);
 });
 
-gulp.task('reload_copy', function (callback) {
-    runSequence('clean',
+gulp.task('reload_sequence', function (callback) {
+    runSequence(
         'compile_templates',
         'bundle_app_debug',
         callback);
 });
 
+
 gulp.task('serve', ['build_debug'], function () {
     browserSync.init({
-        port: 8080,
+        port: 8081,
         ui: {
-            port: config.uiPort
+            port: 8083
         },
         notify: false,
         logPrefix: 'serve',
@@ -187,7 +180,7 @@ gulp.task('serve', ['build_debug'], function () {
         }
     });
 
-    gulp.watch(config.templates_watch, ['reload_copy', reload]);
+    gulp.watch(config.templates, ['custom_sequence', reload]);
     gulp.watch(vendorJs, ['bundle_vendor_js', reload]);
     gulp.watch(config.angularAppFiles_watch, ['bundle_app_debug', reload]);
     gulp.watch(appScssWatch, ['copy_app_scss', reload]);
