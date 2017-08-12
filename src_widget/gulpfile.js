@@ -24,7 +24,7 @@ var clean = require('gulp-clean');
 
 var config = {
     templates: './src/app/**/*.tpl.html',
-    angularAppFiles: ['tmp/templates.js', './src/app/prototypes/**/*.js', './src/app/**/*module.js', './src/app/app.js', './src/app/**/*.js', '!./src/app/**/*spec.js']
+    angularAppFiles: ['./build/tmp/templates.js', './src/app/prototypes/**/*.js', './src/app/**/*module.js', './src/app/app.js', './src/app/**/*.js', '!./src/app/**/*spec.js']
 };
 
 var vendorJs = [
@@ -37,9 +37,9 @@ var vendorJs = [
 ];
 
 var vendorCss = [
-    'src/sass/vendor/angular-material.css',
-    'src/sass/vendor/bootstrap.min.css',
-    'src/sass/vendor/roboto-fonts.css'
+    'src/vendor/css/angular-material.css',
+    'src/vendor/css/bootstrap.min.css',
+    'src/vendor/css/roboto-fonts.css'
 ];
 
 var appScss = [
@@ -51,7 +51,12 @@ var appScssWatch = [
 ];
 
 gulp.task('clean', function () {
-    return del.sync('./build/*');
+    return del.sync('./build');
+});
+
+gulp.task('clean_tmp', function () {
+    del.sync('./build/maps');
+    del.sync('./build/tmp');
 });
 
 gulp.task('bundle_vendor_js', function () {
@@ -113,7 +118,7 @@ gulp.task('bundle_app_debug', function () {
 });
 
 //generate angular templates using html2js
-gulp.task('templates', function () {
+gulp.task('compile_templates', function () {
     return gulp.src(config.templates)
     // .pipe(changed(config.tmp))
         .pipe(plumber())
@@ -125,7 +130,7 @@ gulp.task('templates', function () {
             useStrict: true
         }))
         // .pipe($.concat('templates.js'))
-        .pipe(gulp.dest('./tmp'))
+        .pipe(gulp.dest('./build/tmp'))
         .pipe($.size({
             title: 'templates'
         }))
@@ -139,14 +144,15 @@ gulp.task('copy_index', function () {
         .pipe(gulp.dest('./build/'));
 });
 
-gulp.task('build', function (callback) {
+gulp.task('build_dist', function (callback) {
     runSequence('clean',
         'bundle_vendor_js',
         'bundle_vendor_css',
-        'templates',
+        'compile_templates',
         'bundle_app',
         'copy_app_scss',
         'copy_index',
+        'clean_tmp',
         callback);
 });
 
@@ -154,7 +160,7 @@ gulp.task('build_debug', function (callback) {
     runSequence('clean',
         'bundle_vendor_js',
         'bundle_vendor_css',
-        'templates',
+        'compile_templates',
         'bundle_app_debug',
         'copy_app_scss',
         'copy_index',

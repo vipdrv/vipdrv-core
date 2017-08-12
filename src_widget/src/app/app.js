@@ -1,5 +1,5 @@
 (function () {
-    var app = angular.module('myApp', ["templates", 'ngMaterial', 'ngMessages']);
+    var app = angular.module('myApp', ["templates"]);
 
     /* ========================================= App Data ========================================== */
 
