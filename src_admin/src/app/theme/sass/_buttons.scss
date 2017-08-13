@@ -13,7 +13,7 @@ $hover: 24;
 }
 
 .btn:hover {
-  transform: scale(1.2);
+  transform: scale(1.03);
 }
 
 @mixin styleButton($color, $borderColor) {
@@ -124,11 +124,11 @@ button.btn.btn-inverse {
   }
 }
 
-.btn-group, .btn-toolbar {
-  :hover {
-    transform: none;
-  }
-}
+//.btn-group, .btn-toolbar {
+//  :hover {
+//    transform: none;
+//  }
+//}
 
 @mixin buttonGroupColor($color) {
   border-color: $color - $hover/2;
