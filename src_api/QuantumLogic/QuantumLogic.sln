@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.26430.14
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QuantumLogic.WebApi", "QuantumLogic\QuantumLogic.WebApi.csproj", "{59B8914A-305B-4A57-AF4D-CC5827787AB7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QuantumLogic.Data", "QuantumLogic.Data\QuantumLogic.Data.csproj", "{8FB92484-AD8F-4D20-B124-97B4F8FA5926}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QuantumLogic.Core", "QuantumLogic.Core\QuantumLogic.Core.csproj", "{01A174A0-B971-4109-8BBD-FF175ED11257}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{59B8914A-305B-4A57-AF4D-CC5827787AB7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{59B8914A-305B-4A57-AF4D-CC5827787AB7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{59B8914A-305B-4A57-AF4D-CC5827787AB7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{59B8914A-305B-4A57-AF4D-CC5827787AB7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8FB92484-AD8F-4D20-B124-97B4F8FA5926}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8FB92484-AD8F-4D20-B124-97B4F8FA5926}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8FB92484-AD8F-4D20-B124-97B4F8FA5926}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8FB92484-AD8F-4D20-B124-97B4F8FA5926}.Release|Any CPU.Build.0 = Release|Any CPU
+		{01A174A0-B971-4109-8BBD-FF175ED11257}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{01A174A0-B971-4109-8BBD-FF175ED11257}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{01A174A0-B971-4109-8BBD-FF175ED11257}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{01A174A0-B971-4109-8BBD-FF175ED11257}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
