@@ -37,25 +37,11 @@ namespace QuantumLogic.Core.Domain.Validation
         /// <exception cref="Exceptions.Validation.ValidateEntityRelationsException">Thrown when this entity relations are not valid</exception>
         /// <exception cref="Exceptions.NotSupported.OperationIsNotSupportedException">Thrown when this operation is not supported for current entity</exception>
         void ValidateDelete(TEntity entity);
-        /// <summary>Is used to validate entity for operation "UpdateActivity"</summary>
-        /// <param name="entity">entity to validate</param>
-        /// <exception cref="Exceptions.Validation.ValidationException">Thrown when this entity is not valid</exception>
-        /// <exception cref="Exceptions.Validation.ValidateEntityPropertiesException">Thrown when this entity properties is not valid</exception>
-        /// <exception cref="Exceptions.Validation.ValidateEntityRelationsException">Thrown when this entity relations are not valid</exception>
-        /// <exception cref="Exceptions.NotSupported.OperationIsNotSupportedException">Thrown when this operation is not supported for current entity</exception>
-        void ValidateUpdateActivity(TEntity entity);
-        /// <summary>Is used to validate entity for operation "UpdateOrder"</summary>
-        /// <param name="entity">entity to validate</param>
-        /// <exception cref="Exceptions.Validation.ValidationException">Thrown when this entity is not valid</exception>
-        /// <exception cref="Exceptions.Validation.ValidateEntityPropertiesException">Thrown when this entity properties is not valid</exception>
-        /// <exception cref="Exceptions.Validation.ValidateEntityRelationsException">Thrown when this entity relations are not valid</exception>
-        /// <exception cref="Exceptions.NotSupported.OperationIsNotSupportedException">Thrown when this operation is not supported for current entity</exception>
-        void ValidateUpdateOrder(TEntity entity);
         /// <summary>Is used to check is current entity valid or not</summary>
         /// <param name="entity">entity to validate</param>
         /// <returns>validation result</returns>
         /// <exception cref="Exceptions.NotSupported.OperationIsNotSupportedException">Thrown when this operation is not supported for current entity</exception>
-        bool IsEntityValid(TEntity entity);
+        bool IsValidEntity(TEntity entity);
         /// <summary>Is used to check is current entity valid for operation "Create" or not</summary>
         /// <param name="entity">entity to validate</param>
         /// <returns>validation result</returns>
