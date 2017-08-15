@@ -1,5 +1,6 @@
 ﻿using QuantumLogic.Core.Configurations;
 using QuantumLogic.Data.Configurations;
+using QuantumLogic.WebApi.Configurations.Logging;
 
 namespace QuantumLogic.WebApi.Configurations
 {
@@ -11,5 +12,6 @@ namespace QuantumLogic.WebApi.Configurations
         public WebApiConfiguration WebApi { get; set; }
         public CoreConfiguration Core { get; set; }
         public DataConfiguration Data { get; set; }
+        public LoggingConfiguration Logging { get; set; }
     }
 }

@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Configuration;
+using System.IO;
 
 namespace QuantumLogic.WebApi
 {
@@ -12,14 +9,18 @@ namespace QuantumLogic.WebApi
     {
         public static void Main(string[] args)
         {
-            var host = new WebHostBuilder()
+            IConfigurationRoot hostConfig = new ConfigurationBuilder()
+                .SetBasePath(Directory.GetCurrentDirectory())
+                .AddJsonFile("hosting.json", optional: true)
+                .Build();
+            IWebHost host = new WebHostBuilder()
                 .UseKestrel()
                 .UseContentRoot(Directory.GetCurrentDirectory())
                 .UseIISIntegration()
+                .UseConfiguration(hostConfig)
                 .UseStartup<Startup>()
                 .UseApplicationInsights()
                 .Build();
-
             host.Run();
         }
     }

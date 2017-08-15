@@ -7,8 +7,8 @@ namespace QuantumLogic.Data.EFUnitOfWork
     {
         #region Fields
 
-        private object _syncRoot = new object();
-        private QuantumLogicUnitOfWork _currentUow;
+        private static object _syncRoot = new object();
+        private static QuantumLogicUnitOfWork _currentUow;
 
         #endregion
 
