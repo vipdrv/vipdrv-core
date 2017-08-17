@@ -6,17 +6,12 @@ var reload = browserSync.reload;
 var gulp = require('gulp');
 var $ = require('gulp-load-plugins')();
 var plumber = require('gulp-plumber');
-var gulpCopy = require('gulp-copy');
 var html2js = require('gulp-html2js');
-var changed = require('gulp-changed');
-var util = require('gulp-util');
 var runSequence = require('run-sequence');
 var debug = require('gulp-debug');
 var sass = require('gulp-sass');
-var useref = require('gulp-useref');
 var uglify = require('gulp-uglify');
 var cssnano = require('gulp-cssnano');
-var inject = require('gulp-inject');
 var concat = require('gulp-concat');
 var sourcemaps = require('gulp-sourcemaps');
 var del = require('del');
@@ -24,7 +19,8 @@ var clean = require('gulp-clean');
 
 var config = {
     templates: './src/app/**/*.tpl.html',
-    angularAppFiles: ['tmp/templates.js', './src/app/prototypes/**/*.js', './src/app/**/*module.js', './src/app/app.js', './src/app/**/*.js', '!./src/app/**/*spec.js']
+    angularAppFiles: ['./build/tmp/templates.js', './src/app/prototypes/**/*.js', './src/app/**/*module.js', './src/app/app.js', './src/app/**/*.js', '!./src/app/**/*spec.js'],
+    angularAppFiles_watch: ['./src/app/prototypes/**/*.js', './src/app/**/*module.js', './src/app/app.js', './src/app/**/*.js', '!./src/app/**/*spec.js'],
 };
 
 var vendorJs = [
@@ -32,14 +28,11 @@ var vendorJs = [
     'node_modules/angular-animate/angular-animate.min.js',
     'node_modules/angular-aria/angular-aria.min.js',
     'node_modules/angular-messages/angular-messages.min.js',
-    'node_modules/angular-route/angular-route.min.js',
-    'node_modules/angular-material/angular-material.min.js'
+    'node_modules/angular-route/angular-route.min.js'
 ];
 
 var vendorCss = [
-    'src/sass/vendor/angular-material.css',
-    'src/sass/vendor/bootstrap.min.css',
-    'src/sass/vendor/roboto-fonts.css'
+    'src/vendor/css/bootstrap.min.css',
 ];
 
 var appScss = [
@@ -51,7 +44,12 @@ var appScssWatch = [
 ];
 
 gulp.task('clean', function () {
-    return del.sync('./build/*');
+    return del.sync('./build');
+});
+
+gulp.task('clean_tmp', function () {
+    del.sync('./build/maps');
+    del.sync('./build/tmp');
 });
 
 gulp.task('bundle_vendor_js', function () {
@@ -91,7 +89,6 @@ gulp.task('copy_app_scss', function () {
 gulp.task('bundle_app', function () {
     gulp.src(config.angularAppFiles)
         .pipe(plumber())
-        // .pipe(debug('da-inventory-plugin'))
         .pipe(concat('app.js'))
         .pipe(uglify({mangle: false}))
         .pipe(gulp.dest('./build'))
@@ -108,16 +105,15 @@ gulp.task('bundle_app_debug', function () {
         // .pipe(uglify({mangle: false}))
         .pipe(gulp.dest('./build'))
         .pipe($.size({
-            title: 'da-inventory-plugin app.js'
+            title: 'size of app.js: '
         }));
 });
 
 //generate angular templates using html2js
-gulp.task('templates', function () {
+gulp.task('compile_templates', function () {
     return gulp.src(config.templates)
-    // .pipe(changed(config.tmp))
         .pipe(plumber())
-        .pipe(debug())
+        .pipe(debug('tigr'))
         .pipe(html2js('templates.js', {
             name: 'templates',
             base: '.',
@@ -125,13 +121,13 @@ gulp.task('templates', function () {
             useStrict: true
         }))
         // .pipe($.concat('templates.js'))
-        .pipe(gulp.dest('./tmp'))
-        .pipe($.size({
-            title: 'templates'
-        }))
-        .pipe($.size({
-            title: 'app.js'
-        }));
+        .pipe(gulp.dest('./build/tmp'));
+    // .pipe($.size({
+    //     title: 'templates'
+    // }))
+    // .pipe($.size({
+    //     title: 'app.js'
+    // }));
 });
 
 gulp.task('copy_index', function () {
@@ -139,14 +135,15 @@ gulp.task('copy_index', function () {
         .pipe(gulp.dest('./build/'));
 });
 
-gulp.task('build', function (callback) {
+gulp.task('build_dist', function (callback) {
     runSequence('clean',
         'bundle_vendor_js',
         'bundle_vendor_css',
-        'templates',
+        'compile_templates',
         'bundle_app',
         'copy_app_scss',
         'copy_index',
+        'clean_tmp',
         callback);
 });
 
@@ -154,18 +151,26 @@ gulp.task('build_debug', function (callback) {
     runSequence('clean',
         'bundle_vendor_js',
         'bundle_vendor_css',
-        'templates',
+        'compile_templates',
         'bundle_app_debug',
         'copy_app_scss',
         'copy_index',
         callback);
 });
 
+gulp.task('reload_sequence', function (callback) {
+    runSequence(
+        'compile_templates',
+        'bundle_app_debug',
+        callback);
+});
+
+
 gulp.task('serve', ['build_debug'], function () {
     browserSync.init({
-        port: 8080,
+        port: 8081,
         ui: {
-            port: config.uiPort
+            port: 8083
         },
         notify: false,
         logPrefix: 'serve',
@@ -175,8 +180,8 @@ gulp.task('serve', ['build_debug'], function () {
         }
     });
 
-    gulp.watch(config.templates, ['templates', reload]);
+    gulp.watch(config.templates, ['custom_sequence', reload]);
     gulp.watch(vendorJs, ['bundle_vendor_js', reload]);
-    gulp.watch(config.angularAppFiles, ['bundle_app_debug', reload]);
+    gulp.watch(config.angularAppFiles_watch, ['bundle_app_debug', reload]);
     gulp.watch(appScssWatch, ['copy_app_scss', reload]);
 });
