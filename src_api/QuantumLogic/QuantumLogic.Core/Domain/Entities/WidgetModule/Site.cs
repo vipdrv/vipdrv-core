@@ -13,6 +13,11 @@ namespace QuantumLogic.Core.Domain.Entities.WidgetModule
         public string Contacts { get; set; }
         #endregion
 
+        #region Relation
+        public virtual ICollection<Beverage> Beverages { get; set; }
+        public virtual ICollection<Expert> Experts { get; set; }
+        #endregion
+
         public Site()
         {
         }

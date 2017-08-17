@@ -4,7 +4,7 @@ using System.Text;
 
 namespace QuantumLogic.Core.Domain.Entities.MainModule
 {
-    class User : Entity<int>, IValidable
+    public class User : Entity<int>, IValidable
     {
         #region Fields
         public string Email { get; set; }

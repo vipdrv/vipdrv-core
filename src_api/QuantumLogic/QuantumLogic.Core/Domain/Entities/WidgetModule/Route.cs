@@ -4,7 +4,7 @@ using System.Text;
 
 namespace QuantumLogic.Core.Domain.Entities.WidgetModule
 {
-    class Route : Entity<int>, IValidable
+    public class Route : Entity<int>, IValidable
     {
         #region Fields
         public int SiteId { get; set; }

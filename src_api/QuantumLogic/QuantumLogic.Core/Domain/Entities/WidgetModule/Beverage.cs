@@ -4,7 +4,7 @@ using System.Text;
 
 namespace QuantumLogic.Core.Domain.Entities.WidgetModule
 {
-    class Beverage : Entity<int>, IValidable
+    public class Beverage : Entity<int>, IValidable
     {
         #region Fields
         public int SiteId { get; set; }
@@ -13,6 +13,12 @@ namespace QuantumLogic.Core.Domain.Entities.WidgetModule
         public int Order { get; set; }
         public bool IsActive { get; set; }
         public string PhotoUrl { get; set; }
+        #endregion
+
+        #region Relations
+
+        public virtual Site Site { get; set; }
+
         #endregion
 
         public bool IsValid()
