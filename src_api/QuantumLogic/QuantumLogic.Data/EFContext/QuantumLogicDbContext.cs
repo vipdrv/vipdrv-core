@@ -30,14 +30,19 @@ namespace QuantumLogic.Data.EFContext
         #region DbSets
 
         public virtual DbSet<User> Users { get; set; }
-        public virtual DbSet<Beverage> Beverages { get; set; }
-        public virtual DbSet<Expert> Experts { get; set; }
-        public virtual DbSet<Lead> Leads { get; set; }
-        public virtual DbSet<Route> Routes { get; set; }
-        public virtual DbSet<Site> Sites { get; set; }
-        public virtual DbSet<WidgetTheme> WidgetThemes { get; set; }
+        //public virtual DbSet<Beverage> Beverages { get; set; }
+        //public virtual DbSet<Expert> Experts { get; set; }
+        //public virtual DbSet<Lead> Leads { get; set; }
+        //public virtual DbSet<Route> Routes { get; set; }
+        //public virtual DbSet<Site> Sites { get; set; }
+        //public virtual DbSet<WidgetTheme> WidgetThemes { get; set; }
 
         #endregion
+
+        public QuantumLogicDbContext() : base()
+        {
+
+        }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -49,33 +54,40 @@ namespace QuantumLogic.Data.EFContext
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Site>(entity =>
+            modelBuilder.Entity<User>(entity =>
             {
-                entity.ToTable("Site");
+                entity.ToTable("User");
                 entity.HasKey(c => c.Id);
             });
 
-            modelBuilder.Entity<Beverage>(entity =>
-            {
-                entity.ToTable("Beverage");
-                entity.HasKey(c => c.Id);
-                entity
-                    .HasOne(e => e.Site)
-                    .WithMany(b => b.Beverages)
-                    .HasForeignKey(r => r.SiteId)
-                    .IsRequired(false);
-            });
 
-            modelBuilder.Entity<Expert>(entity =>
-            {
-                entity.ToTable("Expert");
-                entity.HasKey(c => c.Id);
-                entity
-                    .HasOne(e => e.Site)
-                    .WithMany(b => b.Experts)
-                    .HasForeignKey(r => r.SiteId)
-                    .IsRequired(false);
-            });
+            //modelBuilder.Entity<Site>(entity =>
+            //{
+            //    entity.ToTable("Site");
+            //    entity.HasKey(c => c.Id);
+            //});
+
+            //modelBuilder.Entity<Beverage>(entity =>
+            //{
+            //    entity.ToTable("Beverage");
+            //    entity.HasKey(c => c.Id);
+            //    entity
+            //        .HasOne(e => e.Site)
+            //        .WithMany(b => b.Beverages)
+            //        .HasForeignKey(r => r.SiteId)
+            //        .IsRequired(false);
+            //});
+
+            //modelBuilder.Entity<Expert>(entity =>
+            //{
+            //    entity.ToTable("Expert");
+            //    entity.HasKey(c => c.Id);
+            //    entity
+            //        .HasOne(e => e.Site)
+            //        .WithMany(b => b.Experts)
+            //        .HasForeignKey(r => r.SiteId)
+            //        .IsRequired(false);
+            //});
         }
     }
 }
