@@ -16,9 +16,7 @@ namespace QuantumLogic.Core.Domain.Entities.WidgetModule
         #endregion
 
         #region Relations
-
         public virtual Site Site { get; set; }
-
         #endregion
 
         public bool IsValid()

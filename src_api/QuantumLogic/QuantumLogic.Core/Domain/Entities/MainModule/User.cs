@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using QuantumLogic.Core.Domain.Entities.WidgetModule;
 
 namespace QuantumLogic.Core.Domain.Entities.MainModule
 {
@@ -10,6 +11,10 @@ namespace QuantumLogic.Core.Domain.Entities.MainModule
         public string Email { get; set; }
         public string Password { get; set; }
         public int MaxSitesCount { get; set; }
+        #endregion
+
+        #region relations
+        public virtual ICollection<Site> Sites { get; set; }
         #endregion
 
         public bool IsValid()

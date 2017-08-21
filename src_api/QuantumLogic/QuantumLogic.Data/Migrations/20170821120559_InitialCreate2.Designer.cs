@@ -8,9 +8,10 @@ using QuantumLogic.Data.EFContext;
 namespace QuantumLogic.Data.Migrations
 {
     [DbContext(typeof(QuantumLogicDbContext))]
-    partial class QuantumLogicDbContextModelSnapshot : ModelSnapshot
+    [Migration("20170821120559_InitialCreate2")]
+    partial class InitialCreate2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "1.1.2")
@@ -155,8 +156,6 @@ namespace QuantumLogic.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("UserId");
-
                     b.ToTable("Site");
                 });
 
@@ -208,14 +207,6 @@ namespace QuantumLogic.Data.Migrations
                     b.HasOne("QuantumLogic.Core.Domain.Entities.WidgetModule.Site", "Site")
                         .WithMany("Routes")
                         .HasForeignKey("SiteId")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("QuantumLogic.Core.Domain.Entities.WidgetModule.Site", b =>
-                {
-                    b.HasOne("QuantumLogic.Core.Domain.Entities.MainModule.User", "User")
-                        .WithMany("Sites")
-                        .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 

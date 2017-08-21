@@ -15,6 +15,10 @@ namespace QuantumLogic.Core.Domain.Entities.WidgetModule
         public string PhotoUrl { get; set; }
         #endregion
 
+        #region relations
+        public virtual Site Site { get; set; }
+        #endregion
+
         public bool IsValid()
         {
             throw new NotImplementedException();

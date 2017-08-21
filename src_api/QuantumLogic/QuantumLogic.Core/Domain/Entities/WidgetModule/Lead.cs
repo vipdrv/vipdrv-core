@@ -17,6 +17,10 @@ namespace QuantumLogic.Core.Domain.Entities.WidgetModule
         public string UserEmail { get; set; }
         #endregion
 
+        #region relations
+        public virtual Site Site { get; set; }
+        #endregion
+
         public Lead()
         {
 
