@@ -1,11 +1,15 @@
 <div class="container-fluid">
     <td-navigation ng-if="!$ctrl.globalState.isFormCompleted"></td-navigation>
-</div>
-<div class="container-fluid">
-    <div class="row">
-        <td-wizard class="col td-wizard" ng-if="!$ctrl.globalState.isFormCompleted"></td-wizard>
-        <td-sidebar user-data="$ctrl.userData" class="col-3 td-car-details hidden-md-down"
-                    ng-if="!$ctrl.globalState.isFormCompleted" user-data="$ctrl.userData"></td-sidebar>
+
+    <div class="row" ng-if="!$ctrl.globalState.isFormCompleted">
+        <td-wizard class="col td-wizard"></td-wizard>
+        <td-sidebar class="col-3 td-car-details hidden-md-down"
+                    user-data="$ctrl.userData">
+        </td-sidebar>
     </div>
-    <td-complete-step ng-if="$ctrl.globalState.isFormCompleted"></td-complete-step>
+
+    <div class="row">
+        <td-complete-step ng-if="$ctrl.globalState.isFormCompleted">
+        </td-complete-step>
+    </div>
 </div>

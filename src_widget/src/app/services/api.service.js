@@ -15,11 +15,9 @@
                 var url = apiBaseUrl + '/sites/' + siteId + '/open-hours';
 
                 $http.get(url).then(function (response) {
-                    console.log('open-hours loaded : ' + response);
                     var json = response.data;
                     deferred.resolve(json);
                 }, function (err) {
-                    console.log('open-hours failed to load : ' + response);
                     deferred.reject(err);
                 });
 
@@ -31,11 +29,9 @@
                 var url = apiBaseUrl + '/sites/' + siteId + '/routes';
 
                 $http.get(url).then(function (response) {
-                    console.log('routes loaded : ' + response);
                     var json = response.data;
                     deferred.resolve(json);
                 }, function (err) {
-                    console.log('routes failed to load : ' + response);
                     deferred.reject(err);
                 });
 
@@ -47,11 +43,10 @@
                 var url = apiBaseUrl + '/sites/' + siteId + '/beverages';
 
                 $http.get(url).then(function (response) {
-                    console.log('beverages loaded : ' + response);
                     var json = response.data;
                     deferred.resolve(json);
                 }, function (err) {
-                    console.log('beverages failed to load : ' + response);
+
                     deferred.reject(err);
                 });
 
@@ -63,11 +58,9 @@
                 var url = apiBaseUrl + '/sites/' + siteId + '/experts';
 
                 $http.get(url).then(function (response) {
-                    console.log('experts loaded : ' + response);
                     var json = response.data;
                     deferred.resolve(json);
                 }, function (err) {
-                    console.log('experts failed to load : ' + response);
                     deferred.reject(err);
                 });
 
@@ -76,7 +69,7 @@
 
             function _submitForm(formData) {
                 var deferred = $q.defer();
-                var url = apiBaseUrl + '/sites/' + siteId +  '/SubmitForm';
+                var url = apiBaseUrl + '/sites/' + siteId + '/SubmitForm';
 
                 $http.post(url, formData).then(function (response) {
                     var json = response.data;

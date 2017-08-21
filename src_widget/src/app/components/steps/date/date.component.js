@@ -8,11 +8,11 @@
                 var max = new Date();
                 max.setDate(now.getDate() + 30);
                 tomorrow.setDate(now.getDate() + 1);
-                self.minDate =  now;
-                self.maxDate =  max;
+                self.minDate = now;
+                self.maxDate = max;
                 self.myDate = tomorrow;
 
-                self.dateFilter =  _dateFilter;
+                self.dateFilter = _dateFilter;
 
                 this.timeIntervals = [];
 
@@ -20,8 +20,6 @@
                 this.isSatisfy = null;
 
                 this.$onInit = function () {
-                    console.log('on init td-tdDate');
-                    console.log('myDate', self.myDate);
                     if (self.userData.calendar.date === null || self.userData.calendar.time === null) {
                         this.isSatisfy = false;
                     }
@@ -30,17 +28,14 @@
                 };
 
                 function openHoursLoaded(json) {
-                    console.log(json);
                     self.openHours = json.open_hours.days;
                     // find nearest available date
-                    while (!_dateFilter(self.myDate) && self.myDate < self.maxDate){
+                    while (!_dateFilter(self.myDate) && self.myDate < self.maxDate) {
                         self.myDate.setDate(self.myDate.getDate() + 1);
                     }
 
                     self.dateChanged(self.myDate);
                     self.userData.calendar.date = formatDate(self.myDate);
-
-
                 }
 
 
@@ -55,15 +50,16 @@
                     return isOpen;
                 }
 
-                 function split(str) {
-                     var split = str.split(':');
+                function split(str) {
+                    var split = str.split(':');
                     var x = {
                         hours: split[0],
                         minutes: split[1]
                     };
                     return x;
                 }
-                 function getIntervalWithinDay(myDate) {
+
+                function getIntervalWithinDay(myDate) {
                     var timeintervals = self.openHours[myDate.getDay()];
 
                     var x = split(timeintervals.from);
@@ -79,7 +75,7 @@
                         to: to
                     };
 
-                     // console.log(intervalWithinDay);
+                    // console.log(intervalWithinDay);
 
                     return intervalWithinDay;
                 }
@@ -87,7 +83,7 @@
                 function updateTimeOptions(indayInterval) {
                     var options = [];
                     var x = new Date(indayInterval.from.valueOf());
-                    while (x  < indayInterval.to) {
+                    while (x < indayInterval.to) {
                         var minutes = x.getMinutes();
                         if (minutes < 10) {
                             minutes = '0' + minutes;
@@ -108,7 +104,7 @@
                     self.userData.calendar.date = formatDate(self.myDate);
 
                     var myDate = self.myDate;
-                    var indayInterval =  getIntervalWithinDay(myDate);
+                    var indayInterval = getIntervalWithinDay(myDate);
                     updateTimeOptions(indayInterval);
 
                     self.userData.calendar.time = null

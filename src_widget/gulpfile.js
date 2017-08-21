@@ -16,6 +16,7 @@ var concat = require('gulp-concat');
 var sourcemaps = require('gulp-sourcemaps');
 var del = require('del');
 var clean = require('gulp-clean');
+var urlAdjuster = require('gulp-css-url-adjuster');
 
 var config = {
     templates: './src/app/**/*.tpl.html',
@@ -24,15 +25,25 @@ var config = {
 };
 
 var vendorJs = [
+    'node_modules/jquery/dist/jquery.min.js',
+    'node_modules/popper.js/dist/umd/popper.min.js',
+
     'node_modules/angular/angular.min.js',
     'node_modules/angular-animate/angular-animate.min.js',
     'node_modules/angular-aria/angular-aria.min.js',
     'node_modules/angular-messages/angular-messages.min.js',
-    'node_modules/angular-route/angular-route.min.js'
+    'node_modules/bootstrap/dist/js/bootstrap.min.js',
+    'node_modules/ngcomponentrouter/angular_1_router.js'
 ];
 
 var vendorCss = [
-    'src/vendor/css/bootstrap.min.css',
+    'node_modules/bootstrap/dist/css/bootstrap.min.css',
+    'node_modules/angular-material/angular-material.min.css',
+    'node_modules/font-awesome/css/font-awesome.min.css'
+];
+
+var vendorFonts = [
+    'node_modules/font-awesome/fonts/*'
 ];
 
 var appScss = [
@@ -40,7 +51,7 @@ var appScss = [
 ];
 
 var appScssWatch = [
-    './src/sass/*.scss'
+    './src/sass/**/*.scss'
 ];
 
 gulp.task('clean', function () {
@@ -67,7 +78,9 @@ gulp.task('bundle_vendor_js', function () {
 gulp.task('bundle_vendor_css', function () {
     gulp.src(vendorCss)
         .pipe(concat('vendor.css'))
-        .pipe(cssnano())
+        .pipe(urlAdjuster({
+            replace: ['../fonts', './fonts'],
+        }))
         .pipe(gulp.dest('./build'));
 });
 
@@ -85,6 +98,12 @@ gulp.task('copy_app_scss', function () {
         .pipe(sourcemaps.write('./maps'))
         .pipe(gulp.dest('./build'));
 });
+
+gulp.task('copy_app_fonts', function () {
+    gulp.src(vendorFonts)
+        .pipe(gulp.dest('./build/fonts'));
+});
+
 
 gulp.task('bundle_app', function () {
     gulp.src(config.angularAppFiles)
@@ -139,11 +158,12 @@ gulp.task('build_dist', function (callback) {
     runSequence('clean',
         'bundle_vendor_js',
         'bundle_vendor_css',
+        'copy_app_fonts',
         'compile_templates',
         'bundle_app',
         'copy_app_scss',
         'copy_index',
-        'clean_tmp',
+        // 'clean_tmp',
         callback);
 });
 
@@ -151,10 +171,12 @@ gulp.task('build_debug', function (callback) {
     runSequence('clean',
         'bundle_vendor_js',
         'bundle_vendor_css',
+        'copy_app_fonts',
         'compile_templates',
         'bundle_app_debug',
         'copy_app_scss',
         'copy_index',
+        // 'clean_tmp',
         callback);
 });
 
@@ -180,7 +202,7 @@ gulp.task('serve', ['build_debug'], function () {
         }
     });
 
-    gulp.watch(config.templates, ['custom_sequence', reload]);
+    gulp.watch(config.templates, ['reload_sequence', reload]);
     gulp.watch(vendorJs, ['bundle_vendor_js', reload]);
     gulp.watch(config.angularAppFiles_watch, ['bundle_app_debug', reload]);
     gulp.watch(appScssWatch, ['copy_app_scss', reload]);

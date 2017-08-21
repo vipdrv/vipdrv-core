@@ -8,12 +8,12 @@
 
                 this.switchTab = function (tabId) {
                     if (self.widgetTabs[tabId].isActive) {
-                        console.log('Tab is already active');
+                        // console.log('Tab is already active');
                         return;
                     }
 
                     if (self.widgetTabs[tabId].isLocked) {
-                        console.log('Tab is locked');
+                        // console.log('Tab is locked');
                         return;
                     }
 

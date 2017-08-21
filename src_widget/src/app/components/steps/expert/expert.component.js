@@ -7,13 +7,11 @@
                 this.isSatisfy = null;
 
                 function didLoadExperts(json) {
-                        console.log(json);
-                        //todo
-                        self.experts = json.experts.splice(0);
+                    self.experts = json.experts.splice(0);
                 }
 
                 this.$onInit = function () {
-                    console.log('on init td-expert');
+
                     if (self.userData.expert.title === null) {
                         this.isSatisfy = false;
                     }
