@@ -1,15 +1,26 @@
 <div class="container-fluid">
-    <td-navigation ng-if="!$ctrl.globalState.isFormCompleted"></td-navigation>
 
-    <div class="row" ng-if="!$ctrl.globalState.isFormCompleted">
-        <td-wizard class="col td-wizard"></td-wizard>
-        <td-sidebar class="col-3 td-car-details hidden-md-down"
-                    user-data="$ctrl.userData">
+    <div class="row td-tabs">
+        <td-tab class="col td-nav__tab"
+                ng-repeat="tab in widgetTabs"
+                tab-id="tab.id"
+                title="tab.title"
+                tab-data="widgetTabs[tab.id]"
+                switch-tab="switchTab(tab.id)">
+        </td-tab>
+    </div>
+
+
+    <div class="row" ng-if="!globalState.isFormCompleted">
+
+        <td-wizard-content class="col td-wizard"></td-wizard-content>
+        <td-sidebar class="col-3 td-car-details d-none d-md-block"
+                    user-data="userData">
         </td-sidebar>
     </div>
 
-    <div class="row">
-        <td-complete-step ng-if="$ctrl.globalState.isFormCompleted">
-        </td-complete-step>
-    </div>
+
+    <td-complete-step ng-if="$ctrl.globalState.isFormCompleted">
+    </td-complete-step>
+
 </div>

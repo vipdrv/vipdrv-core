@@ -1,6 +1,6 @@
 (function () {
     angular.module('myApp')
-        .component('tdWizard', {
+        .component('tdWizardContent', {
             controller: function (api, widgetTabs, userData, globalState) {
                 var self = this;
 
@@ -59,7 +59,7 @@
                 };
 
             },
-            templateUrl: 'src/app/components/wizard/wizard.tpl.html',
+            templateUrl: 'src/app/components/wizard/wizard-content.tpl.html',
             bindings: {}
         });
 })();

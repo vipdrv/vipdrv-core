@@ -38,8 +38,8 @@ var vendorJs = [
 
 var vendorCss = [
     'node_modules/bootstrap/dist/css/bootstrap.min.css',
-    'node_modules/angular-material/angular-material.min.css',
-    'node_modules/font-awesome/css/font-awesome.min.css'
+    // 'node_modules/angular-material/angular-material.min.css',
+    // 'node_modules/font-awesome/css/font-awesome.min.css'
 ];
 
 var vendorFonts = [
@@ -100,31 +100,30 @@ gulp.task('copy_app_scss', function () {
 });
 
 gulp.task('copy_app_fonts', function () {
-    gulp.src(vendorFonts)
+    return gulp.src(vendorFonts)
         .pipe(gulp.dest('./build/fonts'));
 });
 
 
 gulp.task('bundle_app', function () {
-    gulp.src(config.angularAppFiles)
+    return gulp.src(config.angularAppFiles)
         .pipe(plumber())
         .pipe(concat('app.js'))
         .pipe(uglify({mangle: false}))
         .pipe(gulp.dest('./build'))
         .pipe($.size({
-            title: 'da-inventory-plugin app.js'
+            title: 'size of app.js:'
         }));
 });
 
 gulp.task('bundle_app_debug', function () {
-    gulp.src(config.angularAppFiles)
+    return gulp.src(config.angularAppFiles)
         .pipe(plumber())
-        // .pipe(debug('da-inventory-plugin'))
         .pipe(concat('app.js'))
         // .pipe(uglify({mangle: false}))
         .pipe(gulp.dest('./build'))
         .pipe($.size({
-            title: 'size of app.js: '
+            title: 'size of app.js:'
         }));
 });
 
@@ -132,25 +131,21 @@ gulp.task('bundle_app_debug', function () {
 gulp.task('compile_templates', function () {
     return gulp.src(config.templates)
         .pipe(plumber())
-        .pipe(debug('tigr'))
+        // .pipe(debug('templates.js'))
         .pipe(html2js('templates.js', {
             name: 'templates',
             base: '.',
             adapter: 'angular',
             useStrict: true
         }))
-        // .pipe($.concat('templates.js'))
-        .pipe(gulp.dest('./build/tmp'));
-    // .pipe($.size({
-    //     title: 'templates'
-    // }))
-    // .pipe($.size({
-    //     title: 'app.js'
-    // }));
+        .pipe(gulp.dest('./build/tmp'))
+        .pipe($.size({
+            title: 'templates size:'
+        }));
 });
 
 gulp.task('copy_index', function () {
-    gulp.src('./src/app/index.html')
+    return gulp.src('./src/app/index.html')
         .pipe(gulp.dest('./build/'));
 });
 

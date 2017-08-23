@@ -1,6 +1,6 @@
 (function () {
     angular.module('myApp')
-        .component('tdTab', {
+        .component('tdWizardStepButton', {
             controller: function ($scope) {
                 var self = this;
 
@@ -12,7 +12,7 @@
                     self.prevStep({tabId: this.tabId});
                 };
             },
-            templateUrl: 'src/app/components/shared/nav-button/nav-button.tpl.html',
+            templateUrl: 'src/app/components/shared/wizard-step-button/wizard-step-button.tpl.html',
             bindings: {
                 tabId: '<',
                 nextStep: '&',

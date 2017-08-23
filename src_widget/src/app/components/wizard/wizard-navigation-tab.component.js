@@ -1,6 +1,6 @@
 (function () {
     angular.module('myApp')
-        .component('tdTab', {
+        .component('tdWizardNavigationTab', {
             controller: function () {
                 var self = this;
 

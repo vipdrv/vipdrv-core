@@ -11,14 +11,14 @@
         time: {
             id: 'time',
             title: 'Select date & time',
-            isActive: true,
+            isActive: false,
             isLocked: false,
-            isCompleted: false
+            isCompleted: true
         },
         expert: {
             id: 'expert',
             title: 'Select Expert',
-            isActive: false,
+            isActive: true,
             isLocked: true,
             isCompleted: false
         },
