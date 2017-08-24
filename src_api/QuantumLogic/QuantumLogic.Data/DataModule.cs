@@ -27,7 +27,7 @@ namespace QuantumLogic.Data
 
             #region Repositories
 
-            services.Add(ServiceDescriptor.Transient(typeof(IRepository<,>), typeof(EFRepository<,>)));
+            services.Add(ServiceDescriptor.Transient(typeof(IQLRepository<,>), typeof(EFRepository<,>)));
             //services.AddTransient<IRepository<Entity, long>, EntityRepository>();
 
             #endregion

@@ -54,9 +54,13 @@ namespace QuantumLogic.Data.EFContext
             lock (_syncRoot)
             {
                 if (_context != null)
+                {
                     throw new Exception("With the current flow is already associated logical data context.");
+                }
                 else
+                {
                     _context = CreateContext();
+                }
             }
         }
 
