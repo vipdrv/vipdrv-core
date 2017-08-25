@@ -1,9 +1,13 @@
-<div class="td-tab-header"
-     ng-class="{'td-tab-header-completed': $ctrl.tabData.isCompleted, 'td-tab-header-active' : $ctrl.tabData.isActive, 'td-tab-header-locked' : $ctrl.tabData.isLocked}"
-     ng-click="$ctrl.switchTabInner()">
-     <span class="td-tab-header__title">{{$ctrl.title}}</span>
-     <span class="td-tab-header__title">1</span>
+<div class="wizard-navigation-tab bg-primary"
+     ng-class="{'wizard-navigation-tab--completed': $ctrl.tabData.isCompleted, 'wizard-navigation-tab--active' : $ctrl.tabData.isActive, 'wizard-navigation-tab--locked' : $ctrl.tabData.isLocked}"
+     ng-click="switchTabInner()">
+    <div class="wizard-navigation-tab__content">
+        <div class="wizard-navigation-tab__text text-light d-none d-md-block">{{$ctrl.title}}</div>
+        <div class="wizard-navigation-tab__icon text-light d-sm-block d-md-none d-lg-none">A</div>
+        <!--<div class="wizard-navigation-tab__icon text-light">123</div>-->
+    </div>
 </div>
+
 <!--{{$ctrl.tabData.isActive}}<br>-->
 <!--{{$ctrl.tabData.isLocked}}<br>-->
 <!--{{$ctrl.tabData.isCompleted}}<br>-->

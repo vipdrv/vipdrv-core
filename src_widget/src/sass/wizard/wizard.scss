@@ -1,0 +1,55 @@
+/* =========================================== wizard-navigation-tab ============================================ */
+
+.wizard-navigation-tab {
+  cursor: pointer;
+}
+
+.wizard-navigation-tab__content {
+  height: 50px;
+}
+
+.wizard-navigation-tab__text {
+  text-align: center;
+  line-height: 45px;
+}
+
+.wizard-navigation-tab__icon {
+  text-align: center;
+  line-height: 45px;
+}
+
+.wizard-navigation-tab--active {
+  box-shadow: 0 5px 0 transparentize($theme-sub-color, 0.1);
+  font-weight: 400;
+}
+
+.wizard-navigation-tab--completed {
+  box-shadow: 0 5px 0 $theme-sub-color;
+}
+
+.wizard-navigation-tab--locked {
+  cursor: default;
+}
+
+/* =========================================== wizard-tab-content ============================================ */
+
+
+.tab-title,
+.user-details__heading {
+  color: #6b6b6b;
+  font-size: 28px;
+  font-weight: 100;
+}
+
+.tab-sub-title,
+.user-details__subheading {
+  color: #999999;
+  font-size: 14px;
+  margin: 2px 0px 0px 0px;
+  display: table;
+}
+
+.user-details__email-input-container {
+  margin: 0 auto;
+  margin-top: 24px;
+}

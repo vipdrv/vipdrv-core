@@ -1,19 +1,18 @@
 <div class="container-fluid">
-
-    <div class="row td-tabs">
-        <td-tab class="col td-nav__tab"
+    <div class="row">
+        <td-wizard-navigation-tab
+                class="col no-padding"
                 ng-repeat="tab in widgetTabs"
                 tab-id="tab.id"
                 title="tab.title"
                 tab-data="widgetTabs[tab.id]"
                 switch-tab="switchTab(tab.id)">
-        </td-tab>
+        </td-wizard-navigation-tab>
     </div>
-
 
     <div class="row" ng-if="!globalState.isFormCompleted">
 
-        <td-wizard-content class="col td-wizard"></td-wizard-content>
+        <td-wizard-tab-content class="col td-wizard"></td-wizard-tab-content>
         <td-sidebar class="col-3 td-car-details d-none d-md-block"
                     user-data="userData">
         </td-sidebar>
