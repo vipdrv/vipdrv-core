@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using QuantumLogic.Core.Domain.Entities;
 using QuantumLogic.Core.Domain.Repositories;
+using QuantumLogic.Core.Exceptions.NotFound;
 using QuantumLogic.Data.EFContext;
 using System;
 using System.Collections.Generic;
@@ -10,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace QuantumLogic.Data.Repositories
 {
-    public class EFRepository<TEntity, TPrimaryKey> : IRepository<TEntity, TPrimaryKey>
+    public class EFRepository<TEntity, TPrimaryKey> : IQLRepository<TEntity, TPrimaryKey>
         where TEntity : class, IEntity<TPrimaryKey>
     {
         #region Injected dependencies
@@ -43,11 +44,26 @@ namespace QuantumLogic.Data.Repositories
 
         #endregion
 
+        public virtual async Task<int> GetTotalCountAsync(Func<IQueryable<TEntity>, IQueryable<TEntity>> queryBuilder)
+        {
+            bool createdNew;
+            DbSet<TEntity> set = DbContextManager.BuildOrCurrentContext(out createdNew).Set<TEntity>();
+            IQueryable<TEntity> query = OnSystemFilters ? await ApplySystemFilters(queryBuilder(set)) : queryBuilder(set);
+            int totalCount = query.Count();
+            if (createdNew)
+            {
+                DbContextManager.DisposeContext();
+            }
+            return totalCount;
+        }
         public virtual async Task<IList<TEntity>> GetAllAsync(Func<IQueryable<TEntity>, IQueryable<TEntity>> queryBuilder, params Expression<Func<TEntity, object>>[] includes)
         {
             bool createdNew;
             DbSet<TEntity> set = DbContextManager.BuildOrCurrentContext(out createdNew).Set<TEntity>();
-            IList<TEntity> entities = await queryBuilder(ApplyIncludes(set, includes)).ToListAsync();
+            IQueryable<TEntity> query = OnSystemFilters ? 
+                await ApplySystemFilters(queryBuilder(ApplyIncludes(set, includes))) :
+                queryBuilder(ApplyIncludes(set, includes));
+            IList<TEntity> entities = await query.ToListAsync();
             if (createdNew)
             {
                 DbContextManager.DisposeContext();
@@ -106,7 +122,7 @@ namespace QuantumLogic.Data.Repositories
                 TEntity entity = await temp.FirstOrDefaultAsync();
                 if (entity == null)
                 {
-                    throw new Exception($"Entity {typeof(TEntity).Name} with predicate {filter.ToString()} not found.");
+                    throw new EntityNotFoundException($"Entity {typeof(TEntity).Name} with predicate {filter.ToString()} not found.");
                 }
                 return entity;
             }
@@ -134,11 +150,11 @@ namespace QuantumLogic.Data.Repositories
                 }
                 catch (Exception ex)
                 {
-                    throw new Exception($"Entity {typeof(TEntity).Name} with predicate {filter.ToString()} is not unique.", ex);
+                    throw new EntityNotFoundException($"Entity {typeof(TEntity).Name} with predicate {filter.ToString()} is not unique.", ex);
                 }
                 if (entity == null)
                 {
-                    throw new Exception($"Entity {typeof(TEntity).Name} with predicate {filter.ToString()} not found.");
+                    throw new EntityNotFoundException($"Entity {typeof(TEntity).Name} with predicate {filter.ToString()} not found.");
                 }
                 return entity;
             }
@@ -157,13 +173,12 @@ namespace QuantumLogic.Data.Repositories
             {
                 DbSet<TEntity> set = DbContextManager.BuildOrCurrentContext(out createdNew).Set<TEntity>();
                 IQueryable<TEntity> temp = OnSystemFilters ?
-                    await ApplySystemFilters(Queryable.Where(ApplyIncludes(set, includes),
-                        CreateEqualityExpressionForId(id))) :
+                    await ApplySystemFilters(Queryable.Where(ApplyIncludes(set, includes), CreateEqualityExpressionForId(id))) :
                     Queryable.Where(ApplyIncludes(set, includes), CreateEqualityExpressionForId(id));
                 TEntity entity = await temp.FirstOrDefaultAsync();
                 if (entity == null)
                 {
-                    throw new Exception($"Entity {typeof(TEntity).Name} with id {id} not found.");
+                    throw new EntityNotFoundException($"Entity {typeof(TEntity).Name} with id {id} not found.");
                 }
                 return entity;
             }
@@ -180,6 +195,7 @@ namespace QuantumLogic.Data.Repositories
             bool createdNew = false;
             try
             {
+
                 DbContextManager.BuildOrCurrentContext(out createdNew).Add(entity);
             }
             finally
@@ -228,11 +244,10 @@ namespace QuantumLogic.Data.Repositories
 
         protected static Expression<Func<TEntity, bool>> CreateEqualityExpressionForId(TPrimaryKey id)
         {
-            var lambdaParam = Expression.Parameter(typeof(TEntity));
-            var lambdaBody = Expression.Equal(
+            ParameterExpression lambdaParam = Expression.Parameter(typeof(TEntity));
+            BinaryExpression lambdaBody = Expression.Equal(
                 Expression.PropertyOrField(lambdaParam, "Id"),
-                Expression.Constant(id, typeof(TPrimaryKey))
-                );
+                Expression.Constant(id, typeof(TPrimaryKey)));
             return Expression.Lambda<Func<TEntity, bool>>(lambdaBody, lambdaParam);
         }
 
