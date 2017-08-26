@@ -50,6 +50,10 @@ var appScss = [
     './src/sass/app.scss'
 ];
 
+var appImages = [
+    './src/img/*'
+];
+
 var appScssWatch = [
     './src/sass/**/*.scss'
 ];
@@ -104,6 +108,10 @@ gulp.task('copy_app_fonts', function () {
         .pipe(gulp.dest('./build/fonts'));
 });
 
+gulp.task('copy_app_images', function () {
+    return gulp.src(appImages)
+        .pipe(gulp.dest('./build/img'));
+});
 
 gulp.task('bundle_app', function () {
     return gulp.src(config.angularAppFiles)
@@ -157,6 +165,7 @@ gulp.task('build_dist', function (callback) {
         'compile_templates',
         'bundle_app',
         'copy_app_scss',
+        'copy_app_images',
         'copy_index',
         // 'clean_tmp',
         callback);
@@ -170,6 +179,7 @@ gulp.task('build_debug', function (callback) {
         'compile_templates',
         'bundle_app_debug',
         'copy_app_scss',
+        'copy_app_images',
         'copy_index',
         // 'clean_tmp',
         callback);

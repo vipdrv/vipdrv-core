@@ -1,12 +1,13 @@
 (function () {
     angular.module('myApp')
         .component('tdExpert', {
-            controller: function (api) {
+            controller: function ($scope, api) {
                 var self = this;
                 var api = api;
                 this.isSatisfy = null;
 
                 function didLoadExperts(json) {
+                    console.log(json);
                     self.experts = json.experts.splice(0);
                 }
 
@@ -16,7 +17,9 @@
                         this.isSatisfy = false;
                     }
 
-                    api.loadExperts().then(didLoadExperts)
+                    console.log('123');
+
+                    // api.loadExperts().then(didLoadExperts)
                 };
 
                 var dummyExperts = [{
@@ -37,7 +40,7 @@
                     description: 'Rhoda has a bubbly personality to make any test drive a not to be missed experience.'
                 }];
 
-                this.experts = null;
+                $scope.experts = dummyExperts;
 
                 this.expertChanged = function (expertTitle) {
                     self.userData.expert.title = expertTitle;

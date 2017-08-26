@@ -1,12 +1,12 @@
-<div class="row user-details">
+<div class="row">
     <div class="col-12">
-        <div class="user-details__heading">Select an expert</div>
-        <div class="user-details__subheading">He or she will be there to assist you on the day of your test drive.</div>
+        <h2 class="wizard-tab-content__title">Select an expert</h2>
+        <p>He or she will be there to assist you on the day of your test drive.</p>
     </div>
 </div>
-<div class="row td-card-container">
-    <td-card class="col-md-6 col-sm-12 td-card-root"
-             ng-repeat="expert in $ctrl.experts"
+<div class="row pr-3">
+    <td-card class="col-md-6 col-sm-12 p-0 pt-3 pl-3"
+             ng-repeat="expert in experts"
              card-image="expert.photo_url"
              card-title="expert.title"
              card-desc="expert.description"
@@ -14,11 +14,5 @@
              ng-click="$ctrl.expertChanged(expert.title)">
     </td-card>
 </div>
-
+<p></p>
 <td-wizard-step-button></td-wizard-step-button>
-
-<!--<div class="row">-->
-    <!--<div class="col-12">-->
-        <!--<div class="td-next-step-btn" ng-click="$ctrl.completeStepInner()">Next step</div>-->
-    <!--</div>-->
-<!--</div>-->

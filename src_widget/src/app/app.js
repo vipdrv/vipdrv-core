@@ -18,14 +18,14 @@
         expert: {
             id: 'expert',
             title: 'Select Expert',
-            isActive: true,
-            isLocked: true,
+            isActive: false,
+            isLocked: false,
             isCompleted: false
         },
         beverage: {
             id: 'beverage',
             title: 'Select Beverage',
-            isActive: false,
+            isActive: true,
             isLocked: true,
             isCompleted: false
         },
