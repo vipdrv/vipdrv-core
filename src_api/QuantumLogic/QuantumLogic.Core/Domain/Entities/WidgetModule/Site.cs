@@ -71,7 +71,6 @@ namespace QuantumLogic.Core.Domain.Entities.WidgetModule
 
         public void UpdateFrom(Site actualEntity)
         {
-            Id = actualEntity.Id;
             UserId = actualEntity.UserId;
             BeautyId = actualEntity.BeautyId;
             Name = actualEntity.Name;
