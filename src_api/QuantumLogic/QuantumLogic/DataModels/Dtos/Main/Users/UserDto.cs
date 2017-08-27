@@ -1,7 +1,7 @@
 ﻿using QuantumLogic.Core.Constants;
 using QuantumLogic.Core.Domain.Entities.MainModule;
 
-namespace QuantumLogic.WebApi.DataModels.Dtos.Main
+namespace QuantumLogic.WebApi.DataModels.Dtos.Main.Users
 {
     public class UserDto : EntityDto<User, int>
     {

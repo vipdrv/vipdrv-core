@@ -13,6 +13,5 @@ namespace QuantumLogic.WebApi.Policy.Main
         { }
 
         #endregion
-
     }
 }

@@ -1,21 +1,20 @@
-﻿using QuantumLogic.Core.Domain.Entities.MainModule;
+﻿using QuantumLogic.Core.Domain.Context;
+using QuantumLogic.Core.Domain.Entities.MainModule;
+using QuantumLogic.Core.Domain.Policy.Main;
+using QuantumLogic.Core.Domain.Repositories.Main;
+using QuantumLogic.Core.Domain.Validation.Main;
 using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using QuantumLogic.Core.Domain.Context;
-using QuantumLogic.Core.Domain.Policy;
-using QuantumLogic.Core.Domain.Repositories;
-using QuantumLogic.Core.Domain.Validation;
 
-namespace QuantumLogic.Core.Domain.Services.Main
+namespace QuantumLogic.Core.Domain.Services.Main.Users
 {
     public class UserDomainService : EntityDomainService<User, int>, IUserDomainService
     {
         #region Ctors
 
-        public UserDomainService(IDomainContext domainContext, IQLRepository<User, int> repository, IEntityPolicy<User, int> policy, IEntityValidationService<User, int> validationService)
+        public UserDomainService(IDomainContext domainContext, IUserRepository repository, IUserPolicy policy, IUserValidationService validationService)
             : base(domainContext, repository, policy, validationService)
         { }
 
@@ -25,12 +24,10 @@ namespace QuantumLogic.Core.Domain.Services.Main
         {
             return Task.CompletedTask;
         }
-
         protected override IEnumerable<LoadEntityRelationAction<User>> GetLoadEntityRelationActions()
         {
             return new List<LoadEntityRelationAction<User>>();
         }
-
         protected override Expression<Func<User, object>>[] GetRetrieveAllEntityIncludes()
         {
             return new List<Expression<Func<User, object>>>()

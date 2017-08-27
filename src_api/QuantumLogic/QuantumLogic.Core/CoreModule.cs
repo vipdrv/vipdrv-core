@@ -1,8 +1,10 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using QuantumLogic.Core.Domain.Context;
 using QuantumLogic.Core.Domain.Entities.MainModule;
+using QuantumLogic.Core.Domain.Entities.WidgetModule;
 using QuantumLogic.Core.Domain.Services;
-using QuantumLogic.Core.Domain.Services.Main;
+using QuantumLogic.Core.Domain.Services.Main.Users;
+using QuantumLogic.Core.Domain.Services.Widget.Sites;
 using QuantumLogic.Core.Utils.Modules;
 using System;
 
@@ -16,9 +18,24 @@ namespace QuantumLogic.Core
         protected override void ConfigureServices(IServiceCollection services)
         {
             services.AddScoped<IDomainContext, DomainContext>();
-            
+
+            #region Domain services
+
+            #region Main
+
             services.AddScoped<IEntityDomainService<User, int>, UserDomainService>();
             services.AddScoped<IUserDomainService, UserDomainService>();
+
+            #endregion
+
+            #region Widget
+
+            services.AddScoped<IEntityDomainService<Site, int>, SiteDomainService>();
+            services.AddScoped<ISiteDomainService, SiteDomainService>();
+
+            #endregion
+
+            #endregion
         }
     }
 }

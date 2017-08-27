@@ -12,9 +12,17 @@ using System.Threading.Tasks;
 
 namespace QuantumLogic.WebApi.Controllers
 {
-    public abstract class EntityController<TEntity, TPrimaryKey, TEntityDto> : Controller
+    /// <summary>
+    /// Is used as base controller for entities
+    /// </summary>
+    /// <typeparam name="TEntity">type of entity</typeparam>
+    /// <typeparam name="TPrimaryKey">type of entity primary key</typeparam>
+    /// <typeparam name="TEntityDto">type of entity dto</typeparam>
+    /// <typeparam name="TEntityFullDto">type of entity dto with allowed relations (full info about entity)</typeparam>
+    public abstract class EntityController<TEntity, TPrimaryKey, TEntityDto, TEntityFullDto> : Controller
         where TEntity : class, IEntity<TPrimaryKey>
         where TEntityDto : class, IEntityDto<TEntity, TPrimaryKey>, new()
+        where TEntityFullDto : TEntityDto, new()
     {
         #region Injected Dependencies
 
@@ -34,23 +42,38 @@ namespace QuantumLogic.WebApi.Controllers
 
         #endregion
 
-        #region Inner controller CRUD methods
+        #region Inner CRUD methods
 
-        protected virtual async Task<TEntityDto> InnerGetAsync(TPrimaryKey id)
+        /// <summary>
+        /// Is used as inner get method for entity (returns full version of entity)
+        /// </summary>
+        /// <param name="id">entity id</param>
+        /// <returns>entity as result of task</returns>
+        protected virtual async Task<TEntityFullDto> InnerGetAsync(TPrimaryKey id)
         {
             TEntity entity;
             using (var uow = UowManager.CurrentOrCreateNew(true))
             {
                 entity = await DomainService.RetrieveAsync(id);
             }
-            TEntityDto response = new TEntityDto();
+            TEntityFullDto response = new TEntityFullDto();
             response.MapFromEntity(entity);
             response.NormalizeAsResponse();
             return response;
         }
-        protected virtual async Task<TEntityDto> InnerCreateAsync(TEntityDto request)
+        /// <summary>
+        /// Is used as inner create method for entity (creates entity and returns it back via <see cref="InnerGetAsync(TPrimaryKey)"/>) 
+        /// </summary>
+        /// <param name="request">request</param>
+        /// <returns>created entity as result of task</returns>
+        /// <exception cref="ArgumentNullException">Thrown when request is null</exception>
+        protected virtual async Task<TEntityFullDto> InnerCreateAsync(TEntityFullDto request)
         {
-            TEntityDto response = new TEntityDto();
+            if (request == null)
+            {
+                throw new ArgumentNullException("request");
+            }
+            request.NormalizeAsRequest();
             TPrimaryKey entityId;
             using (var uow = UowManager.CurrentOrCreateNew(true))
             {
@@ -58,22 +81,33 @@ namespace QuantumLogic.WebApi.Controllers
                 await uow.CompleteAsync();
                 entityId = stubEntity.Id;
             }
-            response.MapFromEntity(await DomainService.RetrieveAsync(entityId));
-            response.NormalizeAsResponse();
-            return response;
+            return await InnerGetAsync(entityId);
         }
-        protected virtual async Task<TEntityDto> InnerUpdateAsync(TEntityDto request)
+        /// <summary>
+        /// Is used as inner update method for entity (updates entity and returns it back via <see cref="InnerGetAsync(TPrimaryKey)"/>) 
+        /// </summary>
+        /// <param name="request">request</param>
+        /// <returns>updated entity as result of task</returns>
+        /// <exception cref="ArgumentNullException">Thrown when request is null</exception>
+        protected virtual async Task<TEntityFullDto> InnerUpdateAsync(TEntityFullDto request)
         {
-            TEntityDto response = new TEntityDto();
+            if (request == null)
+            {
+                throw new ArgumentNullException("Request");
+            }
+            request.NormalizeAsRequest();
             using (var uow = UowManager.CurrentOrCreateNew(true))
             {
                 await DomainService.UpdateAsync(request.MapToEntity());
                 await uow.CompleteAsync();
             }
-            response.MapFromEntity(await DomainService.RetrieveAsync(request.Id));
-            response.NormalizeAsResponse();
-            return response;
+            return await InnerGetAsync(request.Id);
         }
+        /// <summary>
+        /// Is used as inner delete method for entity
+        /// </summary>
+        /// <param name="id">entity id</param>
+        /// <returns>deletion task</returns>
         protected virtual async Task InnerDeleteAsync(TPrimaryKey id)
         {
             using (var uow = UowManager.CurrentOrCreateNew(true))
@@ -84,6 +118,8 @@ namespace QuantumLogic.WebApi.Controllers
         }
 
         #endregion
+
+        #region Inner custom methods
 
         /// <summary>
         /// Is used to retrieve all entities via filters and sorting as paged result
@@ -110,5 +146,7 @@ namespace QuantumLogic.WebApi.Controllers
             }
             return new GetAllResponse<TEntityDto>(items, stub.TotalCount);
         }
+
+        #endregion
     }
 }

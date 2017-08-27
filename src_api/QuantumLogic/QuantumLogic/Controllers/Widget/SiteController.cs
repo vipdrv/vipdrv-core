@@ -1,22 +1,22 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using QuantumLogic.Core.Domain.Entities.MainModule;
-using QuantumLogic.Core.Domain.Services.Main.Users;
+using QuantumLogic.Core.Domain.Entities.WidgetModule;
+using QuantumLogic.Core.Domain.Services.Widget.Sites;
 using QuantumLogic.Core.Domain.UnitOfWorks;
-using QuantumLogic.WebApi.DataModels.Dtos.Main.Users;
-using QuantumLogic.WebApi.DataModels.Requests.Main.Users;
+using QuantumLogic.WebApi.DataModels.Dtos.Widget.Sites;
+using QuantumLogic.WebApi.DataModels.Requests.Widget.Sites;
 using QuantumLogic.WebApi.DataModels.Responses;
 using System;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 
-namespace QuantumLogic.WebApi.Controllers.Main
+namespace QuantumLogic.WebApi.Controllers.Widget
 {
-    [Route("api/user")]
-    public class UserController : EntityController<User, int, UserDto, UserFullDto>
+    [Route("api/site")]
+    public class SiteController : EntityController<Site, int, SiteDto, SiteFullDto>
     {
         #region Ctors
 
-        public UserController(IQLUnitOfWorkManager uowManager, IUserDomainService domainService)
+        public SiteController(IQLUnitOfWorkManager uowManager, ISiteDomainService domainService)
             : base(uowManager, domainService)
         { }
 
@@ -25,17 +25,17 @@ namespace QuantumLogic.WebApi.Controllers.Main
         #region CRUD
 
         [HttpGet("{id}")]
-        public Task<UserFullDto> Get(int id)
+        public Task<SiteFullDto> Get(int id)
         {
             return InnerGetAsync(id);
         }
         [HttpPost]
-        public Task<UserFullDto> Create([FromBody]UserFullDto request)
+        public Task<SiteFullDto> Create([FromBody]SiteFullDto request)
         {
             return InnerCreateAsync(request);
         }
         [HttpPut]
-        public Task<UserFullDto> Update([FromBody]UserFullDto request)
+        public Task<SiteFullDto> Update([FromBody]SiteFullDto request)
         {
             return InnerUpdateAsync(request);
         }
@@ -50,9 +50,9 @@ namespace QuantumLogic.WebApi.Controllers.Main
         #region Custom methods
 
         [HttpPost("get-all/{page?}/{pageSize?}")]
-        public Task<GetAllResponse<UserDto>> GetAll([FromBody]UserGetAllRequest request, uint page = 0, uint pageSize = 0)
+        public Task<GetAllResponse<SiteDto>> GetAll([FromBody]SiteGetAllRequest request, uint page = 0, uint pageSize = 0)
         {
-            Expression<Func<User, bool>> filter = (user) => true;
+            Expression<Func<Site, bool>> filter = (user) => true;
             return InnerGetAllAsync(filter, request.Sorting, page, pageSize);
         }
 

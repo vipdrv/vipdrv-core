@@ -195,7 +195,6 @@ namespace QuantumLogic.Data.Repositories
             bool createdNew = false;
             try
             {
-
                 DbContextManager.BuildOrCurrentContext(out createdNew).Add(entity);
             }
             finally

@@ -28,8 +28,9 @@ namespace QuantumLogic.Core.Domain.Entities.MainModule
         }
 
         public User(int id, string email, string password, int maxSitesCount)
-            : base(id)
+            : this()
         {
+            Id = id;
             Email = email;
             Password = password;
             MaxSitesCount = maxSitesCount;

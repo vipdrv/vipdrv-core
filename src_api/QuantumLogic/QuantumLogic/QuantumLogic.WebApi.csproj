@@ -5,9 +5,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Controllers\Widget\" />
-    <Folder Include="Policy\Widget\" />
-    <Folder Include="Validation\Widget\" />
     <Folder Include="wwwroot\" />
   </ItemGroup>
   <ItemGroup>
