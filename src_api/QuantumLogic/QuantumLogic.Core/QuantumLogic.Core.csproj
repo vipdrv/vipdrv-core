@@ -11,4 +11,10 @@
     <PackageReference Include="System.Linq.Dynamic.Core" Version="1.0.7.6" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Domain\Policy\WidgetModule\" />
+    <Folder Include="Domain\Repositories\WidgetModule\" />
+    <Folder Include="Domain\Validation\Widget\" />
+  </ItemGroup>
+
 </Project>

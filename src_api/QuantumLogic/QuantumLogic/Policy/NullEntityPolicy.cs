@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using QuantumLogic.Core.Authorization;
+﻿using QuantumLogic.Core.Authorization;
 using QuantumLogic.Core.Domain.Entities;
+using System.Linq;
 
 namespace QuantumLogic.WebApi.Policy
 {
@@ -12,7 +9,7 @@ namespace QuantumLogic.WebApi.Policy
     /// </summary>
     /// <typeparam name="TEntity">type of entity</typeparam>
     /// <typeparam name="TPrimaryKey">type of primary key</typeparam>
-    public sealed class NullEntityPolicy<TEntity, TPrimaryKey> : EntityPolicy<TEntity, TPrimaryKey>
+    public class NullEntityPolicy<TEntity, TPrimaryKey> : EntityPolicy<TEntity, TPrimaryKey>
         where TEntity : class, IEntity<TPrimaryKey>
     {
         #region Ctors
