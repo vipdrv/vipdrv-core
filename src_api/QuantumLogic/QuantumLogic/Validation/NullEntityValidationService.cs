@@ -7,7 +7,7 @@ namespace QuantumLogic.WebApi.Validation
     /// </summary>
     /// <typeparam name="TEntity">type of entity</typeparam>
     /// <typeparam name="TPrimaryKey">type of primary key</typeparam>
-    public sealed class NullEntityValidationService<TEntity, TPrimaryKey> : EntityValidationService<TEntity, TPrimaryKey>
+    public class NullEntityValidationService<TEntity, TPrimaryKey> : EntityValidationService<TEntity, TPrimaryKey>
         where TEntity : class, IEntity<TPrimaryKey>, IValidable
     {
         #region Inner validation null (no deny operation) methods

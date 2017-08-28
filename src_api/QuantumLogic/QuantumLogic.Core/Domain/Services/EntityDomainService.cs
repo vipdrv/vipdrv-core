@@ -71,7 +71,7 @@ namespace QuantumLogic.Core.Domain.Services
                     return entitySet;
                 }, 
                 RetrieveAllEntityIncludes);
-            return new RetrieveAllResultModel<TEntity>(retrievedEntities, needSkipTake ? await Repository.GetTotalCountAsync((entitySet) => ApplyPolicyFilterSortingToQuery(entitySet, filter, sorting)) : retrievedEntities.Count);
+            return new RetrieveAllResultModel<TEntity>(retrievedEntities, needSkipTake && retrievedEntities.Count == take ? await Repository.GetTotalCountAsync((entitySet) => ApplyPolicyFilterSortingToQuery(entitySet, filter, sorting)) : retrievedEntities.Count);
         }
         public virtual async Task<TEntity> RetrieveAsync(TPrimaryKey id)
         {

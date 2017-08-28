@@ -65,6 +65,10 @@ namespace QuantumLogic.Data.EFUnitOfWork
             lock (_syncRoot)
             {
                 ContextManager.DisposeContext();
+                if (uow == _currentUow)
+                {
+                    _currentUow = null;
+                }
             }
         }
 

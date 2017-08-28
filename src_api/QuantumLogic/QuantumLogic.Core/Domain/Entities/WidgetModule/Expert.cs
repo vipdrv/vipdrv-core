@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace QuantumLogic.Core.Domain.Entities.WidgetModule
+﻿namespace QuantumLogic.Core.Domain.Entities.WidgetModule
 {
-    public class Expert : Entity<int>, IValidable
+    public class Expert : Entity<int>, IPassivable, IOrderable, IValidable, IUpdatableFrom<Expert>
     {
         #region Fields
 
@@ -20,16 +16,67 @@ namespace QuantumLogic.Core.Domain.Entities.WidgetModule
         
         #endregion
 
-        #region relations
+        #region Relations
+
         public virtual Site Site { get; set; }
+
         #endregion
+
+        #region Ctors
+
+        public Expert()
+            : base()
+        { }
+
+        public Expert(int id, int siteId, string name, string description, int order, bool isActive, string photoUrl, string facebookUrl, string linkedinUrl, string workingHours)
+            : this()
+        {
+            Id = id;
+            SiteId = siteId;
+            Name = name;
+            Description = description;
+            Order = order;
+            IsActive = isActive;
+            PhotoUrl = photoUrl;
+            FacebookUrl = facebookUrl;
+            LinkedinUrl = linkedinUrl;
+            WorkingHours = workingHours;
+        }
+
+        #endregion
+
+        #region IValidable implementation
 
         public bool IsValid()
         {
-            throw new NotImplementedException();
+            return InnerValidate(false);
         }
         public void Validate()
         {
+            InnerValidate(true);
         }
+        protected virtual bool InnerValidate(bool throwException)
+        {
+            return true;
+        }
+
+        #endregion
+
+        #region IUpdatable implementation
+
+        public void UpdateFrom(Expert actualEntity)
+        {
+            SiteId = actualEntity.SiteId;
+            Name = actualEntity.Name;
+            Description = actualEntity.Description;
+            Order = actualEntity.Order;
+            IsActive = actualEntity.IsActive;
+            PhotoUrl = actualEntity.PhotoUrl;
+            FacebookUrl = actualEntity.FacebookUrl;
+            LinkedinUrl = actualEntity.LinkedinUrl;
+            WorkingHours = actualEntity.WorkingHours;
+        }
+
+        #endregion
     }
 }

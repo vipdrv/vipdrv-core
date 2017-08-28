@@ -40,10 +40,9 @@ namespace QuantumLogic.Data.EFContext
 
         #endregion
 
-        public QuantumLogicDbContext() : base()
-        {
-
-        }
+        public QuantumLogicDbContext()
+            : base()
+        { }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -51,6 +50,7 @@ namespace QuantumLogic.Data.EFContext
             
             // TODO: hardcoded connection string
             optionsBuilder.UseSqlServer("Server=mysql.dealer-advance.com;Database=dev_quantumlogic;User Id=sa-quantumlogic-2; Password=2YAfUFq9ZFsnLAgA;");
+            //Database.SetCommandTimeout(DBCommandTimeout);
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
