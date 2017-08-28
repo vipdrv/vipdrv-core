@@ -11,7 +11,6 @@ using QuantumLogic.Core.Utils.Modules;
 using QuantumLogic.Core.Utils.Modules.Attributes;
 using QuantumLogic.Data.EFContext;
 using QuantumLogic.Data.EFUnitOfWork;
-using QuantumLogic.Data.Repositories;
 using QuantumLogic.Data.Repositories.Main;
 using QuantumLogic.Data.Repositories.Widget;
 using System;
@@ -38,6 +37,14 @@ namespace QuantumLogic.Data
             services.AddTransient<IQLRepository<User, int>, UserRepository>();
             services.AddTransient<IUserRepository, UserRepository>();
 
+            services.AddTransient<IQLRepository<Beverage, int>, BeverageRepository>();
+            services.AddTransient<IBeverageRepository, BeverageRepository>();
+            services.AddTransient<IQLRepository<Expert, int>, ExpertRepository>();
+            services.AddTransient<IExpertRepository, ExpertRepository>();
+            services.AddTransient<IQLRepository<Lead, int>, LeadRepository>();
+            services.AddTransient<ILeadRepository, LeadRepository>();
+            services.AddTransient<IQLRepository<Route, int>, RouteRepository>();
+            services.AddTransient<IRouteRepository, RouteRepository>();
             services.AddTransient<IQLRepository<Site, int>, SiteRepository>();
             services.AddTransient<ISiteRepository, SiteRepository>();
 

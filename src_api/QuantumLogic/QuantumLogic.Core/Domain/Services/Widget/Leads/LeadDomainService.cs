@@ -20,6 +20,12 @@ namespace QuantumLogic.Core.Domain.Services.Widget.Leads
 
         #endregion
 
+        public override Task<Lead> CreateAsync(Lead entity)
+        {
+            entity.Recieved = DateTime.UtcNow;
+            return base.CreateAsync(entity);
+        }
+
         protected override Task CascadeDeleteAction(Lead entity)
         {
             return Task.CompletedTask;

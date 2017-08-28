@@ -69,7 +69,6 @@ namespace QuantumLogic.Core.Domain.Entities.WidgetModule
             ExpertId = actualEntity.ExpertId;
             BeverageId = actualEntity.BeverageId;
             RouteId = actualEntity.RouteId;
-            Recieved = actualEntity.Recieved;
             UserName = actualEntity.UserName;
             UserPhone = actualEntity.UserPhone;
             UserEmail = actualEntity.UserEmail;
