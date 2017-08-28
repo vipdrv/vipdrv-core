@@ -6,7 +6,7 @@
 </div>
 <div class="row pr-3">
     <td-card class="col-md-6 col-sm-12 p-0 pt-3 pl-3"
-             ng-repeat="expert in experts"
+             ng-repeat="expert in beverages"
              card-image="expert.photo_url"
              card-title="expert.title"
              card-desc="expert.description"
@@ -15,4 +15,4 @@
     </td-card>
 </div>
 <p></p>
-<td-wizard-step-button></td-wizard-step-button>
+<td-wizard-step-button tab-id="$ctrl.tabId" next-step="nextStepInner()"></td-wizard-step-button>

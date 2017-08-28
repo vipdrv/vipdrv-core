@@ -5,6 +5,7 @@
                 var self = this;
 
                 $scope.switchTabInner = function () {
+
                     self.switchTab({tabId: this.tabId});
                 };
             },

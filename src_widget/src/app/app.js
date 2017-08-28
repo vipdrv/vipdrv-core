@@ -13,7 +13,7 @@
             title: 'Select date & time',
             isActive: false,
             isLocked: false,
-            isCompleted: true
+            isCompleted: false
         },
         expert: {
             id: 'expert',
@@ -25,7 +25,7 @@
         beverage: {
             id: 'beverage',
             title: 'Select Beverage',
-            isActive: true,
+            isActive: false,
             isLocked: true,
             isCompleted: false
         },
@@ -39,7 +39,7 @@
         details: {
             id: 'details',
             title: 'Your details',
-            isActive: false,
+            isActive: true,
             isLocked: true,
             isCompleted: false
         }
@@ -80,7 +80,7 @@
     };
 
     var globalState = {
-        isFormCompleted : false
+        isFormCompleted: false
     };
     /* ======================================== Url Params ========================================= */
 

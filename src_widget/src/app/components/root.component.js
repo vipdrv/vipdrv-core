@@ -9,6 +9,7 @@
                 $scope.widgetTabs = widgetTabs;
 
                 $scope.switchTab = function (tabId) {
+
                     if ($scope.widgetTabs[tabId].isActive) {
                         // console.log('Tab is already active');
                         return;
@@ -23,7 +24,9 @@
                         $scope.widgetTabs[key].isActive = false;
                     }
 
-                    $scope.widgetTabs[self.currentTabId].isActive = false;
+                    for (var key in $scope.widgetTabs) {
+                        $scope.widgetTabs[key].isActive = false;
+                    }
                     $scope.widgetTabs[tabId].isActive = true;
                 };
 

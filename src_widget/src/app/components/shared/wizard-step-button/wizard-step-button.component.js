@@ -5,11 +5,11 @@
                 var self = this;
 
                 $scope.nextStepInner = function () {
-                    self.nextStep({tabId: this.tabId});
+                    self.nextStep({tabId: self.tabId});
                 };
 
                 $scope.prevStepInner = function () {
-                    self.prevStep({tabId: this.tabId});
+                    self.prevStep({tabId: self.tabId});
                 };
             },
             templateUrl: 'src/app/components/shared/wizard-step-button/wizard-step-button.tpl.html',

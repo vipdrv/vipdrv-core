@@ -2,12 +2,11 @@
     angular.module('myApp')
         .component('tdWizardTabContent', {
             controller: function (api, widgetTabs, userData, globalState) {
-                var self = this;
+
+                /******** wizard-logic(start) ********/
 
                 this.widgetTabs = widgetTabs;
                 this.userData = userData;
-
-                // this.isFormCompleted = false;
 
                 this.completeForm = function () {
                     api.submitForm(userData);
@@ -16,6 +15,8 @@
                 };
 
                 this.completeStep = function (tabId) {
+
+                    console.log(tabId);
                     widgetTabs[tabId].isActive = false;
                     widgetTabs[tabId].isCompleted = true;
 
@@ -57,6 +58,9 @@
                     }
                     return null;
                 };
+
+                /******** wizard-logic(end)   ********/
+
 
             },
             templateUrl: 'src/app/components/wizard/wizard-tab-content.tpl.html',
