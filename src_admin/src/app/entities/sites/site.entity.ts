@@ -8,20 +8,20 @@ export class SiteEntity extends Entity {
     url: string;
     contacts: string;
 
-    constructor(id: string, userId: number, beautyId: string, name: string, url: string, contacts: string) {
-        super(id);
-        this.userId = userId;
-        this.beautyId = beautyId;
-        this.name = name;
-        this.url = url;
-        this.contacts = contacts;
+    constructor() {
+        super();
     }
 
-    static map(obj: any): SiteEntity {
-        if (Variable.isNullOrUndefined(obj)) {
+    initializeFromDto(dto: any): void {
+        if (Variable.isNullOrUndefined(dto)) {
             return null;
         }
-        let mock: SiteEntity = <SiteEntity>obj;
-        return new SiteEntity(mock.id, mock.userId, mock.beautyId, mock.name, mock.url, mock.contacts);
+        let mock: SiteEntity = <SiteEntity>dto;
+        super.initializeFromDto(dto);
+        this.userId = mock.userId;
+        this.beautyId = mock.beautyId;
+        this.name = mock.name;
+        this.url = mock.url;
+        this.contacts = mock.contacts;
     }
 }

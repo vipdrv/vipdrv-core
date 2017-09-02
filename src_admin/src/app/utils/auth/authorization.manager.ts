@@ -11,8 +11,8 @@ export class AuthorizationManager implements IAuthorizationManager {
     get lastUser(): any {
         return this._lastUser;
     }
-    get user(): any {
-        return null;
+    get user(): Promise<any> {
+        return Promise.resolve(null);
     }
 
     get postAuthRedirectUrl(): string {

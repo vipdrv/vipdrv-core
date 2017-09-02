@@ -3,11 +3,9 @@ import { IEntity } from "./i-entity";
 export class Entity implements IEntity<number> {
     id: number;
     /// ctor
-    constructor(id: number) {
-        this.id = id;
-    }
+    constructor() {}
     /// mapping
-    static map(object: any): Entity {
-        return new Entity(object.id);
+    initializeFromDto(dto: any): void {
+        this.id = dto.id;
     }
 }

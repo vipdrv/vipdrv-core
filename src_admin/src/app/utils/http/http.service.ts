@@ -5,15 +5,12 @@ import { IAuthorizationManager } from "./../auth/i-authorization.manager";
 import { AuthorizationManager } from "./../auth/authorization.manager";
 import { ILogger } from "./../logging/i-logger";
 import { ConsoleLogger } from "./../logging/console/console.logger";
-
 @Injectable()
 export class HttpService implements IHttpService {
-
     /// injected dependencies
     protected http: Http;
     protected logger: ILogger;
     protected authorizationManager: IAuthorizationManager;
-
     /// ctor
     constructor(
         http: Http,
@@ -23,7 +20,6 @@ export class HttpService implements IHttpService {
         this.logger = logger;
         this.authorizationManager = authorizationManager;
     }
-
     /// methods
     get(url: string, options?: RequestOptionsArgs, supressRecursion: boolean = false): Promise<any> {
         let self: HttpService = this;
@@ -149,12 +145,10 @@ export class HttpService implements IHttpService {
                 });
         });
     }
-
     /// predicates
     isUnauthorizedError(reason: any): boolean {
         return !!reason && reason.status === 401;
     }
-
     /// helpers
     private handleCriticalError(methodName: string, reason: any): void {
         this.logger.logCritical("Auth critical error on http.service." + methodName + ": " + reason);

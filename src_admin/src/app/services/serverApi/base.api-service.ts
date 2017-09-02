@@ -19,7 +19,7 @@ export abstract class BaseApiService implements IApiService {
         controllerName: string) {
         this.httpService = httpService;
         this.logger = logger;
-        this.baseUrl = "api";
+        this.baseUrl = "http://localhost:5000/api";
         this.controllerName = controllerName;
     }
     /// url methods

@@ -19,4 +19,4 @@ import { ConsoleLogger } from './logging/console/console.logger';
         ConsoleLogger
     ]
 })
-export class TestModule {}
+export class UtilsModule {}
