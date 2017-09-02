@@ -1,11 +1,11 @@
 import { Injectable } from "@angular/core";
 import { ISiteApiService } from "./i-site.api-service";
-import { BaseApiService } from "./../base.api-service";
-import { UrlParameter } from "./../urlParameter";
+import { CRUDApiService } from "./../crud.api-service";
 import { HttpService, ConsoleLogger } from "./../../../utils/index";
 import { SiteEntity } from "./../../../entities/sites/site.entity";
+import { LightEntity } from "./../../../entities/lightEntity";
 @Injectable()
-export class SiteApiService extends BaseApiService implements ISiteApiService {
+export class SiteApiService extends CRUDApiService<SiteEntity, number, LightEntity> implements ISiteApiService {
     /// ctor
     constructor(
         httpService: HttpService,
@@ -13,22 +13,12 @@ export class SiteApiService extends BaseApiService implements ISiteApiService {
         super(httpService, logger, "site");
     }
     /// methods
-    get(id: number): Promise<SiteEntity> {
-        return this.httpService
-            .get(this.createUrlWithMethodNameAndParams("", String(id)))
-            .then(function (dto: SiteEntity): SiteEntity {
-                let stub: SiteEntity = new SiteEntity();
-                stub.initializeFromDto(dto);
-                return stub;
-            });
+
+    /// helpers
+    protected createEmptyEntity(): SiteEntity {
+        return new SiteEntity();
     }
-    create(id: SiteEntity): Promise<SiteEntity> {
-        return Promise.resolve(null);
-    }
-    update(id: SiteEntity): Promise<SiteEntity> {
-        return Promise.resolve(null);
-    }
-    delete(id: number): Promise<void> {
-        return Promise.resolve();
+    protected createEmptyLightEntity(): LightEntity {
+        return new LightEntity();
     }
 }

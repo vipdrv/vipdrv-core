@@ -14,7 +14,7 @@ export abstract class BaseApiService implements IApiService {
     protected logger: ILogger;
     /// ctor
     constructor(
-        httpService: HttpService,
+        httpService: IHttpService,
         logger: ILogger,
         controllerName: string) {
         this.httpService = httpService;
