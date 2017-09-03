@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { ISiteApiService, SiteApiService } from './../../services/serverApi/index';
 
 @Component({
     selector: 'test',
@@ -14,8 +15,13 @@ export class Test {
     set bindedField(value: string) {
         this._bindedField = value;
     }
-    constructor() {
-        this.bindedField = "Binded field";
+
+    protected siteApiService: ISiteApiService;
+
+    constructor(siteApiService: SiteApiService) {
+        this.bindedField = 'Binded field';
+        this.siteApiService = siteApiService;
+        let defaultSite = this.siteApiService.get(1);
     }
 
 }

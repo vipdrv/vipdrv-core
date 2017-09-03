@@ -1,29 +1,47 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace QuantumLogic.Core.Domain.Entities.WidgetModule
+﻿namespace QuantumLogic.Core.Domain.Entities.WidgetModule
 {
-    public class WidgetTheme : Entity<int>, IValidable
+    public class WidgetTheme : Entity<int>, IValidable, IUpdatableFrom<WidgetTheme>
     {
         #region Fields
+
         public int SiteId { get; set; }
         public string CssUrl { get; set; }
         public string ButtonImageUrl { get; set; }
+
         #endregion
 
-        #region relations
+        #region Relations
+
         public virtual Site Site { get; set; }
+
         #endregion
+
+        #region IValidable implementation
 
         public bool IsValid()
         {
-            throw new NotImplementedException();
+            return InnerValidate(false);
         }
-
         public void Validate()
         {
-            throw new NotImplementedException();
+            InnerValidate(true);
         }
+        protected virtual bool InnerValidate(bool throwException)
+        {
+            return true;
+        }
+
+        #endregion
+
+        #region IUpdatable implementation
+
+        public void UpdateFrom(WidgetTheme actualEntity)
+        {
+            SiteId = actualEntity.SiteId;
+            CssUrl = actualEntity.CssUrl;
+            ButtonImageUrl = actualEntity.ButtonImageUrl;
+        }
+
+        #endregion
     }
 }
