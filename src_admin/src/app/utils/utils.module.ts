@@ -11,8 +11,7 @@ import { ConsoleLogger } from './logging/console/console.logger';
         CommonModule,
         FormsModule
     ],
-    declarations: [
-    ],
+    declarations: [],
     providers: [
         AuthorizationManager,
         HttpService,

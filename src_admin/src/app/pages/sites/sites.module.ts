@@ -5,6 +5,9 @@ import { FormsModule } from '@angular/forms';
 import { AppTranslationModule } from '../../app.translation.module';
 import { NgaModule } from '../../theme/nga.module';
 
+import { UtilsModule } from './../../utils/index';
+import { SitesTableComponent } from './table/sitesTable.component';
+
 import { SitesComponent } from './sites.component';
 import { routing } from './sites.routing';
 @NgModule({
@@ -13,10 +16,12 @@ import { routing } from './sites.routing';
         FormsModule,
         AppTranslationModule,
         NgaModule,
-        routing
+        routing,
+        UtilsModule
     ],
     declarations: [
-        SitesComponent
+        SitesComponent,
+        SitesTableComponent
     ],
     providers: []
 })

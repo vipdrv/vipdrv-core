@@ -8,6 +8,10 @@
       "leads": "Leads",
       "sites": "Sites",
       "test": "Test-page"
+    },
+    "actions": {
+      "text_edit": "edit",
+      "text_delete": "delete"
     }
   },
   "home": {
@@ -19,7 +23,12 @@
 
   },
   "sites": {
-
+    "table": {
+      "title": "Sites",
+      "headerText_siteName": "Site name",
+      "headerText_leads": "Leads amount",
+      "headerText_actions": "Actions"
+    }
   },
   "test":{
     "btnViewer": "Button viewer"

@@ -7,6 +7,7 @@ export class SiteEntity extends Entity {
     name: string;
     url: string;
     contacts: string;
+    leadsAmount: number;
 
     constructor() {
         super();
@@ -23,5 +24,6 @@ export class SiteEntity extends Entity {
         this.name = mock.name;
         this.url = mock.url;
         this.contacts = mock.contacts;
+        this.leadsAmount = mock.leadsAmount;
     }
 }

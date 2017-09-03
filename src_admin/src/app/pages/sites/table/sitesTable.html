@@ -1,0 +1,37 @@
+<div class="sites-table-template">
+    <div class="row">
+        <div class="sites-table-title">
+            <span class="sites-table-title-text" translate>sites.table.title</span>
+        </div>
+    </div>
+    <table class="sites-table-body table table-bordered table-hover"
+           *ngIf="initialized">
+        <thead>
+            <tr>
+                <th translate>sites.table.headerText_siteName</th>
+                <th translate>sites.table.headerText_leads</th>
+                <th translate>sites.table.headerText_actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let item of items">
+                <td>{{item.name}}</td>
+                <td>{{item.leadsAmount}}</td>
+                <td>
+                    <button type="button"
+                            class="btn btn-outline-primary btn-sm"
+                            translate
+                            (click)="deleteEntity(item.id)">
+                        general.actions.text_edit
+                    </button>
+                    <button type="button"
+                            class="btn btn-outline-danger btn-sm"
+                            translate
+                            (click)="deleteEntity(item.id)">
+                        general.actions.text_delete
+                    </button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
