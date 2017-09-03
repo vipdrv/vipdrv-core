@@ -1,16 +1,15 @@
-import { Injectable } from "@angular/core";
-import { ISiteApiService } from "./i-site.api-service";
-import { CRUDApiService } from "./../crud.api-service";
-import { HttpService, ConsoleLogger } from "./../../../utils/index";
-import { SiteEntity } from "./../../../entities/sites/site.entity";
-import { LightEntity } from "./../../../entities/lightEntity";
+import { Injectable } from '@angular/core';
+import { HttpService, ConsoleLogger } from './../../../../utils/index';
+import { SiteEntity, LightEntity } from './../../../../entities/index';
+import { ISiteApiService } from './i-site.api-service';
+import { CRUDApiService } from './../../crud.api-service';
 @Injectable()
 export class SiteApiService extends CRUDApiService<SiteEntity, number, LightEntity> implements ISiteApiService {
     /// ctor
     constructor(
         httpService: HttpService,
         logger: ConsoleLogger) {
-        super(httpService, logger, "site");
+        super(httpService, logger, 'site');
     }
     /// methods
 

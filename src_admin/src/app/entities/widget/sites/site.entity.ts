@@ -1,5 +1,5 @@
-import { Entity } from "./../entity";
-import { Variable } from "./../../utils/index";
+import { Variable } from "./../../../utils/index";
+import { Entity } from "./../../index";
 
 export class SiteEntity extends Entity {
     userId: number;

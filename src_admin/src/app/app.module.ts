@@ -16,8 +16,8 @@ import { AppState, InternalStateType } from './app.service';
 import { GlobalState } from './global.state';
 import { NgaModule } from './theme/nga.module';
 import { PagesModule } from './pages/pages.module';
-import { UtilsModule } from "./utils/utils.module";
-import { ServerApiModule } from "./services/serverApi/serverApi.module";
+import { UtilsModule } from './utils/index';
+import { ServerApiModule } from './services/serverApi/index';
 
 
 // Application wide providers
