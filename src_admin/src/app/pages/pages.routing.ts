@@ -15,7 +15,7 @@ export const routes: Routes = [
       { path: 'integration', loadChildren: './integration/integration.module#IntegrationModule' },
       { path: 'leads', loadChildren: './leads/leads.module#LeadsModule' },
       { path: 'sites', loadChildren: './sites/sites.module#SitesModule' },
-      { path: 'test', loadChildren: './test/test.module#TestModule' },
+      { path: 'test', loadChildren: './test/test.module#TestModule' }
     ]
   }
 ];

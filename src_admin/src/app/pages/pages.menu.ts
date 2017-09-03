@@ -49,18 +49,6 @@ export const PAGES_MENU = [
                   order: 1
               }
           }
-      },
-      {
-        path: 'test',
-        data: {
-            menu: {
-                title: 'general.menu.test',
-                icon: 'ion-gear-a',
-                selected: false,
-                expanded: false,
-                order: 99
-            }
-        }
       }
     ]
   }

@@ -5,7 +5,8 @@ import { ConsoleLogger } from "./../logging/console/console.logger";
 
 @Injectable()
 export class AuthorizationManager implements IAuthorizationManager {
-    private _lastUser: any = null;
+    /// inited with stub used and have to be changed after authorization development
+    private _lastUser: any = { id: 1 };
     private _postAuthorizationDefaultUrl: string = "/";
 
     get lastUser(): any {

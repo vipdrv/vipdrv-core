@@ -1,5 +1,5 @@
-﻿using QuantumLogic.Core.Domain.Entities.WidgetModule;
-using System;
+﻿using QuantumLogic.Core.Constants;
+using QuantumLogic.Core.Domain.Entities.WidgetModule;
 
 namespace QuantumLogic.WebApi.DataModels.Dtos.Widget.Leads
 {
@@ -7,12 +7,17 @@ namespace QuantumLogic.WebApi.DataModels.Dtos.Widget.Leads
     {
         public int SiteId { get; set; }
         public int ExpertId { get; set; }
-        public int BeverageId { get; set; }
+        public int? BeverageId { get; set; }
         public int RouteId { get; set; }
-        public DateTime Recieved { get; set; }
-        public int UserName { get; set; }
+        public string RecievedUtc { get; set; }
+        public string Username { get; set; }
         public string UserPhone { get; set; }
         public string UserEmail { get; set; }
+
+        public string SiteName { get; set; }
+        public string ExpertName { get; set; }
+        public string BeverageName { get; set; }
+        public string RouteName { get; set; }
 
         #region Mapping
 
@@ -23,10 +28,14 @@ namespace QuantumLogic.WebApi.DataModels.Dtos.Widget.Leads
             ExpertId = entity.ExpertId;
             BeverageId = entity.BeverageId;
             RouteId = entity.RouteId;
-            Recieved = entity.Recieved;
-            UserName = entity.UserName;
+            RecievedUtc = entity.RecievedUtc.ToString(QuantumLogicConstants.OutputDateTimeFormat);
+            Username = entity.Username;
             UserPhone = entity.UserPhone;
             UserEmail = entity.UserEmail;
+            SiteName = entity.Site.Name;
+            ExpertName = entity.Expert.Name;
+            BeverageName = entity.Beverage.Name;
+            RouteName = entity.Route.Name;
         }
         public override Lead MapToEntity()
         {
@@ -35,7 +44,7 @@ namespace QuantumLogic.WebApi.DataModels.Dtos.Widget.Leads
             entity.ExpertId = ExpertId;
             entity.BeverageId = BeverageId;
             entity.RouteId = RouteId;
-            entity.UserName = UserName;
+            entity.Username = Username;
             entity.UserPhone = UserPhone;
             entity.UserEmail = UserEmail;
             return entity;

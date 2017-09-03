@@ -10,6 +10,7 @@
       "test": "Test-page"
     },
     "actions": {
+      "text_create": "create",
       "text_edit": "edit",
       "text_delete": "delete"
     }
@@ -20,9 +21,38 @@
 
   },
   "leads": {
-
+    "modal": {
+      "title": "Lead detalization",
+      "siteName": "Site name: ",
+      "received": "Received: ",
+      "userName": "Name: ",
+      "userEmail": "Email: ",
+      "userPhone": "Phone: ",
+      "expertName": "Expert: ",
+      "routeName": "Road: ",
+      "beverageName": "Beverage: ",
+      "cancel": "Close"
+    },
+    "table": {
+      "title": "Leads",
+      "btnText_exportToExcel": "Export to Excel",
+      "headerText_received": "Recieved",
+      "headerText_siteName": "Site",
+      "headerText_userEmail": "Email",
+      "headerText_userPhone": "Phone",
+      "headerText_expertName": "Expert",
+      "headerText_roadName": "Road",
+      "headerText_beverageName": "Beverage"
+    }
   },
   "sites": {
+    "modal": {
+      "title": "Site detalization",
+      "siteName": "Name",
+      "siteUrl": "Url",
+      "cancel": "Cancel",
+      "apply": "Save"
+    },
     "table": {
       "title": "Sites",
       "headerText_siteName": "Site name",

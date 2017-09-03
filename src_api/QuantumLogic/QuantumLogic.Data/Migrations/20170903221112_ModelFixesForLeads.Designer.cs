@@ -8,9 +8,10 @@ using QuantumLogic.Data.EFContext;
 namespace QuantumLogic.Data.Migrations
 {
     [DbContext(typeof(QuantumLogicDbContext))]
-    partial class QuantumLogicDbContextModelSnapshot : ModelSnapshot
+    [Migration("20170903221112_ModelFixesForLeads")]
+    partial class ModelFixesForLeads
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "1.1.2")

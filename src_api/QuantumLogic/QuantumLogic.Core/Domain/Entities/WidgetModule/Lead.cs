@@ -8,10 +8,10 @@ namespace QuantumLogic.Core.Domain.Entities.WidgetModule
 
         public int SiteId { get; set; }
         public int ExpertId { get; set; }
-        public int BeverageId { get; set; }
+        public int? BeverageId { get; set; }
         public int RouteId { get; set; }
-        public DateTime Recieved { get; set; }
-        public int UserName { get; set; }
+        public DateTime RecievedUtc { get; set; }
+        public string Username { get; set; }
         public string UserPhone { get; set; }
         public string UserEmail { get; set; }
 
@@ -20,6 +20,9 @@ namespace QuantumLogic.Core.Domain.Entities.WidgetModule
         #region Relations
 
         public virtual Site Site { get; set; }
+        public virtual Route Route { get; set; }
+        public virtual Expert Expert { get; set; }
+        public virtual Beverage Beverage { get; set; }
 
         #endregion
 
@@ -29,7 +32,7 @@ namespace QuantumLogic.Core.Domain.Entities.WidgetModule
             : base()
         { }
 
-        public Lead(int id, int siteId, int expertId, int beverageId, int routeId, DateTime recieved, int userName, string userPhone, string userEmail)
+        public Lead(int id, int siteId, int expertId, int beverageId, int routeId, DateTime recieved, string username, string userPhone, string userEmail)
             : this()
         {
             Id = id;
@@ -37,8 +40,8 @@ namespace QuantumLogic.Core.Domain.Entities.WidgetModule
             ExpertId = expertId;
             BeverageId = beverageId;
             RouteId = routeId;
-            Recieved = recieved;
-            UserName = userName;
+            RecievedUtc = recieved;
+            Username = username;
             UserPhone = userPhone;
         }
 
@@ -69,7 +72,7 @@ namespace QuantumLogic.Core.Domain.Entities.WidgetModule
             ExpertId = actualEntity.ExpertId;
             BeverageId = actualEntity.BeverageId;
             RouteId = actualEntity.RouteId;
-            UserName = actualEntity.UserName;
+            Username = actualEntity.Username;
             UserPhone = actualEntity.UserPhone;
             UserEmail = actualEntity.UserEmail;
         }

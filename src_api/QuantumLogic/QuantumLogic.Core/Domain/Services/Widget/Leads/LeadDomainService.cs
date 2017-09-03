@@ -22,7 +22,7 @@ namespace QuantumLogic.Core.Domain.Services.Widget.Leads
 
         public override Task<Lead> CreateAsync(Lead entity)
         {
-            entity.Recieved = DateTime.UtcNow;
+            entity.RecievedUtc = DateTime.UtcNow;
             return base.CreateAsync(entity);
         }
 
@@ -38,6 +38,9 @@ namespace QuantumLogic.Core.Domain.Services.Widget.Leads
         {
             return new List<Expression<Func<Lead, object>>>()
             {
+                entity => entity.Beverage,
+                entity => entity.Expert,
+                entity => entity.Route,
                 entity => entity.Site
             }
             .ToArray();
@@ -46,6 +49,9 @@ namespace QuantumLogic.Core.Domain.Services.Widget.Leads
         {
             return new List<Expression<Func<Lead, object>>>()
             {
+                entity => entity.Beverage,
+                entity => entity.Expert,
+                entity => entity.Route,
                 entity => entity.Site
             }
             .ToArray();

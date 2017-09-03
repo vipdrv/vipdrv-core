@@ -27,7 +27,7 @@ export class HttpService implements IHttpService {
             self.authorizationManager.user
                 .then(function (user: any): any {
                     return self.http
-                        .get(url, self.extendOptionsWithAuthorizationHeader(user, options))
+                        .get(url, self.extendOptionsWithHeaders(user, options))
                         .subscribe(
                         (res: any) => {
                             resolve(self.handleResponse(res));
@@ -58,7 +58,7 @@ export class HttpService implements IHttpService {
             self.authorizationManager.user
                 .then(function (user: any): any {
                     return self.http
-                        .post(url, body, self.extendOptionsWithAuthorizationHeader(user, options))
+                        .post(url, body, self.extendOptionsWithHeaders(user, options))
                         .subscribe(
                         (res: any) => {
                             resolve(self.handleResponse(res));
@@ -89,7 +89,7 @@ export class HttpService implements IHttpService {
             self.authorizationManager.user
                 .then(function (user: any): any {
                     return self.http
-                        .put(url, body, self.extendOptionsWithAuthorizationHeader(user, options))
+                        .put(url, body, self.extendOptionsWithHeaders(user, options))
                         .subscribe(
                             (res: any) => {
                                 resolve(self.handleResponse(res));
@@ -120,7 +120,7 @@ export class HttpService implements IHttpService {
             self.authorizationManager.user
                 .then(function (user: any): any {
                     return self.http
-                        .delete(url, self.extendOptionsWithAuthorizationHeader(user, options))
+                        .delete(url, self.extendOptionsWithHeaders(user, options))
                         .subscribe(
                             (res: any) => {
                                 resolve(self.handleResponse(res));
@@ -154,16 +154,20 @@ export class HttpService implements IHttpService {
         this.logger.logCritical("Auth critical error on http.service." + methodName + ": " + reason);
         throw new Error(reason);
     }
-    private extendOptionsWithAuthorizationHeader(user: any, options?: RequestOptionsArgs): RequestOptionsArgs {
+    private extendOptionsWithHeaders(user: any, options?: RequestOptionsArgs): RequestOptionsArgs {
         let opt: any = !!options ? options : {};
         opt.headers = !!opt.headers ? opt.headers : new Headers();
         this.createAuthorizationHeader(opt.headers, user);
+        this.createCorsHeader(opt.headers);
         return opt;
     }
     private createAuthorizationHeader(headers: Headers, user: any): void {
         if (user) {
             headers.append("Authorization", "Bearer " + user.access_token);
         }
+    }
+    private createCorsHeader(headers: Headers): void {
+        headers.append("Access-Control-Allow-Origin", "*");
     }
     private handleResponse(response: Response): any {
         try {

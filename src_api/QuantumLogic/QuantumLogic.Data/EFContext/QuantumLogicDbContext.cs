@@ -121,10 +121,25 @@ namespace QuantumLogic.Data.EFContext
                 entity.ToTable("Lead");
                 entity.HasKey(c => c.Id);
                 entity
+                    .HasOne(e => e.Beverage)
+                    .WithMany()
+                    .HasForeignKey(r => r.BeverageId)
+                    .OnDelete(DeleteBehavior.Restrict);
+                entity
+                    .HasOne(e => e.Expert)
+                    .WithMany()
+                    .HasForeignKey(r => r.ExpertId)
+                    .OnDelete(DeleteBehavior.Restrict);
+                entity
                     .HasOne(e => e.Site)
                     .WithMany(b => b.Leads)
                     .HasForeignKey(r => r.SiteId)
-                    .OnDelete(DeleteBehavior.Cascade);
+                    .OnDelete(DeleteBehavior.Restrict);
+                entity
+                    .HasOne(e => e.Route)
+                    .WithMany()
+                    .HasForeignKey(r => r.RouteId)
+                    .OnDelete(DeleteBehavior.Restrict);
             });
         }
     }

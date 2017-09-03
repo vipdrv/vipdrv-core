@@ -5,23 +5,30 @@
         </div>
     </div>
     <table class="sites-table-body table table-bordered table-hover"
-           *ngIf="initialized">
+           *ngIf="isInitialized()">
         <thead>
             <tr>
                 <th translate>sites.table.headerText_siteName</th>
                 <th translate>sites.table.headerText_leads</th>
-                <th translate>sites.table.headerText_actions</th>
+                <th class="sites-table-body-column-actions">
+                    <button type="button"
+                            class="btn btn-outline-success btn-sm"
+                            translate
+                            (click)="modalOpenCreate()">
+                        general.actions.text_create
+                    </button>
+                </th>
             </tr>
         </thead>
         <tbody>
             <tr *ngFor="let item of items">
                 <td>{{item.name}}</td>
                 <td>{{item.leadsAmount}}</td>
-                <td>
+                <td class="sites-table-body-column-actions">
                     <button type="button"
                             class="btn btn-outline-primary btn-sm"
                             translate
-                            (click)="deleteEntity(item.id)">
+                            (click)="modalOpenEdit(item.id)">
                         general.actions.text_edit
                     </button>
                     <button type="button"
@@ -35,3 +42,53 @@
         </tbody>
     </table>
 </div>
+<modal #siteDetailsModal
+       [backdrop]="'static'">
+    <modal-header>
+        <span class="site-modal-header-text" translate>sites.modal.title</span>
+    </modal-header>
+    <modal-body>
+        <div *ngIf="isSelectedEntityDefined()">
+            <div class="form-group row">
+                <label  class="col-2 col-form-label"
+                        for="siteName"
+                        translate>
+                    sites.modal.siteName
+                </label>
+                <div class="col-10">
+                    <input id="siteName"
+                           type="text"
+                           class="form-control"
+                           [(ngModel)]="selectedEntity.name">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label  class="col-2 col-form-label"
+                        for="siteUrl"
+                        translate>
+                    sites.modal.siteUrl
+                </label>
+                <div class="col-10">
+                    <input id="siteUrl"
+                           type="text"
+                           class="form-control"
+                           placeholder="http://your_site_url.com"
+                           [(ngModel)]="selectedEntity.url"/>
+                </div>
+            </div>
+        </div>
+    </modal-body>
+    <modal-footer>
+        <button type="button"
+                class="btn btn-default"
+                data-dismiss="modal"
+                (click)="modalDismiss()">
+            <span translate>sites.modal.cancel</span>
+        </button>
+        <button type="button"
+                class="btn btn-primary"
+                (click)="modalApply()">
+            <span translate>sites.modal.apply</span>
+        </button>
+    </modal-footer>
+</modal>
