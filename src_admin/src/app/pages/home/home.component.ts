@@ -5,11 +5,6 @@ import { Component } from '@angular/core';
     styleUrls: ['./home.scss'],
     templateUrl: './home.html'
 })
-export class Home {
-
+export class HomeComponent {
     constructor() { }
-
-    protected getWelcomeMessage(): string {
-        return "Welcome to the homepage!";
-    }
 }

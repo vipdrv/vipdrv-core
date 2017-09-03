@@ -15,6 +15,42 @@ export const PAGES_MENU = [
         }
       },
       {
+          path: 'integration',
+          data: {
+              menu: {
+                  title: 'general.menu.integration',
+                  icon: 'ion-gear-a',
+                  selected: false,
+                  expanded: false,
+                  order: 1
+              }
+          }
+      },
+      {
+          path: 'leads',
+          data: {
+              menu: {
+                  title: 'general.menu.leads',
+                  icon: 'ion-ios-paper-outline',
+                  selected: false,
+                  expanded: false,
+                  order: 1
+              }
+          }
+      },
+      {
+          path: 'sites',
+          data: {
+              menu: {
+                  title: 'general.menu.sites',
+                  icon: 'ion-ios-list-outline',
+                  selected: false,
+                  expanded: false,
+                  order: 1
+              }
+          }
+      },
+      {
         path: 'test',
         data: {
             menu: {
@@ -22,7 +58,7 @@ export const PAGES_MENU = [
                 icon: 'ion-gear-a',
                 selected: false,
                 expanded: false,
-                order: 1
+                order: 99
             }
         }
       }

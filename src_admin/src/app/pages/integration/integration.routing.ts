@@ -1,12 +1,12 @@
 import { Routes, RouterModule } from '@angular/router';
 import { ModuleWithProviders } from '@angular/core';
 
-import { HomeComponent } from './home.component';
+import { IntegrationComponent } from './integration.component';
 // noinspection TypeScriptValidateTypes
 export const routes: Routes = [
     {
         path: '',
-        component: HomeComponent,
+        component: IntegrationComponent,
         children: []
     }
 ];

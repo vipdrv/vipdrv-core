@@ -1,31 +1,27 @@
 {
   "general": {
-    "applicationName": "QLogic",
+    "applicationName": "TestDrive",
     "menu": {
       "pages": "Pages",
       "home": "Home",
-      "test": "Test-page",
-      "login": "Login",
-      "register": "Register"
+      "integration": "Integration",
+      "leads": "Leads",
+      "sites": "Sites",
+      "test": "Test-page"
     }
   },
   "home": {
-    "home_child_card_title": "Card title",
-    "home_child_card_body": "Card body"
+  },
+  "integration": {
+
+  },
+  "leads": {
+
+  },
+  "sites": {
+
   },
   "test":{
     "btnViewer": "Button viewer"
-  },
-  "login": {
-    "title": "Sign in to ng2-admin",
-    "signup_link": "New to ng2-admin? Sign up!",
-    "email": "Email",
-    "password": "Password",
-    "sign_in": "Sign in",
-    "forgot_password": "Forgot password?",
-    "sign_from_app_text": "or Sign in with one click",
-    "share_on_facebook": "Share on Facebook",
-    "share_on_twitter": "Share on Twitter",
-    "share_on_google_plus": "Share on Google Plus"
   }
 }

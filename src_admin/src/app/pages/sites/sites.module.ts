@@ -5,8 +5,8 @@ import { FormsModule } from '@angular/forms';
 import { AppTranslationModule } from '../../app.translation.module';
 import { NgaModule } from '../../theme/nga.module';
 
-import { HomeComponent } from './home.component';
-import { routing } from './home.routing';
+import { SitesComponent } from './sites.component';
+import { routing } from './sites.routing';
 @NgModule({
     imports: [
         CommonModule,
@@ -16,10 +16,8 @@ import { routing } from './home.routing';
         routing
     ],
     declarations: [
-        HomeComponent
+        SitesComponent
     ],
-    providers: [
-
-    ]
+    providers: []
 })
-export class HomeModule {}
+export class SitesModule {}
