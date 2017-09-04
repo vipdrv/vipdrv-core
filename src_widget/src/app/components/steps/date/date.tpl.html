@@ -1,27 +1,19 @@
 <div class="row">
     <div class="col-md-6 col-sm-12">
-        <div class="tab-title">Select Date</div>
-        <md-calendar ng-if="$ctrl.openHours" class="fixed-calendar td-calendar"
-                     md-min-date="$ctrl.minDate"
-                     md-max-date="$ctrl.maxDate"
-                     md-date-filter="$ctrl.dateFilter"
-                     ng-model="$ctrl.myDate" ng-change="$ctrl.dateChanged()"></md-calendar>
+        <h2 class="wizard-tab-content__title text-center text-md-left">Select Date</h2>
+        <p>Date</p>
+        <p>Date</p>
+        <p>Date</p>
+        <p>Date</p>
+        <p>Date</p>
     </div>
     <div class="col-md-6 col-sm-12">
-        <div class="tab-title td-time-select__title">Select Time</div>
-
-        <div class="row">
-            <div class="col-md-4 td-time-select__item"
-                 ng-repeat="time in $ctrl.timeIntervals"
-                 ng-click="$ctrl.timeChanged(time)"
-                 ng-class="{'td-time-select__item--active' : $ctrl.userData.calendar.time == time}">
-                {{time}}123345556
-            </div>
-        </div>
+        <h2 class="wizard-tab-content__title text-center text-md-left">Select Time</h2>
+        <p>Time</p>
+        <p>Time</p>
+        <p>Time</p>
+        <p>Time</p>
     </div>
 </div>
-<div class="row">
-    <div class="col-12">
-        <div class="td-next-step-btn" ng-click="$ctrl.completeStepInner()">Next step</div>
-    </div>
-</div>
+<p></p>
+<td-wizard-step-button tab-id="$ctrl.tabId" next-step="$ctrl.nextStepInner()"></td-wizard-step-button>

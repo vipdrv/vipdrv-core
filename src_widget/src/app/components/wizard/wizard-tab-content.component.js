@@ -1,13 +1,12 @@
 (function () {
     angular.module('myApp')
-        .component('tdWizard', {
+        .component('tdWizardTabContent', {
             controller: function (api, widgetTabs, userData, globalState) {
-                var self = this;
+
+                /******** wizard-logic(start) ********/
 
                 this.widgetTabs = widgetTabs;
                 this.userData = userData;
-
-                // this.isFormCompleted = false;
 
                 this.completeForm = function () {
                     api.submitForm(userData);
@@ -15,9 +14,9 @@
                     // this.isFormCompleted = true;
                 };
 
-
-
                 this.completeStep = function (tabId) {
+
+                    console.log(tabId);
                     widgetTabs[tabId].isActive = false;
                     widgetTabs[tabId].isCompleted = true;
 
@@ -29,8 +28,10 @@
                     }
                 };
 
-                this.unCompleteStep = function (tabId) {};
-                this.lockTab = function (tabId) {};
+                this.unCompleteStep = function (tabId) {
+                };
+                this.lockTab = function (tabId) {
+                };
 
                 var getNext = function (collection, key) {
                     var next = false;
@@ -58,8 +59,11 @@
                     return null;
                 };
 
+                /******** wizard-logic(end)   ********/
+
+
             },
-            templateUrl: 'src/app/components/wizard/wizard.tpl.html',
+            templateUrl: 'src/app/components/wizard/wizard-tab-content.tpl.html',
             bindings: {}
         });
 })();

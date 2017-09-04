@@ -1,14 +1,15 @@
 (function () {
     angular.module('myApp')
-        .component('tdTab', {
-            controller: function () {
+        .component('tdWizardNavigationTab', {
+            controller: function ($scope) {
                 var self = this;
 
-                this.switchTabInner = function () {
+                $scope.switchTabInner = function () {
+
                     self.switchTab({tabId: this.tabId});
                 };
             },
-            templateUrl: 'src/app/components/shared/tabs/tab.tpl.html',
+            templateUrl: 'src/app/components/wizard/wizard-navigation-tab.tpl.html',
             bindings: {
                 title: '<',
                 tabId: '<',

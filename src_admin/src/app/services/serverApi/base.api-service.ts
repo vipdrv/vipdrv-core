@@ -1,6 +1,9 @@
 import { ILogger, IHttpService } from './../../utils/index';
 import { IApiService } from './i-api-service';
 import { UrlParameter } from './urlParameter';
+import {environment} from '../../../environments/environment';
+
+// import {environment} from "../../environments/environment";
 /// base abstraction of api-service
 export abstract class BaseApiService implements IApiService {
     /// fields
@@ -19,7 +22,8 @@ export abstract class BaseApiService implements IApiService {
         controllerName: string) {
         this.httpService = httpService;
         this.logger = logger;
-        this.baseUrl = 'http://localhost:5000/api';
+        // this.baseUrl = 'http://localhost:5000/api';
+        this.baseUrl = environment.apiUrl
         this.controllerName = controllerName;
     }
     /// url methods

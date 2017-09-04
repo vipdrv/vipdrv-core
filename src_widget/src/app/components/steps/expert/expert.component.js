@@ -1,24 +1,13 @@
 (function () {
     angular.module('myApp')
         .component('tdExpert', {
-            controller: function (api) {
+            controller: function ($scope, api) {
                 var self = this;
-                var api = api;
-                this.isSatisfy = null;
 
-                function didLoadExperts(json) {
-                        console.log(json);
-                        //todo
-                        self.experts = json.experts.splice(0);
-                }
+                self.isStepValid = null;
 
-                this.$onInit = function () {
-                    console.log('on init td-expert');
-                    if (self.userData.expert.title === null) {
-                        this.isSatisfy = false;
-                    }
-
-                    api.loadExperts().then(didLoadExperts)
+                self.$onInit = function () {
+                    self.validateStep();
                 };
 
                 var dummyExperts = [{
@@ -39,25 +28,25 @@
                     description: 'Rhoda has a bubbly personality to make any test drive a not to be missed experience.'
                 }];
 
-                this.experts = null;
+                $scope.experts = dummyExperts;
 
-                this.expertChanged = function (expertTitle) {
+                self.expertChanged = function (expertTitle) {
                     self.userData.expert.title = expertTitle;
-                    self.satisfyStep();
+                    self.validateStep();
                 };
 
-
-                this.satisfyStep = function () {
+                self.validateStep = function () {
                     if (self.userData.expert.title === null) {
-                        this.isSatisfy = false;
+                        this.isStepValid = false;
                     } else {
-                        this.isSatisfy = true;
+                        this.isStepValid = true;
                     }
                 };
 
-                this.completeStepInner = function () {
-                    if (self.isSatisfy) {
-                        self.completeStep({tabId: this.tabId});
+                $scope.nextStepInner = function () {
+                    if (self.isStepValid) {
+                        console.log('13');
+                        self.completeStep({tabId: self.tabId});
                     }
                 };
             },
