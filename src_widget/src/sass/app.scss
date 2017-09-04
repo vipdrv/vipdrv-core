@@ -2,10 +2,12 @@
 
 @import "debug";
 @import 'themes/theme-blue';
+@import 'wizard/wizard';
+@import 'dirty-hacks';
 
 @import 'mobile';
 
 @import 'common';
 @import 'car-details';
-@import 'card.component';
+@import 'shared/card';
 

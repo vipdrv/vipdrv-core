@@ -1,5 +1,5 @@
 (function () {
-    var app = angular.module('myApp', ["templates"]);
+    var app = angular.module('myApp', ['templates']);
 
     /* ========================================= App Data ========================================== */
 
@@ -11,7 +11,7 @@
         time: {
             id: 'time',
             title: 'Select date & time',
-            isActive: true,
+            isActive: false,
             isLocked: false,
             isCompleted: false
         },
@@ -19,7 +19,7 @@
             id: 'expert',
             title: 'Select Expert',
             isActive: false,
-            isLocked: true,
+            isLocked: false,
             isCompleted: false
         },
         beverage: {
@@ -39,7 +39,7 @@
         details: {
             id: 'details',
             title: 'Your details',
-            isActive: false,
+            isActive: true,
             isLocked: true,
             isCompleted: false
         }
@@ -80,7 +80,7 @@
     };
 
     var globalState = {
-        isFormCompleted : false
+        isFormCompleted: false
     };
     /* ======================================== Url Params ========================================= */
 

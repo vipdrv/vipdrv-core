@@ -1,37 +1,82 @@
-<div class="user-details">
-    <div class="user-details__heading">New customer</div>
-    <div class="user-details__subheading">Create an account to track and edit the details of your test drive booking</div>
+<div class="row">
+    <div class="col-12">
+        <h2 class="wizard-tab-content__title">New customer</h2>
+        <p>Create an account to track and edit the details of your test drive booking</p>
+    </div>
 </div>
+<form>
+    <div class="row">
+        <div class="form-group col-md-6">
+            <label for="inputEmail4" class="col-form-label">Email</label>
+            <input type="email" class="form-control" id="inputEmail4" placeholder="Email">
+        </div>
+        <div class="form-group col-md-6">
+            <label for="inputPassword4" class="col-form-label">Password</label>
+            <input type="password" class="form-control" id="inputPassword4" placeholder="Password">
+        </div>
+    </div>
+    <div class="row">
+        <div class="form-group col-md-6">
+            <label for="inputEmail4" class="col-form-label">Email</label>
+            <input type="email" class="form-control" id="inputEmail4" placeholder="Email">
+        </div>
+        <div class="form-group col-md-6">
+            <label for="inputPassword4" class="col-form-label">Password</label>
+            <input type="password" class="form-control" id="inputPassword4" placeholder="Password">
+        </div>
+    </div>
+    <div class="row">
+        <div class="form-group col-md-6">
+            <label for="inputEmail4" class="col-form-label">Email</label>
+            <input type="email" class="form-control" id="inputEmail4" placeholder="Email">
+        </div>
+        <div class="form-group col-md-6">
+            <label for="inputPassword4" class="col-form-label">Password</label>
+            <input type="password" class="form-control" id="inputPassword4" placeholder="Password">
+        </div>
+    </div>
+    <p class="text-secondary">
+        Nissan will retain your personal information and share it with our Nissan dealers and group companies / entities
+        so that we and they may contact you to let you know about other products, services and special offers that may
+        be interest to you.
+        We or they may also contact you to participate in one of our customer satisfaction surveys or to provide you
+        with services relating to your vehicle. If you do not want your information used in this way please let us know
+        by ticking the appropriate box(es) below.
+    </p>
+    <div class="form-group p-0 m-0">
+        <div class="form-check form-check-inline">
+            <label class="form-check-label">
+                <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1"> Phone
+            </label>
+        </div>
+        <div class="form-check form-check-inline">
+            <label class="form-check-label">
+                <input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="option2"> SMS
+            </label>
+        </div>
+        <div class="form-check form-check-inline disabled">
+            <label class="form-check-label">
+                <input class="form-check-input" type="checkbox" id="inlineCheckbox3" value="option3"> Email
+            </label>
+        </div>
+    </div>
+    <p class="text-secondary">
+        You have the right to withdraw your consent at any time, to ask us for a copy of the information held by us on
+        our records and/or to require us to correct any inaccuracies in your information. If you would like to exercise
+        any of these rights please contact Nissan.
+    </p>
+    <button type="submit" class="btn  btn-lg btn-primary">Create account & make my booking</button>
+</form>
 
-<br>
+<!--<p></p>-->
+<!--<div class="row">-->
+    <!--<div class="col-12 d-none d-md-block">-->
+        <!--<button type="button" class="btn btn-lg btn-primary float-md-right">Next Step</button>-->
+    <!--</div>-->
+<!--</div>-->
+<!--<div class="row">-->
+    <!--<div class="col-12 d-sm-block d-md-none d-lg-none">-->
+        <!--<button type="button" class="btn btn-primary btn-lg btn-block">Next step</button>-->
+    <!--</div>-->
+<!--</div>-->
 
-<div >
-    <md-input-container class="md-block">
-        <label>First Name</label>
-        <input md-maxlength="30" required name="name" ng-model="$ctrl.userData.user.firstName"/>
-    </md-input-container>
-
-    <md-input-container class="md-block">
-        <label>Last Name</label>
-        <input name="social" required ng-model="$ctrl.userData.user.lastName"/>
-    </md-input-container>
-</div>
-<div>
-    <md-input-container class="md-block" >
-        <label>Email</label>
-        <input name="email" ng-model="$ctrl.userData.user.email"
-               required minlength="4" maxlength="100" ng-pattern="/^.+@.+\..+$/" />
-    </md-input-container>
-
-    <md-input-container class="md-block">
-        <label>Phone Number: (000) 000-0000</label>
-        <input name="phone" ng-model="$ctrl.userData.user.phone" ng-pattern="/^[(][0-9]{3}[)] [0-9]{3}-[0-9]{4}$/" />
-    </md-input-container>
-</div>
-
-
-
-<div class="user-details__button-container">
-    <div class="user-details__next-button" ng-click="$ctrl.createAccountAndMakeBooking()">Create account & make my booking</div>
-
-</div>

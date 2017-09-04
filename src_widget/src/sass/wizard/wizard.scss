@@ -1,0 +1,40 @@
+/* =========================================== wizard-navigation-tab ============================================ */
+
+.wizard-navigation-tab {
+  cursor: pointer;
+}
+
+.wizard-navigation-tab__content {
+  height: 50px;
+}
+
+.wizard-navigation-tab__text {
+  text-align: center;
+  line-height: 45px;
+}
+
+.wizard-navigation-tab__icon {
+  text-align: center;
+  line-height: 45px;
+}
+
+.wizard-navigation-tab--active {
+  box-shadow: 0 5px 0 transparentize($theme-sub-color, 0.1);
+  font-weight: 400;
+}
+
+.wizard-navigation-tab--completed {
+  box-shadow: 0 5px 0 $theme-sub-color;
+}
+
+.wizard-navigation-tab--locked {
+  cursor: default;
+}
+
+/* =========================================== wizard-tab-content ============================================ */
+
+.wizard-tab-content__title {
+  margin-top: 1rem;
+  margin-bottom: .5rem;
+  font-weight: 300;
+}

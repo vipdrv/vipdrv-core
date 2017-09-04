@@ -1,19 +1,18 @@
-<div class="row user-details">
-    <div class="col">
-    <div class="user-details__heading">Select preferred route</div>
-    <div class="user-details__subheading">Select the type of drive you'd like to take on your test drive</div>
+<div class="row">
+    <div class="col-12">
+        <h2 class="wizard-tab-content__title">Select preferred route</h2>
+        <p>Select the type of drive you'd like to take on your test drive</p>
     </div>
 </div>
-<div class="row td-card-container">
-    <td-card class="col-md-6 col-sm-12 td-card-root"
-             ng-repeat="road in $ctrl.roads"
-             card-image="road.photo_url"
-             card-title="road.title"
-             card-desc="road.description"
-             is-active-card="road.title == $ctrl.userData.road.title"
-             ng-click="$ctrl.expertChanged(road.title)">
+<div class="row pr-3">
+    <td-card class="col-md-6 col-sm-12 p-0 pt-3 pl-3"
+             ng-repeat="expert in roads"
+             card-image="expert.photo_url"
+             card-title="expert.title"
+             card-desc="expert.description"
+             is-active-card="expert.title == $ctrl.userData.expert.title"
+             ng-click="$ctrl.expertChanged(expert.title)">
     </td-card>
 </div>
-<div class="row">
-    <div class="td-next-step-btn" ng-click="$ctrl.completeStepInner()">Next step</div>
-</div>
+<p></p>
+<td-wizard-step-button tab-id="$ctrl.tabId" next-step="nextStepInner()"></td-wizard-step-button>

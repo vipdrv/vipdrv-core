@@ -6,28 +6,28 @@
 </td-date>
 <td-expert
         ng-if="$ctrl.widgetTabs['expert'].isActive"
-        complete-step="$ctrl.completeStep(tabId)"
         tab-id="'expert'"
-        user-data="$ctrl.userData">
+        user-data="$ctrl.userData"
+        complete-step="$ctrl.completeStep(tabId)">
 </td-expert>
 <td-beverage
         ng-if="$ctrl.widgetTabs['beverage'].isActive"
-        complete-step="$ctrl.completeStep(tabId)"
         tab-id="'beverage'"
-        user-data="$ctrl.userData">
+        user-data="$ctrl.userData"
+        complete-step="$ctrl.completeStep(tabId)">
 </td-beverage>
 <td-road
         ng-if="$ctrl.widgetTabs['road'].isActive"
-        complete-step="$ctrl.completeStep(tabId)"
         tab-id="'road'"
-        user-data="$ctrl.userData">
+        user-data="$ctrl.userData"
+        complete-step="$ctrl.completeStep(tabId)">
 </td-road>
 <td-user-details
         ng-if="$ctrl.widgetTabs['details'].isActive"
-        complete-step="$ctrl.completeStep(tabId)"
-        complete-form="$ctrl.completeForm()"
         tab-id="'details'"
-        user-data="$ctrl.userData">
+        user-data="$ctrl.userData"
+        complete-step="$ctrl.completeStep(tabId)"
+        complete-form="$ctrl.completeForm()">
 </td-user-details>
 
 

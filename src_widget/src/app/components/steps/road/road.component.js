@@ -11,7 +11,6 @@
                 }
 
                 this.$onInit = function () {
-                    console.log('on init tdRoad');
                     if (self.userData.road.title === null) {
                         this.isSatisfy = false;
                     }

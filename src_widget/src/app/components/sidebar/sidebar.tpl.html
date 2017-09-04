@@ -13,8 +13,7 @@
                         Engine
                     </div>
                     <div class="td-car-details__option-text">
-                        {{$ctrl.userData.car.engine}}
-                        <!--3.8 litre twin-turbo V6-->
+                        3.8 litre twin-turbo V6
                     </div>
                 </div>
             </div>
@@ -26,8 +25,7 @@
                     Year
                 </div>
                 <div class="td-car-details__option-text">
-                    {{$ctrl.userData.car.year}}
-                    <!--2016-->
+                    2016
                 </div>
             </div>
             <div class="col-6">
@@ -35,45 +33,44 @@
                     Colour
                 </div>
                 <div class="td-car-details__option-text">
-                    {{$ctrl.userData.car.colour}}
+                    Orange
                 </div>
             </div>
         </div>
         <div class="top-buffer-14">
-            <div class="col-6" ng-if="!!$ctrl.userData.car.transmission">
+            <div class="col-6">
                 <div class="td-car-details__option-title">
                     Transmission
                 </div>
                 <div class="td-car-details__option-text">
-                    {{$ctrl.userData.car.transmission}}
+                    Manual
                 </div>
             </div>
-            <div class="col-6" ng-if="$ctrl.userData.car.fuel">
+            <div class="col-6">
                 <div class="td-car-details__option-title">
                     Fuel
                 </div>
                 <div class="td-car-details__option-text">
-                    {{$ctrl.userData.car.fuel}}
+                    Petrol
                 </div>
             </div>
         </div>
     </div>
     <div class="col-12 td-drive-details">
         <div class="row td-drive-details__content">
-            <div class="col-12 td-car-details__options-row"
-                 ng-if="$ctrl.userData.calendar.date ||  $ctrl.userData.calendar.time">
+            <div class="col-12 td-car-details__options-row">
                 <img class="td-drive-details__row-image" src="/src/img/icon-date.jpg">
                 <span class="td-drive-details__row-text">{{$ctrl.userData.calendar.date}} - {{$ctrl.userData.calendar.time}}</span>
             </div>
-            <div class="col-12 td-car-details__options-row" ng-if="$ctrl.userData.expert.title">
+            <div class="col-12 td-car-details__options-row">
                 <img class="td-drive-details__row-image" src="/src/img/icon-expert.jpg">
                 <span class="td-drive-details__row-text">{{$ctrl.userData.expert.title}}</span>
             </div>
-            <div class="col-12 td-car-details__options-row" ng-if="$ctrl.userData.beverage.title">
+            <div class="col-12 td-car-details__options-row">
                 <img class="td-drive-details__row-image" src="/src/img/icon-beverage.jpg">
                 <span class="td-drive-details__row-text">{{$ctrl.userData.beverage.title}}</span>
             </div>
-            <div class="col-12 td-car-details__options-row-last" ng-if="$ctrl.userData.road.title">
+            <div class="col-12 td-car-details__options-row-last">
                 <img class="td-drive-details__row-image" src="/src/img/icon-road.jpg">
                 <span class="td-drive-details__row-text">{{$ctrl.userData.road.title}}</span>
             </div>
