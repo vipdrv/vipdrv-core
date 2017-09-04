@@ -1,30 +1,32 @@
 (function () {
     angular.module('myApp')
         .component('tdUserDetails', {
-            controller: function () {
+            controller: function ($scope) {
                 var self = this;
 
-                this.isSatisfy = null;
+                self.isStepValid = null;
 
                 this.$onInit = function () {
                     if (self.userData.user.email === null) {
-                        this.isSatisfy = false;
+                        self.isStepValid = false;
                     }
                 };
 
-                this.satisfyStep = function () {
+                this.validateStep = function () {
+                    self.isStepValid = true;
+                    return;
                     if (self.userData.user.email === null) {
-                        this.isSatisfy = false;
+                        self.isStepValid = false;
                     } else {
-                        this.isSatisfy = true;
+                        self.isStepValid = true;
                     }
                 };
 
-                this.createAccountAndMakeBooking = function () {
-                    self.satisfyStep();
+                $scope.makeBooking = function () {
+                    self.validateStep();
 
-                    if (self.isSatisfy) {
-                        self.completeStep({tabId: this.tabId});
+                    if (self.isStepValid) {
+                        // self.completeStep({tabId: self.tabId});
                         self.completeForm();
                     }
                 };

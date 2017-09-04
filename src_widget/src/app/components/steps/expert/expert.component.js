@@ -13,7 +13,7 @@
                 var dummyExperts = [{
                     photo_url: '/img/dummy-expert-2.png',
                     title: 'George Reese',
-                    description: 'As a certified automotive specialist, George will be happy to help you make the right decisions.'
+                    description: 'With over 10 years experience in the industry Joe has invaluable knowledge in give.'
                 }, {
                     photo_url: '/img/dummy-expert-1.png',
                     title: 'Joe Rowe',
@@ -21,11 +21,11 @@
                 }, {
                     photo_url: '/img/dummy-expert-4.png',
                     title: 'Gregory May',
-                    description: 'Head of sales'
+                    description: 'With over 10 years experience in the industry Joe has invaluable knowledge in give.'
                 }, {
                     photo_url: '/img/dummy-expert-3.png',
                     title: 'Rhoda Hogan',
-                    description: 'Rhoda has a bubbly personality to make any test drive a not to be missed experience.'
+                    description: 'With over 10 years experience in the industry Joe has invaluable knowledge in give.'
                 }];
 
                 $scope.experts = dummyExperts;
@@ -45,7 +45,6 @@
 
                 $scope.nextStepInner = function () {
                     if (self.isStepValid) {
-                        console.log('13');
                         self.completeStep({tabId: self.tabId});
                     }
                 };

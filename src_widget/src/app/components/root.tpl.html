@@ -1,7 +1,7 @@
 <div class="container-fluid">
     <div class="row">
         <td-wizard-navigation-tab
-                class="col no-padding"
+                class="col p-0"
                 ng-repeat="tab in widgetTabs"
                 tab-id="tab.id"
                 title="tab.title"
@@ -11,15 +11,11 @@
     </div>
 
     <div class="row bg-light" ng-if="!globalState.isFormCompleted">
-
         <td-wizard-tab-content class="col td-wizard"></td-wizard-tab-content>
         <td-sidebar class="col-3 td-car-details d-none d-md-block"
                     user-data="userData">
         </td-sidebar>
     </div>
-
-
-    <td-complete-step ng-if="$ctrl.globalState.isFormCompleted">
+    <td-complete-step ng-if="globalState.isFormCompleted">
     </td-complete-step>
-
 </div>

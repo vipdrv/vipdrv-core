@@ -3,57 +3,52 @@
         .component('tdBeverage', {
             controller: function ($scope, api) {
                 var self = this;
-                self.beverages = [];
-                this.isSatisfy = null;
+
+                self.isStepValid = null;
 
                 var dummyBeverages = [{
                     photo_url: '/img/dummy-drink-water.png',
-                    title: 'George Reese',
-                    description: 'As a certified automotive specialist, George will be happy to help you make the right decisions.'
+                    title: 'Blue water 1',
+                    description: 'Water is a transparent and nearly colorless chemical substance that is the main constituent of Earth'
                 }, {
                     photo_url: '/img/dummy-drink-water.png',
-                    title: 'Joe Rowe',
-                    description: 'With over 10 years experience in the industry Joe has invaluable knowledge in give.'
+                    title: 'Blue water 2',
+                    description: 'Water is a transparent and nearly colorless chemical substance that is the main constituent of Earth'
                 }, {
                     photo_url: '/img/dummy-drink-water.png',
-                    title: 'Gregory May',
-                    description: 'Head of sales'
+                    title: 'Blue water 3',
+                    description: 'Water is a transparent and nearly colorless chemical substance that is the main constituent of Earth'
                 }, {
                     photo_url: '/img/dummy-drink-water.png',
-                    title: 'Rhoda Hogan',
-                    description: 'Rhoda has a bubbly personality to make any test drive a not to be missed experience.'
+                    title: 'Blue water 4',
+                    description: 'Water is a transparent and nearly colorless chemical substance that is the main constituent of Earth'
                 }];
 
                 $scope.beverages = dummyBeverages;
 
-                function didLoadBeverages(json) {
-                    self.beverages = json.beverages;
-                }
-
-                this.$onInit = function () {
+                self.$onInit = function () {
                     if (self.userData.beverage.title === null) {
                         this.isSatisfy = false;
                     }
-
-                    // api.loadBeverages().then(didLoadBeverages)
                 };
 
-                this.beverageChanged = function (expertTitle) {
+                $scope.itemChanged = function (expertTitle) {
                     self.userData.beverage.title = expertTitle;
-                    self.satisfyStep();
+                    self.validateStep();
                 };
 
-                this.satisfyStep = function () {
+                this.validateStep = function () {
                     if (self.userData.beverage.title === null) {
-                        this.isSatisfy = false;
+                        self.isStepValid = false;
                     } else {
-                        this.isSatisfy = true;
+                        self.isStepValid = true;
                     }
                 };
 
-                this.completeStepInner = function () {
-                    if (self.isSatisfy) {
-                        self.completeStep({tabId: this.tabId});
+                $scope.nextStepInner = function () {
+                    self.validateStep();
+                    if (self.isStepValid) {
+                        self.completeStep({tabId: self.tabId});
                     }
                 };
             },

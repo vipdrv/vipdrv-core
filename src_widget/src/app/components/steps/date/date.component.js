@@ -6,14 +6,13 @@
 
                 self.isStepValid = true;
 
-
                 this.validateStep = function () {
 
                 };
 
-                this.nextStepInner = function () {
+                $scope.nextStepInner = function () {
                     if (self.isStepValid) {
-                        self.completeStep({tabId: this.tabId});
+                        self.completeStep({tabId: self.tabId});
                     }
                 };
             },

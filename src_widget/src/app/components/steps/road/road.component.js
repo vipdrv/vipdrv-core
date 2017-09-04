@@ -1,54 +1,55 @@
 (function () {
     angular.module('myApp')
         .component('tdRoad', {
-            controller: function (api) {
+            controller: function ($scope, api) {
                 var self = this;
-                self.roads = [];
-                this.isSatisfy = null;
 
-                function didLoadRoads(json) {
-                    self.roads = json.routes;
-                }
+                self.isStepValid = null;
 
-                this.$onInit = function () {
+                var dummyBeverages = [{
+                    photo_url: '/img/dummy-drink-water.png',
+                    title: 'Road 1',
+                    description: 'Water is a transparent and nearly colorless chemical substance that is the main constituent of Earth'
+                }, {
+                    photo_url: '/img/dummy-drink-water.png',
+                    title: 'Road 2',
+                    description: 'Water is a transparent and nearly colorless chemical substance that is the main constituent of Earth'
+                }, {
+                    photo_url: '/img/dummy-drink-water.png',
+                    title: 'Road 3',
+                    description: 'Water is a transparent and nearly colorless chemical substance that is the main constituent of Earth'
+                }, {
+                    photo_url: '/img/dummy-drink-water.png',
+                    title: 'Road 4',
+                    description: 'Water is a transparent and nearly colorless chemical substance that is the main constituent of Earth'
+                }];
+
+                $scope.items = dummyBeverages;
+
+                self.$onInit = function () {
                     if (self.userData.road.title === null) {
                         this.isSatisfy = false;
                     }
-
-                    api.loadRoads().then(didLoadRoads)
                 };
 
-                // this.roads = [{
-                //     image: '/img/dummy-road-1.png',
-                //     title: 'Town roads',
-                //     desc: "You'd prefer busier street, with stop-and-start traffic for your test drive."
-                // }, {
-                //     image: '/img/dummy-road-1.png',
-                //     title: 'Country roads',
-                //     desc: "Your'd prefer quiet roads out the way of the city traffic for your test drive."
-                // }, {
-                //     image: '/img/dummy-road-1.png',
-                //     title: 'Motorway',
-                //     desc: "You'd prefer faster roads where you can pick up the speed on your test drive."
-                // }];
-
-                this.expertChanged = function (expertTitle) {
-                    self.userData.road.title = expertTitle;
-                    self.satisfyStep();
+                $scope.itemChanged = function (itemTitle) {
+                    console.log(itemTitle);
+                    self.userData.road.title = itemTitle;
+                    self.validateStep();
                 };
 
-
-                this.satisfyStep = function () {
+                this.validateStep = function () {
                     if (self.userData.road.title === null) {
-                        this.isSatisfy = false;
+                        self.isStepValid = false;
                     } else {
-                        this.isSatisfy = true;
+                        self.isStepValid = true;
                     }
                 };
 
-                this.completeStepInner = function () {
-                    if (self.isSatisfy) {
-                        self.completeStep({tabId: this.tabId});
+                $scope.nextStepInner = function () {
+                    self.validateStep();
+                    if (self.isStepValid) {
+                        self.completeStep({tabId: self.tabId});
                     }
                 };
             },
