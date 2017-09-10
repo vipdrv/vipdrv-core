@@ -11,7 +11,7 @@
                 <button type="button"
                         class="btn btn-outline-success btn-sm"
                         translate
-                        (click)="modalOpenCreate()">
+                        (click)="modalOpenCreate(); $event.stopPropagation();">
                     general.actions.text_create
                 </button>
             </th>
@@ -31,30 +31,30 @@
             <td>
                 <input type="checkbox"
                        class="checkbox-success"
-                       (click)="onChangeEntityActivity(item)"
+                       (click)="onChangeEntityActivity(item); $event.stopPropagation();"
                        [ngModel]="item.isActive">
             </td>
             <td>
                 <i class="fa fa-chevron-up"
                    aria-hidden="true"
                    *ngIf="canDecrementOrder(item)"
-                   (click)="decrementOrder(item)"></i>
+                   (click)="decrementOrder(item); $event.stopPropagation();"></i>
                 <i class="fa fa-chevron-down"
                    aria-hidden="true"
                    *ngIf="canIncrementOrder(item)"
-                   (click)="incrementOrder(item)"></i>
+                   (click)="incrementOrder(item); $event.stopPropagation();"></i>
             </td>
             <td class="experts-table-body-column-actions">
                 <button type="button"
                         class="btn btn-outline-primary btn-sm"
                         translate
-                        (click)="modalOpenEdit(item.id)">
+                        (click)="modalOpenEdit(item.id); $event.stopPropagation();">
                     general.actions.text_edit
                 </button>
                 <button type="button"
                         class="btn btn-outline-danger btn-sm"
                         translate
-                        (click)="deleteEntity(item.id)">
+                        (click)="deleteEntity(item.id); $event.stopPropagation();">
                     general.actions.text_delete
                 </button>
             </td>

@@ -1,4 +1,5 @@
 import { Component, OnInit, Input, ViewChild } from '@angular/core';
+import { Router} from '@angular/router';
 import { ModalComponent } from 'ng2-bs3-modal/ng2-bs3-modal';
 import { Variable, IAuthorizationManager, AuthorizationManager } from './../../../utils/index';
 import { SiteEntity } from './../../../entities/index';
@@ -6,7 +7,7 @@ import { ISiteApiService, SiteApiService, GetAllResponse } from './../../../serv
 @Component({
     selector: 'sites-table',
     styleUrls: ['./sitesTable.scss'],
-    templateUrl: './sitesTable.html',
+    templateUrl: './sitesTable.html'
 })
 export class SitesTableComponent implements OnInit {
     @Input() pageNumber: number;
@@ -20,24 +21,35 @@ export class SitesTableComponent implements OnInit {
     private _defaultPageSize: number = 25;
     private _defaultSorting: string = 'name asc';
     private _defaultFilter: any = null;
-    private _isInitialized: boolean;
+    private _isInitialized: boolean = false;
     protected totalCount: number;
     protected items: Array<SiteEntity>;
     protected selectedEntity: SiteEntity;
     /// injected dependencies
     protected authorizationManager: IAuthorizationManager;
     protected siteApiService: ISiteApiService;
+    protected router: Router;
     /// ctor
-    constructor(authorizationManager: AuthorizationManager, siteApiService: SiteApiService) {
+    constructor(authorizationManager: AuthorizationManager, siteApiService: SiteApiService, router: Router) {
         this.authorizationManager = authorizationManager;
         this.siteApiService = siteApiService;
-        this._isInitialized = false;
+        this.router = router;
     }
     /// methods
     ngOnInit(): void {
         let self = this;
+        self._isInitialized = false;
         self.getAllEntities()
             .then(() => self._isInitialized = true);
+    }
+    protected redirectToEntityDetails(entity: SiteEntity): Promise<boolean> {
+        let actionPromise: Promise<boolean>;
+        if (Variable.isNotNullOrUndefined(entity)) {
+            actionPromise = this.router.navigate([`./pages/sites/${String(entity.id)}`]);
+        } else {
+            actionPromise = Promise.resolve(false);
+        }
+        return actionPromise;
     }
     protected getAllEntities(): Promise<void> {
         let self = this;
