@@ -20,7 +20,13 @@
         <tbody>
         <tr *ngFor="let item of items"
             ngClass="{{getEntityRowClass(item)}}">
-            <td>{{item.photoUrl}}</td>
+            <td>
+                <img class="rounded-circle"
+                     alt="no photo"
+                     [src]="item.photoUrl"
+                     [width]="50"
+                     [height]="50">
+            </td>
             <td>{{item.name}}</td>
             <td>
                 <input type="checkbox"
@@ -57,7 +63,104 @@
         <div *ngIf="isSelectedEntityDefined()">
             <div class="row">
                 <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-                    image cropper component
+                    <div class="expert-avatar-image">
+                        <img class="rounded-circle"
+                             [src]="getAvatar()"
+                             [width]="avatarWidth"
+                             [height]="avatarHeight">
+                    </div>
+                    <div class="expert-avatar-btns"
+                         *ngIf="showAvatarButtons">
+                        <button type="button"
+                                class="btn btn-sm btn-secondary"
+                                (click)="browseAvatar()">
+                            <span translate>experts.modal.browseAvatar</span>
+                        </button>
+                        <button type="button"
+                                class="btn btn-sm btn-secondary"
+                                (click)="changeAvatarUrl()">
+                            <span translate>experts.modal.changeAvatarUrl</span>
+                        </button>
+                    </div>
+                    <div class="expert-avatar-change-url"
+                         *ngIf="showAvatarChangeUrl">
+                        <div class="row">
+                            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                                <div class="form-group row">
+                                    <label class="col-2 col-form-label"
+                                           for="expertPhotoUrl"
+                                           translate>
+                                        experts.modal.expertPhotoUrl
+                                    </label>
+                                    <div class="col-10">
+                                        <input id="expertPhotoUrl"
+                                               type="text"
+                                               class="form-control"
+                                               placeholder="http://www.google.com/avatar.jpg"
+                                               [(ngModel)]="stubAvatarUrl">
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                                        <button type="button"
+                                                style="margin-left: 2px; margin-right: 2px;"
+                                                class="btn btn-sm btn-primary pull-right"
+                                                (click)="changeAvatarUrlAccept()">
+                                            <span translate>experts.modal.changeAvatarUrlAccept</span>
+                                        </button>
+                                        <button type="button"
+                                                style="margin-left: 2px; margin-right: 2px;"
+                                                class="btn btn-sm btn-default pull-right"
+                                                (click)="changeAvatarUrlCancel()">
+                                            <span translate>experts.modal.changeAvatarUrlCancel</span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="expert-avatar-browse"
+                         *ngIf="showAvatarBrowse">
+                        <div class="row">
+                            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                                <div class="row">
+                                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                                        <label class="custom-file">
+                                            <input type="file"
+                                                   id="avatar-browse-file"
+                                                   class="custom-file-input"
+                                                   (change)="avatarBrowseFileChangeListener($event)">
+                                            <span class="custom-file-control"></span>
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                                        <img-cropper #cropper
+                                                     [image]="avatarCropperData"
+                                                     [settings]="avatarCropperSettings">
+                                        </img-cropper>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                                        <button type="button"
+                                                style="margin-left: 2px; margin-right: 2px;"
+                                                class="btn btn-sm btn-primary pull-right"
+                                                (click)="showAvatarBrowseAccept()">
+                                            <span translate>experts.modal.avatarBrowseAccept</span>
+                                        </button>
+                                        <button type="button"
+                                                style="margin-left: 2px; margin-right: 2px;"
+                                                class="btn btn-sm btn-default pull-right"
+                                                (click)="showAvatarBrowseCancel()">
+                                            <span translate>experts.modal.avatarBrowseCancel</span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
             <hr>
@@ -83,7 +186,7 @@
                 <div class="col-10">
                     <textarea id="expertDescription"
                               type="text"
-                              class="form-control"
+                              class="form-control not-resizable-text-area"
                               rows="5"
                               [(ngModel)]="selectedEntity.description"></textarea>
                 </div>
@@ -117,9 +220,12 @@
                 </div>
             </div>
             <hr>
-            <div class="row">
+            <div class="row"
+                 *ngIf="selectedEntity.workingHours">
                 <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-                    working hours component
+                    <working-hours [workingHours]="selectedEntity.workingHours"
+                                   (workingHoursChanged)='onWorkingHoursChanged($event)'>
+                    </working-hours>
                 </div>
             </div>
         </div>

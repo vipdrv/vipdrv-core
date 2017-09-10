@@ -1,0 +1,20 @@
+<div class="working-hour-template">
+    <div class="row">
+        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+            working hours old: {{workingHours}}
+            <br>
+            working hours actual: {{actualWorkingHours}}
+            <br>
+            <button type="button"
+                    class="btn btn-sm btn-default"
+                    (click)="undoChanges()">
+                <span translate>utils.components.workingHours.cancel</span>
+            </button>
+            <button type="button"
+                    class="btn btn-sm btn-primary"
+                    (click)="submitWorkingHours()">
+                <span translate>utils.components.workingHours.apply</span>
+            </button>
+        </div>
+    </div>
+</div>

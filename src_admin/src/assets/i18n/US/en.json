@@ -21,6 +21,14 @@
       }
     }
   },
+  "utils": {
+    "components":{
+     "workingHours": {
+       "cancel": "Undo changes",
+       "apply": "Save"
+     }
+    }
+  },
   "home": {
 
   },
@@ -91,6 +99,13 @@
       "title": "Expert details",
       "cancel": "Cancel",
       "apply": "Save",
+      "browseAvatar": "Browse",
+      "changeAvatarUrl": "Set url",
+      "changeAvatarUrlCancel": "Cancel",
+      "changeAvatarUrlAccept": "Accept",
+      "avatarBrowseAccept": "Accept",
+      "avatarBrowseCancel": "Cancel",
+      "expertPhotoUrl": "Url",
       "expertName": "Name",
       "expertDescription": "Description",
       "linkedinUrl": "Linkedin",

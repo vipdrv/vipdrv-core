@@ -3,7 +3,6 @@ import { ActivatedRoute } from '@angular/router';
 import { Variable } from './../../../utils/index';
 import { SiteEntity } from './../../../entities/index';
 import { ISiteApiService, SiteApiService } from './../../../services/serverApi/index';
-import {variable} from "@angular/compiler/src/output/output_ast";
 @Component({
     selector: 'site-details',
     styleUrls: ['./siteDetails.scss'],

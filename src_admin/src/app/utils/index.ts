@@ -15,3 +15,5 @@ export * from './logging/i-logger';
 export * from './logging/base.logger';
 export * from './logging/log-level';
 export * from './logging/console/console.logger';
+
+export { WorkingHoursComponent } from './components/working-hours/workingHours.component';
