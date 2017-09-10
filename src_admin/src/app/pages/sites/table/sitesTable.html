@@ -1,9 +1,4 @@
 <div class="sites-table-template">
-    <div class="row">
-        <div class="sites-table-title">
-            <span class="sites-table-title-text" translate>sites.table.title</span>
-        </div>
-    </div>
     <table class="sites-table-body table table-bordered table-hover"
            *ngIf="isInitialized()">
         <thead>
@@ -42,6 +37,7 @@
         </tbody>
     </table>
 </div>
+
 <modal #siteDetailsModal
        [backdrop]="'static'">
     <modal-header>

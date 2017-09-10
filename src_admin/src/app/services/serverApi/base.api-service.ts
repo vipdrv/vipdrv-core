@@ -1,7 +1,7 @@
 import { ILogger, IHttpService } from './../../utils/index';
 import { IApiService } from './i-api-service';
 import { UrlParameter } from './urlParameter';
-import {environment} from '../../../environments/environment';
+import { environment } from '../../../environments/environment';
 
 // import {environment} from "../../environments/environment";
 /// base abstraction of api-service

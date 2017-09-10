@@ -1,48 +1,43 @@
-<div class="leads-table-template">
-    <div class="row">
-        <div class="leads-table-title">
-            <span class="leads-table-title-text" translate>leads.table.title</span>
-        </div>
-    </div>
-    <div *ngIf="isInitialized()">
-        <table class="leads-table-body table table-bordered table-hover">
-            <thead>
-            <tr>
-                <th translate>leads.table.headerText_received</th>
-                <th translate>leads.table.headerText_siteName</th>
-                <th translate>leads.table.headerText_userEmail</th>
-                <th translate>leads.table.headerText_userPhone</th>
-                <th translate>leads.table.headerText_expertName</th>
-                <th translate>leads.table.headerText_roadName</th>
-                <th translate>leads.table.headerText_beverageName</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr *ngFor="let item of items"
-                (click)="modalOpenInfo(item.id)">
-                <td>{{item.recievedUtc}}</td>
-                <td>{{item.siteName}}</td>
-                <td>{{item.userEmail}}</td>
-                <td>{{item.userPhone}}</td>
-                <td>{{item.expertName}}</td>
-                <td>{{item.routeName}}</td>
-                <td>{{item.beverageName}}</td>
-            </tr>
-            </tbody>
-        </table>
-        <button type="button"
-                disabled
-                class="btn btn-outline-primary btn-sm pull-right leads-export-btn"
-                data-dismiss="modal"
-                (click)="exportDataToExcel()">
-            <span translate>leads.table.btnText_exportToExcel</span>
-        </button>
-    </div>
+<div class="leads-table-template"
+     *ngIf="isInitialized()">
+    <table class="leads-table-body table table-bordered table-hover">
+        <thead>
+        <tr>
+            <th translate>leads.table.headerText_received</th>
+            <th translate>leads.table.headerText_siteName</th>
+            <th translate>leads.table.headerText_userEmail</th>
+            <th translate>leads.table.headerText_userPhone</th>
+            <th translate>leads.table.headerText_expertName</th>
+            <th translate>leads.table.headerText_roadName</th>
+            <th translate>leads.table.headerText_beverageName</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let item of items"
+            (click)="modalOpenInfo(item.id)">
+            <td>{{item.recievedUtc}}</td>
+            <td>{{item.siteName}}</td>
+            <td>{{item.userEmail}}</td>
+            <td>{{item.userPhone}}</td>
+            <td>{{item.expertName}}</td>
+            <td>{{item.routeName}}</td>
+            <td>{{item.beverageName}}</td>
+        </tr>
+        </tbody>
+    </table>
+    <button type="button"
+            disabled
+            class="btn btn-outline-primary btn-sm pull-right leads-export-btn"
+            data-dismiss="modal"
+            (click)="exportDataToExcel()">
+        <span translate>leads.table.btnText_exportToExcel</span>
+    </button>
 </div>
+
 <modal #leadDetailsInfoModal
        [backdrop]="'static'">
     <modal-header>
-        <span class="leads-modal-header-text" translate>leads.modal.title</span>
+        <span class="lead-modal-header-text" translate>leads.modal.title</span>
     </modal-header>
     <modal-body>
         <div *ngIf="isSelectedEntityDefined()">

@@ -7,9 +7,12 @@ import { NgaModule } from '../../theme/nga.module';
 
 import { Ng2Bs3ModalModule } from 'ng2-bs3-modal/ng2-bs3-modal';
 
-import { LeadsTableComponent } from './table/leadsTable.component';
-import { LeadsComponent } from './leads.component';
-import { routing } from './leads.routing';
+import { UtilsModule } from './../../utils/index';
+import { ExpertsTableComponent } from './table/expertsTable.component';
+
+import { ExpertsComponent } from './experts.component';
+import { routing } from './experts.routing';
+
 @NgModule({
     imports: [
         CommonModule,
@@ -17,16 +20,17 @@ import { routing } from './leads.routing';
         AppTranslationModule,
         NgaModule,
         routing,
+        UtilsModule,
         Ng2Bs3ModalModule
     ],
     exports: [
-        LeadsComponent,
-        LeadsTableComponent
+        ExpertsComponent,
+        ExpertsTableComponent
     ],
     declarations: [
-        LeadsComponent,
-        LeadsTableComponent
+        ExpertsComponent,
+        ExpertsTableComponent
     ],
     providers: []
 })
-export class LeadsModule {}
+export class ExpertsModule {}

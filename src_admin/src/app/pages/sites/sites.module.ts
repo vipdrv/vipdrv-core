@@ -10,6 +10,11 @@ import { Ng2Bs3ModalModule } from 'ng2-bs3-modal/ng2-bs3-modal';
 import { UtilsModule } from './../../utils/index';
 import { SitesTableComponent } from './table/sitesTable.component';
 
+import { ExpertsModule } from './../experts/index';
+
+import { SiteDetailsComponent } from './details/siteDetails.component';
+import { SiteOverviewComponent } from './overview/siteOverview.component';
+
 import { SitesComponent } from './sites.component';
 import { routing } from './sites.routing';
 
@@ -21,14 +26,20 @@ import { routing } from './sites.routing';
         NgaModule,
         routing,
         UtilsModule,
-        Ng2Bs3ModalModule
+        Ng2Bs3ModalModule,
+        ExpertsModule
     ],
     exports: [
-
+        SitesComponent,
+        SitesTableComponent,
+        SiteDetailsComponent,
+        SiteOverviewComponent
     ],
     declarations: [
         SitesComponent,
-        SitesTableComponent
+        SitesTableComponent,
+        SiteDetailsComponent,
+        SiteOverviewComponent
     ],
     providers: []
 })

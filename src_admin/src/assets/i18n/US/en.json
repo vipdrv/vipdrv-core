@@ -13,16 +13,24 @@
       "text_create": "create",
       "text_edit": "edit",
       "text_delete": "delete"
+    },
+    "table":{
+      "headerText": {
+        "activity": "Is active",
+        "order": "Order"
+      }
     }
   },
   "home": {
+
   },
   "integration": {
 
   },
   "leads": {
+    "title": "Leads",
     "modal": {
-      "title": "Lead detalization",
+      "title": "Lead details",
       "siteName": "Site name: ",
       "received": "Received: ",
       "userName": "Name: ",
@@ -34,7 +42,6 @@
       "cancel": "Close"
     },
     "table": {
-      "title": "Leads",
       "btnText_exportToExcel": "Export to Excel",
       "headerText_received": "Recieved",
       "headerText_siteName": "Site",
@@ -46,21 +53,50 @@
     }
   },
   "sites": {
+    "title": "Sites",
     "modal": {
-      "title": "Site detalization",
+      "title": "Site details",
       "siteName": "Name",
       "siteUrl": "Url",
       "cancel": "Cancel",
       "apply": "Save"
     },
     "table": {
-      "title": "Sites",
       "headerText_siteName": "Site name",
       "headerText_leads": "Leads amount",
       "headerText_actions": "Actions"
+    },
+    "overview":{
+      "siteId": "Site id"
+    },
+    "details": {
+      "title": "Sites",
+      "tabs":{
+        "overview": "Overview",
+        "experts": "Experts",
+        "beverages": "Beverages",
+        "routes": "Routes",
+        "notifications": "Notifications",
+        "theme": "Theme"
+      }
     }
   },
-  "test":{
-    "btnViewer": "Button viewer"
+  "experts": {
+    "title": "Experts",
+    "table": {
+      "headerText_avatar": "Avatar",
+      "headerText_expertName": "Expert name"
+    },
+    "modal": {
+      "title": "Expert details",
+      "cancel": "Cancel",
+      "apply": "Save",
+      "expertName": "Name",
+      "expertDescription": "Description",
+      "linkedinUrl": "Linkedin",
+      "facebookUrl": "Facebook",
+      "expertActivity": "Is active",
+      "expertOrder": "Order"
+    }
   }
 }
