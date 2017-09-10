@@ -41,7 +41,8 @@
       "title": "Lead details",
       "siteName": "Site name: ",
       "received": "Received: ",
-      "userName": "Name: ",
+      "firstName": "First name: ",
+      "secondName": "Second name: ",
       "userEmail": "Email: ",
       "userPhone": "Phone: ",
       "expertName": "Expert: ",
@@ -51,6 +52,8 @@
     },
     "table": {
       "btnText_exportToExcel": "Export to Excel",
+      "headerText_firstName": "First name",
+      "headerText_secondName": "Second name",
       "headerText_received": "Recieved",
       "headerText_siteName": "Site",
       "headerText_userEmail": "Email",
