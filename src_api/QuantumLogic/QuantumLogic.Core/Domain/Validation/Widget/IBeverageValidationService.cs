@@ -2,6 +2,6 @@
 
 namespace QuantumLogic.Core.Domain.Validation.Widget
 {
-    public interface IBeverageValidationService : IEntityValidationService<Beverage, int>
+    public interface IBeverageValidationService : IEntityExtendedValidationService<Beverage, int>
     { }
 }

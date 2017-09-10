@@ -92,26 +92,6 @@ export class ExpertsTableComponent implements OnInit {
             });
         return operationPromise;
     }
-    protected changeEntityActivity(item: ExpertEntity): Promise<void> {
-        let actionPromise: Promise<void>;
-        if (Variable.isNotNullOrUndefined(item)) {
-            /// add server api (for change activity) and use it here
-            actionPromise = Promise.resolve();
-        } else {
-            actionPromise = Promise.resolve();
-        }
-        return actionPromise;
-    }
-    protected changeEntityOrder(item: ExpertEntity): Promise<void> {
-        let actionPromise: Promise<void>;
-        if (Variable.isNotNullOrUndefined(item)) {
-            /// add server api (for change order) and use it here
-            actionPromise = Promise.resolve();
-        } else {
-            actionPromise = Promise.resolve();
-        }
-        return actionPromise;
-    }
     protected deleteEntity(id: number): Promise<void> {
         let self = this;
         let operationPromise = self.expertApiService
@@ -123,13 +103,82 @@ export class ExpertsTableComponent implements OnInit {
             });
         return operationPromise;
     }
+    // activity
+    protected onChangeEntityActivity(entity: ExpertEntity): void {
+        if (Variable.isNotNullOrUndefined(entity)) {
+            entity.isActive = !entity.isActive;
+            // TODO: after adding spinners should disable updating activity for this entity until promise ends
+            this.commitChangeEntityActivity(entity);
+        }
+    }
+    protected commitChangeEntityActivity(entity: ExpertEntity): Promise<void> {
+        let actionPromise: Promise<void>;
+        if (Variable.isNotNullOrUndefined(entity)) {
+            actionPromise = this.expertApiService
+                .patchActivity(entity.id, entity.isActive)
+                .then(function(): void { });
+        } else {
+            actionPromise = Promise.resolve();
+        }
+        return actionPromise;
+    }
+    // order
+    protected canIncrementOrder(entity: ExpertEntity): boolean {
+        return this.items.findIndex((item) => item.id === entity.id) < (this.items.length - 1);
+    }
+    protected canDecrementOrder(entity: ExpertEntity): boolean {
+        return this.items.findIndex((item) => item.id === entity.id) > 0;
+    }
+    protected incrementOrder(entity: ExpertEntity): void {
+        if (Variable.isNotNullOrUndefined(entity)) {
+            let entityIndex: number = this.items.findIndex((item) => item.id === entity.id);
+            if (entityIndex > -1 && entityIndex < this.items.length - 1) {
+                let newOrderValue: number = this.items[entityIndex].order + 1;
+                this.items[entityIndex + 1].order = this.items[entityIndex].order;
+                this.items[entityIndex].order = newOrderValue;
+                let stub = this.items[entityIndex];
+                this.items[entityIndex] = this.items[entityIndex + 1];
+                this.items[entityIndex + 1] = stub;
+                // TODO: after adding spinners should disable updating order for this entity until promise ends
+                this.commitChangeEntityOrder(this.items[entityIndex]);
+                this.commitChangeEntityOrder(this.items[entityIndex + 1]);
+            }
+        }
+    }
+    protected decrementOrder(entity: ExpertEntity): void {
+        if (Variable.isNotNullOrUndefined(entity)) {
+            let entityIndex: number = this.items.findIndex((item) => item.id === entity.id);
+            if (entityIndex > 0 && this.items.length > 1) {
+                let newOrderValue: number = this.items[entityIndex].order - 1;
+                this.items[entityIndex - 1].order = this.items[entityIndex].order;
+                this.items[entityIndex].order = newOrderValue;
+                let stub = this.items[entityIndex];
+                this.items[entityIndex] = this.items[entityIndex - 1];
+                this.items[entityIndex - 1] = stub;
+                // TODO: after adding spinners should disable updating order for this entity until promise ends
+                this.commitChangeEntityOrder(this.items[entityIndex - 1]);
+                this.commitChangeEntityOrder(this.items[entityIndex]);
+            }
+        }
+    }
+    protected commitChangeEntityOrder(entity: ExpertEntity): Promise<void> {
+        let actionPromise: Promise<void>;
+        if (Variable.isNotNullOrUndefined(entity)) {
+            actionPromise = this.expertApiService
+                .patchOrder(entity.id, entity.order)
+                .then(function(): void { });
+        } else {
+            actionPromise = Promise.resolve();
+        }
+        return actionPromise;
+    }
     // modal
     protected modalOpenCreate(): Promise<void> {
         let self = this;
         self.selectedEntity = new ExpertEntity();
         self.selectedEntity.siteId = this.siteId;
         self.selectedEntity.isActive = true;
-        self.selectedEntity.order = 0;
+        self.selectedEntity.order = this.getNewEntityOrder();
         self.modal.open();
         return Promise.resolve();
     }
@@ -241,6 +290,13 @@ export class ExpertsTableComponent implements OnInit {
     }
     private buildFilter(): any {
         return Variable.isNotNullOrUndefined(this.filter) ? this.filter : this._defaultFilter;
+    }
+    private getNewEntityOrder(): number {
+        let maxOrder: number = this.items.length > 0 ? this.items[0].order : 0;
+        for (let i: number = 1; i < this.items.length; i++) {
+            maxOrder = this.items[i].order > maxOrder ? this.items[i].order : maxOrder;
+        }
+        return maxOrder === 0 ? 0 : maxOrder + 1;
     }
     private initializeAvatarCropper(): void {
         this.avatarCropperSettings = new CropperSettings();

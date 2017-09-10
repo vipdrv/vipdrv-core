@@ -4,7 +4,7 @@ using QuantumLogic.Core.Domain.Policy.WidgetModule;
 
 namespace QuantumLogic.WebApi.Policy.Widget
 {
-    public class BeveragePolicy : NullEntityPolicy<Beverage, int>, IBeveragePolicy
+    public class BeveragePolicy : NullEntityExtendedPolicy<Beverage, int>, IBeveragePolicy
     {
         #region Ctors
 

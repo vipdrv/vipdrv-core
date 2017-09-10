@@ -31,9 +31,19 @@
             <td>
                 <input type="checkbox"
                        class="checkbox-success"
-                       [(ngModel)]="item.isActive">
+                       (click)="onChangeEntityActivity(item)"
+                       [ngModel]="item.isActive">
             </td>
-            <td>{{item.order}}</td>
+            <td>
+                <i class="fa fa-chevron-up"
+                   aria-hidden="true"
+                   *ngIf="canDecrementOrder(item)"
+                   (click)="decrementOrder(item)"></i>
+                <i class="fa fa-chevron-down"
+                   aria-hidden="true"
+                   *ngIf="canIncrementOrder(item)"
+                   (click)="incrementOrder(item)"></i>
+            </td>
             <td class="experts-table-body-column-actions">
                 <button type="button"
                         class="btn btn-outline-primary btn-sm"
@@ -186,8 +196,8 @@
                 <div class="col-10">
                     <textarea id="expertDescription"
                               type="text"
-                              class="form-control not-resizable-text-area"
-                              rows="5"
+                              class="form-control"
+                              rows="3"
                               [(ngModel)]="selectedEntity.description"></textarea>
                 </div>
             </div>

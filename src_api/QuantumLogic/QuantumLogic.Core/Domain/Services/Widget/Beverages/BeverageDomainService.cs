@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace QuantumLogic.Core.Domain.Services.Widget.Beverages
 {
-    public class BeverageDomainService : EntityDomainService<Beverage, int>, IBeverageDomainService
+    public class BeverageDomainService : EntityExtendedDomainService<Beverage, int>, IBeverageDomainService
     {
         #region Ctors
 

@@ -2,6 +2,6 @@
 
 namespace QuantumLogic.Core.Domain.Validation.Widget
 {
-    public interface IRouteValidationService : IEntityValidationService<Route, int>
+    public interface IRouteValidationService : IEntityExtendedValidationService<Route, int>
     { }
 }

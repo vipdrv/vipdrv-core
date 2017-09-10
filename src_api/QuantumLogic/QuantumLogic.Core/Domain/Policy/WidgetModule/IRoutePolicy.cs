@@ -2,6 +2,6 @@
 
 namespace QuantumLogic.Core.Domain.Policy.WidgetModule
 {
-    public interface IRoutePolicy : IEntityPolicy<Route, int>
+    public interface IRoutePolicy : IEntityExtendedPolicy<Route, int>
     { }
 }

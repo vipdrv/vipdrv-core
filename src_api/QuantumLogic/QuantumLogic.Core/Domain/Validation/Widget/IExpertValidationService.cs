@@ -2,6 +2,6 @@
 
 namespace QuantumLogic.Core.Domain.Validation.Widget
 {
-    public interface IExpertValidationService : IEntityValidationService<Expert, int>
+    public interface IExpertValidationService : IEntityExtendedValidationService<Expert, int>
     { }
 }
