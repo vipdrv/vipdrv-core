@@ -2,6 +2,6 @@
 
 namespace QuantumLogic.Core.Domain.Policy.WidgetModule
 {
-    public interface IBeveragePolicy : IEntityPolicy<Beverage, int>
+    public interface IBeveragePolicy : IEntityExtendedPolicy<Beverage, int>
     { }
 }

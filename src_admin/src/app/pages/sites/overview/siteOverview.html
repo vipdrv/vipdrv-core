@@ -1,0 +1,17 @@
+<div class="site-overview-template"
+     *ngIf="isEntityDefined()">
+    <div class="row site-overview-template-title">
+        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+            {{entity.name}}
+        </div>
+    </div>
+    <div class="row site-overview-template-info">
+        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+            <span class="site-overview-template-info-label"
+                  translate>
+                sites.overview.siteId
+            </span>:
+            <span class="site-overview-template-info-value">{{entity.beautyId}}</span>
+        </div>
+    </div>
+</div>

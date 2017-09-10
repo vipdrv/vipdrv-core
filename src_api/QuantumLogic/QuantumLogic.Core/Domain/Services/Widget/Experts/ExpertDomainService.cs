@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace QuantumLogic.Core.Domain.Services.Widget.Experts
 {
-    public class ExpertDomainService : EntityDomainService<Expert, int>, IExpertDomainService
+    public class ExpertDomainService : EntityExtendedDomainService<Expert, int>, IExpertDomainService
     {
         #region Ctors
 

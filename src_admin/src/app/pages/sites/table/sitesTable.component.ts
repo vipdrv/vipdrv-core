@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, Input, ViewChild } from '@angular/core';
 import { ModalComponent } from 'ng2-bs3-modal/ng2-bs3-modal';
 import { Variable, IAuthorizationManager, AuthorizationManager } from './../../../utils/index';
 import { SiteEntity } from './../../../entities/index';
@@ -9,9 +9,17 @@ import { ISiteApiService, SiteApiService, GetAllResponse } from './../../../serv
     templateUrl: './sitesTable.html',
 })
 export class SitesTableComponent implements OnInit {
+    @Input() pageNumber: number;
+    @Input() pageSize: number;
+    @Input() sorting: string;
+    @Input() filter: any;
     @ViewChild('siteDetailsModal')
     protected modal: ModalComponent;
     /// fields
+    private _defaultPageNumber: number = 0;
+    private _defaultPageSize: number = 25;
+    private _defaultSorting: string = 'name asc';
+    private _defaultFilter: any = null;
     private _isInitialized: boolean;
     protected totalCount: number;
     protected items: Array<SiteEntity>;
@@ -34,7 +42,7 @@ export class SitesTableComponent implements OnInit {
     protected getAllEntities(): Promise<void> {
         let self = this;
         let operationPromise = self.siteApiService
-            .getAll(0, 25, 'name asc', null)
+            .getAll(self.getPageNumber(), self.getPageSize(), self.buildSorting(), self.buildFilter())
             .then(function (response: GetAllResponse<SiteEntity>): Promise<void> {
                 self.totalCount = response.totalCount;
                 self.items = response.items;
@@ -99,5 +107,18 @@ export class SitesTableComponent implements OnInit {
     }
     protected isSelectedEntityDefined(): boolean {
         return Variable.isNotNullOrUndefined(this.selectedEntity);
+    }
+    /// helpers
+    private getPageNumber(): number {
+        return Variable.isNotNullOrUndefined(this.pageNumber) ? this.pageNumber : this._defaultPageNumber;
+    }
+    private getPageSize(): number {
+        return Variable.isNotNullOrUndefined(this.pageSize) ? this.pageSize : this._defaultPageSize;
+    }
+    private buildSorting(): string {
+        return Variable.isNotNullOrUndefined(this.sorting) ? this.sorting : this._defaultSorting;
+    }
+    private buildFilter(): any {
+        return Variable.isNotNullOrUndefined(this.filter) ? this.filter : this._defaultFilter;
     }
 }

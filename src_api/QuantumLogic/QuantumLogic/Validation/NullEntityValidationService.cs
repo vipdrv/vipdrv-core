@@ -16,17 +16,14 @@ namespace QuantumLogic.WebApi.Validation
         {
             return true;
         }
-
         protected override bool ValidateCreate(TEntity entity, bool throwValidationException)
         {
             return ValidateEntity(entity, throwValidationException);
         }
-
         protected override bool ValidateUpdate(TEntity oldEntity, TEntity actualEntity, bool throwValidationException)
         {
             return ValidateEntity(actualEntity, throwValidationException);
         }
-
         protected override bool ValidateDelete(TEntity entity, bool throwValidationException)
         {
             return ValidateEntity(entity, throwValidationException);

@@ -2,6 +2,6 @@
 
 namespace QuantumLogic.Core.Domain.Services.Widget.Routes
 {
-    public interface IRouteDomainService : IEntityDomainService<Route, int>
+    public interface IRouteDomainService : IEntityExtendedDomainService<Route, int>
     { }
 }

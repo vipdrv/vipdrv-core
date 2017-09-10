@@ -26,22 +26,18 @@ namespace QuantumLogic.WebApi.Policy
         {
             return true;
         }
-
         protected override bool CanDelete(TEntity entity, bool throwEntityPolicyException)
         {
             return true;
         }
-
         protected override bool CanRetrieve(TEntity entity, bool throwEntityPolicyException)
         {
             return true;
         }
-
         protected override bool CanUpdate(TEntity entity, bool throwEntityPolicyException)
         {
             return true;
         }
-
         protected override IQueryable<TEntity> InnerRetrieveAllFilter(IQueryable<TEntity> query)
         {
             return query;

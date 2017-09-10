@@ -2,6 +2,6 @@
 
 namespace QuantumLogic.Core.Domain.Services.Widget.Beverages
 {
-    public interface IBeverageDomainService : IEntityDomainService<Beverage, int>
+    public interface IBeverageDomainService : IEntityExtendedDomainService<Beverage, int>
     { }
 }

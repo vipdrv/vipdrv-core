@@ -1,0 +1,256 @@
+<div class="experts-table-template">
+    <table class="experts-table-body table table-bordered table-hover"
+           *ngIf="isInitialized()">
+        <thead>
+        <tr>
+            <th translate>experts.table.headerText_avatar</th>
+            <th translate>experts.table.headerText_expertName</th>
+            <th translate>general.table.headerText.activity</th>
+            <th translate>general.table.headerText.order</th>
+            <th class="experts-table-body-column-actions">
+                <button type="button"
+                        class="btn btn-outline-success btn-sm"
+                        translate
+                        (click)="modalOpenCreate()">
+                    general.actions.text_create
+                </button>
+            </th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let item of items"
+            ngClass="{{getEntityRowClass(item)}}">
+            <td>
+                <img class="rounded-circle"
+                     alt="no photo"
+                     [src]="item.photoUrl"
+                     [width]="50"
+                     [height]="50">
+            </td>
+            <td>{{item.name}}</td>
+            <td>
+                <input type="checkbox"
+                       class="checkbox-success"
+                       (click)="onChangeEntityActivity(item)"
+                       [ngModel]="item.isActive">
+            </td>
+            <td>
+                <i class="fa fa-chevron-up"
+                   aria-hidden="true"
+                   *ngIf="canDecrementOrder(item)"
+                   (click)="decrementOrder(item)"></i>
+                <i class="fa fa-chevron-down"
+                   aria-hidden="true"
+                   *ngIf="canIncrementOrder(item)"
+                   (click)="incrementOrder(item)"></i>
+            </td>
+            <td class="experts-table-body-column-actions">
+                <button type="button"
+                        class="btn btn-outline-primary btn-sm"
+                        translate
+                        (click)="modalOpenEdit(item.id)">
+                    general.actions.text_edit
+                </button>
+                <button type="button"
+                        class="btn btn-outline-danger btn-sm"
+                        translate
+                        (click)="deleteEntity(item.id)">
+                    general.actions.text_delete
+                </button>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<modal #expertDetailsModal
+       size="lg"
+       [backdrop]="'static'">
+    <modal-header>
+        <span class="expert-modal-header-text" translate>experts.modal.title</span>
+    </modal-header>
+    <modal-body>
+        <div *ngIf="isSelectedEntityDefined()">
+            <div class="row">
+                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                    <div class="expert-avatar-image">
+                        <img class="rounded-circle"
+                             [src]="getAvatar()"
+                             [width]="avatarWidth"
+                             [height]="avatarHeight">
+                    </div>
+                    <div class="expert-avatar-btns"
+                         *ngIf="showAvatarButtons">
+                        <button type="button"
+                                class="btn btn-sm btn-secondary"
+                                (click)="browseAvatar()">
+                            <span translate>experts.modal.browseAvatar</span>
+                        </button>
+                        <button type="button"
+                                class="btn btn-sm btn-secondary"
+                                (click)="changeAvatarUrl()">
+                            <span translate>experts.modal.changeAvatarUrl</span>
+                        </button>
+                    </div>
+                    <div class="expert-avatar-change-url"
+                         *ngIf="showAvatarChangeUrl">
+                        <div class="row">
+                            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                                <div class="form-group row">
+                                    <label class="col-2 col-form-label"
+                                           for="expertPhotoUrl"
+                                           translate>
+                                        experts.modal.expertPhotoUrl
+                                    </label>
+                                    <div class="col-10">
+                                        <input id="expertPhotoUrl"
+                                               type="text"
+                                               class="form-control"
+                                               placeholder="http://www.google.com/avatar.jpg"
+                                               [(ngModel)]="stubAvatarUrl">
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                                        <button type="button"
+                                                style="margin-left: 2px; margin-right: 2px;"
+                                                class="btn btn-sm btn-primary pull-right"
+                                                (click)="changeAvatarUrlAccept()">
+                                            <span translate>experts.modal.changeAvatarUrlAccept</span>
+                                        </button>
+                                        <button type="button"
+                                                style="margin-left: 2px; margin-right: 2px;"
+                                                class="btn btn-sm btn-default pull-right"
+                                                (click)="changeAvatarUrlCancel()">
+                                            <span translate>experts.modal.changeAvatarUrlCancel</span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="expert-avatar-browse"
+                         *ngIf="showAvatarBrowse">
+                        <div class="row">
+                            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                                <div class="row">
+                                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                                        <label class="custom-file">
+                                            <input type="file"
+                                                   id="avatar-browse-file"
+                                                   class="custom-file-input"
+                                                   (change)="avatarBrowseFileChangeListener($event)">
+                                            <span class="custom-file-control"></span>
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                                        <img-cropper #cropper
+                                                     [image]="avatarCropperData"
+                                                     [settings]="avatarCropperSettings">
+                                        </img-cropper>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                                        <button type="button"
+                                                style="margin-left: 2px; margin-right: 2px;"
+                                                class="btn btn-sm btn-primary pull-right"
+                                                (click)="showAvatarBrowseAccept()">
+                                            <span translate>experts.modal.avatarBrowseAccept</span>
+                                        </button>
+                                        <button type="button"
+                                                style="margin-left: 2px; margin-right: 2px;"
+                                                class="btn btn-sm btn-default pull-right"
+                                                (click)="showAvatarBrowseCancel()">
+                                            <span translate>experts.modal.avatarBrowseCancel</span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <hr>
+            <div class="form-group row">
+                <label class="col-2 col-form-label"
+                       for="expertName"
+                       translate>
+                    experts.modal.expertName
+                </label>
+                <div class="col-10">
+                    <input id="expertName"
+                           type="text"
+                           class="form-control"
+                           [(ngModel)]="selectedEntity.name">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-2 col-form-label"
+                       for="expertDescription"
+                       translate>
+                    experts.modal.expertDescription
+                </label>
+                <div class="col-10">
+                    <textarea id="expertDescription"
+                              type="text"
+                              class="form-control"
+                              rows="3"
+                              [(ngModel)]="selectedEntity.description"></textarea>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-2 col-form-label"
+                       for="linkedinUrl"
+                       translate>
+                    experts.modal.linkedinUrl
+                </label>
+                <div class="col-10">
+                    <input id="linkedinUrl"
+                           type="text"
+                           class="form-control"
+                           placeholder="https://www.linkedin.com/"
+                           [(ngModel)]="selectedEntity.linkedinUrl">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-2 col-form-label"
+                       for="facebookUrl"
+                       translate>
+                    experts.modal.facebookUrl
+                </label>
+                <div class="col-10">
+                    <input id="facebookUrl"
+                           type="text"
+                           class="form-control"
+                           placeholder="https://www.facebook.com/"
+                           [(ngModel)]="selectedEntity.facebookUrl">
+                </div>
+            </div>
+            <hr>
+            <div class="row"
+                 *ngIf="selectedEntity.workingHours">
+                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                    <working-hours [workingHours]="selectedEntity.workingHours"
+                                   (workingHoursChanged)='onWorkingHoursChanged($event)'>
+                    </working-hours>
+                </div>
+            </div>
+        </div>
+    </modal-body>
+    <modal-footer>
+        <button type="button"
+                class="btn btn-default"
+                data-dismiss="modal"
+                (click)="modalDismiss()">
+            <span translate>experts.modal.cancel</span>
+        </button>
+        <button type="button"
+                class="btn btn-primary"
+                (click)="modalApply()">
+            <span translate>experts.modal.apply</span>
+        </button>
+    </modal-footer>
+</modal>

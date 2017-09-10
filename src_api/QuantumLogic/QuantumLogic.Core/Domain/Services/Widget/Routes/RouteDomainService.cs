@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace QuantumLogic.Core.Domain.Services.Widget.Routes
 {
-    public class RouteDomainService : EntityDomainService<Route, int>, IRouteDomainService
+    public class RouteDomainService : EntityExtendedDomainService<Route, int>, IRouteDomainService
     {
         #region Ctors
 

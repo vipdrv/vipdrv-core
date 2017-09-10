@@ -2,6 +2,6 @@
 
 namespace QuantumLogic.Core.Domain.Policy.WidgetModule
 {
-    public interface IExpertPolicy : IEntityPolicy<Expert, int>
+    public interface IExpertPolicy : IEntityExtendedPolicy<Expert, int>
     { }
 }

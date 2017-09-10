@@ -2,6 +2,6 @@
 
 namespace QuantumLogic.Core.Domain.Services.Widget.Experts
 {
-    public interface IExpertDomainService : IEntityDomainService<Expert, int>
+    public interface IExpertDomainService : IEntityExtendedDomainService<Expert, int>
     { }
 }

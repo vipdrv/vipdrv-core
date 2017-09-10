@@ -3,7 +3,7 @@ using QuantumLogic.Core.Domain.Validation.Widget;
 
 namespace QuantumLogic.WebApi.Validation.Widget
 {
-    public class ExpertValidationService : NullEntityValidationService<Expert, int>, IExpertValidationService
+    public class ExpertValidationService : NullEntityExtendedValidationService<Expert, int>, IExpertValidationService
     {
         #region Ctors
 

@@ -145,6 +145,37 @@ export class HttpService implements IHttpService {
                 });
         });
     }
+    patch(url: string, body: any, options?: RequestOptionsArgs, supressRecursion: boolean = false): Promise<any> {
+        let self: HttpService = this;
+        return new Promise((resolve: any, reject: any) => {
+            self.authorizationManager.user
+                .then(function (user: any): any {
+                    return self.http
+                        .patch(url, body, self.extendOptionsWithHeaders(user, options))
+                        .subscribe(
+                            (res: any) => {
+                                resolve(self.handleResponse(res));
+                            },
+                            (error: any) => {
+                                if (self.isUnauthorizedError(error)) {
+                                    return self.authorizationManager.user
+                                        .then(function (r: any): Promise<any> {
+                                            if (!!r && !r.expired && !supressRecursion) {
+                                                return self.patch(url, body, options, true);
+                                            } else {
+                                                return self.authorizationManager.signIn();
+                                            }
+                                        });
+                                } else {
+                                    return reject(error);
+                                }
+                            });
+                })
+                .catch((reason: any) => {
+                    self.handleCriticalError('patch', reason);
+                });
+        });
+    }
     /// predicates
     isUnauthorizedError(reason: any): boolean {
         return !!reason && reason.status === 401;

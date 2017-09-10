@@ -48,12 +48,15 @@ namespace QuantumLogic.WebApi
             services.AddScoped<IUserPolicy, UserPolicy>();
 
             services.AddScoped<IEntityPolicy<Beverage, int>, BeveragePolicy>();
+            services.AddScoped<IEntityExtendedPolicy<Beverage, int>, BeveragePolicy>();
             services.AddScoped<IBeveragePolicy, BeveragePolicy>();
             services.AddScoped<IEntityPolicy<Expert, int>, ExpertPolicy>();
+            services.AddScoped<IEntityExtendedPolicy<Expert, int>, ExpertPolicy>();
             services.AddScoped<IExpertPolicy, ExpertPolicy>();
             services.AddScoped<IEntityPolicy<Lead, int>, LeadPolicy>();
             services.AddScoped<ILeadPolicy, LeadPolicy>();
             services.AddScoped<IEntityPolicy<Route, int>, RoutePolicy>();
+            services.AddScoped<IEntityExtendedPolicy<Route, int>, RoutePolicy>();
             services.AddScoped<IRoutePolicy, RoutePolicy>();
             services.AddScoped<IEntityPolicy<Site, int>, SitePolicy>();
             services.AddScoped<ISitePolicy, SitePolicy>();
@@ -68,12 +71,15 @@ namespace QuantumLogic.WebApi
             services.AddScoped<IUserValidationService, UserValidationService>();
 
             services.AddScoped<IEntityValidationService<Beverage, int>, BeverageValidationService>();
+            services.AddScoped<IEntityExtendedValidationService<Beverage, int>, BeverageValidationService>();
             services.AddScoped<IBeverageValidationService, BeverageValidationService>();
             services.AddScoped<IEntityValidationService<Expert, int>, ExpertValidationService>();
+            services.AddScoped<IEntityExtendedValidationService<Expert, int>, ExpertValidationService>();
             services.AddScoped<IExpertValidationService, ExpertValidationService>();
             services.AddScoped<IEntityValidationService<Lead, int>, LeadValidationService>();
             services.AddScoped<ILeadValidationService, LeadValidationService>();
             services.AddScoped<IEntityValidationService<Route, int>, RouteValidationService>();
+            services.AddScoped<IEntityExtendedValidationService<Route, int>, RouteValidationService>();
             services.AddScoped<IRouteValidationService, RouteValidationService>();
             services.AddScoped<IEntityValidationService<Site, int>, SiteValidationService>();
             services.AddScoped<ISiteValidationService, SiteValidationService>();
