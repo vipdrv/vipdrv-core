@@ -10,14 +10,19 @@ namespace QuantumLogic.WebApi.DataModels.Dtos.Widget.Leads
         public int? BeverageId { get; set; }
         public int RouteId { get; set; }
         public string RecievedUtc { get; set; }
-        public string Username { get; set; }
+        public string FirstName { get; set; }
+        public string SecondName { get; set; }
         public string UserPhone { get; set; }
         public string UserEmail { get; set; }
+
+        #region Relations
 
         public string SiteName { get; set; }
         public string ExpertName { get; set; }
         public string BeverageName { get; set; }
         public string RouteName { get; set; }
+
+        #endregion
 
         #region Mapping
 
@@ -29,7 +34,8 @@ namespace QuantumLogic.WebApi.DataModels.Dtos.Widget.Leads
             BeverageId = entity.BeverageId;
             RouteId = entity.RouteId;
             RecievedUtc = entity.RecievedUtc.ToString(QuantumLogicConstants.OutputDateTimeFormat);
-            Username = entity.Username;
+            FirstName = entity.FirstName;
+            SecondName = entity.SecondName;
             UserPhone = entity.UserPhone;
             UserEmail = entity.UserEmail;
             SiteName = entity.Site.Name;
@@ -44,7 +50,8 @@ namespace QuantumLogic.WebApi.DataModels.Dtos.Widget.Leads
             entity.ExpertId = ExpertId;
             entity.BeverageId = BeverageId;
             entity.RouteId = RouteId;
-            entity.Username = Username;
+            entity.FirstName = FirstName;
+            entity.SecondName = SecondName;
             entity.UserPhone = UserPhone;
             entity.UserEmail = UserEmail;
             return entity;

@@ -6,8 +6,9 @@ export class LeadEntity extends Entity {
     expertId: number;
     beverageId: number;
     routeId: number;
-    recievedUtc: string
-    username: number;
+    recievedUtc: string;
+    firstName: number;
+    secondName: number;
     userPhone: string;
     userEmail: string;
     siteName: string;
@@ -30,7 +31,8 @@ export class LeadEntity extends Entity {
         this.beverageId = mock.beverageId;
         this.routeId = mock.routeId;
         this.recievedUtc = mock.recievedUtc;
-        this.username = mock.username;
+        this.firstName = mock.firstName;
+        this.secondName = mock.secondName;
         this.userPhone = mock.userPhone;
         this.userEmail = mock.userEmail;
         this.siteName = mock.siteName;

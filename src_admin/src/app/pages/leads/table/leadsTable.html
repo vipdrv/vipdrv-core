@@ -4,6 +4,8 @@
         <thead>
         <tr>
             <th translate>leads.table.headerText_received</th>
+            <th translate>leads.table.headerText_firstName</th>
+            <th translate>leads.table.headerText_secondName</th>
             <th translate>leads.table.headerText_siteName</th>
             <th translate>leads.table.headerText_userEmail</th>
             <th translate>leads.table.headerText_userPhone</th>
@@ -16,6 +18,8 @@
         <tr *ngFor="let item of items"
             (click)="modalOpenInfo(item.id)">
             <td>{{item.recievedUtc}}</td>
+            <td>{{item.firstName}}</td>
+            <td>{{item.secondName}}</td>
             <td>{{item.siteName}}</td>
             <td>{{item.userEmail}}</td>
             <td>{{item.userPhone}}</td>
@@ -50,8 +54,12 @@
                 <div class="col-6 leads-modal-body-text">{{selectedEntity.recievedUtc}}</div>
             </div>
             <div class="row">
-                <label class="col-4 leads-modal-body-label" translate>leads.modal.userName</label>
-                <div class="col-6 leads-modal-body-text">{{selectedEntity.username}}</div>
+                <label class="col-4 leads-modal-body-label" translate>leads.modal.firstName</label>
+                <div class="col-6 leads-modal-body-text">{{selectedEntity.firstName}}</div>
+            </div>
+            <div class="row">
+                <label class="col-4 leads-modal-body-label" translate>leads.modal.secondName</label>
+                <div class="col-6 leads-modal-body-text">{{selectedEntity.secondName}}</div>
             </div>
             <div class="row">
                 <label class="col-4 leads-modal-body-label" translate>leads.modal.userEmail</label>
