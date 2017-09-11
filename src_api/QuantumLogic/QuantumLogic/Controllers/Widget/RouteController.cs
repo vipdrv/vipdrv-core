@@ -53,7 +53,7 @@ namespace QuantumLogic.WebApi.Controllers.Widget
         [Microsoft.AspNetCore.Mvc.HttpPost("get-all/{page?}/{pageSize?}")]
         public Task<GetAllResponse<RouteDto>> GetAll([Microsoft.AspNetCore.Mvc.FromBody]RouteGetAllRequest request, uint page = 0, uint pageSize = 0)
         {
-            Expression<Func<Route, bool>> filter = (user) => true;
+            Expression<Func<Route, bool>> filter = (entity) => request.SiteId.HasValue ? request.SiteId == entity.SiteId : true;
             return InnerGetAllAsync(filter, request.Sorting, page, pageSize);
         }
 

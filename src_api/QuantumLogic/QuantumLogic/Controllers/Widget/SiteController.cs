@@ -52,7 +52,7 @@ namespace QuantumLogic.WebApi.Controllers.Widget
         [HttpPost("get-all/{page?}/{pageSize?}")]
         public Task<GetAllResponse<SiteDto>> GetAll([FromBody]SiteGetAllRequest request, uint page = 0, uint pageSize = 0)
         {
-            Expression<Func<Site, bool>> filter = (user) => true;
+            Expression<Func<Site, bool>> filter = (entity) => true;
             return InnerGetAllAsync(filter, request.Sorting, page, pageSize);
         }
 
