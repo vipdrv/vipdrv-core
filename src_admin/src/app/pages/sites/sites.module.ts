@@ -11,6 +11,7 @@ import { UtilsModule } from './../../utils/index';
 import { SitesTableComponent } from './table/sitesTable.component';
 
 import { ExpertsModule } from './../experts/index';
+import { BeveragesModule } from './../beverages/index';
 
 import { SiteDetailsComponent } from './details/siteDetails.component';
 import { SiteOverviewComponent } from './overview/siteOverview.component';
@@ -27,7 +28,8 @@ import { routing } from './sites.routing';
         routing,
         UtilsModule,
         Ng2Bs3ModalModule,
-        ExpertsModule
+        ExpertsModule,
+        BeveragesModule
     ],
     exports: [
         SitesComponent,

@@ -1,22 +1,22 @@
 import { Component, OnInit, Input, ViewChild } from '@angular/core';
 import { ModalComponent } from 'ng2-bs3-modal/ng2-bs3-modal';
 import { Variable } from './../../../utils/index';
-import { ExpertEntity } from './../../../entities/index';
-import { IContentApiService, ContentApiService, IExpertApiService, ExpertApiService, GetAllResponse } from './../../../services/serverApi/index';
+import { BeverageEntity } from './../../../entities/index';
+import { IContentApiService, ContentApiService, IBeverageApiService, BeverageApiService, GetAllResponse } from './../../../services/serverApi/index';
 import { CropperSettings, ImageCropperComponent } from 'ng2-img-cropper';
-const DefaultExpertAvatar: string = 'data:image/png;base64,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';
+const DefaultBeverageImg: string = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMgAAADICAMAAACahl6sAAAAe1BMVEX///8AAACDg4M7OzuTk5NXV1e/v78rKytra2vT09Pd3d329vaZmZn6+vr5+flCQkLp6ekZGRkLCwtSUlK0tLTLy8stLS0cHBx0dHSvr6+3t7enp6eNjY1mZmbs7OwmJiZ5eXk1NTVeXl5AQEBKSkrExMQQEBB/f3+fn59KDg5wAAAEnklEQVR4nO2d21LbQBBEJd8AG/DdBoyvGMP/f2EqDEiVCtSG3Z5ui+x5zkN3pUrIZzWzRZHJ/B8MZqu+OgOC3rgsy7U6RTqr8o2VOkcqLetRHtRB0rhZlz+iyOD40aO8VmdJYbSoejzdqsMkcLWsenQH6jAJPEyqHnfqLCm8VjXKjjpLCi9Vjcm9OksCt4eqx+lZHSaBzbDqsW3ya1b/ouqxH6nDJDAfVz2OTX7szurH7vpGHSaB6/qx21JnSWFX92jym/ttt37s9tRhEti0qx7LK3WYBPrbqsfihzx2hxt1mATu68fuocm/Pjr142qnzpLCXd2jyb9qB9P6rX2mDpPAqH7sjufqMCnU/x+NfmsvRlWPdpMfu0XR++gxbfJbe1EXuWzyW/tv3ots1TmSeS9yoc6RTC5ybuQi50Yucm7kIudGLoKk307n/czzFPyHj45Frkoil7lILpKL5CK5SC6Si/gWGbWIPDgWyWQymUYy77jCO4/rhP+apcA76L33LcI76Z37FuF9YTMKh0mBd0Z649pjQutRFMtwnHiYp4vtcJx42sQi03CceLrEIpeeRZjTCo+eRZjjCivPIsx5hWfPIsyBhb5nEea3TwPPItSPbU5+PcbMHsUiHCiWPbXIMRwolim1yDocKBZPwfg3rXCgWLhzJK/hQLG8Uos8+BXhTpI4annut8AbvyLkj2gn4URxnLg9im04UhwLcpFhOFIcR3KRQzhSHOxVIrtwpDheyEXc9C97wsdN/7JHfNz0L3u00k3/0odjnHowxa/hpH/5YyVO+veJXqQbDhUDU/wad+FQMfDX1DjpX/6eGif9y19U46R/+TOvTvqXv2vg1qeIYMpyHE71fbji19h7FOGKX8NF/3LFr+Gif7ni13DRv57DL1/hon8VG4Rc9K9ihZCL/lUsgXA5EJVsT3DQv2zxazjoX7b4NRz0L1v8Gg76V7ND2kH/ssWvcR0O9l00q50c9K9m9sVB/2p26jnoX9FWJHgPvvg14PpXtU8Irn/54teA61/V3nu4/t2JisD1r2pBOVz/qjaUw/WvatkhXP+qlszC9a9svR5Y/y5VPYo9tohC/Bpg/asQvwZ4HkYhfg2w/lWIXwOsf3Wr43vhcN9BtzserH9123/B+le4Nhc6D6MRv8ZFON6/oxG/BlT/asSvAdW/yssDofpXI34NqP7lTsD8yQxZRLn0CKp/lZepQPWvdB0+8EBUJX4NoP7VLpIH6t+htAhQ/2ovPAXq3520CFD/am+mBOpf7dWUQP2rveUGqH+1t4sB1yGJ71WB6V+d+DX2qCLM1UefAVuHpBO/Bkz/6sSvAdO/OvFrwPSv+s5QmP5VXxoK+4uovvYNpn/l96WB9K9S/Bog/asUvwboQFQpfg2Q/lWKX+MFU0R/hTZI/yrFrwHSv/pt96ADUf0t2iD9ewb3oEL0r1b8GpB5mHO4QRSif7Xi14DoX634NSD6d6duUYD0r1b8GpB5GK34NSD69xyuN4f82NWKXwOif9Ul3gDoX7X4NfbpRdTi1wDoX/7qo88A6F/+6qPPAOhftfg1et1k1L40k/maX+3qUbhJwgoUAAAAAElFTkSuQmCC';
 @Component({
-    selector: 'experts-table',
-    styleUrls: ['./expertsTable.scss'],
-    templateUrl: './expertsTable.html'
+    selector: 'beverages-table',
+    styleUrls: ['./beveragesTable.scss'],
+    templateUrl: './beveragesTable.html'
 })
-export class ExpertsTableComponent implements OnInit {
+export class BeveragesTableComponent implements OnInit {
     @Input() pageNumber: number;
     @Input() pageSize: number;
     @Input() sorting: string;
     @Input() filter: any;
     @Input() siteId: number;
-    @ViewChild('expertDetailsModal')
+    @ViewChild('beverageDetailsModal')
     protected modal: ModalComponent;
     @ViewChild('cropper', undefined)
     protected cropper: ImageCropperComponent;
@@ -27,8 +27,8 @@ export class ExpertsTableComponent implements OnInit {
     private _defaultFilter: any = null;
     private _isInitialized: boolean = false;
     protected totalCount: number;
-    protected items: Array<ExpertEntity>;
-    protected selectedEntity: ExpertEntity;
+    protected items: Array<BeverageEntity>;
+    protected selectedEntity: BeverageEntity;
     protected avatarWidth: number;
     protected avatarHeight: number;
     protected avatarCropperData: any;
@@ -57,11 +57,11 @@ export class ExpertsTableComponent implements OnInit {
         this._showAvatarChangeUrl = value;
     }
     /// injected dependencies
-    protected expertApiService: IExpertApiService;
+    protected beverageApiService: IBeverageApiService;
     protected contentApiService: IContentApiService;
     /// ctor
-    constructor(siteApiService: ExpertApiService, contentApiService: ContentApiService) {
-        this.expertApiService = siteApiService;
+    constructor(siteApiService: BeverageApiService, contentApiService: ContentApiService) {
+        this.beverageApiService = siteApiService;
         this.contentApiService = contentApiService;
         this.avatarWidth = 150;
         this.avatarHeight = 150;
@@ -73,7 +73,7 @@ export class ExpertsTableComponent implements OnInit {
         self.getAllEntities()
             .then(() => self._isInitialized = true);
     }
-    protected getEntityRowClass(item: ExpertEntity): string {
+    protected getEntityRowClass(item: BeverageEntity): string {
         let classValue: string;
         if (Variable.isNotNullOrUndefined(item) && item.isActive) {
             classValue = null;
@@ -86,9 +86,9 @@ export class ExpertsTableComponent implements OnInit {
     }
     protected getAllEntities(): Promise<void> {
         let self = this;
-        let operationPromise = self.expertApiService
+        let operationPromise = self.beverageApiService
             .getAll(self.getPageNumber(), self.getPageSize(), self.buildSorting(), self.buildFilter())
-            .then(function (response: GetAllResponse<ExpertEntity>): Promise<void> {
+            .then(function (response: GetAllResponse<BeverageEntity>): Promise<void> {
                 self.totalCount = response.totalCount;
                 self.items = response.items;
                 return Promise.resolve();
@@ -97,27 +97,27 @@ export class ExpertsTableComponent implements OnInit {
     }
     protected deleteEntity(id: number): Promise<void> {
         let self = this;
-        let operationPromise = self.expertApiService
+        let operationPromise = self.beverageApiService
             .delete(id)
             .then(function (): Promise<void> {
-                let elementIndex = self.items.findIndex((item: ExpertEntity) => item.id === id);
+                let elementIndex = self.items.findIndex((item: BeverageEntity) => item.id === id);
                 self.items.splice(elementIndex, 1);
                 return Promise.resolve();
             });
         return operationPromise;
     }
     // activity
-    protected onChangeEntityActivity(entity: ExpertEntity): void {
+    protected onChangeEntityActivity(entity: BeverageEntity): void {
         if (Variable.isNotNullOrUndefined(entity)) {
             entity.isActive = !entity.isActive;
             // TODO: after adding spinners should disable updating activity for this entity until promise ends
             this.commitChangeEntityActivity(entity);
         }
     }
-    protected commitChangeEntityActivity(entity: ExpertEntity): Promise<void> {
+    protected commitChangeEntityActivity(entity: BeverageEntity): Promise<void> {
         let actionPromise: Promise<void>;
         if (Variable.isNotNullOrUndefined(entity)) {
-            actionPromise = this.expertApiService
+            actionPromise = this.beverageApiService
                 .patchActivity(entity.id, entity.isActive)
                 .then(function(): void { });
         } else {
@@ -126,13 +126,13 @@ export class ExpertsTableComponent implements OnInit {
         return actionPromise;
     }
     // order
-    protected canIncrementOrder(entity: ExpertEntity): boolean {
+    protected canIncrementOrder(entity: BeverageEntity): boolean {
         return this.items.findIndex((item) => item.id === entity.id) < (this.items.length - 1);
     }
-    protected canDecrementOrder(entity: ExpertEntity): boolean {
+    protected canDecrementOrder(entity: BeverageEntity): boolean {
         return this.items.findIndex((item) => item.id === entity.id) > 0;
     }
-    protected incrementOrder(entity: ExpertEntity): void {
+    protected incrementOrder(entity: BeverageEntity): void {
         if (Variable.isNotNullOrUndefined(entity)) {
             let entityIndex: number = this.items.findIndex((item) => item.id === entity.id);
             if (entityIndex > -1 && entityIndex < this.items.length - 1) {
@@ -148,7 +148,7 @@ export class ExpertsTableComponent implements OnInit {
             }
         }
     }
-    protected decrementOrder(entity: ExpertEntity): void {
+    protected decrementOrder(entity: BeverageEntity): void {
         if (Variable.isNotNullOrUndefined(entity)) {
             let entityIndex: number = this.items.findIndex((item) => item.id === entity.id);
             if (entityIndex > 0 && this.items.length > 1) {
@@ -164,10 +164,10 @@ export class ExpertsTableComponent implements OnInit {
             }
         }
     }
-    protected commitChangeEntityOrder(entity: ExpertEntity): Promise<void> {
+    protected commitChangeEntityOrder(entity: BeverageEntity): Promise<void> {
         let actionPromise: Promise<void>;
         if (Variable.isNotNullOrUndefined(entity)) {
-            actionPromise = this.expertApiService
+            actionPromise = this.beverageApiService
                 .patchOrder(entity.id, entity.order)
                 .then(function(): void { });
         } else {
@@ -178,9 +178,9 @@ export class ExpertsTableComponent implements OnInit {
     // modal
     protected modalOpenCreate(): Promise<void> {
         let self = this;
-        self.selectedEntity = new ExpertEntity();
+        self.selectedEntity = new BeverageEntity();
         self.selectedEntity.siteId = this.siteId;
-        self.selectedEntity.photoUrl = DefaultExpertAvatar;
+        self.selectedEntity.photoUrl = DefaultBeverageImg;
         self.selectedEntity.isActive = true;
         self.selectedEntity.order = this.getNewEntityOrder();
         self.modal.open();
@@ -188,11 +188,11 @@ export class ExpertsTableComponent implements OnInit {
     }
     protected modalOpenEdit(id: number): Promise<void> {
         let self = this;
-        self.selectedEntity = self.items.find((item: ExpertEntity) => item.id === id);
+        self.selectedEntity = self.items.find((item: BeverageEntity) => item.id === id);
         self.modal.open();
-        let operationPromise = self.expertApiService
+        let operationPromise = self.beverageApiService
             .get(id)
-            .then(function (response: ExpertEntity): Promise<void> {
+            .then(function (response: BeverageEntity): Promise<void> {
                 self.selectedEntity = response;
                 return Promise.resolve();
             });
@@ -200,12 +200,12 @@ export class ExpertsTableComponent implements OnInit {
     }
     protected modalApply() {
         let self = this;
-        let operationPromise: Promise<ExpertEntity> = self.selectedEntity.id ?
-            self.expertApiService.update(self.selectedEntity) :
-            self.expertApiService.create(self.selectedEntity);
+        let operationPromise: Promise<BeverageEntity> = self.selectedEntity.id ?
+            self.beverageApiService.update(self.selectedEntity) :
+            self.beverageApiService.create(self.selectedEntity);
         return operationPromise
-            .then(function (entity: ExpertEntity): Promise<void> {
-                let elementIndex = self.items.findIndex((item: ExpertEntity) => item.id === entity.id);
+            .then(function (entity: BeverageEntity): Promise<void> {
+                let elementIndex = self.items.findIndex((item: BeverageEntity) => item.id === entity.id);
                 if (elementIndex !== -1) {
                     self.items.splice(elementIndex, 1, entity);
                 } else {
@@ -275,10 +275,6 @@ export class ExpertsTableComponent implements OnInit {
         this.stubAvatarUrl = null;
         this.showAvatarChangeUrl = false;
         this.showAvatarButtons = true;
-    }
-    // working hours
-    protected onWorkingHoursChanged(value: string): void {
-        this.selectedEntity.workingHours = value;
     }
     /// predicates
     protected isInitialized(): boolean {

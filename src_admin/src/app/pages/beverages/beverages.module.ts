@@ -7,11 +7,11 @@ import { NgaModule } from '../../theme/nga.module';
 
 import { Ng2Bs3ModalModule } from 'ng2-bs3-modal/ng2-bs3-modal';
 
-import { UtilsModule, WorkingHoursComponent } from './../../utils/index';
-import { ExpertsTableComponent } from './table/expertsTable.component';
+import { UtilsModule } from './../../utils/index';
+import { BeveragesTableComponent } from './table/beveragesTable.component';
 
-import { ExpertsComponent } from './experts.component';
-import { routing } from './experts.routing';
+import { BeveragesComponent } from './beverages.component';
+import { routing } from './beverages.routing';
 
 @NgModule({
     imports: [
@@ -24,13 +24,13 @@ import { routing } from './experts.routing';
         Ng2Bs3ModalModule
     ],
     exports: [
-        ExpertsComponent,
-        ExpertsTableComponent
+        BeveragesComponent,
+        BeveragesTableComponent
     ],
     declarations: [
-        ExpertsComponent,
-        ExpertsTableComponent
+        BeveragesComponent,
+        BeveragesTableComponent
     ],
     providers: []
 })
-export class ExpertsModule {}
+export class BeveragesModule {}
