@@ -11,19 +11,22 @@
         time: {
             id: 'time',
             title: 'Select date & time',
-            isActive: false,
+            icon: 'fa fa-clock-o fa-2x',
+            isActive: true,
             isLocked: false,
             isCompleted: false
         },
         expert: {
             id: 'expert',
+            icon: 'fa fa-users fa-2x',
             title: 'Select Expert',
             isActive: false,
-            isLocked: false,
+            isLocked: true,
             isCompleted: false
         },
         beverage: {
             id: 'beverage',
+            icon: 'fa fa-coffee fa-2x',
             title: 'Select Beverage',
             isActive: false,
             isLocked: true,
@@ -31,6 +34,7 @@
         },
         road: {
             id: 'road',
+            icon: 'fa fa-road fa-2x',
             title: 'Select preferred route',
             isActive: false,
             isLocked: true,
@@ -38,8 +42,9 @@
         },
         details: {
             id: 'details',
+            icon: 'fa fa-handshake-o fa-2x',
             title: 'Your details',
-            isActive: true,
+            isActive: false,
             isLocked: true,
             isCompleted: false
         }

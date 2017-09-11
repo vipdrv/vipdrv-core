@@ -9,14 +9,12 @@
                 this.userData = userData;
 
                 this.completeForm = function () {
-                    api.submitForm(userData);
+                    // api.submitForm(userData);
                     globalState.isFormCompleted = true;
                     // this.isFormCompleted = true;
                 };
 
                 this.completeStep = function (tabId) {
-
-                    console.log(tabId);
                     widgetTabs[tabId].isActive = false;
                     widgetTabs[tabId].isCompleted = true;
 
@@ -30,6 +28,7 @@
 
                 this.unCompleteStep = function (tabId) {
                 };
+
                 this.lockTab = function (tabId) {
                 };
 

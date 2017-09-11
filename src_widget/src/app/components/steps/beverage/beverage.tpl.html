@@ -6,13 +6,14 @@
 </div>
 <div class="row pr-3">
     <td-card class="col-md-6 col-sm-12 p-0 pt-3 pl-3"
-             ng-repeat="expert in beverages"
-             card-image="expert.photo_url"
-             card-title="expert.title"
-             card-desc="expert.description"
-             is-active-card="expert.title == $ctrl.userData.expert.title"
-             ng-click="$ctrl.expertChanged(expert.title)">
+             ng-repeat="item in beverages"
+             card-image="item.photo_url"
+             card-title="item.title"
+             card-desc="item.description"
+             is-active-card="item.title == $ctrl.userData.beverage.title"
+             ng-click="itemChanged(item.title)">
     </td-card>
 </div>
 <p></p>
+
 <td-wizard-step-button tab-id="$ctrl.tabId" next-step="nextStepInner()"></td-wizard-step-button>
