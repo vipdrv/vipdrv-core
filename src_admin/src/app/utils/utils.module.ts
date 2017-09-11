@@ -4,6 +4,8 @@ import { FormsModule } from '@angular/forms';
 
 import { AppTranslationModule } from '../app.translation.module';
 
+import { ImageCropperComponent } from 'ng2-img-cropper';
+
 import { AuthorizationManager } from './auth/authorization.manager';
 import { HttpService } from './http/http.service';
 import { ConsoleLogger } from './logging/console/console.logger';
@@ -17,10 +19,12 @@ import { WorkingHoursComponent } from './components/working-hours/workingHours.c
         AppTranslationModule
     ],
     declarations: [
-        WorkingHoursComponent
+        WorkingHoursComponent,
+        ImageCropperComponent
     ],
     exports: [
-        WorkingHoursComponent
+        WorkingHoursComponent,
+        ImageCropperComponent
     ],
     providers: [
         AuthorizationManager,

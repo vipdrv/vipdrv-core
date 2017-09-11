@@ -116,5 +116,28 @@
       "expertActivity": "Is active",
       "expertOrder": "Order"
     }
+  },
+  "beverages": {
+    "title": "Beverages",
+    "table": {
+      "headerText_avatar": "Image",
+      "headerText_beverageName": "Beverage name"
+    },
+    "modal": {
+      "title": "Beverage details",
+      "cancel": "Cancel",
+      "apply": "Save",
+      "browseAvatar": "Browse",
+      "changeAvatarUrl": "Set url",
+      "changeAvatarUrlCancel": "Cancel",
+      "changeAvatarUrlAccept": "Accept",
+      "avatarBrowseAccept": "Accept",
+      "avatarBrowseCancel": "Cancel",
+      "beveragePhotoUrl": "Url",
+      "beverageName": "Name",
+      "beverageDescription": "Description",
+      "beverageActivity": "Is active",
+      "beverageOrder": "Order"
+    }
   }
 }

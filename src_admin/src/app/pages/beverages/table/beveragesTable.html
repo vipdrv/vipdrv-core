@@ -1,13 +1,13 @@
-<div class="experts-table-template">
-    <table class="experts-table-body table table-bordered table-hover"
+<div class="beverages-table-template">
+    <table class="beverages-table-body table table-bordered table-hover"
            *ngIf="isInitialized()">
         <thead>
         <tr>
-            <th translate class="experts-table-body-column-photo">experts.table.headerText_avatar</th>
-            <th translate class="experts-table-body-column-full-name">experts.table.headerText_expertName</th>
-            <th translate class="experts-table-body-column-activity">general.table.headerText.activity</th>
-            <th translate class="experts-table-body-column-order">general.table.headerText.order</th>
-            <th class="experts-table-body-column-actions">
+            <th translate class="beverages-table-body-column-photo">beverages.table.headerText_avatar</th>
+            <th translate class="beverages-table-body-column-name">beverages.table.headerText_beverageName</th>
+            <th translate class="beverages-table-body-column-activity">general.table.headerText.activity</th>
+            <th translate class="beverages-table-body-column-order">general.table.headerText.order</th>
+            <th class="beverages-table-body-column-actions">
                 <button type="button"
                         class="btn btn-outline-success btn-sm"
                         translate
@@ -44,7 +44,7 @@
                    *ngIf="canIncrementOrder(item)"
                    (click)="incrementOrder(item); $event.stopPropagation();"></i>
             </td>
-            <td class="experts-table-body-column-actions">
+            <td class="beverages-table-body-column-actions">
                 <button type="button"
                         class="btn btn-outline-primary btn-sm"
                         translate
@@ -63,47 +63,47 @@
     </table>
 </div>
 
-<modal #expertDetailsModal
+<modal #beverageDetailsModal
        size="lg"
        [backdrop]="'static'">
     <modal-header>
-        <span class="expert-modal-header-text" translate>experts.modal.title</span>
+        <span class="beverage-modal-header-text" translate>beverages.modal.title</span>
     </modal-header>
     <modal-body>
         <div *ngIf="isSelectedEntityDefined()">
             <div class="row">
                 <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-                    <div class="expert-avatar-image">
+                    <div class="beverage-avatar-image">
                         <img class="rounded-circle"
                              [src]="getAvatar()"
                              [width]="avatarWidth"
                              [height]="avatarHeight">
                     </div>
-                    <div class="expert-avatar-btns"
+                    <div class="beverage-avatar-btns"
                          *ngIf="showAvatarButtons">
                         <button type="button"
                                 class="btn btn-sm btn-secondary"
                                 (click)="browseAvatar()">
-                            <span translate>experts.modal.browseAvatar</span>
+                            <span translate>beverages.modal.browseAvatar</span>
                         </button>
                         <button type="button"
                                 class="btn btn-sm btn-secondary"
                                 (click)="changeAvatarUrl()">
-                            <span translate>experts.modal.changeAvatarUrl</span>
+                            <span translate>beverages.modal.changeAvatarUrl</span>
                         </button>
                     </div>
-                    <div class="expert-avatar-change-url"
+                    <div class="beverage-avatar-change-url"
                          *ngIf="showAvatarChangeUrl">
                         <div class="row">
                             <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                                 <div class="form-group row">
                                     <label class="col-2 col-form-label"
-                                           for="expertPhotoUrl"
+                                           for="beveragePhotoUrl"
                                            translate>
-                                        experts.modal.expertPhotoUrl
+                                        beverages.modal.beveragePhotoUrl
                                     </label>
                                     <div class="col-10">
-                                        <input id="expertPhotoUrl"
+                                        <input id="beveragePhotoUrl"
                                                type="text"
                                                class="form-control"
                                                placeholder="http://www.google.com/avatar.jpg"
@@ -116,20 +116,20 @@
                                                 style="margin-left: 2px; margin-right: 2px;"
                                                 class="btn btn-sm btn-primary pull-right"
                                                 (click)="changeAvatarUrlAccept()">
-                                            <span translate>experts.modal.changeAvatarUrlAccept</span>
+                                            <span translate>beverages.modal.changeAvatarUrlAccept</span>
                                         </button>
                                         <button type="button"
                                                 style="margin-left: 2px; margin-right: 2px;"
                                                 class="btn btn-sm btn-default pull-right"
                                                 (click)="changeAvatarUrlCancel()">
-                                            <span translate>experts.modal.changeAvatarUrlCancel</span>
+                                            <span translate>beverages.modal.changeAvatarUrlCancel</span>
                                         </button>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="expert-avatar-browse"
+                    <div class="beverage-avatar-browse"
                          *ngIf="showAvatarBrowse">
                         <div class="row">
                             <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
@@ -158,13 +158,13 @@
                                                 style="margin-left: 2px; margin-right: 2px;"
                                                 class="btn btn-sm btn-primary pull-right"
                                                 (click)="showAvatarBrowseAccept()">
-                                            <span translate>experts.modal.avatarBrowseAccept</span>
+                                            <span translate>beverages.modal.avatarBrowseAccept</span>
                                         </button>
                                         <button type="button"
                                                 style="margin-left: 2px; margin-right: 2px;"
                                                 class="btn btn-sm btn-default pull-right"
                                                 (click)="showAvatarBrowseCancel()">
-                                            <span translate>experts.modal.avatarBrowseCancel</span>
+                                            <span translate>beverages.modal.avatarBrowseCancel</span>
                                         </button>
                                     </div>
                                 </div>
@@ -176,12 +176,12 @@
             <hr>
             <div class="form-group row">
                 <label class="col-2 col-form-label"
-                       for="expertName"
+                       for="beverageName"
                        translate>
-                    experts.modal.expertName
+                    beverages.modal.beverageName
                 </label>
                 <div class="col-10">
-                    <input id="expertName"
+                    <input id="beverageName"
                            type="text"
                            class="form-control"
                            [(ngModel)]="selectedEntity.name">
@@ -189,53 +189,16 @@
             </div>
             <div class="form-group row">
                 <label class="col-2 col-form-label"
-                       for="expertDescription"
+                       for="beverageDescription"
                        translate>
-                    experts.modal.expertDescription
+                    beverages.modal.beverageDescription
                 </label>
                 <div class="col-10">
-                    <textarea id="expertDescription"
+                    <textarea id="beverageDescription"
                               type="text"
                               class="form-control"
-                              rows="3"
+                              rows="5"
                               [(ngModel)]="selectedEntity.description"></textarea>
-                </div>
-            </div>
-            <div class="form-group row">
-                <label class="col-2 col-form-label"
-                       for="linkedinUrl"
-                       translate>
-                    experts.modal.linkedinUrl
-                </label>
-                <div class="col-10">
-                    <input id="linkedinUrl"
-                           type="text"
-                           class="form-control"
-                           placeholder="https://www.linkedin.com/"
-                           [(ngModel)]="selectedEntity.linkedinUrl">
-                </div>
-            </div>
-            <div class="form-group row">
-                <label class="col-2 col-form-label"
-                       for="facebookUrl"
-                       translate>
-                    experts.modal.facebookUrl
-                </label>
-                <div class="col-10">
-                    <input id="facebookUrl"
-                           type="text"
-                           class="form-control"
-                           placeholder="https://www.facebook.com/"
-                           [(ngModel)]="selectedEntity.facebookUrl">
-                </div>
-            </div>
-            <hr>
-            <div class="row"
-                 *ngIf="selectedEntity.workingHours">
-                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-                    <working-hours [workingHours]="selectedEntity.workingHours"
-                                   (workingHoursChanged)='onWorkingHoursChanged($event)'>
-                    </working-hours>
                 </div>
             </div>
         </div>
@@ -245,12 +208,12 @@
                 class="btn btn-default"
                 data-dismiss="modal"
                 (click)="modalDismiss()">
-            <span translate>experts.modal.cancel</span>
+            <span translate>beverages.modal.cancel</span>
         </button>
         <button type="button"
                 class="btn btn-primary"
                 (click)="modalApply()">
-            <span translate>experts.modal.apply</span>
+            <span translate>beverages.modal.apply</span>
         </button>
     </modal-footer>
 </modal>

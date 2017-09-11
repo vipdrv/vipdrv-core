@@ -6,10 +6,14 @@
                translate>
                 sites.details.title
             </a>
-            <span class="site-details-title-chevron"
+            <span class="site-details-title-text"
                   *ngIf="isInitialized()">
-                <i class="fa fa-chevron-right fa-lg"></i>
+                /
             </span>
+            <!--<span class="site-details-title-chevron"-->
+                  <!--*ngIf="isInitialized()">-->
+                <!--<i class="fa fa-chevron-right fa-lg"></i>-->
+            <!--</span>-->
             <span class="site-details-title-site-name-text"
                   *ngIf="isInitialized()">
                 {{entity.name}}
@@ -102,13 +106,16 @@
                  role="tabpanel"
                  aria-labelledby="experts-tab">
                 <experts-table [siteId]="entity.id"
-                               [filter]="getExpertsFilter()"></experts-table>
+                               [filter]="getExpertsFilter()">
+                </experts-table>
             </div>
             <div id="beverages"
                  class="tab-pane fade show"
                  role="tabpanel"
                  aria-labelledby="beverages-tab">
-                Beverages component
+                <beverages-table [siteId]="entity.id"
+                               [filter]="getBeveragesFilter()">
+                </beverages-table>
             </div>
             <div id="routes"
                  class="tab-pane fade show"

@@ -53,6 +53,21 @@ export class SiteDetailsComponent implements OnInit, OnDestroy {
         }
         return filter;
     }
+    protected getBeveragesFilter(): any {
+        let filter = null;
+        let filterOptionSiteId: number = Variable.isNotNullOrUndefined(this.entity) &&
+        Variable.isNotNullOrUndefined(this.entity.id) &&
+        this.entity.id !== 0 ?
+            this.entity.id : null;
+        let anyFilterOptionIsDefined: boolean = Variable.isNotNullOrUndefined(filterOptionSiteId);
+        if (anyFilterOptionIsDefined) {
+            filter = {};
+            if (Variable.isNotNullOrUndefined(filterOptionSiteId)) {
+                filter.siteId = filterOptionSiteId;
+            }
+        }
+        return filter;
+    }
     protected getEntity(): Promise<void> {
         let self = this;
         let operationPromise = self.siteApiService
