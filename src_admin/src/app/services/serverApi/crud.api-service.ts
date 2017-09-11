@@ -4,7 +4,6 @@ import { IEntity, ILightEntity } from './../../entities/index';
 import { ICRUDApiService } from './i-crud.api-service';
 import { BaseApiService } from './base.api-service';
 import { UrlParameter } from './urlParameter';
-import { GetAllRequest } from './dataModels/getAll.request';
 import { GetAllResponse } from './dataModels/getAll.response';
 @Injectable()
 export abstract class CRUDApiService<TEntity extends IEntity<TKey>, TKey, TLightEntity extends ILightEntity<TKey>>
@@ -69,7 +68,8 @@ export abstract class CRUDApiService<TEntity extends IEntity<TKey>, TKey, TLight
         page: number, pageSize: number, sorting, filter: any): Promise<GetAllResponse<T>> {
         let pageParameter = new UrlParameter('page', page);
         let pageSizeParameter = new UrlParameter('pageSize', pageSize);
-        let request: GetAllRequest = new GetAllRequest(sorting, filter);
+        let request = Variable.isNotNullOrUndefined(filter) ? filter : {};
+        request.sorting = sorting;
         return this.httpService
             .post(this.createUrlWithMethodNameAndUrlParams(methodName, pageParameter, pageSizeParameter), request)
             .then(function (response: any): GetAllResponse<T> {

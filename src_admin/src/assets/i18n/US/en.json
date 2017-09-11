@@ -139,5 +139,28 @@
       "beverageActivity": "Is active",
       "beverageOrder": "Order"
     }
+  },
+  "routes": {
+    "title": "Routes",
+    "table": {
+      "headerText_avatar": "Image",
+      "headerText_routeName": "Route name"
+    },
+    "modal": {
+      "title": "Route details",
+      "cancel": "Cancel",
+      "apply": "Save",
+      "browseAvatar": "Browse",
+      "changeAvatarUrl": "Set url",
+      "changeAvatarUrlCancel": "Cancel",
+      "changeAvatarUrlAccept": "Accept",
+      "avatarBrowseAccept": "Accept",
+      "avatarBrowseCancel": "Cancel",
+      "routePhotoUrl": "Url",
+      "routeName": "Name",
+      "routeDescription": "Description",
+      "routeActivity": "Is active",
+      "routeOrder": "Order"
+    }
   }
 }

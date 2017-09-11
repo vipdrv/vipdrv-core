@@ -114,26 +114,30 @@
                  role="tabpanel"
                  aria-labelledby="beverages-tab">
                 <beverages-table [siteId]="entity.id"
-                               [filter]="getBeveragesFilter()">
+                                 [filter]="getBeveragesFilter()">
                 </beverages-table>
             </div>
             <div id="routes"
                  class="tab-pane fade show"
                  role="tabpanel"
                  aria-labelledby="routes-tab">
-                Routes component
+                <routes-table [siteId]="entity.id"
+                              [filter]="getRoutesFilter()">
+                </routes-table>
             </div>
             <div id="notifications"
                  class="tab-pane fade show"
                  role="tabpanel"
                  aria-labelledby="notifications-tab">
-                notifications component
+                notifications component (not implemented yet)
+                // Should patch contacts for current site entity
             </div>
             <div id="theme"
                  class="tab-pane fade show"
                  role="tabpanel"
                  aria-labelledby="theme-tab">
-                theme component
+                theme component (not implemented yet)
+                // Should patch theme for current site entity
             </div>
         </div>
     </div>

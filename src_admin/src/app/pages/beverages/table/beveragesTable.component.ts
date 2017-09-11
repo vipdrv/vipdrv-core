@@ -23,7 +23,7 @@ export class BeveragesTableComponent implements OnInit {
     /// fields
     private _defaultPageNumber: number = 0;
     private _defaultPageSize: number = 100;
-    private _defaultSorting: string = null;
+    private _defaultSorting: string = 'order asc';
     private _defaultFilter: any = null;
     private _isInitialized: boolean = false;
     protected totalCount: number;
