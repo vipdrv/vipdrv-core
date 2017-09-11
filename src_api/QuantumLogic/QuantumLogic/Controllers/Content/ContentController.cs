@@ -32,7 +32,7 @@ namespace QuantumLogic.WebApi.Controllers.Content
 
                     var base64Data = Regex.Match(request.Img, @"data:image/(?<type>.+?),(?<data>.+)").Groups["data"].Value;
                     var binData = Convert.FromBase64String(base64Data);
-                    path = @"C:\Source\git-repos\Quantum\src_api\QuantumLogic\QuantumLogic\Content\Images";
+                    path = "physical path";//@"C:\Source\git-repos\Quantum\src_api\QuantumLogic\QuantumLogic\Content\Images";
                     bool created = false;
                     string fileName;
                     while (!created)
