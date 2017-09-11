@@ -35,12 +35,15 @@ namespace QuantumLogic.Core
             #region Widget
 
             services.AddScoped<IEntityDomainService<Beverage, int>, BeverageDomainService>();
+            services.AddScoped<IEntityExtendedDomainService<Beverage, int>, BeverageDomainService>();
             services.AddScoped<IBeverageDomainService, BeverageDomainService>();
             services.AddScoped<IEntityDomainService<Expert, int>, ExpertDomainService>();
+            services.AddScoped<IEntityExtendedDomainService<Expert, int>, ExpertDomainService>();
             services.AddScoped<IExpertDomainService, ExpertDomainService>();
             services.AddScoped<IEntityDomainService<Lead, int>, LeadDomainService>();
             services.AddScoped<ILeadDomainService, LeadDomainService>();
             services.AddScoped<IEntityDomainService<Route, int>, RouteDomainService>();
+            services.AddScoped<IEntityExtendedDomainService<Route, int>, RouteDomainService>();
             services.AddScoped<IRouteDomainService, RouteDomainService>();
             services.AddScoped<IEntityDomainService<Site, int>, SiteDomainService>();
             services.AddScoped<ISiteDomainService, SiteDomainService>();

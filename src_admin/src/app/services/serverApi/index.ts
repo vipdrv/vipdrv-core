@@ -2,7 +2,9 @@ export * from './serverApi.module';
 
 export * from './urlParameter';
 export * from './dataModels/getAll.response';
-export * from './dataModels/getAll.request';
+
+export * from './content/i-content.api-service';
+export * from './content/content.api-service';
 
 export * from './main/users/i-user.api-service';
 export * from './main/users/user.api-service';

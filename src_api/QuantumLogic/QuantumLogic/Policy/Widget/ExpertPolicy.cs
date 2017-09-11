@@ -4,7 +4,7 @@ using QuantumLogic.Core.Domain.Policy.WidgetModule;
 
 namespace QuantumLogic.WebApi.Policy.Widget
 {
-    public class ExpertPolicy : NullEntityPolicy<Expert, int>, IExpertPolicy
+    public class ExpertPolicy : NullEntityExtendedPolicy<Expert, int>, IExpertPolicy
     {
         #region Ctors
 

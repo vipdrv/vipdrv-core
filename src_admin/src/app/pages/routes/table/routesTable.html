@@ -1,0 +1,223 @@
+<div class="routes-table-template">
+    <table class="routes-table-body table table-bordered table-hover"
+           *ngIf="isInitialized()">
+        <thead>
+        <tr>
+            <th translate class="routes-table-body-column-photo">routes.table.headerText_avatar</th>
+            <th translate class="routes-table-body-column-name">routes.table.headerText_routeName</th>
+            <th translate class="routes-table-body-column-activity">general.table.headerText.activity</th>
+            <th translate class="routes-table-body-column-order">general.table.headerText.order</th>
+            <th class="routes-table-body-column-actions">
+                <button type="button"
+                        class="btn btn-outline-success btn-sm"
+                        translate
+                        (click)="modalOpenCreate(); $event.stopPropagation();">
+                    general.actions.text_create
+                </button>
+            </th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let item of items"
+            ngClass="{{getEntityRowClass(item)}}">
+            <td>
+                <img class="rounded-circle"
+                     alt="no photo"
+                     [src]="item.photoUrl"
+                     [width]="50"
+                     [height]="50">
+            </td>
+            <td>{{item.name}}</td>
+            <td>
+                <input type="checkbox"
+                       class="checkbox-success"
+                       (click)="onChangeEntityActivity(item); $event.stopPropagation();"
+                       [ngModel]="item.isActive">
+            </td>
+            <td>
+                <button type="button"
+                        class="btn btn-sm btn-secondary"
+                        [disabled]="!canDecrementOrder(item)"
+                        (click)="decrementOrder(item); $event.stopPropagation();">
+                    <i class="fa fa-chevron-up" aria-hidden="true"></i>
+                </button>
+                <button type="button"
+                        class="btn btn-sm btn-secondary"
+                        [disabled]="!canIncrementOrder(item)"
+                        (click)="incrementOrder(item); $event.stopPropagation();">
+                    <i class="fa fa-chevron-down" aria-hidden="true"></i>
+                </button>
+            </td>
+            <td class="routes-table-body-column-actions">
+                <button type="button"
+                        class="btn btn-outline-primary btn-sm"
+                        translate
+                        (click)="modalOpenEdit(item.id); $event.stopPropagation();">
+                    general.actions.text_edit
+                </button>
+                <button type="button"
+                        class="btn btn-outline-danger btn-sm"
+                        translate
+                        (click)="deleteEntity(item.id); $event.stopPropagation();">
+                    general.actions.text_delete
+                </button>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<modal #routeDetailsModal
+       size="lg"
+       [backdrop]="'static'">
+    <modal-header>
+        <span class="route-modal-header-text" translate>routes.modal.title</span>
+    </modal-header>
+    <modal-body>
+        <div *ngIf="isSelectedEntityDefined()">
+            <div class="row">
+                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                    <div class="route-avatar-image">
+                        <img class="rounded-circle"
+                             [src]="getAvatar()"
+                             [width]="avatarWidth"
+                             [height]="avatarHeight">
+                    </div>
+                    <div class="route-avatar-btns"
+                         *ngIf="showAvatarButtons">
+                        <button type="button"
+                                class="btn btn-sm btn-secondary"
+                                (click)="browseAvatar()">
+                            <span translate>routes.modal.browseAvatar</span>
+                        </button>
+                        <button type="button"
+                                class="btn btn-sm btn-secondary"
+                                (click)="changeAvatarUrl()">
+                            <span translate>routes.modal.changeAvatarUrl</span>
+                        </button>
+                    </div>
+                    <div class="route-avatar-change-url"
+                         *ngIf="showAvatarChangeUrl">
+                        <div class="row">
+                            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                                <div class="form-group row">
+                                    <label class="col-2 col-form-label"
+                                           for="routePhotoUrl"
+                                           translate>
+                                        routes.modal.routePhotoUrl
+                                    </label>
+                                    <div class="col-10">
+                                        <input id="routePhotoUrl"
+                                               type="text"
+                                               class="form-control"
+                                               placeholder="http://www.google.com/avatar.jpg"
+                                               [(ngModel)]="stubAvatarUrl">
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                                        <button type="button"
+                                                style="margin-left: 2px; margin-right: 2px;"
+                                                class="btn btn-sm btn-primary pull-right"
+                                                (click)="changeAvatarUrlAccept()">
+                                            <span translate>routes.modal.changeAvatarUrlAccept</span>
+                                        </button>
+                                        <button type="button"
+                                                style="margin-left: 2px; margin-right: 2px;"
+                                                class="btn btn-sm btn-default pull-right"
+                                                (click)="changeAvatarUrlCancel()">
+                                            <span translate>routes.modal.changeAvatarUrlCancel</span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="route-avatar-browse"
+                         *ngIf="showAvatarBrowse">
+                        <div class="row">
+                            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                                <div class="row">
+                                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                                        <label class="custom-file">
+                                            <input type="file"
+                                                   id="avatar-browse-file"
+                                                   class="custom-file-input"
+                                                   (change)="avatarBrowseFileChangeListener($event)">
+                                            <span class="custom-file-control"></span>
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                                        <img-cropper #cropper
+                                                     [image]="avatarCropperData"
+                                                     [settings]="avatarCropperSettings">
+                                        </img-cropper>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                                        <button type="button"
+                                                style="margin-left: 2px; margin-right: 2px;"
+                                                class="btn btn-sm btn-primary pull-right"
+                                                (click)="showAvatarBrowseAccept()">
+                                            <span translate>routes.modal.avatarBrowseAccept</span>
+                                        </button>
+                                        <button type="button"
+                                                style="margin-left: 2px; margin-right: 2px;"
+                                                class="btn btn-sm btn-default pull-right"
+                                                (click)="showAvatarBrowseCancel()">
+                                            <span translate>routes.modal.avatarBrowseCancel</span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <hr>
+            <div class="form-group row">
+                <label class="col-2 col-form-label"
+                       for="routeName"
+                       translate>
+                    routes.modal.routeName
+                </label>
+                <div class="col-10">
+                    <input id="routeName"
+                           type="text"
+                           class="form-control"
+                           [(ngModel)]="selectedEntity.name">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-2 col-form-label"
+                       for="routeDescription"
+                       translate>
+                    routes.modal.routeDescription
+                </label>
+                <div class="col-10">
+                    <textarea id="routeDescription"
+                              type="text"
+                              class="form-control"
+                              rows="5"
+                              [(ngModel)]="selectedEntity.description"></textarea>
+                </div>
+            </div>
+        </div>
+    </modal-body>
+    <modal-footer>
+        <button type="button"
+                class="btn btn-default"
+                data-dismiss="modal"
+                (click)="modalDismiss()">
+            <span translate>routes.modal.cancel</span>
+        </button>
+        <button type="button"
+                class="btn btn-primary"
+                (click)="modalApply()">
+            <span translate>routes.modal.apply</span>
+        </button>
+    </modal-footer>
+</modal>

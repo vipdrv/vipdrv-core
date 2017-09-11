@@ -1,6 +1,8 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
+import { ContentApiService } from './content/content.api-service';
+
 import { UserApiService } from './main/users/user.api-service';
 
 import { BeverageApiService } from './widget/beverages/beverage.api-service';
@@ -16,6 +18,7 @@ import { WidgetThemeApiService } from './widget/themes/widgetTheme.api-service';
     ],
     declarations: [],
     providers: [
+        ContentApiService,
         UserApiService,
         BeverageApiService,
         ExpertApiService,

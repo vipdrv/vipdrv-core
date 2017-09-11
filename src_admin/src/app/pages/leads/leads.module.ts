@@ -19,6 +19,10 @@ import { routing } from './leads.routing';
         routing,
         Ng2Bs3ModalModule
     ],
+    exports: [
+        LeadsComponent,
+        LeadsTableComponent
+    ],
     declarations: [
         LeadsComponent,
         LeadsTableComponent

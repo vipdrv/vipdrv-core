@@ -3,6 +3,7 @@ using QuantumLogic.Core.Domain.Entities.WidgetModule;
 using QuantumLogic.Core.Domain.Services.Widget.Experts;
 using QuantumLogic.Core.Domain.UnitOfWorks;
 using QuantumLogic.WebApi.DataModels.Dtos.Widget.Experts;
+using QuantumLogic.WebApi.DataModels.Requests;
 using QuantumLogic.WebApi.DataModels.Requests.Widget.Experts;
 using QuantumLogic.WebApi.DataModels.Responses;
 using System;
@@ -12,7 +13,7 @@ using System.Threading.Tasks;
 namespace QuantumLogic.WebApi.Controllers.Widget
 {
     [Route("api/expert")]
-    public class ExpertController : EntityController<Expert, int, ExpertDto, ExpertFullDto>
+    public class ExpertController : EntityExtendedController<Expert, int, ExpertDto, ExpertFullDto>
     {
         #region Ctors
 
@@ -52,8 +53,23 @@ namespace QuantumLogic.WebApi.Controllers.Widget
         [HttpPost("get-all/{page?}/{pageSize?}")]
         public Task<GetAllResponse<ExpertDto>> GetAll([FromBody]ExpertGetAllRequest request, uint page = 0, uint pageSize = 0)
         {
-            Expression<Func<Expert, bool>> filter = (user) => true;
+            Expression<Func<Expert, bool>> filter = (entity) => request.SiteId.HasValue ? request.SiteId == entity.SiteId : true;
             return InnerGetAllAsync(filter, request.Sorting, page, pageSize);
+        }
+
+        #endregion
+
+        #region Extended metods
+
+        [HttpPatch("change-activity/{id}")]
+        public Task ChangeActivityAsync([FromBody]ChangeActivityRequest request, int id)
+        {
+            return ChangeActivityAsync(id, request.Value);
+        }
+        [HttpPatch("change-order/{id}")]
+        public Task ChangeOrderAsync([FromBody]ChangeOrderRequest request, int id)
+        {
+            return ChangeOrderAsync(id, request.Value);
         }
 
         #endregion

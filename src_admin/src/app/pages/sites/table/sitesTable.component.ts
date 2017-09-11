@@ -1,4 +1,5 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, Input, ViewChild } from '@angular/core';
+import { Router} from '@angular/router';
 import { ModalComponent } from 'ng2-bs3-modal/ng2-bs3-modal';
 import { Variable, IAuthorizationManager, AuthorizationManager } from './../../../utils/index';
 import { SiteEntity } from './../../../entities/index';
@@ -6,35 +7,54 @@ import { ISiteApiService, SiteApiService, GetAllResponse } from './../../../serv
 @Component({
     selector: 'sites-table',
     styleUrls: ['./sitesTable.scss'],
-    templateUrl: './sitesTable.html',
+    templateUrl: './sitesTable.html'
 })
 export class SitesTableComponent implements OnInit {
+    @Input() pageNumber: number;
+    @Input() pageSize: number;
+    @Input() sorting: string;
+    @Input() filter: any;
     @ViewChild('siteDetailsModal')
     protected modal: ModalComponent;
     /// fields
-    private _isInitialized: boolean;
+    private _defaultPageNumber: number = 0;
+    private _defaultPageSize: number = 25;
+    private _defaultSorting: string = 'name asc';
+    private _defaultFilter: any = null;
+    private _isInitialized: boolean = false;
     protected totalCount: number;
     protected items: Array<SiteEntity>;
     protected selectedEntity: SiteEntity;
     /// injected dependencies
     protected authorizationManager: IAuthorizationManager;
     protected siteApiService: ISiteApiService;
+    protected router: Router;
     /// ctor
-    constructor(authorizationManager: AuthorizationManager, siteApiService: SiteApiService) {
+    constructor(authorizationManager: AuthorizationManager, siteApiService: SiteApiService, router: Router) {
         this.authorizationManager = authorizationManager;
         this.siteApiService = siteApiService;
-        this._isInitialized = false;
+        this.router = router;
     }
     /// methods
     ngOnInit(): void {
         let self = this;
+        self._isInitialized = false;
         self.getAllEntities()
             .then(() => self._isInitialized = true);
+    }
+    protected redirectToEntityDetails(entity: SiteEntity): Promise<boolean> {
+        let actionPromise: Promise<boolean>;
+        if (Variable.isNotNullOrUndefined(entity)) {
+            actionPromise = this.router.navigate([`./pages/sites/${String(entity.id)}`]);
+        } else {
+            actionPromise = Promise.resolve(false);
+        }
+        return actionPromise;
     }
     protected getAllEntities(): Promise<void> {
         let self = this;
         let operationPromise = self.siteApiService
-            .getAll(0, 25, 'name asc', null)
+            .getAll(self.getPageNumber(), self.getPageSize(), self.buildSorting(), self.buildFilter())
             .then(function (response: GetAllResponse<SiteEntity>): Promise<void> {
                 self.totalCount = response.totalCount;
                 self.items = response.items;
@@ -99,5 +119,18 @@ export class SitesTableComponent implements OnInit {
     }
     protected isSelectedEntityDefined(): boolean {
         return Variable.isNotNullOrUndefined(this.selectedEntity);
+    }
+    /// helpers
+    private getPageNumber(): number {
+        return Variable.isNotNullOrUndefined(this.pageNumber) ? this.pageNumber : this._defaultPageNumber;
+    }
+    private getPageSize(): number {
+        return Variable.isNotNullOrUndefined(this.pageSize) ? this.pageSize : this._defaultPageSize;
+    }
+    private buildSorting(): string {
+        return Variable.isNotNullOrUndefined(this.sorting) ? this.sorting : this._defaultSorting;
+    }
+    private buildFilter(): any {
+        return Variable.isNotNullOrUndefined(this.filter) ? this.filter : this._defaultFilter;
     }
 }

@@ -3,6 +3,7 @@ using QuantumLogic.Core.Domain.Entities.WidgetModule;
 using QuantumLogic.Core.Domain.Services.Widget.Beverages;
 using QuantumLogic.Core.Domain.UnitOfWorks;
 using QuantumLogic.WebApi.DataModels.Dtos.Widget.Beverages;
+using QuantumLogic.WebApi.DataModels.Requests;
 using QuantumLogic.WebApi.DataModels.Requests.Widget.Beverages;
 using QuantumLogic.WebApi.DataModels.Responses;
 using System;
@@ -12,7 +13,7 @@ using System.Threading.Tasks;
 namespace QuantumLogic.WebApi.Controllers.Widget
 {
     [Route("api/beverage")]
-    public class BeverageController : EntityController<Beverage, int, BeverageDto, BeverageFullDto>
+    public class BeverageController : EntityExtendedController<Beverage, int, BeverageDto, BeverageFullDto>
     {
         #region Ctors
 
@@ -52,8 +53,23 @@ namespace QuantumLogic.WebApi.Controllers.Widget
         [HttpPost("get-all/{page?}/{pageSize?}")]
         public Task<GetAllResponse<BeverageDto>> GetAll([FromBody]BeverageGetAllRequest request, uint page = 0, uint pageSize = 0)
         {
-            Expression<Func<Beverage, bool>> filter = (user) => true;
+            Expression<Func<Beverage, bool>> filter = (entity) => request.SiteId.HasValue ? request.SiteId == entity.SiteId : true;
             return InnerGetAllAsync(filter, request.Sorting, page, pageSize);
+        }
+
+        #endregion
+
+        #region Extended metods
+
+        [HttpPatch("change-activity/{id}")]
+        public Task ChangeActivityAsync(int id, [FromBody]ChangeActivityRequest request)
+        {
+            return ChangeActivityAsync(id, request.Value);
+        }
+        [HttpPatch("change-order/{id}")]
+        public Task ChangeOrderAsync(int id, [FromBody]ChangeOrderRequest request)
+        {
+            return ChangeOrderAsync(id, request.Value);
         }
 
         #endregion

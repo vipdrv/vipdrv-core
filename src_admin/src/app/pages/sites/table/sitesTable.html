@@ -1,9 +1,4 @@
 <div class="sites-table-template">
-    <div class="row">
-        <div class="sites-table-title">
-            <span class="sites-table-title-text" translate>sites.table.title</span>
-        </div>
-    </div>
     <table class="sites-table-body table table-bordered table-hover"
            *ngIf="isInitialized()">
         <thead>
@@ -14,27 +9,28 @@
                     <button type="button"
                             class="btn btn-outline-success btn-sm"
                             translate
-                            (click)="modalOpenCreate()">
+                            (click)="modalOpenCreate(); $event.stopPropagation();">
                         general.actions.text_create
                     </button>
                 </th>
             </tr>
         </thead>
         <tbody>
-            <tr *ngFor="let item of items">
+            <tr *ngFor="let item of items"
+                (click)="redirectToEntityDetails(item)">
                 <td>{{item.name}}</td>
                 <td>{{item.leadsAmount}}</td>
                 <td class="sites-table-body-column-actions">
                     <button type="button"
                             class="btn btn-outline-primary btn-sm"
                             translate
-                            (click)="modalOpenEdit(item.id)">
+                            (click)="modalOpenEdit(item.id); $event.stopPropagation();">
                         general.actions.text_edit
                     </button>
                     <button type="button"
                             class="btn btn-outline-danger btn-sm"
                             translate
-                            (click)="deleteEntity(item.id)">
+                            (click)="deleteEntity(item.id); $event.stopPropagation();">
                         general.actions.text_delete
                     </button>
                 </td>
@@ -42,6 +38,7 @@
         </tbody>
     </table>
 </div>
+
 <modal #siteDetailsModal
        [backdrop]="'static'">
     <modal-header>

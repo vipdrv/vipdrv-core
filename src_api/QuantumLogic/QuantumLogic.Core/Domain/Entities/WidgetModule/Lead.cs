@@ -11,7 +11,8 @@ namespace QuantumLogic.Core.Domain.Entities.WidgetModule
         public int? BeverageId { get; set; }
         public int RouteId { get; set; }
         public DateTime RecievedUtc { get; set; }
-        public string Username { get; set; }
+        public string FirstName { get; set; }
+        public string SecondName { get; set; }
         public string UserPhone { get; set; }
         public string UserEmail { get; set; }
 
@@ -32,7 +33,7 @@ namespace QuantumLogic.Core.Domain.Entities.WidgetModule
             : base()
         { }
 
-        public Lead(int id, int siteId, int expertId, int beverageId, int routeId, DateTime recieved, string username, string userPhone, string userEmail)
+        public Lead(int id, int siteId, int expertId, int beverageId, int routeId, DateTime recieved, string firstname, string secondName, string userPhone, string userEmail)
             : this()
         {
             Id = id;
@@ -41,7 +42,8 @@ namespace QuantumLogic.Core.Domain.Entities.WidgetModule
             BeverageId = beverageId;
             RouteId = routeId;
             RecievedUtc = recieved;
-            Username = username;
+            FirstName = firstname;
+            SecondName = secondName;
             UserPhone = userPhone;
         }
 
@@ -72,7 +74,8 @@ namespace QuantumLogic.Core.Domain.Entities.WidgetModule
             ExpertId = actualEntity.ExpertId;
             BeverageId = actualEntity.BeverageId;
             RouteId = actualEntity.RouteId;
-            Username = actualEntity.Username;
+            FirstName = actualEntity.FirstName;
+            SecondName = actualEntity.SecondName;
             UserPhone = actualEntity.UserPhone;
             UserEmail = actualEntity.UserEmail;
         }

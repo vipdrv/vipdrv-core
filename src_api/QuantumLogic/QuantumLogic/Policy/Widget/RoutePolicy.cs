@@ -4,7 +4,7 @@ using QuantumLogic.Core.Domain.Policy.WidgetModule;
 
 namespace QuantumLogic.WebApi.Policy.Widget
 {
-    public class RoutePolicy : NullEntityPolicy<Route, int>, IRoutePolicy
+    public class RoutePolicy : NullEntityExtendedPolicy<Route, int>, IRoutePolicy
     {
         #region Ctors
 

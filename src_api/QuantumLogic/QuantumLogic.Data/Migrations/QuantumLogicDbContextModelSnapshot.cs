@@ -95,17 +95,19 @@ namespace QuantumLogic.Data.Migrations
 
                     b.Property<int>("ExpertId");
 
+                    b.Property<string>("FirstName");
+
                     b.Property<DateTime>("RecievedUtc");
 
                     b.Property<int>("RouteId");
+
+                    b.Property<string>("SecondName");
 
                     b.Property<int>("SiteId");
 
                     b.Property<string>("UserEmail");
 
                     b.Property<string>("UserPhone");
-
-                    b.Property<string>("Username");
 
                     b.HasKey("Id");
 
@@ -203,11 +205,11 @@ namespace QuantumLogic.Data.Migrations
 
             modelBuilder.Entity("QuantumLogic.Core.Domain.Entities.WidgetModule.Lead", b =>
                 {
-                    b.HasOne("QuantumLogic.Core.Domain.Entities.WidgetModule.Route", "Beverage")
+                    b.HasOne("QuantumLogic.Core.Domain.Entities.WidgetModule.Beverage", "Beverage")
                         .WithMany()
                         .HasForeignKey("BeverageId");
 
-                    b.HasOne("QuantumLogic.Core.Domain.Entities.WidgetModule.Route", "Expert")
+                    b.HasOne("QuantumLogic.Core.Domain.Entities.WidgetModule.Expert", "Expert")
                         .WithMany()
                         .HasForeignKey("ExpertId");
 
