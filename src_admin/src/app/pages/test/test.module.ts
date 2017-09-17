@@ -7,8 +7,14 @@ import { NgaModule } from '../../theme/nga.module';
 import { Test } from './test.component';
 import { routing } from './test.routing';
 
+import { TableDemoComponent } from './testTable/testTable';
+
 import { BtnViewer } from './btnViewer';
 import { BootstrapBtnMessageService } from './btnViewer/bootstrapBtnMessage.service';
+import { Ng2BootstrapModule } from 'ng2-bootstrap';
+
+import { PaginationModule } from 'ng2-bootstrap';
+import { Ng2TableModule } from 'ng2-table/ng2-table';
 
 @NgModule({
     imports: [
@@ -16,11 +22,15 @@ import { BootstrapBtnMessageService } from './btnViewer/bootstrapBtnMessage.serv
         FormsModule,
         AppTranslationModule,
         NgaModule,
-        routing
+        Ng2TableModule,
+        PaginationModule,
+        routing,
+        Ng2BootstrapModule
     ],
     declarations: [
         Test,
-        BtnViewer
+        BtnViewer,
+        TableDemoComponent
     ],
     providers: [
         BootstrapBtnMessageService

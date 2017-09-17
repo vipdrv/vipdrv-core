@@ -1,6 +1,7 @@
 export * from './utils.module';
 
 export * from './variable';
+export * from './extensions';
 
 export * from './auth/authorization.manager';
 export * from './auth/i-authorization.manager';
@@ -15,5 +16,9 @@ export * from './logging/i-logger';
 export * from './logging/base.logger';
 export * from './logging/log-level';
 export * from './logging/console/console.logger';
+
+export * from './loader/test-drive-loader.settings';
+
+export * from './promises/promise.service';
 
 export { WorkingHoursComponent } from './components/working-hours/workingHours.component';

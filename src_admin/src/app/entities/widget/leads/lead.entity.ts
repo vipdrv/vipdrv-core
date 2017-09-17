@@ -1,12 +1,11 @@
-import { Variable } from "./../../../utils/index";
-import { Entity } from "./../../index";
-
+import { Variable, Extensions } from './../../../utils/index';
+import { Entity } from './../../index';
 export class LeadEntity extends Entity {
     siteId: number;
     expertId: number;
     beverageId: number;
     routeId: number;
-    recievedUtc: string;
+    recievedDateTime: string;
     firstName: number;
     secondName: number;
     userPhone: string;
@@ -30,7 +29,7 @@ export class LeadEntity extends Entity {
         this.expertId = mock.expertId;
         this.beverageId = mock.beverageId;
         this.routeId = mock.routeId;
-        this.recievedUtc = mock.recievedUtc;
+        this.recievedDateTime = Extensions.formatUtcDateTimeToLocalTimezone(dto.recievedUtc);
         this.firstName = mock.firstName;
         this.secondName = mock.secondName;
         this.userPhone = mock.userPhone;

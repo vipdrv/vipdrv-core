@@ -9,6 +9,7 @@ import { ImageCropperComponent } from 'ng2-img-cropper';
 import { AuthorizationManager } from './auth/authorization.manager';
 import { HttpService } from './http/http.service';
 import { ConsoleLogger } from './logging/console/console.logger';
+import { PromiseService } from './promises/promise.service';
 
 import { WorkingHoursComponent } from './components/working-hours/workingHours.component';
 
@@ -29,7 +30,8 @@ import { WorkingHoursComponent } from './components/working-hours/workingHours.c
     providers: [
         AuthorizationManager,
         HttpService,
-        ConsoleLogger
+        ConsoleLogger,
+        PromiseService
     ]
 })
 export class UtilsModule {}

@@ -1,5 +1,5 @@
-import { Variable } from "./../../../utils/index";
-import { Entity, IPassivable, IOrderable } from "./../../index";
+import { Variable } from './../../../utils/index';
+import { Entity, IPassivable, IOrderable } from './../../index';
 
 export class ExpertEntity extends Entity implements IPassivable, IOrderable {
     siteId: number;
