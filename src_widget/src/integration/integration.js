@@ -1,7 +1,7 @@
 var TestDrive = TestDrive || (function () {
-    var _SiteId = 'nissan-of-bowie';
-    var _WidgetUrl = 'http://dev.widget.quantumlogic.online';
-    // var _WidgetUrl = 'http://localhost:8081';
+
+    var _SiteId = '%siteId%';
+    var _WidgetUrl = '%widgetUrl%';
 
     var _appendTestDriveFrame = function (vin, img, title, engine, year, colour, transmission, fuel) {
         var url = `${_WidgetUrl}?site_id=${_SiteId}&vin=${vin}&img=${img}&title=${title}&engine=${engine}&year=${year}&colour=${colour}&transmission=${transmission}&fuel=${fuel}`;

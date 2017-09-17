@@ -17,17 +17,21 @@ var sourcemaps = require('gulp-sourcemaps');
 var del = require('del');
 var clean = require('gulp-clean');
 var urlAdjuster = require('gulp-css-url-adjuster');
+var replace = require('gulp-replace');
+var babel = require('gulp-babel');
+
+var env = require('./src/environments/environment.dev');
 
 var config = {
     templates: './src/app/**/*.tpl.html',
     angularAppFiles: ['./build/tmp/templates.js', './src/app/prototypes/**/*.js', './src/app/**/*module.js', './src/app/app.js', './src/app/**/*.js', '!./src/app/**/*spec.js'],
     angularAppFiles_watch: ['./src/app/prototypes/**/*.js', './src/app/**/*module.js', './src/app/app.js', './src/app/**/*.js', '!./src/app/**/*spec.js'],
+    integration: ['./src/app/prototypes/**/*.js', './src/app/**/*module.js', './src/app/app.js', './src/app/**/*.js', '!./src/app/**/*spec.js'],
 };
 
 var vendorJs = [
     'node_modules/jquery/dist/jquery.min.js',
     'node_modules/popper.js/dist/umd/popper.min.js',
-
     'node_modules/angular/angular.min.js',
     'node_modules/angular-animate/angular-animate.min.js',
     'node_modules/angular-aria/angular-aria.min.js',
@@ -58,14 +62,79 @@ var appScssWatch = [
     './src/sass/**/*.scss'
 ];
 
+
+// =======================================================================//
+// Build Tasks                                                            //
+// =======================================================================//
+
+gulp.task('build_dist:dev', function (callback) {
+    runSequence('build_dist',
+        'init_dev_env',
+        callback);
+});
+
+gulp.task('build_dist:prod', function (callback) {
+    runSequence('build_dist',
+        'init_prod_env',
+        callback);
+});
+
+gulp.task('serve:build_dist:prod', function (callback) {
+    runSequence('build_dist',
+        'init_prod_env',
+        'serve',
+        'watch_dist',
+        callback);
+});
+
+gulp.task('serve:build_debug:local', function (callback) {
+    runSequence('build_debug',
+        'init_local_env',
+        'serve',
+        'watch_debug',
+        callback);
+});
+
+gulp.task('serve:build_debug:prod', function (callback) {
+    runSequence('build_debug',
+        'init_prod_prod',
+        'serve',
+        'watch_debug',
+        callback);
+});
+
+// =======================================================================//
+
 gulp.task('clean', function () {
     return del.sync('./build');
 });
 
-gulp.task('clean_tmp', function () {
-    del.sync('./build/maps');
-    del.sync('./build/tmp');
+gulp.task('init_local_env', function () {
+    var env = require('./src/environments/environment.local');
+    replaceConfigs(env);
 });
+
+gulp.task('init_dev_env', function () {
+    var env = require('./src/environments/environment.dev');
+    replaceConfigs(env);
+});
+
+gulp.task('init_prod_env', function () {
+    var env = require('./src/environments/environment.prod');
+    replaceConfigs(env);
+});
+
+function replaceConfigs(env) {
+    gulp.src(['./build/app.js'])
+        .pipe(replace('%apiBaseUrl%', env.apiBaseUrl))
+        .pipe(replace('%siteId%', env.defaultSiteId))
+        .pipe(gulp.dest('./build/'));
+
+    gulp.src(['./build/integration/integration.js'])
+        .pipe(replace('%widgetUrl%', env.widgetUrl))
+        .pipe(replace('%siteId%', env.defaultSiteId))
+        .pipe(gulp.dest('./build/integration/'));
+}
 
 gulp.task('bundle_vendor_js', function () {
     gulp.src(vendorJs)
@@ -88,17 +157,21 @@ gulp.task('bundle_vendor_css', function () {
         .pipe(gulp.dest('./build'));
 });
 
-gulp.task('copy_app_scss', function () {
+gulp.task('copy_app_scss_dist', function () {
+    gulp.src(appScss)
+        .pipe(plumber())
+        .pipe(sourcemaps.init())
+        .pipe(sass({outputStyle: 'compressed'}).on('error', sass.logError))
+        .pipe(cssnano())
+        .pipe(sourcemaps.write('./maps'))
+        .pipe(gulp.dest('./build'));
+});
+
+gulp.task('copy_app_scss_debug', function () {
     gulp.src(appScss)
         .pipe(plumber())
         .pipe(sourcemaps.init())
         .pipe(sass())
-        // .pipe(sass({outputStyle: 'compressed'}).on('error', sass.logError))
-        /*.pipe(urlAdjuster({
-         replace: ['../../img', '../img'],
-         }))*/
-        // .pipe(concat('site.css'))
-        // .pipe(cssnano())
         .pipe(sourcemaps.write('./maps'))
         .pipe(gulp.dest('./build'));
 });
@@ -108,16 +181,43 @@ gulp.task('copy_app_fonts', function () {
         .pipe(gulp.dest('./build/fonts'));
 });
 
+gulp.task('bundle_integration', function () {
+    gulp.src('./src/integration/*.js')
+        .pipe(concat('integration.js'))
+        .pipe(gulp.dest('./build/integration/'));
+
+    gulp.src('./src/integration/*.scss')
+        .pipe(plumber())
+        .pipe(sass().on('error', sass.logError))
+        .pipe(gulp.dest('./build/integration/'));
+});
+
+gulp.task('bundle_integration_dist', function () {
+    gulp.src('./src/integration/*.js')
+        .pipe(babel({presets: ['es2015']}))
+        .pipe(concat('integration.js'))
+        .pipe(uglify({compress: true}).on('error', function (e) {
+            console.log(e);
+        }))
+        .pipe(gulp.dest('./build/integration/'));
+
+    gulp.src('./src/integration/*.scss')
+        .pipe(plumber())
+        .pipe(sass({outputStyle: 'compressed'}).on('error', sass.logError))
+        .pipe(cssnano())
+        .pipe(gulp.dest('./build/integration/'));
+});
+
 gulp.task('copy_app_images', function () {
     return gulp.src(appImages)
         .pipe(gulp.dest('./build/img'));
 });
 
-gulp.task('bundle_app', function () {
+gulp.task('bundle_app_dist', function () {
     return gulp.src(config.angularAppFiles)
         .pipe(plumber())
         .pipe(concat('app.js'))
-        .pipe(uglify({mangle: false}))
+        .pipe(uglify())
         .pipe(gulp.dest('./build'))
         .pipe($.size({
             title: 'size of app.js:'
@@ -128,7 +228,6 @@ gulp.task('bundle_app_debug', function () {
     return gulp.src(config.angularAppFiles)
         .pipe(plumber())
         .pipe(concat('app.js'))
-        // .pipe(uglify({mangle: false}))
         .pipe(gulp.dest('./build'))
         .pipe($.size({
             title: 'size of app.js:'
@@ -163,11 +262,11 @@ gulp.task('build_dist', function (callback) {
         'bundle_vendor_css',
         'copy_app_fonts',
         'compile_templates',
-        'bundle_app',
-        'copy_app_scss',
+        'bundle_app_dist',
+        'copy_app_scss_dist',
         'copy_app_images',
         'copy_index',
-        // 'clean_tmp',
+        'bundle_integration_dist',
         callback);
 });
 
@@ -178,22 +277,21 @@ gulp.task('build_debug', function (callback) {
         'copy_app_fonts',
         'compile_templates',
         'bundle_app_debug',
-        'copy_app_scss',
+        'copy_app_scss_debug',
         'copy_app_images',
         'copy_index',
-        // 'clean_tmp',
+        'bundle_integration',
         callback);
 });
 
-gulp.task('reload_sequence', function (callback) {
+gulp.task('reload_sequence_debug', function (callback) {
     runSequence(
         'compile_templates',
         'bundle_app_debug',
         callback);
 });
 
-
-gulp.task('serve', ['build_debug'], function () {
+gulp.task('serve', function () {
     browserSync.init({
         port: 8081,
         ui: {
@@ -206,9 +304,20 @@ gulp.task('serve', ['build_debug'], function () {
             middleware: []
         }
     });
+});
 
+gulp.task('watch_debug', function () {
     gulp.watch(config.templates, ['reload_sequence', reload]);
     gulp.watch(vendorJs, ['bundle_vendor_js', reload]);
     gulp.watch(config.angularAppFiles_watch, ['bundle_app_debug', reload]);
-    gulp.watch(appScssWatch, ['copy_app_scss', reload]);
+    gulp.watch(appScssWatch, ['copy_app_scss_debug', reload]);
+    gulp.watch('./src/integration/*', ['bundle_integration', reload]);
+});
+
+gulp.task('watch_dist', function () {
+    gulp.watch(config.templates, ['reload_sequence', reload]);
+    gulp.watch(vendorJs, ['bundle_vendor_js', reload]);
+    gulp.watch(config.angularAppFiles_watch, ['bundle_app_dist', reload]);
+    gulp.watch(appScssWatch, ['copy_app_scss_dist', reload]);
+    gulp.watch('./src/integration/*', ['bundle_integration', reload]);
 });

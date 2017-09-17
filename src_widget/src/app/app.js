@@ -1,11 +1,12 @@
 (function () {
     var app = angular.module('myApp', ['templates']);
 
-    /* ========================================= App Data ========================================== */
+    /* ======================================== App Configs ======================================== */
 
-    var apiBaseUrl = 'http://api.dev.test-drive.tech';
-    // var apiBaseUrl = 'http://localhost:4220';
-    var siteId = 'nissan-of-bowie';
+    var apiBaseUrl = '%apiBaseUrl%';
+    var siteId = '%siteId%';
+
+    /* ===================================== Global Variables ====================================== */
 
     var widgetTabs = {
         time: {
@@ -87,9 +88,8 @@
     var globalState = {
         isFormCompleted: false
     };
-    /* ======================================== Url Params ========================================= */
 
-    // var url = new URL(window.location.href);
+    /* ======================================== Url Params ========================================= */
 
     var url = new FiltersFromUrl(window.location.search).get();
 
@@ -97,12 +97,12 @@
 
     var vin = url.vin || null;
     var img = url.img || null;
-    var title = url.title;
-    var engine = url.engine;
-    var year = url.year;
-    var colour = url.colour;
-    var transmission = url.transmission;
-    var fuel = url.fuel;
+    var title = url.title || null;
+    var engine = url.engine || null;
+    var year = url.year || null;
+    var colour = url.colour || null;
+    var transmission = url.transmission || null;
+    var fuel = url.fuel || null;
 
     userData.car.vin = vin;
     userData.car.img = img;
@@ -118,6 +118,5 @@
     app.value('userData', userData);
     app.value('apiBaseUrl', apiBaseUrl);
     app.value('siteId', siteId);
-})();
 
-// http://localhost:8080/?site_id=nissan-of-bowie&vin=5N1AA0NC9EN606049&img=http://vehiclephotos.vauto.com/ca/f0/97/9e-1ad8-43be-b64a-1e1635ee7099/image-1.jpg&title=Nissan%20GT-R&year=2016&colour=Orange&transmission=Manual&fuel=3.8%20litre%20twin-turbo%20V6
+})();
