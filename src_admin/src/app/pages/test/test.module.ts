@@ -23,7 +23,7 @@ import { Ng2TableModule } from 'ng2-table/ng2-table';
         AppTranslationModule,
         NgaModule,
         Ng2TableModule,
-        PaginationModule.forRoot(),
+        PaginationModule,
         routing,
         Ng2BootstrapModule
     ],

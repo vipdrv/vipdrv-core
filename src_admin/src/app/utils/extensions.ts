@@ -1,6 +1,7 @@
 import { DatePipe } from '@angular/common';
 import { Variable } from './variable';
 export module Extensions {
+    /// date time extensions
     const dateTimeLocale: string = 'en-US';
     const dateTimePattern: string = ' MM/dd/yyyy HH:mm:ss';
     export function formatDateTime(dateTime: string): string {
@@ -19,5 +20,11 @@ export module Extensions {
         } else {
             throw new Error('Argument (dateTime) exceprion!');
         }
+    }
+    /// promises extensions
+    export function delay(timeout) {
+        return new Promise(function(resolve) {
+            setTimeout(resolve, timeout)
+        });
     }
 }
