@@ -1,6 +1,7 @@
 export * from './utils.module';
 
 export * from './variable';
+export * from './extensions';
 
 export * from './auth/authorization.manager';
 export * from './auth/i-authorization.manager';
