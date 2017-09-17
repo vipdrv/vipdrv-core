@@ -11,5 +11,4 @@ import { Pages } from './pages.component';
   imports: [CommonModule, AppTranslationModule, NgaModule, routing],
   declarations: [Pages]
 })
-export class PagesModule {
-}
+export class PagesModule { }

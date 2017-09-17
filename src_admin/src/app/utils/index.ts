@@ -17,4 +17,8 @@ export * from './logging/base.logger';
 export * from './logging/log-level';
 export * from './logging/console/console.logger';
 
+export * from './loader/test-drive-loader.settings';
+
+export * from './promises/promise.service';
+
 export { WorkingHoursComponent } from './components/working-hours/workingHours.component';
