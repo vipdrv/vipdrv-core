@@ -188,7 +188,7 @@
                     <input id="expertName"
                            type="text"
                            class="form-control"
-                           [(ngModel)]="selectedEntity.name">
+                           [(ngModel)]="entity.name">
                 </div>
             </div>
             <div class="form-group row">
@@ -202,7 +202,7 @@
                               type="text"
                               class="form-control"
                               rows="3"
-                              [(ngModel)]="selectedEntity.description"></textarea>
+                              [(ngModel)]="entity.description"></textarea>
                 </div>
             </div>
             <div class="form-group row">
@@ -216,7 +216,7 @@
                            type="text"
                            class="form-control"
                            placeholder="https://www.linkedin.com/"
-                           [(ngModel)]="selectedEntity.linkedinUrl">
+                           [(ngModel)]="entity.linkedinUrl">
                 </div>
             </div>
             <div class="form-group row">
@@ -230,14 +230,14 @@
                            type="text"
                            class="form-control"
                            placeholder="https://www.facebook.com/"
-                           [(ngModel)]="selectedEntity.facebookUrl">
+                           [(ngModel)]="entity.facebookUrl">
                 </div>
             </div>
             <hr>
             <div class="row"
-                 *ngIf="selectedEntity.workingHours">
+                 *ngIf="entity.workingHours">
                 <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-                    <working-hours [workingHours]="selectedEntity.workingHours"
+                    <working-hours [workingHours]="entity.workingHours"
                                    (workingHoursChanged)='onWorkingHoursChanged($event)'>
                     </working-hours>
                 </div>

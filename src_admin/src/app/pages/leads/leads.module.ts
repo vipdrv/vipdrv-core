@@ -8,6 +8,7 @@ import { NgaModule } from '../../theme/nga.module';
 import { Ng2Bs3ModalModule } from 'ng2-bs3-modal/ng2-bs3-modal';
 
 import { LeadsTableComponent } from './table/leadsTable.component';
+import { LeadDetailsInfoComponent } from './details/info/leadDetailsInfo.component';
 import { LeadsComponent } from './leads.component';
 import { routing } from './leads.routing';
 @NgModule({
@@ -21,11 +22,13 @@ import { routing } from './leads.routing';
     ],
     exports: [
         LeadsComponent,
-        LeadsTableComponent
+        LeadsTableComponent,
+        LeadDetailsInfoComponent
     ],
     declarations: [
         LeadsComponent,
-        LeadsTableComponent
+        LeadsTableComponent,
+        LeadDetailsInfoComponent
     ],
     providers: []
 })

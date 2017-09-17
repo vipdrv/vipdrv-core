@@ -17,7 +17,7 @@
         <tbody>
         <tr *ngFor="let item of items"
             (click)="modalOpenInfo(item.id)">
-            <td>{{item.recievedUtc}}</td>
+            <td>{{item.recievedDateTime}}</td>
             <td>{{item.firstName}}</td>
             <td>{{item.secondName}}</td>
             <td>{{item.siteName}}</td>
@@ -45,42 +45,7 @@
     </modal-header>
     <modal-body>
         <div *ngIf="isSelectedEntityDefined()">
-            <div class="row">
-                <label class="col-4 leads-modal-body-label" translate>leads.modal.siteName</label>
-                <div class="col-6 leads-modal-body-text">{{selectedEntity.siteName}}</div>
-            </div>
-            <div class="row">
-                <label class="col-4 leads-modal-body-label" translate>leads.modal.received</label>
-                <div class="col-6 leads-modal-body-text">{{selectedEntity.recievedUtc}}</div>
-            </div>
-            <div class="row">
-                <label class="col-4 leads-modal-body-label" translate>leads.modal.firstName</label>
-                <div class="col-6 leads-modal-body-text">{{selectedEntity.firstName}}</div>
-            </div>
-            <div class="row">
-                <label class="col-4 leads-modal-body-label" translate>leads.modal.secondName</label>
-                <div class="col-6 leads-modal-body-text">{{selectedEntity.secondName}}</div>
-            </div>
-            <div class="row">
-                <label class="col-4 leads-modal-body-label" translate>leads.modal.userEmail</label>
-                <div class="col-6 leads-modal-body-text">{{selectedEntity.userEmail}}</div>
-            </div>
-            <div class="row">
-                <label class="col-4 leads-modal-body-label" translate>leads.modal.userPhone</label>
-                <div class="col-6 leads-modal-body-text">{{selectedEntity.userPhone}}</div>
-            </div>
-            <div class="row">
-                <label class="col-4 leads-modal-body-label" translate>leads.modal.expertName</label>
-                <div class="col-6 leads-modal-body-text">{{selectedEntity.expertName}}</div>
-            </div>
-            <div class="row">
-                <label class="col-4 leads-modal-body-label" translate>leads.modal.routeName</label>
-                <div class="col-6 leads-modal-body-text">{{selectedEntity.routeName}}</div>
-            </div>
-            <div class="row">
-                <label class="col-4 leads-modal-body-label" translate>leads.modal.beverageName</label>
-                <div class="col-6 leads-modal-body-text">{{selectedEntity.beverageName}}</div>
-            </div>
+            <lead-details-info [entity]="selectedEntity"></lead-details-info>
         </div>
     </modal-body>
     <modal-footer>
