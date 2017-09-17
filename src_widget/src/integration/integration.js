@@ -15,8 +15,8 @@ var TestDrive = TestDrive || (function () {
         var html =
             `<div class="test-drive__content">
                  <div class="frame-header">
-                 <div class="frame-header__title">Test Drive booking</div>
-                 <div class="frame-header__cross" onclick="TestDrive.closeTestDrive()">&#10006;</div>
+                    <div class="frame-header__title">Test Drive booking</div>
+                    <div class="frame-header__cross" onclick="TestDrive.closeTestDrive()">&#10006;</div>
                  </div>
                  <iframe class="test-drive__frame" src="${encodeURI(url)}" frameBorder="0"></iframe>
              </div>`;
