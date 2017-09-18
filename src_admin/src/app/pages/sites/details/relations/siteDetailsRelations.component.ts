@@ -1,35 +1,41 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Variable } from './../../../utils/index';
-import { SiteEntity } from './../../../entities/index';
-import { ISiteApiService, SiteApiService } from './../../../services/serverApi/index';
+import { Variable, ILogger, ConsoleLogger, PromiseService } from '../../../../utils/index';
+import { SiteEntity } from '../../../../entities/index';
+import { ISiteApiService, SiteApiService } from '../../../../services/serverApi/index';
 @Component({
-    selector: 'site-details',
-    styleUrls: ['./siteDetails.scss'],
-    templateUrl: './siteDetails.html',
+    selector: 'site-details-relations',
+    styleUrls: ['./siteDetailsRelations.scss'],
+    templateUrl: './siteDetailsRelations.html',
 })
-export class SiteDetailsComponent implements OnInit, OnDestroy {
+export class SiteDetailsRelationsComponent implements OnInit, OnDestroy {
     /// fields
     private _entityId: number;
     private _parameterSubscription: any; // type should be Subscription;
-    private _isInitialized: boolean;
     protected entity: SiteEntity;
     /// injected dependencies
+    protected logger: ILogger;
     protected siteApiService: ISiteApiService;
+    protected promiseService: PromiseService;
+    protected route: ActivatedRoute;
     /// ctor
-    constructor(siteApiService: SiteApiService, private route: ActivatedRoute) {
+    constructor(
+        logger: ConsoleLogger,
+        siteApiService: SiteApiService,
+        promiseService: PromiseService,
+        route: ActivatedRoute) {
+        this.logger = logger;
         this.siteApiService = siteApiService;
-        this._isInitialized = false;
+        this.promiseService = promiseService;
+        this.route = route;
     }
     /// methods
     ngOnInit(): void {
         let self = this;
         self._parameterSubscription = self.route.params
             .subscribe(params => {
-                self._isInitialized = false;
                 self._entityId = +params['entityId'];
-                self.getEntity()
-                    .then(() => self._isInitialized = true);
+                self.getEntity();
             });
     }
     ngOnDestroy() {
@@ -85,16 +91,22 @@ export class SiteDetailsComponent implements OnInit, OnDestroy {
     }
     protected getEntity(): Promise<void> {
         let self = this;
-        let operationPromise = self.siteApiService
+        self.promiseService.applicationPromises.sites.get.entityId = self._entityId;
+        self.promiseService.applicationPromises.sites.get.promise = self.siteApiService
             .get(self._entityId)
             .then(function (response: SiteEntity): Promise<void> {
                 self.entity = response;
                 return Promise.resolve();
-            });
-        return operationPromise;
-    }
-    /// predicates
-    protected isInitialized(): boolean {
-        return this._isInitialized;
+            })
+            .then(
+                () => {
+                    self.promiseService.applicationPromises.sites.get.promise = null;
+                    self.promiseService.applicationPromises.sites.get.entityId = null;
+                },
+                () => {
+                    self.promiseService.applicationPromises.sites.get.promise = null;
+                    self.promiseService.applicationPromises.sites.get.entityId = null;
+                });
+        return self.promiseService.applicationPromises.sites.get.promise;
     }
 }

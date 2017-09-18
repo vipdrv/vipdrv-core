@@ -9,7 +9,7 @@ import { Ng2Bs3ModalModule } from 'ng2-bs3-modal/ng2-bs3-modal';
 
 import { UtilsModule, WorkingHoursComponent } from './../../utils/index';
 import { ExpertsTableComponent } from './table/expertsTable.component';
-
+import { ExpertDetailsInfoComponent } from './details/info/expertDetailsInfo.component';
 import { ExpertsComponent } from './experts.component';
 import { routing } from './experts.routing';
 
@@ -25,11 +25,13 @@ import { routing } from './experts.routing';
     ],
     exports: [
         ExpertsComponent,
-        ExpertsTableComponent
+        ExpertsTableComponent,
+        ExpertDetailsInfoComponent
     ],
     declarations: [
         ExpertsComponent,
-        ExpertsTableComponent
+        ExpertsTableComponent,
+        ExpertDetailsInfoComponent
     ],
     providers: []
 })

@@ -2,7 +2,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { ModuleWithProviders } from '@angular/core';
 
 import { SitesComponent } from './sites.component';
-import { SiteDetailsComponent } from './details/siteDetails.component';
+import { SiteDetailsRelationsComponent } from './details/relations/siteDetailsRelations.component';
 // noinspection TypeScriptValidateTypes
 export const routes: Routes = [
     {
@@ -12,7 +12,7 @@ export const routes: Routes = [
     },
     {
         path: ':entityId',
-        component: SiteDetailsComponent,
+        component: SiteDetailsRelationsComponent,
         children: []
     },
 ];
