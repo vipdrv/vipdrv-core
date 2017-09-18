@@ -87,7 +87,7 @@
     <modal-body>
         <div *ngIf="isSelectedEntityDefined()"
              [ngBusy]="getModalBodyBusyPromises()">
-            <site-details-edit [entity]="selectedEntity"></site-details-edit>
+            <site-details-edit [entity]="entity"></site-details-edit>
         </div>
     </modal-body>
     <modal-footer>

@@ -83,7 +83,7 @@
     <modal-body>
         <div *ngIf="isSelectedEntityDefined()"
              [ngBusy]="promiseService.applicationPromises.leads.get">
-            <lead-details-info [entity]="selectedEntity"></lead-details-info>
+            <lead-details-info [entity]="entity"></lead-details-info>
         </div>
     </modal-body>
     <modal-footer>

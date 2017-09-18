@@ -1,4 +1,4 @@
-<div class="experts-table-template">
+<div class="experts-table-template table-responsive">
     <table class="experts-table-body table table-bordered table-hover"
            *ngIf="isInitialized()">
         <thead>
@@ -19,6 +19,7 @@
         </thead>
         <tbody>
         <tr *ngFor="let item of items"
+            (click)="modalOpenInfo(item.id)"
             ngClass="{{getEntityRowClass(item)}}">
             <td>
                 <img class="rounded-circle"
@@ -74,7 +75,10 @@
         <span class="expert-modal-header-text" translate>experts.modal.title</span>
     </modal-header>
     <modal-body>
-        <div *ngIf="isSelectedEntityDefined()">
+        <expert-details-info *ngIf="isSelectedEntityDefined() && isOperationModeInfo"
+                             [entity]="entity">
+        </expert-details-info>
+        <div *ngIf="isSelectedEntityDefined() && isOperationModeAddOrUpdate">
             <div class="row">
                 <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                     <div class="expert-avatar-image">
@@ -253,6 +257,7 @@
         </button>
         <button type="button"
                 class="btn btn-primary"
+                *ngIf="isOperationModeAddOrUpdate"
                 (click)="modalApply()">
             <span translate>experts.modal.apply</span>
         </button>

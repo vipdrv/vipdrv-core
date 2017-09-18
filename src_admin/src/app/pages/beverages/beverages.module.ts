@@ -9,7 +9,7 @@ import { Ng2Bs3ModalModule } from 'ng2-bs3-modal/ng2-bs3-modal';
 
 import { UtilsModule } from './../../utils/index';
 import { BeveragesTableComponent } from './table/beveragesTable.component';
-
+import { BeverageDetailsInfoComponent } from './details/info/beverageDetailsInfo.component';
 import { BeveragesComponent } from './beverages.component';
 import { routing } from './beverages.routing';
 
@@ -25,11 +25,13 @@ import { routing } from './beverages.routing';
     ],
     exports: [
         BeveragesComponent,
-        BeveragesTableComponent
+        BeveragesTableComponent,
+        BeverageDetailsInfoComponent
     ],
     declarations: [
         BeveragesComponent,
-        BeveragesTableComponent
+        BeveragesTableComponent,
+        BeverageDetailsInfoComponent
     ],
     providers: []
 })

@@ -29,7 +29,7 @@ export class SitesTableComponent implements OnInit {
     /// data fields
     protected totalCount: number;
     protected items: Array<SiteEntity>;
-    protected selectedEntity: SiteEntity;
+    protected entity: SiteEntity;
     /// injected dependencies
     protected logger: ILogger;
     protected authorizationManager: IAuthorizationManager;
@@ -103,20 +103,20 @@ export class SitesTableComponent implements OnInit {
     }
     protected modalOpenCreate(): Promise<void> {
         let self = this;
-        self.selectedEntity = new SiteEntity();
-        self.selectedEntity.userId = this.authorizationManager.lastUser.id;
+        self.entity = new SiteEntity();
+        self.entity.userId = this.authorizationManager.lastUser.id;
         self.modal.open();
         return Promise.resolve();
     }
     protected modalOpenEdit(id: number): Promise<void> {
         let self = this;
-        self.selectedEntity = self.items.find((item: SiteEntity) => item.id === id);
+        self.entity = self.items.find((item: SiteEntity) => item.id === id);
         self.modal.open();
         self.promiseService.applicationPromises.sites.get.entityId = id;
         self.promiseService.applicationPromises.sites.get.promise = self.siteApiService
             .get(id)
             .then(function (response: SiteEntity): Promise<void> {
-                self.selectedEntity = response;
+                self.entity = response;
                 return Promise.resolve();
             })
             .then(
@@ -133,9 +133,9 @@ export class SitesTableComponent implements OnInit {
     protected modalApply() {
         let self = this;
         self.promiseService.applicationPromises.sites.addOrUpdate.entityId =
-            self.selectedEntity.id ? self.selectedEntity.id : null;
-        self.promiseService.applicationPromises.sites.addOrUpdate.promise = (self.selectedEntity.id ?
-            self.siteApiService.update(self.selectedEntity) : self.siteApiService.create(self.selectedEntity))
+            self.entity.id ? self.entity.id : null;
+        self.promiseService.applicationPromises.sites.addOrUpdate.promise = (self.entity.id ?
+            self.siteApiService.update(self.entity) : self.siteApiService.create(self.entity))
             .then(function (entity: SiteEntity): Promise<void> {
                 let elementIndex = self.items.findIndex((item: SiteEntity) => item.id === entity.id);
                 if (elementIndex !== -1) {
@@ -143,7 +143,7 @@ export class SitesTableComponent implements OnInit {
                 } else {
                     self.items.push(entity);
                 }
-                self.selectedEntity = null;
+                self.entity = null;
                 return self.modal.close();
             })
             .then(
@@ -158,7 +158,7 @@ export class SitesTableComponent implements OnInit {
         return self.promiseService.applicationPromises.sites.addOrUpdate.promise;
     }
     protected modalDismiss(): Promise<void> {
-        this.selectedEntity = null;
+        this.entity = null;
         return this.modal.dismiss();
     }
     protected onPageNumberChanged(): void {
@@ -216,6 +216,6 @@ export class SitesTableComponent implements OnInit {
         return this.pageSize < this.totalCount;
     }
     protected isSelectedEntityDefined(): boolean {
-        return Variable.isNotNullOrUndefined(this.selectedEntity);
+        return Variable.isNotNullOrUndefined(this.entity);
     }
 }

@@ -9,7 +9,7 @@ import { Ng2Bs3ModalModule } from 'ng2-bs3-modal/ng2-bs3-modal';
 
 import { UtilsModule } from './../../utils/index';
 import { RoutesTableComponent } from './table/routesTable.component';
-
+import { RouteDetailsInfoComponent } from './details/info/routeDetailsInfo.component';
 import { RoutesComponent } from './routes.component';
 import { routing } from './routes.routing';
 
@@ -25,11 +25,13 @@ import { routing } from './routes.routing';
     ],
     exports: [
         RoutesComponent,
-        RoutesTableComponent
+        RoutesTableComponent,
+        RouteDetailsInfoComponent
     ],
     declarations: [
         RoutesComponent,
-        RoutesTableComponent
+        RoutesTableComponent,
+        RouteDetailsInfoComponent
     ],
     providers: []
 })
