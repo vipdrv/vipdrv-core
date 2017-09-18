@@ -6,7 +6,7 @@ import { RouterModule } from '@angular/router';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateService } from '@ngx-translate/core';
 
-import { BusyModule, BusyConfig } from 'angular2-busy';
+import { BusyModule, BusyConfig, BUSY_CONFIG_DEFAULTS } from 'angular2-busy';
 import { PaginationModule } from 'ng2-bootstrap';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 /*
@@ -30,6 +30,15 @@ const APP_PROVIDERS = [
   GlobalState
 ];
 
+const busyConfig: BusyConfig = {
+    message: loaderMessage,
+    delay: 200,
+    template: loaderTemplate,
+    minDuration: BUSY_CONFIG_DEFAULTS.minDuration,
+    backdrop: true,
+    wrapperClass: BUSY_CONFIG_DEFAULTS.wrapperClass
+};
+
 export type StoreType = {
   state: InternalStateType,
   restoreInputValues: () => void,
@@ -51,7 +60,7 @@ export type StoreType = {
     NgaModule.forRoot(),
     NgbModule.forRoot(),
     PaginationModule.forRoot(),
-    BusyModule.forRoot(new BusyConfig({ message: loaderMessage, template: loaderTemplate })),
+    BusyModule.forRoot(busyConfig),
     PagesModule,
     UtilsModule,
     ServerApiModule,
