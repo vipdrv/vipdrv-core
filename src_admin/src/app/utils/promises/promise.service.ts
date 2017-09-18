@@ -17,12 +17,28 @@ export class PromiseService {
     private initializePromisesStore(): void {
         this._applicationPromises = {
             leads: {
-                get: null,
                 getAll: null,
-                create: null,
-                update: null,
+                get: null,
+                addOrUpdate: null,
                 delete: null,
                 exportToExcel: null
+            },
+            sites: {
+                getAll: {
+                    promise: null
+                },
+                get: {
+                    promise: null,
+                    entityId: null
+                },
+                addOrUpdate: {
+                    promise: null,
+                    entityId: null
+                },
+                delete: {
+                    promise: null,
+                    entityId: null
+                }
             }
         };
     }

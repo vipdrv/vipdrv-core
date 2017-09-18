@@ -20,7 +20,7 @@ export class LeadsTableComponent implements OnInit {
     protected modalInfo: ModalComponent;
     /// settings
     private _defaultPageNumber: number = 1;
-    private _defaultPageSize: number = 5;
+    private _defaultPageSize: number = 10;
     private _defaultSorting: string = 'recievedUtc desc';
     private _defaultFilter: any = null;
     protected maxPaginationSize: number = 3;
@@ -33,7 +33,7 @@ export class LeadsTableComponent implements OnInit {
     protected logger: ILogger;
     protected authorizationManager: IAuthorizationManager;
     protected leadApiService: ILeadApiService;
-    protected promiseService: PromiseService
+    protected promiseService: PromiseService;
     /// ctor
     constructor(
         logger: ConsoleLogger,

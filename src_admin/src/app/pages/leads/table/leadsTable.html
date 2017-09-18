@@ -9,6 +9,7 @@
                 <i class="fa fa-refresh" *ngIf="!promiseService.applicationPromises.leads.getAll"></i>
             </button>
             <select class="form-control-sm leads-page-size-control"
+                    [disabled]="!!promiseService.applicationPromises.leads.getAll"
                     [(ngModel)]="pageSize"
                     (change)="onPageSizeChanged($event)">
                 <option *ngFor="let item of pageSizeValues"
