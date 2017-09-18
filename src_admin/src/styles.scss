@@ -117,6 +117,7 @@
 /* ng-busy styles (ad-hock solution cuz this lib can load their styles) */
 .ng-busy {
   z-index: 1002;
+  margin-top: 70px;
 }
 .ng-busy,
 .ng-busy > *,
@@ -128,6 +129,7 @@
   bottom: 0px;
 }
 .ng-busy-backdrop {
+  margin-top: 70px;
   position: absolute;
   top: 0;
   left: 0;

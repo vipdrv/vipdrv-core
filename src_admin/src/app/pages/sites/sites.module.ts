@@ -12,7 +12,7 @@ import { BeveragesModule } from './../beverages/index';
 import { ExpertsModule } from './../experts/index';
 import { RoutesModule } from './../routes/index';
 import { SiteDetailsEditComponent } from './details/edit/siteDetailsEdit.component';
-import { SiteDetailsComponent } from './details/siteDetails.component';
+import { SiteDetailsRelationsComponent } from './details/relations/siteDetailsRelations.component';
 import { SiteOverviewComponent } from './overview/siteOverview.component';
 import { SitesComponent } from './sites.component';
 import { routing } from './sites.routing';
@@ -35,14 +35,14 @@ import { routing } from './sites.routing';
         SitesComponent,
         SitesTableComponent,
         SiteDetailsEditComponent,
-        SiteDetailsComponent,
+        SiteDetailsRelationsComponent,
         SiteOverviewComponent
     ],
     declarations: [
         SitesComponent,
         SitesTableComponent,
         SiteDetailsEditComponent,
-        SiteDetailsComponent,
+        SiteDetailsRelationsComponent,
         SiteOverviewComponent
     ],
     providers: []
