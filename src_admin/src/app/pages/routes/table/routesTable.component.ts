@@ -28,12 +28,14 @@ export class RoutesTableComponent implements OnInit {
     private _isInitialized: boolean = false;
     protected totalCount: number;
     protected items: Array<RouteEntity>;
-    protected selectedEntity: RouteEntity;
+    protected entity: RouteEntity;
     protected avatarWidth: number;
     protected avatarHeight: number;
     protected avatarCropperData: any;
     protected avatarCropperSettings: CropperSettings;
     protected stubAvatarUrl: string;
+    protected isOperationModeInfo: boolean;
+    protected isOperationModeAddOrUpdate: boolean;
     /// properties
     private _showAvatarButtons: boolean = true;
     protected get showAvatarButtons(): boolean {
@@ -176,33 +178,48 @@ export class RoutesTableComponent implements OnInit {
         return actionPromise;
     }
     // modal
+    protected modalOpenInfo(id: number): Promise<void> {
+        let self = this;
+        self.entity = self.items.find((item: RouteEntity) => item.id === id);
+        self.isOperationModeInfo = true;
+        self.modal.open();
+        let operationPromise = self.routeApiService
+            .get(id)
+            .then(function (response: RouteEntity): Promise<void> {
+                self.entity = response;
+                return Promise.resolve();
+            });
+        return operationPromise;
+    }
     protected modalOpenCreate(): Promise<void> {
         let self = this;
-        self.selectedEntity = new RouteEntity();
-        self.selectedEntity.siteId = this.siteId;
-        self.selectedEntity.photoUrl = DefaultRouteImg;
-        self.selectedEntity.isActive = true;
-        self.selectedEntity.order = this.getNewEntityOrder();
+        self.entity = new RouteEntity();
+        self.entity.siteId = this.siteId;
+        self.entity.photoUrl = DefaultRouteImg;
+        self.entity.isActive = true;
+        self.entity.order = this.getNewEntityOrder();
+        self.isOperationModeAddOrUpdate = true;
         self.modal.open();
         return Promise.resolve();
     }
     protected modalOpenEdit(id: number): Promise<void> {
         let self = this;
-        self.selectedEntity = self.items.find((item: RouteEntity) => item.id === id);
+        self.entity = self.items.find((item: RouteEntity) => item.id === id);
+        self.isOperationModeAddOrUpdate = true;
         self.modal.open();
         let operationPromise = self.routeApiService
             .get(id)
             .then(function (response: RouteEntity): Promise<void> {
-                self.selectedEntity = response;
+                self.entity = response;
                 return Promise.resolve();
             });
         return operationPromise;
     }
     protected modalApply() {
         let self = this;
-        let operationPromise: Promise<RouteEntity> = self.selectedEntity.id ?
-            self.routeApiService.update(self.selectedEntity) :
-            self.routeApiService.create(self.selectedEntity);
+        let operationPromise: Promise<RouteEntity> = self.entity.id ?
+            self.routeApiService.update(self.entity) :
+            self.routeApiService.create(self.entity);
         return operationPromise
             .then(function (entity: RouteEntity): Promise<void> {
                 let elementIndex = self.items.findIndex((item: RouteEntity) => item.id === entity.id);
@@ -211,12 +228,16 @@ export class RoutesTableComponent implements OnInit {
                 } else {
                     self.items.push(entity);
                 }
-                self.selectedEntity = null;
+                self.entity = null;
+                self.isOperationModeAddOrUpdate = false;
+                self.isOperationModeInfo = false;
                 return self.modal.close();
             });
     }
     protected modalDismiss(): Promise<void> {
-        this.selectedEntity = null;
+        this.entity = null;
+        this.isOperationModeAddOrUpdate = false;
+        this.isOperationModeInfo = false;
         return this.modal.dismiss();
     }
     // avatar
@@ -227,7 +248,7 @@ export class RoutesTableComponent implements OnInit {
         } else if (this.showAvatarChangeUrl) {
             avatar = this.stubAvatarUrl;
         } else {
-            avatar = this.selectedEntity.photoUrl;
+            avatar = this.entity.photoUrl;
         }
         return avatar;
     }
@@ -242,7 +263,7 @@ export class RoutesTableComponent implements OnInit {
             .postImage(self.avatarCropperData.image)
             .then(function (imageUrl: string) {
                 // TODO: remove this stub result after implementing #27 - content controller
-                self.selectedEntity.photoUrl = self.avatarCropperData.image; // imageUrl;
+                self.entity.photoUrl = self.avatarCropperData.image; // imageUrl;
                 self.showAvatarBrowseCancel();
             });
     }
@@ -268,7 +289,7 @@ export class RoutesTableComponent implements OnInit {
         this.showAvatarChangeUrl = true;
     }
     protected changeAvatarUrlAccept(): void {
-        this.selectedEntity.photoUrl = this.stubAvatarUrl;
+        this.entity.photoUrl = this.stubAvatarUrl;
         this.changeAvatarUrlCancel();
     }
     protected changeAvatarUrlCancel(): void {
@@ -281,7 +302,7 @@ export class RoutesTableComponent implements OnInit {
         return this._isInitialized;
     }
     protected isSelectedEntityDefined(): boolean {
-        return Variable.isNotNullOrUndefined(this.selectedEntity);
+        return Variable.isNotNullOrUndefined(this.entity);
     }
     /// helpers
     private getPageNumber(): number {

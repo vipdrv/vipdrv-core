@@ -28,12 +28,14 @@ export class BeveragesTableComponent implements OnInit {
     private _isInitialized: boolean = false;
     protected totalCount: number;
     protected items: Array<BeverageEntity>;
-    protected selectedEntity: BeverageEntity;
+    protected entity: BeverageEntity;
     protected avatarWidth: number;
     protected avatarHeight: number;
     protected avatarCropperData: any;
     protected avatarCropperSettings: CropperSettings;
     protected stubAvatarUrl: string;
+    protected isOperationModeInfo: boolean;
+    protected isOperationModeAddOrUpdate: boolean;
     /// properties
     private _showAvatarButtons: boolean = true;
     protected get showAvatarButtons(): boolean {
@@ -176,33 +178,48 @@ export class BeveragesTableComponent implements OnInit {
         return actionPromise;
     }
     // modal
+    protected modalOpenInfo(id: number): Promise<void> {
+        let self = this;
+        self.entity = self.items.find((item: BeverageEntity) => item.id === id);
+        self.isOperationModeInfo = true;
+        self.modal.open();
+        let operationPromise = self.beverageApiService
+            .get(id)
+            .then(function (response: BeverageEntity): Promise<void> {
+                self.entity = response;
+                return Promise.resolve();
+            });
+        return operationPromise;
+    }
     protected modalOpenCreate(): Promise<void> {
         let self = this;
-        self.selectedEntity = new BeverageEntity();
-        self.selectedEntity.siteId = this.siteId;
-        self.selectedEntity.photoUrl = DefaultBeverageImg;
-        self.selectedEntity.isActive = true;
-        self.selectedEntity.order = this.getNewEntityOrder();
+        self.entity = new BeverageEntity();
+        self.entity.siteId = this.siteId;
+        self.entity.photoUrl = DefaultBeverageImg;
+        self.entity.isActive = true;
+        self.entity.order = this.getNewEntityOrder();
+        self.isOperationModeAddOrUpdate = true;
         self.modal.open();
         return Promise.resolve();
     }
     protected modalOpenEdit(id: number): Promise<void> {
         let self = this;
-        self.selectedEntity = self.items.find((item: BeverageEntity) => item.id === id);
+        self.entity = self.items.find((item: BeverageEntity) => item.id === id);
+        self.isOperationModeAddOrUpdate = true;
         self.modal.open();
         let operationPromise = self.beverageApiService
             .get(id)
             .then(function (response: BeverageEntity): Promise<void> {
-                self.selectedEntity = response;
+                self.entity = response;
                 return Promise.resolve();
             });
         return operationPromise;
     }
     protected modalApply() {
         let self = this;
-        let operationPromise: Promise<BeverageEntity> = self.selectedEntity.id ?
-            self.beverageApiService.update(self.selectedEntity) :
-            self.beverageApiService.create(self.selectedEntity);
+        let operationPromise: Promise<BeverageEntity> = self.entity.id ?
+            self.beverageApiService.update(self.entity) :
+            self.beverageApiService.create(self.entity);
         return operationPromise
             .then(function (entity: BeverageEntity): Promise<void> {
                 let elementIndex = self.items.findIndex((item: BeverageEntity) => item.id === entity.id);
@@ -211,12 +228,16 @@ export class BeveragesTableComponent implements OnInit {
                 } else {
                     self.items.push(entity);
                 }
-                self.selectedEntity = null;
+                self.entity = null;
+                self.isOperationModeAddOrUpdate = false;
+                self.isOperationModeInfo = false;
                 return self.modal.close();
             });
     }
     protected modalDismiss(): Promise<void> {
-        this.selectedEntity = null;
+        this.entity = null;
+        this.isOperationModeAddOrUpdate = false;
+        this.isOperationModeInfo = false;
         return this.modal.dismiss();
     }
     // avatar
@@ -227,7 +248,7 @@ export class BeveragesTableComponent implements OnInit {
         } else if (this.showAvatarChangeUrl) {
             avatar = this.stubAvatarUrl;
         } else {
-            avatar = this.selectedEntity.photoUrl;
+            avatar = this.entity.photoUrl;
         }
         return avatar;
     }
@@ -242,7 +263,7 @@ export class BeveragesTableComponent implements OnInit {
             .postImage(self.avatarCropperData.image)
             .then(function (imageUrl: string) {
                 // TODO: remove this stub result after implementing #27 - content controller
-                self.selectedEntity.photoUrl = self.avatarCropperData.image; // imageUrl;
+                self.entity.photoUrl = self.avatarCropperData.image; // imageUrl;
                 self.showAvatarBrowseCancel();
             });
     }
@@ -268,7 +289,7 @@ export class BeveragesTableComponent implements OnInit {
         this.showAvatarChangeUrl = true;
     }
     protected changeAvatarUrlAccept(): void {
-        this.selectedEntity.photoUrl = this.stubAvatarUrl;
+        this.entity.photoUrl = this.stubAvatarUrl;
         this.changeAvatarUrlCancel();
     }
     protected changeAvatarUrlCancel(): void {
@@ -281,7 +302,7 @@ export class BeveragesTableComponent implements OnInit {
         return this._isInitialized;
     }
     protected isSelectedEntityDefined(): boolean {
-        return Variable.isNotNullOrUndefined(this.selectedEntity);
+        return Variable.isNotNullOrUndefined(this.entity);
     }
     /// helpers
     private getPageNumber(): number {

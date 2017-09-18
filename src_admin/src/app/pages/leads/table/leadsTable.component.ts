@@ -20,7 +20,7 @@ export class LeadsTableComponent implements OnInit {
     protected modalInfo: ModalComponent;
     /// settings
     private _defaultPageNumber: number = 1;
-    private _defaultPageSize: number = 10;
+    private _defaultPageSize: number = 5;
     private _defaultSorting: string = 'recievedUtc desc';
     private _defaultFilter: any = null;
     protected maxPaginationSize: number = 3;
@@ -28,7 +28,7 @@ export class LeadsTableComponent implements OnInit {
     /// data fields
     protected totalCount: number;
     protected items: Array<LeadEntity>;
-    protected selectedEntity: LeadEntity;
+    protected entity: LeadEntity;
     /// injected dependencies
     protected logger: ILogger;
     protected authorizationManager: IAuthorizationManager;
@@ -83,12 +83,12 @@ export class LeadsTableComponent implements OnInit {
     }
     protected modalOpenInfo(id: number): Promise<void> {
         let self = this;
-        self.selectedEntity = self.items.find((item: LeadEntity) => item.id === id);
+        self.entity = self.items.find((item: LeadEntity) => item.id === id);
         self.modalInfo.open();
         self.promiseService.applicationPromises.leads.get = self.leadApiService
             .get(id)
             .then(function (response: LeadEntity): Promise<void> {
-                self.selectedEntity = response;
+                self.entity = response;
                 return Promise.resolve();
             })
             .then(
@@ -97,7 +97,7 @@ export class LeadsTableComponent implements OnInit {
         return self.promiseService.applicationPromises.leads.get;
     }
     protected modalDismiss(): Promise<void> {
-        this.selectedEntity = null;
+        this.entity = null;
         return this.modalInfo.dismiss();
     }
     protected exportDataToExcel(): Promise<void> {
@@ -128,6 +128,6 @@ export class LeadsTableComponent implements OnInit {
         return this.pageSize < this.totalCount;
     }
     protected isSelectedEntityDefined(): boolean {
-        return Variable.isNotNullOrUndefined(this.selectedEntity);
+        return Variable.isNotNullOrUndefined(this.entity);
     }
 }

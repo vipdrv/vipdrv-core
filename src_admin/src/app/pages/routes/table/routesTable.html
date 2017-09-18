@@ -19,6 +19,7 @@
         </thead>
         <tbody>
         <tr *ngFor="let item of items"
+            (click)="modalOpenInfo(item.id)"
             ngClass="{{getEntityRowClass(item)}}">
             <td>
                 <img class="rounded-circle"
@@ -74,7 +75,10 @@
         <span class="route-modal-header-text" translate>routes.modal.title</span>
     </modal-header>
     <modal-body>
-        <div *ngIf="isSelectedEntityDefined()">
+        <route-details-info *ngIf="isSelectedEntityDefined() && isOperationModeInfo"
+                             [entity]="entity">
+        </route-details-info>
+        <div *ngIf="isSelectedEntityDefined() && isOperationModeAddOrUpdate">
             <div class="row">
                 <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                     <div class="route-avatar-image">
@@ -216,6 +220,7 @@
         </button>
         <button type="button"
                 class="btn btn-primary"
+                *ngIf="isOperationModeAddOrUpdate"
                 (click)="modalApply()">
             <span translate>routes.modal.apply</span>
         </button>
