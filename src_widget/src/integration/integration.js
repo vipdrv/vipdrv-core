@@ -1,7 +1,11 @@
+// =======================================================================//
+// Widget Integration logic                                               //
+// =======================================================================//
+
 var TestDrive = TestDrive || (function () {
-    var _SiteId = 'nissan-of-bowie';
-    var _WidgetUrl = 'http://dev.widget.quantumlogic.online';
-    // var _WidgetUrl = 'http://localhost:8081';
+
+    var _SiteId = '%siteId%';
+    var _WidgetUrl = '%widgetUrl%';
 
     var _appendTestDriveFrame = function (vin, img, title, engine, year, colour, transmission, fuel) {
         var url = `${_WidgetUrl}?site_id=${_SiteId}&vin=${vin}&img=${img}&title=${title}&engine=${engine}&year=${year}&colour=${colour}&transmission=${transmission}&fuel=${fuel}`;
@@ -11,8 +15,8 @@ var TestDrive = TestDrive || (function () {
         var html =
             `<div class="test-drive__content">
                  <div class="frame-header">
-                 <div class="frame-header__title">Test Drive booking</div>
-                 <div class="frame-header__cross" onclick="TestDrive.closeTestDrive()">&#10006;</div>
+                    <div class="frame-header__title">Test Drive booking</div>
+                    <div class="frame-header__cross" onclick="TestDrive.closeTestDrive()">&#10006;</div>
                  </div>
                  <iframe class="test-drive__frame" src="${encodeURI(url)}" frameBorder="0"></iframe>
              </div>`;
@@ -93,4 +97,9 @@ var TestDrive = TestDrive || (function () {
     };
 }());
 
+// =======================================================================//
+// Widget Initialization                                                  //
+// =======================================================================//
+
+window.openTestDrive = TestDrive.openTestDrive;
 

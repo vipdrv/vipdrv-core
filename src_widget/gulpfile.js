@@ -17,17 +17,21 @@ var sourcemaps = require('gulp-sourcemaps');
 var del = require('del');
 var clean = require('gulp-clean');
 var urlAdjuster = require('gulp-css-url-adjuster');
+var replace = require('gulp-replace');
+var babel = require('gulp-babel');
+
+var env = require('./src/environments/environment.dev');
 
 var config = {
     templates: './src/app/**/*.tpl.html',
     angularAppFiles: ['./build/tmp/templates.js', './src/app/prototypes/**/*.js', './src/app/**/*module.js', './src/app/app.js', './src/app/**/*.js', '!./src/app/**/*spec.js'],
     angularAppFiles_watch: ['./src/app/prototypes/**/*.js', './src/app/**/*module.js', './src/app/app.js', './src/app/**/*.js', '!./src/app/**/*spec.js'],
+    integration: ['./src/app/prototypes/**/*.js', './src/app/**/*module.js', './src/app/app.js', './src/app/**/*.js', '!./src/app/**/*spec.js'],
 };
 
 var vendorJs = [
     'node_modules/jquery/dist/jquery.min.js',
     'node_modules/popper.js/dist/umd/popper.min.js',
-
     'node_modules/angular/angular.min.js',
     'node_modules/angular-animate/angular-animate.min.js',
     'node_modules/angular-aria/angular-aria.min.js',
@@ -58,17 +62,90 @@ var appScssWatch = [
     './src/sass/**/*.scss'
 ];
 
+
+// =======================================================================//
+// Build Tasks                                                            //
+// =======================================================================//
+
+gulp.task('build_dist:dev', function (callback) {
+    return runSequence('build_dist',
+        'init_dev_env',
+        callback);
+});
+
+gulp.task('build_dist:prod', function (callback) {
+    return runSequence('build_dist',
+        'init_prod_env',
+        callback);
+});
+
+gulp.task('serve:build_dist:prod', function (callback) {
+    return runSequence('build_dist',
+        'init_prod_env',
+        'serve',
+        'watch_dist:prod',
+        callback);
+});
+
+gulp.task('serve:build_debug:local', function (callback) {
+    return runSequence('build_debug',
+        'init_local_env',
+        'serve',
+        'watch_debug:local',
+        callback);
+});
+
+gulp.task('serve:build_debug:prod', function (callback) {
+    return runSequence('build_debug',
+        'init_prod_env',
+        'serve',
+        'watch_debug:prod',
+        callback);
+});
+
+// =======================================================================//
+
 gulp.task('clean', function () {
     return del.sync('./build');
 });
 
-gulp.task('clean_tmp', function () {
-    del.sync('./build/maps');
-    del.sync('./build/tmp');
+gulp.task('init_local_env', function (callback) {
+    env = require('./src/environments/environment.local');
+    return runSequence('replace_app_config',
+        'replace_integration_config',
+        callback);
+});
+
+gulp.task('init_dev_env', function (callback) {
+    env = require('./src/environments/environment.dev');
+    return runSequence('replace_app_config',
+        'replace_integration_config',
+        callback);
+});
+
+gulp.task('init_prod_env', function (callback) {
+    env = require('./src/environments/environment.prod');
+    return runSequence('replace_app_config',
+        'replace_integration_config',
+        callback);
+});
+
+gulp.task('replace_app_config', function () {
+    return gulp.src(['./build/app.js'])
+        .pipe(replace('%apiBaseUrl%', env.apiBaseUrl))
+        .pipe(replace('%siteId%', env.defaultSiteId))
+        .pipe(gulp.dest('./build/'));
+});
+
+gulp.task('replace_integration_config', function () {
+    return gulp.src(['./build/integration/integration.js'])
+        .pipe(replace('%widgetUrl%', env.widgetUrl))
+        .pipe(replace('%siteId%', env.defaultSiteId))
+        .pipe(gulp.dest('./build/integration/'));
 });
 
 gulp.task('bundle_vendor_js', function () {
-    gulp.src(vendorJs)
+    return gulp.src(vendorJs)
         .pipe(plumber())
         // .pipe(debug('da-inventory-plugin bundle_vendors'))
         .pipe(concat('vendor.js'))
@@ -80,7 +157,7 @@ gulp.task('bundle_vendor_js', function () {
 });
 
 gulp.task('bundle_vendor_css', function () {
-    gulp.src(vendorCss)
+    return gulp.src(vendorCss)
         .pipe(concat('vendor.css'))
         .pipe(urlAdjuster({
             replace: ['../fonts', './fonts'],
@@ -88,17 +165,21 @@ gulp.task('bundle_vendor_css', function () {
         .pipe(gulp.dest('./build'));
 });
 
-gulp.task('copy_app_scss', function () {
-    gulp.src(appScss)
+gulp.task('copy_app_scss_dist', function () {
+    return gulp.src(appScss)
+        .pipe(plumber())
+        .pipe(sourcemaps.init())
+        .pipe(sass({outputStyle: 'compressed'}).on('error', sass.logError))
+        .pipe(cssnano())
+        .pipe(sourcemaps.write('./maps'))
+        .pipe(gulp.dest('./build'));
+});
+
+gulp.task('copy_app_scss_debug', function () {
+    return gulp.src(appScss)
         .pipe(plumber())
         .pipe(sourcemaps.init())
         .pipe(sass())
-        // .pipe(sass({outputStyle: 'compressed'}).on('error', sass.logError))
-        /*.pipe(urlAdjuster({
-         replace: ['../../img', '../img'],
-         }))*/
-        // .pipe(concat('site.css'))
-        // .pipe(cssnano())
         .pipe(sourcemaps.write('./maps'))
         .pipe(gulp.dest('./build'));
 });
@@ -108,16 +189,43 @@ gulp.task('copy_app_fonts', function () {
         .pipe(gulp.dest('./build/fonts'));
 });
 
+gulp.task('bundle_integration', function () {
+    gulp.src('./src/integration/*.js')
+        .pipe(concat('integration.js'))
+        .pipe(gulp.dest('./build/integration/'));
+
+    return gulp.src('./src/integration/*.scss')
+        .pipe(plumber())
+        .pipe(sass().on('error', sass.logError))
+        .pipe(gulp.dest('./build/integration/'));
+});
+
+gulp.task('bundle_integration_dist', function () {
+    gulp.src('./src/integration/*.js')
+        .pipe(babel({presets: ['es2015']}))
+        .pipe(concat('integration.js'))
+        .pipe(uglify({compress: true}).on('error', function (e) {
+            console.log(e);
+        }))
+        .pipe(gulp.dest('./build/integration/'));
+
+    return gulp.src('./src/integration/*.scss')
+        .pipe(plumber())
+        .pipe(sass({outputStyle: 'compressed'}).on('error', sass.logError))
+        .pipe(cssnano())
+        .pipe(gulp.dest('./build/integration/'));
+});
+
 gulp.task('copy_app_images', function () {
     return gulp.src(appImages)
         .pipe(gulp.dest('./build/img'));
 });
 
-gulp.task('bundle_app', function () {
+gulp.task('bundle_app_dist', function () {
     return gulp.src(config.angularAppFiles)
         .pipe(plumber())
         .pipe(concat('app.js'))
-        .pipe(uglify({mangle: false}))
+        .pipe(uglify())
         .pipe(gulp.dest('./build'))
         .pipe($.size({
             title: 'size of app.js:'
@@ -128,7 +236,6 @@ gulp.task('bundle_app_debug', function () {
     return gulp.src(config.angularAppFiles)
         .pipe(plumber())
         .pipe(concat('app.js'))
-        // .pipe(uglify({mangle: false}))
         .pipe(gulp.dest('./build'))
         .pipe($.size({
             title: 'size of app.js:'
@@ -158,42 +265,34 @@ gulp.task('copy_index', function () {
 });
 
 gulp.task('build_dist', function (callback) {
-    runSequence('clean',
+    return runSequence('clean',
         'bundle_vendor_js',
         'bundle_vendor_css',
         'copy_app_fonts',
         'compile_templates',
-        'bundle_app',
-        'copy_app_scss',
+        'bundle_app_dist',
+        'copy_app_scss_dist',
         'copy_app_images',
         'copy_index',
-        // 'clean_tmp',
+        'bundle_integration_dist',
         callback);
 });
 
 gulp.task('build_debug', function (callback) {
-    runSequence('clean',
+    return runSequence('clean',
         'bundle_vendor_js',
         'bundle_vendor_css',
         'copy_app_fonts',
         'compile_templates',
         'bundle_app_debug',
-        'copy_app_scss',
+        'copy_app_scss_debug',
         'copy_app_images',
         'copy_index',
-        // 'clean_tmp',
+        'bundle_integration',
         callback);
 });
 
-gulp.task('reload_sequence', function (callback) {
-    runSequence(
-        'compile_templates',
-        'bundle_app_debug',
-        callback);
-});
-
-
-gulp.task('serve', ['build_debug'], function () {
+gulp.task('serve', function () {
     browserSync.init({
         port: 8081,
         ui: {
@@ -206,9 +305,84 @@ gulp.task('serve', ['build_debug'], function () {
             middleware: []
         }
     });
-
-    gulp.watch(config.templates, ['reload_sequence', reload]);
-    gulp.watch(vendorJs, ['bundle_vendor_js', reload]);
-    gulp.watch(config.angularAppFiles_watch, ['bundle_app_debug', reload]);
-    gulp.watch(appScssWatch, ['copy_app_scss', reload]);
 });
+
+// =======================================================================//
+// Watchers                                                               //
+// =======================================================================//
+
+/* templates(start) */
+
+gulp.task('reload_templates_debug:local', function (callback) {
+    return runSequence(
+        'compile_templates',
+        'bundle_app_debug',
+        callback);
+});
+
+gulp.task('reload_templates_debug:prod', function (callback) {
+    return runSequence(
+        'compile_templates',
+        'bundle_app_debug',
+        callback);
+});
+
+gulp.task('reload_templates_dist:prod', function (callback) {
+    return runSequence(
+        'compile_templates',
+        'bundle_app_dist',
+        callback);
+});
+
+/* templates(end)   */
+
+/* app(start) */
+
+gulp.task('reload_app_debug:local', function (callback) {
+    return runSequence(
+        'bundle_app_debug',
+        'init_local_env',
+        callback);
+});
+
+gulp.task('reload_app_debug:prod', function (callback) {
+    return runSequence(
+        'bundle_app_debug',
+        'init_prod_env',
+        callback);
+});
+
+gulp.task('reload_app_dist:prod', function (callback) {
+    return runSequence(
+        'bundle_app_dist',
+        'init_prod_env',
+        callback);
+});
+
+/* app(end)   */
+
+gulp.task('watch_debug:local', function () {
+    gulp.watch(config.templates, ['reload_templates_debug:local', reload]);
+    gulp.watch(vendorJs, ['bundle_vendor_js', reload]);
+    gulp.watch(config.angularAppFiles_watch, ['reload_app_debug:local', reload]);
+    gulp.watch(appScssWatch, ['copy_app_scss_debug', reload]);
+    gulp.watch('./src/integration/*', ['bundle_integration', 'init_local_env', reload]);
+});
+
+gulp.task('watch_debug:prod', function () {
+    gulp.watch(config.templates, ['reload_templates_debug:prod', reload]);
+    gulp.watch(vendorJs, ['bundle_vendor_js', reload]);
+    gulp.watch(config.angularAppFiles_watch, ['reload_app_debug:prod', reload]);
+    gulp.watch(appScssWatch, ['copy_app_scss_debug', reload]);
+    gulp.watch('./src/integration/*', ['bundle_integration', 'init_prod_env', reload]);
+});
+
+gulp.task('watch_dist:prod', function () {
+    gulp.watch(config.templates, ['reload_templates_dist:prod', reload]);
+    gulp.watch(vendorJs, ['bundle_vendor_js', reload]);
+    gulp.watch(config.angularAppFiles_watch, ['reload_app_dist:prod', reload]);
+    gulp.watch(appScssWatch, ['copy_app_scss_dist', reload]);
+    gulp.watch('./src/integration/*', ['bundle_integration_dist', 'init_prod_env', reload]);
+});
+
+// =======================================================================//

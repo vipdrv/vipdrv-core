@@ -1,6 +1,6 @@
 <div class="row">
     <div class="col-12">
-        <img src="/src/img/dummy-car-detail.jpg" class="img-fluid" alt="Responsive image">
+        <img src="/img/dummy-car-detail.jpg" class="img-fluid" alt="Responsive image">
     </div>
     <div class="col-12">
         <h3 class="text-primary">Nissan GT-R</h3>
@@ -25,20 +25,43 @@
         <p class="text-secondary m-0">Fuel</p>
         <p>Petrol</p>
     </div>
-    <div class="col-12">
-        <img class="td-drive-details__row-image" src="/src/img/icon-date.jpg">
-        <!--<p>{{$ctrl.userData.calendar.date}} - {{$ctrl.userData.calendar.time}}</p>-->
-        <p>12/06/2016 - 9:00</p>
+    <hr>
+
+    <div class="col-12 mb-2">
+        <div class="media">
+            <img class="d-flex mr-4" src="/img/icon-date.jpg">
+            <div class="media-body">
+                <span>12/06/2016 - 9:00</span>
+                <!--<p>{{$ctrl.userData.calendar.date}} - {{$ctrl.userData.calendar.time}}</p>-->
+            </div>
+        </div>
+    </div>
+
+    <div class="col-12 mb-2">
+        <div class="media">
+            <img class="d-flex mr-4" src="/img/icon-expert.jpg">
+            <div class="media-body">
+                <span>{{$ctrl.userData.expert.title}}</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-12 mb-2">
+        <div class="media">
+            <img class="d-flex mr-4" src="/img/icon-beverage.jpg">
+            <div class="media-body">
+                <span>{{$ctrl.userData.beverage.title}}</span>
+            </div>
+        </div>
     </div>
 
     <div class="col-12">
-        <img class="td-drive-details__row-image" src="/src/img/icon-expert.jpg">
-        <p>{{$ctrl.userData.expert.title}}</p>
-        <p>George Reese</p>
+        <div class="media">
+            <img class="d-flex mr-4" src="/img/icon-road.jpg">
+            <div class="media-body">
+                <span>{{$ctrl.userData.road.title}}</span>
+            </div>
+        </div>
     </div>
-    <div class="col-12">
-        <img class="td-drive-details__row-image" src="/src/img/icon-beverage.jpg">
-        <p>{{$ctrl.userData.expert.title}}</p>
-        <p>Town Roads</p>
-    </div>
+
 </div>
