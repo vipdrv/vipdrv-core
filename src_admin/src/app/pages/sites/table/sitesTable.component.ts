@@ -173,6 +173,19 @@ export class SitesTableComponent implements OnInit {
             setTimeout(() => this.pageNumber = this._defaultPageNumber, 0);
         }
     }
+    protected getModalBodyBusyPromises() {
+        let array: Array<Promise<void>> = [];
+        if (this.promiseService.applicationPromises.sites.getAll.promise) {
+            array.push(this.promiseService.applicationPromises.sites.getAll.promise);
+        }
+        if (this.promiseService.applicationPromises.sites.get.promise) {
+            array.push(this.promiseService.applicationPromises.sites.get.promise);
+        }
+        if (this.promiseService.applicationPromises.sites.addOrUpdate.promise) {
+            array.push(this.promiseService.applicationPromises.sites.addOrUpdate.promise);
+        }
+        return array;
+    }
     /// predicates
     protected isBtnModalApplyBusy(): boolean {
         return !!this.promiseService.applicationPromises.sites.addOrUpdate.promise ||

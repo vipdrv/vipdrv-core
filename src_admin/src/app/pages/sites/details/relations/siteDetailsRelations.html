@@ -7,21 +7,17 @@
                 sites.details.title
             </a>
             <span class="site-details-title-text"
-                  *ngIf="isInitialized()">
+                  *ngIf="!!entity">
                 /
             </span>
-            <!--<span class="site-details-title-chevron"-->
-                  <!--*ngIf="isInitialized()">-->
-                <!--<i class="fa fa-chevron-right fa-lg"></i>-->
-            <!--</span>-->
             <span class="site-details-title-site-name-text"
-                  *ngIf="isInitialized()">
+                  *ngIf="!!entity">
                 {{entity.name}}
             </span>
         </div>
     </div>
     <div class="site-details-template-body"
-         *ngIf="isInitialized()">
+         [ngBusy]="promiseService.applicationPromises.sites.get.promise">
         <ul class="nav nav-tabs"
             id="site-details-tabs"
             role="tablist">
@@ -94,7 +90,8 @@
             </li>
         </ul>
         <div id="site-details"
-             class="tab-content">
+             class="tab-content"
+             *ngIf="!!entity">
             <div id="overview"
                  class="tab-pane fade show active"
                  role="tabpanel"

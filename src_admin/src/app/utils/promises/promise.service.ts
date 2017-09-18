@@ -39,7 +39,24 @@ export class PromiseService {
                     promise: null,
                     entityId: null
                 }
-            }
+            },
+            experts: {
+                getAll: {
+                    promise: null
+                },
+                get: {
+                    promise: null,
+                    entityId: null
+                },
+                addOrUpdate: {
+                    promise: null,
+                    entityId: null
+                },
+                delete: {
+                    promise: null,
+                    entityId: null
+                }
+            },
         };
     }
 }

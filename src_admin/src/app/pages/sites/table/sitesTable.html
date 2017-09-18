@@ -1,5 +1,5 @@
 <div class="sites-table-template">
-    <div  class="sites-table-header">
+    <div class="sites-table-header">
         <div style="float: left;">
             <button type="button"
                     [disabled]="!!promiseService.applicationPromises.sites.getAll.promise"
@@ -86,7 +86,7 @@
     </modal-header>
     <modal-body>
         <div *ngIf="isSelectedEntityDefined()"
-             [ngBusy]="promiseService.applicationPromises.sites.get.promise">
+             [ngBusy]="getModalBodyBusyPromises()">
             <site-details-edit [entity]="selectedEntity"></site-details-edit>
         </div>
     </modal-body>
