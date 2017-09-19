@@ -28,7 +28,7 @@ namespace QuantumLogic.Core.Domain.Services
         /// </summary>        
         /// <param name="id">entity id</param>
         /// <param name="newValue">new order value</param>
-        /// <returns>task of updating entity activity</returns>
+        /// <returns>task of updating entity order</returns>
         /// <exception cref="Exceptions.NotSupported.OperationIsNotSupportedException">Thrown when this operation is not supported for current entity</exception>
         /// <exception cref="Exceptions.Policy.EntityPolicyException">Thrown when this operation access is denied</exception>
         /// <exception cref="Exceptions.Validation.ValidationException">Thrown when this entity is not valid</exception>

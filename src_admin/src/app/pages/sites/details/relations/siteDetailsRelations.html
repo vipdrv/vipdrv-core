@@ -126,8 +126,118 @@
                  class="tab-pane fade show"
                  role="tabpanel"
                  aria-labelledby="notifications-tab">
-                notifications component (not implemented yet)
-                // Should patch contacts for current site entity
+                <div class="site-notifications-template">
+                    <div class="row">
+                        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12">
+                            <div class="row site-notifications-email-label-row">
+                                <div class="col-xl-12">
+                                    <span translate>sites.details.notifications.emails</span>:
+                                </div>
+                            </div>
+                            <div class="row site-notifications-email-entity-row"
+                                 *ngFor="let item of emailEntities">
+                                <div class="col-xl-1 col-lg-1 col-md-1 col-sm-1 col-1">
+                                </div>
+                                <div class="col-xl-8 col-lg-8 col-md-10 col-sm-10 col-10">
+                                    <div class="input-group input-group-sm">
+                                        <input type="email"
+                                           class="form-control form-control-sm"
+                                           [(ngModel)]="item.value"/>
+                                        <span class="input-group-btn">
+                                            <button type="button"
+                                                    class="btn btn-sm btn-outline-danger"
+                                                    (click)="deleteEmailFromContacts(item)">
+                                                <i class="fa fa-times"></i>
+                                            </button>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row site-notifications-email-entity-row">
+                                <div class="col-xl-1 col-lg-1 col-md-1 col-sm-1 col-1">
+                                </div>
+                                <div class="col-xl-8 col-lg-8 col-md-10 col-sm-10 col-10">
+                                    <hr>
+                                    <div class="input-group input-group-sm">
+                                        <input type="email"
+                                               class="form-control form-control-sm"
+                                               [(ngModel)]="newEmailEntity.value"/>
+                                        <span class="input-group-btn">
+                                            <button type="button"
+                                                    [disabled]="!isNewEmailValid()"
+                                                    class="btn btn-sm btn-outline-success"
+                                                    (click)="addNewEmailEntity()">
+                                                <i class="fa fa-plus"></i>
+                                            </button>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12">
+                            <div class="row site-notifications-sms-label-row">
+                                <div class="col-xl-12">
+                                    <span translate>sites.details.notifications.sms</span>:
+                                </div>
+                            </div>
+                            <div class="row site-notifications-sms-entity-row"
+                                 *ngFor="let item of smsEntities">
+                                <div class="col-xl-1 col-lg-1 col-md-1 col-sm-1 col-1">
+                                </div>
+                                <div class="col-xl-8 col-lg-8 col-md-10 col-sm-10 col-10">
+                                    <div class="input-group input-group-sm">
+                                        <input type="email"
+                                               class="form-control form-control-sm"
+                                               [(ngModel)]="item.value"/>
+                                        <span class="input-group-btn">
+                                            <button type="button"
+                                                    class="btn btn-sm btn-outline-danger"
+                                                    (click)="deleteSMSFromContacts(item)">
+                                                <i class="fa fa-times"></i>
+                                            </button>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row site-notifications-sms-entity-row">
+                                <div class="col-xl-1 col-lg-1 col-md-1 col-sm-1 col-1">
+                                </div>
+                                <div class="col-xl-8 col-lg-8 col-md-10 col-sm-10 col-10">
+                                    <hr>
+                                    <div class="input-group input-group-sm">
+                                        <input type="email"
+                                               class="form-control form-control-sm"
+                                               [(ngModel)]="newSMSEntity.value"/>
+                                        <span class="input-group-btn">
+                                            <button type="button"
+                                                    [disabled]="!isNewSMSValid()"
+                                                    class="btn btn-sm btn-outline-success"
+                                                    (click)="addNewSMSEntity()">
+                                                <i class="fa fa-plus"></i>
+                                            </button>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="site-notifications-template-footer">
+                        <button type="button"
+                                [disabled]="!!patchContactsPromise"
+                                style="margin: 3px;"
+                                class="btn btn-primary pull-right"
+                                (click)="saveSiteContacts()">
+                            <i class="fa fa-refresh fa-spin" *ngIf="!!patchContactsPromise"></i>
+                            <span translate>general.actions.text_save</span>
+                        </button>
+                        <button type="button"
+                                style="margin: 3px;"
+                                class="btn btn-default pull-right"
+                                (click)="resetSiteContacts()">
+                            <span translate>general.actions.text_reset</span>
+                        </button>
+                    </div>
+                </div>
             </div>
             <div id="theme"
                  class="tab-pane fade show"

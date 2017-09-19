@@ -12,7 +12,13 @@ export class SiteApiService extends CRUDApiService<SiteEntity, number, LightEnti
         super(httpService, logger, 'site');
     }
     /// methods
-
+    patchContacts(id: number, value: any): Promise<void> {
+        let self = this;
+        let methodName: string = 'change-contacts';
+        return this.httpService
+            .patch(this.createUrlWithMethodNameAndParams(methodName, String(id)), { 'value': value })
+            .then(function (response: any): void { });
+    }
     /// helpers
     protected createEmptyEntity(): SiteEntity {
         return new SiteEntity();

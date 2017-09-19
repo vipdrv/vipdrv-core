@@ -12,5 +12,19 @@ namespace QuantumLogic.WebApi.Validation.Widget
         { }
 
         #endregion
+
+        public void ValidateChangeContacts(Site entity)
+        {
+            ValidateChangeContacts(entity, true);
+        }
+        public bool IsValidChangeContacts(Site entity)
+        {
+            return ValidateChangeContacts(entity, false);
+        }
+
+        protected virtual bool ValidateChangeContacts(Site entity, bool throwValidationException)
+        {
+            return ValidateEntity(entity, throwValidationException);
+        }
     }
 }
