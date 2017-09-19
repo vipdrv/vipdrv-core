@@ -57,5 +57,15 @@ namespace QuantumLogic.WebApi.Controllers.Widget
         }
 
         #endregion
+
+        [HttpPatch("change-contacts/{id}")]
+        public async Task ChangeContactsAsync(int id, [FromBody]ChangeContactsRequest request)
+        {
+            using (var uow = UowManager.CurrentOrCreateNew(true))
+            {
+                await ((ISiteDomainService)DomainService).ChangeContactsAsync(id, request.Value);
+                await uow.CompleteAsync();
+            }
+        }
     }
 }

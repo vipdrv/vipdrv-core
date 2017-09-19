@@ -12,7 +12,10 @@
     "actions": {
       "text_create": "create",
       "text_edit": "edit",
-      "text_delete": "delete"
+      "text_delete": "delete",
+      "text_save": "save",
+      "text_reset": "reset",
+      "text_cancel": "cancel"
     },
     "table":{
       "headerText": {
@@ -89,6 +92,10 @@
         "routes": "Routes",
         "notifications": "Notifications",
         "theme": "Theme"
+      },
+      "notifications": {
+        "emails": "Emails",
+        "sms": "SMS"
       }
     }
   },

@@ -20,6 +20,15 @@ namespace QuantumLogic.Core.Domain.Services.Widget.Sites
 
         #endregion
 
+        public async Task ChangeContactsAsync(int id, string newValue)
+        {
+            Site entity = await RetrieveAsync(id);
+            ((ISitePolicy)Policy).PolicyChangeContacts(entity);
+            entity.Contacts = newValue;
+            ((ISiteValidationService)ValidationService).ValidateChangeContacts(entity);
+            await Repository.UpdateAsync(entity);
+        }
+
         protected override Task CascadeDeleteAction(Site entity)
         {
             return Task.CompletedTask;

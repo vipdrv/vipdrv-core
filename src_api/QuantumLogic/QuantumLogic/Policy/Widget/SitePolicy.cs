@@ -13,5 +13,19 @@ namespace QuantumLogic.WebApi.Policy.Widget
         { }
 
         #endregion
+
+        public void PolicyChangeContacts(Site entity)
+        {
+            CanChangeContacts(entity, true);
+        }
+        public bool CanChangeContacts(Site entity)
+        {
+            return CanChangeContacts(entity, false);
+        }
+
+        protected virtual bool CanChangeContacts(Site entity, bool throwEntityPolicyException)
+        {
+            return true;
+        }
     }
 }

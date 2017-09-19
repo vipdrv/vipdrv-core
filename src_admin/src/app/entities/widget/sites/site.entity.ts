@@ -6,7 +6,7 @@ export class SiteEntity extends Entity {
     beautyId: string;
     name: string;
     url: string;
-    contacts: string;
+    contacts: any;
     leadsAmount: number;
 
     constructor() {
