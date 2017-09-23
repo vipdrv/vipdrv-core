@@ -95,7 +95,6 @@ export class SiteDetailsRelationsComponent implements OnInit, OnDestroy {
             .get(self._entityId)
             .then(function (response: SiteEntity): Promise<void> {
                 self.entity = response;
-                self.initializeNotificationEntities();
                 return Promise.resolve();
             })
             .then(
@@ -110,75 +109,17 @@ export class SiteDetailsRelationsComponent implements OnInit, OnDestroy {
         return self.promiseService.applicationPromises.sites.get.promise;
     }
     /// notifications
-    protected patchContactsPromise: Promise<void> = null;
-    protected initializeNotificationEntities() {
-        this.initializeEmailEntities();
-        this.initializeSMSEntities();
-    }
-    protected saveSiteContacts(): Promise<void> {
+    protected patchSiteContacts(newContacts: string) {
         let self = this;
-        self.entity.contacts =
-            self.emailEntities.map((item) => item.value).join(',') + ';' +
-            self.smsEntities.map((item) => item.value).join(',');
-        self.patchContactsPromise = self.siteApiService
-            .patchContacts(self.entity.id, self.entity.contacts)
+        self.promiseService.applicationPromises.sites.patch.contactsPromise = self.siteApiService
+            .patchContacts(self.entity.id, newContacts)
             .then(
-                () => self.patchContactsPromise = null,
-                () => self.patchContactsPromise = null);
-        return self.patchContactsPromise;
-    }
-    protected resetSiteContacts(): void {
-        this.initializeNotificationEntities();
-    }
-    protected emailEntities: Array<any>;
-    protected newEmailEntity: any;
-    protected initializeEmailEntities(): void {
-        this.emailEntities = this.parseToValueObj(this.entity.contacts, ';', ',', 0);
-        this.newEmailEntity = { value: '' };
-    }
-    protected deleteEmailFromContacts(emailEntity: any): void {
-        let index = this.emailEntities.findIndex((r) => r === emailEntity);
-        if (index > -1) {
-            this.emailEntities.splice(index, 1);
-        }
-    }
-    protected addNewEmailEntity(): void {
-        this.emailEntities.push(this.newEmailEntity);
-        this.newEmailEntity = { value: '' };
-    }
-    protected isNewEmailValid(): boolean {
-        return Extensions.emailRegExp.test(this.newEmailEntity.value);
-    }
-    protected smsEntities: Array<any>;
-    protected newSMSEntity: any;
-    protected initializeSMSEntities(): void {
-        this.smsEntities = this.parseToValueObj(this.entity.contacts, ';', ',', 1);
-        this.newSMSEntity = { value: '' };
-    }
-    protected deleteSMSFromContacts(smsEntity: any): void {
-        let index = this.smsEntities.findIndex((r) => r === smsEntity);
-        if (index > -1) {
-            this.smsEntities.splice(index, 1);
-        }
-    }
-    protected addNewSMSEntity(): void {
-        this.smsEntities.push(this.newSMSEntity);
-        this.newSMSEntity = { value: '' };
-    }
-    protected isNewSMSValid(): boolean {
-        return /^\d\d\d\d\d\d\d\d\d\d$/.test(this.newSMSEntity.value);
-    }
-    private parseToValueObj(str: string, globalSeparator: string, localSeparator: string, globalPosition: number): Array<any> {
-        let result = [];
-        if (str && str.indexOf(globalSeparator) > -1) {
-            let arr = str.split(globalSeparator);
-            if (arr.length > globalPosition && arr[globalPosition] !== '') {
-                let values: Array<string> = arr[globalPosition].split(localSeparator);
-                for (let item of values) {
-                    result.push({ value: item });
-                }
-            }
-        }
-        return result
+                function(): void {
+                    self.entity.contacts = newContacts;
+                    self.promiseService.applicationPromises.sites.patch.contactsPromise = null;
+                },
+                function(): void {
+                    self.promiseService.applicationPromises.sites.patch.contactsPromise = null;
+                });
     }
 }
