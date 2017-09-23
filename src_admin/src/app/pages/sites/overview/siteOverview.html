@@ -1,17 +1,115 @@
 <div class="site-overview-template"
      *ngIf="isEntityDefined()">
-    <div class="row site-overview-template-title">
-        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-            {{entity.name}}
-        </div>
-    </div>
-    <div class="row site-overview-template-info">
+    <div class="row site-overview-template-body-beauty-id">
         <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
             <span class="site-overview-template-info-label"
                   translate>
-                sites.overview.siteId
+                sites.overview.name
             </span>:
-            <span class="site-overview-template-info-value">{{entity.beautyId}}</span>
+            <span class="site-overview-template-info-value">
+                {{entity.name}}
+            </span>
+        </div>
+    </div>
+    <div class="row site-overview-template-body-beauty-id">
+        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+            <span class="site-overview-template-info-label"
+                  translate>
+                sites.overview.beautyId
+            </span>:
+            <span class="site-overview-template-info-value">
+                {{entity.beautyId}}
+            </span>
+        </div>
+    </div>
+    <div class="row site-overview-template-body-experts">
+        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+            <span class="site-overview-template-info-label"
+                  translate>
+                sites.overview.experts
+            </span>:
+            <span class="badge badge-danger"
+                  *ngIf="showNoExperts()"
+                  translate>
+                sites.overview.noExperts
+            </span>
+            <span class="badge badge-success"
+                  *ngIf="showActiveExpertsAmount()"
+                  [translateParams]="{ amount: entity.activeExpertsAmount }"
+                  translate>
+                sites.overview.activeExperts_amount
+            </span>
+            <span class="badge badge-danger"
+                  *ngIf="showNoActiveExpertsAmount()"
+                  translate>
+                sites.overview.noActiveExperts
+            </span>
+            <span class="badge badge-warning"
+                  *ngIf="showNotActiveExpertsAmount()"
+                  [translateParams]="{ amount: entity.expertsAmount - entity.activeExpertsAmount }"
+                  translate>
+                sites.overview.notActiveExperts_amount
+            </span>
+        </div>
+    </div>
+    <div class="row site-overview-template-body-beverages">
+        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+            <span class="site-overview-template-info-label"
+                  translate>
+                sites.overview.beverages
+            </span>:
+            <span class="badge badge-danger"
+                  *ngIf="showNoBeverages()"
+                  translate>
+                sites.overview.noBeverages
+            </span>
+            <span class="badge badge-success"
+                  *ngIf="showActiveBeveragesAmount()"
+                  [translateParams]="{ amount: entity.activeBeveragesAmount }"
+                  translate>
+                sites.overview.activeBeverages_amount
+            </span>
+            <span class="badge badge-danger"
+                  *ngIf="showNoActiveBeveragesAmount()"
+                  translate>
+                sites.overview.noActiveBeverages
+            </span>
+            <span class="badge badge-warning"
+                  *ngIf="showNotActiveBeveragesAmount()"
+                  [translateParams]="{ amount: entity.beveragesAmount - entity.activeBeveragesAmount }"
+                  translate>
+                sites.overview.notActiveBeverages_amount
+            </span>
+        </div>
+    </div>
+    <div class="row site-overview-template-body-routes">
+        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+            <span class="site-overview-template-info-label"
+                  translate>
+                sites.overview.routes
+            </span>:
+            <span class="badge badge-danger"
+                  *ngIf="showNoRoutes()"
+                  translate>
+                sites.overview.noRoutes
+            </span>
+            <span class="badge badge-success"
+                  *ngIf="showActiveRoutesAmount()"
+                  [translateParams]="{ amount: entity.activeRoutesAmount }"
+                  translate>
+                sites.overview.activeRoutes_amount
+            </span>
+            <span class="badge badge-danger"
+                  *ngIf="showNoActiveRoutesAmount()"
+                  translate>
+                sites.overview.noActiveRoutes
+            </span>
+            <span class="badge badge-warning"
+                  *ngIf="showNotActiveRoutesAmount()"
+                  [translateParams]="{ amount: entity.routesAmount - entity.activeRoutesAmount }"
+                  translate>
+                sites.overview.notActiveRoutes_amount
+            </span>
         </div>
     </div>
 </div>
