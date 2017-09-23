@@ -138,7 +138,7 @@ gulp.task('replace_app_config', function () {
 });
 
 gulp.task('replace_integration_config', function () {
-    return gulp.src(['./build/integration/integration.js'])
+    return gulp.src(['./build/integration/*'])
         .pipe(replace('%widgetUrl%', env.widgetUrl))
         .pipe(replace('%siteId%', env.defaultSiteId))
         .pipe(gulp.dest('./build/integration/'));
@@ -147,9 +147,7 @@ gulp.task('replace_integration_config', function () {
 gulp.task('bundle_vendor_js', function () {
     return gulp.src(vendorJs)
         .pipe(plumber())
-        // .pipe(debug('da-inventory-plugin bundle_vendors'))
         .pipe(concat('vendor.js'))
-        .pipe(uglify({mangle: false}))
         .pipe(gulp.dest('./build'))
         .pipe($.size({
             title: 'test-drive vendor.js'
@@ -190,6 +188,9 @@ gulp.task('copy_app_fonts', function () {
 });
 
 gulp.task('bundle_integration', function () {
+    gulp.src('./src/integration/index.html')
+        .pipe(gulp.dest('./build/integration'));
+
     gulp.src('./src/integration/*.js')
         .pipe(concat('integration.js'))
         .pipe(gulp.dest('./build/integration/'));
@@ -201,6 +202,9 @@ gulp.task('bundle_integration', function () {
 });
 
 gulp.task('bundle_integration_dist', function () {
+    gulp.src('./src/integration/index.html')
+        .pipe(gulp.dest('./build/integration'));
+
     gulp.src('./src/integration/*.js')
         .pipe(babel({presets: ['es2015']}))
         .pipe(concat('integration.js'))
@@ -224,8 +228,11 @@ gulp.task('copy_app_images', function () {
 gulp.task('bundle_app_dist', function () {
     return gulp.src(config.angularAppFiles)
         .pipe(plumber())
+        .pipe(babel({presets: ['es2015']}))
         .pipe(concat('app.js'))
-        .pipe(uglify())
+        .pipe(uglify({mangle: false, compress: true}).on('error', function (e) {
+            console.log(e);
+        }))
         .pipe(gulp.dest('./build'))
         .pipe($.size({
             title: 'size of app.js:'
@@ -303,7 +310,7 @@ gulp.task('serve', function () {
         server: {
             baseDir: ['./build', '.'],
             middleware: []
-        }
+        },
     });
 });
 

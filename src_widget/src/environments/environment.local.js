@@ -1,6 +1,6 @@
 module.exports = {
     production: false,
     widgetUrl: 'http://localhost:8081',
-    apiBaseUrl: 'http://localhost:5000/api',
+    apiBaseUrl: 'https://dev.api.quantumlogic.online/api',
     defaultSiteId: 'demo-website'
 };
