@@ -92,7 +92,7 @@
     </modal-body>
     <modal-footer>
         <button type="button"
-                class="btn btn-default"
+                class="btn btn-secondary"
                 data-dismiss="modal"
                 (click)="modalDismiss()">
             <span translate>sites.modal.cancel</span>
@@ -102,7 +102,7 @@
                 class="btn btn-primary"
                 (click)="modalApply()">
             <i class="fa fa-refresh fa-spin" *ngIf="isBtnModalApplyBusy()"></i>
-            <i class="fa fa-edit" *ngIf="!isBtnModalApplyBusy()"></i>
+            <i class="fa fa-save" *ngIf="!isBtnModalApplyBusy()"></i>
             <span translate>sites.modal.apply</span>
         </button>
     </modal-footer>

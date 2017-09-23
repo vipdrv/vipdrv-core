@@ -14,6 +14,7 @@ import { RoutesModule } from './../routes/index';
 import { SiteDetailsEditComponent } from './details/edit/siteDetailsEdit.component';
 import { SiteDetailsRelationsComponent } from './details/relations/siteDetailsRelations.component';
 import { SiteOverviewComponent } from './overview/siteOverview.component';
+import { SiteContactsComponent } from './contacts/siteContacts.component';
 import { SitesComponent } from './sites.component';
 import { routing } from './sites.routing';
 @NgModule({
@@ -36,14 +37,16 @@ import { routing } from './sites.routing';
         SitesTableComponent,
         SiteDetailsEditComponent,
         SiteDetailsRelationsComponent,
-        SiteOverviewComponent
+        SiteOverviewComponent,
+        SiteContactsComponent
     ],
     declarations: [
         SitesComponent,
         SitesTableComponent,
         SiteDetailsEditComponent,
         SiteDetailsRelationsComponent,
-        SiteOverviewComponent
+        SiteOverviewComponent,
+        SiteContactsComponent
     ],
     providers: []
 })

@@ -38,6 +38,9 @@ export class PromiseService {
                 delete: {
                     promise: null,
                     entityId: null
+                },
+                patch: {
+                    contactsPromise: null
                 }
             },
             experts: {
