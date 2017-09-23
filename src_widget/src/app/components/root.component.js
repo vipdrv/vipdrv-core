@@ -30,6 +30,10 @@
                     $scope.widgetTabs[tabId].isActive = true;
                 };
 
+                // =======================================================================//
+                // Widget Initialization                                                  //
+                // =======================================================================//
+
             },
             templateUrl: 'src/app/components/root.tpl.html'
         });
