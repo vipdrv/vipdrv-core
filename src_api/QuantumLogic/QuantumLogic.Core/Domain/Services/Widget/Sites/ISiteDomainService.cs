@@ -1,4 +1,6 @@
 ﻿using QuantumLogic.Core.Domain.Entities.WidgetModule;
+using QuantumLogic.Core.Utils.Scheduling.Week;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace QuantumLogic.Core.Domain.Services.Widget.Sites
@@ -17,5 +19,10 @@ namespace QuantumLogic.Core.Domain.Services.Widget.Sites
         /// <exception cref="Exceptions.Validation.ValidateEntityPropertiesException">Thrown when this entity properties are not valid</exception>
         /// <exception cref="Exceptions.Validation.ValidateEntityRelationsException">Thrown when this entity relations are not valid</exception>
         Task ChangeContactsAsync(int id, string newValue);
+
+        /// <summary>
+        /// Is used to retrieve week schedule for site (merge of schedules of all active experts)
+        /// </summary>
+        Task<IList<DayOfWeekInterval>> RetrieveWeekSchedule(int id);
     }
 }
