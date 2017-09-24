@@ -103,7 +103,8 @@
                  role="tabpanel"
                  aria-labelledby="experts-tab">
                 <experts-table [siteId]="entity.id"
-                               [filter]="getExpertsFilter()">
+                               [filter]="getExpertsFilter()"
+                               (onExpertsChange)="actualizeExpertsInfo($event)">
                 </experts-table>
             </div>
             <div id="beverages"
@@ -111,7 +112,8 @@
                  role="tabpanel"
                  aria-labelledby="beverages-tab">
                 <beverages-table [siteId]="entity.id"
-                                 [filter]="getBeveragesFilter()">
+                                 [filter]="getBeveragesFilter()"
+                                 (onBeveragesChange)="actualizeBeveragesInfo($event)">
                 </beverages-table>
             </div>
             <div id="routes"
@@ -119,15 +121,16 @@
                  role="tabpanel"
                  aria-labelledby="routes-tab">
                 <routes-table [siteId]="entity.id"
-                              [filter]="getRoutesFilter()">
+                              [filter]="getRoutesFilter()"
+                              (onRoutesChange)="actualizeRoutesInfo($event)">
                 </routes-table>
             </div>
             <div id="notifications"
                  class="tab-pane fade show"
                  role="tabpanel"
                  aria-labelledby="notifications-tab">
-                <site-contacts (patchSiteContacts)="patchSiteContacts($event)"
-                               [siteContacts]="entity.contacts">
+                <site-contacts [siteContacts]="entity.contacts"
+                               (onSaveSiteContacts)="patchSiteContacts($event)">
                 </site-contacts>
             </div>
             <div id="theme"

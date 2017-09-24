@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, ViewChild } from '@angular/core';
+import { Component, OnInit, Input, Output, ViewChild, EventEmitter } from '@angular/core';
 import { ModalComponent } from 'ng2-bs3-modal/ng2-bs3-modal';
 import { Variable } from './../../../utils/index';
 import { ExpertEntity } from './../../../entities/index';
@@ -16,6 +16,7 @@ export class ExpertsTableComponent implements OnInit {
     @Input() sorting: string;
     @Input() filter: any;
     @Input() siteId: number;
+    @Output() onExpertsChange: EventEmitter<any> = new EventEmitter<any>();
     @ViewChild('expertDetailsModal')
     protected modal: ModalComponent;
     @ViewChild('cropper', undefined)
@@ -75,6 +76,16 @@ export class ExpertsTableComponent implements OnInit {
         self.getAllEntities()
             .then(() => self._isInitialized = true);
     }
+    protected notifyOnChanges(entityActivated: boolean = false, entityDeactivated: boolean = false): void {
+        if (Variable.isNotNullOrUndefined(this.onExpertsChange)) {
+            this.onExpertsChange
+                .emit({
+                    totalCount: this.totalCount,
+                    entityWasActivated: entityActivated,
+                    entityWasDeactivated: entityDeactivated
+                });
+        }
+    }
     protected getEntityRowClass(item: ExpertEntity): string {
         let classValue: string;
         if (Variable.isNotNullOrUndefined(item) && item.isActive) {
@@ -102,8 +113,14 @@ export class ExpertsTableComponent implements OnInit {
         let operationPromise = self.expertApiService
             .delete(id)
             .then(function (): Promise<void> {
+                self.totalCount--;
                 let elementIndex = self.items.findIndex((item: ExpertEntity) => item.id === id);
-                self.items.splice(elementIndex, 1);
+                if (elementIndex > -1) {
+                    self.notifyOnChanges(false, self.items[elementIndex].isActive);
+                    self.items.splice(elementIndex, 1);
+                } else {
+                    self.notifyOnChanges();
+                }
                 return Promise.resolve();
             });
         return operationPromise;
@@ -119,9 +136,13 @@ export class ExpertsTableComponent implements OnInit {
     protected commitChangeEntityActivity(entity: ExpertEntity): Promise<void> {
         let actionPromise: Promise<void>;
         if (Variable.isNotNullOrUndefined(entity)) {
+            let self = this;
+            let newActivityValue: boolean = entity.isActive;
             actionPromise = this.expertApiService
-                .patchActivity(entity.id, entity.isActive)
-                .then(function(): void { });
+                .patchActivity(entity.id, newActivityValue)
+                .then(function(): void {
+                    self.notifyOnChanges(newActivityValue, !newActivityValue);
+                });
         } else {
             actionPromise = Promise.resolve();
         }
@@ -225,8 +246,11 @@ export class ExpertsTableComponent implements OnInit {
                 let elementIndex = self.items.findIndex((item: ExpertEntity) => item.id === entity.id);
                 if (elementIndex !== -1) {
                     self.items.splice(elementIndex, 1, entity);
+                    self.notifyOnChanges();
                 } else {
                     self.items.push(entity);
+                    self.totalCount++;
+                    self.notifyOnChanges(entity.isActive, !entity.isActive);
                 }
                 self.entity = null;
                 self.isOperationModeInfo = false;

@@ -10,6 +10,9 @@ namespace QuantumLogic.WebApi.DataModels.Dtos.Widget.Sites
         public string Url { get; set; }
         public string Contacts { get; set; }
         public int LeadsAmount { get; set; }
+        public int ExpertsAmount { get; set; }
+        public int BeveragesAmount { get; set; }
+        public int RoutesAmount { get; set; }
 
         #region Mapping
 
@@ -22,6 +25,9 @@ namespace QuantumLogic.WebApi.DataModels.Dtos.Widget.Sites
             Url = entity.Url;
             Contacts = entity.Contacts;
             LeadsAmount = entity.Leads.Count;
+            ExpertsAmount = entity.Experts.Count;
+            BeveragesAmount = entity.Beverages.Count;
+            RoutesAmount = entity.Routes.Count;
         }
         public override Site MapToEntity()
         {
