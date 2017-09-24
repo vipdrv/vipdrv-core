@@ -9,15 +9,28 @@ namespace QuantumLogic.Core.Utils.Scheduling.Week
     /// </summary>
     public class DayOfWeekInterval
     {
+        #region Consts
+
+        /// <summary>
+        /// Separator between interval parts
+        /// </summary>
+        public const char DayOfWeekIntervalSectionsSeparator = ',';
+        /// <summary>
+        /// Separator between intervals
+        /// </summary>
+        public const char DayOfWeekIntervalsSeparator = ';';
+
+        #endregion
+
         public DayOfWeek DayOfWeek { get; private set; }
         public TimeSpan StartTime { get; private set; }
         public TimeSpan EndTime { get; private set; }
 
         #region Ctors
 
-        public DayOfWeekInterval(string str, char sectionSeparator = ',')
+        public DayOfWeekInterval(string str)
         {
-            IList<string> splitStr = str.Split(sectionSeparator);
+            IList<string> splitStr = str.Split(DayOfWeekIntervalSectionsSeparator);
             if (splitStr.Count == 3)
             {
                 try
@@ -64,11 +77,11 @@ namespace QuantumLogic.Core.Utils.Scheduling.Week
         /// </summary>
         /// <param name="str">string</param>
         /// <returns>day of week intervals</returns>
-        public static IList<DayOfWeekInterval> Parse(string str, char sectionSeparator = ';')
+        public static IList<DayOfWeekInterval> Parse(string str)
         {
             return String.IsNullOrEmpty(str) ?
                 new List<DayOfWeekInterval>() :
-                str.Split(sectionSeparator)
+                str.Split(DayOfWeekIntervalsSeparator)
                     .Where(r => !String.IsNullOrEmpty(r))
                     .Select(r => new DayOfWeekInterval(r))
                     .ToList();

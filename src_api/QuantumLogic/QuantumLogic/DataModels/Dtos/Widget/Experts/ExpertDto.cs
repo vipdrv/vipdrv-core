@@ -13,7 +13,6 @@ namespace QuantumLogic.WebApi.DataModels.Dtos.Widget.Experts
         public string PhotoUrl { get; set; }
         public string FacebookUrl { get; set; }
         public string LinkedinUrl { get; set; }
-        public string WorkingHours { get; set; }
 
         #region Mapping
 
@@ -28,7 +27,6 @@ namespace QuantumLogic.WebApi.DataModels.Dtos.Widget.Experts
             PhotoUrl = entity.PhotoUrl;
             FacebookUrl = entity.FacebookUrl;
             LinkedinUrl = entity.LinkedinUrl;
-            WorkingHours = entity.WorkingHours;
         }
         public override Expert MapToEntity()
         {
@@ -41,7 +39,6 @@ namespace QuantumLogic.WebApi.DataModels.Dtos.Widget.Experts
             entity.PhotoUrl = PhotoUrl;
             entity.FacebookUrl = FacebookUrl;
             entity.LinkedinUrl = LinkedinUrl;
-            entity.WorkingHours = WorkingHours;
             return entity;
         }
 
