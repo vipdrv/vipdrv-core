@@ -8,9 +8,18 @@
 
                 this.validateStep = function () {
 
+
+                    api.retrieveExperts();
+
                 };
 
                 $scope.nextStepInner = function () {
+
+                    api.retrieveExperts().then((data) => {
+                        console.log(11, data);
+                    });
+                    return;
+
                     if (self.isStepValid) {
                         self.completeStep({tabId: self.tabId});
                     }

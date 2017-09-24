@@ -3,5 +3,6 @@
     public class ExpertGetAllRequest : GetAllRequest
     {
         public int? SiteId { get; set; }
+        public string SiteBeautyId { get; set; }
     }
 }
