@@ -7,7 +7,7 @@ import { Variable, Extensions, ILogger, ConsoleLogger, PromiseService } from '..
 })
 export class SiteContactsComponent implements OnInit, OnChanges {
     @Input() siteContacts: string;
-    @Output() patchSiteContacts: EventEmitter<string> = new EventEmitter<string>();
+    @Output() onSaveSiteContacts: EventEmitter<string> = new EventEmitter<string>();
     /// fields
     private _contacts: string = '';
     protected emailEntities: Array<ContactEntity>;
@@ -39,7 +39,7 @@ export class SiteContactsComponent implements OnInit, OnChanges {
         this.initializeSMSEntities();
     }
     protected saveSiteContacts(): void {
-        this.patchSiteContacts.emit(`${this.emailEntities.map((item) => item.value).join(',')};${this.smsEntities.map((item) => item.value).join(',')}`);
+        this.onSaveSiteContacts.emit(`${this.emailEntities.map((item) => item.value).join(',')};${this.smsEntities.map((item) => item.value).join(',')}`);
     }
     protected resetSiteContacts(): void {
         this.initializeNotificationEntities();

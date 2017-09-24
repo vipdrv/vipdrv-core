@@ -1,33 +1,33 @@
 <div class="site-overview-template"
      *ngIf="isEntityDefined()">
-    <div class="row site-overview-template-body-beauty-id">
+    <div class="row site-overview-template-body-row-name">
         <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
             <span class="site-overview-template-info-label"
                   translate>
                 sites.overview.name
-            </span>:
+            </span>
             <span class="site-overview-template-info-value">
                 {{entity.name}}
             </span>
         </div>
     </div>
-    <div class="row site-overview-template-body-beauty-id">
+    <div class="row site-overview-template-body-row-beauty-id">
         <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
             <span class="site-overview-template-info-label"
                   translate>
                 sites.overview.beautyId
-            </span>:
+            </span>
             <span class="site-overview-template-info-value">
                 {{entity.beautyId}}
             </span>
         </div>
     </div>
-    <div class="row site-overview-template-body-experts">
+    <div class="row site-overview-template-body-row-experts">
         <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
             <span class="site-overview-template-info-label"
                   translate>
                 sites.overview.experts
-            </span>:
+            </span>
             <span class="badge badge-danger"
                   *ngIf="showNoExperts()"
                   translate>
@@ -52,12 +52,12 @@
             </span>
         </div>
     </div>
-    <div class="row site-overview-template-body-beverages">
+    <div class="row site-overview-template-body-row-beverages">
         <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
             <span class="site-overview-template-info-label"
                   translate>
                 sites.overview.beverages
-            </span>:
+            </span>
             <span class="badge badge-danger"
                   *ngIf="showNoBeverages()"
                   translate>
@@ -82,12 +82,12 @@
             </span>
         </div>
     </div>
-    <div class="row site-overview-template-body-routes">
+    <div class="row site-overview-template-body-row-routes">
         <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
             <span class="site-overview-template-info-label"
                   translate>
                 sites.overview.routes
-            </span>:
+            </span>
             <span class="badge badge-danger"
                   *ngIf="showNoRoutes()"
                   translate>
