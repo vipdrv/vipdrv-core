@@ -25,10 +25,14 @@ namespace QuantumLogic.Core.Utils.Scheduling.Week
                     DayOfWeek = (DayOfWeek)Int32.Parse(splitStr[0]);
                     StartTime = TimeSpan.Parse(splitStr[1]);
                     EndTime = TimeSpan.Parse(splitStr[2]);
+                    if (StartTime >= EndTime)
+                    {
+                        throw new ArgumentException($"{nameof(StartTime)} have to be early then {nameof(EndTime)} for interval \"{str}\".");
+                    }
                 }
                 catch (Exception ex)
                 {
-                    throw new NotSupportedException($"Initialization failed for WeekScheduleInterval: \"{str}\"! ({ex})");
+                    throw new ArgumentException($"Initialization failed for WeekScheduleInterval: \"{str}\"! ({ex})");
                 }
             }
             else
@@ -42,6 +46,10 @@ namespace QuantumLogic.Core.Utils.Scheduling.Week
             DayOfWeek = dayOfWeek;
             StartTime = startTimeOfDay;
             EndTime = endTimeOfDay;
+            if (StartTime >= EndTime)
+            {
+                throw new ArgumentException($"{nameof(StartTime)} ({StartTime}) have to be early then {nameof(EndTime)} (({EndTime})) for interval.");
+            }
         }
 
         #endregion
@@ -77,8 +85,37 @@ namespace QuantumLogic.Core.Utils.Scheduling.Week
             {
                 throw new ArgumentException($"Argument {nameof(intervals)} can not be null!");
             }
-#warning: TODO: implement this
-            return intervals;
+            else if (intervals.Count < 2)
+            {
+                return intervals;
+            } 
+            IList<DayOfWeekInterval> pureIntervals = new List<DayOfWeekInterval>();
+            IList<DayOfWeekInterval> sortedIntervals = intervals.OrderBy(r => r.DayOfWeek).ThenBy(r => r.StartTime).ToList();
+            DayOfWeek currentDayOfWeek = sortedIntervals.First().DayOfWeek;
+            TimeSpan currentStartTime = sortedIntervals.First().StartTime;
+            TimeSpan currentEndTime = sortedIntervals.First().EndTime;
+            for (int i = 1; i < sortedIntervals.Count; i++)
+            {
+                if (sortedIntervals[i].DayOfWeek == currentDayOfWeek && sortedIntervals[i].StartTime <= currentEndTime && sortedIntervals[i].EndTime > currentEndTime)
+                {
+                    // prolong current interval
+                    currentEndTime = sortedIntervals[i].EndTime;
+                }
+                else if (sortedIntervals[i].DayOfWeek == currentDayOfWeek && sortedIntervals[i].StartTime <= currentEndTime)
+                {
+                    // doing nothing cuz current interval contains new one
+                }
+                else
+                {
+                    // add new pure interval and start new one
+                    pureIntervals.Add(new DayOfWeekInterval(currentDayOfWeek, currentStartTime, currentEndTime));
+                    currentDayOfWeek = sortedIntervals[i].DayOfWeek;
+                    currentStartTime = sortedIntervals[i].StartTime;
+                    currentEndTime = sortedIntervals[i].EndTime;
+                }
+            }
+            pureIntervals.Add(new DayOfWeekInterval(currentDayOfWeek, currentStartTime, currentEndTime));
+            return pureIntervals;
         }
     }
 }
