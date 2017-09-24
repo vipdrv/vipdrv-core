@@ -7,6 +7,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
+using QuantumLogic.Core.Utils.Scheduling.Week;
+using System.Linq;
 
 namespace QuantumLogic.Core.Domain.Services.Widget.Sites
 {
@@ -27,6 +29,10 @@ namespace QuantumLogic.Core.Domain.Services.Widget.Sites
             entity.Contacts = newValue;
             ((ISiteValidationService)ValidationService).ValidateChangeContacts(entity);
             await Repository.UpdateAsync(entity);
+        }
+        public async Task<IList<DayOfWeekInterval>> RetrieveWeekSchedule(int id)
+        {
+            return DayOfWeekInterval.Purify((await RetrieveAsync(id)).Experts.Where(r => r.IsActive).SelectMany(r => DayOfWeekInterval.Parse(r.WorkingHours)).ToList());
         }
 
         protected override Task CascadeDeleteAction(Site entity)
