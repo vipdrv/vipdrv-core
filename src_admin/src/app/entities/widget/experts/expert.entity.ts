@@ -1,6 +1,5 @@
-import { Variable } from './../../../utils/index';
+import { Variable, WorkingInterval } from './../../../utils/index';
 import { Entity, IPassivable, IOrderable } from './../../index';
-
 export class ExpertEntity extends Entity implements IPassivable, IOrderable {
     siteId: number;
     name: string;
@@ -10,12 +9,12 @@ export class ExpertEntity extends Entity implements IPassivable, IOrderable {
     photoUrl: string;
     facebookUrl: string;
     linkedinUrl: string;
-    workingHours: string;
-
+    workingHours: Array<WorkingInterval>;
+    /// ctoe
     constructor() {
         super();
     }
-
+    /// methods
     initializeFromDto(dto: any): void {
         if (Variable.isNullOrUndefined(dto)) {
             return null;
@@ -30,6 +29,6 @@ export class ExpertEntity extends Entity implements IPassivable, IOrderable {
         this.photoUrl = mock.photoUrl;
         this.facebookUrl = mock.facebookUrl;
         this.linkedinUrl = mock.linkedinUrl;
-        this.workingHours = mock.workingHours;
+        this.workingHours = WorkingInterval.initializeManyFromDto(dto.workingHours);
     }
 }

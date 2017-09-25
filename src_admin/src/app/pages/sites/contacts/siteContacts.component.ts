@@ -76,10 +76,10 @@ export class SiteContactsComponent implements OnInit, OnChanges {
     }
     /// predicates
     protected isEmailValid(value: string): boolean {
-        return Extensions.RegExp.email.test(value) && !this.containsContactsEntityValue(this.emailEntities, value);
+        return Extensions.regExp.email.test(value) && !this.containsContactsEntityValue(this.emailEntities, value);
     }
     protected isSMSValid(value: string): boolean {
-        return Extensions.RegExp.phoneNumber.test(value) && !this.containsContactsEntityValue(this.smsEntities, value);
+        return Extensions.regExp.phoneNumber.test(value) && !this.containsContactsEntityValue(this.smsEntities, value);
     }
     protected isSaveProcessing(): boolean {
         return Variable.isNotNullOrUndefined(this.promiseService.applicationPromises.sites.patch.contactsPromise);

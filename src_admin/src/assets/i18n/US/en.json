@@ -22,6 +22,15 @@
         "activity": "Is active",
         "order": "Order"
       }
+    },
+    "daysOfWeek": {
+      "sunday": "Sunday",
+      "monday": "Monday",
+      "tuesday": "Tuesday",
+      "wednesday": "Wednesday",
+      "thursday": "Thursday",
+      "friday": "Friday",
+      "saturday": "Saturday"
     }
   },
   "utils": {
@@ -137,7 +146,8 @@
       "linkedinUrl": "Linkedin",
       "facebookUrl": "Facebook",
       "expertActivity": "Is active",
-      "expertOrder": "Order"
+      "expertOrder": "Order",
+      "weekSchedule": "Week schedule"
     }
   },
   "beverages": {

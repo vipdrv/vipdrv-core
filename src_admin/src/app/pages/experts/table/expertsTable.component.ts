@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, Output, ViewChild, EventEmitter } from '@angular/core';
 import { ModalComponent } from 'ng2-bs3-modal/ng2-bs3-modal';
-import { Variable } from './../../../utils/index';
+import { Variable, WorkingInterval } from './../../../utils/index';
 import { ExpertEntity } from './../../../entities/index';
 import { IContentApiService, ContentApiService, IExpertApiService, ExpertApiService, GetAllResponse } from './../../../services/serverApi/index';
 import { CropperSettings, ImageCropperComponent } from 'ng2-img-cropper';
@@ -89,9 +89,9 @@ export class ExpertsTableComponent implements OnInit {
     protected getEntityRowClass(item: ExpertEntity): string {
         let classValue: string;
         if (Variable.isNotNullOrUndefined(item) && item.isActive) {
-            classValue = null;
+            classValue = 'table-success';
         } else if (Variable.isNotNullOrUndefined(item) && !item.isActive) {
-            classValue = 'table-danger';
+            classValue = 'table-warning';
         } else {
             classValue = null;
         }
@@ -322,8 +322,8 @@ export class ExpertsTableComponent implements OnInit {
         this.showAvatarButtons = true;
     }
     // working hours
-    protected onWorkingHoursChanged(value: string): void {
-        this.entity.workingHours = value;
+    protected actualizeWorkingHours(actualWorkingHours: Array<WorkingInterval>): void {
+        this.entity.workingHours = actualWorkingHours;
     }
     /// predicates
     protected isInitialized(): boolean {
