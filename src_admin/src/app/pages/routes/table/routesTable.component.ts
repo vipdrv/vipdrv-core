@@ -89,9 +89,9 @@ export class RoutesTableComponent implements OnInit {
     protected getEntityRowClass(item: RouteEntity): string {
         let classValue: string;
         if (Variable.isNotNullOrUndefined(item) && item.isActive) {
-            classValue = null;
+            classValue = 'table-success';
         } else if (Variable.isNotNullOrUndefined(item) && !item.isActive) {
-            classValue = 'table-danger';
+            classValue = 'table-warning';
         } else {
             classValue = null;
         }

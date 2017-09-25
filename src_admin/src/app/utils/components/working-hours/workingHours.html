@@ -1,21 +1,109 @@
-<div class="working-hour-template">
+<div class="week-schedule-template">
     <div class="row">
         <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-            Not implemented yet
-            <!--working hours old: {{workingHours}}-->
-            <!--<br>-->
-            <!--working hours actual: {{actualWorkingHours}}-->
-            <!--<br>-->
-            <!--<button type="button"-->
-                    <!--class="btn btn-sm btn-default"-->
-                    <!--(click)="undoChanges()">-->
-                <!--<span translate>utils.components.workingHours.cancel</span>-->
-            <!--</button>-->
-            <!--<button type="button"-->
-                    <!--class="btn btn-sm btn-primary"-->
-                    <!--(click)="submitWorkingHours()">-->
-                <!--<span translate>utils.components.workingHours.apply</span>-->
-            <!--</button>-->
+            <div class="row week-schedule-row"
+                 *ngFor="let item of actualEntities">
+                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                    <div class="input-group input-group-sm">
+                        <span class="input-group-btn">
+                            <button class="btn btn-sm btn-primary week-schedule-start-edit-btn"
+                                    type="button"
+                                    *ngIf="!item.isEditProcessing"
+                                    (click)="item.startEdit()">
+                                <i class="fa fa-edit"></i>
+                            </button>
+                            <button class="btn btn-sm btn-secondary week-schedule-undo-btn"
+                                    type="button"
+                                    *ngIf="item.isEditProcessing"
+                                    (click)="item.undoEdit()">
+                                <i class="fa fa-undo"></i>
+                            </button>
+                        </span>
+                        <select class="form-control form-control-sm"
+                                *ngIf="item.isEditProcessing"
+                                [(ngModel)]="item.dayOfWeek">
+                            <option *ngFor="let dayOfWeek of daysOfWeek"
+                                    [ngValue]="dayOfWeek.id">
+                                <span translate>{{dayOfWeek.localizationKey}}</span>
+                            </option>
+                        </select>
+                        <select class="form-control form-control-sm"
+                                *ngIf="!item.isEditProcessing"
+                                disabled
+                                [(ngModel)]="item.editDayOfWeek">
+                            <option *ngFor="let dayOfWeek of daysOfWeek"
+                                    [ngValue]="dayOfWeek.id">
+                                <span translate>{{dayOfWeek.localizationKey}}</span>
+                            </option>
+                        </select>
+                        <span class="input-group-addon week-schedule-colon-text-addon">:</span>
+                        <input type="text"
+                               class="form-control form-control-sm"
+                               *ngIf="item.isEditProcessing"
+                               [(ngModel)]="item.editStartTime"/>
+                        <input type="text"
+                               class="form-control form-control-sm"
+                               *ngIf="!item.isEditProcessing"
+                               disabled
+                               [(ngModel)]="item.startTime"/>
+                        <span class="input-group-addon week-schedule-minus-text-addon">-</span>
+                        <input type="text"
+                               class="form-control form-control-sm"
+                               *ngIf="item.isEditProcessing"
+                               [(ngModel)]="item.endTime"/>
+                        <input type="text"
+                               class="form-control form-control-sm"
+                               *ngIf="!item.isEditProcessing"
+                               disabled
+                               [(ngModel)]="item.endTime"/>
+                        <span class="input-group-btn">
+                            <button class="btn btn-sm btn-danger week-schedule-remove-btn"
+                                    type="button"
+                                    *ngIf="!item.isEditProcessing"
+                                    (click)="deleteInterval(item)">
+                                <i class="fa fa-times"></i>
+                            </button>
+                            <button class="btn btn-sm btn-success week-schedule-commit-edit-btn"
+                                    type="button"
+                                    *ngIf="item.isEditProcessing"
+                                    [disabled]="!isIntervalValid(item, true)"
+                                    (click)="item.commitEdit()">
+                                <i class="fa fa-check"></i>
+                            </button>
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <hr>
+            <div class="row week-schedule-row">
+                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                    <div class="input-group input-group-sm">
+                        <select class="form-control form-control-sm"
+                                [(ngModel)]="newEntity.editDayOfWeek">
+                            <option *ngFor="let dayOfWeek of daysOfWeek"
+                                    [ngValue]="dayOfWeek.id">
+                                <span translate>{{dayOfWeek.localizationKey}}</span>
+                            </option>
+                        </select>
+                        <span class="input-group-addon week-schedule-colon-text-addon">:</span>
+                        <input type="text"
+                               class="form-control form-control-sm"
+                               [(ngModel)]="newEntity.editStartTime"/>
+                        <span class="input-group-addon week-schedule-minus-text-addon">-</span>
+                        <input type="text"
+                               class="form-control form-control-sm"
+                               [(ngModel)]="newEntity.editEndTime"/>
+                        <span class="input-group-btn">
+                            <button class="btn btn-sm btn-success week-schedule-commit-add-btn"
+                                    type="button"
+                                    [disabled]="!isIntervalValid(newEntity, false)"
+                                    (click)="addNewInterval()">
+                                <i class="fa fa-plus"></i>
+                            </button>
+                        </span>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>

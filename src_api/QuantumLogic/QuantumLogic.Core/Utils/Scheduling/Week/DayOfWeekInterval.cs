@@ -22,11 +22,13 @@ namespace QuantumLogic.Core.Utils.Scheduling.Week
 
         #endregion
 
-        public DayOfWeek DayOfWeek { get; private set; }
-        public TimeSpan StartTime { get; private set; }
-        public TimeSpan EndTime { get; private set; }
+        public DayOfWeek DayOfWeek { get; set; }
+        public TimeSpan StartTime { get; set; }
+        public TimeSpan EndTime { get; set; }
 
         #region Ctors
+
+        public DayOfWeekInterval() { }
 
         public DayOfWeekInterval(string str)
         {
@@ -69,7 +71,7 @@ namespace QuantumLogic.Core.Utils.Scheduling.Week
 
         public override string ToString()
         {
-            return $"{DayOfWeek},{StartTime},{EndTime}";
+            return $"{(int)DayOfWeek},{StartTime},{EndTime}";
         }
 
         /// <summary>

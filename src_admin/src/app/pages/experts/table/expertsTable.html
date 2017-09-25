@@ -241,16 +241,33 @@
             <div class="row"
                  *ngIf="entity.workingHours">
                 <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-                    <working-hours [workingHours]="entity.workingHours"
-                                   (workingHoursChanged)='onWorkingHoursChanged($event)'>
-                    </working-hours>
+                    <div class="row">
+                        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                            <button class="btn btn-sm btn-info pull-left experts-week-intervals-accordion-control-btn"
+                                    type="button"
+                                    data-toggle="collapse"
+                                    data-target="#collapseExample"
+                                    aria-expanded="false"
+                                    aria-controls="collapseExample">
+                                <i class="fa fa-list-alt"></i>
+                                <span translate>experts.modal.weekSchedule</span>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="collapse" id="collapseExample">
+                        <div class="card card-block">
+                            <working-hours [workingHours]="entity.workingHours"
+                                           (workingHoursChanged)='actualizeWorkingHours($event)'>
+                            </working-hours>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </modal-body>
     <modal-footer>
         <button type="button"
-                class="btn btn-default"
+                class="btn btn-secondary"
                 data-dismiss="modal"
                 (click)="modalDismiss()">
             <span translate>experts.modal.cancel</span>
