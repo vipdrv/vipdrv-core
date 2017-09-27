@@ -60,6 +60,7 @@
         </thead>
         <tbody>
         <tr *ngFor="let item of items"
+            class="leads-table-body-row"
             (click)="modalOpenInfo(item.id)">
             <td>{{item.recievedDateTime}}</td>
             <td>{{item.firstName}}</td>

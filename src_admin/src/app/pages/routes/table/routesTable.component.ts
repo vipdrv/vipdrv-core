@@ -89,9 +89,9 @@ export class RoutesTableComponent implements OnInit {
     protected getEntityRowClass(item: RouteEntity): string {
         let classValue: string;
         if (Variable.isNotNullOrUndefined(item) && item.isActive) {
-            classValue = 'table-success';
+            classValue = 'routes-table-body-row-active';
         } else if (Variable.isNotNullOrUndefined(item) && !item.isActive) {
-            classValue = 'table-warning';
+            classValue = 'routes-table-body-row-not-active';
         } else {
             classValue = null;
         }
@@ -159,7 +159,7 @@ export class RoutesTableComponent implements OnInit {
         if (Variable.isNotNullOrUndefined(entity)) {
             let entityIndex: number = this.items.findIndex((item) => item.id === entity.id);
             if (entityIndex > -1 && entityIndex < this.items.length - 1) {
-                let newOrderValue: number = this.items[entityIndex].order + 1;
+                let newOrderValue: number = this.items[entityIndex + 1].order;
                 this.items[entityIndex + 1].order = this.items[entityIndex].order;
                 this.items[entityIndex].order = newOrderValue;
                 let stub = this.items[entityIndex];
@@ -175,7 +175,7 @@ export class RoutesTableComponent implements OnInit {
         if (Variable.isNotNullOrUndefined(entity)) {
             let entityIndex: number = this.items.findIndex((item) => item.id === entity.id);
             if (entityIndex > 0 && this.items.length > 1) {
-                let newOrderValue: number = this.items[entityIndex].order - 1;
+                let newOrderValue: number = this.items[entityIndex - 1].order;
                 this.items[entityIndex - 1].order = this.items[entityIndex].order;
                 this.items[entityIndex].order = newOrderValue;
                 let stub = this.items[entityIndex];

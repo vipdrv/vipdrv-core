@@ -36,3 +36,17 @@
 .beverage-avatar-change-url {
 
 }
+.beverages-table-body-row-active {
+  background-color: #f1f8e9;
+}
+.beverages-table-body-row-active:hover {
+  cursor: pointer;
+  background-color: #dcedc8;
+}
+.beverages-table-body-row-not-active {
+  background-color: #fff3e0;
+}
+.beverages-table-body-row-not-active:hover {
+  cursor: pointer;
+  background-color: #ffe0b2;
+}

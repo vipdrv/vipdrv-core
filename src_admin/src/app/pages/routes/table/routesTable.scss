@@ -36,3 +36,17 @@
 .route-avatar-change-url {
 
 }
+.routes-table-body-row-active {
+  background-color: #f1f8e9;
+}
+.routes-table-body-row-active:hover {
+  cursor: pointer;
+  background-color: #dcedc8;
+}
+.routes-table-body-row-not-active {
+  background-color: #fff3e0;
+}
+.routes-table-body-row-not-active:hover {
+  cursor: pointer;
+  background-color: #ffe0b2;
+}
