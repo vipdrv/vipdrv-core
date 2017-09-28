@@ -1,5 +1,5 @@
 (function () {
-    var app = angular.module('myApp', ['templates']);
+    var app = angular.module('myApp', ['templates', 'moment-picker']);
 
     // =======================================================================//
     // App Configs                                                            //

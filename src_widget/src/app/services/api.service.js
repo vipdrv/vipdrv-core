@@ -8,18 +8,25 @@
             // Get Widget Data                                                        //
             // =======================================================================//
 
-            this.loadOpenHours = function () {
-                var deferred = $q.defer();
-                var url = apiBaseUrl + '/sites/' + siteId + '/open-hours';
+            this.retrieveOpenHours = function () {
+                var req = {
+                    method: 'GET',
+                    url: apiBaseUrl + '/site/' + siteId + '/week-schedule',
+                    headers: {
+                        'content-type': 'application/json'
+                    },
+                    // data: {
+                    //     siteId: siteId,
+                    //     sorting: 'order asc'
+                    // }
+                };
 
-                $http.get(url).then(function (response) {
-                    var json = response.data;
-                    deferred.resolve(json);
-                }, function (err) {
-                    deferred.reject(err);
+                var promise = $http(req).then(function (responce) {
+                    return responce.data;
+                }, function () {
                 });
 
-                return deferred.promise;
+                return promise;
             };
 
             this.retrieveExperts = function () {

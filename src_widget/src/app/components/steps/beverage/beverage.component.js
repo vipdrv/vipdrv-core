@@ -6,26 +6,6 @@
 
                 self.isStepValid = null;
 
-                var dummyBeverages = [{
-                    photo_url: '/img/dummy-drink-water.png',
-                    title: 'Blue water 1',
-                    description: 'Water is a transparent and nearly colorless chemical substance that is the main constituent of Earth'
-                }, {
-                    photo_url: '/img/dummy-drink-water.png',
-                    title: 'Blue water 2',
-                    description: 'Water is a transparent and nearly colorless chemical substance that is the main constituent of Earth'
-                }, {
-                    photo_url: '/img/dummy-drink-water.png',
-                    title: 'Blue water 3',
-                    description: 'Water is a transparent and nearly colorless chemical substance that is the main constituent of Earth'
-                }, {
-                    photo_url: '/img/dummy-drink-water.png',
-                    title: 'Blue water 4',
-                    description: 'Water is a transparent and nearly colorless chemical substance that is the main constituent of Earth'
-                }];
-
-                $scope.beverages = dummyBeverages;
-
                 self.$onInit = function () {
                     if (self.userData.beverage.title === null) {
                         this.isSatisfy = false;
@@ -55,6 +35,7 @@
             templateUrl: 'src/app/components/steps/beverage/beverage.tpl.html',
             bindings: {
                 userData: '=',
+                stepData: '<',
                 tabId: '<',
                 completeStep: '&'
             }

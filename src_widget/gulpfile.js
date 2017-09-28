@@ -37,12 +37,14 @@ var vendorJs = [
     'node_modules/angular-aria/angular-aria.min.js',
     'node_modules/angular-messages/angular-messages.min.js',
     'node_modules/bootstrap/dist/js/bootstrap.min.js',
-    'node_modules/ngcomponentrouter/angular_1_router.js'
+    'node_modules/ngcomponentrouter/angular_1_router.js',
+    'node_modules/moment/min/moment-with-locales.min.js',
+    'node_modules/angular-moment-picker/dist/angular-moment-picker.min.js'
 ];
 
 var vendorCss = [
     'node_modules/bootstrap/dist/css/bootstrap.min.css',
-    // 'node_modules/angular-material/angular-material.min.css',
+    'node_modules/angular-moment-picker/dist/angular-moment-picker.min.css'
     // 'node_modules/font-awesome/css/font-awesome.min.css'
 ];
 
@@ -76,6 +78,14 @@ gulp.task('build_dist:dev', function (callback) {
 gulp.task('build_dist:prod', function (callback) {
     return runSequence('build_dist',
         'init_prod_env',
+        callback);
+});
+
+gulp.task('serve:build_dist:local', function (callback) {
+    return runSequence('build_dist',
+        'init_local_env',
+        'serve',
+        'watch_dist:prod',
         callback);
 });
 
@@ -324,6 +334,7 @@ gulp.task('reload_templates_debug:local', function (callback) {
     return runSequence(
         'compile_templates',
         'bundle_app_debug',
+        'init_local_env',
         callback);
 });
 
@@ -331,6 +342,7 @@ gulp.task('reload_templates_debug:prod', function (callback) {
     return runSequence(
         'compile_templates',
         'bundle_app_debug',
+        'init_prod_env',
         callback);
 });
 
@@ -338,6 +350,7 @@ gulp.task('reload_templates_dist:prod', function (callback) {
     return runSequence(
         'compile_templates',
         'bundle_app_dist',
+        'init_prod_env',
         callback);
 });
 

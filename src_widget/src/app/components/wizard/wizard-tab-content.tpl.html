@@ -2,24 +2,28 @@
         ng-if="$ctrl.widgetTabs['time'].isActive"
         tab-id="'time'"
         complete-step="$ctrl.completeStep(tabId)"
-        user-data="$ctrl.userData">
+        user-data="$ctrl.userData"
+        step-data="$ctrl.openHours">
 </td-date>
 <td-expert
         ng-if="$ctrl.widgetTabs['expert'].isActive"
         tab-id="'expert'"
         user-data="$ctrl.userData"
+        step-data="$ctrl.experts"
         complete-step="$ctrl.completeStep(tabId)">
 </td-expert>
 <td-beverage
         ng-if="$ctrl.widgetTabs['beverage'].isActive"
         tab-id="'beverage'"
         user-data="$ctrl.userData"
+        step-data="$ctrl.beverages"
         complete-step="$ctrl.completeStep(tabId)">
 </td-beverage>
 <td-road
         ng-if="$ctrl.widgetTabs['road'].isActive"
         tab-id="'road'"
         user-data="$ctrl.userData"
+        step-data="$ctrl.roads"
         complete-step="$ctrl.completeStep(tabId)">
 </td-road>
 <td-user-details
