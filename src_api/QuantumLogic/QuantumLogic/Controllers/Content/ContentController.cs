@@ -19,6 +19,7 @@ namespace QuantumLogic.WebApi.Controllers.Content
         public Task<string> UploadImageAsync([FromBody]ImgRequestCrutch request)
         {
             return Task.FromResult(String.Empty);
+            // TODO: replace stub with real implementation 
 #warning stub realization that should be removed
             string imageUrl = null;
             try

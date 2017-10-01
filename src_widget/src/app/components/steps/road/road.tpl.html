@@ -6,12 +6,12 @@
 </div>
 <div class="row pr-3">
     <td-card class="col-md-6 col-sm-12 p-0 pt-3 pl-3"
-             ng-repeat="item in items"
-             card-image="item.photo_url"
-             card-title="item.title"
+             ng-repeat="item in $ctrl.stepData"
+             card-image="item.photoUrl"
+             card-title="item.name"
              card-desc="item.description"
-             is-active-card="item.title == $ctrl.userData.road.title"
-             ng-click="itemChanged(item.title)">
+             is-active-card="item.name == $ctrl.userData.road.title"
+             ng-click="itemChanged(item.name)">
     </td-card>
 </div>
 <p></p>

@@ -5,6 +5,6 @@
          style="height: 64px">
     <div class="media-body">
         <h5 class="mt-0" ng-class="$ctrl.isActiveCard ? 'text-primary' : ''">{{$ctrl.cardTitle}}</h5>
-        <span class="text-secondary">{{$ctrl.cardDesc}}</span>
+        <span class="text-secondary">{{$ctrl.cardDesc | limitTo:220}}{{$ctrl.cardDesc.length  > 220 ? ' ...' : ''}}</span>
     </div>
 </div>

@@ -3,7 +3,11 @@
         .component('tdWizardTabContent', {
             controller: function (api, widgetTabs, userData, globalState) {
 
-                /******** wizard-logic(start) ********/
+                var self = this;
+
+                // =======================================================================//
+                // Wizard                                                                 //
+                // =======================================================================//
 
                 this.widgetTabs = widgetTabs;
                 this.userData = userData;
@@ -58,8 +62,27 @@
                     return null;
                 };
 
-                /******** wizard-logic(end)   ********/
+                // =======================================================================//
+                // Load Data from Api                                                     //
+                // =======================================================================//
 
+                self.openHours = [];
+                self.experts = [];
+                self.beverages = [];
+                self.roads = [];
+
+                api.retrieveOpenHours().then((data) => {
+                    self.openHours = data.workingIntervals;
+                });
+                api.retrieveExperts().then((data) => {
+                    self.experts = data.items;
+                });
+                api.retrieveBeverages().then((data) => {
+                    self.beverages = data.items;
+                });
+                api.retrieveRoutes().then((data) => {
+                    self.roads = data.items;
+                });
 
             },
             templateUrl: 'src/app/components/wizard/wizard-tab-content.tpl.html',

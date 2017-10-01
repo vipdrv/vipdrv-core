@@ -3,81 +3,96 @@
     angular.module('myApp')
         .service('api', function ($http, $q, apiBaseUrl, siteId) {
 
-            this.submitForm = _submitForm;
-            this.loadExperts = _loadExperts;
-            this.loadBeverages = _loadBeverages;
-            this.loadRoads = _loadRoads;
-            this.loadOpenHours = _loadOpenHours;
 
-            function _loadOpenHours() {
-                var deferred = $q.defer();
-                var url = apiBaseUrl + '/sites/' + siteId + '/open-hours';
+            // =======================================================================//
+            // Get Widget Data                                                        //
+            // =======================================================================//
 
-                $http.get(url).then(function (response) {
-                    var json = response.data;
-                    deferred.resolve(json);
-                }, function (err) {
-                    deferred.reject(err);
+            this.retrieveOpenHours = function () {
+                var req = {
+                    method: 'GET',
+                    url: apiBaseUrl + '/site/' + siteId + '/week-schedule',
+                    headers: {
+                        'content-type': 'application/json'
+                    },
+                    // data: {
+                    //     siteId: siteId,
+                    //     sorting: 'order asc'
+                    // }
+                };
+
+                var promise = $http(req).then(function (responce) {
+                    return responce.data;
+                }, function () {
                 });
 
-                return deferred.promise;
-            }
+                return promise;
+            };
 
-            function _loadRoads() {
-                var deferred = $q.defer();
-                var url = apiBaseUrl + '/sites/' + siteId + '/routes';
+            this.retrieveExperts = function () {
+                var req = {
+                    method: 'POST',
+                    url: apiBaseUrl + '/expert/get-all',
+                    headers: {
+                        'content-type': 'application/json'
+                    },
+                    data: {
+                        siteId: siteId,
+                        sorting: 'order asc'
+                    }
+                };
 
-                $http.get(url).then(function (response) {
-                    var json = response.data;
-                    deferred.resolve(json);
-                }, function (err) {
-                    deferred.reject(err);
+                var promise = $http(req).then(function (responce) {
+                    return responce.data;
+                }, function () {
                 });
 
-                return deferred.promise;
-            }
+                return promise;
+            };
 
-            function _loadBeverages() {
-                var deferred = $q.defer();
-                var url = apiBaseUrl + '/sites/' + siteId + '/beverages';
+            this.retrieveBeverages = function () {
+                var req = {
+                    method: 'POST',
+                    url: apiBaseUrl + '/beverage/get-all',
+                    headers: {
+                        'content-type': 'application/json'
+                    },
+                    data: {
+                        siteId: siteId,
+                        sorting: 'order asc'
+                    }
+                };
 
-                $http.get(url).then(function (response) {
-                    var json = response.data;
-                    deferred.resolve(json);
-                }, function (err) {
-
-                    deferred.reject(err);
+                var promise = $http(req).then(function (responce) {
+                    return responce.data;
+                }, function () {
                 });
 
-                return deferred.promise;
-            }
+                return promise;
+            };
 
-            function _loadExperts() {
-                var deferred = $q.defer();
-                var url = apiBaseUrl + '/sites/' + siteId + '/experts';
+            this.retrieveRoutes = function () {
+                var req = {
+                    method: 'POST',
+                    url: apiBaseUrl + '/route/get-all',
+                    headers: {
+                        'content-type': 'application/json'
+                    },
+                    data: {
+                        siteId: siteId,
+                        sorting: 'order asc'
+                    }
+                };
 
-                $http.get(url).then(function (response) {
-                    var json = response.data;
-                    deferred.resolve(json);
-                }, function (err) {
-                    deferred.reject(err);
+                var promise = $http(req).then(function (responce) {
+                    return responce.data;
+                }, function () {
                 });
 
-                return deferred.promise;
-            }
+                return promise;
+            };
 
-            function _submitForm(formData) {
-                var deferred = $q.defer();
-                var url = apiBaseUrl + '/sites/' + siteId + '/SubmitForm';
+            // =======================================================================//
 
-                $http.post(url, formData).then(function (response) {
-                    var json = response.data;
-                    deferred.resolve(json);
-                }, function (err) {
-                    deferred.reject(err);
-                });
-
-                return deferred.promise;
-            }
         });
 })();

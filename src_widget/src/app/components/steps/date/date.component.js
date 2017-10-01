@@ -19,6 +19,7 @@
             templateUrl: 'src/app/components/steps/date/date.tpl.html',
             bindings: {
                 userData: '=',
+                stepData: '<',
                 tabId: '<',
                 completeStep: '&'
             }
