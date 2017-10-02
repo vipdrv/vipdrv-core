@@ -68,15 +68,15 @@
         },
         expert: {
             id: null,
-            title: null
+            name: null
         },
         beverage: {
             id: null,
-            title: null
+            name: null
         },
         road: {
             id: null,
-            title: null
+            name: null
         },
         car: {
             img: null,

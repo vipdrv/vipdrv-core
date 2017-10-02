@@ -14,7 +14,7 @@
 
                 this.validateStep = function () {
                     self.isStepValid = true;
-                    return;
+
                     if (self.userData.user.email === null) {
                         self.isStepValid = false;
                     } else {

@@ -71,22 +71,20 @@
                 self.beverages = [];
                 self.roads = [];
 
-                api.retrieveOpenHours().then((data) => {
+                api.retrieveOpenHours((data) => {
                     self.openHours = data.workingIntervals;
                 });
-                api.retrieveExperts().then((data) => {
+                api.retrieveExperts((data) => {
                     self.experts = data.items;
                 });
-                api.retrieveBeverages().then((data) => {
+                api.retrieveBeverages((data) => {
                     self.beverages = data.items;
                 });
-                api.retrieveRoutes().then((data) => {
+                api.retrieveRoutes((data) => {
                     self.roads = data.items;
                 });
-
             },
             templateUrl: 'src/app/components/wizard/wizard-tab-content.tpl.html',
             bindings: {}
         });
 })();
-
