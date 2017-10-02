@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using Microsoft.WindowsAzure.Storage;
 using Microsoft.WindowsAzure.Storage.Blob;
 
-namespace QuantumLogic.Core.Utils.ContentManager
+namespace QuantumLogic.Core.Utils.ContentManager.Providers
 {
     public class BlobProvider : IContentManager
     {
@@ -20,15 +20,15 @@ namespace QuantumLogic.Core.Utils.ContentManager
             _blobClient = storageAccount.CreateCloudBlobClient();
         }
 
-        public async Task<Uri> SaveFileToStorage(FileStream fileStream, string fileName, string contentType)
+        public async Task<Uri> SaveFileToStorage(Stream stream, string fileName, string contentType)
         {
+            // TODO: move container name to consructor
             CloudBlobContainer container = _blobClient.GetContainerReference("image-container");
 
-            // Get a reference to a blob
             CloudBlockBlob blockBlob = container.GetBlockBlobReference(fileName);
             blockBlob.Properties.ContentType = contentType;
 
-            await blockBlob.UploadFromStreamAsync(fileStream);
+            await blockBlob.UploadFromStreamAsync(stream);
             
             return blockBlob.Uri;
         }

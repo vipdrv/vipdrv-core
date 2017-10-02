@@ -6,6 +6,6 @@ namespace QuantumLogic.Core.Utils.ContentManager
 {
     public interface IContentManager
     {
-        Task<Uri> SaveFileToStorage(FileStream fileStream, string blobName, string contentType);
+        Task<Uri> SaveFileToStorage(Stream fileStream, string blobName, string contentType);
     }
 }

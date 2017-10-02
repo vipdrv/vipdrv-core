@@ -1,6 +1,8 @@
-﻿using System.Threading.Tasks;
+﻿using System.IO;
+using System.Threading.Tasks;
 using NUnit.Framework;
 using QuantumLogic.Core.Utils.ContentManager;
+using QuantumLogic.Core.Utils.ContentManager.Providers;
 
 namespace QuantumLogic.Tests.Core.Utils.ContentManager
 {
@@ -9,11 +11,11 @@ namespace QuantumLogic.Tests.Core.Utils.ContentManager
     {
         [Test]
         [Ignore("Real filesystem, Real storage")]
-        public async Task SaveFileToBlob__SlouldWork()
+        public async Task SaveBlobFromStream__SlouldWork()
         {
-            IContentManager blobProvider = new BlobProvider();
+            var blobProvider = new BlobProvider();
 
-            var fileStream = System.IO.File.OpenRead(@"C:\Users\Ultramarine\Google Drive\Media\Pictures\Test\29312940.jpeg");
+            var fileStream = File.OpenRead(@"C:\Users\Ultramarine\Google Drive\Media\Pictures\Test\29312940.jpeg");
             var fileName = "29312940.jpeg";
             var contentType = "image/jpg";
 
