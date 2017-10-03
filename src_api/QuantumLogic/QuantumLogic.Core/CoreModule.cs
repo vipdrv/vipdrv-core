@@ -9,6 +9,8 @@ using QuantumLogic.Core.Domain.Services.Widget.Experts;
 using QuantumLogic.Core.Domain.Services.Widget.Leads;
 using QuantumLogic.Core.Domain.Services.Widget.Routes;
 using QuantumLogic.Core.Domain.Services.Widget.Sites;
+using QuantumLogic.Core.Utils.ContentManager;
+using QuantumLogic.Core.Utils.ContentManager.Providers;
 using QuantumLogic.Core.Utils.Modules;
 using System;
 
@@ -22,6 +24,8 @@ namespace QuantumLogic.Core
         protected override void ConfigureServices(IServiceCollection services)
         {
             services.AddScoped<IDomainContext, DomainContext>();
+
+            services.AddScoped<IContentManager, BlobProvider>();
 
             #region Domain services
 

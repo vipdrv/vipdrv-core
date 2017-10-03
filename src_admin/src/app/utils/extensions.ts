@@ -34,4 +34,17 @@ export module Extensions {
             setTimeout(resolve, timeout)
         });
     }
+    /// random extensions
+    export function generateGuid() {
+        return this.generateS4() + this.generateS4() + '-' +
+            this.generateS4() + '-' +
+            this.generateS4() + '-' +
+            this.generateS4() + '-' +
+            this.generateS4() + this.generateS4() + this.generateS4();
+    }
+    export function generateS4() {
+        return Math.floor((1 + Math.random()) * 0x10000)
+            .toString(16)
+            .substring(1);
+    }
 }

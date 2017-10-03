@@ -2,6 +2,7 @@
 using QuantumLogic.Core.Domain.Entities.WidgetModule;
 using QuantumLogic.Core.Domain.Services.Widget.Leads;
 using QuantumLogic.Core.Domain.UnitOfWorks;
+using QuantumLogic.Core.Extensions.DateTimeEx;
 using QuantumLogic.WebApi.DataModels.Dtos.Widget.Leads;
 using QuantumLogic.WebApi.DataModels.Requests.Widget.Leads;
 using QuantumLogic.WebApi.DataModels.Responses;
@@ -52,10 +53,37 @@ namespace QuantumLogic.WebApi.Controllers.Widget
         [HttpPost("get-all/{page?}/{pageSize?}")]
         public Task<GetAllResponse<LeadDto>> GetAll([FromBody]LeadGetAllRequest request, uint page = 0, uint pageSize = 0)
         {
-            Expression<Func<Lead, bool>> filter = (entity) => true;
-            return InnerGetAllAsync(filter, request.Sorting, page, pageSize);
+            return InnerGetAllAsync(BuildRetrieveManyFilter(request), request.Sorting, page, pageSize);
         }
 
         #endregion
+
+        [HttpPost("export/excel/{page?}/{pageSize?}")]
+        public async Task<string> ExportDataToExcelAsync([FromBody]LeadGetAllRequest request, uint page = 0, uint pageSize = 0)
+        {
+            string fileUrl;
+            TimeSpan timeZoneOffset = TimeSpan.Zero;
+            string fileName = $"TestDrive-Leads-{DateTime.UtcNow.FormatUtcDateTimeToUserFriendlyString(timeZoneOffset, "yyyyMMddHHmmss")}";
+            string worksheetsName = "leads";
+            using (var uow = UowManager.CurrentOrCreateNew(true))
+            {
+                fileUrl = await ((ILeadDomainService)DomainService).ExportDataToExcelAsync(fileName, worksheetsName, timeZoneOffset, BuildRetrieveManyFilter(request), request.Sorting, (int)(page * pageSize), (int)pageSize);
+            }
+            return fileUrl;
+        }
+
+        private Expression<Func<Lead, bool>> BuildRetrieveManyFilter(LeadGetAllRequest request)
+        {
+            return (entity) => 
+                //(String.IsNullOrEmpty(request.RecievedDateTime) || entity.RecievedUtc) &&
+                (String.IsNullOrEmpty(request.FirstName) || entity.FirstName.Contains(request.FirstName)) &&
+                (String.IsNullOrEmpty(request.SecondName) || entity.SecondName.Contains(request.SecondName)) &&
+                (String.IsNullOrEmpty(request.Site) || entity.Site.Name.Contains(request.Site)) &&
+                (String.IsNullOrEmpty(request.Email) || entity.UserEmail.Contains(request.Email)) &&
+                (String.IsNullOrEmpty(request.Phone) || entity.UserPhone.Contains(request.Phone)) &&
+                (String.IsNullOrEmpty(request.Expert) || entity.Expert.Name.Contains(request.Expert)) &&
+                (String.IsNullOrEmpty(request.Route) || entity.Route.Name.Contains(request.Route)) &&
+                (String.IsNullOrEmpty(request.Beverage) || entity.Beverage.Name.Contains(request.Beverage));
+        }
     }
 }

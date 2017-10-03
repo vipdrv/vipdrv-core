@@ -20,7 +20,7 @@ export class LeadsTableComponent implements OnInit {
     protected modalInfo: ModalComponent;
     /// settings
     private _defaultPageNumber: number = 1;
-    private _defaultPageSize: number = 5;
+    private _defaultPageSize: number = 10;
     private _defaultSorting: string = 'recievedUtc desc';
     private _defaultFilter: any = null;
     protected maxPaginationSize: number = 3;
@@ -55,8 +55,10 @@ export class LeadsTableComponent implements OnInit {
     }
     protected getAllEntities(): Promise<void> {
         let self = this;
+        let filter = Object.assign({}, self.filter)
+        self.extendFilter(filter);
         self.promiseService.applicationPromises.leads.getAll = self.leadApiService
-            .getAll(self.pageNumber - 1, self.pageSize, self.sorting, self.filter)
+            .getAll(self.pageNumber - 1, self.pageSize, self.sorting, filter)
             .then(function (response: GetAllResponse<LeadEntity>): Promise<void> {
                 self.totalCount = response.totalCount;
                 self.items = response.items;
@@ -102,10 +104,14 @@ export class LeadsTableComponent implements OnInit {
     }
     protected exportDataToExcel(): Promise<void> {
         let self = this;
-        /// TODO: remove this stub implementation and use export to excel method from api service here
-        self.logger.logWarning('Stub implementation of exportDataToExcel was called.');
-        self.promiseService.applicationPromises.leads.exportToExcel = Extensions
-            .delay(5000)
+        let filter = Object.assign({}, self.filter)
+        self.extendFilter(filter);
+        self.promiseService.applicationPromises.leads.exportToExcel = self.leadApiService
+            .exportToExcel(self.pageNumber - 1, self.pageSize, self.sorting, filter)
+            .then(function (response: string): Promise<void> {
+                window.open(response, '_self', '');
+                return Promise.resolve();
+            })
             .then(
                 () => self.promiseService.applicationPromises.leads.exportToExcel = null,
                 () => self.promiseService.applicationPromises.leads.exportToExcel = null);
@@ -129,5 +135,64 @@ export class LeadsTableComponent implements OnInit {
     }
     protected isSelectedEntityDefined(): boolean {
         return Variable.isNotNullOrUndefined(this.entity);
+    }
+    /// table filters
+    protected tableFilters: any = {
+        recievedDateTime: null,
+        firstName: null,
+        secondName: null,
+        site: null,
+        email: null,
+        phone: null,
+        expert: null,
+        route: null,
+        beverage: null
+    };
+    /// timeout to apply filters
+    protected msTimeout: number = 3000;
+    protected filterSyncKey: string = null;
+    tableFilterValueChanged(newValue: string, key: string): void {
+        if (this.tableFilters[key] !== newValue) {
+            this.tableFilters[key] = newValue;
+            let currentSyncKey: string = Extensions.generateGuid();
+            this.filterSyncKey = currentSyncKey;
+            setTimeout(
+                () => {
+                    if (this.filterSyncKey === currentSyncKey) {
+                        this.filterSyncKey = null;
+                        this.getAllEntities();
+                    }
+                },
+                this.msTimeout);
+        }
+    }
+    protected extendFilter(filter: any): void {
+        if (Variable.isNullOrUndefined(filter)) {
+            throw new Error('Argument exception! (extendFilter requires defined argument filter)');
+        }
+        if (Variable.isNotNullOrUndefined(this.tableFilters.firstName) && this.tableFilters.firstName !== '') {
+            filter.firstName = this.tableFilters.firstName;
+        }
+        if (Variable.isNotNullOrUndefined(this.tableFilters.secondName) && this.tableFilters.secondName !== '') {
+            filter.secondName = this.tableFilters.secondName;
+        }
+        if (Variable.isNotNullOrUndefined(this.tableFilters.site) && this.tableFilters.site !== '') {
+            filter.site = this.tableFilters.site;
+        }
+        if (Variable.isNotNullOrUndefined(this.tableFilters.email) && this.tableFilters.email !== '') {
+            filter.email = this.tableFilters.email;
+        }
+        if (Variable.isNotNullOrUndefined(this.tableFilters.phone) && this.tableFilters.phone !== '') {
+            filter.phone = this.tableFilters.phone;
+        }
+        if (Variable.isNotNullOrUndefined(this.tableFilters.expert) && this.tableFilters.expert !== '') {
+            filter.expert = this.tableFilters.expert;
+        }
+        if (Variable.isNotNullOrUndefined(this.tableFilters.route) && this.tableFilters.route !== '') {
+            filter.route = this.tableFilters.route;
+        }
+        if (Variable.isNotNullOrUndefined(this.tableFilters.beverage) && this.tableFilters.beverage !== '') {
+            filter.beverage = this.tableFilters.beverage;
+        }
     }
 }

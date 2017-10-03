@@ -58,6 +58,62 @@
             <th translate>leads.table.headerText_beverageName</th>
         </tr>
         </thead>
+        <tr class="leads-table-body-row-filters">
+            <td>
+                <!--<input type="text"-->
+                       <!--class="form-control"-->
+                       <!--(ngModelChange)="tableFilterValueChanged($event, 'recievedDateTime')"-->
+                       <!--[ngModel]="tableFilters.recievedDateTime"/>-->
+            </td>
+            <td>
+                <input type="text"
+                       class="form-control"
+                       (ngModelChange)="tableFilterValueChanged($event, 'firstName')"
+                       [ngModel]="tableFilters.firstName"/>
+            </td>
+            <td>
+                <input type="text"
+                       class="form-control"
+                       (ngModelChange)="tableFilterValueChanged($event, 'secondName')"
+                       [ngModel]="tableFilters.secondName"/>
+            </td>
+            <td>
+                <input type="text"
+                       class="form-control"
+                       (ngModelChange)="tableFilterValueChanged($event, 'site')"
+                       [ngModel]="tableFilters.site"/>
+            </td>
+            <td>
+                <input type="text"
+                       class="form-control"
+                       (ngModelChange)="tableFilterValueChanged($event, 'email')"
+                       [ngModel]="tableFilters.email"/>
+            </td>
+            <td>
+                <input type="text"
+                       class="form-control"
+                       (ngModelChange)="tableFilterValueChanged($event, 'phone')"
+                       [ngModel]="tableFilters.phone"/>
+            </td>
+            <td>
+                <input type="text"
+                       class="form-control"
+                       (ngModelChange)="tableFilterValueChanged($event, 'expert')"
+                       [ngModel]="tableFilters.expert"/>
+            </td>
+            <td>
+                <input type="text"
+                       class="form-control"
+                       (ngModelChange)="tableFilterValueChanged($event, 'route')"
+                       [ngModel]="tableFilters.route"/>
+            </td>
+            <td>
+                <input type="text"
+                       class="form-control"
+                       (ngModelChange)="tableFilterValueChanged($event, 'beverage')"
+                       [ngModel]="tableFilters.beverage"/>
+            </td>
+        </tr>
         <tbody>
         <tr *ngFor="let item of items"
             class="leads-table-body-row"
