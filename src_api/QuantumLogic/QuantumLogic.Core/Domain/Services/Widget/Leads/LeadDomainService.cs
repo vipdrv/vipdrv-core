@@ -17,7 +17,11 @@ namespace QuantumLogic.Core.Domain.Services.Widget.Leads
 {
     public class LeadDomainService : EntityDomainService<Lead, int>, ILeadDomainService
     {
-        IContentManager ContentManager { get; set; }
+        #region Injected dependencies
+
+        public IContentManager ContentManager { get; private set; }
+
+        #endregion
 
         #region Ctors
 
@@ -35,6 +39,8 @@ namespace QuantumLogic.Core.Domain.Services.Widget.Leads
             return base.CreateAsync(entity);
         }
 
+        #region Excel export (good to refactor this and make universal for using with any entity)
+
         public async Task<string> ExportDataToExcelAsync(
             string fileName, string worksheetsName, TimeSpan timeZoneOffset,
             Expression<Func<Lead, bool>> filter = null, 
@@ -46,13 +52,13 @@ namespace QuantumLogic.Core.Domain.Services.Widget.Leads
                 //new EntityOptionConfig<Lead>("Id", LocalizeDisplayName("Id"), (r => r.Id), false),
                 new EntityOptionConfig<Lead>("FirstName", LocalizeDisplayName("First name"), (r => r.FirstName), true),
                 new EntityOptionConfig<Lead>("SecondName", LocalizeDisplayName("Second name"), (r => r.SecondName), true),
-                new EntityOptionConfig<Lead>("Beverage", LocalizeDisplayName("Beverage"), (r => r.Beverage.Name), true),
+                new EntityOptionConfig<Lead>("Site", LocalizeDisplayName("Site"), (r => r.Site.Name), true),
+                new EntityOptionConfig<Lead>("RecievedUtc", LocalizeDisplayName("Recieved"), (r => r.RecievedUtc.FormatUtcDateTimeToUserFriendlyString(timeZoneOffset)), true),
                 new EntityOptionConfig<Lead>("Expert", LocalizeDisplayName("Expert"), (r => r.Expert.Name), true),
-                new EntityOptionConfig<Lead>("RecievedUtc", LocalizeDisplayName("Recieved"), (r => r.RecievedUtc.FormatUtcDateTimeToUserFriendlyString(timeZoneOffset)), false),
-                new EntityOptionConfig<Lead>("Route", LocalizeDisplayName("Route"), (r => r.Route.Name), false),
-                new EntityOptionConfig<Lead>("Site", LocalizeDisplayName("Site"), (r => r.Site.Name), false),
-                new EntityOptionConfig<Lead>("UserEmail", LocalizeDisplayName("Email"), (r => r.UserEmail), false),
-                new EntityOptionConfig<Lead>("UserPhone", LocalizeDisplayName("Phone"), (r => r.UserPhone), false)
+                new EntityOptionConfig<Lead>("Route", LocalizeDisplayName("Route"), (r => r.Route.Name), true),
+                new EntityOptionConfig<Lead>("Beverage", LocalizeDisplayName("Beverage"), (r => r.Beverage.Name), true),
+                new EntityOptionConfig<Lead>("UserEmail", LocalizeDisplayName("Email"), (r => r.UserEmail), true),
+                new EntityOptionConfig<Lead>("UserPhone", LocalizeDisplayName("Phone"), (r => r.UserPhone), true)
             };
             string fileUrl;
             var entities = (await RetrieveAllAsync(filter, sorting, skip, take)).Entities;
@@ -102,8 +108,11 @@ namespace QuantumLogic.Core.Domain.Services.Widget.Leads
 
         private string LocalizeDisplayName(string v)
         {
+            /// localization can be added here
             return v;
         }
+
+        #endregion
 
         protected override Task CascadeDeleteAction(Lead entity)
         {
