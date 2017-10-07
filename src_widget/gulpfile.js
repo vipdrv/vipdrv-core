@@ -24,9 +24,9 @@ var env = require('./src/environments/environment.dev');
 
 var config = {
     templates: './src/app/**/*.tpl.html',
-    angularAppFiles: ['./build/tmp/templates.js', './src/app/prototypes/**/*.js', './src/app/**/*module.js', './src/app/app.js', './src/app/**/*.js', '!./src/app/**/*spec.js'],
-    angularAppFiles_watch: ['./src/app/prototypes/**/*.js', './src/app/**/*module.js', './src/app/app.js', './src/app/**/*.js', '!./src/app/**/*spec.js'],
-    integration: ['./src/app/prototypes/**/*.js', './src/app/**/*module.js', './src/app/app.js', './src/app/**/*.js', '!./src/app/**/*spec.js'],
+    angularAppFiles: ['./build/tmp/templates.js', './src/app/helpers/**/*.js', './src/app/**/*module.js', './src/app/app.js', './src/app/**/*.js', '!./src/app/**/*spec.js'],
+    angularAppFiles_watch: ['./src/app/helpers/**/*.js', './src/app/**/*module.js', './src/app/app.js', './src/app/**/*.js', '!./src/app/**/*spec.js'],
+    integration: ['./src/app/helpers/**/*.js', './src/app/**/*module.js', './src/app/app.js', './src/app/**/*.js', '!./src/app/**/*spec.js'],
 };
 
 var vendorJs = [
@@ -226,7 +226,7 @@ gulp.task('bundle_integration_dist', function () {
     return gulp.src('./src/integration/*.scss')
         .pipe(plumber())
         .pipe(sass({outputStyle: 'compressed'}).on('error', sass.logError))
-        .pipe(cssnano())
+        // .pipe(cssnano())
         .pipe(gulp.dest('./build/integration/'));
 });
 
