@@ -121,7 +121,7 @@ namespace QuantumLogic.Core.Domain.Services
             // deleting from database
             await Repository.DeleteAsync(entity);
             // deleting composed (entities that are depending on this one) entities
-            await CascadeDeleteAction(entity);
+            await CascadeDeleteActionAsync(entity);
         }
 
         #region Helpers
@@ -129,7 +129,7 @@ namespace QuantumLogic.Core.Domain.Services
         protected abstract Expression<Func<TEntity, object>>[] GetRetrieveAllEntityIncludes();
         protected abstract Expression<Func<TEntity, object>>[] GetRetrieveEntityIncludes();
         protected abstract IEnumerable<LoadEntityRelationAction<TEntity>> GetLoadEntityRelationActions();
-        protected abstract Task CascadeDeleteAction(TEntity entity);
+        protected abstract Task CascadeDeleteActionAsync(TEntity entity);
 
         protected void LoadEntityRelations(TEntity entity, DomainMethodNames method)
         {

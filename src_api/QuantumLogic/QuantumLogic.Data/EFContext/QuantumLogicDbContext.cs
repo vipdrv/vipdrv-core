@@ -58,7 +58,78 @@ namespace QuantumLogic.Data.EFContext
             modelBuilder.Entity<User>(entity =>
             {
                 entity.ToTable("User");
-                entity.HasKey(c => c.Id);
+                entity.HasKey(r => r.Id);
+            });
+
+            modelBuilder.Entity<UserClaim>(entity =>
+            {
+                entity.ToTable("UserClaim");
+                entity.HasKey(r => new { r.UserId, r.ClaimId });
+                entity
+                    .HasOne(r => r.User)
+                    .WithMany(r => r.UserClaims)
+                    .HasForeignKey(r => r.UserId)
+                    .OnDelete(DeleteBehavior.Cascade);
+                entity
+                    .HasOne(r => r.Claim)
+                    .WithMany()
+                    .HasForeignKey(r => r.ClaimId)
+                    .OnDelete(DeleteBehavior.Cascade);
+            });
+
+            modelBuilder.Entity<UserRole>(entity =>
+            {
+                entity.ToTable("UserRole");
+                entity.HasKey(r => new { r.UserId, r.RoleId });
+                entity
+                    .HasOne(r => r.User)
+                    .WithMany(r => r.UserRoles)
+                    .HasForeignKey(r => r.UserId)
+                    .OnDelete(DeleteBehavior.Cascade);
+                entity
+                    .HasOne(r => r.Role)
+                    .WithMany(r => r.UserRoles)
+                    .HasForeignKey(r => r.RoleId)
+                    .OnDelete(DeleteBehavior.Cascade);
+            });
+
+            modelBuilder.Entity<Role>(entity =>
+            {
+                entity.ToTable("Role");
+                entity.HasKey(r => r.Id);
+            });
+
+            modelBuilder.Entity<RoleClaim>(entity =>
+            {
+                entity.ToTable("RoleClaim");
+                entity.HasKey(r => new { r.RoleId, r.ClaimId });
+                entity
+                    .HasOne(r => r.Role)
+                    .WithMany(r => r.RoleClaims)
+                    .HasForeignKey(r => r.RoleId)
+                    .OnDelete(DeleteBehavior.Cascade);
+                entity
+                    .HasOne(r => r.Claim)
+                    .WithMany()
+                    .HasForeignKey(r => r.ClaimId)
+                    .OnDelete(DeleteBehavior.Cascade);
+            });
+
+            modelBuilder.Entity<Claim>(entity =>
+            {
+                entity.ToTable("Claim");
+                entity.HasKey(r => r.Id);
+            });
+
+            modelBuilder.Entity<ExternalLogin>(entity =>
+            {
+                entity.ToTable("ExternalLogin");
+                entity.HasKey(r => r.Id);
+                entity
+                    .HasOne(e => e.User)
+                    .WithMany(b => b.ExternalLogins)
+                    .HasForeignKey(r => r.UserId)
+                    .OnDelete(DeleteBehavior.Cascade);
             });
 
             modelBuilder.Entity<Site>(entity =>

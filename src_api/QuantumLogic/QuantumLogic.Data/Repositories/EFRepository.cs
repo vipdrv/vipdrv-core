@@ -16,7 +16,7 @@ namespace QuantumLogic.Data.Repositories
     {
         #region Injected dependencies
 
-        private DbContextManager DbContextManager { get; set; }
+        protected DbContextManager DbContextManager { get; private set; }
 
         #endregion
 

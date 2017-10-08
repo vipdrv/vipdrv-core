@@ -19,6 +19,7 @@ using QuantumLogic.WebApi.Policy.Widget;
 using QuantumLogic.WebApi.Validation.Main;
 using QuantumLogic.WebApi.Validation.Widget;
 using System;
+using System.IdentityModel.Tokens.Jwt;
 
 namespace QuantumLogic.WebApi
 {
@@ -39,6 +40,7 @@ namespace QuantumLogic.WebApi
         {
             services.AddScoped<IQLSession, QLSession>();
             services.AddScoped<IQLPermissionChecker, NullQLPermissionChecker>();
+            services.AddTransient<JwtSecurityTokenHandler, JwtSecurityTokenHandler>();
 
             #region Policy registration
 

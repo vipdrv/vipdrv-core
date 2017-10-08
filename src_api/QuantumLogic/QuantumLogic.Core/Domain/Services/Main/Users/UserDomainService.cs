@@ -2,9 +2,11 @@
 using QuantumLogic.Core.Domain.Entities.MainModule;
 using QuantumLogic.Core.Domain.Policy.Main;
 using QuantumLogic.Core.Domain.Repositories.Main;
+using QuantumLogic.Core.Domain.Services.Main.Users.Models;
 using QuantumLogic.Core.Domain.Validation.Main;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 
@@ -20,7 +22,22 @@ namespace QuantumLogic.Core.Domain.Services.Main.Users
 
         #endregion
 
-        protected override Task CascadeDeleteAction(User entity)
+        public async Task<UserInfo> GetUserInfo(string login, string password, Func<User, string, bool> loginComparer)
+        {
+            User user = await ((IUserRepository)Repository)
+                .FirstOrDefaultWithDeepIncludesAsync((entity) => loginComparer(entity, login) && entity.PasswordHash == password);
+            return user == null ?
+                null :
+                new UserInfo(
+                    user.Id.ToString(),
+                    user.Id,
+                    user.Username,
+                    user.UserRoles.Select(r => r.Role.Name).ToList(),
+                    user.UserClaims.Select(r => r.Claim.Id).Union(user.UserRoles.SelectMany(r => r.Role.RoleClaims.Select(e => e.Claim.Id))).OrderBy(r => r).ToList(),
+                    user.AvatarUrl);
+        }
+
+        protected override Task CascadeDeleteActionAsync(User entity)
         {
             return Task.CompletedTask;
         }

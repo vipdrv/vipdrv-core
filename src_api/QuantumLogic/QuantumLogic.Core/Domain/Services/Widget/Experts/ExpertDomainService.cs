@@ -20,7 +20,7 @@ namespace QuantumLogic.Core.Domain.Services.Widget.Experts
 
         #endregion
 
-        protected override Task CascadeDeleteAction(Expert entity)
+        protected override Task CascadeDeleteActionAsync(Expert entity)
         {
             return Task.CompletedTask;
         }

@@ -20,7 +20,7 @@ namespace QuantumLogic.Core.Domain.Services.Widget.Beverages
 
         #endregion
 
-        protected override Task CascadeDeleteAction(Beverage entity)
+        protected override Task CascadeDeleteActionAsync(Beverage entity)
         {
             return Task.CompletedTask;
         }

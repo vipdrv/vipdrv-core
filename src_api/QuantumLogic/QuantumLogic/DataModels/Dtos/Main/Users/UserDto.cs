@@ -22,7 +22,7 @@ namespace QuantumLogic.WebApi.DataModels.Dtos.Main.Users
         {
             User entity = base.MapToEntity();
             entity.Email = Email;
-            entity.Password = Password;
+            entity.PasswordHash = Password;
             entity.MaxSitesCount = MaxSitesCount;
             return entity;
         }

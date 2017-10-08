@@ -20,7 +20,7 @@ namespace QuantumLogic.Core.Domain.Services.Widget.Routes
 
         #endregion
 
-        protected override Task CascadeDeleteAction(Route entity)
+        protected override Task CascadeDeleteActionAsync(Route entity)
         {
             return Task.CompletedTask;
         }

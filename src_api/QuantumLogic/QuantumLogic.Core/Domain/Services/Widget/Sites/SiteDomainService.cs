@@ -35,7 +35,7 @@ namespace QuantumLogic.Core.Domain.Services.Widget.Sites
             return DayOfWeekInterval.Purify((await RetrieveAsync(id)).Experts.Where(r => r.IsActive).SelectMany(r => DayOfWeekInterval.Parse(r.WorkingHours)).ToList());
         }
 
-        protected override Task CascadeDeleteAction(Site entity)
+        protected override Task CascadeDeleteActionAsync(Site entity)
         {
             return Task.CompletedTask;
         }
