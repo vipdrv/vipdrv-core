@@ -8,8 +8,7 @@ import { SiteEntity } from './../../../entities/index';
 @Component({
     selector: 'sites-table',
     styleUrls: ['./sitesTable.scss'],
-    templateUrl: './sitesTable.html',
-    providers: [AuthorizationManager]
+    templateUrl: './sitesTable.html'
 })
 export class SitesTableComponent implements OnInit {
     /// inputs

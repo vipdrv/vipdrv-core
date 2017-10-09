@@ -55,7 +55,9 @@ export class LeadsTableComponent implements OnInit {
     }
     protected getAllEntities(): Promise<void> {
         let self = this;
-        let filter = Object.assign({}, self.filter)
+        let filter = Object.assign({}, self.filter);
+        filter.userId = Variable.isNullOrUndefined(this.authorizationManager.lastUser) ?
+            null : this.authorizationManager.lastUser.id;
         self.extendFilter(filter);
         self.promiseService.applicationPromises.leads.getAll = self.leadApiService
             .getAll(self.pageNumber - 1, self.pageSize, self.sorting, filter)
@@ -106,10 +108,12 @@ export class LeadsTableComponent implements OnInit {
         let self = this;
         let filter = Object.assign({}, self.filter)
         self.extendFilter(filter);
+        let userId = Variable.isNullOrUndefined(this.authorizationManager.lastUser) ?
+            null : this.authorizationManager.lastUser.id;
         self.promiseService.applicationPromises.leads.exportToExcel = self.leadApiService
             /// #40 - download All entities from Lead table (ofc its stupid move - uncomment after see this)
             ///.exportToExcel(self.pageNumber - 1, self.pageSize, self.sorting, filter)
-            .exportToExcel(0, 10000, self.sorting, null)
+            .exportToExcel(0, 10000, self.sorting, { 'userId': userId })
             .then(function (response: string): Promise<void> {
                 window.open(response, '_self', '');
                 return Promise.resolve();

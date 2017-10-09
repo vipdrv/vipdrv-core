@@ -5,7 +5,6 @@ import { GlobalState } from './global.state';
 import { BaImageLoaderService, BaThemePreloader, BaThemeSpinner } from './theme/services';
 import { BaThemeConfig } from './theme/theme.config';
 import { layoutPaths } from './theme/theme.constants';
-import {AuthorizationManager} from './utils/auth/authorization.manager';
 /*
  * App Component
  * Top Level Component
@@ -18,8 +17,7 @@ import {AuthorizationManager} from './utils/auth/authorization.manager';
       <div class="additional-bg"></div>
       <router-outlet></router-outlet>
     </main>
-  `,
-    providers: [AuthorizationManager]
+  `
 })
 export class App {
 

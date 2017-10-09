@@ -7,8 +7,7 @@ import { IAuthorizationManager, AuthorizationManager, Variable } from './../../.
 @Component({
   selector: 'ba-page-top',
   templateUrl: './baPageTop.html',
-  styleUrls: ['./baPageTop.scss'],
-  providers: [AuthorizationManager]
+  styleUrls: ['./baPageTop.scss']
 })
 export class BaPageTop {
 

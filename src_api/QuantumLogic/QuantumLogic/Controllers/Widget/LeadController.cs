@@ -74,7 +74,8 @@ namespace QuantumLogic.WebApi.Controllers.Widget
 
         private Expression<Func<Lead, bool>> BuildRetrieveManyFilter(LeadGetAllRequest request)
         {
-            return (entity) => 
+            return (entity) =>
+                request.UserId == null || request.UserId == entity.Site.UserId && 
                 //(String.IsNullOrEmpty(request.RecievedDateTime) || entity.RecievedUtc) &&
                 (String.IsNullOrEmpty(request.FirstName) || !String.IsNullOrEmpty(entity.FirstName) && entity.FirstName.Contains(request.FirstName)) &&
                 (String.IsNullOrEmpty(request.SecondName) || !String.IsNullOrEmpty(entity.SecondName) && entity.SecondName.Contains(request.SecondName)) &&

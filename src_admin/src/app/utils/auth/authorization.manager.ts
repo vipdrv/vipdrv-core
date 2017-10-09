@@ -37,16 +37,28 @@ export class AuthorizationManager implements IAuthorizationManager, CanActivate 
         this.logger = logger;
         this.router = router;
         this.http = http;
-        this.baseUrl = environment.apiUrl
+        this.baseUrl = environment.apiUrl;
+        this._lastUser = this.getStoredUser();
+    }
+    protected getStoredUser(): any {
+        let storedUser;
+        if (sessionStorage.getItem('currentUser')) {
+            storedUser = JSON.parse(sessionStorage.getItem('currentUser'));
+        } else if (localStorage.getItem('currentUser')) {
+            storedUser = JSON.parse(localStorage.getItem('currentUser'));
+        } else {
+            storedUser = null;
+        }
+        return storedUser;
     }
     /// authorization guard implementation
     canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
         if (this._lastUser) {
             return true;
         }
-        let storedUser = localStorage.getItem('currentUser');
+        let storedUser = this.getStoredUser();
         if (storedUser) {
-            this._lastUser = JSON.parse(storedUser);
+            this._lastUser = storedUser;
             return true;
         }
         this.router.navigate(['/login'], { queryParams: { returnUrl: state.url } });
@@ -95,12 +107,15 @@ export class AuthorizationManager implements IAuthorizationManager, CanActivate 
                         self._lastUser.avatarUrl = info.grantedPermissions;
                         if (isPersist) {
                             localStorage.setItem('currentUser', JSON.stringify(self._lastUser));
+                        } else {
+                            sessionStorage.setItem('currentUser', JSON.stringify(self._lastUser));
                         }
                     });
             });
     }
     signOut(): Promise<any> {
         localStorage.removeItem('currentUser');
+        sessionStorage.removeItem('currentUser');
         this._lastUser = null;
         return Promise.resolve();
     }
