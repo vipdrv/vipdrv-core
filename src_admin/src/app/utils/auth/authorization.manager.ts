@@ -85,32 +85,11 @@ export class AuthorizationManager implements IAuthorizationManager, CanActivate 
             })
             .then(function (response: TokenResponse) {
                 self._lastUser = response;
-                return new Promise((resolve: any, reject: any) => {
-                    self.user
-                        .then(function (user: any): any {
-                            return self.http
-                                .get(`${self.baseUrl}/user-identity-info`, self.extendOptionsWithHeaders(user, null))
-                                .subscribe(
-                                    (res: any) => {
-                                        resolve(self.handleResponse(res));
-                                    },
-                                    (error: any) => {
-                                        //TODO: resolve this
-                                        return reject(error);
-                                    });
-                        })
-                    })
-                    .then(function (info: UserIdentityInfo) {
-                        self._lastUser.id = info.userId;
-                        self._lastUser.avatarUrl = info.avatarUrl;
-                        self._lastUser.avatarUrl = info.grantedRoles;
-                        self._lastUser.avatarUrl = info.grantedPermissions;
-                        if (isPersist) {
-                            localStorage.setItem('currentUser', JSON.stringify(self._lastUser));
-                        } else {
-                            sessionStorage.setItem('currentUser', JSON.stringify(self._lastUser));
-                        }
-                    });
+                if (isPersist) {
+                    localStorage.setItem('currentUser', JSON.stringify(self._lastUser));
+                } else {
+                    sessionStorage.setItem('currentUser', JSON.stringify(self._lastUser));
+                }
             });
     }
     signOut(): Promise<any> {

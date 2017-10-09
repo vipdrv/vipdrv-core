@@ -74,7 +74,9 @@ namespace QuantumLogic.WebApi.Controllers.Authorization
                             audience: QLAuthenticationOptions.Audience,
                             issuer: QLAuthenticationOptions.Issuer,
                             expires: expireDateTimeUtc);
-                    response = new TokenResponse(token.Issuer, token.Audiences.ToList(), JwtTokenHandler.WriteToken(token), identityBox.Sid, identityBox.Username, expireDateTimeUtc);
+                    response = new TokenResponse(
+                        token.Issuer, token.Audiences.ToList(), JwtTokenHandler.WriteToken(token), identityBox.Sid, expireDateTimeUtc,
+                        await ParseIdentityInfoFromIdentityClaimsAsync(identityBox.ClaimsIdentity.Claims.ToDictionary((item) => item.Type, (item) => item.Value)));
                 }
                 else
                 {
@@ -93,12 +95,11 @@ namespace QuantumLogic.WebApi.Controllers.Authorization
         [HttpGet("user-identity-info")]
         public Task<UserIdentityInfo> GetUserInfoAsync()
         {
-            return ParseIdentityInfoFromContext(HttpContext);
+            return ParseIdentityInfoFromIdentityClaimsAsync(HttpContext.User.Claims.ToDictionary((item) => item.Type, (item) => item.Value));
         }
 
-        public static Task<UserIdentityInfo> ParseIdentityInfoFromContext(HttpContext context)
+        public static Task<UserIdentityInfo> ParseIdentityInfoFromIdentityClaimsAsync(IDictionary<string, string> identityClaims)
         {
-            IDictionary<string, string> identityClaims = context.User.Claims.ToDictionary((item) => item.Type, (item) => item.Value);
             string grantedRolesValue;
             if (!identityClaims.TryGetValue(GrantedRolesClaimKey, out grantedRolesValue))
             {
