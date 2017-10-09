@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using QuantumLogic.Core.Domain.Services.Main.Users;
 using QuantumLogic.Core.Domain.Services.Main.Users.Models;
@@ -57,7 +58,7 @@ namespace QuantumLogic.WebApi.Controllers.Authorization
         #endregion
 
         [HttpPost("token")]
-        public async Task<TokenResponse> GetJwtTokenAsync([FromBody]TokenRequest request)
+        public async Task<TokenResponse> CreateJwtTokenAsync([FromBody]TokenRequest request)
         {
             TokenResponse response;
             try
@@ -89,10 +90,15 @@ namespace QuantumLogic.WebApi.Controllers.Authorization
         }
 
         [Authorize]
-        [HttpGet("identity-info")]
+        [HttpGet("user-identity-info")]
         public Task<UserIdentityInfo> GetUserInfoAsync()
         {
-            IDictionary<string, string> identityClaims = HttpContext.User.Claims.ToDictionary((item) => item.Type, (item) => item.Value);
+            return ParseIdentityInfoFromContext(HttpContext);
+        }
+
+        public static Task<UserIdentityInfo> ParseIdentityInfoFromContext(HttpContext context)
+        {
+            IDictionary<string, string> identityClaims = context.User.Claims.ToDictionary((item) => item.Type, (item) => item.Value);
             string grantedRolesValue;
             if (!identityClaims.TryGetValue(GrantedRolesClaimKey, out grantedRolesValue))
             {
@@ -109,7 +115,7 @@ namespace QuantumLogic.WebApi.Controllers.Authorization
                 avatarUrl = String.Empty;
             }
             UserIdentityInfo result = new UserIdentityInfo(
-                Int64.Parse(identityClaims[UserIdClaimKey]), 
+                Int64.Parse(identityClaims[UserIdClaimKey]),
                 identityClaims[UsernameClaimKey],
                 String.IsNullOrEmpty(grantedRolesValue) ? new string[0] : grantedRolesValue.Split(','),
                 String.IsNullOrEmpty(grantedPermissionsValue) ? new string[0] : grantedPermissionsValue.Split(','),

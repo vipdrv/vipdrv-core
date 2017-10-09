@@ -5,13 +5,18 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using QuantumLogic.Core.Authorization;
 using QuantumLogic.Core.Utils.RegisterConfigurationsServices;
+using QuantumLogic.WebApi.Authorization;
 using QuantumLogic.WebApi.Authorization.Options;
 using QuantumLogic.WebApi.Configurations;
 using QuantumLogic.WebApi.Configurations.Logging;
+using QuantumLogic.WebApi.Controllers.Authorization;
+using QuantumLogic.WebApi.DataModels.Responses.Authorization;
 using Serilog;
 using Serilog.Events;
 using System;
+using System.Collections.Generic;
 using System.IO;
 
 namespace QuantumLogic.WebApi

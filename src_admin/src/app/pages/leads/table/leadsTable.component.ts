@@ -107,7 +107,9 @@ export class LeadsTableComponent implements OnInit {
         let filter = Object.assign({}, self.filter)
         self.extendFilter(filter);
         self.promiseService.applicationPromises.leads.exportToExcel = self.leadApiService
-            .exportToExcel(self.pageNumber - 1, self.pageSize, self.sorting, filter)
+            /// #40 - download All entities from Lead table (ofc its stupid move - uncomment after see this)
+            ///.exportToExcel(self.pageNumber - 1, self.pageSize, self.sorting, filter)
+            .exportToExcel(0, 10000, self.sorting, null)
             .then(function (response: string): Promise<void> {
                 window.open(response, '_self', '');
                 return Promise.resolve();
@@ -193,6 +195,45 @@ export class LeadsTableComponent implements OnInit {
         }
         if (Variable.isNotNullOrUndefined(this.tableFilters.beverage) && this.tableFilters.beverage !== '') {
             filter.beverage = this.tableFilters.beverage;
+        }
+    }
+    /// onblur filters
+    protected oldTableFilters: any = {
+        recievedDateTime: null,
+        firstName: null,
+        secondName: null,
+        site: null,
+        email: null,
+        phone: null,
+        expert: null,
+        route: null,
+        beverage: null
+    };
+    applyFilters(): Promise<void> {
+        let filtersWereNotChanged: boolean =
+            this.tableFilters.recievedDateTime === this.oldTableFilters.recievedDateTime &&
+            this.tableFilters.firstName === this.oldTableFilters.firstName &&
+            this.tableFilters.secondName === this.oldTableFilters.secondName &&
+            this.tableFilters.site === this.oldTableFilters.site &&
+            this.tableFilters.email === this.oldTableFilters.email &&
+            this.tableFilters.phone === this.oldTableFilters.phone &&
+            this.tableFilters.expert === this.oldTableFilters.expert &&
+            this.tableFilters.route === this.oldTableFilters.route &&
+            this.tableFilters.beverage === this.oldTableFilters.beverage;
+        if (!filtersWereNotChanged) {
+            this.oldTableFilters = {};
+            this.oldTableFilters.recievedDateTime = this.tableFilters.recievedDateTime;
+            this.oldTableFilters.firstName = this.tableFilters.firstName;
+            this.oldTableFilters.secondName = this.tableFilters.secondName;
+            this.oldTableFilters.site = this.tableFilters.site;
+            this.oldTableFilters.email = this.tableFilters.email;
+            this.oldTableFilters.phone = this.tableFilters.phone;
+            this.oldTableFilters.expert = this.tableFilters.expert;
+            this.oldTableFilters.route = this.tableFilters.route;
+            this.oldTableFilters.beverage = this.tableFilters.beverage;
+            return this.getAllEntities();
+        } else {
+            return Promise.resolve();
         }
     }
 }

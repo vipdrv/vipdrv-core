@@ -1,12 +1,13 @@
-﻿export interface IAuthorizationManager {
+﻿import { CanActivate } from '@angular/router';
+export interface IAuthorizationManager extends CanActivate {
     /// url to redirect after authorization
     postAuthRedirectUrl: string;
 
     // #warning: use user here, not any
-    user: Promise<any>;
     lastUser: any;
+    user: Promise<any>;
 
-    signIn(args?: any): Promise<any>;
-    signOut(args?: any): Promise<any>;
+    signInViaUsername(login: string, password: string, isPersist: boolean): Promise<any>;
+    signOut(): Promise<any>;
     handleAuthorizationCallback(): Promise<void>;
 }

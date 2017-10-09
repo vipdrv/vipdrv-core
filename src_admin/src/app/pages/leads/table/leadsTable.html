@@ -68,50 +68,50 @@
             <td>
                 <input type="text"
                        class="form-control"
-                       (ngModelChange)="tableFilterValueChanged($event, 'firstName')"
-                       [ngModel]="tableFilters.firstName"/>
+                       [(ngModel)]="tableFilters.firstName"
+                       (blur)="applyFilters()"/>
             </td>
             <td>
                 <input type="text"
                        class="form-control"
-                       (ngModelChange)="tableFilterValueChanged($event, 'secondName')"
-                       [ngModel]="tableFilters.secondName"/>
+                       [(ngModel)]="tableFilters.secondName"
+                       (blur)="applyFilters()"/>
             </td>
             <td>
                 <input type="text"
                        class="form-control"
-                       (ngModelChange)="tableFilterValueChanged($event, 'site')"
-                       [ngModel]="tableFilters.site"/>
+                       [(ngModel)]="tableFilters.site"
+                       (blur)="applyFilters()">
             </td>
             <td>
                 <input type="text"
                        class="form-control"
-                       (ngModelChange)="tableFilterValueChanged($event, 'email')"
-                       [ngModel]="tableFilters.email"/>
+                       [(ngModel)]="tableFilters.email"
+                       (blur)="applyFilters()"/>
             </td>
             <td>
                 <input type="text"
                        class="form-control"
-                       (ngModelChange)="tableFilterValueChanged($event, 'phone')"
-                       [ngModel]="tableFilters.phone"/>
+                       [(ngModel)]="tableFilters.phone"
+                       (blur)="applyFilters()"/>
             </td>
             <td>
                 <input type="text"
                        class="form-control"
-                       (ngModelChange)="tableFilterValueChanged($event, 'expert')"
-                       [ngModel]="tableFilters.expert"/>
+                       [(ngModel)]="tableFilters.expert"
+                       (blur)="applyFilters()"/>
             </td>
             <td>
                 <input type="text"
                        class="form-control"
-                       (ngModelChange)="tableFilterValueChanged($event, 'route')"
-                       [ngModel]="tableFilters.route"/>
+                       [(ngModel)]="tableFilters.route"
+                       (blur)="applyFilters()"/>
             </td>
             <td>
                 <input type="text"
                        class="form-control"
-                       (ngModelChange)="tableFilterValueChanged($event, 'beverage')"
-                       [ngModel]="tableFilters.beverage"/>
+                       [(ngModel)]="tableFilters.beverage"
+                       (blur)="applyFilters()"/>
             </td>
         </tr>
         <tbody>

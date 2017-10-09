@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.DependencyInjection;
 using QuantumLogic.Core;
 using QuantumLogic.Core.Authorization;
 using QuantumLogic.Core.Domain.Entities.MainModule;
@@ -41,7 +42,7 @@ namespace QuantumLogic.WebApi
             services.AddScoped<IQLSession, QLSession>();
             services.AddScoped<IQLPermissionChecker, NullQLPermissionChecker>();
             services.AddTransient<JwtSecurityTokenHandler, JwtSecurityTokenHandler>();
-
+           
             #region Policy registration
 
             //services.Add(ServiceDescriptor.Scoped(typeof(IEntityPolicy<,>), typeof(NullEntityPolicy<,>)));
