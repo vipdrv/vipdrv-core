@@ -33,18 +33,20 @@ export class HttpService implements IHttpService {
                             resolve(self.handleResponse(res));
                         },
                         (error: any) => {
-                            if (self.isUnauthorizedError(error)) {
-                                return self.authorizationManager.user
-                                    .then(function (r: any): Promise<any> {
-                                        if (!!r && !r.expired && !supressRecursion) {
-                                            return self.get(url, options, true);
-                                        } else {
-                                            return self.authorizationManager.signIn();
-                                        }
-                                    });
-                            } else {
-                                return reject(error);
-                            }
+                            //TODO: resolve this
+                            return reject(error);
+                            // if (self.isUnauthorizedError(error)) {
+                            //     return self.authorizationManager.user
+                            //         .then(function (r: any): Promise<any> {
+                            //             if (!!r && !r.expired && !supressRecursion) {
+                            //                 return self.get(url, options, true);
+                            //             } else {
+                            //                 return self.authorizationManager.signIn();
+                            //             }
+                            //         });
+                            // } else {
+                            //     return reject(error);
+                            // }
                         });
                 })
                 .catch((reason: any) => {
@@ -64,18 +66,21 @@ export class HttpService implements IHttpService {
                             resolve(self.handleResponse(res));
                         },
                         (error: any) => {
-                            if (self.isUnauthorizedError(error)) {
-                                return self.authorizationManager.user
-                                    .then(function (r: any): Promise<any> {
-                                        if (!!r && !r.expired && !supressRecursion) {
-                                            return self.post(url, body, options, true);
-                                        } else {
-                                            return self.authorizationManager.signIn();
-                                        }
-                                    });
-                            } else {
-                                return reject(error);
-                            }
+//TODO: resolve this
+                            return reject(error);
+
+                            // if (self.isUnauthorizedError(error)) {
+                            //     return self.authorizationManager.user
+                            //         .then(function (r: any): Promise<any> {
+                            //             if (!!r && !r.expired && !supressRecursion) {
+                            //                 return self.post(url, body, options, true);
+                            //             } else {
+                            //                 return self.authorizationManager.signIn();
+                            //             }
+                            //         });
+                            // } else {
+                            //     return reject(error);
+                            // }
                         });
                 })
                 .catch((reason: any) => {
@@ -95,18 +100,20 @@ export class HttpService implements IHttpService {
                                 resolve(self.handleResponse(res));
                             },
                             (error: any) => {
-                                if (self.isUnauthorizedError(error)) {
-                                    return self.authorizationManager.user
-                                        .then(function (r: any): Promise<any> {
-                                            if (!!r && !r.expired && !supressRecursion) {
-                                                return self.put(url, body, options, true);
-                                            } else {
-                                                return self.authorizationManager.signIn();
-                                            }
-                                        });
-                                } else {
-                                    return reject(error);
-                                }
+                                //TODO: resolve this
+                                return reject(error);
+                                // if (self.isUnauthorizedError(error)) {
+                                //     return self.authorizationManager.user
+                                //         .then(function (r: any): Promise<any> {
+                                //             if (!!r && !r.expired && !supressRecursion) {
+                                //                 return self.put(url, body, options, true);
+                                //             } else {
+                                //                 return self.authorizationManager.signIn();
+                                //             }
+                                //         });
+                                // } else {
+                                //     return reject(error);
+                                // }
                             });
                 })
                 .catch((reason: any) => {
@@ -126,18 +133,20 @@ export class HttpService implements IHttpService {
                                 resolve(self.handleResponse(res));
                             },
                             (error: any) => {
-                                if (self.isUnauthorizedError(error)) {
-                                    return self.authorizationManager.user
-                                        .then(function (r: any): Promise<any> {
-                                            if (!!r && !r.expired && !supressRecursion) {
-                                                return self.delete(url, options, true);
-                                            } else {
-                                                return self.authorizationManager.signIn();
-                                            }
-                                        });
-                                } else {
-                                    return reject(error);
-                                }
+                                //TODO: resolve this
+                                return reject(error);
+                                // if (self.isUnauthorizedError(error)) {
+                                //     return self.authorizationManager.user
+                                //         .then(function (r: any): Promise<any> {
+                                //             if (!!r && !r.expired && !supressRecursion) {
+                                //                 return self.delete(url, options, true);
+                                //             } else {
+                                //                 return self.authorizationManager.signIn();
+                                //             }
+                                //         });
+                                // } else {
+                                //     return reject(error);
+                                // }
                             });
                 })
                 .catch((reason: any) => {
@@ -157,18 +166,20 @@ export class HttpService implements IHttpService {
                                 resolve(self.handleResponse(res));
                             },
                             (error: any) => {
-                                if (self.isUnauthorizedError(error)) {
-                                    return self.authorizationManager.user
-                                        .then(function (r: any): Promise<any> {
-                                            if (!!r && !r.expired && !supressRecursion) {
-                                                return self.patch(url, body, options, true);
-                                            } else {
-                                                return self.authorizationManager.signIn();
-                                            }
-                                        });
-                                } else {
-                                    return reject(error);
-                                }
+                                //TODO: resolve this
+                                return reject(error);
+                                // if (self.isUnauthorizedError(error)) {
+                                //     return self.authorizationManager.user
+                                //         .then(function (r: any): Promise<any> {
+                                //             if (!!r && !r.expired && !supressRecursion) {
+                                //                 return self.patch(url, body, options, true);
+                                //             } else {
+                                //                 return self.authorizationManager.signIn();
+                                //             }
+                                //         });
+                                // } else {
+                                //     return reject(error);
+                                // }
                             });
                 })
                 .catch((reason: any) => {
@@ -194,7 +205,7 @@ export class HttpService implements IHttpService {
     }
     private createAuthorizationHeader(headers: Headers, user: any): void {
         if (user) {
-            headers.append("Authorization", "Bearer " + user.access_token);
+            headers.append("Authorization", "Bearer " + user.token);
         }
     }
     private createCorsHeader(headers: Headers): void {

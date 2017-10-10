@@ -2,6 +2,8 @@ import {Component} from '@angular/core';
 
 import {GlobalState} from '../../../global.state';
 
+import { IAuthorizationManager, AuthorizationManager, Variable } from './../../../utils/index';
+
 @Component({
   selector: 'ba-page-top',
   templateUrl: './baPageTop.html',
@@ -12,7 +14,10 @@ export class BaPageTop {
   public isScrolled:boolean = false;
   public isMenuCollapsed:boolean = false;
 
-  constructor(private _state:GlobalState) {
+  protected authorizationManager: IAuthorizationManager;
+
+  constructor(private _state: GlobalState, authorizationManager: AuthorizationManager ) {
+    this.authorizationManager = authorizationManager;
     this._state.subscribe('menu.isCollapsed', (isCollapsed) => {
       this.isMenuCollapsed = isCollapsed;
     });
@@ -27,4 +32,8 @@ export class BaPageTop {
   public scrolledChanged(isScrolled) {
     this.isScrolled = isScrolled;
   }
+
+  isUserInfoDefined(): boolean {
+      return Variable.isNotNullOrUndefined(this.authorizationManager.lastUser);
+}
 }

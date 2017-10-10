@@ -1,8 +1,16 @@
-<div class="page-top clearfix" baScrollPosition maxHeight="50" (scrollChange)="scrolledChanged($event)"
+<div class="page-top clearfix"
+     baScrollPosition
+     maxHeight="50"
+     (scrollChange)="scrolledChanged($event)"
      [ngClass]="{scrolled: isScrolled}">
   <!--<a routerLink="/pages/home" class="al-logo clearfix"><span translate>general.applicationName</span></a>-->
-  <a routerLink="/pages/home" class="al-logo clearfix"><img src="../../../../assets/img/main-logo.png"></a>
-  <a href (click)="toggleMenu()" class="collapse-menu-link ion-navicon"></a>
+  <a routerLink="/pages/home"
+     class="al-logo clearfix">
+    <img src="../../../../assets/img/main-logo.png">
+  </a>
+  <a href (click)="toggleMenu()"
+     class="collapse-menu-link ion-navicon">
+  </a>
   <!--
   <div class="search">
     <i class="ion-ios-search-strong" ng-click="startSearch()"></i>
@@ -24,4 +32,10 @@
       <ba-msg-center></ba-msg-center>
     </div>
     -->
+    <a routerLink="/logout"
+       style="margin-top: 20px; color: #ffffff; "
+       class="pull-right"
+       *ngIf="isUserInfoDefined()">
+      <i class="fa fa-sign-out"></i> Logout
+    </a>
 </div>

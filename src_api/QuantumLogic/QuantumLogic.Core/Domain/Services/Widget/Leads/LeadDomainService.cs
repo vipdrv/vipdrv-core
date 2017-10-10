@@ -114,7 +114,7 @@ namespace QuantumLogic.Core.Domain.Services.Widget.Leads
 
         #endregion
 
-        protected override Task CascadeDeleteAction(Lead entity)
+        protected override Task CascadeDeleteActionAsync(Lead entity)
         {
             return Task.CompletedTask;
         }

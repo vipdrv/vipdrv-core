@@ -8,7 +8,7 @@ export abstract class BaseApiService implements IApiService {
     protected baseUrl: string;
     protected controllerName: string;
     get controllerUrl(): string {
-        return this.baseUrl + '/' + this.controllerName;
+        return `${this.baseUrl}/${this.controllerName}`;
     }
     /// injected dependencies
     protected httpService: IHttpService;
@@ -20,7 +20,7 @@ export abstract class BaseApiService implements IApiService {
         controllerName: string) {
         this.httpService = httpService;
         this.logger = logger;
-        this.baseUrl = environment.apiUrl
+        this.baseUrl = `${environment.apiUrl}/api`;
         this.controllerName = controllerName;
     }
     /// url methods

@@ -7,6 +7,8 @@ namespace QuantumLogic.WebApi.Authorization
     {
         public long? UserId { get; private set; }
 
+        public string Username { get; private set; }
+
         public ISet<string> GrantedPermissions { get; private set; }
 
         #region Ctors
@@ -20,10 +22,11 @@ namespace QuantumLogic.WebApi.Authorization
             GrantedPermissions = grantedPermissions;
         }
 
-        public QLSession(long userId, ISet<string> grantedPermissions)
+        public QLSession(long userId, string username, ISet<string> grantedPermissions)
             : this(grantedPermissions)
         {
             UserId = userId;
+            Username = username;
         }
 
         #endregion

@@ -68,6 +68,9 @@ export class SitesTableComponent implements OnInit {
     }
     protected getAllEntities(): Promise<void> {
         let self = this;
+        self.filter = Variable.isNullOrUndefined(self.filter) ? {} : self.filter;
+        self.filter.userId = Variable.isNullOrUndefined(this.authorizationManager.lastUser) ?
+            null : this.authorizationManager.lastUser.id;
         self.promiseService.applicationPromises.sites.getAll.promise = self.siteApiService
             .getAll(self.pageNumber - 1, self.pageSize, self.sorting, self.filter)
             .then(function (response: GetAllResponse<SiteEntity>): Promise<void> {

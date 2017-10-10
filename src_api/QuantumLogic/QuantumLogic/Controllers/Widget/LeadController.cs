@@ -74,16 +74,17 @@ namespace QuantumLogic.WebApi.Controllers.Widget
 
         private Expression<Func<Lead, bool>> BuildRetrieveManyFilter(LeadGetAllRequest request)
         {
-            return (entity) => 
+            return (entity) =>
+                request.UserId == null || request.UserId == entity.Site.UserId && 
                 //(String.IsNullOrEmpty(request.RecievedDateTime) || entity.RecievedUtc) &&
-                (String.IsNullOrEmpty(request.FirstName) || entity.FirstName.Contains(request.FirstName)) &&
-                (String.IsNullOrEmpty(request.SecondName) || entity.SecondName.Contains(request.SecondName)) &&
-                (String.IsNullOrEmpty(request.Site) || entity.Site.Name.Contains(request.Site)) &&
-                (String.IsNullOrEmpty(request.Email) || entity.UserEmail.Contains(request.Email)) &&
-                (String.IsNullOrEmpty(request.Phone) || entity.UserPhone.Contains(request.Phone)) &&
-                (String.IsNullOrEmpty(request.Expert) || entity.Expert.Name.Contains(request.Expert)) &&
-                (String.IsNullOrEmpty(request.Route) || entity.Route.Name.Contains(request.Route)) &&
-                (String.IsNullOrEmpty(request.Beverage) || entity.Beverage.Name.Contains(request.Beverage));
+                (String.IsNullOrEmpty(request.FirstName) || !String.IsNullOrEmpty(entity.FirstName) && entity.FirstName.Contains(request.FirstName)) &&
+                (String.IsNullOrEmpty(request.SecondName) || !String.IsNullOrEmpty(entity.SecondName) && entity.SecondName.Contains(request.SecondName)) &&
+                (String.IsNullOrEmpty(request.Site) || !String.IsNullOrEmpty(entity.Site.Name) && entity.Site.Name.Contains(request.Site)) &&
+                (String.IsNullOrEmpty(request.Email) || !String.IsNullOrEmpty(entity.UserEmail) && entity.UserEmail.Contains(request.Email)) &&
+                (String.IsNullOrEmpty(request.Phone) || !String.IsNullOrEmpty(entity.UserPhone) && entity.UserPhone.Contains(request.Phone)) &&
+                (String.IsNullOrEmpty(request.Expert) || !String.IsNullOrEmpty(entity.Expert.Name) && entity.Expert.Name.Contains(request.Expert)) &&
+                (String.IsNullOrEmpty(request.Route) || !String.IsNullOrEmpty(entity.Route.Name) && entity.Route.Name.Contains(request.Route)) &&
+                (String.IsNullOrEmpty(request.Beverage) || !String.IsNullOrEmpty(entity.Beverage.Name) && entity.Beverage.Name.Contains(request.Beverage));
         }
     }
 }

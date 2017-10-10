@@ -7,13 +7,24 @@ namespace QuantumLogic.Core.Domain.Entities.MainModule
     {
         #region Fields
 
+        public string Username { get; set; }
         public string Email { get; set; }
-        public string Password { get; set; }
+        public string PhoneNumber { get; set; }
+        public string PasswordHash { get; set; }
+
+        public string FirstName { get; set; }
+        public string SecondName { get; set; }
+        public string AvatarUrl { get; set; }
+
         public int MaxSitesCount { get; set; }
 
         #endregion
 
         #region Relations
+
+        public virtual ICollection<ExternalLogin> ExternalLogins { get; set; }
+        public virtual ICollection<UserRole> UserRoles { get; set; }
+        public virtual ICollection<UserClaim> UserClaims { get; set; }
 
         public virtual ICollection<Site> Sites { get; set; }
 
@@ -25,15 +36,6 @@ namespace QuantumLogic.Core.Domain.Entities.MainModule
             : base()
         {
             Sites = new HashSet<Site>();
-        }
-
-        public User(int id, string email, string password, int maxSitesCount)
-            : this()
-        {
-            Id = id;
-            Email = email;
-            Password = password;
-            MaxSitesCount = maxSitesCount;
         }
 
         #endregion
@@ -60,7 +62,6 @@ namespace QuantumLogic.Core.Domain.Entities.MainModule
         public void UpdateFrom(User actualEntity)
         {
             Email = actualEntity.Email;
-            Password = actualEntity.Password;
             MaxSitesCount = actualEntity.MaxSitesCount;
         }
 

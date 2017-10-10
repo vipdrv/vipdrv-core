@@ -5,12 +5,18 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using QuantumLogic.Core.Authorization;
 using QuantumLogic.Core.Utils.RegisterConfigurationsServices;
+using QuantumLogic.WebApi.Authorization;
+using QuantumLogic.WebApi.Authorization.Options;
 using QuantumLogic.WebApi.Configurations;
 using QuantumLogic.WebApi.Configurations.Logging;
+using QuantumLogic.WebApi.Controllers.Authorization;
+using QuantumLogic.WebApi.DataModels.Responses.Authorization;
 using Serilog;
 using Serilog.Events;
 using System;
+using System.Collections.Generic;
 using System.IO;
 
 namespace QuantumLogic.WebApi
@@ -54,21 +60,29 @@ namespace QuantumLogic.WebApi
                         .AllowAnyHeader()
                         .AllowCredentials());
             });
-            services.AddMvc();
+            services//.AddMvc()
+                .AddMvcCore()
+                .AddJsonFormatters()
+                .AddAuthorization();
         }
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory, IOptions<LoggingConfiguration> loggingConfiguration)
         {
             mainModule.Run(app.ApplicationServices);
             RegisterLogger(env, loggerFactory, loggingConfiguration.Value);
-            app.Use(async (context, next) =>
-            {
-                // here all requests can be monitored 
-                // context.Request 
-                await next.Invoke();
-            });
+            //app.Use(async (context, next) =>
+            //    {
+            //        // here all requests can be monitored 
+            //        // context.Request 
+            //        await next.Invoke();
+            //    });
             app.UseCors("CorsPolicy");
             //app.UseIISPlatformHandler(options => options.AuthenticationDescriptions.Clear()); 
+            app.UseJwtBearerAuthentication(
+                new JwtBearerOptions
+                {
+                    TokenValidationParameters = QLAuthenticationOptions.GetTokenValidationParameters()
+                });
             app.UseMvc();
         }
 

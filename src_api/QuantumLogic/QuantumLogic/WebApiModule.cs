@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.DependencyInjection;
 using QuantumLogic.Core;
 using QuantumLogic.Core.Authorization;
 using QuantumLogic.Core.Domain.Entities.MainModule;
@@ -19,6 +20,7 @@ using QuantumLogic.WebApi.Policy.Widget;
 using QuantumLogic.WebApi.Validation.Main;
 using QuantumLogic.WebApi.Validation.Widget;
 using System;
+using System.IdentityModel.Tokens.Jwt;
 
 namespace QuantumLogic.WebApi
 {
@@ -39,7 +41,8 @@ namespace QuantumLogic.WebApi
         {
             services.AddScoped<IQLSession, QLSession>();
             services.AddScoped<IQLPermissionChecker, NullQLPermissionChecker>();
-
+            services.AddTransient<JwtSecurityTokenHandler, JwtSecurityTokenHandler>();
+           
             #region Policy registration
 
             //services.Add(ServiceDescriptor.Scoped(typeof(IEntityPolicy<,>), typeof(NullEntityPolicy<,>)));

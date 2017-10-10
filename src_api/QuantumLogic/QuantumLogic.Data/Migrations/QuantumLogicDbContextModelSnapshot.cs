@@ -16,20 +16,113 @@ namespace QuantumLogic.Data.Migrations
                 .HasAnnotation("ProductVersion", "1.1.2")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+            modelBuilder.Entity("QuantumLogic.Core.Domain.Entities.MainModule.Claim", b =>
+                {
+                    b.Property<string>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Name");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Claim");
+                });
+
+            modelBuilder.Entity("QuantumLogic.Core.Domain.Entities.MainModule.ExternalLogin", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("LoginProvider");
+
+                    b.Property<string>("ProviderDisplayName");
+
+                    b.Property<string>("ProviderKey");
+
+                    b.Property<int>("UserId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("ExternalLogin");
+                });
+
+            modelBuilder.Entity("QuantumLogic.Core.Domain.Entities.MainModule.Role", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Name");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Role");
+                });
+
+            modelBuilder.Entity("QuantumLogic.Core.Domain.Entities.MainModule.RoleClaim", b =>
+                {
+                    b.Property<int>("RoleId");
+
+                    b.Property<string>("ClaimId");
+
+                    b.HasKey("RoleId", "ClaimId");
+
+                    b.HasIndex("ClaimId");
+
+                    b.ToTable("RoleClaim");
+                });
+
             modelBuilder.Entity("QuantumLogic.Core.Domain.Entities.MainModule.User", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
+                    b.Property<string>("AvatarUrl");
+
                     b.Property<string>("Email");
+
+                    b.Property<string>("FirstName");
 
                     b.Property<int>("MaxSitesCount");
 
-                    b.Property<string>("Password");
+                    b.Property<string>("PasswordHash");
+
+                    b.Property<string>("PhoneNumber");
+
+                    b.Property<string>("SecondName");
+
+                    b.Property<string>("Username");
 
                     b.HasKey("Id");
 
                     b.ToTable("User");
+                });
+
+            modelBuilder.Entity("QuantumLogic.Core.Domain.Entities.MainModule.UserClaim", b =>
+                {
+                    b.Property<int>("UserId");
+
+                    b.Property<string>("ClaimId");
+
+                    b.HasKey("UserId", "ClaimId");
+
+                    b.HasIndex("ClaimId");
+
+                    b.ToTable("UserClaim");
+                });
+
+            modelBuilder.Entity("QuantumLogic.Core.Domain.Entities.MainModule.UserRole", b =>
+                {
+                    b.Property<int>("UserId");
+
+                    b.Property<int>("RoleId");
+
+                    b.HasKey("UserId", "RoleId");
+
+                    b.HasIndex("RoleId");
+
+                    b.ToTable("UserRole");
                 });
 
             modelBuilder.Entity("QuantumLogic.Core.Domain.Entities.WidgetModule.Beverage", b =>
@@ -185,6 +278,53 @@ namespace QuantumLogic.Data.Migrations
                         .IsUnique();
 
                     b.ToTable("WidgetTheme");
+                });
+
+            modelBuilder.Entity("QuantumLogic.Core.Domain.Entities.MainModule.ExternalLogin", b =>
+                {
+                    b.HasOne("QuantumLogic.Core.Domain.Entities.MainModule.User", "User")
+                        .WithMany("ExternalLogins")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("QuantumLogic.Core.Domain.Entities.MainModule.RoleClaim", b =>
+                {
+                    b.HasOne("QuantumLogic.Core.Domain.Entities.MainModule.Claim", "Claim")
+                        .WithMany()
+                        .HasForeignKey("ClaimId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("QuantumLogic.Core.Domain.Entities.MainModule.Role", "Role")
+                        .WithMany("RoleClaims")
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("QuantumLogic.Core.Domain.Entities.MainModule.UserClaim", b =>
+                {
+                    b.HasOne("QuantumLogic.Core.Domain.Entities.MainModule.Claim", "Claim")
+                        .WithMany()
+                        .HasForeignKey("ClaimId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("QuantumLogic.Core.Domain.Entities.MainModule.User", "User")
+                        .WithMany("UserClaims")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("QuantumLogic.Core.Domain.Entities.MainModule.UserRole", b =>
+                {
+                    b.HasOne("QuantumLogic.Core.Domain.Entities.MainModule.Role", "Role")
+                        .WithMany("UserRoles")
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("QuantumLogic.Core.Domain.Entities.MainModule.User", "User")
+                        .WithMany("UserRoles")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("QuantumLogic.Core.Domain.Entities.WidgetModule.Beverage", b =>
