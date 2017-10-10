@@ -4,14 +4,14 @@
         <p>He or she will be there to assist you on the day of your test drive.</p>
     </div>
 </div>
-<div class="row pr-3">
+<div class="row pr-3" style="max-height: 350px; overflow: hidden;">
     <td-card class="col-md-6 col-sm-12 p-0 pt-3 pl-3"
              ng-repeat="expert in $ctrl.stepData"
              card-image="expert.photoUrl"
              card-title="expert.name"
              card-desc="expert.description"
-             is-active-card="expert.name == $ctrl.userData.expert.title"
-             ng-click="$ctrl.expertChanged(expert.name)">
+             is-active-card="expert.name == $ctrl.userData.expert.name"
+             ng-click="$ctrl.expertChanged(expert.id, expert.name)">
     </td-card>
 </div>
 <p></p>

@@ -4,18 +4,17 @@
 
 .test-drive-widget__root {
   min-height: 586px;
+  overflow: hidden;
 }
 
 @media (max-width: 1022px) {
   .test-drive-widget__root {
     height: calc(100vh);
-    // height: calc(100vh - 50px);
   }
 }
 
 @media (max-height: 648px) {
   .test-drive-widget__root {
     height: calc(100vh);
-    // height: calc(100vh - 50px);
   }
 }

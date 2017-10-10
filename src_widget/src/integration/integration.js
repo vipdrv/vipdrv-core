@@ -6,12 +6,9 @@ var TestDrive = TestDrive || (function () {
 
     var _SiteId = '%siteId%';
     var _WidgetUrl = '%widgetUrl%';
-    // var _WidgetUrl = 'http://localhost:8081';
 
     var _appendTestDriveFrame = function (vin, img, title, engine, year, colour, transmission, fuel) {
         var url = `${_WidgetUrl}?site_id=${_SiteId}&vin=${vin}&img=${img}&title=${title}&engine=${engine}&year=${year}&colour=${colour}&transmission=${transmission}&fuel=${fuel}`;
-
-        console.log(url);
 
         var html =
             `<div class="test-drive__content">
@@ -23,6 +20,12 @@ var TestDrive = TestDrive || (function () {
              </div>`;
 
         document.getElementsByClassName('test-drive')[0].innerHTML = html;
+    };
+
+    var _appendWidgetFrame = function() {
+        var elemDiv = document.createElement('div');
+        elemDiv.className = "test-drive";
+        document.body.appendChild(elemDiv);
     };
 
     var _showTestDrive = function () {
@@ -82,6 +85,7 @@ var TestDrive = TestDrive || (function () {
     return {
         init: function (Args) {
             _SiteId = Args.SiteId || _SiteId;
+            _appendWidgetFrame();
             _addCss();
             _escapeListener();
             _outOfModalClickListener();

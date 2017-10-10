@@ -8,15 +8,14 @@
 <body>
 
 <p>This is just a demo page to test widget integration1</p>
-<button onclick="TestDrive.openTestDrive()">Open Drive</button>
 
-<!-- Widget(start) -->
-<div class="test-drive"></div>
-<script src="%widgetUrl%/integration/integration.js" type="text/javascript"></script>
-<script>
-    TestDrive.init({SiteId: 'nissan-of-bowie'});
-</script>
-<!-- Widget(end)   -->
+<script src="%widgetUrl%/integration/integration.js"></script>
+<script>TestDrive.init({SiteId: 13})</script>
+
+<!--vin, img, title, engine, year, colour, transmission, fuel-->
+<button onclick="TestDrive.openTestDrive('VIN', 'http://vehiclephotos.vauto.com/d6/a9/c6/60-a1dd-49d1-ab3c-7f0ae46850be/image-1.jpg', 'Nissan GT-RR', '3.8 litre twin-turbo V6', 'COLOR-1', 'MANUAL 01', 'PERTOL-2')">
+    Open Drive
+</button>
 
 </body>
 </html>

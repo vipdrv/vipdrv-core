@@ -1,19 +1,20 @@
 (function () {
     angular.module('myApp')
         .component('tdRoad', {
-            controller: function ($scope, api) {
+            controller: function ($scope) {
                 var self = this;
 
                 self.isStepValid = null;
 
                 self.$onInit = function () {
-                    if (self.userData.road.title === null) {
-                        this.isSatisfy = false;
+                    if (self.userData.road.name === null) {
+                        this.isStepValid = false;
                     }
                 };
 
-                $scope.itemChanged = function (itemTitle) {
-                    self.userData.road.title = itemTitle;
+                $scope.itemChanged = function (id, name) {
+                    self.userData.road.id = id;
+                    self.userData.road.name = name;
                     self.validateStep();
                 };
 

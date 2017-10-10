@@ -1,31 +1,34 @@
-<div class="row">
+<div class="row td-sidebar">
+    <img src="{{$ctrl.userData.car.img}}" class="td-sidebar__car-image pt-2 pl-2 pr-2 pb-1">
+
     <div class="col-12">
-        <img src="/img/dummy-car-detail.jpg" class="img-fluid" alt="Responsive image">
+        <h4 class="text-primary" ng-show="!$ctrl.userData.car.title">Nissan GT-R</h4>
+        <h4 class="text-primary" ng-show="$ctrl.userData.car.title">{{$ctrl.userData.car.title}}</h4>
     </div>
-    <div class="col-12">
-        <h3 class="text-primary">Nissan GT-R</h3>
-    </div>
+
     <div class="col-12">
         <p class="text-secondary m-0">Engine</p>
-        <p>3.8 litre twin-turbo V6</p>
+        <!--<p>3.8 litre twin-turbo V6</p>-->
+        <p>{{$ctrl.userData.car.engine}}</p>
     </div>
     <div class="col-6">
         <p class="text-secondary m-0">Year</p>
-        <p>2016</p>
+        <!--<p>2016</p>-->
+        <p>{{$ctrl.userData.car.year}}</p>
     </div>
     <div class="col-6">
         <p class="text-secondary m-0">Colour</p>
-        <p>Orange</p>
+        <!--<p>Orange</p>-->
+        <p>{{$ctrl.userData.car.colour}}</p>
     </div>
     <div class="col-6">
         <p class="text-secondary m-0">Transmission</p>
-        <p>Manual</p>
+        <p>{{$ctrl.userData.car.transmission}}</p>
     </div>
     <div class="col-6">
         <p class="text-secondary m-0">Fuel</p>
-        <p>Petrol</p>
+        <p>{{$ctrl.userData.car.fuel}}</p>
     </div>
-    <hr>
 
     <div class="col-12 mb-2">
         <div class="media">
@@ -41,7 +44,7 @@
         <div class="media">
             <img class="d-flex mr-4" src="/img/icon-expert.jpg">
             <div class="media-body">
-                <span>{{$ctrl.userData.expert.title}}</span>
+                <span>{{$ctrl.userData.expert.name}}</span>
             </div>
         </div>
     </div>
@@ -50,7 +53,7 @@
         <div class="media">
             <img class="d-flex mr-4" src="/img/icon-beverage.jpg">
             <div class="media-body">
-                <span>{{$ctrl.userData.beverage.title}}</span>
+                <span>{{$ctrl.userData.beverage.name}}</span>
             </div>
         </div>
     </div>
@@ -59,7 +62,7 @@
         <div class="media">
             <img class="d-flex mr-4" src="/img/icon-road.jpg">
             <div class="media-body">
-                <span>{{$ctrl.userData.road.title}}</span>
+                <span>{{$ctrl.userData.road.name}}</span>
             </div>
         </div>
     </div>

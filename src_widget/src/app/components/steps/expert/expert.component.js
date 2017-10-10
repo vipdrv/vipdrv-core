@@ -10,13 +10,15 @@
                     self.validateStep();
                 };
 
-                self.expertChanged = function (expertTitle) {
-                    self.userData.expert.title = expertTitle;
+                self.expertChanged = function (id, name) {
+                    self.userData.expert.id = id;
+                    self.userData.expert.name = name;
+
                     self.validateStep();
                 };
 
                 self.validateStep = function () {
-                    if (self.userData.expert.title === null) {
+                    if (self.userData.expert.name === null) {
                         this.isStepValid = false;
                     } else {
                         this.isStepValid = true;
