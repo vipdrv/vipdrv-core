@@ -10,6 +10,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\QuantumLogic.Core\QuantumLogic.Core.csproj" />
+    <ProjectReference Include="..\..\QuantumLogic.Data\QuantumLogic.Data.csproj" />
   </ItemGroup>
 
 </Project>
