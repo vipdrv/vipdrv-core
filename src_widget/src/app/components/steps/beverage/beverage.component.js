@@ -1,24 +1,25 @@
 (function () {
     angular.module('myApp')
         .component('tdBeverage', {
-            controller: function ($scope, api) {
+            controller: function ($scope) {
                 var self = this;
 
                 self.isStepValid = null;
 
                 self.$onInit = function () {
-                    if (self.userData.beverage.title === null) {
-                        this.isSatisfy = false;
+                    if (self.userData.beverage.name === null) {
+                        self.isStepValid = false;
                     }
                 };
 
-                $scope.itemChanged = function (expertTitle) {
-                    self.userData.beverage.title = expertTitle;
+                $scope.itemChanged = function (id, name) {
+                    self.userData.beverage.id = id;
+                    self.userData.beverage.name = name;
                     self.validateStep();
                 };
 
                 this.validateStep = function () {
-                    if (self.userData.beverage.title === null) {
+                    if (self.userData.beverage.name === null) {
                         self.isStepValid = false;
                     } else {
                         self.isStepValid = true;
