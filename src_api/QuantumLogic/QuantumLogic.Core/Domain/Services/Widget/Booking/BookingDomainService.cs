@@ -7,7 +7,7 @@ namespace QuantumLogic.Core.Domain.Services.Widget.Booking
     public class BookingDomainService : IBookingDomainService
     {
 
-        public void CompleteBooking(CompleteBookingRequest request)
+        public void CompleteBooking()
         {
 
         }

@@ -17,10 +17,7 @@ namespace QuantumLogic.Tests.Core.Utils.Email
         [Test]
         public void Test()
         {
-            var sendGridProvider = new SendGridProvider();
-            var emailTemplate = sendGridProvider.CompleteBookingEmailTemplate("A", "B");
-
-            sendGridProvider.SendEmail("ultramarine256@gmail.com", "Please confirm your Booking", emailTemplate);
+            
 
 
         }
