@@ -75,7 +75,7 @@ namespace QuantumLogic.WebApi.Controllers.Authorization
                             issuer: QLAuthenticationOptions.Issuer,
                             expires: expireDateTimeUtc);
                     response = new TokenResponse(
-                        token.Issuer, token.Audiences.ToList(), JwtTokenHandler.WriteToken(token), identityBox.Sid, expireDateTimeUtc,
+                        token.Issuer, token.Audiences.ToList(), JwtTokenHandler.WriteToken(token), identityBox.Sub, expireDateTimeUtc,
                         await ParseIdentityInfoFromIdentityClaimsAsync(identityBox.ClaimsIdentity.Claims.ToDictionary((item) => item.Type, (item) => item.Value)));
                 }
                 else
@@ -142,7 +142,7 @@ namespace QuantumLogic.WebApi.Controllers.Authorization
                         new Claim(GrantedRolesClaimKey, String.Join(",", userInfo.GrantedRoles)),
                         new Claim(GrantedPermissionsClaimKey, String.Join(",", userInfo.GrantedPermissions))
                     });
-                claimsIdentityBox = new ClaimsIdentityBox(userInfo.Sid, userInfo.Username, identity);
+                claimsIdentityBox = new ClaimsIdentityBox(userInfo.Sub, userInfo.Username, identity);
             }
             else
             {
@@ -178,15 +178,15 @@ namespace QuantumLogic.WebApi.Controllers.Authorization
         /// </summary>
         private class ClaimsIdentityBox
         {
-            public string Sid { get; private set; }
+            public string Sub { get; private set; }
             public string Username { get; private set; }
             public ClaimsIdentity ClaimsIdentity { get; private set; }
 
             #region Ctors
 
-            public ClaimsIdentityBox(string sid, string username, ClaimsIdentity claimsIdentity)
+            public ClaimsIdentityBox(string sub, string username, ClaimsIdentity claimsIdentity)
             {
-                Sid = sid;
+                Sub = sub;
                 Username = username;
                 ClaimsIdentity = claimsIdentity;
             }

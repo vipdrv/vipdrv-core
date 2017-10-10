@@ -4,7 +4,7 @@ namespace QuantumLogic.Core.Domain.Services.Main.Users.Models
 {
     public class UserInfo
     {
-        public string Sid { get; private set; }
+        public string Sub { get; private set; }
         public int UserId { get; private set; }
         public string Username { get; private set; }
         public string AvatarUrl { get; private set; }
@@ -13,9 +13,9 @@ namespace QuantumLogic.Core.Domain.Services.Main.Users.Models
 
         #region Ctors
 
-        public UserInfo(string sid, int userId, string username, IList<string> grantedRoles, IList<string> grantedPermissions, string avatarUrl)
+        public UserInfo(string sub, int userId, string username, IList<string> grantedRoles, IList<string> grantedPermissions, string avatarUrl)
         {
-            Sid = sid;
+            Sub = sub;
             UserId = userId;
             Username = username;
             GrantedRoles = grantedRoles;

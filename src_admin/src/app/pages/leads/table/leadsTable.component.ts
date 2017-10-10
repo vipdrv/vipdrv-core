@@ -57,7 +57,7 @@ export class LeadsTableComponent implements OnInit {
         let self = this;
         let filter = Object.assign({}, self.filter);
         filter.userId = Variable.isNullOrUndefined(this.authorizationManager.lastUser) ?
-            null : this.authorizationManager.lastUser.id;
+            null : this.authorizationManager.lastUser.userId;
         self.extendFilter(filter);
         self.promiseService.applicationPromises.leads.getAll = self.leadApiService
             .getAll(self.pageNumber - 1, self.pageSize, self.sorting, filter)

@@ -70,7 +70,7 @@ export class SitesTableComponent implements OnInit {
         let self = this;
         self.filter = Variable.isNullOrUndefined(self.filter) ? {} : self.filter;
         self.filter.userId = Variable.isNullOrUndefined(this.authorizationManager.lastUser) ?
-            null : this.authorizationManager.lastUser.id;
+            null : this.authorizationManager.lastUser.userId;
         self.promiseService.applicationPromises.sites.getAll.promise = self.siteApiService
             .getAll(self.pageNumber - 1, self.pageSize, self.sorting, self.filter)
             .then(function (response: GetAllResponse<SiteEntity>): Promise<void> {
@@ -107,7 +107,7 @@ export class SitesTableComponent implements OnInit {
     protected modalOpenCreate(): Promise<void> {
         let self = this;
         self.entity = new SiteEntity();
-        self.entity.userId = this.authorizationManager.lastUser.id;
+        self.entity.userId = this.authorizationManager.lastUser.userId;
         self.modal.open();
         return Promise.resolve();
     }

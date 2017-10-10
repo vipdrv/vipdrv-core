@@ -13,10 +13,12 @@ export class AuthorizationManager implements IAuthorizationManager, CanActivate 
     private _postAuthorizationDefaultUrl: string = '/';
 
     get lastUser(): any {
-        return this._lastUser;
+        //TODO: fix this after resolve singleton problem (should return just last user) - this service is singleton
+        //return this._lastUser;
+        return this.getStoredUser();
     }
     get user(): Promise<any> {
-        return Promise.resolve(this._lastUser);
+        return Promise.resolve(this.getStoredUser());
     }
 
     get postAuthRedirectUrl(): string {
