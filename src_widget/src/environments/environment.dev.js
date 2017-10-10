@@ -1,6 +1,6 @@
 module.exports = {
     production: false,
-    widgetUrl: 'http://dev.widget.quantumlogic.online',
-    apiBaseUrl: 'http://dev.api.quantumlogic.online/api',
+    widgetUrl: 'http://dev.widget.testdrive.pw',
+    apiBaseUrl: 'http://dev.api.testdrive.pw/api',
     defaultSiteId: 13
 };
