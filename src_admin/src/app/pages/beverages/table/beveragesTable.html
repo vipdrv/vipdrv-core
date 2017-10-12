@@ -30,8 +30,12 @@
             </td>
             <td>{{item.name}}</td>
             <td>
-                <ui-switch [ngModel]="item.isActive"
-                           (click)="onChangeEntityActivity(item); $event.stopPropagation();">
+                <ui-switch color="{{switcherSettings.color}}"
+                           switchColor="{{switcherSettings.switchColor}}"
+                           defaultBgColor="{{switcherSettings.defaultBgColor}}"
+                           defaultBoColor="{{switcherSettings.defaultBoColor}}"
+                           (click)="onChangeEntityActivity(item); $event.stopPropagation();"
+                           [ngModel]="item.isActive">
                 </ui-switch>
             </td>
             <td>

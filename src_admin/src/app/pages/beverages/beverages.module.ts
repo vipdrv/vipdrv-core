@@ -7,7 +7,7 @@ import { NgaModule } from '../../theme/nga.module';
 
 import { Ng2Bs3ModalModule } from 'ng2-bs3-modal/ng2-bs3-modal';
 
-import { UiSwitchModule } from 'angular2-ui-switch'
+import { UiSwitchModule } from 'ngx-ui-switch'
 
 import { UtilsModule } from './../../utils/index';
 import { BeveragesTableComponent } from './table/beveragesTable.component';

@@ -9,14 +9,16 @@
     <div class="col-md-8">
         <h2>
             {{entity.name}}
-            <a href="{{entity.facebookUrl}}"
-               class="float-right"
-               style="margin-left: 5px;">
+            <a class="float-right"
+               style="margin-left: 5px;"
+               *ngIf="entity.facebookUrl"
+               href="{{entity.facebookUrl}}">
                 <i class="fa fa-facebook-official"></i>
             </a>
-            <a href="{{entity.linkedinUrl}}"
-               class="float-right"
-               style="margin-left: 5px;">
+            <a class="float-right"
+               style="margin-left: 5px;"
+               *ngIf="entity.linkedinUrl"
+               href="{{entity.linkedinUrl}}">
                 <i class="fa fa-linkedin-square"></i>
             </a>
         </h2>
