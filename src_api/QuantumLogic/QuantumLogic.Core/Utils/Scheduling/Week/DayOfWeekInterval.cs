@@ -98,7 +98,7 @@ namespace QuantumLogic.Core.Utils.Scheduling.Week
         {
             if (intervals == null)
             {
-                throw new ArgumentException($"Argument {nameof(intervals)} can not be null!");
+                return new List<DayOfWeekInterval>();
             }
             else if (intervals.Count < 2)
             {

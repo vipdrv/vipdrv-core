@@ -109,7 +109,7 @@ export class LeadsTableComponent implements OnInit {
         let filter = Object.assign({}, self.filter)
         self.extendFilter(filter);
         let userId = Variable.isNullOrUndefined(this.authorizationManager.lastUser) ?
-            null : this.authorizationManager.lastUser.id;
+            null : this.authorizationManager.lastUser.userId;
         self.promiseService.applicationPromises.leads.exportToExcel = self.leadApiService
             /// #40 - download All entities from Lead table (ofc its stupid move - uncomment after see this)
             ///.exportToExcel(self.pageNumber - 1, self.pageSize, self.sorting, filter)
