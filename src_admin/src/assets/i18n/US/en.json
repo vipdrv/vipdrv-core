@@ -36,6 +36,7 @@
   "utils": {
     "components":{
      "workingHours": {
+       "noWorkingIntervals": "There are no working hours yet",
        "cancel": "Undo changes",
        "apply": "Save"
      }

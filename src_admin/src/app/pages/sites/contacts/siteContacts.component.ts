@@ -85,7 +85,7 @@ export class SiteContactsComponent implements OnInit, OnChanges {
         return Variable.isNotNullOrUndefined(this.promiseService.applicationPromises.sites.patch.contactsPromise);
     }
     private containsContactsEntityValue(collection: Array<ContactEntity>, value: string): boolean {
-        return Variable.isNullOrUndefined(collection) || !collection.length ||
+        return Variable.isNullOrUndefined(collection) || Variable.isNullOrUndefined(collection.length) ||
             collection.findIndex((item: ContactEntity) => item.value === value) > -1;
     }
     /// helpers

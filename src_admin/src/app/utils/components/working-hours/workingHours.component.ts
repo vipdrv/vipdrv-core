@@ -15,21 +15,25 @@ export class WorkingHoursComponent implements OnInit, OnChanges {
     protected newEntity: WorkingInterval;
     constructor() { }
     ngOnInit(): void {
-        this.actualEntities = this.workingHours;
+        this.undoChanges();
         this.initializeNewEntity();
     }
     ngOnChanges(changes: SimpleChanges) {
         let workingHoursChange: SimpleChange = changes['workingHours'];
         if (Variable.isNotNullOrUndefined(workingHoursChange) &&
             this.actualEntities !== this.workingHours) {
-            this.actualEntities = this.workingHours;
+            this.undoChanges();
         }
     }
     protected submitWorkingHours(): void {
         this.workingHoursChanged.emit(this.actualEntities);
     }
     protected undoChanges(): void {
-        this.actualEntities = this.workingHours;
+        if (Variable.isNotNullOrUndefined(this.workingHours)) {
+            this.actualEntities = this.workingHours;
+        } else {
+            this.actualEntities = [];
+        }
     }
     protected addNewInterval(): void {
         this.newEntity.commitEdit();
