@@ -7,6 +7,8 @@ import { NgaModule } from '../../theme/nga.module';
 
 import { Ng2Bs3ModalModule } from 'ng2-bs3-modal/ng2-bs3-modal';
 
+import { UiSwitchModule } from 'angular2-ui-switch'
+
 import { UtilsModule } from './../../utils/index';
 import { RoutesTableComponent } from './table/routesTable.component';
 import { RouteDetailsInfoComponent } from './details/info/routeDetailsInfo.component';
@@ -21,7 +23,8 @@ import { routing } from './routes.routing';
         NgaModule,
         routing,
         UtilsModule,
-        Ng2Bs3ModalModule
+        Ng2Bs3ModalModule,
+        UiSwitchModule
     ],
     exports: [
         RoutesComponent,
