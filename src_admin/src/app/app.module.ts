@@ -23,7 +23,6 @@ import { PagesModule } from './pages/pages.module';
 
 import { UtilsModule, loaderMessage, loaderTemplate } from './utils/index';
 import { ServerApiModule } from './services/serverApi/index';
-
 // Application wide providers
 const APP_PROVIDERS = [
   AppState,

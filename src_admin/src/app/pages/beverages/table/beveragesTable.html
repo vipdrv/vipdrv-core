@@ -30,11 +30,9 @@
             </td>
             <td>{{item.name}}</td>
             <td>
-                <div class="switch" (click)="onChangeEntityActivity(item); $event.stopPropagation();">
-                    <input type="checkbox"
-                           [ngModel]="item.isActive">
-                    <span class="slider round"></span>
-                </div>
+                <ui-switch [ngModel]="item.isActive"
+                           (click)="onChangeEntityActivity(item); $event.stopPropagation();">
+                </ui-switch>
             </td>
             <td>
                 <button type="button"

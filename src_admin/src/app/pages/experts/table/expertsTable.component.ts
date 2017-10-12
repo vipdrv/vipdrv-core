@@ -130,7 +130,8 @@ export class ExpertsTableComponent implements OnInit {
         if (Variable.isNotNullOrUndefined(entity)) {
             entity.isActive = !entity.isActive;
             // TODO: after adding spinners should disable updating activity for this entity until promise ends
-            this.commitChangeEntityActivity(entity);
+            //this.commitChangeEntityActivity(entity);
+            console.log(entity.isActive);
         }
     }
     protected commitChangeEntityActivity(entity: ExpertEntity): Promise<void> {
