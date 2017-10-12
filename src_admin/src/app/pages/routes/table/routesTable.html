@@ -30,10 +30,11 @@
             </td>
             <td>{{item.name}}</td>
             <td>
-                <input type="checkbox"
-                       class="checkbox-success"
-                       (click)="onChangeEntityActivity(item); $event.stopPropagation();"
-                       [ngModel]="item.isActive">
+                <div class="switch" (click)="onChangeEntityActivity(item); $event.stopPropagation();">
+                    <input type="checkbox"
+                           [ngModel]="item.isActive">
+                    <span class="slider round"></span>
+                </div>
             </td>
             <td>
                 <button type="button"
