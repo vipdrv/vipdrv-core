@@ -53,14 +53,14 @@
                    [(ngModel)]="model.password">
         </div>
         <div class="login-form-row">
-            <label class="checkbox">
+            <label class="custom-control custom-checkbox mb-2 mr-sm-2 mb-sm-0">
                 <input type="checkbox"
-                       value="remember-me"
-                       id="rememberMe"
                        name="rememberMe"
+                       class="custom-control-input"
                        [disabled]="loading"
                        [(ngModel)]="model.isPersist">
-                Remember me
+                <span class="custom-control-indicator"></span>
+                <span class="custom-control-description">Remember me</span>
             </label>
         </div>
         <div style="margin-top: 10px;">

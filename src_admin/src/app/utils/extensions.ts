@@ -1,6 +1,7 @@
 import { DatePipe } from '@angular/common';
 import { Variable } from './variable';
-export module Extensions {
+
+export namespace Extensions {
     /// regular expressions
     export const regExp = {
         email: /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
