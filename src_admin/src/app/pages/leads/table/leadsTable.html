@@ -124,9 +124,24 @@
             <td>{{item.siteName}}</td>
             <td>{{item.userEmail}}</td>
             <td>{{item.userPhone}}</td>
-            <td>{{item.expertName}}</td>
-            <td>{{item.routeName}}</td>
-            <td>{{item.beverageName}}</td>
+            <td>
+                <span class="badge badge-info leads-table-badge-class"
+                      *ngIf="item.expertName">
+                {{item.expertName}}
+                </span>
+            </td>
+            <td>
+                <span class="badge badge-info leads-table-badge-class"
+                      *ngIf="item.routeName">
+                {{item.routeName}}
+                </span>
+            </td>
+            <td>
+                <span class="badge badge-info leads-table-badge-class"
+                      *ngIf="item.beverageName">
+                {{item.beverageName}}
+                </span>
+            </td>
         </tr>
         </tbody>
     </table>
