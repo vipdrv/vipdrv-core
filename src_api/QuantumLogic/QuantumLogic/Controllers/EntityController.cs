@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using QuantumLogic.Core.Domain.Entities;
 using QuantumLogic.Core.Domain.Services;
-using QuantumLogic.Core.Domain.Services.Models;
 using QuantumLogic.Core.Domain.UnitOfWorks;
 using QuantumLogic.WebApi.DataModels.Dtos;
 using QuantumLogic.WebApi.DataModels.Responses;
@@ -119,7 +118,7 @@ namespace QuantumLogic.WebApi.Controllers
 
         #endregion
 
-        #region Inner custom methods
+        #region Inner methods to operate with many entities
 
         /// <summary>
         /// Is used to retrieve all entities via filters and sorting as paged result
@@ -131,20 +130,24 @@ namespace QuantumLogic.WebApi.Controllers
         /// <returns>object with retrieved items and total count</returns>
         protected virtual async Task<GetAllResponse<TEntityDto>> InnerGetAllAsync(Expression<Func<TEntity, bool>> filter, string sorting, uint page, uint pageSize)
         {
-            RetrieveAllResultModel<TEntity> stub;
+            int totalCount;
+            IList<TEntity> entities;
+            int skip = (int)(page * pageSize);
+            int take = (int)pageSize;
             using (var uow = UowManager.CurrentOrCreateNew(true))
             {
-                stub = await DomainService.RetrieveAllAsync(filter, sorting, (int)(page * pageSize), (int)pageSize);
+                entities = await DomainService.RetrieveAllAsync(filter, sorting, skip, take);
+                totalCount = take > 0 || skip > 0 && (entities.Count == take || skip != 0) ? await DomainService.GetTotalCountAsync(filter) : entities.Count;
             }
-            List<TEntityDto> items = new List<TEntityDto>(stub.Entities.Count);
-            foreach (var entity in stub.Entities)
+            List<TEntityDto> entityDtos = new List<TEntityDto>(entities.Count);
+            foreach (TEntity entity in entities)
             {
                 TEntityDto entityDto = new TEntityDto();
                 entityDto.MapFromEntity(entity);
                 entityDto.NormalizeAsResponse();
-                items.Add(entityDto);
+                entityDtos.Add(entityDto);
             }
-            return new GetAllResponse<TEntityDto>(items, stub.TotalCount);
+            return new GetAllResponse<TEntityDto>(entityDtos, totalCount);
         }
 
         #endregion

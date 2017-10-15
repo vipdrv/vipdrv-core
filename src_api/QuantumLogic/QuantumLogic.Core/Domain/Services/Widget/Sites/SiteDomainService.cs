@@ -1,14 +1,13 @@
-﻿using QuantumLogic.Core.Domain.Context;
-using QuantumLogic.Core.Domain.Entities.WidgetModule;
+﻿using QuantumLogic.Core.Domain.Entities.WidgetModule;
 using QuantumLogic.Core.Domain.Policy.WidgetModule;
 using QuantumLogic.Core.Domain.Repositories.WidgetModule;
 using QuantumLogic.Core.Domain.Validation.Widget;
+using QuantumLogic.Core.Utils.Scheduling.Week;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using QuantumLogic.Core.Utils.Scheduling.Week;
-using System.Linq;
 
 namespace QuantumLogic.Core.Domain.Services.Widget.Sites
 {
@@ -16,8 +15,8 @@ namespace QuantumLogic.Core.Domain.Services.Widget.Sites
     {
         #region Ctors
 
-        public SiteDomainService(IDomainContext domainContext, ISiteRepository repository, ISitePolicy policy, ISiteValidationService validationService)
-            : base(domainContext, repository, policy, validationService)
+        public SiteDomainService(ISiteRepository repository, ISitePolicy policy, ISiteValidationService validationService)
+            : base(repository, policy, validationService)
         { }
 
         #endregion
@@ -39,7 +38,7 @@ namespace QuantumLogic.Core.Domain.Services.Widget.Sites
         {
             return Task.CompletedTask;
         }
-        protected override IEnumerable<LoadEntityRelationAction<Site>> GetLoadEntityRelationActions()
+        internal override IEnumerable<LoadEntityRelationAction<Site>> GetLoadEntityRelationActions()
         {
             return new List<LoadEntityRelationAction<Site>>();
         }

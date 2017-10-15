@@ -1,5 +1,4 @@
-﻿using QuantumLogic.Core.Domain.Context;
-using QuantumLogic.Core.Domain.Entities.WidgetModule;
+﻿using QuantumLogic.Core.Domain.Entities.WidgetModule;
 using QuantumLogic.Core.Domain.Policy.WidgetModule;
 using QuantumLogic.Core.Domain.Repositories.WidgetModule;
 using QuantumLogic.Core.Domain.Validation.Widget;
@@ -14,8 +13,8 @@ namespace QuantumLogic.Core.Domain.Services.Widget.Routes
     {
         #region Ctors
 
-        public RouteDomainService(IDomainContext domainContext, IRouteRepository repository, IRoutePolicy policy, IRouteValidationService validationService)
-            : base(domainContext, repository, policy, validationService)
+        public RouteDomainService(IRouteRepository repository, IRoutePolicy policy, IRouteValidationService validationService)
+            : base(repository, policy, validationService)
         { }
 
         #endregion
@@ -24,7 +23,7 @@ namespace QuantumLogic.Core.Domain.Services.Widget.Routes
         {
             return Task.CompletedTask;
         }
-        protected override IEnumerable<LoadEntityRelationAction<Route>> GetLoadEntityRelationActions()
+        internal override IEnumerable<LoadEntityRelationAction<Route>> GetLoadEntityRelationActions()
         {
             return new List<LoadEntityRelationAction<Route>>();
         }

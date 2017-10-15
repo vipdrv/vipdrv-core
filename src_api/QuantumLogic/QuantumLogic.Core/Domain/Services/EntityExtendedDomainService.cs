@@ -1,5 +1,4 @@
 ﻿using QuantumLogic.Core.Domain.Entities;
-using QuantumLogic.Core.Domain.Context;
 using QuantumLogic.Core.Domain.Policy;
 using QuantumLogic.Core.Domain.Repositories;
 using QuantumLogic.Core.Domain.Validation;
@@ -12,8 +11,8 @@ namespace QuantumLogic.Core.Domain.Services
     {
         #region Ctors
 
-        public EntityExtendedDomainService(IDomainContext domainContext, IQLRepository<TEntity, TPrimaryKey> repository, IEntityExtendedPolicy<TEntity, TPrimaryKey> policy, IEntityExtendedValidationService<TEntity, TPrimaryKey> validationService) 
-            : base(domainContext, repository, policy, validationService)
+        public EntityExtendedDomainService(IQLRepository<TEntity, TPrimaryKey> repository, IEntityExtendedPolicy<TEntity, TPrimaryKey> policy, IEntityExtendedValidationService<TEntity, TPrimaryKey> validationService) 
+            : base(repository, policy, validationService)
         { }
 
         #endregion

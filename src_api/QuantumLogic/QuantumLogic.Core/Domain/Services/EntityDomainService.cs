@@ -1,8 +1,6 @@
-﻿using QuantumLogic.Core.Domain.Context;
-using QuantumLogic.Core.Domain.Entities;
+﻿using QuantumLogic.Core.Domain.Entities;
 using QuantumLogic.Core.Domain.Policy;
 using QuantumLogic.Core.Domain.Repositories;
-using QuantumLogic.Core.Domain.Services.Models;
 using QuantumLogic.Core.Domain.Validation;
 using QuantumLogic.Core.Enums;
 using QuantumLogic.Core.Exceptions.Validation;
@@ -22,13 +20,12 @@ namespace QuantumLogic.Core.Domain.Services
 
         protected Expression<Func<TEntity, object>>[] RetrieveAllEntityIncludes { get; private set; }
         protected Expression<Func<TEntity, object>>[] RetrieveEntityIncludes { get; private set; }
-        protected IEnumerable<LoadEntityRelationAction<TEntity>> LoadEntityRelationActions { get; private set; }
+        internal IEnumerable<LoadEntityRelationAction<TEntity>> LoadEntityRelationActions { get; private set; }
 
         #endregion
 
         #region Injected dependencies
 
-        protected IDomainContext DomainContext { get; private set; }
         protected IQLRepository<TEntity, TPrimaryKey> Repository { get; private set; }
         protected IEntityPolicy<TEntity, TPrimaryKey> Policy { get; private set; }
         protected IEntityValidationService<TEntity, TPrimaryKey> ValidationService { get; private set; }
@@ -38,13 +35,11 @@ namespace QuantumLogic.Core.Domain.Services
         #region Ctors
 
         public EntityDomainService(
-            IDomainContext domainContext,
             IQLRepository<TEntity, TPrimaryKey> repository,
             IEntityPolicy<TEntity, TPrimaryKey> policy,
             IEntityValidationService<TEntity, TPrimaryKey> validationService)
             : base()
         {
-            DomainContext = domainContext;
             Repository = repository;
             Policy = policy;
             ValidationService = validationService;
@@ -55,14 +50,17 @@ namespace QuantumLogic.Core.Domain.Services
 
         #endregion
 
-        public virtual async Task<RetrieveAllResultModel<TEntity>> RetrieveAllAsync(Expression<Func<TEntity, bool>> filter = null, string sorting = null, int skip = 0, int take = 0)
+        public virtual Task<int> GetTotalCountAsync(Expression<Func<TEntity, bool>> filter = null)
         {
-            bool needSkipTake = take > 0 || skip > 0;
-            IList<TEntity> retrievedEntities = await Repository.GetAllAsync(
+            return Repository.GetTotalCountAsync((entitySet) => ApplyPolisyAndFilterToQuery(entitySet, filter));
+        }
+        public virtual async Task<IList<TEntity>> RetrieveAllAsync(Expression<Func<TEntity, bool>> filter = null, string sorting = null, int skip = 0, int take = 0)
+        {
+            return await Repository.GetAllAsync(
                 (entitySet) => 
                 {
-                    entitySet = ApplyPolicyFilterSortingToQuery(entitySet, filter, sorting);
-                    if (needSkipTake)
+                    entitySet = ApplySortingToQuery(ApplyPolisyAndFilterToQuery(entitySet, filter), sorting);
+                    if (take > 0 || skip > 0)
                     {
                         entitySet = entitySet
                             .Skip(skip)
@@ -71,7 +69,6 @@ namespace QuantumLogic.Core.Domain.Services
                     return entitySet;
                 }, 
                 RetrieveAllEntityIncludes);
-            return new RetrieveAllResultModel<TEntity>(retrievedEntities, needSkipTake && (retrievedEntities.Count == take || skip != 0) ? await Repository.GetTotalCountAsync((entitySet) => ApplyPolicyFilterSortingToQuery(entitySet, filter, sorting)) : retrievedEntities.Count);
         }
         public virtual async Task<TEntity> RetrieveAsync(TPrimaryKey id)
         {
@@ -128,8 +125,8 @@ namespace QuantumLogic.Core.Domain.Services
 
         protected abstract Expression<Func<TEntity, object>>[] GetRetrieveAllEntityIncludes();
         protected abstract Expression<Func<TEntity, object>>[] GetRetrieveEntityIncludes();
-        protected abstract IEnumerable<LoadEntityRelationAction<TEntity>> GetLoadEntityRelationActions();
         protected abstract Task CascadeDeleteActionAsync(TEntity entity);
+        internal abstract IEnumerable<LoadEntityRelationAction<TEntity>> GetLoadEntityRelationActions();
 
         protected void LoadEntityRelations(TEntity entity, DomainMethodNames method)
         {
@@ -146,24 +143,18 @@ namespace QuantumLogic.Core.Domain.Services
                 throw new ValidateEntityRelationsException();
             }
         }
-
-        protected virtual IQueryable<TEntity> ApplyPolicyFilterSortingToQuery(IQueryable<TEntity> entitySet, Expression<Func<TEntity, bool>> filter, string sorting)
+        protected virtual IQueryable<TEntity> ApplySortingToQuery(IQueryable<TEntity> query, string sorting)
         {
-            // using policy
+            return !String.IsNullOrEmpty(sorting) ? query.OrderBy(sorting) : query.OrderBy(r => r.Id);
+        }
+        protected virtual IQueryable<TEntity> ApplyPolisyAndFilterToQuery(IQueryable<TEntity> entitySet, Expression<Func<TEntity, bool>> filter)
+        {
+            // using policy filter
             IQueryable<TEntity> query = Policy.RetrieveAllFilter(entitySet);
             // applying filters
             if (filter != null)
             {
                 query = query.Where(filter);
-            }
-            // ordering
-            if (!String.IsNullOrEmpty(sorting))
-            {
-                query = query.OrderBy(sorting);
-            }
-            else
-            {
-                query = query.OrderBy(r => r.Id);
             }
             return query;
         }
@@ -171,7 +162,7 @@ namespace QuantumLogic.Core.Domain.Services
         #endregion
     }
 
-    public class LoadEntityRelationAction<TEntity>
+    internal class LoadEntityRelationAction<TEntity>
     {
         public Action<TEntity> ActionExpression { get; private set; }
         public ISet<DomainMethodNames> MethodsToUse { get; private set; }

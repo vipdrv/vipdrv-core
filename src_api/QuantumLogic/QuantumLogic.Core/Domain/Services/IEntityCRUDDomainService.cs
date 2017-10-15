@@ -9,7 +9,6 @@ namespace QuantumLogic.Core.Domain.Services
     /// <typeparam name="TEntity">type of entity</typeparam>
     /// <typeparam name="TPrimaryKey">type of entity primary key</typeparam>
     public interface IEntityCRUDDomainService<TEntity, TPrimaryKey>
-        where TEntity : class, IEntity<TPrimaryKey>
     {
         /// <summary>
         /// Is used to retrieve entity via domain rules

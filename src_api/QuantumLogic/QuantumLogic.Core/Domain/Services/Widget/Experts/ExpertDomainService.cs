@@ -1,5 +1,4 @@
-﻿using QuantumLogic.Core.Domain.Context;
-using QuantumLogic.Core.Domain.Entities.WidgetModule;
+﻿using QuantumLogic.Core.Domain.Entities.WidgetModule;
 using QuantumLogic.Core.Domain.Policy.WidgetModule;
 using QuantumLogic.Core.Domain.Repositories.WidgetModule;
 using QuantumLogic.Core.Domain.Validation.Widget;
@@ -14,8 +13,8 @@ namespace QuantumLogic.Core.Domain.Services.Widget.Experts
     {
         #region Ctors
 
-        public ExpertDomainService(IDomainContext domainContext, IExpertRepository repository, IExpertPolicy policy, IExpertValidationService validationService)
-            : base(domainContext, repository, policy, validationService)
+        public ExpertDomainService(IExpertRepository repository, IExpertPolicy policy, IExpertValidationService validationService)
+            : base(repository, policy, validationService)
         { }
 
         #endregion
@@ -24,7 +23,7 @@ namespace QuantumLogic.Core.Domain.Services.Widget.Experts
         {
             return Task.CompletedTask;
         }
-        protected override IEnumerable<LoadEntityRelationAction<Expert>> GetLoadEntityRelationActions()
+        internal override IEnumerable<LoadEntityRelationAction<Expert>> GetLoadEntityRelationActions()
         {
             return new List<LoadEntityRelationAction<Expert>>();
         }

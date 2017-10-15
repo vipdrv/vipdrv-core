@@ -32,5 +32,10 @@ namespace QuantumLogic.Core.Utils.ContentManager.Providers
             
             return blockBlob.Uri;
         }
+
+        public Task<Uri> SaveFileToStorage(byte[] content, string blobName, string contentType)
+        {
+            return SaveFileToStorage(new MemoryStream(content), blobName, contentType);
+        }
     }
 }
