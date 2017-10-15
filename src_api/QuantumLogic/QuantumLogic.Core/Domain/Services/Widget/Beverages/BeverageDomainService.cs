@@ -1,5 +1,4 @@
-﻿using QuantumLogic.Core.Domain.Context;
-using QuantumLogic.Core.Domain.Entities.WidgetModule;
+﻿using QuantumLogic.Core.Domain.Entities.WidgetModule;
 using QuantumLogic.Core.Domain.Policy.WidgetModule;
 using QuantumLogic.Core.Domain.Repositories.WidgetModule;
 using QuantumLogic.Core.Domain.Validation.Widget;
@@ -14,8 +13,8 @@ namespace QuantumLogic.Core.Domain.Services.Widget.Beverages
     {
         #region Ctors
 
-        public BeverageDomainService(IDomainContext domainContext, IBeverageRepository repository, IBeveragePolicy policy, IBeverageValidationService validationService)
-            : base(domainContext, repository, policy, validationService)
+        public BeverageDomainService(IBeverageRepository repository, IBeveragePolicy policy, IBeverageValidationService validationService)
+            : base(repository, policy, validationService)
         { }
 
         #endregion
@@ -24,7 +23,7 @@ namespace QuantumLogic.Core.Domain.Services.Widget.Beverages
         {
             return Task.CompletedTask;
         }
-        protected override IEnumerable<LoadEntityRelationAction<Beverage>> GetLoadEntityRelationActions()
+        internal override IEnumerable<LoadEntityRelationAction<Beverage>> GetLoadEntityRelationActions()
         {
             return new List<LoadEntityRelationAction<Beverage>>();
         }

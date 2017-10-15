@@ -1,5 +1,4 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using QuantumLogic.Core.Domain.Context;
 using QuantumLogic.Core.Domain.Entities.MainModule;
 using QuantumLogic.Core.Domain.Entities.WidgetModule;
 using QuantumLogic.Core.Domain.Services;
@@ -23,8 +22,6 @@ namespace QuantumLogic.Core
 
         protected override void ConfigureServices(IServiceCollection services)
         {
-            services.AddScoped<IDomainContext, DomainContext>();
-
             services.AddScoped<IContentManager, BlobProvider>();
 
             #region Domain services

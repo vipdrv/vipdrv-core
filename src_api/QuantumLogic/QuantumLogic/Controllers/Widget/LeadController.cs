@@ -3,9 +3,13 @@ using QuantumLogic.Core.Domain.Entities.WidgetModule;
 using QuantumLogic.Core.Domain.Services.Widget.Leads;
 using QuantumLogic.Core.Domain.UnitOfWorks;
 using QuantumLogic.Core.Extensions.DateTimeEx;
+using QuantumLogic.Core.Utils.ContentManager;
+using QuantumLogic.Core.Utils.Export.Entity.Concrete.Excel;
+using QuantumLogic.Core.Utils.Export.Entity.Concrete.Excel.DataModels;
 using QuantumLogic.WebApi.DataModels.Dtos.Widget.Leads;
 using QuantumLogic.WebApi.DataModels.Requests.Widget.Leads;
 using QuantumLogic.WebApi.DataModels.Responses;
+using QuantumLogic.WebApi.Providers.Export.Excel.Leads;
 using System;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
@@ -15,11 +19,19 @@ namespace QuantumLogic.WebApi.Controllers.Widget
     [Route("api/lead")]
     public class LeadController : EntityController<Lead, int, LeadDto, LeadFullDto>
     {
+        #region Injected dependencies
+
+        public IContentManager ContentManager { get; private set; }
+
+        #endregion
+
         #region Ctors
 
-        public LeadController(IQLUnitOfWorkManager uowManager, ILeadDomainService domainService)
+        public LeadController(IQLUnitOfWorkManager uowManager, ILeadDomainService domainService, IContentManager contentManager)
             : base(uowManager, domainService)
-        { }
+        {
+            ContentManager = contentManager;
+        }
 
         #endregion
 
@@ -59,20 +71,25 @@ namespace QuantumLogic.WebApi.Controllers.Widget
         #endregion
 
         [HttpPost("export/excel/{page?}/{pageSize?}")]
-        public async Task<string> ExportDataToExcelAsync([FromBody]LeadGetAllRequest request, uint page = 0, uint pageSize = 0)
+        public async Task<string> ExportDataToExcelAsync([FromBody]LeadGetAllRequest request, uint? page = null, uint? pageSize = null)
         {
-            string fileUrl;
+            Uri fileUrl;
             TimeSpan timeZoneOffset = TimeSpan.Zero;
             string fileName = $"TestDrive-Leads-{DateTime.UtcNow.FormatUtcDateTimeToUserFriendlyString(timeZoneOffset, "yyyyMMddHHmmss")}";
             string worksheetsName = "leads";
             using (var uow = UowManager.CurrentOrCreateNew(true))
             {
-                fileUrl = await ((ILeadDomainService)DomainService).ExportDataToExcelAsync(fileName, worksheetsName, timeZoneOffset, BuildRetrieveManyFilter(request), request.Sorting, (int)(page * pageSize), (int)pageSize);
+                ExcelExportSettings<Lead> settings = new ExcelExportSettings<Lead>(
+                    fileName, worksheetsName,
+                    DomainService, ContentManager,
+                    ExcelExportLeadOptionsProvider.GetEntityOptions((r) => r.UseByDefault, (key) => key, timeZoneOffset),
+                    BuildRetrieveManyFilter(request), request.Sorting, page ?? 0 * pageSize ?? 0, pageSize);
+                fileUrl = await ExcelExportService<Lead>.ExportDataAsync(settings);
             }
-            return fileUrl;
+            return fileUrl.ToString();
         }
 
-        private Expression<Func<Lead, bool>> BuildRetrieveManyFilter(LeadGetAllRequest request)
+        protected virtual Expression<Func<Lead, bool>> BuildRetrieveManyFilter(LeadGetAllRequest request)
         {
             return (entity) =>
                 request.UserId == null || request.UserId == entity.Site.UserId && 

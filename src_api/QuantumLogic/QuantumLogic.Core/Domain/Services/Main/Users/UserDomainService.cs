@@ -1,5 +1,4 @@
-﻿using QuantumLogic.Core.Domain.Context;
-using QuantumLogic.Core.Domain.Entities.MainModule;
+﻿using QuantumLogic.Core.Domain.Entities.MainModule;
 using QuantumLogic.Core.Domain.Policy.Main;
 using QuantumLogic.Core.Domain.Repositories.Main;
 using QuantumLogic.Core.Domain.Services.Main.Users.Models;
@@ -16,8 +15,8 @@ namespace QuantumLogic.Core.Domain.Services.Main.Users
     {
         #region Ctors
 
-        public UserDomainService(IDomainContext domainContext, IUserRepository repository, IUserPolicy policy, IUserValidationService validationService)
-            : base(domainContext, repository, policy, validationService)
+        public UserDomainService(IUserRepository repository, IUserPolicy policy, IUserValidationService validationService)
+            : base(repository, policy, validationService)
         { }
 
         #endregion
@@ -41,7 +40,7 @@ namespace QuantumLogic.Core.Domain.Services.Main.Users
         {
             return Task.CompletedTask;
         }
-        protected override IEnumerable<LoadEntityRelationAction<User>> GetLoadEntityRelationActions()
+        internal override IEnumerable<LoadEntityRelationAction<User>> GetLoadEntityRelationActions()
         {
             return new List<LoadEntityRelationAction<User>>();
         }
