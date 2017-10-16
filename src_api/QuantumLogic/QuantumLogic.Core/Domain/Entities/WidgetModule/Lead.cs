@@ -45,6 +45,7 @@ namespace QuantumLogic.Core.Domain.Entities.WidgetModule
             FirstName = firstname;
             SecondName = secondName;
             UserPhone = userPhone;
+            UserEmail = userEmail;
         }
 
         #endregion

@@ -3,8 +3,13 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using QuantumLogic.Core.Domain.Entities.WidgetModule;
 using QuantumLogic.Core.Domain.Services.Widget.Booking;
+using QuantumLogic.Core.Utils.Email;
+using QuantumLogic.Core.Utils.Email.Providers.SendGrid;
+using QuantumLogic.Core.Utils.Email.Services;
+using QuantumLogic.Core.Utils.Email.Templates;
 using QuantumLogic.Data.EFContext;
 using QuantumLogic.WebApi.DataModels.Requests.Widget.Booking;
+using SendGrid.Helpers.Mail;
 
 namespace QuantumLogic.WebApi.Controllers.Widget
 {
@@ -19,52 +24,19 @@ namespace QuantumLogic.WebApi.Controllers.Widget
         }
 
         [HttpPost("complete-booking")]
-        public Task<string> CompleteBooking(long siteId, [FromBody]CompleteBookingRequest request)
+        public Task<bool> CompleteBooking(int siteId, [FromBody]CompleteBookingRequest request)
         {
+            ITestDriveEmailService driveEmailService = new TestDriveEmailService(new SendGridEmailProvider());
+            var emailTo = new EmailAddress(request.BookingUser.Email, $"{request.BookingUser.FirstName} {request.BookingUser.LastName}");
+            IEmailTemplate emailTemplate = new CompleteBookingEmailTemplate(request.BookingUser.FirstName, request.BookingUser.LastName, DateTime.Now.ToString(), "Ford Mustang", "Expert #1", "Tea", "City Roads");
             
-            //var firstName = request.BookingUser.FirstName;
-            //var lastName = request.BookingUser.LastName;
-            //var email = request.BookingUser.Email;
-            //var phone = request.BookingUser.Phone;
-
-            var carImgUrl = "https://generalstandart256.blob.core.windows.net/image-container/dummy-car-detail.jpg";
-            var carTitle = "Nissan GT-R 2016 3.8 litre twin-turbo V6";
-
-            //var expertName = request.BookingExpert.Name;
-            //var beverageName = request.BookingBeverage.Name;
-            //var roadName = request.BookingRoad.Name;
-
-            //var sendGridProvider = new SendGridProvider();
-            //var emailTemplate = sendGridProvider.CompleteBookingEmailTemplate("Evgeny", "Platonov", DateTime.Now.ToString(), carTitle, "Fernando Alonso Díaz", "Tea", "Sea-Road");
-
-            //sendGridProvider.SendEmail("ultramarine256@gmail.com", "Please confirm your Booking", emailTemplate);
-
-            // TODO: send email
-            // TODO: update leads table
-
-
             var db = new QuantumLogicDbContext();
-
-            var lead2 = new Lead
-            {
-                FirstName = "Evgeny",
-                SecondName = "Platonov",
-                UserEmail = "ultramarine256@gmail.com",
-                UserPhone = "+380953007952",
-                SiteId = 13,
-                RouteId = 4,
-                ExpertId = 4,
-                BeverageId = 6,
-
-                RecievedUtc = DateTime.Now
-            };
-
-            db.Leads.Add(lead2);
+            var lead = new Lead(0, siteId, request.BookingExpert.Id, request.BookingBeverage.Id, request.BookingRoad.Id, DateTime.Now, request.BookingUser.FirstName, request.BookingUser.LastName, request.BookingUser.Phone, request.BookingUser.Email);
+            db.Leads.Add(lead);
 
             db.SaveChanges();
-
-
-            return Task.FromResult("asd");
+            
+            return Task.FromResult(true);
         }
     }
 }
