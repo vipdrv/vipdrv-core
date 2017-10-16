@@ -1,29 +1,34 @@
 ﻿using System;
+using System.Net;
 using SendGrid.Helpers.Mail;
 
 namespace QuantumLogic.Core.Utils.Email.Services
 {
-    public class TestDriveEmailService : ITestDriveEmailService
+    public class TestDriveEmailService : ITestDriveEmailService, ILeadEmailService, IBookingEmailService
     {
-        private readonly IEmailProvider _emailProvider;
-        private readonly EmailAddress _emailFrom;
+        protected const string CompleteBookingSubject = "Thak you for complete booking";
+        protected const string NewLeadNotificationSubject = "New Lead!";
+        protected static EmailAddress EmailFrom = new EmailAddress("test@example.com", "Example User");
+        protected IEmailProvider EmailProvider { get; private set; }
 
         public TestDriveEmailService(IEmailProvider emailProvider)
         {
-            _emailProvider = emailProvider;
-            _emailFrom = new EmailAddress("test@example.com", "Example User");
+            EmailProvider = emailProvider;
         }
 
-        public string SendCompleteBookingEmail(EmailAddress emailTo, IEmailTemplate emailTemplate)
+        public HttpStatusCode SendTestDriveEmail(EmailAddress emailTo, string subject, IEmailTemplate htmlContent, string plainTextContent = null)
         {
-            var subject = "Thak you for complete booking";
-
-            return _emailProvider.SendEmail(emailTo, _emailFrom, subject, "", emailTemplate.AsHtml());
+            return EmailProvider.SendEmail(emailTo, EmailFrom, subject, plainTextContent, htmlContent.AsHtml());
         }
 
-        public string SendNewLeadNotificationEmail(EmailAddress emailTo, IEmailTemplate emailTemplate)
+        public HttpStatusCode SendCompleteBookingEmail(EmailAddress emailTo, IEmailTemplate htmlContent, string plainTextContent = null)
         {
-            throw new NotImplementedException();
+            return SendTestDriveEmail(emailTo, CompleteBookingSubject, htmlContent, plainTextContent);
+        }
+
+        public HttpStatusCode SendNewLeadNotificationEmail(EmailAddress emailTo, IEmailTemplate htmlContent, string plainTextContent = null)
+        {
+            return SendTestDriveEmail(emailTo, NewLeadNotificationSubject, htmlContent, plainTextContent);
         }
     }
 }

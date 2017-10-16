@@ -21,7 +21,7 @@ namespace QuantumLogic.Tests.Core.Utils.Email
         [Ignore("Real Email sending")]
         public void CompleteBooking__ShouldSendEmail()
         {
-            ITestDriveEmailService driveEmailService = new TestDriveEmailService(new SendGridEmailProvider());
+            IBookingEmailService driveEmailService = new TestDriveEmailService(new SendGridEmailProvider());
             var emailTo = new EmailAddress("ultramarine256@gmail.com", "Evgeny Platonov");
             IEmailTemplate emailTemplate = new CompleteBookingEmailTemplate("FirstName", "SecondName", DateTime.Now.ToString(), "Ford Mustang", "Expert #1", "Tea", "City Roads");
 
