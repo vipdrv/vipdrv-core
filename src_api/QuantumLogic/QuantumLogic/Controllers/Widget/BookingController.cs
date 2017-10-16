@@ -3,7 +3,6 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using QuantumLogic.Core.Domain.Entities.WidgetModule;
 using QuantumLogic.Core.Domain.Services.Widget.Booking;
-using QuantumLogic.Core.Utils.Email.Providers;
 using QuantumLogic.Data.EFContext;
 using QuantumLogic.WebApi.DataModels.Requests.Widget.Booking;
 
@@ -35,10 +34,10 @@ namespace QuantumLogic.WebApi.Controllers.Widget
             //var beverageName = request.BookingBeverage.Name;
             //var roadName = request.BookingRoad.Name;
 
-            var sendGridProvider = new SendGridProvider();
-            var emailTemplate = sendGridProvider.CompleteBookingEmailTemplate("Evgeny", "Platonov", DateTime.Now.ToString(), carTitle, "Fernando Alonso Díaz", "Tea", "Sea-Road");
+            //var sendGridProvider = new SendGridProvider();
+            //var emailTemplate = sendGridProvider.CompleteBookingEmailTemplate("Evgeny", "Platonov", DateTime.Now.ToString(), carTitle, "Fernando Alonso Díaz", "Tea", "Sea-Road");
 
-            sendGridProvider.SendEmail("ultramarine256@gmail.com", "Please confirm your Booking", emailTemplate);
+            //sendGridProvider.SendEmail("ultramarine256@gmail.com", "Please confirm your Booking", emailTemplate);
 
             // TODO: send email
             // TODO: update leads table
