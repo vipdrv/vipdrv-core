@@ -5,6 +5,6 @@ namespace QuantumLogic.Core.Domain.Services.Main.Invitations
 {
     public interface IInvitationDomainService : IEntityDomainService<Invitation, int>
     {
-        Task UseInvitationAsync(string invitationCode);
+        Task<Invitation> UseInvitationAsync(string invitationCode);
     }
 }

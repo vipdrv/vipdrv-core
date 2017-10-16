@@ -109,7 +109,7 @@ namespace QuantumLogic.WebApi.Controllers.Main
             entity.InvitatorId = id;
             using (var uow = UowManager.CurrentOrCreateNew(true))
             {
-                entity = await InvitationDomainService.CreateAsync(request.MapToEntity());
+                entity = await InvitationDomainService.CreateAsync(entity);
                 await uow.CompleteAsync();
             }
             using (var uow = UowManager.CurrentOrCreateNew(true))
@@ -121,7 +121,7 @@ namespace QuantumLogic.WebApi.Controllers.Main
             return dto;
         }
 
-        [HttpPost("{invitation-code}")]
+        [HttpPost("{invitationCode}")]
         public async Task RegisterAsync([FromBody]UserFullDto request, string invitationCode)
         {
             if (request == null)
@@ -131,7 +131,8 @@ namespace QuantumLogic.WebApi.Controllers.Main
             request.NormalizeAsRequest();
             using (var uow = UowManager.CurrentOrCreateNew(true))
             {
-                await InvitationDomainService.UseInvitationAsync(invitationCode);
+                Invitation invitation = await InvitationDomainService.UseInvitationAsync(invitationCode);
+                request.MaxSitesCount = invitation.AvailableSitesCount;
                 await DomainService.CreateAsync(request.MapToEntity());
                 await uow.CompleteAsync();
             }

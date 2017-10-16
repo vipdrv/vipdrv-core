@@ -21,9 +21,9 @@ namespace QuantumLogic.Core.Domain.Services.Main.Invitations
 
         #endregion
 
-        public async Task UseInvitationAsync(string invitationCode)
+        public async Task<Invitation> UseInvitationAsync(string invitationCode)
         {
-            Invitation entity = await Repository.FirstOrDefaultAsync(r => r.InvitationCode == invitationCode && r.Used);
+            Invitation entity = await Repository.FirstOrDefaultAsync(r => r.InvitationCode == invitationCode && !r.Used);
             if (entity == null)
             {
                 throw new EntityNotFoundException();
@@ -31,6 +31,7 @@ namespace QuantumLogic.Core.Domain.Services.Main.Invitations
             ((IInvitationPolicy)Policy).CanUse(entity);
             entity.Used = true;
             entity.UsedTimeUtc = DateTime.UtcNow;
+            return entity;
         }
 
         public override Task<Invitation> CreateAsync(Invitation entity)
@@ -55,11 +56,21 @@ namespace QuantumLogic.Core.Domain.Services.Main.Invitations
         }
         protected override Expression<Func<Invitation, object>>[] GetRetrieveAllEntityIncludes()
         {
-            return new Expression<Func<Invitation, object>>[0];
+            return new List<Expression<Func<Invitation, object>>>()
+            {
+                entity => entity.Role,
+                entity => entity.Invitator
+            }
+            .ToArray();
         }
         protected override Expression<Func<Invitation, object>>[] GetRetrieveEntityIncludes()
         {
-            return new Expression<Func<Invitation, object>>[0];
+            return new List<Expression<Func<Invitation, object>>>()
+            {
+                entity => entity.Role,
+                entity => entity.Invitator
+            }
+            .ToArray();
         }
     }
 }
