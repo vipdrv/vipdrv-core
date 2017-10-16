@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using QuantumLogic.Core.Domain.Entities.WidgetModule;
 using QuantumLogic.Core.Domain.Services.Widget.Beverages;
 using QuantumLogic.Core.Domain.UnitOfWorks;
@@ -26,32 +27,35 @@ namespace QuantumLogic.WebApi.Controllers.Widget
         #region CRUD
 
         [HttpGet("{id}")]
-        public Task<BeverageFullDto> Get(int id)
+        public Task<BeverageFullDto> GetAsync(int id)
         {
             return InnerGetAsync(id);
         }
+        [Authorize]
         [HttpPost]
-        public Task<BeverageFullDto> Create([FromBody]BeverageFullDto request)
+        public Task<BeverageFullDto> CreateAsync([FromBody]BeverageFullDto request)
         {
             return InnerCreateAsync(request);
         }
+        [Authorize]
         [HttpPut]
-        public Task<BeverageFullDto> Update([FromBody]BeverageFullDto request)
+        public Task<BeverageFullDto> UpdateAsync([FromBody]BeverageFullDto request)
         {
             return InnerUpdateAsync(request);
         }
+        [Authorize]
         [HttpDelete("{id}")]
-        public Task Delete(int id)
+        public Task DeleteAsync(int id)
         {
             return InnerDeleteAsync(id);
         }
 
         #endregion
 
-        #region Custom methods
+        #region Methods to operate with many entities
 
         [HttpPost("get-all/{page?}/{pageSize?}")]
-        public Task<GetAllResponse<BeverageDto>> GetAll([FromBody]BeverageGetAllRequest request, uint page = 0, uint pageSize = 0)
+        public Task<GetAllResponse<BeverageDto>> GetAllAsync([FromBody]BeverageGetAllRequest request, uint page = 0, uint pageSize = 0)
         {
             Expression<Func<Beverage, bool>> filter = (entity) => request.SiteId.HasValue ? request.SiteId == entity.SiteId : true;
             return InnerGetAllAsync(filter, request.Sorting, page, pageSize);
@@ -61,11 +65,13 @@ namespace QuantumLogic.WebApi.Controllers.Widget
 
         #region Extended metods
 
+        [Authorize]
         [HttpPatch("change-activity/{id}")]
         public Task ChangeActivityAsync(int id, [FromBody]ChangeActivityRequest request)
         {
             return ChangeActivityAsync(id, request.Value);
         }
+        [Authorize]
         [HttpPatch("change-order/{id}")]
         public Task ChangeOrderAsync(int id, [FromBody]ChangeOrderRequest request)
         {

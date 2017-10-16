@@ -31,12 +31,15 @@ namespace QuantumLogic.Data.EFContext
         #region DbSets
 
         public virtual DbSet<User> Users { get; set; }
+        public virtual DbSet<Role> Roles { get; set; }
+        public virtual DbSet<Claim> Claims { get; set; }
+        public virtual DbSet<Invitation> Invitations { get; set; }
         public virtual DbSet<Site> Sites { get; set; }
+        public virtual DbSet<Lead> Leads { get; set; }
         public virtual DbSet<Beverage> Beverages { get; set; }
         public virtual DbSet<Expert> Experts { get; set; }
         public virtual DbSet<Route> Routes { get; set; }
         public virtual DbSet<WidgetTheme> WidgetThemes { get; set; }
-        public virtual DbSet<Lead> Leads { get; set; }
 
         #endregion
 
@@ -129,6 +132,22 @@ namespace QuantumLogic.Data.EFContext
                     .HasOne(e => e.User)
                     .WithMany(b => b.ExternalLogins)
                     .HasForeignKey(r => r.UserId)
+                    .OnDelete(DeleteBehavior.Cascade);
+            });
+
+            modelBuilder.Entity<Invitation>(entity =>
+            {
+                entity.ToTable("Invitation");
+                entity.HasKey(r => r.Id);
+                entity
+                    .HasOne(e => e.Invitator)
+                    .WithMany(b => b.CreatedInvitations)
+                    .HasForeignKey(r => r.InvitatorId)
+                    .OnDelete(DeleteBehavior.Cascade);
+                entity
+                    .HasOne(e => e.Role)
+                    .WithMany()
+                    .HasForeignKey(r => r.RoleId)
                     .OnDelete(DeleteBehavior.Cascade);
             });
 

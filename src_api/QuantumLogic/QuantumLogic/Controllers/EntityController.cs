@@ -70,7 +70,7 @@ namespace QuantumLogic.WebApi.Controllers
         {
             if (request == null)
             {
-                throw new ArgumentNullException("request");
+                throw new ArgumentNullException(nameof(request));
             }
             request.NormalizeAsRequest();
             TPrimaryKey entityId;

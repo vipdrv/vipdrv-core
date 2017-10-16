@@ -8,9 +8,10 @@ using QuantumLogic.Data.EFContext;
 namespace QuantumLogic.Data.Migrations
 {
     [DbContext(typeof(QuantumLogicDbContext))]
-    partial class QuantumLogicDbContextModelSnapshot : ModelSnapshot
+    [Migration("20171016152938_AddedInvitations")]
+    partial class AddedInvitations
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "1.1.2")
@@ -55,8 +56,6 @@ namespace QuantumLogic.Data.Migrations
 
                     b.Property<int>("AvailableSitesCount");
 
-                    b.Property<DateTime>("CreatedTimeUtc");
-
                     b.Property<string>("Email");
 
                     b.Property<string>("InvitationCode");
@@ -66,10 +65,6 @@ namespace QuantumLogic.Data.Migrations
                     b.Property<string>("PhoneNumber");
 
                     b.Property<int>("RoleId");
-
-                    b.Property<bool>("Used");
-
-                    b.Property<DateTime?>("UsedTimeUtc");
 
                     b.HasKey("Id");
 

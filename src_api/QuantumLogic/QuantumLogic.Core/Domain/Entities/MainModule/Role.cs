@@ -30,5 +30,10 @@ namespace QuantumLogic.Core.Domain.Entities.MainModule
         }
 
         #endregion
+
+        public override string ToString()
+        {
+            return $"{Name}";
+        }
     }
 }

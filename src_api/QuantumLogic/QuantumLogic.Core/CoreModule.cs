@@ -2,6 +2,7 @@
 using QuantumLogic.Core.Domain.Entities.MainModule;
 using QuantumLogic.Core.Domain.Entities.WidgetModule;
 using QuantumLogic.Core.Domain.Services;
+using QuantumLogic.Core.Domain.Services.Main.Invitations;
 using QuantumLogic.Core.Domain.Services.Main.Users;
 using QuantumLogic.Core.Domain.Services.Widget.Beverages;
 using QuantumLogic.Core.Domain.Services.Widget.Experts;
@@ -27,7 +28,9 @@ namespace QuantumLogic.Core
             #region Domain services
 
             #region Main
-
+            
+            services.AddScoped<IEntityDomainService<Invitation, int>, InvitationDomainService>();
+            services.AddScoped<IInvitationDomainService, InvitationDomainService>();
             services.AddScoped<IEntityDomainService<User, int>, UserDomainService>();
             services.AddScoped<IUserDomainService, UserDomainService>();
 

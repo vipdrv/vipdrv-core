@@ -16,22 +16,22 @@ namespace QuantumLogic.Core.Domain.Policy
         IQueryable<TEntity> RetrieveAllFilter(IQueryable<TEntity> query);
         /// <summary>Is used to check operation "Retrieve" access via policy</summary>
         /// <param name="entity">entity for operation</param>
-        /// <exception cref="Exceptions.EntityPolicyException">Thrown when this operation access is denied</exception>
+        /// <exception cref="Exceptions.Policy.EntityPolicyException">Thrown when this operation access is denied</exception>
         /// <exception cref="Core.Exceptions.NotSupported.OperationIsNotSupportedException">Thrown when this operation is not supported for current entity</exception>
         void PolicyRetrieve(TEntity entity);
         /// <summary>Is used to check operation "Create" access via policy</summary>
         /// <param name="entity">entity for operation</param>
-        /// <exception cref="Exceptions.EntityPolicyException">Thrown when this operation access is denied</exception>
+        /// <exception cref="Exceptions.Policy.EntityPolicyException">Thrown when this operation access is denied</exception>
         /// <exception cref="Core.Exceptions.NotSupported.OperationIsNotSupportedException">Thrown when this operation is not supported for current entity</exception>
         void PolicyCreate(TEntity entity);
         /// <summary>Is used to check operation "Update" access via policy</summary>
         /// <param name="entity">entity for operation</param>
-        /// <exception cref="Exceptions.EntityPolicyException">Thrown when this operation access is denied</exception>
+        /// <exception cref="Exceptions.Policy.EntityPolicyException">Thrown when this operation access is denied</exception>
         /// <exception cref="Core.Exceptions.NotSupported.OperationIsNotSupportedException">Thrown when this operation is not supported for current entity</exception>
         void PolicyUpdate(TEntity entity);
         /// <summary>Is used to check operation "Delete" access via policy</summary>
         /// <param name="entity">entity for operation</param>
-        /// <exception cref="Exceptions.EntityPolicyException">Thrown when this operation access is denied</exception>
+        /// <exception cref="Exceptions.Policy.EntityPolicyException">Thrown when this operation access is denied</exception>
         /// <exception cref="Core.Exceptions.NotSupported.OperationIsNotSupportedException">Thrown when this operation is not supported for current entity</exception>
         void PolicyDelete(TEntity entity);
         /// <summary>Is used to check operation "Retrieve" access via policy</summary>

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using QuantumLogic.Core.Domain.Entities.WidgetModule;
 using QuantumLogic.Core.Domain.Services.Widget.Routes;
 using QuantumLogic.Core.Domain.UnitOfWorks;
@@ -25,33 +26,36 @@ namespace QuantumLogic.WebApi.Controllers.Widget
 
         #region CRUD
 
-        [Microsoft.AspNetCore.Mvc.HttpGet("{id}")]
-        public Task<RouteFullDto> Get(int id)
+        [HttpGet("{id}")]
+        public Task<RouteFullDto> GetAsync(int id)
         {
             return InnerGetAsync(id);
         }
-        [Microsoft.AspNetCore.Mvc.HttpPost]
-        public Task<RouteFullDto> Create([Microsoft.AspNetCore.Mvc.FromBody]RouteFullDto request)
+        [Authorize]
+        [HttpPost]
+        public Task<RouteFullDto> CreateAsync([FromBody]RouteFullDto request)
         {
             return InnerCreateAsync(request);
         }
-        [Microsoft.AspNetCore.Mvc.HttpPut]
-        public Task<RouteFullDto> Update([Microsoft.AspNetCore.Mvc.FromBody]RouteFullDto request)
+        [Authorize]
+        [HttpPut]
+        public Task<RouteFullDto> UpdateAsync([FromBody]RouteFullDto request)
         {
             return InnerUpdateAsync(request);
         }
-        [Microsoft.AspNetCore.Mvc.HttpDelete("{id}")]
-        public Task Delete(int id)
+        [Authorize]
+        [HttpDelete("{id}")]
+        public Task DeleteAsync(int id)
         {
             return InnerDeleteAsync(id);
         }
 
         #endregion
 
-        #region Custom methods
+        #region Methods to operate with many entities
 
-        [Microsoft.AspNetCore.Mvc.HttpPost("get-all/{page?}/{pageSize?}")]
-        public Task<GetAllResponse<RouteDto>> GetAll([Microsoft.AspNetCore.Mvc.FromBody]RouteGetAllRequest request, uint page = 0, uint pageSize = 0)
+        [HttpPost("get-all/{page?}/{pageSize?}")]
+        public Task<GetAllResponse<RouteDto>> GetAllAsync([FromBody]RouteGetAllRequest request, uint page = 0, uint pageSize = 0)
         {
             Expression<Func<Route, bool>> filter = (entity) => request.SiteId.HasValue ? request.SiteId == entity.SiteId : true;
             return InnerGetAllAsync(filter, request.Sorting, page, pageSize);
@@ -61,11 +65,13 @@ namespace QuantumLogic.WebApi.Controllers.Widget
 
         #region Extended metods
 
+        [Authorize]
         [HttpPatch("change-activity/{id}")]
         public Task ChangeActivityAsync(int id, [FromBody]ChangeActivityRequest request)
         {
             return ChangeActivityAsync(id, request.Value);
         }
+        [Authorize]
         [HttpPatch("change-order/{id}")]
         public Task ChangeOrderAsync(int id, [FromBody]ChangeOrderRequest request)
         {
