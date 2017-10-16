@@ -42,11 +42,13 @@ namespace QuantumLogic.WebApi
             services.AddScoped<IQLSession, QLSession>();
             services.AddScoped<IQLPermissionChecker, NullQLPermissionChecker>();
             services.AddTransient<JwtSecurityTokenHandler, JwtSecurityTokenHandler>();
-           
+
             #region Policy registration
 
             //services.Add(ServiceDescriptor.Scoped(typeof(IEntityPolicy<,>), typeof(NullEntityPolicy<,>)));
 
+            services.AddScoped<IEntityPolicy<Invitation, int>, InvitationPolicy>();
+            services.AddScoped<IInvitationPolicy, InvitationPolicy>();
             services.AddScoped<IEntityPolicy<User, int>, UserPolicy>();
             services.AddScoped<IUserPolicy, UserPolicy>();
 
@@ -70,6 +72,8 @@ namespace QuantumLogic.WebApi
 
             //services.Add(ServiceDescriptor.Scoped(typeof(IEntityValidationService<,>), typeof(NullEntityValidationService<,>)));
 
+            services.AddScoped<IEntityValidationService<Invitation, int>, InvitationValidationService>();
+            services.AddScoped<IInvitationValidationService, InvitationValidationService>();
             services.AddScoped<IEntityValidationService<User, int>, UserValidationService>();
             services.AddScoped<IUserValidationService, UserValidationService>();
 

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using QuantumLogic.Core.Domain.Entities.WidgetModule;
 using QuantumLogic.Core.Domain.Services.Widget.Sites;
 using QuantumLogic.Core.Domain.UnitOfWorks;
@@ -26,32 +27,35 @@ namespace QuantumLogic.WebApi.Controllers.Widget
         #region CRUD
 
         [HttpGet("{id}")]
-        public Task<SiteFullDto> Get(int id)
+        public Task<SiteFullDto> GetAsync(int id)
         {
             return InnerGetAsync(id);
         }
+        [Authorize]
         [HttpPost]
-        public Task<SiteFullDto> Create([FromBody]SiteFullDto request)
+        public Task<SiteFullDto> CreateAsync([FromBody]SiteFullDto request)
         {
             return InnerCreateAsync(request);
         }
+        [Authorize]
         [HttpPut]
-        public Task<SiteFullDto> Update([FromBody]SiteFullDto request)
+        public Task<SiteFullDto> UpdateAsync([FromBody]SiteFullDto request)
         {
             return InnerUpdateAsync(request);
         }
+        [Authorize]
         [HttpDelete("{id}")]
-        public Task Delete(int id)
+        public Task DeleteAsync(int id)
         {
             return InnerDeleteAsync(id);
         }
 
         #endregion
 
-        #region Custom methods
+        #region Methods to operate with many entities
 
         [HttpPost("get-all/{page?}/{pageSize?}")]
-        public Task<GetAllResponse<SiteDto>> GetAll([FromBody]SiteGetAllRequest request, uint page = 0, uint pageSize = 0)
+        public Task<GetAllResponse<SiteDto>> GetAllAsync([FromBody]SiteGetAllRequest request, uint page = 0, uint pageSize = 0)
         {
             Expression<Func<Site, bool>> filter = (entity) => request.UserId == null || request.UserId == entity.UserId;
             return InnerGetAllAsync(filter, request.Sorting, page, pageSize);
@@ -59,8 +63,9 @@ namespace QuantumLogic.WebApi.Controllers.Widget
 
         #endregion
 
-        #region Unic methods
+        #region Special methods
 
+        [Authorize]
         [HttpPatch("change-contacts/{id}")]
         public async Task ChangeContactsAsync(int id, [FromBody]ChangeContactsRequest request)
         {

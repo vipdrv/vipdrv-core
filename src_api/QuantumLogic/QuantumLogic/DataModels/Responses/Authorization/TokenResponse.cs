@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace QuantumLogic.WebApi.DataModels.Responses.Authorization
 {
-    public class TokenResponse : UserIdentityInfo
+    public class TokenResponse : IdentityInfo
     {
         public string Issuer { get; private set; }
         public IList<string> Audiences { get; private set; }
@@ -13,7 +13,7 @@ namespace QuantumLogic.WebApi.DataModels.Responses.Authorization
 
         #region Ctors
 
-        public TokenResponse(string issuer, IList<string> audiences, string token, string sub, DateTime expireDateTimeUtc, UserIdentityInfo userIdentityInfo)
+        public TokenResponse(string issuer, IList<string> audiences, string token, string sub, DateTime expireDateTimeUtc, IdentityInfo userIdentityInfo)
             : this(
                   issuer, audiences, token, sub, expireDateTimeUtc, userIdentityInfo.UserId, userIdentityInfo.Username,
                   userIdentityInfo.GrantedRoles, userIdentityInfo.GrantedPermissions, userIdentityInfo.AvatarUrl)

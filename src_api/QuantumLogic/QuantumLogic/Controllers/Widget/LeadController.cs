@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using QuantumLogic.Core.Domain.Entities.WidgetModule;
 using QuantumLogic.Core.Domain.Services.Widget.Leads;
 using QuantumLogic.Core.Domain.UnitOfWorks;
@@ -38,38 +39,42 @@ namespace QuantumLogic.WebApi.Controllers.Widget
         #region CRUD
 
         [HttpGet("{id}")]
-        public Task<LeadFullDto> Get(int id)
+        public Task<LeadFullDto> GetAsync(int id)
         {
             return InnerGetAsync(id);
         }
         [HttpPost]
-        public Task<LeadFullDto> Create([FromBody]LeadFullDto request)
+        public Task<LeadFullDto> CreateAsync([FromBody]LeadFullDto request)
         {
             return InnerCreateAsync(request);
         }
+        [Authorize]
         [HttpPut]
-        public Task<LeadFullDto> Update([FromBody]LeadFullDto request)
+        public Task<LeadFullDto> UpdateAsync([FromBody]LeadFullDto request)
         {
             return InnerUpdateAsync(request);
         }
+        [Authorize]
         [HttpDelete("{id}")]
-        public Task Delete(int id)
+        public Task DeleteAsync(int id)
         {
             return InnerDeleteAsync(id);
         }
 
         #endregion
 
-        #region Custom methods
+        #region Methods to operate with many entities
 
+        [Authorize]
         [HttpPost("get-all/{page?}/{pageSize?}")]
-        public Task<GetAllResponse<LeadDto>> GetAll([FromBody]LeadGetAllRequest request, uint page = 0, uint pageSize = 0)
+        public Task<GetAllResponse<LeadDto>> GetAllAsync([FromBody]LeadGetAllRequest request, uint page = 0, uint pageSize = 0)
         {
             return InnerGetAllAsync(BuildRetrieveManyFilter(request), request.Sorting, page, pageSize);
         }
 
         #endregion
 
+        [Authorize]
         [HttpPost("export/excel/{page?}/{pageSize?}")]
         public async Task<string> ExportDataToExcelAsync([FromBody]LeadGetAllRequest request, uint? page = null, uint? pageSize = null)
         {

@@ -34,6 +34,8 @@ namespace QuantumLogic.Data
 
             //services.Add(ServiceDescriptor.Transient(typeof(IQLRepository<,>), typeof(EFRepository<,>)));
 
+            services.AddTransient<IQLRepository<Invitation, int>, InvitationRepository>();
+            services.AddTransient<IInvitationRepository, InvitationRepository>();
             services.AddTransient<IQLRepository<User, int>, UserRepository>();
             services.AddTransient<IUserRepository, UserRepository>();
 

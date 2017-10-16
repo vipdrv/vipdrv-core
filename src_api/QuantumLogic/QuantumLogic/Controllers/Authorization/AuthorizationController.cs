@@ -92,13 +92,13 @@ namespace QuantumLogic.WebApi.Controllers.Authorization
         }
 
         [Authorize]
-        [HttpGet("user-identity-info")]
-        public Task<UserIdentityInfo> GetUserInfoAsync()
+        [HttpGet("identity-info")]
+        public Task<IdentityInfo> GetIdentityInfoAsync()
         {
             return ParseIdentityInfoFromIdentityClaimsAsync(HttpContext.User.Claims.ToDictionary((item) => item.Type, (item) => item.Value));
         }
 
-        public static Task<UserIdentityInfo> ParseIdentityInfoFromIdentityClaimsAsync(IDictionary<string, string> identityClaims)
+        public static Task<IdentityInfo> ParseIdentityInfoFromIdentityClaimsAsync(IDictionary<string, string> identityClaims)
         {
             string grantedRolesValue;
             if (!identityClaims.TryGetValue(GrantedRolesClaimKey, out grantedRolesValue))
@@ -115,7 +115,7 @@ namespace QuantumLogic.WebApi.Controllers.Authorization
             {
                 avatarUrl = String.Empty;
             }
-            UserIdentityInfo result = new UserIdentityInfo(
+            IdentityInfo result = new IdentityInfo(
                 Int64.Parse(identityClaims[UserIdClaimKey]),
                 identityClaims[UsernameClaimKey],
                 String.IsNullOrEmpty(grantedRolesValue) ? new string[0] : grantedRolesValue.Split(','),

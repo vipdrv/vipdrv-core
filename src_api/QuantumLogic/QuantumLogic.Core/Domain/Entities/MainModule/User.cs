@@ -27,6 +27,7 @@ namespace QuantumLogic.Core.Domain.Entities.MainModule
         public virtual ICollection<UserClaim> UserClaims { get; set; }
 
         public virtual ICollection<Site> Sites { get; set; }
+        public virtual ICollection<Invitation> CreatedInvitations { get; set; }
 
         #endregion
 
@@ -35,10 +36,19 @@ namespace QuantumLogic.Core.Domain.Entities.MainModule
         public User()
             : base()
         {
+            ExternalLogins = new HashSet<ExternalLogin>();
+            UserRoles = new HashSet<UserRole>();
+            UserClaims = new HashSet<UserClaim>();
             Sites = new HashSet<Site>();
+            CreatedInvitations = new HashSet<Invitation>();
         }
 
         #endregion
+
+        public override string ToString()
+        {
+            return $"{FirstName} ({Username}) {SecondName}";
+        }
 
         #region IValidable implementation
 

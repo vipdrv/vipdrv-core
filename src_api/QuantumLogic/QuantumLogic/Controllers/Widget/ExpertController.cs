@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using QuantumLogic.Core.Domain.Entities.WidgetModule;
 using QuantumLogic.Core.Domain.Services.Widget.Experts;
 using QuantumLogic.Core.Domain.UnitOfWorks;
@@ -26,32 +27,35 @@ namespace QuantumLogic.WebApi.Controllers.Widget
         #region CRUD
 
         [HttpGet("{id}")]
-        public Task<ExpertFullDto> Get(int id)
+        public Task<ExpertFullDto> GetAsync(int id)
         {
             return InnerGetAsync(id);
         }
+        [Authorize]
         [HttpPost]
-        public Task<ExpertFullDto> Create([FromBody]ExpertFullDto request)
+        public Task<ExpertFullDto> CreateAsync([FromBody]ExpertFullDto request)
         {
             return InnerCreateAsync(request);
         }
+        [Authorize]
         [HttpPut]
-        public Task<ExpertFullDto> Update([FromBody]ExpertFullDto request)
+        public Task<ExpertFullDto> UpdateAsync([FromBody]ExpertFullDto request)
         {
             return InnerUpdateAsync(request);
         }
+        [Authorize]
         [HttpDelete("{id}")]
-        public Task Delete(int id)
+        public Task DeleteAsync(int id)
         {
             return InnerDeleteAsync(id);
         }
 
         #endregion
 
-        #region Custom methods
+        #region Methods to operate with many entities
 
         [HttpPost("get-all/{page?}/{pageSize?}")]
-        public Task<GetAllResponse<ExpertDto>> GetAll([FromBody]ExpertGetAllRequest request, uint page = 0, uint pageSize = 0)
+        public Task<GetAllResponse<ExpertDto>> GetAllAsync([FromBody]ExpertGetAllRequest request, uint page = 0, uint pageSize = 0)
         {
             Expression<Func<Expert, bool>> filter = (entity) =>
                (!request.SiteId.HasValue || request.SiteId == entity.SiteId) &&
@@ -64,11 +68,13 @@ namespace QuantumLogic.WebApi.Controllers.Widget
 
         #region Extended metods
 
+        [Authorize]
         [HttpPatch("change-activity/{id}")]
         public Task ChangeActivityAsync([FromBody]ChangeActivityRequest request, int id)
         {
             return ChangeActivityAsync(id, request.Value);
         }
+        [Authorize]
         [HttpPatch("change-order/{id}")]
         public Task ChangeOrderAsync([FromBody]ChangeOrderRequest request, int id)
         {
