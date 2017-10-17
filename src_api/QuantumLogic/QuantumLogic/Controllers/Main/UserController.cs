@@ -5,6 +5,8 @@ using QuantumLogic.Core.Domain.Services.Main.Invitations;
 using QuantumLogic.Core.Domain.Services.Main.Users;
 using QuantumLogic.Core.Domain.UnitOfWorks;
 using QuantumLogic.Core.Exceptions.Validation;
+using QuantumLogic.Core.Utils.Email;
+using QuantumLogic.Core.Utils.Email.Providers.SendGrid;
 using QuantumLogic.WebApi.DataModels.Dtos.Main.Invitations;
 using QuantumLogic.WebApi.DataModels.Dtos.Main.Users;
 using QuantumLogic.WebApi.DataModels.Requests.Main.Users;
@@ -12,6 +14,7 @@ using QuantumLogic.WebApi.DataModels.Responses;
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
+using System.Net;
 using System.Threading.Tasks;
 
 namespace QuantumLogic.WebApi.Controllers.Main
@@ -106,6 +109,19 @@ namespace QuantumLogic.WebApi.Controllers.Main
         [HttpPost("{id}/invitation")]
         public async Task<InvitationDto> CreateInvitationAsync([FromBody]InvitationDto request, int id)
         {
+            string origin;
+            try
+            {
+                Microsoft.Extensions.Primitives.StringValues origins;
+                Request.Headers.TryGetValue("Origin", out origins);
+                origin = origins[0];
+            }
+            catch
+            {
+                Response.StatusCode = (int)HttpStatusCode.ServiceUnavailable;
+                throw new ArgumentException("Origin");
+            }
+
             Invitation entity = request.MapToEntity();
             entity.InvitatorId = id;
             using (var uow = UowManager.CurrentOrCreateNew(true))
@@ -117,9 +133,16 @@ namespace QuantumLogic.WebApi.Controllers.Main
             {
                 entity = await InvitationDomainService.RetrieveAsync(entity.Id);
             }
-#warning TODO: uncomment after implementation of email service
-            //string registrationUrl = $"{Request.Scheme}://{Request.Host}/#/registration/{entity.InvitationCode}";
-            //EmailService.SendEmail(new EmailAddress(), registrationUrl);
+#warning TODO: rework after implementation of email service
+            string registrationUrl = $"{origin}/#/registration/{entity.InvitationCode}";
+            var emailProvider = new SendGridEmailProvider();
+            string result = emailProvider.SendEmail(
+                new SendGrid.Helpers.Mail.EmailAddress(entity.Email),
+                new SendGrid.Helpers.Mail.EmailAddress("test.drive@mail.com", "TestDrive service"),
+                "Invitation to TestDrive service!",
+                registrationUrl,
+                registrationUrl);
+
             InvitationDto dto = new InvitationDto();
             dto.MapFromEntity(entity);
             return dto;

@@ -2,6 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Extensions } from './../../utils/index';
 import { IUserApiService, UserApiService } from './../../services/serverApi/index';
+import { IAuthorizationManager, AuthorizationManager } from './../../utils/index';
 @Component({
     selector: 'registration',
     styleUrls: ['./registration.scss'],
@@ -28,16 +29,20 @@ export class RegistrationComponent implements OnInit, OnDestroy {
     protected errorMessage: string;
     /// injected dependencies
     protected userApiService: IUserApiService;
+    protected authorizationManager: IAuthorizationManager;
     /// ctor
     constructor(
-        private route: ActivatedRoute,
-        private router: Router,
-        userApiService: UserApiService) {
+        protected route: ActivatedRoute,
+        protected router: Router,
+        userApiService: UserApiService,
+        authorizationManager: AuthorizationManager) {
         this.userApiService = userApiService;
+        this.authorizationManager = authorizationManager;
     }
     /// methods
     ngOnInit(): void {
         const self = this;
+        self.authorizationManager.signOut();
         self._parameterSubscription = self.route.params
             .subscribe(params => {
                 self.invitationCodeFromUrl = params['invitationCode'];
