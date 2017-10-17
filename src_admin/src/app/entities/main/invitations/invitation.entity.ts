@@ -26,9 +26,11 @@ export class InvitationEntity extends Entity {
         this.invitationCode = mock.invitationCode;
         this.email = mock.email;
         this.phoneNumber = mock.phoneNumber;
-        this.createdTimeUtc = Extensions.formatUtcDateTimeToLocalTimezone(mock.createdTimeUtc);
+        this.createdTimeUtc = Variable.isNullOrUndefined(mock.createdTimeUtc) ?
+            null : Extensions.formatUtcDateTimeToLocalTimezone(mock.createdTimeUtc);
         this.used = mock.used;
-        this.usedTimeUtc = Extensions.formatUtcDateTimeToLocalTimezone(mock.usedTimeUtc);
+        this.usedTimeUtc = Variable.isNullOrUndefined(mock.usedTimeUtc) ?
+            null : Extensions.formatUtcDateTimeToLocalTimezone(mock.usedTimeUtc);
         this.availableSitesCount = mock.availableSitesCount;
         this.roleId = mock.roleId;
         this.role = mock.role;
