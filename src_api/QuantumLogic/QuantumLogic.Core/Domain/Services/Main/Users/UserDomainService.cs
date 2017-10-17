@@ -36,6 +36,13 @@ namespace QuantumLogic.Core.Domain.Services.Main.Users
                     user.AvatarUrl);
         }
 
+        public Task<bool> IsUsernameValid(string value)
+        {
+            return Repository
+                .FirstOrDefaultAsync(r => String.Equals(r.Username, value, StringComparison.OrdinalIgnoreCase))
+                .ContinueWith((pt) => pt.Result == null);
+        }
+
         protected override Task CascadeDeleteActionAsync(User entity)
         {
             return Task.CompletedTask;

@@ -196,5 +196,16 @@
       "routeActivity": "Is active",
       "routeOrder": "Order"
     }
+  },
+  "registration": {
+    "headerMessage": "register in our service!",
+    "messageInfo": "Please, fill out the registration form.",
+    "firstName": "First name",
+    "secondName": "Second name",
+    "email": "Email",
+    "username": "Username",
+    "password": "Password",
+    "confirmPassword": "Password (confirm)",
+    "applyRegistration": "Sign up"
   }
 }
