@@ -17,6 +17,10 @@ export const routes: Routes = [
         loadChildren: './logout/logout.module#LogoutModule'
     },
     {
+        path: 'registration',
+        loadChildren: './registration/registration.module#RegistrationModule'
+    },
+    {
         path: 'pages',
         component: Pages,
         children: [

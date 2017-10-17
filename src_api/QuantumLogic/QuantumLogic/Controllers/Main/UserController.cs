@@ -4,6 +4,7 @@ using QuantumLogic.Core.Domain.Entities.MainModule;
 using QuantumLogic.Core.Domain.Services.Main.Invitations;
 using QuantumLogic.Core.Domain.Services.Main.Users;
 using QuantumLogic.Core.Domain.UnitOfWorks;
+using QuantumLogic.Core.Exceptions.Validation;
 using QuantumLogic.WebApi.DataModels.Dtos.Main.Invitations;
 using QuantumLogic.WebApi.DataModels.Dtos.Main.Users;
 using QuantumLogic.WebApi.DataModels.Requests.Main.Users;
@@ -116,6 +117,9 @@ namespace QuantumLogic.WebApi.Controllers.Main
             {
                 entity = await InvitationDomainService.RetrieveAsync(entity.Id);
             }
+#warning TODO: uncomment after implementation of email service
+            //string registrationUrl = $"{Request.Scheme}://{Request.Host}/#/registration/{entity.InvitationCode}";
+            //EmailService.SendEmail(new EmailAddress(), registrationUrl);
             InvitationDto dto = new InvitationDto();
             dto.MapFromEntity(entity);
             return dto;
@@ -131,11 +135,21 @@ namespace QuantumLogic.WebApi.Controllers.Main
             request.NormalizeAsRequest();
             using (var uow = UowManager.CurrentOrCreateNew(true))
             {
+                if (!(await ((IUserDomainService)DomainService).IsUsernameValid(request.Username)))
+                {
+                    throw new ValidateEntityPropertiesException(nameof(request.Username));
+                }
                 Invitation invitation = await InvitationDomainService.UseInvitationAsync(invitationCode);
                 request.MaxSitesCount = invitation.AvailableSitesCount;
                 await DomainService.CreateAsync(request.MapToEntity());
                 await uow.CompleteAsync();
             }
+        }
+
+        [HttpGet("is-username-valid/{value}")]
+        public Task<bool> IsUsernameValid(string value)
+        {
+            return ((IUserDomainService)DomainService).IsUsernameValid(value);
         }
 
         #endregion
