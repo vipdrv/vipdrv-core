@@ -5,6 +5,7 @@ export * from './i-light-entity';
 export * from './entity';
 export * from './lightEntity';
 
+export * from './main/invitations/invitation.entity';
 export * from './main/users/user.entity';
 
 export * from './widget/beverages/beverage.entity';

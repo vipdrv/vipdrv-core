@@ -38,7 +38,7 @@ export class BaPageTop {
     }
     userAvatarUrl(): string {
         // TODO: replace with real user avatar
-        let result: string = 'https://www.b1g1.com/assets/admin/images/no_image_user.png';
+        const result: string = 'https://www.b1g1.com/assets/admin/images/no_image_user.png';
         return result;
     }
 }
