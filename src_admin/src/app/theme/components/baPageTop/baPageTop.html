@@ -17,25 +17,18 @@
     <input id="searchInput" type="text" placeholder="Search for...">
   </div>
   -->
-  <!--
-    <div class="user-profile clearfix">
+
+    <div class="user-profile clearfix"
+         *ngIf="isUserInfoDefined()">
       <div class="dropdown al-user-profile">
         <a class="profile-toggle-link dropdown-toggle" id="user-profile-dd" data-toggle="dropdown" aria-expanded="false">
-          <img src="{{ ( 'Nasta' | baProfilePicture ) }}">
+          <img src="{{userAvatarUrl()}}">
         </a>
         <ul class="dropdown-menu top-dropdown-menu profile-dropdown" aria-labelledby="user-profile-dd">
-          <li class="dropdown-item"><a href><i class="fa fa-user"></i>Profile</a></li>
-          <li class="dropdown-item"><a href><i class="fa fa-cog"></i>Settings</a></li>
-          <li class="dropdown-item"><a href class="signout"><i class="fa fa-power-off"></i>Sign out</a></li>
+          <li class="dropdown-item"><a routerLink="/pages/userProfile"><i class="fa fa-user"></i>Profile</a></li>
+          <li class="dropdown-item"><a routerLink="/pages/invitations"><i class="fa fa-cog"></i>Invitations</a></li>
+          <li class="dropdown-item"><a routerLink="/logout" class="signout"><i class="fa fa-power-off"></i>Sign out</a></li>
         </ul>
       </div>
-      <ba-msg-center></ba-msg-center>
     </div>
-    -->
-    <a routerLink="/logout"
-       style="margin-top: 20px; color: #ffffff; "
-       class="pull-right"
-       *ngIf="isUserInfoDefined()">
-      <i class="fa fa-sign-out"></i> Logout
-    </a>
 </div>

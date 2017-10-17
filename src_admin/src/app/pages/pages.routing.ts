@@ -24,15 +24,38 @@ export const routes: Routes = [
         path: 'pages',
         component: Pages,
         children: [
-            { path: '', redirectTo: 'home', pathMatch: 'full', canActivate: [AuthorizationManager] },
-            { path: 'home', loadChildren: './home/home.module#HomeModule', canActivate: [AuthorizationManager] },
+            {
+                path: '',
+                redirectTo: 'home',
+                pathMatch: 'full',
+                canActivate: [AuthorizationManager]
+            },
+            {
+                path: 'home',
+                loadChildren: './home/home.module#HomeModule',
+                canActivate: [AuthorizationManager]
+            },
             {
                 path: 'integration',
                 loadChildren: './integration/integration.module#IntegrationModule',
                 canActivate: [AuthorizationManager]
             },
-            { path: 'leads', loadChildren: './leads/leads.module#LeadsModule', canActivate: [AuthorizationManager] },
-            { path: 'sites', loadChildren: './sites/sites.module#SitesModule', canActivate: [AuthorizationManager] },
+            {
+                path: 'leads',
+                loadChildren: './leads/leads.module#LeadsModule',
+                canActivate: [AuthorizationManager]
+            },
+            {
+                path: 'sites',
+                loadChildren: './sites/sites.module#SitesModule',
+                canActivate: [AuthorizationManager]
+            },
+            {
+                path: 'invitations',
+                loadChildren: './invitations/invitations.module#InvitationsModule',
+                canActivate: [AuthorizationManager]
+            },
+
             { path: 'test', loadChildren: './test/test.module#TestModule', canActivate: [AuthorizationManager] }
         ]
     }
