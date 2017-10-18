@@ -30,6 +30,14 @@ namespace QuantumLogic.Core.Domain.Entities.MainModule
         public virtual ICollection<Invitation> CreatedInvitations { get; set; }
 
         #endregion
+        
+        public virtual string FullName
+        {
+            get
+            {
+                return $"{FirstName} {SecondName}";
+            }
+        }
 
         #region Ctors
 

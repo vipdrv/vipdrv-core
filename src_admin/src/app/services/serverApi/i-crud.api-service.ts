@@ -8,7 +8,7 @@ export interface ICRUDApiService<TEntity extends IEntity<TKey>, TKey, TLightEnti
     getAll(page: number, pageSize: number, sorting, filter: any): Promise<GetAllResponse<TEntity>>;
     getAllLight(page: number, pageSize: number, sorting: string, filter: any): Promise<GetAllResponse<TLightEntity>>;
     get(id: TKey): Promise<TEntity>;
-    create(id: TEntity): Promise<TEntity>;
+    create(entity: TEntity): Promise<TEntity>;
     update(id: TEntity): Promise<TEntity>;
     delete(id: TKey): Promise<void>;
 }

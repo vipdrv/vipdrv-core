@@ -1,0 +1,161 @@
+<div class="wrapper">
+    <form class="form-registration">
+        <span class="form-registration-heading-app-name" translate>general.applicationName</span> -
+        <span class="form-registration-heading-message" translate>registration.headerMessage</span>
+        <hr>
+        <div class="alert alert-danger alert-dismissible fade show"
+             role="alert"
+             style="margin-top: 10px; height: 50px;"
+             *ngIf="!!errorMessage">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close" (click)="errorMessage = null;">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            {{errorMessage}}
+        </div>
+        <div class="alert alert-info alert-dismissible fade show"
+             role="alert"
+             style="margin-top: 10px; height: 50px;"
+             *ngIf="!errorMessage">
+            <span translate>
+                registration.messageInfo
+            </span>
+        </div>
+        <div class="row form-registration-row">
+            <div class="col-12">
+
+            </div>
+        </div>
+        <div class="row form-registration-row">
+            <label  class="col-4 col-form-label"
+                    for="invitationCode"
+                    translate>
+                registration.invitationCode
+            </label>
+            <div class="col-8">
+                <input id="invitationCode"
+                       type="text"
+                       name="invitationCode"
+                       class="form-control"
+                       required=""
+                       autofocus=""
+                       placeholder="00000000-0000-0000-0000-000000000000"
+                       [(ngModel)]="invitationCode">
+            </div>
+        </div>
+        <div class="row form-registration-row">
+            <label  class="col-4 col-form-label"
+                    for="firstName"
+                    translate>
+                registration.firstName
+            </label>
+            <div class="col-8">
+                <input id="firstName"
+                       type="text"
+                       name="firstName"
+                       class="form-control"
+                       required=""
+                       autofocus=""
+                       placeholder="John"
+                       [(ngModel)]="model.firstName">
+            </div>
+        </div>
+        <div class="row form-registration-row">
+            <label  class="col-4 col-form-label"
+                    for="secondName"
+                    translate>
+                registration.secondName
+            </label>
+            <div class="col-8">
+                <input id="secondName"
+                       type="text"
+                       name="secondName"
+                       class="form-control"
+                       required=""
+                       autofocus=""
+                       placeholder="Doe"
+                       [(ngModel)]="model.secondName">
+            </div>
+        </div>
+        <div class="row form-registration-row">
+            <label  class="col-4 col-form-label"
+                    for="email"
+                    translate>
+                registration.email
+            </label>
+            <div class="col-8">
+                <input id="email"
+                       type="email"
+                       name="email"
+                       class="form-control"
+                       required=""
+                       autofocus=""
+                       placeholder="john.doe@email.com"
+                       [(ngModel)]="model.email">
+            </div>
+        </div>
+        <div class="row form-registration-row">
+            <label  class="col-4 col-form-label"
+                    for="username"
+                    translate>
+                registration.username
+            </label>
+            <div class="col-8">
+                <input id="username"
+                       type="text"
+                       name="username"
+                       class="form-control"
+                       required=""
+                       autofocus=""
+                       placeholder="JDoe"
+                       (ngModelChange)="usernameChanged($event)"
+                       [ngModel]="model.username">
+            </div>
+        </div>
+        <div class="row form-registration-row">
+            <label class="col-4 col-form-label"
+                   for="password"
+                   translate>
+                registration.password
+            </label>
+            <div class="col-8">
+                <input id="password"
+                       type="password"
+                       name="password"
+                       class="form-control"
+                       required=""
+                       autofocus=""
+                       placeholder="Password"
+                       [(ngModel)]="model.password">
+            </div>
+        </div>
+        <div class="row form-registration-row">
+            <label class="col-4 col-form-label"
+                   for="confirmPassword"
+                   translate>
+                registration.confirmPassword
+            </label>
+            <div class="col-8">
+                <input id="confirmPassword"
+                       type="password"
+                       name="confirmPassword"
+                       class="form-control"
+                       required=""
+                       autofocus=""
+                       placeholder="Repeat password"
+                       [(ngModel)]="confirmPassword">
+            </div>
+        </div>
+        <div style="margin-top: 10px;">
+            <button class="btn btn-success pull-right"
+                    type="submit"
+                    [disabled]="loading || !isRegistrationAvailable()"
+                    (click)="register()">
+                <i class="fa fa-refresh fa-spin" *ngIf="!!loading"></i>
+                <i class="fa fa-check" *ngIf="!loading"></i>
+                <span translate>
+                    registration.applyRegistration
+                </span>
+            </button>
+        </div>
+    </form>
+</div>
