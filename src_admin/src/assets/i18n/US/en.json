@@ -200,6 +200,7 @@
   "registration": {
     "headerMessage": "register in our service!",
     "messageInfo": "Please, fill out the registration form.",
+    "invitationCode": "Activation key",
     "firstName": "First name",
     "secondName": "Second name",
     "email": "Email",
@@ -207,5 +208,41 @@
     "password": "Password",
     "confirmPassword": "Password (confirm)",
     "applyRegistration": "Sign up"
+  },
+  "invitations": {
+    "title": "Invitations management",
+    "status": {
+      "pending": "Pending",
+      "accepted": "Accepted"
+    },
+    "actions": {
+      "delete": "revoke"
+    },
+    "table": {
+      "invitationCode": "Invitation code",
+      "email": "Email",
+      "phoneNumber": "Phone number",
+      "createdTime": "Creation time",
+      "used": "Status",
+      "usedTime": "Accepted time",
+      "availableSitesCount": "Sites max count",
+      "role": "Expected role",
+      "invitator": "Creator"
+    },
+    "modal": {
+      "titleInfo": "Invitation details",
+      "titleCreate": "Creating invitation",
+      "cancel": "Cancel",
+      "apply": "Send invitation",
+      "invitationCode": "Invitation code",
+      "email": "Email",
+      "phoneNumber": "Phone number",
+      "createdTime": "Creation time",
+      "used": "Status",
+      "usedTime": "Accepted time",
+      "availableSitesCount": "Sites max count",
+      "role": "Expected role",
+      "invitator": "Creator"
+    }
   }
 }
