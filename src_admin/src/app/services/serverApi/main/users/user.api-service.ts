@@ -42,7 +42,7 @@ export class UserApiService extends CRUDApiService<UserEntity, number, LightEnti
         const methodName: string = `${userId}/invitation`;
         const pageParameter = new UrlParameter('page', page);
         const pageSizeParameter = new UrlParameter('pageSize', pageSize);
-        const sortingParameter = new UrlParameter('sorting', pageSize);
+        const sortingParameter = new UrlParameter('sorting', sorting);
         return self.httpService
             .get(self.createUrlWithMethodNameAndUrlParams(methodName, pageParameter, pageSizeParameter, sortingParameter))
             .then(function (response: any): GetAllResponse<InvitationEntity> {

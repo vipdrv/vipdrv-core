@@ -1,41 +1,14 @@
-Invitations components will be here (not implemented yet)
-<br>
-<br>
-stub invitation sender
-<br>
-<br>
-<div class="form-group row">
-    <label  class="col-2 col-form-label"
-            for="email"
-            translate>
-        Email
-    </label>
-    <div class="col-10">
-        <input id="email"
-               type="email"
-               class="form-control"
-               [(ngModel)]="model.email">
+<div class="invitations-template">
+    <div class="row">
+        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+            <div class="invitations-template-title">
+                <span class="invitations-template-title-text" translate>invitations.title</span>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+            <invitations-table></invitations-table>
+        </div>
     </div>
 </div>
-<div class="form-group row">
-    <label  class="col-2 col-form-label"
-            for="siteUrl"
-            translate>
-        Available sites count
-    </label>
-    <div class="col-10">
-        <input id="siteUrl"
-               type="number"
-               min="0"
-               class="form-control"
-               [(ngModel)]="model.availableSitesCount"/>
-    </div>
-</div>
-<button type="button"
-        [disabled]="isSendInvitationDisabled()"
-        class="btn btn-primary pull-right"
-        (click)="sendInvitation()">
-    <i class="fa fa-refresh fa-spin" *ngIf="isSendInvitationInProgress()"></i>
-    <i class="fa fa-paper-plane" *ngIf="!isSendInvitationInProgress()"></i>
-    Send invitation
-</button>
