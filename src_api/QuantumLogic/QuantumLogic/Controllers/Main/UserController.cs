@@ -136,7 +136,7 @@ namespace QuantumLogic.WebApi.Controllers.Main
 #warning TODO: rework after implementation of email service
             string registrationUrl = $"{origin}/#/registration/{entity.InvitationCode}";
             var emailProvider = new SendGridEmailProvider();
-            string result = emailProvider.SendEmail(
+            var result = emailProvider.SendEmail(
                 new SendGrid.Helpers.Mail.EmailAddress(entity.Email),
                 new SendGrid.Helpers.Mail.EmailAddress("test.drive@mail.com", "TestDrive service"),
                 "Invitation to TestDrive service!",
