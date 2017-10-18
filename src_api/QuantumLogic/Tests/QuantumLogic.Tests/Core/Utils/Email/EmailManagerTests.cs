@@ -18,14 +18,13 @@ namespace QuantumLogic.Tests.Core.Utils.Email
     public sealed class EmailManagerTests
     {
         [Test]
-        [Ignore("Real Email sending")]
+        // [Ignore("Real Email sending")]
         public void CompleteBooking__ShouldSendEmail()
         {
-            IBookingEmailService driveEmailService = new TestDriveEmailService(new SendGridEmailProvider());
-            var emailTo = new EmailAddress("ultramarine256@gmail.com", "Evgeny Platonov");
-            IEmailTemplate emailTemplate = new CompleteBookingEmailTemplate("FirstName", "SecondName", DateTime.Now.ToString(), "Ford Mustang", "Expert #1", "Tea", "City Roads");
+            ITestDriveEmailService driveEmailService = new TestDriveEmailService(new SendGridEmailProvider());
 
-            driveEmailService.SendCompleteBookingEmail(emailTo, emailTemplate);
+            var emailTo = new EmailAddress("ultramarine256@gmail.com", "Evgeny Platonov");
+            driveEmailService.SendDealerInvitationEmail(emailTo, "http://dev.admin.testdrive.pw/");
         }
     }
 }
