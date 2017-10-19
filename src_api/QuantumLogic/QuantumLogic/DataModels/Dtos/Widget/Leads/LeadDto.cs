@@ -1,10 +1,12 @@
-﻿using QuantumLogic.Core.Constants;
+﻿using System;
+using QuantumLogic.Core.Constants;
 using QuantumLogic.Core.Domain.Entities.WidgetModule;
 
 namespace QuantumLogic.WebApi.DataModels.Dtos.Widget.Leads
 {
     public class LeadDto : EntityDto<Lead, int>
     {
+        public int Id { get; }
         public int SiteId { get; set; }
         public int ExpertId { get; set; }
         public int? BeverageId { get; set; }
@@ -14,6 +16,8 @@ namespace QuantumLogic.WebApi.DataModels.Dtos.Widget.Leads
         public string SecondName { get; set; }
         public string UserPhone { get; set; }
         public string UserEmail { get; set; }
+        public DateTime BookingDateTimeUtc { get; set; }
+        public string BookingDateTimeOutputUtc { get; set; }
 
         #region Relations
 
@@ -21,6 +25,28 @@ namespace QuantumLogic.WebApi.DataModels.Dtos.Widget.Leads
         public string ExpertName { get; set; }
         public string BeverageName { get; set; }
         public string RouteName { get; set; }
+
+        #endregion
+
+        #region ctor
+
+        public LeadDto() : base()
+        {
+        }
+
+        public LeadDto(int id, int siteId, int expertId, int? beverageId, int routeId, string firstName, string secondName, string userPhone, string userEmail, DateTime bookingDateTimeUtc) : this()
+        {
+            Id = id;
+            SiteId = siteId;
+            ExpertId = expertId;
+            BeverageId = beverageId;
+            RouteId = routeId;
+            FirstName = firstName;
+            SecondName = secondName;
+            UserPhone = userPhone;
+            UserEmail = userEmail;
+            BookingDateTimeUtc = bookingDateTimeUtc;
+        }
 
         #endregion
 
@@ -42,6 +68,7 @@ namespace QuantumLogic.WebApi.DataModels.Dtos.Widget.Leads
             ExpertName = entity.Expert.Name;
             BeverageName = entity.Beverage.Name;
             RouteName = entity.Route.Name;
+            BookingDateTimeOutputUtc = BookingDateTimeUtc.ToString(QuantumLogicConstants.OutputDateTimeFormat);
         }
         public override Lead MapToEntity()
         {
