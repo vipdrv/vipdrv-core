@@ -14,6 +14,13 @@ using QuantumLogic.WebApi.Providers.Export.Excel.Leads;
 using System;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
+using QuantumLogic.Core.Utils.Email;
+using QuantumLogic.Core.Utils.Email.Providers.SendGrid;
+using QuantumLogic.Core.Utils.Email.Services;
+using QuantumLogic.Core.Utils.Email.Templates;
+using QuantumLogic.Data.EFContext;
+using QuantumLogic.WebApi.DataModels.Requests.Widget.Booking;
+using SendGrid.Helpers.Mail;
 
 namespace QuantumLogic.WebApi.Controllers.Widget
 {
@@ -72,6 +79,20 @@ namespace QuantumLogic.WebApi.Controllers.Widget
             return InnerGetAllAsync(BuildRetrieveManyFilter(request), request.Sorting, page, pageSize);
         }
 
+        [HttpPost("{siteId}/complete-booking")]
+        public async Task<LeadFullDto> CompleteBooking(int siteId, [FromBody]CompleteBookingRequest request)
+        {
+            var leadFullDto = new LeadFullDto(0, siteId, request.ExpertId, request.BeverageId, request.RoadId, request.BookingUser.FirstName, request.BookingUser.LastName, request.BookingUser.Phone, request.BookingUser.Email, request.BookingDateTime.DateTime);
+
+            LeadFullDto result = await InnerCreateAsync(leadFullDto);
+
+            // ITestDriveEmailService driveEmailService = new TestDriveEmailService(new SendGridEmailProvider());
+            // var emailTo = new EmailAddress(request.BookingUser.Email, $"{request.BookingUser.FirstName} {request.BookingUser.LastName}");
+            // IEmailTemplate emailTemplate = new CompleteBookingEmailTemplate(request.BookingUser.FirstName, request.BookingUser.LastName, DateTime.Now.ToString(), "Ford Mustang", "Expert #1", "Tea", "City Roads");
+
+            return result;
+        }
+
         #endregion
 
         [Authorize]
@@ -97,7 +118,7 @@ namespace QuantumLogic.WebApi.Controllers.Widget
         protected virtual Expression<Func<Lead, bool>> BuildRetrieveManyFilter(LeadGetAllRequest request)
         {
             return (entity) =>
-                request.UserId == null || request.UserId == entity.Site.UserId && 
+                request.UserId == null || request.UserId == entity.Site.UserId &&
                 //(String.IsNullOrEmpty(request.RecievedDateTime) || entity.RecievedUtc) &&
                 (String.IsNullOrEmpty(request.FirstName) || !String.IsNullOrEmpty(entity.FirstName) && entity.FirstName.Contains(request.FirstName)) &&
                 (String.IsNullOrEmpty(request.SecondName) || !String.IsNullOrEmpty(entity.SecondName) && entity.SecondName.Contains(request.SecondName)) &&
