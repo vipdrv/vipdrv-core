@@ -17,7 +17,6 @@ using System.Threading.Tasks;
 using QuantumLogic.Core.Utils.Email;
 using QuantumLogic.Core.Utils.Email.Providers.SendGrid;
 using QuantumLogic.Core.Utils.Email.Services;
-using QuantumLogic.Core.Utils.Email.Templates;
 using QuantumLogic.Data.EFContext;
 using QuantumLogic.WebApi.DataModels.Requests.Widget.Booking;
 using SendGrid.Helpers.Mail;
