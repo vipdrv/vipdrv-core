@@ -16,6 +16,9 @@ using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Net;
 using System.Threading.Tasks;
+using QuantumLogic.Core.Utils.Email.Services;
+using QuantumLogic.Core.Utils.Email.Templates.TestDrive;
+using SendGrid.Helpers.Mail;
 
 namespace QuantumLogic.WebApi.Controllers.Main
 {
@@ -133,16 +136,15 @@ namespace QuantumLogic.WebApi.Controllers.Main
             {
                 entity = await InvitationDomainService.RetrieveAsync(entity.Id);
             }
-#warning TODO: rework after implementation of email service
+            
             string registrationUrl = $"{origin}/#/registration/{entity.InvitationCode}";
-            var emailProvider = new SendGridEmailProvider();
-            var result = emailProvider.SendEmail(
-                new SendGrid.Helpers.Mail.EmailAddress(entity.Email),
-                new SendGrid.Helpers.Mail.EmailAddress("test.drive@mail.com", "TestDrive service"),
-                "Invitation to TestDrive service!",
-                registrationUrl,
-                registrationUrl);
 
+#warning TODO: Register and Inject TestDriveEmailService
+            new TestDriveEmailService(new SendGridEmailProvider())
+                .SendDealerInvitationEmail(
+                    new EmailAddress(entity.Email, string.Empty), 
+                    new DealerInvitationEmailTemplate(registrationUrl));
+            
             InvitationDto dto = new InvitationDto();
             dto.MapFromEntity(entity);
             return dto;

@@ -6,7 +6,6 @@ namespace QuantumLogic.WebApi.DataModels.Dtos.Widget.Leads
 {
     public class LeadDto : EntityDto<Lead, int>
     {
-        public int Id { get; }
         public int SiteId { get; set; }
         public int ExpertId { get; set; }
         public int? BeverageId { get; set; }

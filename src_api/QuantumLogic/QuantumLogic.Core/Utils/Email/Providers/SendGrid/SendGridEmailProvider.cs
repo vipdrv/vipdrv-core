@@ -1,4 +1,5 @@
-﻿using System.Net;
+﻿using System.Collections.Generic;
+using System.Net;
 using SendGrid;
 using SendGrid.Helpers.Mail;
 
@@ -18,6 +19,12 @@ namespace QuantumLogic.Core.Utils.Email.Providers.SendGrid
             var msg = MailHelper.CreateSingleEmail(emailFrom, emailTo, subject, plainTextContent, htmlContent);
 
             return _client.SendEmailAsync(msg).Result.StatusCode;
+        }
+
+        public HttpStatusCode SendEmail(IList<EmailAddress> emailTo, EmailAddress emailFrom, string subject, string plainTextContent,
+            string htmlContent)
+        {
+            throw new System.NotImplementedException();
         }
     }
 }
