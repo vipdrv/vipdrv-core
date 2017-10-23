@@ -12,11 +12,17 @@ using QuantumLogic.WebApi.DataModels.Requests.Widget.Leads;
 using QuantumLogic.WebApi.DataModels.Responses;
 using QuantumLogic.WebApi.Providers.Export.Excel.Leads;
 using System;
+using System.Linq;
+using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
+using QuantumLogic.Core.Domain.Services.Widget.Beverages;
+using QuantumLogic.Core.Domain.Services.Widget.Experts;
+using QuantumLogic.Core.Domain.Services.Widget.Routes;
 using QuantumLogic.Core.Utils.Email;
 using QuantumLogic.Core.Utils.Email.Providers.SendGrid;
 using QuantumLogic.Core.Utils.Email.Services;
+using QuantumLogic.Core.Utils.Email.Templates.TestDrive;
 using QuantumLogic.Data.EFContext;
 using QuantumLogic.WebApi.DataModels.Requests.Widget.Booking;
 using SendGrid.Helpers.Mail;
@@ -26,6 +32,11 @@ namespace QuantumLogic.WebApi.Controllers.Widget
     [Route("api/lead")]
     public class LeadController : EntityController<Lead, int, LeadDto, LeadFullDto>
     {
+        private readonly IExpertDomainService _expertDomainService;
+        private readonly IBeverageDomainService _beverageDomainService;
+        private readonly IRouteDomainService _routeDomainService;
+        private readonly ITestDriveEmailService _testDriveEmailService;
+
         #region Injected dependencies
 
         public IContentManager ContentManager { get; private set; }
@@ -34,9 +45,20 @@ namespace QuantumLogic.WebApi.Controllers.Widget
 
         #region Ctors
 
-        public LeadController(IQLUnitOfWorkManager uowManager, ILeadDomainService domainService, IContentManager contentManager)
+        public LeadController(
+            IQLUnitOfWorkManager uowManager, 
+            ILeadDomainService domainService,
+            IExpertDomainService expertDomainService,
+            IBeverageDomainService beverageDomainService,
+            IRouteDomainService routeDomainService,
+            IContentManager contentManager,
+            ITestDriveEmailService testDriveEmailService)
             : base(uowManager, domainService)
         {
+            _expertDomainService = expertDomainService;
+            _beverageDomainService = beverageDomainService;
+            _routeDomainService = routeDomainService;
+            _testDriveEmailService = testDriveEmailService;
             ContentManager = contentManager;
         }
 
@@ -81,13 +103,34 @@ namespace QuantumLogic.WebApi.Controllers.Widget
         [HttpPost("{siteId}/complete-booking")]
         public async Task<LeadFullDto> CompleteBooking(int siteId, [FromBody]CompleteBookingRequest request)
         {
-            var leadFullDto = new LeadFullDto(0, siteId, request.ExpertId, request.BeverageId, request.RoadId, request.BookingUser.FirstName, request.BookingUser.LastName, request.BookingUser.Phone, request.BookingUser.Email, request.BookingDateTime.DateTime);
+            var leadFullDto = new LeadFullDto(
+                0, 
+                siteId, 
+                request.ExpertId, 
+                request.BeverageId, 
+                request.RoadId, 
+                request.BookingUser.FirstName, 
+                request.BookingUser.LastName,
+                request.BookingUser.Phone, 
+                request.BookingUser.Email, 
+                request.BookingDateTime.DateTime);
 
             LeadFullDto result = await InnerCreateAsync(leadFullDto);
 
-            // ITestDriveEmailService driveEmailService = new TestDriveEmailService(new SendGridEmailProvider());
-            // var emailTo = new EmailAddress(request.BookingUser.Email, $"{request.BookingUser.FirstName} {request.BookingUser.LastName}");
-            // IEmailTemplate emailTemplate = new CompleteBookingEmailTemplate(request.BookingUser.FirstName, request.BookingUser.LastName, DateTime.Now.ToString(), "Ford Mustang", "Expert #1", "Tea", "City Roads");
+            var expert = await _expertDomainService.RetrieveAsync(request.ExpertId);
+            var beverage = await _beverageDomainService.RetrieveAsync(request.BeverageId);
+            var road = await _routeDomainService.RetrieveAsync(request.RoadId);
+
+            _testDriveEmailService.SendCompleteBookingEmail(
+                new EmailAddress(request.BookingUser.Email, $"{request.BookingUser.FirstName} {request.BookingUser.LastName}"),
+                new CompleteBookingEmailTemplate(
+                    request.BookingUser.FirstName,
+                    request.BookingUser.LastName,
+                    request.BookingDateTime.DateTime,
+                    request.BookingCar.Title,
+                    expert.Name,
+                    beverage.Name,
+                    road.Name));
 
             return result;
         }

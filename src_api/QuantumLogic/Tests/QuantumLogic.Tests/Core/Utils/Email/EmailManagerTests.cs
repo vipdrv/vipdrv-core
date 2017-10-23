@@ -23,7 +23,7 @@ namespace QuantumLogic.Tests.Core.Utils.Email
             ITestDriveEmailService driveEmailService = new TestDriveEmailService(new SendGridEmailProvider());
 
             var emailTo = new EmailAddress("ultramarine256@gmail.com", "Evgeny Platonov");
-            driveEmailService.SendDealerInvitationEmail(emailTo, );
+            // driveEmailService.SendDealerInvitationEmail(emailTo, );
         }
     }
 }
