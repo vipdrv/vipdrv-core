@@ -1,7 +1,7 @@
 <div class="container-fluid test-drive-widget__root">
-    <div class="row">
+    <div class="row" ng-if="!globalState.isFormCompleted">
         <td-wizard-navigation-tab
-                class="col p-0"
+                class="col p-0 bg-light"
                 ng-repeat="tab in widgetTabs"
                 tab-id="tab.id"
                 title="tab.title"
@@ -10,7 +10,7 @@
         </td-wizard-navigation-tab>
     </div>
 
-    <div class="row" ng-if="!globalState.isFormCompleted"><!--bg-light-->
+    <div class="row td-wizard__root" ng-if="!globalState.isFormCompleted">
         <td-wizard-tab-content class="col td-wizard" ></td-wizard-tab-content>
         <td-sidebar class="col-3 td-car-details d-none d-md-block bg-white"
                     user-data="userData">

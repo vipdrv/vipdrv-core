@@ -13,6 +13,9 @@
                 this.userData = userData;
 
                 this.completeForm = function () {
+
+                    // api.completeBooking();
+
                     // api.submitForm(userData);
                     globalState.isFormCompleted = true;
                     // this.isFormCompleted = true;
@@ -63,26 +66,30 @@
                 };
 
                 // =======================================================================//
-                // Load Data from Api                                                     //
+                // Init                                                                   //
                 // =======================================================================//
 
-                self.openHours = [];
-                self.experts = [];
-                self.beverages = [];
-                self.roads = [];
+                self.$onInit = function() {
+                    self.openHours = [];
+                    self.experts = [];
+                    self.beverages = [];
+                    self.roads = [];
 
-                api.retrieveOpenHours((data) => {
-                    self.openHours = data.workingIntervals;
-                });
-                api.retrieveExperts((data) => {
-                    self.experts = data.items;
-                });
-                api.retrieveBeverages((data) => {
-                    self.beverages = data.items;
-                });
-                api.retrieveRoutes((data) => {
-                    self.roads = data.items;
-                });
+                    api.retrieveOpenHours().then(function (data) {
+                        self.openHours = data.workingIntervals;
+                    });
+                    api.retrieveExperts().then(function (data) {
+                        self.experts = data.items;
+                    });
+                    api.retrieveBeverages().then(function (data) {
+                        self.beverages = data.items;
+                    });
+                    api.retrieveRoutes().then(function (data) {
+                        self.roads = data.items;
+                    });
+                };
+
+
             },
             templateUrl: 'src/app/components/wizard/wizard-tab-content.tpl.html',
             bindings: {}

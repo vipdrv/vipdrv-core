@@ -1,5 +1,6 @@
 <div class="row td-sidebar">
-    <img src="{{$ctrl.userData.car.img}}" class="td-sidebar__car-image pt-2 pl-2 pr-2 pb-1">
+
+    <img ng-if="$ctrl.userData.car.img != null" src="{{$ctrl.userData.car.img}}" class="td-sidebar__car-image pt-2 pl-2 pr-2 pb-1">
 
     <div class="col-12">
         <h4 class="text-primary" ng-show="!$ctrl.userData.car.title">Nissan GT-R</h4>
@@ -9,33 +10,34 @@
     <div class="col-12">
         <p class="text-secondary m-0">Engine</p>
         <!--<p>3.8 litre twin-turbo V6</p>-->
-        <p>{{$ctrl.userData.car.engine}}</p>
+        <p class="mb-2">{{$ctrl.userData.car.engine}}</p>
     </div>
     <div class="col-6">
         <p class="text-secondary m-0">Year</p>
         <!--<p>2016</p>-->
-        <p>{{$ctrl.userData.car.year}}</p>
+        <p class="mb-2">{{$ctrl.userData.car.year}}</p>
     </div>
     <div class="col-6">
         <p class="text-secondary m-0">Colour</p>
         <!--<p>Orange</p>-->
-        <p>{{$ctrl.userData.car.colour}}</p>
+        <p class="mb-2">{{$ctrl.userData.car.colour}}</p>
     </div>
     <div class="col-6">
         <p class="text-secondary m-0">Transmission</p>
-        <p>{{$ctrl.userData.car.transmission}}</p>
+        <p class="mb-2">{{$ctrl.userData.car.transmission}}</p>
     </div>
     <div class="col-6">
         <p class="text-secondary m-0">Fuel</p>
-        <p>{{$ctrl.userData.car.fuel}}</p>
+        <p class="mb-3">{{$ctrl.userData.car.fuel}}</p>
     </div>
 
     <div class="col-12 mb-2">
         <div class="media">
             <img class="d-flex mr-4" src="/img/icon-date.jpg">
             <div class="media-body">
-                <span>12/06/2016 - 9:00</span>
+                <!--<span>12/06/2016 - 9:00</span>-->
                 <!--<p>{{$ctrl.userData.calendar.date}} - {{$ctrl.userData.calendar.time}}</p>-->
+                <p>25/06/2016 - {{$ctrl.userData.calendar.time}}</p>
             </div>
         </div>
     </div>

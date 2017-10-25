@@ -1,8 +1,10 @@
 <div class="wizard-navigation-tab bg-primary"
      ng-class="{'wizard-navigation-tab--completed': $ctrl.tabData.isCompleted, 'wizard-navigation-tab--active' : $ctrl.tabData.isActive, 'wizard-navigation-tab--locked' : $ctrl.tabData.isLocked}"
      ng-click="switchTabInner()">
+
     <div class="wizard-navigation-tab__content">
-        <div class="wizard-navigation-tab__text text-light d-none d-md-block" ng-class="{'font-weight-bold': $ctrl.tabData.isActive}">{{$ctrl.title}}</div>
+        <div class="wizard-navigation-tab__text text-light d-none d-md-block"
+             ng-class="{'font-weight-bold': $ctrl.tabData.isActive}">{{$ctrl.title}}</div>
         <div class="wizard-navigation-tab__icon text-light d-sm-block d-md-none d-lg-none">
             <i class="{{$ctrl.tabData.icon}}" aria-hidden="true"></i>
         </div>

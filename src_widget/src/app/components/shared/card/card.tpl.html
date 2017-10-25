@@ -3,8 +3,8 @@
          src="{{$ctrl.cardImage}}"
          alt="Image"
          style="height: 64px">
-    <div class="media-body">
+    <div class="media-body td-card__body">
         <h5 class="mt-0" ng-class="$ctrl.isActiveCard ? 'text-primary' : ''">{{$ctrl.cardTitle}}</h5>
-        <span class="text-secondary">{{$ctrl.cardDesc | limitTo:220}}{{$ctrl.cardDesc.length  > 220 ? ' ...' : ''}}</span>
+        <a class="text-secondary">{{$ctrl.cardDesc | limitTo:120}}{{$ctrl.cardDesc.length > 120 ? ' ...' : ''}}</a>
     </div>
 </div>
