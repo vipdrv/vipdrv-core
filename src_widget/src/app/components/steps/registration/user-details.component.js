@@ -22,8 +22,10 @@
                     }
                 };
 
-                $scope.makeBooking = function () {
-                    self.validateStep();
+                self.makeBooking = function () {
+                    // self.validateStep();
+
+                    self.completeForm();
 
                     if (self.isStepValid) {
                         // self.completeStep({tabId: self.tabId});

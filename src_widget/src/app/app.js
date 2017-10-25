@@ -64,7 +64,7 @@
         },
         calendar: {
             date: null,
-            time: null
+            time: '10:00'
         },
         expert: {
             id: null,

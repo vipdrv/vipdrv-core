@@ -1,7 +1,7 @@
 <div class="row">
     <div class="col-md-6 col-sm-12 d-none d-sm-none d-md-none d-lg-block d-xl-block">
         <h2 class="wizard-tab-content__title text-center text-md-left">Select Date</h2>
-        <br>
+        <p></p>
         <div moment-picker="ctrl.dateImput"
              format="LL LTS"
              min-view="month"
@@ -14,19 +14,19 @@
     </div>
     <div class="col-md-6 col-sm-12 d-none d-sm-none d-md-none d-lg-block d-xl-block">
         <h2 class="wizard-tab-content__title text-center text-md-left">Select Time</h2>
-        <br>
-        <div moment-picker="ctrl.timeInput"
-             format="LL LTS"
-             min-view="day"
-             max-view="day"
-             min-date="''"
-             max-date="''"
-             today="true"
-             inline="true">
+        <p></p>
+        <div class="row td-time pr-3">
+            <div class="col-3 pb-2 p-0 pl-2"
+                 ng-repeat="time in $ctrl.timeIntervals"
+                 ng-click="$ctrl.timeChanged(time)">
+                <div class="td-time__item"
+                     ng-class="time == $ctrl.userData.calendar.time ? 'td-time__item--active' : ''">
+                    {{time}}
+                </div>
+            </div>
         </div>
     </div>
-    <!--{{ ctrl.dateImput }}-->
-    <!--{{ ctrl.timeInput }}-->
+
 
     <div class="col-sm-12 d-sm-block d-md-block d-lg-none d-xl-none">
         <h2 class="wizard-tab-content__title text-center">Select Date & Time</h2>
@@ -41,7 +41,6 @@
         </div>
         <!--{{ ctrl.dateTimeInput }}-->
     </div>
-
 
 </div>
 <p></p>
