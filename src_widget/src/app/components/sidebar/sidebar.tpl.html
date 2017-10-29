@@ -1,6 +1,6 @@
 <div class="row td-sidebar">
 
-    <img ng-if="$ctrl.userData.car.img != null" src="{{$ctrl.userData.car.img}}" class="td-sidebar__car-image pt-2 pl-2 pr-2 pb-1">
+    <img ng-if="$ctrl.userData.car.img != null" src="{{$ctrl.userData.car.img}}" class="td-sidebar__car-image pt-1 pl-2 pr-2 pb-1">
 
     <div class="col-12">
         <h4 class="text-primary" ng-show="!$ctrl.userData.car.title">Nissan GT-R</h4>
@@ -31,18 +31,18 @@
         <p class="mb-3">{{$ctrl.userData.car.fuel}}</p>
     </div>
 
-    <div class="col-12 mb-2">
+    <div class="col-12 mb-1">
         <div class="media">
             <img class="d-flex mr-4" src="/img/icon-date.jpg">
             <div class="media-body">
                 <!--<span>12/06/2016 - 9:00</span>-->
-                <!--<p>{{$ctrl.userData.calendar.date}} - {{$ctrl.userData.calendar.time}}</p>-->
-                <p>25/06/2016 - {{$ctrl.userData.calendar.time}}</p>
+                <span>{{$ctrl.userData.calendar.date}} - {{$ctrl.userData.calendar.time}}</span>
+                <!--<span>25/06/2016 - {{$ctrl.userData.calendar.time}}</span>-->
             </div>
         </div>
     </div>
 
-    <div class="col-12 mb-2">
+    <div class="col-12 mb-1">
         <div class="media">
             <img class="d-flex mr-4" src="/img/icon-expert.jpg">
             <div class="media-body">
@@ -51,7 +51,7 @@
         </div>
     </div>
 
-    <div class="col-12 mb-2">
+    <div class="col-12 mb-1">
         <div class="media">
             <img class="d-flex mr-4" src="/img/icon-beverage.jpg">
             <div class="media-body">

@@ -11,6 +11,7 @@
                 };
 
                 self.expertChanged = function (id, name) {
+
                     self.userData.expert.id = id;
                     self.userData.expert.name = name;
 

@@ -1,5 +1,5 @@
 <div class="container-fluid test-drive-widget__root">
-    <div class="row" ng-if="!globalState.isFormCompleted">
+    <div class="row" ng-if="!globalState.isFormCompleted" style="height: 10%; overflow: hidden;">
         <td-wizard-navigation-tab
                 class="col p-0 bg-light"
                 ng-repeat="tab in widgetTabs"
@@ -9,13 +9,9 @@
                 switch-tab="switchTab(tab.id)">
         </td-wizard-navigation-tab>
     </div>
-
-    <div class="row td-wizard__root" ng-if="!globalState.isFormCompleted">
-        <td-wizard-tab-content class="col td-wizard" ></td-wizard-tab-content>
-        <td-sidebar class="col-3 td-car-details d-none d-md-block bg-white"
-                    user-data="userData">
-        </td-sidebar>
+    <div class="row td-wizard__root" ng-if="!globalState.isFormCompleted" style="height: 90%; overflow: hidden;">
+        <td-wizard-tab-content class="col td-wizard"></td-wizard-tab-content>
+        <td-sidebar class="col-3 td-car-details d-none d-md-block bg-white" user-data="userData"></td-sidebar>
     </div>
-    <td-complete-step ng-if="globalState.isFormCompleted">
-    </td-complete-step>
+    <td-complete-step ng-if="globalState.isFormCompleted" class="h-100"></td-complete-step>
 </div>
