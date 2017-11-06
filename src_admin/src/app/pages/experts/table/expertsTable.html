@@ -258,9 +258,9 @@
                     </div>
                     <div class="collapse" id="collapseExample">
                         <div class="card card-block">
-                            <working-hours [workingHours]="entity.workingHours"
-                                           (workingHoursChanged)='actualizeWorkingHours($event)'>
-                            </working-hours>
+                            <working-hours-simple [workingHours]="entity.workingHours"
+                                                  (workingHoursChanged)='actualizeWorkingHours($event)'>
+                            </working-hours-simple>
                         </div>
                     </div>
                 </div>

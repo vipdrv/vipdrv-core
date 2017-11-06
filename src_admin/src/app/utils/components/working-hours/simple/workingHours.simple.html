@@ -1,0 +1,78 @@
+<div class="week-schedule-template">
+    <div class="row">
+        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+            <div *ngIf="actualEntities && actualEntities.length">
+                <div class="row week-schedule-row"
+                     *ngFor="let item of actualEntities">
+                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                        <div class="input-group input-group-sm">
+                            <span class="day-of-week-span" translate>
+                                {{item.getDayOfWeekEntity().localizationKey}}
+                            </span>
+                            <input type="text"
+                                   class="form-control form-control-sm"
+                                   *ngIf="item.isEditProcessing"
+                                   [(ngModel)]="item.editStartTime"/>
+                            <input type="text"
+                                   class="form-control form-control-sm"
+                                   *ngIf="!item.isEditProcessing"
+                                   disabled
+                                   [(ngModel)]="item.startTime"/>
+                            <span class="input-group-addon week-schedule-minus-text-addon">-</span>
+                            <input type="text"
+                                   class="form-control form-control-sm"
+                                   *ngIf="item.isEditProcessing"
+                                   [(ngModel)]="item.editEndTime"/>
+                            <input type="text"
+                                   class="form-control form-control-sm"
+                                   *ngIf="!item.isEditProcessing"
+                                   disabled
+                                   [(ngModel)]="item.endTime"/>
+                            <span class="input-group-btn">
+                                <button class="btn btn-sm btn-primary week-schedule-start-edit-btn"
+                                        type="button"
+                                        *ngIf="!item.isEditProcessing"
+                                        (click)="item.startEdit()">
+                                    <i class="fa fa-edit"></i>
+                                </button>
+                                <button class="btn btn-sm btn-success week-schedule-commit-edit-btn"
+                                        type="button"
+                                        *ngIf="item.isEditProcessing"
+                                        [disabled]="!item.isValid(true)"
+                                        (click)="item.commitEdit()">
+                                    <i class="fa fa-check"></i>
+                                </button>
+                            </span>
+                            <ui-switch class="is-active-control"
+                                       color="{{switcherSettings.color}}"
+                                       switchColor="{{switcherSettings.switchColor}}"
+                                       defaultBgColor="{{switcherSettings.defaultBgColor}}"
+                                       defaultBoColor="{{switcherSettings.defaultBoColor}}"
+                                       [(ngModel)]="item.isActive">
+                            </ui-switch>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row component-footer">
+        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+        <button class="btn btn-success pull-right btn-sm component-footer-btn"
+                type="button"
+                [disabled]="isSaveProcessing()"
+                (click)="submitWorkingHours()">
+            <i class="fa fa-refresh fa-spin" *ngIf="isSaveProcessing()"></i>
+            <i class="fa fa-check" *ngIf="!isSaveProcessing()"></i>
+            <span translate>general.actions.text_commit</span>
+        </button>
+        <button class="btn btn-secondary pull-right btn-sm component-footer-btn"
+                type="button"
+                [disabled]="isSaveProcessing()"
+                (click)="undoChanges()">
+            <i class="fa fa-undo"></i>
+            <span translate>general.actions.text_reset</span>
+        </button>
+        </div>
+    </div>
+</div>

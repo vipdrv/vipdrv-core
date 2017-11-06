@@ -26,7 +26,7 @@
                             </span>
                             <select class="form-control form-control-sm"
                                     *ngIf="item.isEditProcessing"
-                                    [(ngModel)]="item.dayOfWeek">
+                                    [(ngModel)]="item.editDayOfWeek">
                                 <option *ngFor="let dayOfWeek of daysOfWeek"
                                         [ngValue]="dayOfWeek.id">
                                     <span translate>{{dayOfWeek.localizationKey}}</span>
@@ -35,7 +35,7 @@
                             <select class="form-control form-control-sm"
                                     *ngIf="!item.isEditProcessing"
                                     disabled
-                                    [(ngModel)]="item.editDayOfWeek">
+                                    [(ngModel)]="item.dayOfWeek">
                                 <option *ngFor="let dayOfWeek of daysOfWeek"
                                         [ngValue]="dayOfWeek.id">
                                     <span translate>{{dayOfWeek.localizationKey}}</span>
@@ -55,7 +55,7 @@
                             <input type="text"
                                    class="form-control form-control-sm"
                                    *ngIf="item.isEditProcessing"
-                                   [(ngModel)]="item.endTime"/>
+                                   [(ngModel)]="item.editEndTime"/>
                             <input type="text"
                                    class="form-control form-control-sm"
                                    *ngIf="!item.isEditProcessing"
@@ -71,7 +71,7 @@
                                 <button class="btn btn-sm btn-success week-schedule-commit-edit-btn"
                                         type="button"
                                         *ngIf="item.isEditProcessing"
-                                        [disabled]="!isIntervalValid(item, true)"
+                                        [disabled]="!item.isValid(true)"
                                         (click)="item.commitEdit()">
                                     <i class="fa fa-check"></i>
                                 </button>
@@ -102,7 +102,7 @@
                         <span class="input-group-btn">
                             <button class="btn btn-sm btn-success week-schedule-commit-add-btn"
                                     type="button"
-                                    [disabled]="!isIntervalValid(newEntity, false)"
+                                    [disabled]="!newEntity.isValid(false)"
                                     (click)="addNewInterval()">
                                 <i class="fa fa-plus"></i>
                             </button>
