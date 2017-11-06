@@ -21,5 +21,7 @@ export * from './loader/test-drive-loader.settings';
 
 export * from './promises/promise.service';
 
-export { WorkingHoursComponent } from './components/working-hours/workingHours.component';
-export * from './components/working-hours/workingInterval';
+export { WorkingHoursComponent } from './components/working-hours/advanced/workingHours.component';
+export { WorkingHoursSimpleComponent } from './components/working-hours/simple/workingHours.simple.component';
+export * from './components/working-hours/models/workingInterval';
+export * from './components/working-hours/models/dayOfWeekSchedule';

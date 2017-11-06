@@ -15,7 +15,8 @@
       "text_delete": "delete",
       "text_save": "save",
       "text_reset": "reset",
-      "text_cancel": "cancel"
+      "text_cancel": "cancel",
+      "text_commit": "commit"
     },
     "table":{
       "headerText": {
