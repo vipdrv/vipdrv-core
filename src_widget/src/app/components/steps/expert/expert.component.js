@@ -1,7 +1,7 @@
 (function () {
     angular.module('myApp')
         .component('tdExpert', {
-            controller: function ($scope, api) {
+            controller: function ($scope) {
                 var self = this;
 
                 self.isStepValid = null;
@@ -11,7 +11,6 @@
                 };
 
                 self.expertChanged = function (id, name) {
-
                     self.userData.expert.id = id;
                     self.userData.expert.name = name;
 

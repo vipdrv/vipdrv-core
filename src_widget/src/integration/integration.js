@@ -8,7 +8,7 @@ var TestDrive = TestDrive || (function () {
     var _WidgetUrl = '%widgetUrl%';
 
     var _appendTestDriveFrame = function (vin, img, title, engine, year, colour, transmission, fuel) {
-        var url = `${_WidgetUrl}?site_id=${_SiteId}&vin=${vin}&img=${img}&title=${title}&engine=${engine}&year=${year}&colour=${colour}&transmission=${transmission}&fuel=${fuel}`;
+        var url = `${_WidgetUrl}?site_id=${_SiteId}&vin=${vin}&imageUrl=${img}&title=${title}&engine=${engine}&year=${year}&colour=${colour}&transmission=${transmission}&fuel=${fuel}`;
 
         var html =
             `<div class="test-drive__content">

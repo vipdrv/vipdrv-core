@@ -120,32 +120,38 @@
                         "phone": null,
                         "email": null
                     },
-                    "calendar": {
+                    "bookingDateTime": {
                         "date": null,
                         "time": null
                     },
                     "bookingCar": {
-                        "img": null,
-                        "title": null,
-                        "engine": null,
-                        "year": null,
-                        "colour": null,
-                        "transmission": null,
-                        "fuel": null
+                        "VIN": null,
+                        "imageUrl": null,
+                        "title": null
                     },
                     "expertId": null,
                     "beverageId": null,
                     "roadId": null
                 };
 
-                bookingDto.bookingUser = userData.user;
-                bookingDto.bookingCar = userData.car;
+                bookingDto.bookingUser.firstName = userData.user.firstName;
+                bookingDto.bookingUser.lastName = userData.user.lastName;
+                bookingDto.bookingUser.phone = userData.user.phone;
+                bookingDto.bookingUser.email = userData.user.email;
+
+                bookingDto.bookingDateTime.date = userData.calendar.date;
+                bookingDto.bookingDateTime.time = userData.calendar.time;
+
+                bookingDto.bookingCar.VIN = "1FTEF25N9RLB80787"; // TODO: Fake VIN
+                bookingDto.bookingCar.imageUrl = userData.car.imageUrl;
+                bookingDto.bookingCar.title = userData.car.title;
+
                 bookingDto.expertId = userData.expert.id;
                 bookingDto.beverageId = userData.beverage.id;
                 bookingDto.roadId = userData.road.id;
 
                 return bookingDto;
-            }
+            };
 
         });
 })();

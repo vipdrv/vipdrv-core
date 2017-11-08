@@ -9,37 +9,50 @@ namespace QuantumLogic.Core.Utils.Email.Templates.TestDrive
     public class CompleteBookingEmailTemplate : IEmailTemplate
     {
         protected const string TemplateUrl = "https://generalstandart256.blob.core.windows.net/testdrive-email-templates/complete-booking__email-template.html";
-        private readonly string _firstName;
-        private readonly string _lastName;
-        private readonly DateTime _bookingDateTime;
+        private readonly string _customerFirstName;
+        private readonly string _customerLastName;
+        private readonly string _bookingDateTime;
+        private readonly string _vehicleImgUrl;
         private readonly string _vehicleTitle;
-        private readonly string _expert;
-        private readonly string _beverage;
-        private readonly string _road;
-        
-        public CompleteBookingEmailTemplate(string firstName, string lastName, DateTime bookingDateTime, string vehicleTitle, string expert, string beverage, string road)
+        private readonly string _expertName;
+        private readonly string _beverageName;
+        private readonly string _roadName;
+
+        public CompleteBookingEmailTemplate(
+            string customerFirstName,
+            string customerLastName,
+            string bookingDateTime,
+            string vehicleImgUrl,
+            string vehicleTitle,
+            string expertName,
+            string beverageName,
+            string roadName)
         {
-            _firstName = firstName;
-            _lastName = lastName;
-            _bookingDateTime = bookingDateTime;
             _vehicleTitle = vehicleTitle;
-            _expert = expert;
-            _beverage = beverage;
-            _road = road;
+            _vehicleImgUrl = vehicleImgUrl;
+            _customerFirstName = customerFirstName;
+            _customerLastName = customerLastName;
+            _bookingDateTime = bookingDateTime;
+            _expertName = expertName;
+            _beverageName = beverageName;
+            _roadName = roadName;
         }
-        
+
         public string AsHtml()
         {
             // TODO: use method as async
             var html = new HttpClient().GetStringAsync(TemplateUrl).Result;
 
-            html = html.Replace("{{first_name}}", _firstName);
-            html = html.Replace("{{last_name}}", _lastName);
-            html = html.Replace("{{dateTime}}", _bookingDateTime.ToString(QuantumLogicConstants.OutputDateTimeFormat));
-            html = html.Replace("{{vehicle_title}}", _vehicleTitle);
-            html = html.Replace("{{expert}}", _expert);
-            html = html.Replace("{{beverage}}", _beverage);
-            html = html.Replace("{{road}}", _road);
+            html = html.Replace("{{vehicleTitle}}", _vehicleTitle);
+            html = html.Replace("{{vehicleImgUrl}}", _vehicleImgUrl);
+
+            html = html.Replace("{{customerFirstName}}", _customerFirstName);
+            html = html.Replace("{{customerLastName}}", _customerLastName);
+
+            html = html.Replace("{{bookingDateTime}}", _bookingDateTime);
+            html = html.Replace("{{expertName}}", _expertName);
+            html = html.Replace("{{beverageName}}", _beverageName);
+            html = html.Replace("{{roadName}}", _roadName);
 
             return html;
         }

@@ -11,9 +11,9 @@ namespace QuantumLogic.WebApi.DataModels.Requests.Widget.Booking
         public BookingUser BookingUser { get; set; }
         public BookingDateTime BookingDateTime { get; set; }
         public BookingCar BookingCar { get; set; }
-        public int ExpertId { get; set;}
-        public int BeverageId { get; set; }
-        public int RoadId { get; set; }
+        public int? ExpertId { get; set;}
+        public int? BeverageId { get; set; }
+        public int? RoadId { get; set; }
 
         public CompleteBookingRequest()
         {
@@ -35,13 +35,14 @@ namespace QuantumLogic.WebApi.DataModels.Requests.Widget.Booking
 
     public class BookingDateTime
     {
-        public DateTime DateTime { get; set; }
+        public string Date { get; set; }
+        public string Time { get; set; }
     }
     
     public class BookingCar
     {
-        public string CarVIN { get; set; }
-        public string CarImageUrl { get; set; }
+        public string VIN { get; set; }
+        public string ImageUrl { get; set; }
         public string Title { get; set; }
     }
 }
