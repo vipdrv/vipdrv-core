@@ -13,12 +13,7 @@
                 this.userData = userData;
 
                 this.completeForm = function () {
-
-                    // api.completeBooking();
-
-                    // api.submitForm(userData);
                     globalState.isFormCompleted = true;
-                    // this.isFormCompleted = true;
                 };
 
                 this.completeStep = function (tabId) {
@@ -69,7 +64,7 @@
                 // Init                                                                   //
                 // =======================================================================//
 
-                self.$onInit = function() {
+                self.$onInit = function () {
                     self.openHours = [];
                     self.experts = [];
                     self.beverages = [];
@@ -88,7 +83,6 @@
                         self.roads = data.items;
                     });
                 };
-
 
             },
             templateUrl: 'src/app/components/wizard/wizard-tab-content.tpl.html',

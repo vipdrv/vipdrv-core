@@ -4,69 +4,92 @@
         <p>Create an account to track and edit the details of your test drive booking</p>
     </div>
 </div>
-<form class="td-cards">
+
+<form name="userForm">
     <div class="row">
         <div class="form-group col-md-6">
             <label for="input1" class="col-form-label">First Name</label>
-            <input type="email" class="form-control" id="input1" placeholder="First Name">
+            <input name="firstName"
+                   class="form-control" id="input1" placeholder="First Name"
+                   ng-model="firstName"
+                   ng-class="{ 'is-invalid' : !userForm.firstName.$valid && !userForm.firstName.$pristine, 'is-valid' : userForm.firstName.$valid && !userForm.firstName.$pristine }"
+                   required>
         </div>
         <div class="form-group col-md-6">
             <label for="input2" class="col-form-label">Last Name</label>
-            <input type="text" class="form-control" id="input2" placeholder="Last Name">
+            <input name="secondName"
+                   class="form-control" id="input2" placeholder="Last Name"
+                   ng-model="secondName"
+                   ng-class="{ 'is-invalid' : !userForm.secondName.$valid && !userForm.secondName.$pristine, 'is-valid' : userForm.secondName.$valid && !userForm.secondName.$pristine }"
+                   required>
         </div>
     </div>
     <div class="row">
         <div class="form-group col-md-6">
             <label for="input3" class="col-form-label">Email</label>
-            <input type="email" class="form-control" id="input3" placeholder="Email">
+            <input type="email"
+                   name="email"
+                   class="form-control" id="input3" placeholder="Email"
+                   ng-model="email"
+                   ng-class="{ 'is-invalid' : !userForm.email.$valid && !userForm.email.$pristine, 'is-valid' : userForm.email.$valid && !userForm.email.$pristine}"
+                   required>
         </div>
         <div class="form-group col-md-6">
             <label for="input4" class="col-form-label">Phone</label>
-            <input class="form-control" id="input4" placeholder="Phone">
+            <input type="tel"
+                   name="phone"
+                   class="form-control"
+                   id="input4"
+                   placeholder="Phone"
+                   ng-model="phone"
+                   ng-class="{ 'is-invalid' : !userForm.phone.$valid && !userForm.phone.$pristine,'is-valid' : userForm.phone.$valid && !userForm.phone.$pristine }"
+                   required>
+        </div>
+    </div>
+
+    <p></p>
+    <div class="row">
+        <div class="col-12 d-none d-md-block">
+            <button ng-disabled="userForm.$invalid" type="button" class="btn btn-lg btn-primary float-md-right" ng-click="$ctrl.makeBooking()">Make my booking</button>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12 d-sm-block d-md-none d-lg-none">
+            <button ng-disabled="userForm.$invalid" type="button" class="btn btn-primary btn-lg btn-block" ng-click="$ctrl.makeBooking()">Make my booking</button>
         </div>
     </div>
 
     <!--<p class="text-secondary">-->
-        <!--Nissan will retain your personal information and share it with our Nissan dealers and group companies / entities-->
-        <!--so that we and they may contact you to let you know about other products, services and special offers that may-->
-        <!--be interest to you.-->
-        <!--We or they may also contact you to participate in one of our customer satisfaction surveys or to provide you-->
-        <!--with services relating to your vehicle. If you do not want your information used in this way please let us know-->
-        <!--by ticking the appropriate box(es) below.-->
+    <!--Nissan will retain your personal information and share it with our Nissan dealers and group companies / entities-->
+    <!--so that we and they may contact you to let you know about other products, services and special offers that may-->
+    <!--be interest to you.-->
+    <!--We or they may also contact you to participate in one of our customer satisfaction surveys or to provide you-->
+    <!--with services relating to your vehicle. If you do not want your information used in this way please let us know-->
+    <!--by ticking the appropriate box(es) below.-->
     <!--</p>-->
     <!--<div class="form-group p-0 m-0">-->
-        <!--<div class="form-check form-check-inline">-->
-            <!--<label class="form-check-label">-->
-                <!--<input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1"> Phone-->
-            <!--</label>-->
-        <!--</div>-->
-        <!--<div class="form-check form-check-inline">-->
-            <!--<label class="form-check-label">-->
-                <!--<input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="option2"> SMS-->
-            <!--</label>-->
-        <!--</div>-->
-        <!--<div class="form-check form-check-inline disabled">-->
-            <!--<label class="form-check-label">-->
-                <!--<input class="form-check-input" type="checkbox" id="inlineCheckbox3" value="option3"> Email-->
-            <!--</label>-->
-        <!--</div>-->
+    <!--<div class="form-check form-check-inline">-->
+    <!--<label class="form-check-label">-->
+    <!--<input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1"> Phone-->
+    <!--</label>-->
+    <!--</div>-->
+    <!--<div class="form-check form-check-inline">-->
+    <!--<label class="form-check-label">-->
+    <!--<input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="option2"> SMS-->
+    <!--</label>-->
+    <!--</div>-->
+    <!--<div class="form-check form-check-inline disabled">-->
+    <!--<label class="form-check-label">-->
+    <!--<input class="form-check-input" type="checkbox" id="inlineCheckbox3" value="option3"> Email-->
+    <!--</label>-->
+    <!--</div>-->
     <!--</div>-->
     <!--<p class="text-secondary">-->
-        <!--You have the right to withdraw your consent at any time, to ask us for a copy of the information held by us on-->
-        <!--our records and/or to require us to correct any inaccuracies in your information. If you would like to exercise-->
-        <!--any of these rights please contact Nissan.-->
+    <!--You have the right to withdraw your consent at any time, to ask us for a copy of the information held by us on-->
+    <!--our records and/or to require us to correct any inaccuracies in your information. If you would like to exercise-->
+    <!--any of these rights please contact Nissan.-->
     <!--</p>-->
 </form>
-<p></p>
-<div class="row">
-    <div class="col-12 d-none d-md-block">
-        <button type="button" class="btn btn-lg btn-primary float-md-right" ng-click="$ctrl.makeBooking()">Make my booking</button>
-    </div>
-</div>
-<div class="row">
-    <div class="col-12 d-sm-block d-md-none d-lg-none">
-        <button type="button" class="btn btn-primary btn-lg btn-block" ng-click="$ctrl.makeBooking()">Make my booking</button>
-    </div>
-</div>
+
 
 

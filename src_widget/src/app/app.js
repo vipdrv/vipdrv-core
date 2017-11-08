@@ -64,7 +64,7 @@
         },
         calendar: {
             date: null,
-            time: '10:00'
+            time: null
         },
         expert: {
             id: null,
@@ -79,7 +79,7 @@
             name: null
         },
         car: {
-            img: null,
+            imageUrl: null,
             title: null,
             engine: null,
             year: null,
@@ -102,7 +102,7 @@
     var siteId = url.site_id || siteId;
 
     var vin = url.vin || null;
-    var img = url.img || null;
+    var imageUrl = url.imageUrl || null;
     var title = url.title || null;
     var engine = url.engine || null;
     var year = url.year || null;
@@ -111,7 +111,7 @@
     var fuel = url.fuel || null;
 
     userData.car.vin = vin;
-    userData.car.img = img;
+    userData.car.imageUrl = imageUrl;
     userData.car.title = title;
     userData.car.engine = engine;
     userData.car.year = year;
