@@ -52,7 +52,7 @@ namespace QuantumLogic.Data.EFContext
             // optionsBuilder.UseSqlServer(DataConfiguration.DefaultConnection.ConnectionString);
             
             // TODO: hardcoded connection string
-            optionsBuilder.UseSqlServer("Server=mysql.dealer-advance.com;Database=dev_quantumlogic;User Id=sa-quantumlogic-2; Password=2YAfUFq9ZFsnLAgA;");
+            optionsBuilder.UseSqlServer("Server=mssql-usa.elrondsoft.com;Database=dev_testdrive;User Id=sa-testdrive; Password=nUqhXX9CpXVbbxdE;");
             //Database.SetCommandTimeout(DBCommandTimeout);
         }
 
