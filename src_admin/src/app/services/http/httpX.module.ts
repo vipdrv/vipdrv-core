@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { AuthorizationService } from './authorization.service';
+import { HttpXService } from './httpX.service';
 @NgModule({
     imports: [
         CommonModule
@@ -8,7 +8,7 @@ import { AuthorizationService } from './authorization.service';
     declarations: [],
     exports: [],
     providers: [
-       AuthorizationService
+        HttpXService
     ]
 })
-export class AuthorizationModule {}
+export class HttpXModule {}

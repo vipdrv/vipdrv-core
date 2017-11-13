@@ -29,12 +29,15 @@ export class AuthorizationService implements IAuthorizationService {
 
     protected baseUrl: string;
     /// injected dependencies
-    protected logger: ILogger;
+    //protected logger: ILogger;
     protected router: Router;
     protected http: Http;
     /// ctor
-    constructor(logger: ConsoleLogger, router: Router, http: Http) {
-        this.logger = logger;
+    constructor(
+        //logger: ConsoleLogger,
+        router: Router,
+        http: Http) {
+        //this.logger = logger;
         this.router = router;
         this.http = http;
         this.baseUrl = environment.apiUrl;
@@ -99,7 +102,7 @@ export class AuthorizationService implements IAuthorizationService {
         return Promise.resolve();
     }
     handleAuthorizationCallback(): Promise<void> {
-        this.logger.logDebug("HandleAuthorizationCallback method (in AuthorizationManager) called.");
+        //this.logger.logDebug("HandleAuthorizationCallback method (in AuthorizationManager) called.");
         return Promise.resolve();
     }
     /// helpers

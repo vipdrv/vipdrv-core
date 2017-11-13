@@ -1,11 +1,9 @@
 import { Injectable } from '@angular/core';
-
-import { AuthorizationService } from './../authorization/index';
-
+import { IAuthorizationService, AuthorizationService } from './../index';
 @Injectable()
 export class BasePolicyService {
     /// injected dependencies
-    protected authService: AuthorizationService;
+    protected authService: IAuthorizationService;
     /// ctor
     constructor(authService: AuthorizationService) {
         this.authService = authService;

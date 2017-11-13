@@ -21,7 +21,7 @@ import { GlobalState } from './global.state';
 import { NgaModule } from './theme/nga.module';
 import { PagesModule } from './pages/pages.module';
 
-import { AuthorizationModule, PolicyModule, ServerApiModule } from './services/index';
+import { AuthorizationModule, HttpXModule, PolicyModule, ServerApiModule } from './services/index';
 import { UtilsModule, loaderMessage, loaderTemplate } from './utils/index';
 // Application wide providers
 const APP_PROVIDERS = [
@@ -61,6 +61,7 @@ export type StoreType = {
     PaginationModule.forRoot(),
     BusyModule.forRoot(busyConfig),
     AuthorizationModule,
+    HttpXModule,
     PagesModule,
     PolicyModule,
     UtilsModule,
