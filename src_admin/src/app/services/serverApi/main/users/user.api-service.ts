@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
-import { HttpService, ConsoleLogger, Variable } from '../../../../utils/index';
+import { ConsoleLogger, Variable } from './../../../../utils/index';
+import { HttpXService } from './../../../index';
 import { UserEntity, LightEntity, InvitationEntity } from '../../../../entities/index';
 import { CRUDApiService } from './../../crud.api-service';
 import { IUserApiService } from './i-user.api-service';
@@ -9,7 +10,7 @@ import { UrlParameter } from './../../urlParameter';
 export class UserApiService extends CRUDApiService<UserEntity, number, LightEntity> implements IUserApiService {
     /// ctor
     constructor(
-        httpService: HttpService,
+        httpService: HttpXService,
         logger: ConsoleLogger) {
         super(httpService, logger, 'user');
     }

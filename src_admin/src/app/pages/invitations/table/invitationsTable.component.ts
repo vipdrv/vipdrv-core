@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, ViewChild } from '@angular/core';
 import { ModalComponent } from 'ng2-bs3-modal/ng2-bs3-modal';
 import { Variable, Extensions, PromiseService, ConsoleLogger, ILogger } from './../../../utils/index';
-import { IAuthorizationManager, AuthorizationManager } from './../../../utils/index';
+import { IAuthorizationService, AuthorizationService } from './../../../services/index';
 import { IUserApiService, UserApiService, GetAllResponse } from './../../../services/serverApi/index';
 import { InvitationEntity } from './../../../entities/index';
 @Component({
@@ -33,13 +33,13 @@ export class InvitationsTableComponent implements OnInit {
     protected entity: InvitationEntity;
     /// injected dependencies
     protected logger: ILogger;
-    protected authorizationManager: IAuthorizationManager;
+    protected authorizationManager: IAuthorizationService;
     protected userApiService: IUserApiService;
     protected promiseService: PromiseService;
     /// ctor
     constructor(
         logger: ConsoleLogger,
-        authorizationManager: AuthorizationManager,
+        authorizationManager: AuthorizationService,
         userApiService: UserApiService,
         promiseService: PromiseService) {
         this.logger = logger;

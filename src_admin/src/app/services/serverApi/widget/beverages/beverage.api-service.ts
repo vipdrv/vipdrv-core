@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
-import { HttpService, ConsoleLogger } from './../../../../utils/index';
+import { ConsoleLogger } from './../../../../utils/index';
+import { HttpXService } from './../../../index';
 import { BeverageEntity, LightEntity } from './../../../../entities/index';
 import { CRUDXApiService } from './../../crudx.api-service';
 import { IBeverageApiService } from './i-beverage.api-service';
@@ -9,7 +10,7 @@ export class BeverageApiService
     implements IBeverageApiService {
     /// ctor
     constructor(
-        httpService: HttpService,
+        httpService: HttpXService,
         logger: ConsoleLogger) {
         super(httpService, logger, 'beverage');
     }

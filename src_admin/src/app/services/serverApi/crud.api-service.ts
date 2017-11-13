@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
-import { IHttpService, ILogger, Variable } from './../../utils/index';
+import { ILogger, Variable } from './../../utils/index';
+import { IHttpXService } from './../index';
 import { IEntity, ILightEntity } from './../../entities/index';
 import { ICRUDApiService } from './i-crud.api-service';
 import { BaseApiService } from './base.api-service';
@@ -11,7 +12,7 @@ export abstract class CRUDApiService<TEntity extends IEntity<TKey>, TKey, TLight
     implements ICRUDApiService<TEntity, TKey, TLightEntity> {
     /// ctor
     constructor(
-        httpService: IHttpService,
+        httpService: IHttpXService,
         logger: ILogger,
         controllerName: string) {
         super(httpService, logger, controllerName);

@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-
-import { IAuthorizationManager, AuthorizationManager } from './../../utils/index';
+import { IAuthorizationService, AuthorizationService } from './../../services/index';
 
 @Component({
     selector: 'login',
@@ -18,12 +17,12 @@ export class LoginComponent implements OnInit {
     returnUrl: string;
     errorMessage: string;
 
-    protected authorizationManager: IAuthorizationManager;
+    protected authorizationManager: IAuthorizationService;
 
     constructor(
         private route: ActivatedRoute,
         private router: Router,
-        authorizationManager: AuthorizationManager) {
+        authorizationManager: AuthorizationService) {
         this.authorizationManager = authorizationManager;
     }
 
