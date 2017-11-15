@@ -1,4 +1,5 @@
 ﻿using QuantumLogic.Core.Domain.Entities.WidgetModule;
+using System.Linq;
 
 namespace QuantumLogic.WebApi.DataModels.Dtos.Widget.Sites
 {
@@ -14,6 +15,10 @@ namespace QuantumLogic.WebApi.DataModels.Dtos.Widget.Sites
         public int BeveragesAmount { get; set; }
         public int RoutesAmount { get; set; }
 
+        public int ActiveExpertsAmount { get; set; }
+        public int ActiveBeveragesAmount { get; set; }
+        public int ActiveRoutesAmount { get; set; }
+
         #region Mapping
 
         public override void MapFromEntity(Site entity)
@@ -28,6 +33,9 @@ namespace QuantumLogic.WebApi.DataModels.Dtos.Widget.Sites
             ExpertsAmount = entity.Experts.Count;
             BeveragesAmount = entity.Beverages.Count;
             RoutesAmount = entity.Routes.Count;
+            ActiveExpertsAmount = entity.Experts.Where(r => r.IsActive).Count();
+            ActiveBeveragesAmount = entity.Beverages.Where(r => r.IsActive).Count();
+            ActiveRoutesAmount = entity.Routes.Where(r => r.IsActive).Count();
         }
         public override Site MapToEntity()
         {
