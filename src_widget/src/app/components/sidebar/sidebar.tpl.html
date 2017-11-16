@@ -1,5 +1,4 @@
 <div class="row td-sidebar">
-
     <img ng-if="$ctrl.userData.car.imageUrl != null" src="{{$ctrl.userData.car.imageUrl}}" class="td-sidebar__car-image pt-1 pl-2 pr-2 pb-1">
 
     <div class="col-12">
@@ -29,17 +28,17 @@
 
     <div class="col-12 mb-1" ng-if="$ctrl.userData.calendar.date">
         <div class="media">
-            <img class="d-flex mr-4" src="/img/icon-date.jpg">
-            <div class="media-body">
-                <span>{{$ctrl.userData.calendar.date}} - {{$ctrl.userData.calendar.time}}</span>
+            <img class="d-flex mr-3" src="/img/icon-date.jpg">
+            <div class="media-body sidebar-media-item__body">
+                <span>{{$ctrl.userData.calendar.date}} {{$ctrl.userData.calendar.time}}</span>
             </div>
         </div>
     </div>
 
     <div class="col-12 mb-1" ng-if="$ctrl.userData.expert.name">
         <div class="media">
-            <img class="d-flex mr-4" src="/img/icon-expert.jpg">
-            <div class="media-body">
+            <img class="d-flex mr-3" src="/img/icon-expert.jpg">
+            <div class="media-body sidebar-media-item__body">
                 <span>{{$ctrl.userData.expert.name}}</span>
             </div>
         </div>
@@ -47,8 +46,8 @@
 
     <div class="col-12 mb-1" ng-if="$ctrl.userData.beverage.name">
         <div class="media">
-            <img class="d-flex mr-4" src="/img/icon-beverage.jpg">
-            <div class="media-body">
+            <img class="d-flex mr-3" src="/img/icon-beverage.jpg">
+            <div class="media-body sidebar-media-item__body">
                 <span>{{$ctrl.userData.beverage.name}}</span>
             </div>
         </div>
@@ -56,11 +55,10 @@
 
     <div class="col-12" ng-if="$ctrl.userData.road.name">
         <div class="media">
-            <img class="d-flex mr-4" src="/img/icon-road.jpg">
-            <div class="media-body">
+            <img class="d-flex mr-3" src="/img/icon-road.jpg">
+            <div class="media-body sidebar-media-item__body">
                 <span>{{$ctrl.userData.road.name}}</span>
             </div>
         </div>
     </div>
-
 </div>

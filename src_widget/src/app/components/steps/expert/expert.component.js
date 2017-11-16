@@ -13,7 +13,6 @@
                 self.expertChanged = function (id, name) {
                     self.userData.expert.id = id;
                     self.userData.expert.name = name;
-
                     self.validateStep();
                 };
 
@@ -25,11 +24,17 @@
                     }
                 };
 
-                $scope.nextStepInner = function () {
+                $scope.nextStep = function () {
                     self.validateStep();
                     if (self.isStepValid) {
                         self.completeStep({tabId: self.tabId});
                     }
+                };
+
+                $scope.skipStep = function () {
+                    self.userData.expert.id = 0;
+                    self.userData.expert.name = 'Skipped';
+                    self.completeStep({tabId: self.tabId});
                 };
             },
             templateUrl: 'src/app/components/steps/expert/expert.tpl.html',

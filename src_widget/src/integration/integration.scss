@@ -33,13 +33,8 @@
   transition: transform 300ms;
   will-change: transform;
 }
-@media (max-width: 1022px) {
-  .test-drive__content {
-    width: 100%;
-    height: 100%;
-  }
-}
-@media (max-height: 648px) {
+
+@media (max-width: 1022px), (max-height: 648px)  {
   .test-drive__content {
     width: 100%;
     height: 100%;
@@ -51,7 +46,7 @@
 }
 
 .frame-header {
-  height: 10%;
+  // height: 10%;
   // min-height: 50px;
   width: 100%;
   background-color: #007bff;
@@ -72,6 +67,7 @@
   float: left;
   line-height: 50px;
 }
+
 @media (max-width: 1022px) {
   .frame-header__title {
     width: 85%;
@@ -86,6 +82,7 @@
   text-align: center;
   cursor: pointer;
 }
+
 @media (max-width: 1022px) {
   .frame-header__cross {
     width: 15%;
@@ -98,7 +95,7 @@
 
 .test-drive__frame {
   width: 100%;
-  height: 90%;
+  height: calc(100% - 50px);
   overflow: hidden;
 }
 

@@ -26,11 +26,16 @@
                     }
                 };
 
-                $scope.nextStepInner = function () {
+                $scope.nextStep = function () {
                     self.validateStep();
                     if (self.isStepValid) {
                         self.completeStep({tabId: self.tabId});
                     }
+                };
+                $scope.skipStep = function () {
+                    self.userData.beverage.id = 0;
+                    self.userData.beverage.name = "Skipped";
+                    self.completeStep({tabId: self.tabId});
                 };
             },
             templateUrl: 'src/app/components/steps/beverage/beverage.tpl.html',

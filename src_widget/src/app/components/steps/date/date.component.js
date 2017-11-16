@@ -4,22 +4,35 @@
             controller: function ($scope) {
                 var self = this;
 
-                self.isStepValid = true;
+                self.dateChanged = function (oldValue, newValue) {
+                    var arr = newValue._i.split(' ');
+                    // var dayOfWeek = arr[1];
 
-                self.timeIntervals = ['9:00', '10:00', '11:00', '12:00', '13:00', '14:00', '15:00', '16:00', '17:00'];
+                    self.userData.calendar.date = arr[0];
+                };
 
                 self.timeChanged = function (time) {
                     self.userData.calendar.time = time;
                 };
 
-                this.validateStep = function () {
-
+                this.$onInit = function () {
+                    self.openHours = 1;
                 };
 
-                $scope.nextStepInner = function () {
+                self.isStepValid = true;
+                self.timeIntervals = ['9:00 AM', '10:00 AM', '11:00 AM', '12:00 AM', '1:00 PM', '2:00 PM', '3:00 PM', '4:00 PM', '5:00 PM', '6:00 PM'];
+
+                this.validateStep = function () {
+                };
+
+                $scope.nextStep = function () {
                     if (self.isStepValid) {
                         self.completeStep({tabId: self.tabId});
                     }
+                };
+
+                $scope.skipStep = function () {
+                    self.completeStep({tabId: self.tabId});
                 };
             },
             templateUrl: 'src/app/components/steps/date/date.tpl.html',

@@ -8,193 +8,56 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css">
     <title>Integration</title>
-    <style>
-        /*body {*/
-        /*min-height: 75rem; !* Can be removed; just added for demo purposes *!*/
-        /*}*/
-
-        .navbar {
-            margin-bottom: 0;
-        }
-
-        .jumbotron {
-            padding-top: 6rem;
-            padding-bottom: 6rem;
-            margin-bottom: 0;
-            background-color: #fff;
-        }
-
-        .jumbotron p:last-child {
-            margin-bottom: 0;
-        }
-
-        .jumbotron-heading {
-            font-weight: 300;
-        }
-
-        .jumbotron .container {
-            max-width: 40rem;
-        }
-
-        .album {
-
-            padding-top: 3rem;
-            padding-bottom: 3rem;
-            background-color: #f7f7f7;
-        }
-
-        .card > img {
-            margin-bottom: .75rem;
-        }
-
-        footer {
-            padding-top: 3rem;
-            padding-bottom: 3rem;
-        }
-
-        footer p {
-            margin-bottom: .25rem;
-        }
-    </style>
 </head>
 <body>
 
-<header>
-    <div class="collapse bg-dark" id="navbarHeader">
-        <div class="container">
-            <div class="row">
-                <div class="col-sm-8 py-4">
-                    <h4 class="text-white">About</h4>
-                    <p class="text-muted">
-                        VIPdrv is a whole new way for car dealers to offer test drive scheduling from their dealer
-                        websites.<br>
-                        VIPdrv creates the best customer experience, well before the customer visits the store, driving
-                        the best opportunity for conversion.<br>
-                        VIPdrv will be launching in Nov 2017.<br>
-                        Please contact us today to learn more.
-                    </p>
-                </div>
-                <div class="col-sm-4 py-4">
-                    <h4 class="text-white">Contact</h4>
-                    <ul class="list-unstyled">
-                        <!--<li><a href="#" class="text-white">Follow on Twitter</a></li>-->
-                        <li><a href="#" class="text-white">760-469-9296</a></li>
-                        <li><a href="#" class="text-white">Email Us</a></li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="navbar navbar-dark bg-dark">
-        <div class="container d-flex justify-content-between">
-            <a href="#" class="navbar-brand">
-                <img src="http://dev.admin.testdrive.pw/assets/img/main-logo.png"/>
-            </a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarHeader"
-                    aria-controls="navbarHeader" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-        </div>
-    </div>
-</header>
-
 <main role="main">
-
     <section class="jumbotron text-center">
         <div class="container">
-            <h1 class="jumbotron-heading">VIPDrv Demo</h1>
-            <p class="lead text-muted">
-                Something short and leading about VIPdrv Widget below—its contents, the creator,
-                etc. Make it short and sweet, but not too short so folks don't simply skip over it entirely.
-            </p>
-            <p>
-                <a href="javascript:void(0)" class="btn btn-primary"
-                   onclick="TestDrive.openTestDrive(
+            <h1 class="jumbotron-heading">Test Drive</h1>
+            <a href="javascript:void(0)" class="btn btn-primary"
+               onclick="TestDrive.openTestDrive(
                             'VIN',
                             'https://www.picpng.com/uploads/small/Blue_BMW_PNG_Image_Free_Download_28669.Png',
                             'BMW M140i',
                             '3.8 litre twin-turbo V6',
+                            '2017',
                             'Blue',
                             'Manual',
                             'Petrol')">Open Widget
-                </a>
-                <a href="http://dev.admin.testdrive.pw" target="_blank" class="btn btn-secondary">Admin Dashboard</a>
-            </p>
+            </a>
         </div>
     </section>
-
-    <div class="album text-muted">
-        <div class="container">
-
-            <!-- START THE FEATURETTES -->
-
-            <div class="row featurette">
-                <div class="col-md-8">
-                    <h2 class="featurette-heading">Customer can pick comfortable Date & Time</h2>
-                    <p class="lead">Donec ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula porta felis euismod semper. Praesent commodo cursus magna, vel scelerisque nisl
-                        consectetur. Fusce dapibus, tellus ac cursus commodo.</p>
-                </div>
-                <div class="col-md-4">
-                    <img src="/img/widget-demo-step-1.png" class="featurette-image img-fluid mx-auto" data-src="/img/widget-demo-step-2.png" alt="Generic placeholder image">
-                </div>
-            </div>
-
-            <hr class="featurette-divider">
-
-            <div class="row featurette">
-                <div class="col-md-8 order-md-2">
-                    <h2 class="featurette-heading">Chose the Expert you feel comfortable with</h2>
-                    <p class="lead">Donec ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula porta felis euismod semper. Praesent commodo cursus magna, vel scelerisque nisl
-                        consectetur. Fusce dapibus, tellus ac cursus commodo.</p>
-                </div>
-                <div class="col-md-4 order-md-1">
-                    <img src="/img/widget-demo-step-2.png" class="featurette-image img-fluid mx-auto" data-src="holder.js/500x500/auto" alt="Generic placeholder image">
-                </div>
-            </div>
-
-            <hr class="featurette-divider">
-
-            <div class="row featurette">
-                <div class="col-md-8">
-                    <h2 class="featurette-heading">Chose your favorite Beverage</h2>
-                    <p class="lead">Donec ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula porta felis euismod semper. Praesent commodo cursus magna, vel scelerisque nisl
-                        consectetur. Fusce dapibus, tellus ac cursus commodo.</p>
-                </div>
-                <div class="col-md-4">
-                    <img src="/img/widget-demo-step-3.png" class="featurette-image img-fluid mx-auto" data-src="/img/widget-demo-step-2.png" alt="Generic placeholder image">
-                </div>
-            </div>
-
-            <hr class="featurette-divider">
-
-            <div class="row featurette">
-                <div class="col-md-8 order-md-2">
-                    <h2 class="featurette-heading">Get customer contacts</h2>
-                    <p class="lead">Donec ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula porta felis euismod semper. Praesent commodo cursus magna, vel scelerisque nisl
-                        consectetur. Fusce dapibus, tellus ac cursus commodo.</p>
-                </div>
-                <div class="col-md-4 order-md-1">
-                    <img src="/img/widget-demo-step-4.png" class="featurette-image img-fluid mx-auto" data-src="holder.js/500x500/auto" alt="Generic placeholder image">
-                </div>
-            </div>
-
-
-
-            <!-- /END THE FEATURETTES -->
-
-
-        </div>
-    </div>
-
 </main>
 
-<footer class="text-muted">
-    <div class="container">
-        <p>
-            JOINT VENTURE DIGITAL, 78206 VARNER ROAD, SUITE D, PALM DESERT, CA, 92211, UNITED STATES760-469-9296
-        </p>
-    </div>
-</footer>
+<style>
+    .height__100 {
+        max-height: 500px;
+    }
+
+    .background__red {
+        background-color: red;
+    }
+
+    .background__blue {
+        background-color: blue;
+    }
+
+    .bottom-button {
+        position: relative;
+        bottom: 10px;
+    }
+</style>
+
+<div class="row height__100 background__blue">
+    <div class="col-6 background__red">11</div>
+    <div class="col-6 background__red">11</div>
+    <div class="col-6">11</div>
+    <div class="col-6">11</div>
+    <div class="col-6 background__red">11</div>
+</div>
+
+<button class="bottom-button">Go Go Go</button>
 
 <!-- jQuery first, then Tether, then Bootstrap JS. -->
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
@@ -205,10 +68,8 @@
 
 <!-------------------------------------------->
 <!---------- Widget Integration -------------->
-
 <script src="%widgetUrl%/integration/integration.js"></script>
 <script>TestDrive.init({SiteId: 28})</script>
-
 <!-------------------------------------------->
 
 

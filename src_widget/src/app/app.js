@@ -45,6 +45,14 @@
             isLocked: true,
             isCompleted: false
         },
+        // music: {
+        //     id: 'road',
+        //     icon: 'fa fa-music fa-2x',
+        //     title: 'Select music',
+        //     isActive: false,
+        //     isLocked: true,
+        //     isCompleted: false
+        // },
         details: {
             id: 'details',
             icon: 'fa fa-handshake-o fa-2x',
@@ -60,7 +68,8 @@
             firstName: null,
             lastName: null,
             phone: null,
-            email: null
+            email: null,
+            comment: null
         },
         calendar: {
             date: null,

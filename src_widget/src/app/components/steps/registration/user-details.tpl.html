@@ -35,8 +35,9 @@
                    required>
         </div>
         <div class="form-group col-md-6">
-            <label for="input4" class="col-form-label">Phone</label>
+            <label for="input4" class="col-form-label">Phone1</label>
             <input type="tel"
+                   phone-input
                    name="phone"
                    class="form-control"
                    id="input4"
@@ -46,15 +47,26 @@
                    required>
         </div>
     </div>
-
-    <p></p>
     <div class="row">
-        <div class="col-12 d-none d-md-block">
-            <button ng-disabled="userForm.$invalid" type="button" class="btn btn-lg btn-primary float-md-right" ng-click="$ctrl.makeBooking()">Make my booking</button>
+        <div class="form-group col-md-12">
+            <label for="input5" class="col-form-label">Comment</label>
+            <textarea name="comment"
+                   class="form-control"
+                   id="input5"
+                   placeholder="Your comment"
+                   ng-model="comment"
+                   ng-class="{ 'is-invalid' : !userForm.comment.$valid && !userForm.comment.$pristine,'is-valid' : userForm.comment.$valid && !userForm.comment.$pristine }">
+            </textarea>
         </div>
     </div>
-    <div class="row">
-        <div class="col-12 d-sm-block d-md-none d-lg-none">
+
+    <div class="row wizard-navigation-tab-next-button--desktop d-none d-md-block">
+        <div class="col-12">
+            <button ng-disabled="userForm.$invalid" type="button" class="btn btn-lg btn-primary " ng-click="$ctrl.makeBooking()">Make my booking</button>
+        </div>
+    </div>
+    <div class="row wizard-navigation-tab-next-button--mobile d-md-none d-lg-none d-sm-block">
+        <div class="col-12">
             <button ng-disabled="userForm.$invalid" type="button" class="btn btn-primary btn-lg btn-block" ng-click="$ctrl.makeBooking()">Make my booking</button>
         </div>
     </div>

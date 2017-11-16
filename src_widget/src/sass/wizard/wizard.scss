@@ -3,7 +3,7 @@
 // =======================================================================//
 
 .td-wizard__root {
-  height: 100%;
+  height: calc(100% - 55px);
 }
 
 .td-wizard {
@@ -47,6 +47,23 @@
 }
 
 // =======================================================================//
+// wizard-next-button                                                     //
+// =======================================================================//
+
+.wizard-navigation-tab-next-button--desktop {
+  position: absolute;
+  bottom: 15px;
+  right: 15px;
+}
+
+.wizard-navigation-tab-next-button--mobile {
+  position: absolute;
+  width: 100%;
+  bottom: 15px;
+  right: 15px;
+}
+
+// =======================================================================//
 // wizard-tab-content                                                     //
 // =======================================================================//
 
@@ -61,8 +78,14 @@
 // =======================================================================//
 
 .td-cards {
-  height: 60%;
+  max-height: calc(100% - 255px);
   overflow: auto;
+}
+
+@media (max-width: 1022px), (max-height: 648px)  {
+  .td-cards {
+    max-height: calc(100% - 180px);
+  }
 }
 
 .td-card__content {

@@ -14,5 +14,21 @@
              ng-click="$ctrl.expertChanged(expert.id, expert.name)">
     </td-card>
 </div>
-<p></p>
-<td-wizard-step-button tab-id="$ctrl.tabId" next-step="nextStepInner()"></td-wizard-step-button>
+
+<div class="row wizard-navigation-tab-next-button--desktop d-none d-md-block">
+    <div class="col-12">
+        <button type="button" class="btn btn-lg btn-secondary " ng-click="skipStep()">Skip Step</button>
+        <button type="button" class="btn btn-lg btn-primary " ng-click="nextStep()">Next Step</button>
+    </div>
+</div>
+
+<div class="row wizard-navigation-tab-next-button--mobile d-md-none d-lg-none d-sm-block">
+    <div class="col-12">
+        <button type="button" class="btn btn-secondary btn-lg btn-block" ng-click="skipStep()">Skip Step</button>
+        <button type="button" class="btn btn-primary btn-lg btn-block" ng-click="nextStep()">Next Step</button>
+    </div>
+</div>
+
+
+
+
