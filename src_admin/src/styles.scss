@@ -1,5 +1,32 @@
 /* You can add global styles to this file, and also import other style files */
-
+/* global test-drive styles */
+.test-drive-standalone-btn {
+  margin-left:2px;
+  margin-right:2px;
+}
+.test-drive-left-standalone-btn {
+  margin-right:2px;
+}
+.test-drive-right-standalone-btn {
+  margin-left:2px;
+}
+// test-drive template styles
+.test-drive-many-entities-template {
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+.test-drive-many-entities-template-header {
+  margin-bottom: 5px;
+}
+.test-drive-many-entities-template-body {
+  margin-top: 5px;
+  margin-bottom: 5px;
+  // is required to use ng-busy backdrop in this container
+  position: relative;
+}
+.test-drive-many-entities-template-footer {
+  margin-top: 5px;
+}
 /* custom loader styles () */
 .test-drive-loader-wrapper {
 }
@@ -115,6 +142,9 @@
   }
 }
 /* ng-busy styles (ad-hock solution cuz this lib can load their styles) */
+.ng-busy-parent-container {
+  position: relative;
+}
 .ng-busy {
   z-index: 1002;
 }

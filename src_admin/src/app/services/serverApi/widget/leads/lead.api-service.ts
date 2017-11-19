@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
-import { HttpService, ConsoleLogger, Variable } from './../../../../utils/index';
+import { ConsoleLogger, Variable } from './../../../../utils/index';
+import { HttpXService } from './../../../index';
 import { LeadEntity, LightEntity } from './../../../../entities/index';
 import { CRUDApiService } from './../../crud.api-service';
 import { ILeadApiService } from './i-lead.api-service';
@@ -8,7 +9,7 @@ import { UrlParameter } from './../../urlParameter';
 export class LeadApiService extends CRUDApiService<LeadEntity, number, LightEntity> implements ILeadApiService {
     /// ctor
     constructor(
-        httpService: HttpService,
+        httpService: HttpXService,
         logger: ConsoleLogger) {
         super(httpService, logger, 'lead');
     }

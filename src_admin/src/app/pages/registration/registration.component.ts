@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Extensions } from './../../utils/index';
 import { IUserApiService, UserApiService } from './../../services/serverApi/index';
-import { IAuthorizationManager, AuthorizationManager } from './../../utils/index';
+import { IAuthorizationService, AuthorizationService } from './../../services/index';
 @Component({
     selector: 'registration',
     styleUrls: ['./registration.scss'],
@@ -29,13 +29,13 @@ export class RegistrationComponent implements OnInit, OnDestroy {
     protected errorMessage: string;
     /// injected dependencies
     protected userApiService: IUserApiService;
-    protected authorizationManager: IAuthorizationManager;
+    protected authorizationManager: IAuthorizationService;
     /// ctor
     constructor(
         protected route: ActivatedRoute,
         protected router: Router,
         userApiService: UserApiService,
-        authorizationManager: AuthorizationManager) {
+        authorizationManager: AuthorizationService) {
         this.userApiService = userApiService;
         this.authorizationManager = authorizationManager;
     }

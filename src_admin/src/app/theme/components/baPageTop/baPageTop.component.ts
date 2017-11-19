@@ -1,8 +1,7 @@
-import {Component} from '@angular/core';
-
-import {GlobalState} from '../../../global.state';
-
-import { IAuthorizationManager, AuthorizationManager, Variable } from './../../../utils/index';
+import { Component } from '@angular/core';
+import { GlobalState } from '../../../global.state';
+import { Variable } from './../../../utils/index';
+import { IAuthorizationService, AuthorizationService } from './../../../services/index';
 
 @Component({
   selector: 'ba-page-top',
@@ -11,13 +10,13 @@ import { IAuthorizationManager, AuthorizationManager, Variable } from './../../.
 })
 export class BaPageTop {
 
-    public isScrolled: boolean = false;
-    public isMenuCollapsed: boolean = false;
+    isScrolled: boolean = false;
+    isMenuCollapsed: boolean = false;
 
-    protected authorizationManager: IAuthorizationManager;
+    protected authorizationService: IAuthorizationService;
 
-    constructor(private _state: GlobalState, authorizationManager: AuthorizationManager) {
-        this.authorizationManager = authorizationManager;
+    constructor(private _state: GlobalState, authorizationService: AuthorizationService) {
+        this.authorizationService = authorizationService;
         this._state.subscribe('menu.isCollapsed', (isCollapsed) => {
             this.isMenuCollapsed = isCollapsed;
         });
@@ -34,7 +33,7 @@ export class BaPageTop {
     }
 
     isUserInfoDefined(): boolean {
-        return Variable.isNotNullOrUndefined(this.authorizationManager.lastUser);
+        return Variable.isNotNullOrUndefined(this.authorizationService.lastUser);
     }
     userAvatarUrl(): string {
         // TODO: replace with real user avatar

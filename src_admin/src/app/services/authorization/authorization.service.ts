@@ -1,14 +1,12 @@
-﻿import { Injectable } from "@angular/core";
-import { Router, CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
-import { Http, Response, RequestOptionsArgs, Headers } from "@angular/http";
+import { Injectable } from '@angular/core';
+import { Router, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
+import { Http, Response, RequestOptionsArgs, Headers } from '@angular/http';
 import { environment } from '../../../environments/environment';
-import { IAuthorizationManager } from "./i-authorization.manager";
-import { ILogger } from "./../logging/i-logger";
-import { ConsoleLogger } from "./../logging/console/console.logger";
-import { TokenResponse, UserIdentityInfo } from './../../services/serverApi/index';
-import { Variable } from '../variable';
+import { ILogger, ConsoleLogger, Variable } from './../../utils/index';
+import { TokenResponse, UserIdentityInfo } from './../index';
+import { IAuthorizationService } from './i-authorization.service';
 @Injectable()
-export class AuthorizationManager implements IAuthorizationManager, CanActivate {
+export class AuthorizationService implements IAuthorizationService {
     private _lastUser: any;
     private _postAuthorizationDefaultUrl: string = '/';
 
@@ -31,12 +29,15 @@ export class AuthorizationManager implements IAuthorizationManager, CanActivate 
 
     protected baseUrl: string;
     /// injected dependencies
-    protected logger: ILogger;
+    //protected logger: ILogger;
     protected router: Router;
     protected http: Http;
     /// ctor
-    constructor(logger: ConsoleLogger, router: Router, http: Http) {
-        this.logger = logger;
+    constructor(
+        //logger: ConsoleLogger,
+        router: Router,
+        http: Http) {
+        //this.logger = logger;
         this.router = router;
         this.http = http;
         this.baseUrl = environment.apiUrl;
@@ -84,7 +85,7 @@ export class AuthorizationManager implements IAuthorizationManager, CanActivate 
                     (error: any) => {
                         return reject(error);
                     })
-            })
+        })
             .then(function (response: TokenResponse) {
                 self._lastUser = response;
                 if (isPersist) {
@@ -101,7 +102,7 @@ export class AuthorizationManager implements IAuthorizationManager, CanActivate 
         return Promise.resolve();
     }
     handleAuthorizationCallback(): Promise<void> {
-        this.logger.logDebug("HandleAuthorizationCallback method (in AuthorizationManager) called.");
+        //this.logger.logDebug("HandleAuthorizationCallback method (in AuthorizationManager) called.");
         return Promise.resolve();
     }
     /// helpers

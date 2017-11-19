@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
-import { IHttpService, ILogger,  } from './../../utils/index';
+import { ILogger } from './../../utils/index';
+import { IHttpXService } from './../index';
 import { IEntity, ILightEntity } from './../../entities/index';
 import { ICRUDXApiService } from './i-crudx.api-service';
 import { CRUDApiService } from './crud.api-service';
@@ -10,7 +11,7 @@ export abstract class CRUDXApiService<TEntity extends IEntity<TKey>, TKey, TLigh
     implements ICRUDXApiService<TEntity, TKey, TLightEntity> {
     /// ctor
     constructor(
-        httpService: IHttpService,
+        httpService: IHttpXService,
         logger: ILogger,
         controllerName: string) {
         super(httpService, logger, controllerName);

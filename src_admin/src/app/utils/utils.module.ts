@@ -8,8 +8,6 @@ import { ImageCropperComponent } from 'ng2-img-cropper';
 
 import { UiSwitchModule } from 'ngx-ui-switch'
 
-import { AuthorizationManager } from './auth/authorization.manager';
-import { HttpService } from './http/http.service';
 import { ConsoleLogger } from './logging/console/console.logger';
 import { PromiseService } from './promises/promise.service';
 
@@ -34,8 +32,6 @@ import { WorkingHoursSimpleComponent } from './components/working-hours/simple/w
         ImageCropperComponent
     ],
     providers: [
-        AuthorizationManager,
-        HttpService,
         ConsoleLogger,
         PromiseService
     ]
