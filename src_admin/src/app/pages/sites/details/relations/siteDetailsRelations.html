@@ -1,19 +1,22 @@
 <div class="site-details-template">
     <div class="site-details-template-header">
-        <div class="site-details-title">
-            <a class="site-details-title-text"
-               href="/#/pages/sites"
-               translate>
-                sites.details.title
-            </a>
-            <span class="site-details-title-text"
-                  *ngIf="!!entity">
-                /
-            </span>
-            <span class="site-details-title-site-name-text"
-                  *ngIf="!!entity">
-                {{entity.name}}
-            </span>
+        <div class="row">
+            <div class="col-12">
+                <nav aria-label="breadcrumb" role="navigation">
+                    <ol class="breadcrumb site-details-title-text">
+                        <li class="breadcrumb-item" aria-current="page">
+                            <a href="/#/pages/sites">
+                                <span translate>sites.title</span>
+                            </a>
+                        </li>
+                        <li class="breadcrumb-item active"
+                            aria-current="page"
+                            *ngIf="!!entity">
+                            <span translate>{{entity.name}}</span>
+                        </li>
+                    </ol>
+                </nav>
+            </div>
         </div>
     </div>
     <div class="site-details-template-body"

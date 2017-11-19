@@ -248,5 +248,21 @@
       "role": "Expected role",
       "invitator": "Creator"
     }
+  },
+  "userProfile": {
+    "userProfileMainTitle": "Personal data",
+    "tabs": {
+      "personalInfo": "Personal info",
+      "avatar": "Avatar",
+      "changePassword": "Change password",
+      "password": {
+        "oldPassword": "Old password",
+        "oldPasswordHelp": "We need your old password to commit changes.",
+        "newPassword": "New password",
+        "newPasswordHelp": "Enter your new password (it will be used as main password after commit).",
+        "newRepeatedPassword": "Repeat new password",
+        "newRepeatedPasswordHelp": "Repeat your new password to avoid mistakes."
+      }
+    }
   }
 }

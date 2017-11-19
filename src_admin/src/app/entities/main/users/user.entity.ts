@@ -5,7 +5,15 @@ export class UserEntity extends Entity {
     email: string;
     password: string;
     maxSitesCount: number;
-    /// ctor
+
+    username: string;
+    phoneNumber: string;
+    firstName: string;
+    secondName: string;
+    avatarUrl: string;
+    currentSitesCount: number;
+
+/// ctor
     constructor() {
         super();
     }
@@ -19,5 +27,12 @@ export class UserEntity extends Entity {
         this.email = mock.email;
         this.password = mock.password;
         this.maxSitesCount = mock.maxSitesCount;
+
+        this.username = mock.username;
+        this.phoneNumber = mock.phoneNumber;
+        this.firstName = mock.firstName;
+        this.secondName = mock.secondName;
+        this.avatarUrl = mock.avatarUrl;
+        this.currentSitesCount = mock.currentSitesCount;
     }
 }

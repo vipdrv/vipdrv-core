@@ -129,7 +129,7 @@ namespace QuantumLogic.WebApi.Controllers.Authorization
         private async Task<ClaimsIdentityBox> GetUserIdentityAsync(string login, string password, string grantType)
         {
             ClaimsIdentityBox claimsIdentityBox;
-            UserInfo userInfo = await UserDomainService.GetUserInfo(login, password, GetLoginComparer(grantType));
+            UserInfo userInfo = await UserDomainService.GetUserInfoAsync(login, password, GetLoginComparer(grantType));
             if (userInfo != null)
             {
                 ClaimsIdentity identity = new ClaimsIdentity(
