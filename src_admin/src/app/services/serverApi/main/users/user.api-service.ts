@@ -15,6 +15,33 @@ export class UserApiService extends CRUDApiService<UserEntity, number, LightEnti
         super(httpService, logger, 'user');
     }
     /// methods
+    patchPassword(userId: number, oldPassword: string, newPassword: string): Promise<void> {
+        const methodName = 'patch-password';
+        const url: string = `${userId}/${methodName}`;
+        return this.httpService
+            .patch(
+                this.createUrlWithMethodName(url),
+                {
+                    oldPassword,
+                    newPassword,
+                })
+            .then(function (): Promise<void> {
+                return Promise.resolve();
+            });
+    }
+    patchAvatar(userId: number, newAvatarUrl: string): Promise<void> {
+        const methodName = 'patch-avatar';
+        const url: string = `${userId}/${methodName}`;
+        return this.httpService
+            .patch(
+                this.createUrlWithMethodName(url),
+                {
+                    newAvatarUrl
+                })
+            .then(function (): Promise<void> {
+                return Promise.resolve();
+            });
+    }
     register(entity: any, invitationCode: string): Promise<void> {
         return this.httpService
             .post(this.createUrlWithMethodName(invitationCode), entity)

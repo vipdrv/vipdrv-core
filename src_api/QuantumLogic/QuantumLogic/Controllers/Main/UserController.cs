@@ -4,21 +4,21 @@ using QuantumLogic.Core.Domain.Entities.MainModule;
 using QuantumLogic.Core.Domain.Services.Main.Invitations;
 using QuantumLogic.Core.Domain.Services.Main.Users;
 using QuantumLogic.Core.Domain.UnitOfWorks;
+using QuantumLogic.Core.Exceptions.Authorization;
 using QuantumLogic.Core.Exceptions.Validation;
-using QuantumLogic.Core.Utils.Email;
 using QuantumLogic.Core.Utils.Email.Providers.SendGrid;
+using QuantumLogic.Core.Utils.Email.Services;
+using QuantumLogic.Core.Utils.Email.Templates.TestDrive;
 using QuantumLogic.WebApi.DataModels.Dtos.Main.Invitations;
 using QuantumLogic.WebApi.DataModels.Dtos.Main.Users;
 using QuantumLogic.WebApi.DataModels.Requests.Main.Users;
 using QuantumLogic.WebApi.DataModels.Responses;
+using SendGrid.Helpers.Mail;
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Net;
 using System.Threading.Tasks;
-using QuantumLogic.Core.Utils.Email.Services;
-using QuantumLogic.Core.Utils.Email.Templates.TestDrive;
-using SendGrid.Helpers.Mail;
 
 namespace QuantumLogic.WebApi.Controllers.Main
 {
@@ -160,7 +160,7 @@ namespace QuantumLogic.WebApi.Controllers.Main
             request.NormalizeAsRequest();
             using (var uow = UowManager.CurrentOrCreateNew(true))
             {
-                if (!(await ((IUserDomainService)DomainService).IsUsernameValid(request.Username)))
+                if (!(await ((IUserDomainService)DomainService).IsUsernameValidAsync(request.Username)))
                 {
                     throw new ValidateEntityPropertiesException(nameof(request.Username));
                 }
@@ -174,7 +174,38 @@ namespace QuantumLogic.WebApi.Controllers.Main
         [HttpGet("is-username-valid/{value}")]
         public Task<bool> IsUsernameValid(string value)
         {
-            return ((IUserDomainService)DomainService).IsUsernameValid(value);
+            return ((IUserDomainService)DomainService).IsUsernameValidAsync(value);
+        }
+
+        [Authorize]
+        [HttpPatch("{id}/patch-password")]
+        public async Task PatchPassword([FromBody]PatchPasswordRequest request, int id)
+        {
+            try
+            {
+                using (var uow = UowManager.CurrentOrCreateNew(true))
+                {
+                    await ((IUserDomainService)DomainService)
+                        .UpdatePasswordAsync(id, request.OldPassword, request.NewPassword);
+                    await uow.CompleteAsync();
+                }
+            }
+            catch (PasswordIsNotValidException)
+            {
+                Response.StatusCode = (int)HttpStatusCode.Unauthorized;
+            }
+        }
+
+        [Authorize]
+        [HttpPatch("{id}/patch-avatar")]
+        public async Task PatchPassword([FromBody]PatchAvatarRequest request, int id)
+        {
+            using (var uow = UowManager.CurrentOrCreateNew(true))
+            {
+                await ((IUserDomainService)DomainService)
+                    .UpdateAvatarAsync(id, request.NewAvatarUrl);
+                await uow.CompleteAsync();
+            }
         }
 
         #endregion

@@ -3,6 +3,7 @@ using QuantumLogic.Core.Domain.Policy.Main;
 using QuantumLogic.Core.Domain.Repositories.Main;
 using QuantumLogic.Core.Domain.Services.Main.Users.Models;
 using QuantumLogic.Core.Domain.Validation.Main;
+using QuantumLogic.Core.Exceptions.Authorization;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,7 +22,7 @@ namespace QuantumLogic.Core.Domain.Services.Main.Users
 
         #endregion
 
-        public async Task<UserInfo> GetUserInfo(string login, string password, Func<User, string, bool> loginComparer)
+        public async Task<UserInfo> GetUserInfoAsync(string login, string password, Func<User, string, bool> loginComparer)
         {
             User user = await ((IUserRepository)Repository)
                 .FirstOrDefaultWithDeepIncludesAsync((entity) => loginComparer(entity, login) && entity.PasswordHash == password);
@@ -36,11 +37,31 @@ namespace QuantumLogic.Core.Domain.Services.Main.Users
                     user.AvatarUrl);
         }
 
-        public Task<bool> IsUsernameValid(string value)
+        public Task<bool> IsUsernameValidAsync(string value)
         {
             return Repository
                 .FirstOrDefaultAsync(r => String.Equals(r.Username, value, StringComparison.OrdinalIgnoreCase))
                 .ContinueWith((pt) => pt.Result == null);
+        }
+
+        public async Task UpdatePasswordAsync(int userId, string oldPassword, string newPassword)
+        {
+            User entity = await Repository.FirstOrDefaultAsync(r => r.Id == userId && r.PasswordHash == oldPassword);
+            if (entity != null)
+            {
+                entity.PasswordHash = newPassword;
+                await Repository.UpdateAsync(entity);
+            }
+            else
+            {
+                throw new PasswordIsNotValidException();
+            }
+        }
+        public async Task UpdateAvatarAsync(int userId, string newAvatarUrl)
+        {
+            User entity = await Repository.GetAsync(userId);
+            entity.AvatarUrl = newAvatarUrl;
+            await Repository.UpdateAsync(entity);
         }
 
         protected override Task CascadeDeleteActionAsync(User entity)
