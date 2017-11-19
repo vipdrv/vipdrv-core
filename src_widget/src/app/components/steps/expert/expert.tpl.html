@@ -1,9 +1,10 @@
 <div class="row">
     <div class="col-12">
-        <h2 class="wizard-tab-content__title">Select an expert</h2>
-        <p>He or she will be there to assist you on the day of your test drive.</p>
+        <h2 class="wizard-tab-content__title">Select Salesperson</h2>
+        <p>Select an expert from below to handle your test drive experience.</p>
     </div>
 </div>
+
 <div class="row pr-3 td-cards">
     <td-card class="col-md-6 col-sm-12 p-0 pt-3 pl-3"
              ng-repeat="expert in $ctrl.stepData"
@@ -17,15 +18,14 @@
 
 <div class="row wizard-navigation-tab-next-button--desktop d-none d-md-block">
     <div class="col-12">
-        <button type="button" class="btn btn-lg btn-secondary " ng-click="skipStep()">Skip Step</button>
-        <button type="button" class="btn btn-lg btn-primary " ng-click="nextStep()">Next Step</button>
+        <a href="javascript:void(0)" class="card-link mr-3" ng-click="skipStep()">Skip this step</a>
+        <button type="button" class="btn btn-lg btn-primary pointer" ng-click="nextStep()">Next Step</button>
     </div>
 </div>
-
 <div class="row wizard-navigation-tab-next-button--mobile d-md-none d-lg-none d-sm-block">
     <div class="col-12">
-        <button type="button" class="btn btn-secondary btn-lg btn-block" ng-click="skipStep()">Skip Step</button>
-        <button type="button" class="btn btn-primary btn-lg btn-block" ng-click="nextStep()">Next Step</button>
+        <a href="javascript:void(0)" class="card-link d-block text-center mb-3" ng-click="skipStep()">Skip this step </a>
+        <button type="button" class="btn btn-primary btn-lg btn-block" ng-click="nextStep()">Next step</button>
     </div>
 </div>
 

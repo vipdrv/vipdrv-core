@@ -141,6 +141,11 @@ gulp.task('init_prod_env', function (callback) {
 });
 
 gulp.task('replace_app_config', function () {
+    var hash = Math.random().toString(36).substring(7);
+    gulp.src(['./build/index.html'])
+        .pipe(replace('%hash%', hash))
+        .pipe(gulp.dest('./build/'));
+
     return gulp.src(['./build/app.js'])
         .pipe(replace('%apiBaseUrl%', env.apiBaseUrl))
         .pipe(replace('%siteId%', env.defaultSiteId))

@@ -40,7 +40,7 @@
         road: {
             id: 'road',
             icon: 'fa fa-road fa-2x',
-            title: 'Select preferred route',
+            title: 'Select Preferred Route',
             isActive: false,
             isLocked: true,
             isCompleted: false
@@ -56,7 +56,7 @@
         details: {
             id: 'details',
             icon: 'fa fa-handshake-o fa-2x',
-            title: 'Your details',
+            title: 'Your Details',
             isActive: false,
             isLocked: true,
             isCompleted: false

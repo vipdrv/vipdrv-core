@@ -78,13 +78,13 @@
 // =======================================================================//
 
 .td-cards {
-  max-height: calc(100% - 255px);
+  max-height: calc(100% - 180px);
   overflow: auto;
 }
 
-@media (max-width: 1022px), (max-height: 648px)  {
+@media (max-width: 758px) {
   .td-cards {
-    max-height: calc(100% - 180px);
+    max-height: calc(100% - 244px);
   }
 }
 
@@ -96,6 +96,15 @@
 .td-card__body {
   line-height: 1.3;
   font-size: 11pt;
+}
+
+.form-input__hack-1 {
+  height: 100%;
+}
+
+.form-input__hack-2 {
+  max-height: calc(100% - 190px);
+  overflow: auto;
 }
 
 // =======================================================================//
