@@ -77,15 +77,26 @@
                     sites.details.tabs.notifications
                 </a>
             </li>
+            <!--<li class="nav-item">-->
+                <!--<a id="theme-tab"-->
+                   <!--class="nav-link"-->
+                   <!--href="#theme"-->
+                   <!--data-toggle="tab"-->
+                   <!--role="tab"-->
+                   <!--aria-controls="theme-tab"-->
+                   <!--translate>-->
+                    <!--sites.details.tabs.theme-->
+                <!--</a>-->
+            <!--</li>-->
             <li class="nav-item">
-                <a id="theme-tab"
+                <a id="widget-preview-tab"
                    class="nav-link"
-                   href="#theme"
+                   href="#widget-preview"
                    data-toggle="tab"
                    role="tab"
-                   aria-controls="theme-tab"
+                   aria-controls="widget-preview-tab"
                    translate>
-                    sites.details.tabs.theme
+                    sites.details.tabs.widgetPreview
                 </a>
             </li>
         </ul>
@@ -133,12 +144,18 @@
                                (onSaveSiteContacts)="patchSiteContacts($event)">
                 </site-contacts>
             </div>
-            <div id="theme"
+            <!--<div id="theme"-->
+                 <!--class="tab-pane fade show"-->
+                 <!--role="tabpanel"-->
+                 <!--aria-labelledby="theme-tab">-->
+                <!--theme component (not implemented yet)-->
+                <!--// Should patch theme for current site entity-->
+            <!--</div>-->
+            <div id="widget-preview"
                  class="tab-pane fade show"
                  role="tabpanel"
-                 aria-labelledby="theme-tab">
-                theme component (not implemented yet)
-                // Should patch theme for current site entity
+                 aria-labelledby="widget-preview-tab">
+                 <widget-preview [id]="entity.id"></widget-preview>
             </div>
         </div>
     </div>

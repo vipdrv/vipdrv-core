@@ -11,12 +11,14 @@ import { SitesTableComponent } from './table/sitesTable.component';
 import { BeveragesModule } from './../beverages/index';
 import { ExpertsModule } from './../experts/index';
 import { RoutesModule } from './../routes/index';
+import { WidgetPreviewModule } from './../widgetPreview/index';
 import { SiteDetailsEditComponent } from './details/edit/siteDetailsEdit.component';
 import { SiteDetailsRelationsComponent } from './details/relations/siteDetailsRelations.component';
 import { SiteOverviewComponent } from './overview/siteOverview.component';
 import { SiteContactsComponent } from './contacts/siteContacts.component';
 import { SitesComponent } from './sites.component';
 import { routing } from './sites.routing';
+
 @NgModule({
     imports: [
         CommonModule,
@@ -30,7 +32,8 @@ import { routing } from './sites.routing';
         BusyModule,
         BeveragesModule,
         ExpertsModule,
-        RoutesModule
+        RoutesModule,
+        WidgetPreviewModule
     ],
     exports: [
         SitesComponent,
@@ -51,3 +54,5 @@ import { routing } from './sites.routing';
     providers: []
 })
 export class SitesModule {}
+
+
