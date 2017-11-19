@@ -118,7 +118,8 @@
         "beverages": "Beverages",
         "routes": "Routes",
         "notifications": "Notifications",
-        "theme": "Theme"
+        "theme": "Theme",
+        "widgetPreview": "Preview"
       },
       "notifications": {
         "emails": "Emails",
