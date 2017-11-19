@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, ViewChild } from '@angular/core';
-import { Router} from '@angular/router';
+import { Router } from '@angular/router';
 import { ModalComponent } from 'ng2-bs3-modal/ng2-bs3-modal';
 import { Variable, PromiseService, ConsoleLogger, ILogger } from './../../../utils/index';
 import { IAuthorizationService, AuthorizationService } from './../../../services/index';

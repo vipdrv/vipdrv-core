@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { BasePolicyService } from './base.policy-service';
+import { SiteEntityPolicyService } from './concrete/widget/site/siteEntity.policy-service';
 @NgModule({
     imports: [
         CommonModule
@@ -10,7 +10,7 @@ import { BasePolicyService } from './base.policy-service';
     exports: [
     ],
     providers: [
-        BasePolicyService
+        SiteEntityPolicyService
     ]
 })
 export class PolicyModule {}

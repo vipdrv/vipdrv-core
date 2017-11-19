@@ -11,12 +11,12 @@ export class SiteApiService extends CRUDApiService<SiteEntity, number, LightEnti
         httpService: HttpXService,
         logger: ConsoleLogger) {
         super(httpService, logger, 'site');
-        this.logger.logDebug('SiteApiService was constructed.');
+        this.logger.logDebug('SiteApiService has been constructed.');
     }
     /// methods
     patchContacts(id: number, value: any): Promise<void> {
-        let self = this;
-        let methodName: string = 'change-contacts';
+        const self = this;
+        const methodName: string = 'change-contacts';
         return this.httpService
             .patch(this.createUrlWithMethodNameAndParams(methodName, String(id)), { 'value': value })
             .then(function (response: any): void { });

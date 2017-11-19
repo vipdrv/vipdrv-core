@@ -10,7 +10,9 @@
       "test": "Test-page"
     },
     "actions": {
+      "text_info": "info",
       "text_create": "create",
+      "text_update": "edit",
       "text_edit": "edit",
       "text_delete": "delete",
       "text_save": "save",
