@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
-import { HttpService, ConsoleLogger } from './../../../../utils/index';
+import { ConsoleLogger } from './../../../../utils/index';
+import { HttpXService } from './../../../index';
 import { SiteEntity, LightEntity } from './../../../../entities/index';
 import { ISiteApiService } from './i-site.api-service';
 import { CRUDApiService } from './../../crud.api-service';
@@ -7,14 +8,15 @@ import { CRUDApiService } from './../../crud.api-service';
 export class SiteApiService extends CRUDApiService<SiteEntity, number, LightEntity> implements ISiteApiService {
     /// ctor
     constructor(
-        httpService: HttpService,
+        httpService: HttpXService,
         logger: ConsoleLogger) {
         super(httpService, logger, 'site');
+        this.logger.logDebug('SiteApiService has been constructed.');
     }
     /// methods
     patchContacts(id: number, value: any): Promise<void> {
-        let self = this;
-        let methodName: string = 'change-contacts';
+        const self = this;
+        const methodName: string = 'change-contacts';
         return this.httpService
             .patch(this.createUrlWithMethodNameAndParams(methodName, String(id)), { 'value': value })
             .then(function (response: any): void { });

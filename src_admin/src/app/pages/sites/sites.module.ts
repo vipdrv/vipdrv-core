@@ -17,6 +17,8 @@ import { SiteOverviewComponent } from './overview/siteOverview.component';
 import { SiteContactsComponent } from './contacts/siteContacts.component';
 import { SitesComponent } from './sites.component';
 import { routing } from './sites.routing';
+import { SiteCardsComponent } from './cards/siteCards.component';
+import { SiteCardComponent } from './cards/siteCard.component';
 @NgModule({
     imports: [
         CommonModule,
@@ -35,6 +37,8 @@ import { routing } from './sites.routing';
     exports: [
         SitesComponent,
         SitesTableComponent,
+        SiteCardsComponent,
+        SiteCardComponent,
         SiteDetailsEditComponent,
         SiteDetailsRelationsComponent,
         SiteOverviewComponent,
@@ -43,6 +47,8 @@ import { routing } from './sites.routing';
     declarations: [
         SitesComponent,
         SitesTableComponent,
+        SiteCardsComponent,
+        SiteCardComponent,
         SiteDetailsEditComponent,
         SiteDetailsRelationsComponent,
         SiteOverviewComponent,

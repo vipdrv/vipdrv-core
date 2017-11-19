@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-
-import { IAuthorizationManager, AuthorizationManager } from './../../utils/index';
+import { IAuthorizationService, AuthorizationService } from './../../services/index';
 
 @Component({
     selector: 'logout',
@@ -9,11 +8,11 @@ import { IAuthorizationManager, AuthorizationManager } from './../../utils/index
     templateUrl: 'logout.html'
 })
 export class LogoutComponent implements OnInit {
-    protected authorizationManager: IAuthorizationManager;
+    protected authorizationManager: IAuthorizationService;
 
     constructor(
         private router: Router,
-        authorizationManager: AuthorizationManager) {
+        authorizationManager: AuthorizationService) {
         this.authorizationManager = authorizationManager;
     }
 

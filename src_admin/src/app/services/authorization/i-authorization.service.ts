@@ -1,5 +1,5 @@
-﻿import { CanActivate } from '@angular/router';
-export interface IAuthorizationManager extends CanActivate {
+import { CanActivate } from '@angular/router';
+export interface IAuthorizationService extends CanActivate {
     /// url to redirect after authorization
     postAuthRedirectUrl: string;
 

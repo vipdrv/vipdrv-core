@@ -1,9 +1,9 @@
 import { Component, OnInit, Input, ViewChild } from '@angular/core';
-import { Router} from '@angular/router';
+import { Router } from '@angular/router';
 import { ModalComponent } from 'ng2-bs3-modal/ng2-bs3-modal';
 import { Variable, PromiseService, ConsoleLogger, ILogger } from './../../../utils/index';
-import { IAuthorizationManager, AuthorizationManager } from './../../../utils/index';
-import { ISiteApiService, SiteApiService, GetAllResponse } from './../../../services/serverApi/index';
+import { IAuthorizationService, AuthorizationService } from './../../../services/index';
+import { ISiteApiService, SiteApiService, GetAllResponse } from './../../../services/index';
 import { SiteEntity } from './../../../entities/index';
 @Component({
     selector: 'sites-table',
@@ -32,14 +32,14 @@ export class SitesTableComponent implements OnInit {
     protected entity: SiteEntity;
     /// injected dependencies
     protected logger: ILogger;
-    protected authorizationManager: IAuthorizationManager;
+    protected authorizationManager: IAuthorizationService;
     protected siteApiService: ISiteApiService;
     protected promiseService: PromiseService;
     protected router: Router;
     /// ctor
     constructor(
         logger: ConsoleLogger,
-        authorizationManager: AuthorizationManager,
+        authorizationManager: AuthorizationService,
         siteApiService: SiteApiService,
         promiseService: PromiseService,
         router: Router) {

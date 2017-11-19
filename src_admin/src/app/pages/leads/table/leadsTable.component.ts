@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, ViewChild } from '@angular/core';
 import { ModalComponent } from 'ng2-bs3-modal/ng2-bs3-modal';
 import { Variable, Extensions, PromiseService, ConsoleLogger, ILogger } from './../../../utils/index';
-import { IAuthorizationManager, AuthorizationManager } from './../../../utils/index';
+import { IAuthorizationService, AuthorizationService } from './../../../services/index';
 import { ILeadApiService, LeadApiService, GetAllResponse } from './../../../services/serverApi/index';
 import { LeadEntity } from './../../../entities/index';
 @Component({
@@ -31,13 +31,13 @@ export class LeadsTableComponent implements OnInit {
     protected entity: LeadEntity;
     /// injected dependencies
     protected logger: ILogger;
-    protected authorizationManager: IAuthorizationManager;
+    protected authorizationManager: IAuthorizationService;
     protected leadApiService: ILeadApiService;
     protected promiseService: PromiseService;
     /// ctor
     constructor(
         logger: ConsoleLogger,
-        authorizationManager: AuthorizationManager,
+        authorizationManager: AuthorizationService,
         leadApiService: LeadApiService,
         promiseService: PromiseService) {
         this.logger = logger;

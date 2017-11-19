@@ -1,4 +1,5 @@
-import { ILogger, IHttpService } from './../../utils/index';
+import { ILogger } from './../../utils/index';
+import { IHttpXService } from './../index';
 import { IApiService } from './i-api-service';
 import { UrlParameter } from './urlParameter';
 import { environment } from '../../../environments/environment';
@@ -11,11 +12,11 @@ export abstract class BaseApiService implements IApiService {
         return `${this.baseUrl}/${this.controllerName}`;
     }
     /// injected dependencies
-    protected httpService: IHttpService;
+    protected httpService: IHttpXService;
     protected logger: ILogger;
     /// ctor
     constructor(
-        httpService: IHttpService,
+        httpService: IHttpXService,
         logger: ILogger,
         controllerName: string) {
         this.httpService = httpService;

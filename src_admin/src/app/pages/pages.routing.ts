@@ -1,7 +1,7 @@
 import { Routes, RouterModule }  from '@angular/router';
 import { Pages } from './pages.component';
 import { ModuleWithProviders } from '@angular/core';
-import { AuthorizationManager } from './../utils/index';
+import { AuthorizationService } from './../services/index';
 
 // noinspection TypeScriptValidateTypes
 
@@ -28,35 +28,35 @@ export const routes: Routes = [
                 path: '',
                 redirectTo: 'home',
                 pathMatch: 'full',
-                canActivate: [AuthorizationManager]
+                canActivate: [AuthorizationService]
             },
             {
                 path: 'home',
                 loadChildren: './home/home.module#HomeModule',
-                canActivate: [AuthorizationManager]
+                canActivate: [AuthorizationService]
             },
             {
                 path: 'integration',
                 loadChildren: './integration/integration.module#IntegrationModule',
-                canActivate: [AuthorizationManager]
+                canActivate: [AuthorizationService]
             },
             {
                 path: 'leads',
                 loadChildren: './leads/leads.module#LeadsModule',
-                canActivate: [AuthorizationManager]
+                canActivate: [AuthorizationService]
             },
             {
                 path: 'sites',
                 loadChildren: './sites/sites.module#SitesModule',
-                canActivate: [AuthorizationManager]
+                canActivate: [AuthorizationService]
             },
             {
                 path: 'invitations',
                 loadChildren: './invitations/invitations.module#InvitationsModule',
-                canActivate: [AuthorizationManager]
+                canActivate: [AuthorizationService]
             },
 
-            { path: 'test', loadChildren: './test/test.module#TestModule', canActivate: [AuthorizationManager] }
+            { path: 'test', loadChildren: './test/test.module#TestModule', canActivate: [AuthorizationService] }
         ]
     }
 ];

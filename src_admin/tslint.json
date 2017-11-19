@@ -6,7 +6,7 @@
     "node_modules/codelyzer"
   ],
   "rules": {
-    "max-line-length": [true, 140],
+    "max-line-length": [true, 150],
     "class-name": true,
     "comment-format": [true, "check-space"],
     "indent": [true, "spaces"],
@@ -102,7 +102,7 @@
     "prefer-template": true,
     "no-unnecessary-callback-wrapper": true,
     "member-access": [true, "no-public"],
-    "no-empty-interface": true,
+    "no-empty-interface": false,
     "no-reference": true,
     "prefer-for-of": true,
     "forin": true,
@@ -113,8 +113,8 @@
     "no-boolean-literal-compare": true,
     "object-literal-shorthand": true,
 
-    "directive-selector": [true, "attribute", ["nga", "ngd", "ngt"], "camelCase"],
-    "component-selector": [true, "element", ["nga", "ngd", "ngt"], "kebab-case"],
+    // "directive-selector": [true, "attribute", ["nga", "ngd", "ngt"], "camelCase"],
+    // "component-selector": [true, "element", ["nga", "ngd", "ngt"], "kebab-case"],
     "use-input-property-decorator": true,
     "use-output-property-decorator": true,
     "use-host-property-decorator": true,
@@ -124,7 +124,7 @@
     "no-forward-ref": true,
     "use-life-cycle-interface": true,
     "use-pipe-transform-interface": true,
-    "pipe-naming": [true, "camelCase", ["nga", "ngd", "ngt"]],
+    // "pipe-naming": [true, "camelCase", ["nga", "ngd", "ngt"]],
     "component-class-suffix": true,
     "directive-class-suffix": true,
     "templates-use-public": true,

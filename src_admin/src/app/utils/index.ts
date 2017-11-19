@@ -3,12 +3,6 @@ export * from './utils.module';
 export * from './variable';
 export * from './extensions';
 
-export * from './auth/authorization.manager';
-export * from './auth/i-authorization.manager';
-
-export * from './http/http.service';
-export * from './http/i-http.service';
-
 export * from './keyed-collection/i-string-keyed-collection';
 export * from './keyed-collection/string-keyed-collection';
 
