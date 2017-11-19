@@ -1,58 +1,61 @@
-<div class="row">
-    <button class="btn btn-secondary btn-sm pull-left"
-            type="button"
-            *ngIf="isActionGetManyAllowed()"
-            [disabled]="isActionGetManyDisabled()"
-            (click)="getManyEntities()">
-        <i class="fa fa-refresh fa-spin" *ngIf="isActionGetManyProcessing()"></i>
-        <i class="fa fa-refresh" *ngIf="!isActionGetManyProcessing()"></i>
-    </button>
-    <button class="btn btn-sm btn-outline-success pull-right"
-            type="button"
-            *ngIf="isActionCreateAllowed()"
-            [disabled]="isActionCreateDisabled()"
-            (click)="openModalOnCreate()">
-        <i class="fa fa-spinner fa-pulse" *ngIf="isActionCreateProcessing()"></i>
-        <i class="fa fa-plus" *ngIf="!isActionCreateProcessing()"></i>
-        <span translate>general.actions.text_create</span>
-    </button>
+<div class="row template-header">
+    <div class="col-12">
+        <button class="btn btn-secondary btn-sm pull-left test-drive-left-standalone-btn"
+                type="button"
+                *ngIf="isActionGetManyAllowed()"
+                [disabled]="isActionGetManyDisabled()"
+                (click)="getManyEntities(); $event.stopPropagation();">
+            <i class="fa fa-refresh fa-spin" *ngIf="isActionGetManyProcessing()"></i>
+            <i class="fa fa-refresh" *ngIf="!isActionGetManyProcessing()"></i>
+        </button>
+        <button class="btn btn-sm btn-outline-success pull-right test-drive-right-standalone-btn"
+                type="button"
+                *ngIf="isActionCreateAllowed()"
+                [disabled]="isActionCreateDisabled()"
+                (click)="openModalOnCreate(); $event.stopPropagation();">
+            <i class="fa fa-spinner fa-pulse" *ngIf="isActionCreateProcessing()"></i>
+            <i class="fa fa-plus" *ngIf="!isActionCreateProcessing()"></i>
+            <span translate>general.actions.text_create</span>
+        </button>
+    </div>
 </div>
-<div class="row">
-    <div class="test col-xs-12 col-sm-12 col-md-6 col-lg-4 col-xl-3"
+<div class="row template-body"
+     [ngBusy]="firstLoadPromise">
+    <div class="card-group col-xs-12 col-sm-12 col-md-6 col-lg-4 col-xl-3"
          *ngFor="let entity of items">
-        <div class="card border-success">
-            <div class="card-header bg-success text-white">
+        <div class="card site-card">
+            <div class="card-header text-center">
                 {{entity.name}}
             </div>
-            <div class="card-body">
+            <div class="card-block">
                 <div class="card-text">
                     <site-card [entity]="entity"></site-card>
                 </div>
             </div>
             <div class="card-footer bg-transparent">
-                <button class="btn btn-sm btn-outline-danger pull-right site-card-footer-btn"
+                <button class="btn btn-sm btn-outline-danger pull-right test-drive-right-standalone-btn"
                         type="button"
                         *ngIf="isActionDeleteAllowed(entity)"
                         [disabled]="isActionDeleteDisabled(entity)"
-                        (click)="deleteEntity(entity.id)">
+                        (click)="deleteEntity(entity.id); $event.stopPropagation();">
                     <i class="fa fa-spinner fa-pulse" *ngIf="isActionDeleteProcessing(entity)"></i>
                     <i class="fa fa-times" *ngIf="!isActionDeleteProcessing(entity)"></i>
                     <span translate>general.actions.text_delete</span>
                 </button>
-                <button class="btn btn-sm btn-outline-primary pull-right site-card-footer-btn"
+                <button class="btn btn-sm btn-outline-primary pull-right test-drive-standalone-btn"
                         type="button"
                         *ngIf="isActionUpdateAllowed(entity)"
                         [disabled]="isActionUpdateDisabled(entity)"
-                        (click)="openModalOnUpdate(entity)">
+                        (click)="openModalOnUpdate(entity); $event.stopPropagation();">
                     <i class="fa fa-spinner fa-pulse" *ngIf="isActionUpdateProcessing(entity)"></i>
                     <i class="fa fa-pencil" *ngIf="!isActionUpdateProcessing(entity)"></i>
                     <span translate>general.actions.text_update</span>
                 </button>
-                <button class="btn btn-sm btn-outline-info pull-right site-card-footer-btn"
+                <button class="btn btn-sm btn-outline-info pull-right test-drive-left-standalone-btn"
                         type="button"
                         *ngIf="isActionGetAllowed(entity)"
                         [disabled]="isActionGetDisabled(entity)"
-                        (click)="redirectToEntityDetails(entity)">
+                        (click)="redirectToEntityDetails(entity); $event.stopPropagation();">
                     <i class="fa fa-spinner fa-pulse" *ngIf="isActionGetProcessing(entity)"></i>
                     <i class="fa fa-info" *ngIf="!isActionGetProcessing(entity)"></i>
                     <span translate>general.actions.text_info</span>
@@ -76,13 +79,13 @@
     <modal-footer>
         <button type="button"
                 class="btn btn-secondary"
-                (click)="siteDetailsModalDismiss()">
+                (click)="siteDetailsModalDismiss(); $event.stopPropagation();">
             <span translate>sites.modal.cancel</span>
         </button>
         <button type="button"
                 [disabled]="isSiteDetailsModalApplyDisabled()"
                 class="btn btn-primary"
-                (click)="siteDetailsModalApply()">
+                (click)="siteDetailsModalApply(); $event.stopPropagation();">
             <i class="fa fa-spinner fa-pulse" *ngIf="isSiteDetailsModalApplyProcessing()"></i>
             <i class="fa fa-save" *ngIf="!isSiteDetailsModalApplyProcessing()"></i>
             <span translate>sites.modal.apply</span>
