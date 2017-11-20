@@ -5,6 +5,10 @@ import { HttpModule } from '@angular/http';
 import { RouterModule } from '@angular/router';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateService } from '@ngx-translate/core';
+
+import { BusyModule, BusyConfig, BUSY_CONFIG_DEFAULTS } from 'angular2-busy';
+import { PaginationModule } from 'ng2-bootstrap';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 /*
  * Platform and Environment providers/directives/pipes
  */
@@ -17,12 +21,22 @@ import { GlobalState } from './global.state';
 import { NgaModule } from './theme/nga.module';
 import { PagesModule } from './pages/pages.module';
 
-
+import { AuthorizationModule, HttpXModule, PolicyModule, ServerApiModule } from './services/index';
+import { UtilsModule, loaderMessage, loaderTemplate } from './utils/index';
 // Application wide providers
 const APP_PROVIDERS = [
   AppState,
   GlobalState
 ];
+
+const busyConfig: BusyConfig = {
+    message: loaderMessage,
+    delay: 200,
+    template: loaderTemplate,
+    minDuration: BUSY_CONFIG_DEFAULTS.minDuration,
+    backdrop: true,
+    wrapperClass: BUSY_CONFIG_DEFAULTS.wrapperClass
+};
 
 export type StoreType = {
   state: InternalStateType,
@@ -30,32 +44,35 @@ export type StoreType = {
   disposeOldHosts: () => void
 };
 
-/**
- * `AppModule` is the main entry point into Angular2's bootstraping process
- */
 @NgModule({
   bootstrap: [App],
   declarations: [
     App
   ],
-  imports: [ // import Angular's modules
+  imports: [
     BrowserModule,
     HttpModule,
     RouterModule,
     FormsModule,
     ReactiveFormsModule,
+    BrowserAnimationsModule,
     NgaModule.forRoot(),
     NgbModule.forRoot(),
+    PaginationModule.forRoot(),
+    BusyModule.forRoot(busyConfig),
+    AuthorizationModule,
+    HttpXModule,
     PagesModule,
+    PolicyModule,
+    UtilsModule,
+    ServerApiModule,
     routing
   ],
-  providers: [ // expose our Services and Providers into Angular's dependency injection
+  providers: [
     APP_PROVIDERS
   ]
 })
 
 export class AppModule {
-
-  constructor(public appState: AppState) {
-  }
+  constructor(public appState: AppState) { }
 }

@@ -1,0 +1,165 @@
+<div class="site-details-template">
+    <div class="site-details-template-header">
+        <div class="row">
+            <div class="col-12">
+                <nav aria-label="breadcrumb" role="navigation">
+                    <ol class="breadcrumb site-details-title-text">
+                        <li class="breadcrumb-item" aria-current="page">
+                            <a href="/#/pages/sites">
+                                <span translate>sites.title</span>
+                            </a>
+                        </li>
+                        <li class="breadcrumb-item active"
+                            aria-current="page"
+                            *ngIf="!!entity">
+                            <span translate>{{entity.name}}</span>
+                        </li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
+    <div class="site-details-template-body"
+         [ngBusy]="promiseService.applicationPromises.sites.get.promise">
+        <ul class="nav nav-tabs"
+            id="site-details-tabs"
+            role="tablist">
+            <li class="nav-item">
+                <a id="overview-tab"
+                   class="nav-link active"
+                   href="#overview"
+                   data-toggle="tab"
+                   role="tab"
+                   aria-controls="overview-tab"
+                   aria-expanded="true"
+                   translate>
+                    sites.details.tabs.overview
+                </a>
+            </li>
+            <li class="nav-item">
+                <a id="experts-tab"
+                   class="nav-link"
+                   href="#experts"
+                   data-toggle="tab"
+                   role="tab"
+                   aria-controls="experts-tab"
+                   translate>
+                    sites.details.tabs.experts
+                </a>
+            </li>
+            <li class="nav-item">
+                <a id="beverages-tab"
+                   class="nav-link"
+                   href="#beverages"
+                   data-toggle="tab"
+                   role="tab"
+                   aria-controls="beverages-tab"
+                   translate>
+                    sites.details.tabs.beverages
+                </a>
+            </li>
+            <li class="nav-item">
+                <a id="routes-tab"
+                   class="nav-link"
+                   href="#routes"
+                   data-toggle="tab"
+                   role="tab"
+                   aria-controls="routes-tab"
+                   translate>
+                    sites.details.tabs.routes
+                </a>
+            </li>
+            <li class="nav-item">
+                <a id="notifications-tab"
+                   class="nav-link"
+                   href="#notifications"
+                   data-toggle="tab"
+                   role="tab"
+                   aria-controls="notifications-tab"
+                   translate>
+                    sites.details.tabs.notifications
+                </a>
+            </li>
+            <!--<li class="nav-item">-->
+                <!--<a id="theme-tab"-->
+                   <!--class="nav-link"-->
+                   <!--href="#theme"-->
+                   <!--data-toggle="tab"-->
+                   <!--role="tab"-->
+                   <!--aria-controls="theme-tab"-->
+                   <!--translate>-->
+                    <!--sites.details.tabs.theme-->
+                <!--</a>-->
+            <!--</li>-->
+            <li class="nav-item">
+                <a id="widget-preview-tab"
+                   class="nav-link"
+                   href="#widget-preview"
+                   data-toggle="tab"
+                   role="tab"
+                   aria-controls="widget-preview-tab"
+                   translate>
+                    sites.details.tabs.widgetPreview
+                </a>
+            </li>
+        </ul>
+        <div id="site-details"
+             class="tab-content"
+             *ngIf="!!entity">
+            <div id="overview"
+                 class="tab-pane fade show active"
+                 role="tabpanel"
+                 aria-labelledby="overview-tab">
+                <site-overview [entity]="entity"></site-overview>
+            </div>
+            <div id="experts"
+                 class="tab-pane fade show"
+                 role="tabpanel"
+                 aria-labelledby="experts-tab">
+                <experts-table [siteId]="entity.id"
+                               [filter]="getExpertsFilter()"
+                               (onExpertsChange)="actualizeExpertsInfo($event)">
+                </experts-table>
+            </div>
+            <div id="beverages"
+                 class="tab-pane fade show"
+                 role="tabpanel"
+                 aria-labelledby="beverages-tab">
+                <beverages-table [siteId]="entity.id"
+                                 [filter]="getBeveragesFilter()"
+                                 (onBeveragesChange)="actualizeBeveragesInfo($event)">
+                </beverages-table>
+            </div>
+            <div id="routes"
+                 class="tab-pane fade show"
+                 role="tabpanel"
+                 aria-labelledby="routes-tab">
+                <routes-table [siteId]="entity.id"
+                              [filter]="getRoutesFilter()"
+                              (onRoutesChange)="actualizeRoutesInfo($event)">
+                </routes-table>
+            </div>
+            <div id="notifications"
+                 class="tab-pane fade show"
+                 role="tabpanel"
+                 aria-labelledby="notifications-tab">
+                <site-contacts [siteContacts]="entity.contacts"
+                               (onSaveSiteContacts)="patchSiteContacts($event)">
+                </site-contacts>
+            </div>
+            <!--<div id="theme"-->
+                 <!--class="tab-pane fade show"-->
+                 <!--role="tabpanel"-->
+                 <!--aria-labelledby="theme-tab">-->
+                <!--theme component (not implemented yet)-->
+                <!--// Should patch theme for current site entity-->
+            <!--</div>-->
+            <div id="widget-preview"
+                 class="tab-pane fade show"
+                 role="tabpanel"
+                 aria-labelledby="widget-preview-tab">
+                 <widget-preview [id]="entity.id"></widget-preview>
+            </div>
+        </div>
+    </div>
+</div>

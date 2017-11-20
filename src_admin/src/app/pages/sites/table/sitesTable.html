@@ -1,0 +1,110 @@
+<div class="sites-table-template">
+    <div class="sites-table-header">
+        <div style="float: left;">
+            <button type="button"
+                    [disabled]="!!promiseService.applicationPromises.sites.getAll.promise"
+                    class="btn btn-secondary btn-sm pull-left sites-refresh-btn"
+                    (click)="getAllEntities()">
+                <i class="fa fa-refresh fa-spin" *ngIf="!!promiseService.applicationPromises.sites.getAll.promise"></i>
+                <i class="fa fa-refresh" *ngIf="!promiseService.applicationPromises.sites.getAll.promise"></i>
+            </button>
+            <select class="form-control-sm sites-page-size-control"
+                    [disabled]="!!promiseService.applicationPromises.sites.getAll.promise"
+                    [(ngModel)]="pageSize"
+                    (change)="onPageSizeChanged($event)">
+                <option *ngFor="let item of pageSizeValues"
+                        [ngValue]="item">
+                    {{item}}
+                </option>
+            </select>
+        </div>
+        <div style="float: left;"
+             *ngIf="usePagination()">
+            <pagination class="pagination-sm"
+                        [disabled]="!!promiseService.applicationPromises.sites.getAll.promise"
+                        [(ngModel)]="pageNumber"
+                        [totalItems]="totalCount"
+                        [itemsPerPage]="pageSize"
+                        [maxSize]="maxPaginationSize"
+                        [boundaryLinks]="true"
+                        [rotate]="false"
+                        (pageChanged)="onPageNumberChanged($event)"
+                        (numPages)="numPages = $event">
+            </pagination>
+        </div>
+    </div>
+    <table class="sites-table-body table table-bordered table-hover"
+           [ngBusy]="promiseService.applicationPromises.sites.getAll.promise">
+        <thead>
+            <tr>
+                <th translate>sites.table.headerText_siteName</th>
+                <th translate>sites.table.headerText_leads</th>
+                <th class="sites-table-body-column-actions">
+                    <button type="button"
+                            [disabled]="isBtnCreateBusy()"
+                            class="btn btn-outline-success btn-sm"
+                            (click)="modalOpenCreate(); $event.stopPropagation();">
+                        <i class="fa fa-refresh fa-spin" *ngIf="isBtnCreateBusy()"></i>
+                        <i class="fa fa-plus" *ngIf="!isBtnCreateBusy()"></i>
+                        <span translate>general.actions.text_create</span>
+                    </button>
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let item of items"
+                class="sites-table-body-row"
+                (click)="redirectToEntityDetails(item)">
+                <td>{{item.name}}</td>
+                <td>{{item.leadsAmount}}</td>
+                <td class="sites-table-body-column-actions">
+                    <button type="button"
+                            [disabled]="isBtnEditBusy(item.id)"
+                            class="btn btn-outline-primary btn-sm"
+                            (click)="modalOpenEdit(item.id); $event.stopPropagation();">
+                        <i class="fa fa-refresh fa-spin" *ngIf="isBtnEditBusy(item.id)"></i>
+                        <i class="fa fa-edit" *ngIf="!isBtnEditBusy(item.id)"></i>
+                        <span translate>general.actions.text_edit</span>
+                    </button>
+                    <button type="button"
+                            [disabled]="isBtnDeleteBusy(item.id)"
+                            class="btn btn-outline-danger btn-sm"
+                            (click)="deleteEntity(item.id); $event.stopPropagation();">
+                        <i class="fa fa-refresh fa-spin" *ngIf="isBtnDeleteBusy(item.id)"></i>
+                        <i class="fa fa-times" *ngIf="!isBtnDeleteBusy(item.id)"></i>
+                        <span translate>general.actions.text_delete</span>
+                    </button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<modal #siteDetailsModal
+       [backdrop]="'static'">
+    <modal-header>
+        <span class="site-modal-header-text" translate>sites.modal.title</span>
+    </modal-header>
+    <modal-body>
+        <div *ngIf="isSelectedEntityDefined()"
+             [ngBusy]="getModalBodyBusyPromises()">
+            <site-details-edit [entity]="entity"></site-details-edit>
+        </div>
+    </modal-body>
+    <modal-footer>
+        <button type="button"
+                class="btn btn-secondary"
+                data-dismiss="modal"
+                (click)="modalDismiss()">
+            <span translate>sites.modal.cancel</span>
+        </button>
+        <button type="button"
+                [disabled]="isBtnModalApplyBusy()"
+                class="btn btn-primary"
+                (click)="modalApply()">
+            <i class="fa fa-refresh fa-spin" *ngIf="isBtnModalApplyBusy()"></i>
+            <i class="fa fa-save" *ngIf="!isBtnModalApplyBusy()"></i>
+            <span translate>sites.modal.apply</span>
+        </button>
+    </modal-footer>
+</modal>

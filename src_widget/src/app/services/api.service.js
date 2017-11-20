@@ -1,91 +1,157 @@
 (function () {
     'use strict';
-
     angular.module('myApp')
         .service('api', function ($http, $q, apiBaseUrl, siteId) {
 
-            this.submitForm = _submitForm;
-            this.loadExperts = _loadExperts;
-            this.loadBeverages = _loadBeverages;
-            this.loadRoads = _loadRoads;
-            this.loadOpenHours = _loadOpenHours;
+            // =======================================================================//
+            // Get Widget Data                                                        //
+            // =======================================================================//
 
-            function _loadOpenHours() {
-                var deferred = $q.defer();
-                var url = apiBaseUrl + '/sites/' + siteId + '/open-hours';
+            this.retrieveOpenHours = function () {
+                var req = {
+                    method: 'GET',
+                    url: apiBaseUrl + '/site/' + siteId + '/week-schedule',
+                    headers: {
+                        'content-type': 'application/json'
+                    }
+                };
 
-                $http.get(url).then(function (response) {
-                    console.log('open-hours loaded : ' + response);
-                    var json = response.data;
-                    deferred.resolve(json);
-                }, function (err) {
-                    console.log('open-hours failed to load : ' + response);
-                    deferred.reject(err);
+                var promise = $http(req).then(function (responce) {
+                    return responce.data;
+                }, function () {
                 });
 
-                return deferred.promise;
-            }
+                return promise;
+            };
 
-            function _loadRoads() {
-                var deferred = $q.defer();
-                var url = apiBaseUrl + '/sites/' + siteId + '/routes';
+            this.retrieveExperts = function () {
+                var req = {
+                    method: 'POST',
+                    url: apiBaseUrl + "/expert/get-all",
+                    headers: {
+                        'content-type': 'application/json'
+                    },
+                    data: {
+                        "siteId": siteId,
+                        "sorting": "name asc"
+                    }
+                };
 
-                $http.get(url).then(function (response) {
-                    console.log('routes loaded : ' + response);
-                    var json = response.data;
-                    deferred.resolve(json);
-                }, function (err) {
-                    console.log('routes failed to load : ' + response);
-                    deferred.reject(err);
+                var promise = $http(req).then(function (responce) {
+                    return responce.data;
+                }, function () {
                 });
 
-                return deferred.promise;
-            }
+                return promise;
+            };
 
-            function _loadBeverages() {
-                var deferred = $q.defer();
-                var url = apiBaseUrl + '/sites/' + siteId + '/beverages';
+            this.retrieveBeverages = function () {
+                var req = {
+                    method: 'POST',
+                    url: apiBaseUrl + "/beverage/get-all",
+                    headers: {
+                        'content-type': 'application/json'
+                    },
+                    data: {
+                        "siteId": siteId,
+                        "sorting": "name asc"
+                    }
+                };
 
-                $http.get(url).then(function (response) {
-                    console.log('beverages loaded : ' + response);
-                    var json = response.data;
-                    deferred.resolve(json);
-                }, function (err) {
-                    console.log('beverages failed to load : ' + response);
-                    deferred.reject(err);
+                var promise = $http(req).then(function (responce) {
+                    return responce.data;
+                }, function () {
                 });
 
-                return deferred.promise;
-            }
+                return promise;
+            };
 
-            function _loadExperts() {
-                var deferred = $q.defer();
-                var url = apiBaseUrl + '/sites/' + siteId + '/experts';
+            this.retrieveRoutes = function () {
+                var req = {
+                    method: 'POST',
+                    url: apiBaseUrl + '/route/get-all',
+                    headers: {
+                        'content-type': 'application/json'
+                    },
+                    data: {
+                        "siteId": siteId,
+                        "sorting": "name asc"
+                    }
+                };
 
-                $http.get(url).then(function (response) {
-                    console.log('experts loaded : ' + response);
-                    var json = response.data;
-                    deferred.resolve(json);
-                }, function (err) {
-                    console.log('experts failed to load : ' + response);
-                    deferred.reject(err);
+                var promise = $http(req).then(function (responce) {
+                    return responce.data;
+                }, function () {
                 });
 
-                return deferred.promise;
-            }
+                return promise;
+            };
 
-            function _submitForm(formData) {
-                var deferred = $q.defer();
-                var url = apiBaseUrl + '/sites/' + siteId +  '/SubmitForm';
+            this.completeBooking = function (userData) {
+                var data = JSON.stringify(mapToBookingRequestDto(userData));
 
-                $http.post(url, formData).then(function (response) {
-                    var json = response.data;
-                    deferred.resolve(json);
-                }, function (err) {
-                    deferred.reject(err);
+                var req = {
+                    method: 'POST',
+                    url: apiBaseUrl + "/lead/" + siteId + "/complete-booking",
+                    headers: {
+                        'content-type': 'application/json'
+                    },
+                    data: data
+                };
+
+                var promise = $http(req).then(function (responce) {
+                    return responce.data;
+                }, function () {
                 });
 
-                return deferred.promise;
-            }
+                return promise;
+            };
+
+            // =======================================================================//
+            // Get Widget Data                                                        //
+            // =======================================================================//
+
+            var mapToBookingRequestDto = function (userData) {
+
+                var bookingDto = {
+                    "bookingUser": {
+                        "firstName": null,
+                        "lastName": null,
+                        "phone": null,
+                        "email": null
+                    },
+                    "bookingDateTime": {
+                        "date": null,
+                        "time": null
+                    },
+                    "bookingCar": {
+                        "VIN": null,
+                        "imageUrl": null,
+                        "title": null
+                    },
+                    "expertId": null,
+                    "beverageId": null,
+                    "roadId": null
+                };
+
+                bookingDto.bookingUser.firstName = userData.user.firstName;
+                bookingDto.bookingUser.lastName = userData.user.lastName;
+                bookingDto.bookingUser.phone = userData.user.phone;
+                bookingDto.bookingUser.email = userData.user.email;
+
+                bookingDto.bookingDateTime.date = userData.calendar.date;
+                bookingDto.bookingDateTime.time = userData.calendar.time;
+
+                bookingDto.bookingCar.VIN = "1FTEF25N9RLB80787"; // TODO: Fake VIN
+                bookingDto.bookingCar.imageUrl = userData.car.imageUrl;
+                bookingDto.bookingCar.title = userData.car.title;
+
+                bookingDto.expertId = userData.expert.id;
+                bookingDto.beverageId = userData.beverage.id;
+                bookingDto.roadId = userData.road.id;
+
+                return bookingDto;
+            };
+
         });
 })();

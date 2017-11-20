@@ -1,45 +1,47 @@
 (function () {
     angular.module('myApp')
         .component('tdBeverage', {
-            controller: function (api) {
+            controller: function ($scope) {
                 var self = this;
-                self.beverages = [];
-                this.isSatisfy = null;
 
-                function didLoadBeverages(json) {
-                    self.beverages = json.beverages;
-                }
+                self.isStepValid = null;
 
-                this.$onInit = function () {
-                    if (self.userData.beverage.title === null) {
-                        this.isSatisfy = false;
+                self.$onInit = function () {
+                    if (self.userData.beverage.name === null) {
+                        self.isStepValid = false;
                     }
-
-                    api.loadBeverages().then(didLoadBeverages)
                 };
 
-                this.beverageChanged = function (expertTitle) {
-                    self.userData.beverage.title = expertTitle;
-                    self.satisfyStep();
+                $scope.itemChanged = function (id, name) {
+                    self.userData.beverage.id = id;
+                    self.userData.beverage.name = name;
+                    self.validateStep();
                 };
 
-                this.satisfyStep = function () {
-                    if (self.userData.beverage.title === null) {
-                        this.isSatisfy = false;
+                this.validateStep = function () {
+                    if (self.userData.beverage.name === null) {
+                        self.isStepValid = false;
                     } else {
-                        this.isSatisfy = true;
+                        self.isStepValid = true;
                     }
                 };
 
-                this.completeStepInner = function () {
-                    if (self.isSatisfy) {
-                        self.completeStep({tabId: this.tabId});
+                $scope.nextStep = function () {
+                    self.validateStep();
+                    if (self.isStepValid) {
+                        self.completeStep({tabId: self.tabId});
                     }
+                };
+                $scope.skipStep = function () {
+                    self.userData.beverage.id = 0;
+                    self.userData.beverage.name = "Skipped";
+                    self.completeStep({tabId: self.tabId});
                 };
             },
             templateUrl: 'src/app/components/steps/beverage/beverage.tpl.html',
             bindings: {
                 userData: '=',
+                stepData: '<',
                 tabId: '<',
                 completeStep: '&'
             }

@@ -1,27 +1,56 @@
 <div class="row">
-    <div class="col-md-6 col-sm-12">
-        <div class="tab-title">Select Date</div>
-        <md-calendar ng-if="$ctrl.openHours" class="fixed-calendar td-calendar"
-                     md-min-date="$ctrl.minDate"
-                     md-max-date="$ctrl.maxDate"
-                     md-date-filter="$ctrl.dateFilter"
-                     ng-model="$ctrl.myDate" ng-change="$ctrl.dateChanged()"></md-calendar>
+    <div class="col-md-6 col-sm-12 d-none d-sm-none d-md-none d-lg-block d-xl-block">
+        <h2 class="wizard-tab-content__title text-center text-md-left">Select Date</h2>
+        <p></p>
+        <div moment-picker="$ctrl.dateImput"
+             change="$ctrl.dateChanged(oldValue, newValue)"
+             format="YYYY-MM-DD d"
+             min-view="month"
+             max-view="month"
+             today="true"
+             keyboard="true"
+             inline="true"
+             set-on-select="true">
+        </div>
     </div>
-    <div class="col-md-6 col-sm-12">
-        <div class="tab-title td-time-select__title">Select Time</div>
-        <div class="td-time-select__container">
-            <div class="row">
-                <div class="col td-time-select__item"
-                     ng-repeat="time in $ctrl.timeIntervals"
-                     ng-click="$ctrl.timeChanged(time)"
-                     ng-class="{'td-time-select__item--active' : $ctrl.userData.calendar.time == time}">{{time}}
+    <div class="col-md-6 col-sm-12 d-none d-sm-none d-md-none d-lg-block d-xl-block">
+        <h2 class="wizard-tab-content__title text-center text-md-left">Select Time</h2>
+        <p></p>
+        <div class="row td-time pr-3">
+            <div class="col-3 pb-2 p-0 pl-2"
+                 ng-repeat="time in $ctrl.timeIntervals"
+                 ng-click="$ctrl.timeChanged(time)">
+                <div class="td-time__item"
+                     ng-class="time == $ctrl.userData.calendar.time ? 'td-time__item--active' : ''">
+                    {{time}}
                 </div>
             </div>
         </div>
     </div>
+    <div class="col-sm-12 d-sm-block d-md-block d-lg-none d-xl-none">
+        <h2 class="wizard-tab-content__title text-center">Select Date & Time</h2>
+        <br>
+        <div moment-picker="ctrl.dateTimeInput"
+             format="LL LTS"
+             min-view="month"
+             max-view="hour"
+             min-date="'2017-09-26'"
+             today="true"
+             inline="true">
+        </div>
+        <!--{{ ctrl.dateTimeInput }}-->
+    </div>
 </div>
-<div class="row">
+
+<div class="row wizard-navigation-tab-next-button--desktop d-none d-md-block">
     <div class="col-12">
-        <div class="td-next-step-btn" ng-click="$ctrl.completeStepInner()">Next step</div>
+        <a href="javascript:void(0)" class="card-link mr-3" ng-click="skipStep()">Skip this step</a>
+        <button type="button" class="btn btn-lg btn-primary pointer" ng-click="nextStep()">Next Step</button>
+    </div>
+</div>
+<div class="row wizard-navigation-tab-next-button--mobile d-md-none d-lg-none d-sm-block">
+    <div class="col-12">
+        <a href="javascript:void(0)" class="card-link d-block text-center mb-3" ng-click="skipStep()">Skip this step </a>
+        <button type="button" class="btn btn-primary btn-lg btn-block" ng-click="nextStep()">Next Step</button>
     </div>
 </div>

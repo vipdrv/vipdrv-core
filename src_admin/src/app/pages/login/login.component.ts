@@ -1,33 +1,48 @@
-import {Component} from '@angular/core';
-import {FormGroup, AbstractControl, FormBuilder, Validators} from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
+import { Router, ActivatedRoute } from '@angular/router';
+import { IAuthorizationService, AuthorizationService } from './../../services/index';
 
 @Component({
-  selector: 'login',
-  templateUrl: './login.html',
-  styleUrls: ['./login.scss']
+    selector: 'login',
+    styleUrls: ['./login.scss'],
+    templateUrl: 'login.html'
 })
-export class Login {
+export class LoginComponent implements OnInit {
+    model: any = {
+        username: '',
+        password: '',
+        isPersist: true
+    };
+    loading = false;
+    returnUrl: string;
+    errorMessage: string;
 
-  public form:FormGroup;
-  public email:AbstractControl;
-  public password:AbstractControl;
-  public submitted:boolean = false;
+    protected authorizationManager: IAuthorizationService;
 
-  constructor(fb:FormBuilder) {
-    this.form = fb.group({
-      'email': ['', Validators.compose([Validators.required, Validators.minLength(4)])],
-      'password': ['', Validators.compose([Validators.required, Validators.minLength(4)])]
-    });
-
-    this.email = this.form.controls['email'];
-    this.password = this.form.controls['password'];
-  }
-
-  public onSubmit(values:Object):void {
-    this.submitted = true;
-    if (this.form.valid) {
-      // your code goes here
-      // console.log(values);
+    constructor(
+        private route: ActivatedRoute,
+        private router: Router,
+        authorizationManager: AuthorizationService) {
+        this.authorizationManager = authorizationManager;
     }
-  }
+
+    ngOnInit() {
+        //this.authorizationManager.signOut();
+        this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
+    }
+
+    login() {
+        let self = this;
+        self.loading = true;
+        self.authorizationManager
+            .signInViaUsername(self.model.username, self.model.password, self.model.isPersist)
+            .then(function () {
+                self.router.navigate([self.returnUrl]);
+                self.loading = false;
+            })
+            .catch(function(reason) {
+                self.loading = false;
+                self.errorMessage = 'Login or password was incorrect.';
+            });
+    }
 }

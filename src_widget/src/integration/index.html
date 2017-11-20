@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css">
+    <title>Integration</title>
+</head>
+<body>
+
+<main role="main">
+    <section class="jumbotron text-center">
+        <div class="container">
+            <h1 class="jumbotron-heading">Test Drive</h1>
+            <a href="javascript:void(0)" class="btn btn-primary"
+               onclick="TestDrive.openTestDrive(
+                            'VIN',
+                            'https://www.picpng.com/uploads/small/Blue_BMW_PNG_Image_Free_Download_28669.Png',
+                            'BMW M140i',
+                            '3.8 litre twin-turbo V6',
+                            '2017',
+                            'Blue',
+                            'Manual',
+                            'Petrol')">Open Widget
+            </a>
+        </div>
+    </section>
+</main>
+
+<!-- jQuery first, then Tether, then Bootstrap JS. -->
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js"></script>
+</body>
+</html>
+
+<!-------------------------------------------->
+<!---------- Widget Integration -------------->
+<script src="%widgetUrl%/integration/integration.js"></script>
+<script>TestDrive.init({SiteId: 28})</script>
+<!-------------------------------------------->
+
+

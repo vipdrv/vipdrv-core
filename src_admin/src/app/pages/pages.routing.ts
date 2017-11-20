@@ -1,34 +1,67 @@
 import { Routes, RouterModule }  from '@angular/router';
 import { Pages } from './pages.component';
 import { ModuleWithProviders } from '@angular/core';
+import { AuthorizationService } from './../services/index';
+
 // noinspection TypeScriptValidateTypes
 
 // export function loadChildren(path) { return System.import(path); };
 
 export const routes: Routes = [
-  {
-    path: 'login',
-    loadChildren: 'app/pages/login/login.module#LoginModule'
-  },
-  {
-    path: 'register',
-    loadChildren: 'app/pages/register/register.module#RegisterModule'
-  },
-  {
-    path: 'pages',
-    component: Pages,
-    children: [
-      { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
-      { path: 'dashboard', loadChildren: './dashboard/dashboard.module#DashboardModule' },
-      { path: 'editors', loadChildren: './editors/editors.module#EditorsModule' },
-      { path: 'components', loadChildren: './components/components.module#ComponentsModule' },
-      { path: 'charts', loadChildren: './charts/charts.module#ChartsModule' },
-      { path: 'ui', loadChildren: './ui/ui.module#UiModule' },
-      { path: 'forms', loadChildren: './forms/forms.module#FormsModule' },
-      { path: 'tables', loadChildren: './tables/tables.module#TablesModule' },
-      { path: 'maps', loadChildren: './maps/maps.module#MapsModule' }
-    ]
-  }
+    {
+        path: 'login',
+        loadChildren: './login/login.module#LoginModule'
+    },
+    {
+        path: 'logout',
+        loadChildren: './logout/logout.module#LogoutModule'
+    },
+    {
+        path: 'registration',
+        loadChildren: './registration/registration.module#RegistrationModule'
+    },
+    {
+        path: 'pages',
+        component: Pages,
+        children: [
+            {
+                path: '',
+                redirectTo: 'home',
+                pathMatch: 'full',
+                canActivate: [AuthorizationService]
+            },
+            {
+                path: 'home',
+                loadChildren: './home/home.module#HomeModule',
+                canActivate: [AuthorizationService]
+            },
+            {
+                path: 'integration',
+                loadChildren: './integration/integration.module#IntegrationModule',
+                canActivate: [AuthorizationService]
+            },
+            {
+                path: 'leads',
+                loadChildren: './leads/leads.module#LeadsModule',
+                canActivate: [AuthorizationService]
+            },
+            {
+                path: 'sites',
+                loadChildren: './sites/sites.module#SitesModule',
+                canActivate: [AuthorizationService]
+            },
+            {
+                path: 'invitations',
+                loadChildren: './invitations/invitations.module#InvitationsModule',
+                canActivate: [AuthorizationService]
+            },
+            {
+                path: 'user-profile',
+                loadChildren: './userProfile/userProfile.module#UserProfileModule',
+                canActivate: [AuthorizationService]
+            },
+            { path: 'test', loadChildren: './test/test.module#TestModule', canActivate: [AuthorizationService] }
+        ]
+    }
 ];
-
 export const routing: ModuleWithProviders = RouterModule.forChild(routes);

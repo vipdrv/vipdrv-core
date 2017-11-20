@@ -1,69 +1,46 @@
 (function () {
     angular.module('myApp')
         .component('tdExpert', {
-            controller: function (api) {
+            controller: function ($scope) {
                 var self = this;
-                var api = api;
-                this.isSatisfy = null;
 
-                function didLoadExperts(json) {
-                        console.log(json);
-                        //todo
-                        self.experts = json.experts.splice(0);
-                }
+                self.isStepValid = null;
 
-                this.$onInit = function () {
-                    console.log('on init td-expert');
-                    if (self.userData.expert.title === null) {
-                        this.isSatisfy = false;
-                    }
-
-                    api.loadExperts().then(didLoadExperts)
+                self.$onInit = function () {
+                    self.validateStep();
                 };
 
-                var dummyExperts = [{
-                    photo_url: '/img/dummy-expert-2.png',
-                    title: 'George Reese',
-                    description: 'As a certified automotive specialist, George will be happy to help you make the right decisions.'
-                }, {
-                    photo_url: '/img/dummy-expert-1.png',
-                    title: 'Joe Rowe',
-                    description: 'With over 10 years experience in the industry Joe has invaluable knowledge in give.'
-                }, {
-                    photo_url: '/img/dummy-expert-4.png',
-                    title: 'Gregory May',
-                    description: 'Head of sales'
-                }, {
-                    photo_url: '/img/dummy-expert-3.png',
-                    title: 'Rhoda Hogan',
-                    description: 'Rhoda has a bubbly personality to make any test drive a not to be missed experience.'
-                }];
-
-                this.experts = null;
-
-                this.expertChanged = function (expertTitle) {
-                    self.userData.expert.title = expertTitle;
-                    self.satisfyStep();
+                self.expertChanged = function (id, name) {
+                    self.userData.expert.id = id;
+                    self.userData.expert.name = name;
+                    self.validateStep();
                 };
 
-
-                this.satisfyStep = function () {
-                    if (self.userData.expert.title === null) {
-                        this.isSatisfy = false;
+                self.validateStep = function () {
+                    if (self.userData.expert.name === null) {
+                        this.isStepValid = false;
                     } else {
-                        this.isSatisfy = true;
+                        this.isStepValid = true;
                     }
                 };
 
-                this.completeStepInner = function () {
-                    if (self.isSatisfy) {
-                        self.completeStep({tabId: this.tabId});
+                $scope.nextStep = function () {
+                    self.validateStep();
+                    if (self.isStepValid) {
+                        self.completeStep({tabId: self.tabId});
                     }
+                };
+
+                $scope.skipStep = function () {
+                    self.userData.expert.id = 0;
+                    self.userData.expert.name = 'Skipped';
+                    self.completeStep({tabId: self.tabId});
                 };
             },
             templateUrl: 'src/app/components/steps/expert/expert.tpl.html',
             bindings: {
                 userData: '=',
+                stepData: '<',
                 tabId: '<',
                 completeStep: '&'
             }

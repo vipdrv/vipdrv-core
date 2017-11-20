@@ -1,22 +1,29 @@
 (function () {
-    var app = angular.module('myApp', ["templates", 'ngMaterial', 'ngMessages']);
+    var app = angular.module('myApp', ['templates', 'moment-picker']);
 
-    /* ========================================= App Data ========================================== */
+    // =======================================================================//
+    // App Configs                                                            //
+    // =======================================================================//
 
-    var apiBaseUrl = 'http://api.dev.test-drive.tech';
-    // var apiBaseUrl = 'http://localhost:4220';
-    var siteId = 'nissan-of-bowie';
+    var apiBaseUrl = '%apiBaseUrl%';
+    var siteId = '%siteId%';
+
+    // =======================================================================//
+    // Global Variables                                                       //
+    // =======================================================================//
 
     var widgetTabs = {
         time: {
             id: 'time',
             title: 'Select date & time',
+            icon: 'fa fa-clock-o fa-2x',
             isActive: true,
             isLocked: false,
             isCompleted: false
         },
         expert: {
             id: 'expert',
+            icon: 'fa fa-users fa-2x',
             title: 'Select Expert',
             isActive: false,
             isLocked: true,
@@ -24,6 +31,7 @@
         },
         beverage: {
             id: 'beverage',
+            icon: 'fa fa-coffee fa-2x',
             title: 'Select Beverage',
             isActive: false,
             isLocked: true,
@@ -31,14 +39,24 @@
         },
         road: {
             id: 'road',
-            title: 'Select preferred route',
+            icon: 'fa fa-road fa-2x',
+            title: 'Select Preferred Route',
             isActive: false,
             isLocked: true,
             isCompleted: false
         },
+        // music: {
+        //     id: 'road',
+        //     icon: 'fa fa-music fa-2x',
+        //     title: 'Select music',
+        //     isActive: false,
+        //     isLocked: true,
+        //     isCompleted: false
+        // },
         details: {
             id: 'details',
-            title: 'Your details',
+            icon: 'fa fa-handshake-o fa-2x',
+            title: 'Your Details',
             isActive: false,
             isLocked: true,
             isCompleted: false
@@ -50,7 +68,8 @@
             firstName: null,
             lastName: null,
             phone: null,
-            email: null
+            email: null,
+            comment: null
         },
         calendar: {
             date: null,
@@ -58,18 +77,18 @@
         },
         expert: {
             id: null,
-            title: null
+            name: null
         },
         beverage: {
             id: null,
-            title: null
+            name: null
         },
         road: {
             id: null,
-            title: null
+            name: null
         },
         car: {
-            img: null,
+            imageUrl: null,
             title: null,
             engine: null,
             year: null,
@@ -80,27 +99,28 @@
     };
 
     var globalState = {
-        isFormCompleted : false
+        isFormCompleted: false
     };
-    /* ======================================== Url Params ========================================= */
 
-    // var url = new URL(window.location.href);
+    // =======================================================================//
+    // Parse Url Params                                                       //
+    // =======================================================================//
 
     var url = new FiltersFromUrl(window.location.search).get();
 
     var siteId = url.site_id || siteId;
 
     var vin = url.vin || null;
-    var img = url.img || null;
-    var title = url.title;
-    var engine = url.engine;
-    var year = url.year;
-    var colour = url.colour;
-    var transmission = url.transmission;
-    var fuel = url.fuel;
+    var imageUrl = url.imageUrl || null;
+    var title = url.title || null;
+    var engine = url.engine || null;
+    var year = url.year || null;
+    var colour = url.colour || null;
+    var transmission = url.transmission || null;
+    var fuel = url.fuel || null;
 
     userData.car.vin = vin;
-    userData.car.img = img;
+    userData.car.imageUrl = imageUrl;
     userData.car.title = title;
     userData.car.engine = engine;
     userData.car.year = year;
@@ -108,14 +128,10 @@
     userData.car.transmission = transmission;
     userData.car.fuel = fuel;
 
-    console.log(userData.car);
-
     app.value('widgetTabs', widgetTabs);
     app.value('globalState', globalState);
-
     app.value('userData', userData);
     app.value('apiBaseUrl', apiBaseUrl);
     app.value('siteId', siteId);
-})();
 
-// http://localhost:8080/?site_id=nissan-of-bowie&vin=5N1AA0NC9EN606049&img=http://vehiclephotos.vauto.com/ca/f0/97/9e-1ad8-43be-b64a-1e1635ee7099/image-1.jpg&title=Nissan%20GT-R&year=2016&colour=Orange&transmission=Manual&fuel=3.8%20litre%20twin-turbo%20V6
+})();

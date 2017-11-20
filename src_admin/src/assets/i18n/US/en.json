@@ -1,107 +1,268 @@
 {
-  "login": {
-    "title": "Sign in to ng2-admin",
-    "signup_link": "New to ng2-admin? Sign up!",
-    "email": "Email",
-    "password": "Password",
-    "sign_in": "Sign in",
-    "forgot_password": "Forgot password?",
-    "sign_from_app_text": "or Sign in with one click",
-    "share_on_facebook": "Share on Facebook",
-    "share_on_twitter": "Share on Twitter",
-    "share_on_google_plus": "Share on Google Plus"
-  },
   "general": {
-    "akveo": "Akveo",
-    "home": "Home",
-    "forms": {
-      "option1": "Option 1"
-    },
+    "applicationName": "TestDrive",
     "menu": {
-      "dashboard": "Dashboard",
-      "editors": "Editors",
-      "ck_editor": "CKEditor",
-      "components": "Components",
-      "tree_view": "Tree View",
-      "charts": "Charts",
-      "chartist_js": "Chartist.Js",
-      "ui_features": "UI Features",
-      "typography": "Typography",
-      "buttons": "Buttons",
-      "icons": "Icons",
-      "modals": "Modals",
-      "grid": "Grid",
-      "form_elements": "Form Elements",
-      "form_inputs": "Form Inputs",
-      "form_layouts": "Form Layouts",
-      "tables": "Tables",
-      "basic_tables": "Basic Tables",
-      "smart_tables": "Smart Tables",
-      "maps": "Maps",
-      "google_maps": "Google Maps",
-      "leaflet_maps": "Leaflet Maps",
-      "bubble_maps": "Bubble Maps",
-      "line_maps": "Line Maps",
       "pages": "Pages",
-      "login": "Login",
-      "register": "Register",
-      "menu_level_1": "Menu Level 1",
-      "menu_level_1_1": "Menu Level 1.1",
-      "menu_level_1_2": "Menu Level 1.2",
-      "menu_level_1_2_1": "Menu Level 1.2.1",
-      "external_link": "External Link"
+      "home": "Home",
+      "integration": "Integration",
+      "leads": "Leads",
+      "sites": "Sites",
+      "test": "Test-page"
     },
-    "created_with": "Created with"
-  },
-  "dashboard": {
-    "acquisition_channels": "Acquisition Channels",
-    "users_by_country": "Users by Country",
-    "revenue": "Revenue",
-    "feed": "Feed",
-    "todo_list": "To Do List",
-    "calendar": "Calendar",
-    "new_visits": "New Visits",
-    "purchases": "Purchases",
-    "active_users": "Active Users",
-    "returned": "Returned",
-    "popular_app": {
-      "super_app": "Super App",
-      "most_popular_app": "Most Popular App",
-      "total_visits": "Total Visits",
-      "new_visits": "New Visits",
-      "sales": "Sales"
+    "actions": {
+      "text_info": "info",
+      "text_create": "create",
+      "text_update": "edit",
+      "text_edit": "edit",
+      "text_delete": "delete",
+      "text_save": "save",
+      "text_reset": "reset",
+      "text_cancel": "cancel",
+      "text_commit": "commit"
     },
-    "todo": {
-      "task_todo": "Task to do.."
+    "table":{
+      "headerText": {
+        "activity": "Is active",
+        "order": "Order"
+      }
     },
-    "traffic_chart": {
-      "view_total": "Views Total"
+    "daysOfWeek": {
+      "sunday": "Sunday",
+      "monday": "Monday",
+      "tuesday": "Tuesday",
+      "wednesday": "Wednesday",
+      "thursday": "Thursday",
+      "friday": "Friday",
+      "saturday": "Saturday"
     }
   },
-  "tree_view": {
-    "title": "basic",
-    "programming": "Programming languages by programming paradigm",
-    "oop": "Object-oriented programming",
-    "java": "Java",
-    "c_plus_plus": "C++",
-    "c_sharp": "C#",
-    "prototype": "Prototype-based programming",
-    "java_script": "JavaScript",
-    "coffee_script": "CoffeeScript",
-    "lua": "Lua"
+  "utils": {
+    "components":{
+     "workingHours": {
+       "noWorkingIntervals": "There are no working hours yet",
+       "cancel": "Undo changes",
+       "apply": "Save"
+     }
+    }
   },
-  "chart": {
-    "lines": "Lines",
-    "bars": "Bars",
-    "simple_line_chart": "Simple line chart",
-    "line_chart": "Line chart with area",
-    "bi_polar_line_chart": "Bi-polar line chart with area only",
-    "simple_bar_chart": "Simple bar chart",
-    "multi_line_labels_bar_chart": "Multi-line labels bar chart",
-    "stacked_bar_chart": "Stacked bar chart",
-    "pies_and_donuts": "Pies & Donuts",
-    "simple_pie": "Simple Pie",
-    "pie_with_labels": "Pie with labels",
-    "donut": "Donut"
+  "home": {
+
+  },
+  "integration": {
+
+  },
+  "leads": {
+    "title": "Leads",
+    "modal": {
+      "title": "Lead details",
+      "siteName": "Site name: ",
+      "received": "Received: ",
+      "firstName": "First name: ",
+      "secondName": "Second name: ",
+      "userEmail": "Email: ",
+      "userPhone": "Phone: ",
+      "expertName": "Expert: ",
+      "routeName": "Road: ",
+      "beverageName": "Beverage: ",
+      "cancel": "Close"
+    },
+    "table": {
+      "btnText_exportToExcel": "Export to Excel",
+      "headerText_firstName": "First name",
+      "headerText_secondName": "Second name",
+      "headerText_received": "Recieved",
+      "headerText_siteName": "Site",
+      "headerText_userEmail": "Email",
+      "headerText_userPhone": "Phone",
+      "headerText_expertName": "Expert",
+      "headerText_roadName": "Road",
+      "headerText_beverageName": "Beverage"
+    }
+  },
+  "sites": {
+    "title": "Sites",
+    "modal": {
+      "title": "Site details",
+      "siteName": "Name",
+      "siteUrl": "Url",
+      "cancel": "Cancel",
+      "apply": "Save"
+    },
+    "table": {
+      "headerText_siteName": "Site name",
+      "headerText_leads": "Leads amount",
+      "headerText_actions": "Actions"
+    },
+    "overview":{
+      "name": "Name:",
+      "beautyId": "Beauty id:",
+      "experts": "Experts:",
+      "noExperts": "no experts",
+      "activeExperts_amount": "{{amount}} active",
+      "noActiveExperts": "no active",
+      "notActiveExperts_amount": "{{amount}} not active",
+      "beverages": "Beverages:",
+      "noBeverages": "no beverages",
+      "activeBeverages_amount": "{{amount}} active",
+      "noActiveBeverages": "no active",
+      "notActiveBeverages_amount": "{{amount}} not active",
+      "routes": "Routes:",
+      "noRoutes": "no routes",
+      "activeRoutes_amount": "{{amount}} active",
+      "noActiveRoutes": "no active",
+      "notActiveRoutes_amount": "{{amount}} not active"
+    },
+    "details": {
+      "title": "Sites",
+      "tabs":{
+        "overview": "Overview",
+        "experts": "Experts",
+        "beverages": "Beverages",
+        "routes": "Routes",
+        "notifications": "Notifications",
+        "theme": "Theme",
+        "widgetPreview": "Preview"
+      },
+      "notifications": {
+        "emails": "Emails",
+        "sms": "SMS"
+      }
+    }
+  },
+  "experts": {
+    "title": "Experts",
+    "table": {
+      "headerText_avatar": "Avatar",
+      "headerText_expertName": "Expert name"
+    },
+    "modal": {
+      "title": "Expert details",
+      "cancel": "Cancel",
+      "apply": "Save",
+      "browseAvatar": "Browse",
+      "changeAvatarUrl": "Set url",
+      "changeAvatarUrlCancel": "Cancel",
+      "changeAvatarUrlAccept": "Accept",
+      "avatarBrowseAccept": "Accept",
+      "avatarBrowseCancel": "Cancel",
+      "expertPhotoUrl": "Url",
+      "expertName": "Name",
+      "expertDescription": "Description",
+      "linkedinUrl": "Linkedin",
+      "facebookUrl": "Facebook",
+      "expertActivity": "Is active",
+      "expertOrder": "Order",
+      "weekSchedule": "Week schedule"
+    }
+  },
+  "beverages": {
+    "title": "Beverages",
+    "table": {
+      "headerText_avatar": "Image",
+      "headerText_beverageName": "Beverage name"
+    },
+    "modal": {
+      "title": "Beverage details",
+      "cancel": "Cancel",
+      "apply": "Save",
+      "browseAvatar": "Browse",
+      "changeAvatarUrl": "Set url",
+      "changeAvatarUrlCancel": "Cancel",
+      "changeAvatarUrlAccept": "Accept",
+      "avatarBrowseAccept": "Accept",
+      "avatarBrowseCancel": "Cancel",
+      "beveragePhotoUrl": "Url",
+      "beverageName": "Name",
+      "beverageDescription": "Description",
+      "beverageActivity": "Is active",
+      "beverageOrder": "Order"
+    }
+  },
+  "routes": {
+    "title": "Routes",
+    "table": {
+      "headerText_avatar": "Image",
+      "headerText_routeName": "Route name"
+    },
+    "modal": {
+      "title": "Route details",
+      "cancel": "Cancel",
+      "apply": "Save",
+      "browseAvatar": "Browse",
+      "changeAvatarUrl": "Set url",
+      "changeAvatarUrlCancel": "Cancel",
+      "changeAvatarUrlAccept": "Accept",
+      "avatarBrowseAccept": "Accept",
+      "avatarBrowseCancel": "Cancel",
+      "routePhotoUrl": "Url",
+      "routeName": "Name",
+      "routeDescription": "Description",
+      "routeActivity": "Is active",
+      "routeOrder": "Order"
+    }
+  },
+  "registration": {
+    "headerMessage": "register in our service!",
+    "messageInfo": "Please, fill out the registration form.",
+    "invitationCode": "Activation key",
+    "firstName": "First name",
+    "secondName": "Second name",
+    "email": "Email",
+    "username": "Username",
+    "password": "Password",
+    "confirmPassword": "Password (confirm)",
+    "applyRegistration": "Sign up"
+  },
+  "invitations": {
+    "title": "Invitations management",
+    "status": {
+      "pending": "Pending",
+      "accepted": "Accepted"
+    },
+    "actions": {
+      "delete": "revoke"
+    },
+    "table": {
+      "invitationCode": "Invitation code",
+      "email": "Email",
+      "phoneNumber": "Phone number",
+      "createdTime": "Creation time",
+      "used": "Status",
+      "usedTime": "Accepted time",
+      "availableSitesCount": "Sites max count",
+      "role": "Expected role",
+      "invitator": "Creator"
+    },
+    "modal": {
+      "titleInfo": "Invitation details",
+      "titleCreate": "Creating invitation",
+      "cancel": "Cancel",
+      "apply": "Send invitation",
+      "invitationCode": "Invitation code",
+      "email": "Email",
+      "phoneNumber": "Phone number",
+      "createdTime": "Creation time",
+      "used": "Status",
+      "usedTime": "Accepted time",
+      "availableSitesCount": "Sites max count",
+      "role": "Expected role",
+      "invitator": "Creator"
+    }
+  },
+  "userProfile": {
+    "userProfileMainTitle": "Personal data",
+    "tabs": {
+      "personalInfo": "Personal info",
+      "avatar": "Avatar",
+      "changePassword": "Change password",
+      "password": {
+        "oldPassword": "Old password",
+        "oldPasswordHelp": "We need your old password to commit changes.",
+        "newPassword": "New password",
+        "newPasswordHelp": "Enter your new password (it will be used as main password after commit).",
+        "newRepeatedPassword": "Repeat new password",
+        "newRepeatedPasswordHelp": "Repeat your new password to avoid mistakes."
+      }
+    }
   }
 }

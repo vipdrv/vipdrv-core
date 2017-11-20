@@ -1,19 +1,29 @@
-<div class="row user-details">
-    <div class="col">
-    <div class="user-details__heading">Select preferred route</div>
-    <div class="user-details__subheading">Select the type of drive you'd like to take on your test drive</div>
+<div class="row">
+    <div class="col-12">
+        <h2 class="wizard-tab-content__title">Select Route</h2>
+        <p>What type of test drive would you like to take ? Let's choose one that best fits your lifestyle</p>
     </div>
 </div>
-<div class="row td-card-container">
-    <td-card class="col-md-6 col-sm-12 td-card-root"
-             ng-repeat="road in $ctrl.roads"
-             card-image="road.photo_url"
-             card-title="road.title"
-             card-desc="road.description"
-             is-active-card="road.title == $ctrl.userData.road.title"
-             ng-click="$ctrl.expertChanged(road.title)">
+<div class="row pr-3 td-cards">
+    <td-card class="col-md-6 col-sm-12 p-0 pt-3 pl-3"
+             ng-repeat="item in $ctrl.stepData"
+             card-image="item.photoUrl"
+             card-title="item.name"
+             card-desc="item.description"
+             is-active-card="item.name == $ctrl.userData.road.name"
+             ng-click="itemChanged(item.id, item.name)">
     </td-card>
 </div>
-<div class="row">
-    <div class="td-next-step-btn" ng-click="$ctrl.completeStepInner()">Next step</div>
+
+<div class="row wizard-navigation-tab-next-button--desktop d-none d-md-block">
+    <div class="col-12">
+        <a href="javascript:void(0)" class="card-link mr-3" ng-click="skipStep()">Skip this step</a>
+        <button type="button" class="btn btn-lg btn-primary " ng-click="nextStep()">Next Step</button>
+    </div>
+</div>
+<div class="row wizard-navigation-tab-next-button--mobile d-md-none d-lg-none d-sm-block">
+    <div class="col-12">
+        <a href="javascript:void(0)" class="card-link d-block text-center mb-3" ng-click="skipStep()">Skip this step </a>
+        <button type="button" class="btn btn-primary btn-lg btn-block" ng-click="nextStep()">Next Step</button>
+    </div>
 </div>
