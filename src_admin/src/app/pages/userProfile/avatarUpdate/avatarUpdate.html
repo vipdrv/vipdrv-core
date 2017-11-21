@@ -1,0 +1,112 @@
+<div class="row avatar-row">
+    <div class="col-6">
+        <img class="rounded-circle"
+             alt="avatar url"
+             [src]="getAvatar()"
+             [width]="avatarWidth"
+             [height]="avatarHeight">
+    </div>
+    <div class="col-6"
+         *ngIf="isAvatarInEditMode()">
+        <div class="row">
+            <div class="col-12">
+                <img-cropper #cropper
+                             [image]="avatarCropperData"
+                             [settings]="avatarCropperSettings">
+                </img-cropper>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <label class="custom-file">
+                    <input type="file"
+                           id="avatar-browse-file"
+                           class="custom-file-input"
+                           (change)="avatarBrowseFileChangeListener($event)">
+                    <span class="custom-file-control"></span>
+                </label>
+            </div>
+        </div>
+    </div>
+    <div class="col-6"
+         *ngIf="isAvatarInEditUrlMode()">
+        <div class="form-group">
+            <label for="avatar-url"
+                   translate>
+                avatar url
+            </label>
+            <input id="avatar-url"
+                   type="text"
+                   name="avatar-url"
+                   class="form-control"
+                   required=""
+                   autofocus=""
+                   placeholder="http://www.google.com/avatar.jpg"
+                   [(ngModel)]="stubAvatarUrl">
+            <small id="avatar-url-help"
+                   class="form-text text-muted"
+                   translate>
+                avatar url help
+            </small>
+        </div>
+    </div>
+</div>
+<div class="row avatar-row"
+     *ngIf="isAvatarInViewMode()">
+    <div class="col-12">
+        <button type="button"
+                class="btn btn-sm btn-secondary"
+                (click)="editAvatar()">
+            <span translate>browse avatar</span>
+        </button>
+        <button type="button"
+                class="btn btn-sm btn-secondary"
+                (click)="editAvatarUrl()">
+            <span translate>change avatar url</span>
+        </button>
+    </div>
+</div>
+<div class="row avatar-row"
+     *ngIf="isAvatarInEditMode()">
+    <div class="col-12">
+        <button type="button"
+                class="btn btn-sm btn-secondary"
+                (click)="editAvatarCommit()">
+            <span translate>commit</span>
+        </button>
+        <button type="button"
+                class="btn btn-sm btn-secondary"
+                (click)="editAvatarCancel()">
+            <span translate>cancel</span>
+        </button>
+    </div>
+</div>
+<div class="row avatar-row"
+     *ngIf="isAvatarInEditUrlMode()">
+    <div class="col-12">
+        <button type="button"
+                class="btn btn-sm btn-secondary"
+                (click)="editAvatarUrlCommit()">
+            <span translate>commit</span>
+        </button>
+        <button type="button"
+                class="btn btn-sm btn-secondary"
+                (click)="editAvatarUrlCancel()">
+            <span translate>cancel</span>
+        </button>
+    </div>
+</div>
+<div class="row avatar-row">
+    <div class="col-12">
+        <button type="button"
+                class="btn btn-primary pull-right test-drive-right-standalone-btn"
+                (click)="saveAvatar()">
+            <span translate>save changes</span>
+        </button>
+        <button type="button"
+                class="btn btn-secondary pull-right test-drive-left-standalone-btn"
+                (click)="resetAvatar()">
+            <span translate>cancel</span>
+        </button>
+    </div>
+</div>

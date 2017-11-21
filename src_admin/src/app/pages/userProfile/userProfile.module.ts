@@ -7,6 +7,7 @@ import { Ng2Bs3ModalModule } from 'ng2-bs3-modal/ng2-bs3-modal';
 import { BusyModule } from 'angular2-busy';
 import { UtilsModule } from './../../utils/index';
 import { UserProfileComponent } from './userProfile.component';
+import { PasswordUpdateComponent } from './passwordUpdate/passwordUpdate.component';
 import { routing } from './userProfile.routing';
 @NgModule({
     imports: [
@@ -17,14 +18,16 @@ import { routing } from './userProfile.routing';
         routing,
         UtilsModule,
         Ng2Bs3ModalModule,
-        BusyModule
+        BusyModule,
     ],
     exports: [
-        UserProfileComponent
+        UserProfileComponent,
+        PasswordUpdateComponent,
     ],
     declarations: [
-        UserProfileComponent
+        UserProfileComponent,
+        PasswordUpdateComponent,
     ],
-    providers: []
+    providers: [],
 })
 export class UserProfileModule {}
