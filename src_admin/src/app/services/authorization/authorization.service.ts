@@ -59,7 +59,7 @@ export class AuthorizationService implements IAuthorizationService {
         if (this._lastUser) {
             return true;
         }
-        let storedUser = this.getStoredUser();
+        const storedUser = this.getStoredUser();
         if (storedUser) {
             this._lastUser = storedUser;
             return true;
@@ -94,6 +94,10 @@ export class AuthorizationService implements IAuthorizationService {
                     sessionStorage.setItem('currentUser', JSON.stringify(self._lastUser));
                 }
             });
+    }
+    actualizeUserProfile(): Promise<void> {
+        // TODO: implement this to support user profile actualization
+        return Promise.resolve();
     }
     signOut(): Promise<any> {
         localStorage.removeItem('currentUser');
