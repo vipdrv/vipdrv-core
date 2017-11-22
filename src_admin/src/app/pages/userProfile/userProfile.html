@@ -59,7 +59,7 @@
                      aria-labelledby="personal-info-tab">
                     <div class="user-profile-tab-content"
                          *ngIf="isUserDefined()">
-
+                        <user-personal-info [user]="user"></user-personal-info>
                     </div>
                 </div>
                 <div id="avatar"
@@ -68,7 +68,9 @@
                      aria-labelledby="avatar-tab">
                     <div class="user-profile-tab-content"
                          *ngIf="isUserDefined()">
-
+                        <user-avatar-update [userId]="userId"
+                                            [avatarUrl]="user.avatarUrl"
+                                            (avatarUrlPatched)='onUpdateAvatarUrl($event)'></user-avatar-update>
                     </div>
                 </div>
                 <div id="changePassword"
@@ -77,7 +79,8 @@
                      aria-labelledby="change-password-tab">
                     <div class="user-profile-tab-content"
                          *ngIf="isUserIdDefined()">
-                        <user-password-update [userId]="userId"></user-password-update>
+                        <user-password-update [userId]="userId"
+                                              (passwordPatched)='onUpdatePassword($event)'></user-password-update>
                     </div>
                 </div>
             </div>

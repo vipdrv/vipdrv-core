@@ -1,17 +1,36 @@
-import { Component, ViewChild, OnInit } from '@angular/core';
+import { Component, ViewChild, Input, Output, EventEmitter, OnInit } from '@angular/core';
 import { Variable, ConsoleLogger, ILogger } from './../../../utils/index';
 import { CropperSettings, ImageCropperComponent } from 'ng2-img-cropper';
 import { IUserApiService, UserApiService } from './../../../services/index';
+const enum ComponentMode {
+    View = 1,
+    EditViaCropper = 2,
+    EditViaUrlInput = 3,
+}
 @Component({
     selector: 'user-avatar-update',
     styleUrls: ['./avatarUpdate.scss'],
     templateUrl: './avatarUpdate.html',
 })
 export class AvatarUpdateComponent implements OnInit {
+    /// inputs
+    @Input() userId: number;
+    @Input() avatarUrl: string;
+    /// outputs
+    @Output() avatarUrlPatched: EventEmitter<string> = new EventEmitter<string>();
+    /// view children
+    @ViewChild('avatarCropper', undefined)
+    protected avatarCropper: ImageCropperComponent;
     /// service fields
-    protected userLoadingPromise: Promise<void>;
+    protected componentMode: ComponentMode = ComponentMode.View;
+    protected patchAvatarPromise: Promise<void>;
+    protected avatarCropperSettings: CropperSettings;
+    protected avatarCropperData: any;
+    protected avatarWidth: number;
+    protected avatarHeight: number;
     /// fields
-    protected userId: number;
+    protected newAvatarUrl: string;
+    protected tempAvatarUrl: string;
     /// injected dependencies
     protected logger: ILogger;
     protected userApiService: IUserApiService;
@@ -23,107 +42,113 @@ export class AvatarUpdateComponent implements OnInit {
     }
     /// methods
     ngOnInit(): void {
+        this.newAvatarUrl = this.avatarUrl;
         this.avatarWidth = 300;
         this.avatarHeight = 300;
         this.initializeAvatarCropper();
+        this.componentMode = 1;
     }
-
-
-    /// avatar
-    @ViewChild('cropper', undefined)
-
-    private _currentAvatarUrl: string = 'https://www.b1g1.com/assets/admin/images/no_image_user.png';
-
-    protected defaultAvatarUrl: string = 'https://www.b1g1.com/assets/admin/images/no_image_user.png';
-
-    protected cropper: ImageCropperComponent;
-    protected avatarWidth: number;
-    protected avatarHeight: number;
-    protected avatarCropperData: any;
-    protected avatarCropperSettings: CropperSettings;
-    protected stubAvatarUrl: string;
-    private _avatarMode: string = 'View';
-    isAvatarInViewMode(): boolean {
-        return this._avatarMode === 'View';
-    }
-    isAvatarInEditMode(): boolean {
-        return this._avatarMode === 'Edit';
-    }
-    isAvatarInEditUrlMode(): boolean {
-        return this._avatarMode === 'EditUrl';
-    }
-    protected getAvatar(): any {
-        if (this.isAvatarInViewMode()) {
-            return this.defaultAvatarUrl; //this._currentAvatarUrl;
-        } else if (this.isAvatarInEditMode() && this.avatarCropperData && this.avatarCropperData.image) {
-            return Variable.isNotNullOrUndefined(this.avatarCropperData.image) ?
-                this.avatarCropperData.image : this._currentAvatarUrl;
-        } else if (this.isAvatarInEditUrlMode()) {
-            return Variable.isNotNullOrUndefined(this.stubAvatarUrl) ? this.stubAvatarUrl : this._currentAvatarUrl;
+    getAvatarUrl(): string {
+        let avatarUrl: string;
+        if (this.isModeView()) {
+            avatarUrl = this.newAvatarUrl;
+        } else if (this.isModeEditViaCropper()) {
+            avatarUrl = this.avatarCropperData.image;
         } else {
-            return this.defaultAvatarUrl;
+            avatarUrl = this.tempAvatarUrl;
         }
+        if (Variable.isNullOrUndefined(avatarUrl)) {
+            avatarUrl = this.avatarUrl;
+        }
+        return avatarUrl;
     }
-    protected editAvatar(): void {
-        this.avatarCropperData = {};
-        this._avatarMode = 'Edit';
-    }
-    protected editAvatarCommit(): void {
+    patchAvatar(): Promise<void> {
         const self = this;
-        this._currentAvatarUrl = self.avatarCropperData.image; // imageUrl;
-        this.editAvatarCancel();
-    }
-    protected editAvatarCancel(): void {
-        this.avatarCropperData = null;
-        this._avatarMode = 'View';
-    }
-    protected avatarBrowseFileChangeListener($event) {
-        const image: any = new Image();
-        const file: File = $event.target.files[0];
-        const fileReader: FileReader = new FileReader();
-        const self = this;
-        fileReader.onloadend = function (loadEvent: any): void {
-            image.src = loadEvent.target.result;
-            self.cropper.setImage(image);
-
-        };
-        fileReader.readAsDataURL(file);
-    }
-    protected editAvatarUrl(): void {
-        this._avatarMode = 'EditUrl';
-    }
-    protected editAvatarUrlCommit(): void {
-        this._currentAvatarUrl = this.stubAvatarUrl;
-        this.editAvatarUrlCancel();
-    }
-    protected editAvatarUrlCancel(): void {
-        this.stubAvatarUrl = null;
-        this._avatarMode = 'View';
-    }
-    private _changeAvatarPromise: Promise<void>;
-    saveAvatar(): Promise<void> {
-        const self = this;
-        self._changeAvatarPromise = self.userApiService
-            .patchAvatar(
-                self.authorizationService.lastUser.userId,
-                self._currentAvatarUrl)
-            .then(function() {
-
+        self.patchAvatarPromise = self.userApiService
+            .patchAvatar(self.userId, self.newAvatarUrl)
+            .then(function(): void {
+                self.avatarUrlPatched.emit(self.newAvatarUrl);
             })
             .then(
                 () => {
-                    self._changeAvatarPromise = null;
+                    self.patchAvatarPromise = null;
                 },
                 () => {
-                    self._changeAvatarPromise = null;
-                }
+                    self.patchAvatarPromise = null;
+                },
             );
-        return self._changeAvatarPromise;
+        return self.patchAvatarPromise;
     }
     resetAvatar(): void {
-        this._currentAvatarUrl = this.defaultAvatarUrl;
+        this.newAvatarUrl = this.avatarUrl;
     }
-    private initializeAvatarCropper(): void {
+    startEditAvatarViaCropper(): void {
+        this.avatarCropperData = {};
+        this.componentMode = ComponentMode.EditViaCropper;
+    }
+    commitEditAvatarViaCropper(): void {
+        this.newAvatarUrl = this.avatarCropperData.image;
+        this.cancelEditAvatarViaCropper();
+    }
+    cancelEditAvatarViaCropper(): void {
+        this.avatarCropperData = null;
+        this.componentMode = ComponentMode.View;
+    }
+    startEditAvatarViaUrlInput(): void {
+        this.tempAvatarUrl = null;
+        this.componentMode = ComponentMode.EditViaUrlInput;
+    }
+    commitEditAvatarViaUrlInput(): void {
+        this.newAvatarUrl = this.tempAvatarUrl;
+        this.cancelEditAvatarViaUrlInput();
+    }
+    cancelEditAvatarViaUrlInput(): void {
+        this.tempAvatarUrl = null;
+        this.componentMode = ComponentMode.View;
+    }
+    /// predicates
+    isUserIdDefined(): boolean {
+        return Variable.isNotNullOrUndefined(this.userId);
+    }
+    isAvatarUrlDefined(): boolean {
+        return Variable.isNotNullOrUndefined(this.avatarUrl);
+    }
+    isNewAvatarUrlDefined(): boolean {
+        return Variable.isNotNullOrUndefined(this.newAvatarUrl);
+    }
+    isCropperImageDefined(): boolean {
+        return Variable.isNotNullOrUndefined(this.avatarCropperData) &&
+            Variable.isNotNullOrUndefined(this.avatarCropperData.image);
+    }
+    isTempAvatarUrlDefined(): boolean {
+        return Variable.isNotNullOrUndefined(this.tempAvatarUrl);
+    }
+    isModeView(): boolean {
+        return this.componentMode === ComponentMode.View;
+    }
+    isModeEditViaCropper(): boolean {
+        return this.componentMode === ComponentMode.EditViaCropper;
+    }
+    isModeEditViaUrlInput(): boolean {
+        return this.componentMode === ComponentMode.EditViaUrlInput;
+    }
+    isPatchAvatarAllowed(): boolean {
+        return this.isModeView() && Variable.isNotNullOrUndefined(this.userId);
+    }
+    isPatchAvatarDisabled(): boolean {
+        return this.isPatchAvatarProcessing() || !this.isNewAvatarUrlDefined();
+    }
+    isPatchAvatarProcessing(): boolean {
+        return Variable.isNotNullOrUndefined(this.patchAvatarPromise);
+    }
+    isResetAvatarAllowed(): boolean {
+        return this.isModeView();
+    }
+    isResetAvatarDisabled(): boolean {
+        return this.isPatchAvatarProcessing();
+    }
+    /// helpers
+    protected initializeAvatarCropper(): void {
         this.avatarCropperSettings = new CropperSettings();
         this.avatarCropperSettings.rounded = true;
         this.avatarCropperSettings.noFileInput = true;
@@ -134,14 +159,20 @@ export class AvatarUpdateComponent implements OnInit {
         this.avatarCropperSettings.height = this.avatarHeight;
         this.avatarCropperSettings.croppedWidth = this.avatarWidth;
         this.avatarCropperSettings.croppedHeight = this.avatarHeight;
-        this.avatarCropperSettings.canvasWidth = this.avatarWidth - 40;
-        this.avatarCropperSettings.canvasHeight = this.avatarHeight - 40;
+        this.avatarCropperSettings.canvasWidth = this.avatarWidth;
+        this.avatarCropperSettings.canvasHeight = this.avatarHeight;
         this.avatarCropperData = {};
-        this.logger.logTrase('UserProfileComponent: Avatar cropper has been initialized.');
+        this.logger.logTrase('AvatarUpdateComponent: Avatar cropper has been initialized.');
     }
-    /// predicates
-    isUserIdDefined(): boolean {
-        return Variable.isNotNullOrUndefined(this.userId);
+    protected browseFileChangeListenerInAvatarCropper($event) {
+        const self = this;
+        const image: any = new Image();
+        const file: File = $event.target.files[0];
+        const fileReader: FileReader = new FileReader();
+        fileReader.onloadend = function (loadEvent: any): void {
+            image.src = loadEvent.target.result;
+            self.avatarCropper.setImage(image);
+        };
+        fileReader.readAsDataURL(file);
     }
-    /// helpers
 }

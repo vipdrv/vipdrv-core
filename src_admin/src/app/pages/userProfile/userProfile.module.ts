@@ -7,7 +7,9 @@ import { Ng2Bs3ModalModule } from 'ng2-bs3-modal/ng2-bs3-modal';
 import { BusyModule } from 'angular2-busy';
 import { UtilsModule } from './../../utils/index';
 import { UserProfileComponent } from './userProfile.component';
+import { PersonalInfoComponent } from './personalInfo/personalInfo.component';
 import { PasswordUpdateComponent } from './passwordUpdate/passwordUpdate.component';
+import { AvatarUpdateComponent } from './avatarUpdate/avatarUpdate.component';
 import { routing } from './userProfile.routing';
 @NgModule({
     imports: [
@@ -16,16 +18,20 @@ import { routing } from './userProfile.routing';
         AppTranslationModule,
         NgaModule,
         routing,
-        UtilsModule,
         Ng2Bs3ModalModule,
         BusyModule,
+        UtilsModule,
     ],
     exports: [
         UserProfileComponent,
+        PersonalInfoComponent,
+        AvatarUpdateComponent,
         PasswordUpdateComponent,
     ],
     declarations: [
         UserProfileComponent,
+        PersonalInfoComponent,
+        AvatarUpdateComponent,
         PasswordUpdateComponent,
     ],
     providers: [],

@@ -1,30 +1,34 @@
+<div *ngIf="isUserDefined()">
+
 <div class="row personal-info-row">
     <div class="col-12">
         <span class="personal-info-label" translate>Username:</span>
-        {{currentUser.username}}
+        {{user.username}}
     </div>
 </div>
 <div class="row personal-info-row">
     <div class="col-12">
         <span class="personal-info-label" translate>Email:</span>
-        {{currentUser.email}}
+        {{user.email}}
     </div>
 </div>
 <div class="row personal-info-row">
     <div class="col-12">
         <span class="personal-info-label" translate>First name:</span>
-        {{currentUser.firstName}}
+        {{user.firstName}}
     </div>
 </div>
 <div class="row personal-info-row">
     <div class="col-12">
         <span class="personal-info-label" translate>Second name:</span>
-        {{currentUser.secondName}}
+        {{user.secondName}}
     </div>
 </div>
 <div class="row personal-info-row">
     <div class="col-12">
         <span class="personal-info-label" translate>Max sites count:</span>
-        {{currentUser.maxSitesCount}}
+        {{user.maxSitesCount}}
     </div>
+</div>
+
 </div>

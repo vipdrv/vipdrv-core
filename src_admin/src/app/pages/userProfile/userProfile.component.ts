@@ -36,6 +36,12 @@ export class UserProfileComponent implements OnInit {
             }
         }
     }
+    onUpdateAvatarUrl(newAvatarUrl: string): void {
+        this.user.avatarUrl = newAvatarUrl;
+    }
+    onUpdatePassword(): void {
+        // TODO: notify auth service
+    }
     /// predicates
     isUserIdDefined(): boolean {
         return Variable.isNotNullOrUndefined(this.userId);

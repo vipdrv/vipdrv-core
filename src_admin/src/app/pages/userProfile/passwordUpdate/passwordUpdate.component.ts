@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { Variable, ILogger, ConsoleLogger } from './../../../utils/index';
 import { IUserApiService, UserApiService } from './../../../services/index';
 @Component({
@@ -9,8 +9,10 @@ import { IUserApiService, UserApiService } from './../../../services/index';
 export class PasswordUpdateComponent {
     /// inputs
     @Input() userId: number;
+    /// outputs
+    @Output() passwordPatched: EventEmitter<any> = new EventEmitter<any>();
     /// service fields
-    private _changePasswordPromise: Promise<void>;
+    protected patchPasswordPromise: Promise<void>;
     /// fields
     protected oldPassword: string;
     protected newPassword: string;
@@ -27,22 +29,23 @@ export class PasswordUpdateComponent {
     /// methods
     commitPasswordChange(): Promise<void> {
         const self = this;
-        self._changePasswordPromise = self.userApiService
+        self.patchPasswordPromise = self.userApiService
             .patchPassword(self.userId, self.oldPassword, self.newPassword)
             .then(function() {
                 self.oldPassword = null;
                 self.newPassword = null;
                 self.newRepeatedPassword = null;
+                self.passwordPatched.emit();
             })
             .then(
                 () => {
-                    self._changePasswordPromise = null;
+                    self.patchPasswordPromise = null;
                 },
                 () => {
-                    self._changePasswordPromise = null;
+                    self.patchPasswordPromise = null;
                 },
             );
-        return self._changePasswordPromise;
+        return self.patchPasswordPromise;
     }
     /// predicates
     isUserIdDefined(): boolean {
@@ -52,10 +55,10 @@ export class PasswordUpdateComponent {
         return this.isCommitPasswordChangeProcessing();
     }
     isCommitPasswordChangeProcessing(): boolean {
-        return Variable.isNotNullOrUndefined(this._changePasswordPromise);
+        return Variable.isNotNullOrUndefined(this.patchPasswordPromise);
     }
     isCommitPasswordChangeDisabled(): boolean {
-        return Variable.isNotNullOrUndefined(this._changePasswordPromise) ||
+        return Variable.isNotNullOrUndefined(this.patchPasswordPromise) ||
             Variable.isNullOrUndefined(this.oldPassword) ||
             Variable.isNullOrUndefined(this.newPassword) ||
             this.newPassword !== this.newRepeatedPassword;
