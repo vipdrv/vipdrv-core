@@ -18,7 +18,8 @@
       "text_save": "save",
       "text_reset": "reset",
       "text_cancel": "cancel",
-      "text_commit": "commit"
+      "text_commit": "commit",
+      "text_accept": "accept"
     },
     "table":{
       "headerText": {
@@ -255,7 +256,13 @@
       "personalInfo": "Personal info",
       "avatar": "Avatar",
       "changePassword": "Change password",
-      "password": {
+      "patchAvatarComponent": {
+        "avatarUrl": "Avatar url",
+        "avatarUrlHelp": "Define avatar via entering direct url to it.",
+        "defineAvatarViaDirectUrl": "Set avatar via url",
+        "defineAvatarViaFile": "Set avatar via file"
+      },
+      "patchPasswordComponent": {
         "oldPassword": "Old password",
         "oldPasswordHelp": "We need your old password to commit changes.",
         "newPassword": "New password",
