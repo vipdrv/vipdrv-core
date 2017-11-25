@@ -44,6 +44,17 @@ namespace QuantumLogic.Core.Domain.Services.Main.Users
                 .ContinueWith((pt) => pt.Result == null);
         }
 
+        public async Task UpdatePersonalInfoAsync(int userId, string newFirstName, string newSecondName, string newEmail, string newPhoneNumber)
+        {
+            User entity = await Repository.GetAsync(userId);
+            Policy.PolicyUpdate(entity);
+            entity.FirstName = newFirstName;
+            entity.SecondName = newSecondName;
+            entity.Email = newEmail;
+            entity.PhoneNumber = newPhoneNumber;
+            ValidationService.ValidateEntity(entity);
+            await Repository.UpdateAsync(entity);
+        }
         public async Task UpdatePasswordAsync(int userId, string oldPassword, string newPassword)
         {
             User entity = await Repository.FirstOrDefaultAsync(r => r.Id == userId && r.PasswordHash == oldPassword);
@@ -60,7 +71,9 @@ namespace QuantumLogic.Core.Domain.Services.Main.Users
         public async Task UpdateAvatarAsync(int userId, string newAvatarUrl)
         {
             User entity = await Repository.GetAsync(userId);
+            Policy.PolicyUpdate(entity);
             entity.AvatarUrl = newAvatarUrl;
+            ValidationService.ValidateEntity(entity);
             await Repository.UpdateAsync(entity);
         }
 

@@ -38,8 +38,19 @@ export class UserProfileComponent implements OnInit {
     }
     onUpdateAvatarUrl(newAvatarUrl: string): void {
         this.user.avatarUrl = newAvatarUrl;
+        this.notifyObserversOnChangeProfile();
     }
     onUpdatePassword(): void {
+        // do not need to notify about this event
+    }
+    onUpdatePersonalInfo(newPersonalInfo: any): void {
+        this.user.firstName = newPersonalInfo.firstName;
+        this.user.secondName = newPersonalInfo.secondName;
+        this.user.email = newPersonalInfo.email;
+        this.user.phoneNumber = newPersonalInfo.phoneNumber;
+        this.notifyObserversOnChangeProfile();
+    }
+    notifyObserversOnChangeProfile(): void {
         // TODO: notify auth service
     }
     /// predicates
