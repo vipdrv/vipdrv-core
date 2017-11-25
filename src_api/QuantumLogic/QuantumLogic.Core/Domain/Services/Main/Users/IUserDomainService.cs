@@ -11,5 +11,6 @@ namespace QuantumLogic.Core.Domain.Services.Main.Users
         Task<bool> IsUsernameValidAsync(string value);
         Task UpdatePasswordAsync(int userId, string oldPassword, string newPassword);
         Task UpdateAvatarAsync(int userId, string newAvatarUrl);
+        Task UpdatePersonalInfoAsync(int userId, string newFirstName, string newSecondName, string newEmail, string newPhoneNumber);
     }
 }

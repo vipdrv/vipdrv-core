@@ -208,6 +208,18 @@ namespace QuantumLogic.WebApi.Controllers.Main
             }
         }
 
+        [Authorize]
+        [HttpPatch("{id}/patch-avatar")]
+        public async Task PatchPersonalInfo([FromBody]PatchPersonalInfoRequest request, int id)
+        {
+            using (var uow = UowManager.CurrentOrCreateNew(true))
+            {
+                await ((IUserDomainService)DomainService)
+                    .UpdatePersonalInfoAsync(id, request.FirstName, request.SecondName, request.Email, request.PhoneNumber);
+                await uow.CompleteAsync();
+            }
+        }
+
         #endregion
     }
 }
