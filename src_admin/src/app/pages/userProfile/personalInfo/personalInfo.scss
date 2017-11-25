@@ -1,4 +1,28 @@
+.personal-info-avatar-container {
+  max-width: 400px;
+}
+.personal-info-avatar-img {
+  width: 300px;
+  height: 300px;
+}
+.personal-info-row-title {
+  margin-bottom: 25px;
+}
 .personal-info-row {
   margin-top: 10px;
   margin-bottom: 10px;
+}
+.personal-info-row-footer {
+  margin-top: 25px;
+}
+.personal-info-label-container {
+  width: 165px;
+  min-width: 165px;
+  max-width: 165px;
+}
+.personal-info-label-text {
+
+}
+.personal-info-value-container {
+  font-style: italic;
 }
