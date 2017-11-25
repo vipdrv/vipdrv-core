@@ -59,7 +59,8 @@
                      aria-labelledby="personal-info-tab">
                     <div class="user-profile-tab-content"
                          *ngIf="isUserDefined()">
-                        <user-personal-info [user]="user"></user-personal-info>
+                        <user-personal-info [user]="user"
+                                            (personalInfoPatched)='onUpdatePersonalInfo($event)'></user-personal-info>
                     </div>
                 </div>
                 <div id="avatar"

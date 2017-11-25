@@ -209,6 +209,7 @@
     "firstName": "First name",
     "secondName": "Second name",
     "email": "Email",
+    "phoneNumber": "Phone number",
     "username": "Username",
     "password": "Password",
     "confirmPassword": "Password (confirm)",
@@ -269,6 +270,14 @@
         "newPasswordHelp": "Enter your new password (it will be used as main password after commit).",
         "newRepeatedPassword": "Repeat new password",
         "newRepeatedPasswordHelp": "Repeat your new password to avoid mistakes."
+      },
+      "personalInfoComponent": {
+        "maxSitesCount": "Max sites amount",
+        "editPersonalInfo": "Edit personal info",
+        "firstNameHelp": "Enter your first name.",
+        "secondNameHelp": "Enter your second name.",
+        "emailHelp": "Enter your contact e-mail (it will be used as main e-mail after commit).",
+        "phoneNumberHelp": "Enter your contact phone number (not required)."
       }
     }
   }

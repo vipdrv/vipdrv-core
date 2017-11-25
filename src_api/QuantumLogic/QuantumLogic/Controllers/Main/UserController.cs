@@ -209,7 +209,7 @@ namespace QuantumLogic.WebApi.Controllers.Main
         }
 
         [Authorize]
-        [HttpPatch("{id}/patch-avatar")]
+        [HttpPatch("{id}/patch-personal-info")]
         public async Task PatchPersonalInfo([FromBody]PatchPersonalInfoRequest request, int id)
         {
             using (var uow = UowManager.CurrentOrCreateNew(true))
