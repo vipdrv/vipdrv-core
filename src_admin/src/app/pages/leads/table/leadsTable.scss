@@ -30,6 +30,18 @@
 .leads-table-body-row:hover {
   cursor: pointer;
 }
+.leads-table-body-row-disabled {
+
+}
+.leads-table-body-row-disabled:hover {
+
+}
+.leads-table-body-row-processing {
+  background-color: #E8EAF6;
+}
+.leads-table-body-row-processing:hover {
+  background-color: #C5CAE9;
+}
 .leads-table-body-row-filters {
   background-color: #fafafa;
 }
@@ -38,4 +50,7 @@
 }
 .leads-table-badge-class {
   //font-size: 0.9rem;
+}
+.template-header-column {
+  float: left;
 }

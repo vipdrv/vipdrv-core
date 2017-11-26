@@ -1,150 +1,173 @@
-<div class="leads-table-template">
-    <div  class="leads-table-header">
-        <div style="float: left;">
-            <button type="button"
-                    [disabled]="!!promiseService.applicationPromises.leads.getAll"
-                    class="btn btn-secondary btn-sm pull-left leads-refresh-btn"
-                    (click)="getAllEntities()">
-                <i class="fa fa-refresh fa-spin" *ngIf="!!promiseService.applicationPromises.leads.getAll"></i>
-                <i class="fa fa-refresh" *ngIf="!promiseService.applicationPromises.leads.getAll"></i>
-            </button>
-            <select class="form-control-sm leads-page-size-control"
-                    [disabled]="!!promiseService.applicationPromises.leads.getAll"
-                    [(ngModel)]="pageSize"
-                    (change)="onPageSizeChanged($event)">
-                <option *ngFor="let item of pageSizeValues"
-                        [ngValue]="item">
-                    {{item}}
-                </option>
-            </select>
-        </div>
-        <div style="float: left;"
-             *ngIf="usePagination()">
-            <pagination class="pagination-sm"
-                        [disabled]="!!promiseService.applicationPromises.leads.getAll"
-                        [(ngModel)]="pageNumber"
-                        [totalItems]="totalCount"
-                        [itemsPerPage]="pageSize"
-                        [maxSize]="maxPaginationSize"
-                        [boundaryLinks]="true"
-                        [rotate]="false"
-                        (pageChanged)="onPageNumberChanged($event)"
-                        (numPages)="numPages = $event">
-            </pagination>
-        </div>
-        <div>
-            <button type="button"
-                    [disabled]="!!promiseService.applicationPromises.leads.exportToExcel"
-                    class="btn btn-outline-primary btn-sm pull-right leads-export-btn"
-                    (click)="exportDataToExcel()">
-                <i class="fa fa-refresh fa-spin" *ngIf="!!promiseService.applicationPromises.leads.exportToExcel"></i>
-                <i class="fa fa-file-excel-o" *ngIf="!promiseService.applicationPromises.leads.exportToExcel"></i>
-                <span translate>leads.table.btnText_exportToExcel</span>
-            </button>
+<div class="many-entities-template">
+    <div class="row test-drive-many-entities-template-header">
+        <div class="col-12">
+            <div class="pull-left">
+                <button type="button"
+                        *ngIf="isRefreshAllowed()"
+                        [disabled]="isRefreshDisabled()"
+                        class="btn btn-secondary btn-sm pull-left leads-refresh-btn"
+                        (click)="getAllEntities()">
+                    <i class="fa fa-refresh fa-spin" *ngIf="isRefreshProcessing()"></i>
+                    <i class="fa fa-refresh" *ngIf="!isRefreshProcessing()"></i>
+                </button>
+                <select class="form-control-sm leads-page-size-control"
+                        *ngIf="isPageSizeChangeAllowed()"
+                        [disabled]="isPageSizeChangeDisabled()"
+                        [(ngModel)]="pageSize"
+                        (change)="onPageSizeChanged($event)">
+                    <option *ngFor="let item of pageSizeValues"
+                            [ngValue]="item">
+                        {{item}}
+                    </option>
+                </select>
+            </div>
+            <div class="pull-left"
+                 *ngIf="isPaginationAllowed()">
+                <pagination class="pagination-sm"
+                            [disabled]="isPaginationDisabled()"
+                            [(ngModel)]="pageNumber"
+                            [totalItems]="totalCount"
+                            [itemsPerPage]="pageSize"
+                            [maxSize]="maxPaginationSize"
+                            [boundaryLinks]="true"
+                            [rotate]="false"
+                            (pageChanged)="onPageNumberChanged($event)"
+                            (numPages)="numPages = $event">
+                </pagination>
+            </div>
+            <div class="pull-right">
+                <button type="button"
+                        *ngIf="isExportToExcelAllowed()"
+                        [disabled]="isExportToExcelDisabled()"
+                        class="btn btn-outline-primary btn-sm pull-right leads-export-btn"
+                        (click)="exportDataToExcel()">
+                    <i class="fa fa-refresh fa-spin" *ngIf="isExportToExcelProcessing()"></i>
+                    <i class="fa fa-file-excel-o" *ngIf="!isExportToExcelProcessing()"></i>
+                    <span translate>leads.table.btnText_exportToExcel</span>
+                </button>
+            </div>
         </div>
     </div>
-    <table class="leads-table-body table table-bordered table-hover"
-           [ngBusy]="promiseService.applicationPromises.leads.getAll">
-        <thead>
-        <tr>
-            <th translate>leads.table.headerText_received</th>
-            <th translate>leads.table.headerText_firstName</th>
-            <th translate>leads.table.headerText_secondName</th>
-            <th translate>leads.table.headerText_siteName</th>
-            <th translate>leads.table.headerText_userEmail</th>
-            <th translate>leads.table.headerText_userPhone</th>
-            <th translate>leads.table.headerText_expertName</th>
-            <th translate>leads.table.headerText_roadName</th>
-            <th translate>leads.table.headerText_beverageName</th>
-        </tr>
-        </thead>
-        <tr class="leads-table-body-row-filters">
-            <td>
-                <!--<input type="text"-->
-                       <!--class="form-control"-->
-                       <!--(ngModelChange)="tableFilterValueChanged($event, 'recievedDateTime')"-->
-                       <!--[ngModel]="tableFilters.recievedDateTime"/>-->
-            </td>
-            <td>
-                <input type="text"
-                       class="form-control"
-                       [(ngModel)]="tableFilters.firstName"
-                       (blur)="applyFilters()"/>
-            </td>
-            <td>
-                <input type="text"
-                       class="form-control"
-                       [(ngModel)]="tableFilters.secondName"
-                       (blur)="applyFilters()"/>
-            </td>
-            <td>
-                <input type="text"
-                       class="form-control"
-                       [(ngModel)]="tableFilters.site"
-                       (blur)="applyFilters()">
-            </td>
-            <td>
-                <input type="text"
-                       class="form-control"
-                       [(ngModel)]="tableFilters.email"
-                       (blur)="applyFilters()"/>
-            </td>
-            <td>
-                <input type="text"
-                       class="form-control"
-                       [(ngModel)]="tableFilters.phone"
-                       (blur)="applyFilters()"/>
-            </td>
-            <td>
-                <input type="text"
-                       class="form-control"
-                       [(ngModel)]="tableFilters.expert"
-                       (blur)="applyFilters()"/>
-            </td>
-            <td>
-                <input type="text"
-                       class="form-control"
-                       [(ngModel)]="tableFilters.route"
-                       (blur)="applyFilters()"/>
-            </td>
-            <td>
-                <input type="text"
-                       class="form-control"
-                       [(ngModel)]="tableFilters.beverage"
-                       (blur)="applyFilters()"/>
-            </td>
-        </tr>
-        <tbody>
-        <tr *ngFor="let item of items"
-            class="leads-table-body-row"
-            (click)="modalOpenInfo(item.id)">
-            <td>{{item.recievedDateTime}}</td>
-            <td>{{item.firstName}}</td>
-            <td>{{item.secondName}}</td>
-            <td>{{item.siteName}}</td>
-            <td>{{item.userEmail}}</td>
-            <td>{{item.userPhone}}</td>
-            <td>
-                <span class="badge badge-info leads-table-badge-class"
-                      *ngIf="item.expertName">
-                {{item.expertName}}
-                </span>
-            </td>
-            <td>
-                <span class="badge badge-info leads-table-badge-class"
-                      *ngIf="item.routeName">
-                {{item.routeName}}
-                </span>
-            </td>
-            <td>
-                <span class="badge badge-info leads-table-badge-class"
-                      *ngIf="item.beverageName">
-                {{item.beverageName}}
-                </span>
-            </td>
-        </tr>
-        </tbody>
-    </table>
+    <div class="test-drive-many-entities-template-body">
+        <div class="row"
+             [ngBusy]="firstLoadingPromise">
+            <div class="col-12">
+                <table class="leads-table-body table table-bordered table-hover">
+                    <thead>
+                    <tr>
+                        <th translate>leads.table.headerText_received</th>
+                        <th translate>leads.table.headerText_firstName</th>
+                        <th translate>leads.table.headerText_secondName</th>
+                        <th translate>leads.table.headerText_siteName</th>
+                        <th translate>leads.table.headerText_userEmail</th>
+                        <th translate>leads.table.headerText_userPhone</th>
+                        <th translate>leads.table.headerText_expertName</th>
+                        <th translate>leads.table.headerText_roadName</th>
+                        <th translate>leads.table.headerText_beverageName</th>
+                    </tr>
+                    </thead>
+                    <tr class="leads-table-body-row-filters"
+                        *ngIf="isFilteringAllowed()">
+                        <td>
+                            <!--<input type="text"-->
+                            <!--class="form-control"-->
+                            <!--[disabled]="isFilteringDisabled()"-->
+                            <!--(ngModelChange)="tableFilterValueChanged($event, 'recievedDateTime')"-->
+                            <!--[ngModel]="tableFilters.recievedDateTime"/>-->
+                        </td>
+                        <td>
+                            <input type="text"
+                                   class="form-control"
+                                   [disabled]="isFilteringDisabled()"
+                                   [(ngModel)]="tableFilters.firstName"
+                                   (blur)="applyFilters()"/>
+                        </td>
+                        <td>
+                            <input type="text"
+                                   class="form-control"
+                                   [disabled]="isFilteringDisabled()"
+                                   [(ngModel)]="tableFilters.secondName"
+                                   (blur)="applyFilters()"/>
+                        </td>
+                        <td>
+                            <input type="text"
+                                   class="form-control"
+                                   [disabled]="isFilteringDisabled()"
+                                   [(ngModel)]="tableFilters.site"
+                                   (blur)="applyFilters()">
+                        </td>
+                        <td>
+                            <input type="text"
+                                   class="form-control"
+                                   [disabled]="isFilteringDisabled()"
+                                   [(ngModel)]="tableFilters.email"
+                                   (blur)="applyFilters()"/>
+                        </td>
+                        <td>
+                            <input type="text"
+                                   class="form-control"
+                                   [disabled]="isFilteringDisabled()"
+                                   [(ngModel)]="tableFilters.phone"
+                                   (blur)="applyFilters()"/>
+                        </td>
+                        <td>
+                            <input type="text"
+                                   class="form-control"
+                                   [disabled]="isFilteringDisabled()"
+                                   [(ngModel)]="tableFilters.expert"
+                                   (blur)="applyFilters()"/>
+                        </td>
+                        <td>
+                            <input type="text"
+                                   class="form-control"
+                                   [disabled]="isFilteringDisabled()"
+                                   [(ngModel)]="tableFilters.route"
+                                   (blur)="applyFilters()"/>
+                        </td>
+                        <td>
+                            <input type="text"
+                                   class="form-control"
+                                   [disabled]="isFilteringDisabled()"
+                                   [(ngModel)]="tableFilters.beverage"
+                                   (blur)="applyFilters()"/>
+                        </td>
+                    </tr>
+                    <tbody>
+                    <tr *ngFor="let item of items"
+                        [ngClass]="getClassesForLeadTableRow(item)"
+                        class="leads-table-body-row"
+                        (click)="tryModalOpenInfo(item.id)">
+                        <td>{{item.recievedDateTime}}</td>
+                        <td>{{item.firstName}}</td>
+                        <td>{{item.secondName}}</td>
+                        <td>{{item.siteName}}</td>
+                        <td>{{item.userEmail}}</td>
+                        <td>{{item.userPhone}}</td>
+                        <td>
+                            <span class="badge badge-info leads-table-badge-class"
+                                  *ngIf="item.expertName">
+                                {{item.expertName}}
+                            </span>
+                        </td>
+                        <td>
+                            <span class="badge badge-info leads-table-badge-class"
+                                  *ngIf="item.routeName">
+                                {{item.routeName}}
+                            </span>
+                        </td>
+                        <td>
+                            <span class="badge badge-info leads-table-badge-class"
+                                  *ngIf="item.beverageName">
+                                {{item.beverageName}}
+                            </span>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="test-drive-many-entities-template-footer"></div>
 </div>
 
 <modal #leadDetailsInfoModal
@@ -163,7 +186,7 @@
                 class="btn btn-default"
                 data-dismiss="modal"
                 (click)="modalDismiss()">
-            <span translate>leads.modal.cancel</span>
+            <span translate>general.actions.modalClose</span>
         </button>
     </modal-footer>
 </modal>

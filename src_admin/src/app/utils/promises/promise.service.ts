@@ -16,13 +16,6 @@ export class PromiseService {
     /// helpers
     private initializePromisesStore(): void {
         this._applicationPromises = {
-            leads: {
-                getAll: null,
-                get: null,
-                addOrUpdate: null,
-                delete: null,
-                exportToExcel: null
-            },
             sites: {
                 getAll: {
                     promise: null
