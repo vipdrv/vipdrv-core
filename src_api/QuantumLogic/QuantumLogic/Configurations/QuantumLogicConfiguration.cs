@@ -9,6 +9,7 @@ namespace QuantumLogic.WebApi.Configurations
     /// </summary>
     public class QuantumLogicConfiguration
     {
+        public ApplicationInfoConfiguration ApplicationInfo { get; set; }
         public WebApiConfiguration WebApi { get; set; }
         public CoreConfiguration Core { get; set; }
         public DataConfiguration Data { get; set; }

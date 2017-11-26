@@ -4,49 +4,38 @@ using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
 using Newtonsoft.Json.Linq;
+using QuantumLogic.WebApi.Configurations;
 using QuantumLogic.WebApi.DataModels.Dtos.Main.ApiStatus;
 
 namespace QuantumLogic.WebApi.Controllers.Main
 {
     public class ApiStatusController : Controller
     {
+        public ApplicationInfoConfiguration ApplicationInfoConfiguration { get; private set; }
+
+        public ApiStatusController(IOptions<ApplicationInfoConfiguration> applicationInfoConfigurationOption)
+        {
+            ApplicationInfoConfiguration = applicationInfoConfigurationOption.Value;
+        }
+
         [HttpGet("")]
-        public ApiStatusDto ApiStatus(int id)
+        public ApplicationStatusDto ApiStatus()
         {
-            var apiStatus = new ApiStatus(Assembly.GetEntryAssembly());
-            return apiStatus.GetApiStatusDto();
-        }
-    }
-
-    public class ApiStatus
-    {
-        private readonly Assembly _assembly;
-        
-        public ApiStatus(Assembly assembly)
-        {
-            _assembly = assembly;
+            return new ApplicationStatusDto(GetConfiguration(), 
+                ApplicationInfoConfiguration.BuildCounterMask, 
+                ApplicationInfoConfiguration.Name, 
+                ApplicationInfoConfiguration.Version);
         }
 
-        public string GetAssemblyVersion()
-        {
-            return _assembly
-                .GetCustomAttribute<AssemblyInformationalVersionAttribute>()
-                .InformationalVersion;
-        }
-
-        public string GetConfiguration()
+        protected string GetConfiguration()
         {
             var configuration = "Release";
 #if DEBUG
             configuration = "Debug";
 #endif
             return configuration;
-        }
-
-        public ApiStatusDto GetApiStatusDto()
-        {
-            return new ApiStatusDto(GetAssemblyVersion(), GetConfiguration());
         }
     }
 }
