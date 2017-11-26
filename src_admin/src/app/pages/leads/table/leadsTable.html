@@ -3,14 +3,16 @@
         <div class="col-12">
             <div class="pull-left">
                 <button type="button"
-                        [disabled]="!!promiseService.applicationPromises.leads.getAll"
+                        *ngIf="isRefreshAllowed()"
+                        [disabled]="isRefreshDisabled()"
                         class="btn btn-secondary btn-sm pull-left leads-refresh-btn"
                         (click)="getAllEntities()">
-                    <i class="fa fa-refresh fa-spin" *ngIf="!!promiseService.applicationPromises.leads.getAll"></i>
-                    <i class="fa fa-refresh" *ngIf="!promiseService.applicationPromises.leads.getAll"></i>
+                    <i class="fa fa-refresh fa-spin" *ngIf="isRefreshProcessing()"></i>
+                    <i class="fa fa-refresh" *ngIf="!isRefreshProcessing()"></i>
                 </button>
                 <select class="form-control-sm leads-page-size-control"
-                        [disabled]="!!promiseService.applicationPromises.leads.getAll"
+                        *ngIf="isPageSizeChangeAllowed()"
+                        [disabled]="isPageSizeChangeDisabled()"
                         [(ngModel)]="pageSize"
                         (change)="onPageSizeChanged($event)">
                     <option *ngFor="let item of pageSizeValues"
@@ -20,9 +22,9 @@
                 </select>
             </div>
             <div class="pull-left"
-                 *ngIf="usePagination()">
+                 *ngIf="isPaginationAllowed()">
                 <pagination class="pagination-sm"
-                            [disabled]="!!promiseService.applicationPromises.leads.getAll"
+                            [disabled]="isPaginationDisabled()"
                             [(ngModel)]="pageNumber"
                             [totalItems]="totalCount"
                             [itemsPerPage]="pageSize"
@@ -35,11 +37,12 @@
             </div>
             <div class="pull-right">
                 <button type="button"
-                        [disabled]="!!promiseService.applicationPromises.leads.exportToExcel"
+                        *ngIf="isExportToExcelAllowed()"
+                        [disabled]="isExportToExcelDisabled()"
                         class="btn btn-outline-primary btn-sm pull-right leads-export-btn"
                         (click)="exportDataToExcel()">
-                    <i class="fa fa-refresh fa-spin" *ngIf="!!promiseService.applicationPromises.leads.exportToExcel"></i>
-                    <i class="fa fa-file-excel-o" *ngIf="!promiseService.applicationPromises.leads.exportToExcel"></i>
+                    <i class="fa fa-refresh fa-spin" *ngIf="isExportToExcelProcessing()"></i>
+                    <i class="fa fa-file-excel-o" *ngIf="!isExportToExcelProcessing()"></i>
                     <span translate>leads.table.btnText_exportToExcel</span>
                 </button>
             </div>
@@ -63,66 +66,77 @@
                         <th translate>leads.table.headerText_beverageName</th>
                     </tr>
                     </thead>
-                    <tr class="leads-table-body-row-filters">
+                    <tr class="leads-table-body-row-filters"
+                        *ngIf="isFilteringAllowed()">
                         <td>
                             <!--<input type="text"-->
                             <!--class="form-control"-->
+                            <!--[disabled]="isFilteringDisabled()"-->
                             <!--(ngModelChange)="tableFilterValueChanged($event, 'recievedDateTime')"-->
                             <!--[ngModel]="tableFilters.recievedDateTime"/>-->
                         </td>
                         <td>
                             <input type="text"
                                    class="form-control"
+                                   [disabled]="isFilteringDisabled()"
                                    [(ngModel)]="tableFilters.firstName"
                                    (blur)="applyFilters()"/>
                         </td>
                         <td>
                             <input type="text"
                                    class="form-control"
+                                   [disabled]="isFilteringDisabled()"
                                    [(ngModel)]="tableFilters.secondName"
                                    (blur)="applyFilters()"/>
                         </td>
                         <td>
                             <input type="text"
                                    class="form-control"
+                                   [disabled]="isFilteringDisabled()"
                                    [(ngModel)]="tableFilters.site"
                                    (blur)="applyFilters()">
                         </td>
                         <td>
                             <input type="text"
                                    class="form-control"
+                                   [disabled]="isFilteringDisabled()"
                                    [(ngModel)]="tableFilters.email"
                                    (blur)="applyFilters()"/>
                         </td>
                         <td>
                             <input type="text"
                                    class="form-control"
+                                   [disabled]="isFilteringDisabled()"
                                    [(ngModel)]="tableFilters.phone"
                                    (blur)="applyFilters()"/>
                         </td>
                         <td>
                             <input type="text"
                                    class="form-control"
+                                   [disabled]="isFilteringDisabled()"
                                    [(ngModel)]="tableFilters.expert"
                                    (blur)="applyFilters()"/>
                         </td>
                         <td>
                             <input type="text"
                                    class="form-control"
+                                   [disabled]="isFilteringDisabled()"
                                    [(ngModel)]="tableFilters.route"
                                    (blur)="applyFilters()"/>
                         </td>
                         <td>
                             <input type="text"
                                    class="form-control"
+                                   [disabled]="isFilteringDisabled()"
                                    [(ngModel)]="tableFilters.beverage"
                                    (blur)="applyFilters()"/>
                         </td>
                     </tr>
                     <tbody>
                     <tr *ngFor="let item of items"
+                        [ngClass]="getClassesForLeadTableRow(item)"
                         class="leads-table-body-row"
-                        (click)="modalOpenInfo(item.id)">
+                        (click)="tryModalOpenInfo(item.id)">
                         <td>{{item.recievedDateTime}}</td>
                         <td>{{item.firstName}}</td>
                         <td>{{item.secondName}}</td>
@@ -172,7 +186,7 @@
                 class="btn btn-default"
                 data-dismiss="modal"
                 (click)="modalDismiss()">
-            <span translate>leads.modal.cancel</span>
+            <span translate>general.actions.modalClose</span>
         </button>
     </modal-footer>
 </modal>
