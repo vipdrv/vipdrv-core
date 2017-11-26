@@ -86,19 +86,22 @@ var TestDrive = TestDrive || (function () {
         init: function (Args) {
             _SiteId = Args.SiteId || _SiteId;
 
-            //
-
             _appendWidgetFrame();
             _addCss();
             _escapeListener();
             _outOfModalClickListener();
         },
-        openTestDrive: function (vin, img, title, engine, year, colour, transmission, fuel) {
-            _appendTestDriveFrame(vin, img, title, engine, year, colour, transmission, fuel);
-            _showTestDrive();
-        },
-        openTestDriveOop: function (car) {
-            _appendTestDriveFrame(car.vin, car.image, car.title, car.engine, car.year, car.color, car.transmission, car.fuel);
+        openTestDrive: function (Args) {
+            var carVin = Args.carVin || "";
+            var carImageUrl = Args.carImageUrl || "";
+            var carTitle = Args.carTitle || "";
+            var carEngine = Args.carEngine || "";
+            var carYear = Args.carYear || "";
+            var carColor = Args.carColor || "";
+            var carTransmission = Args.carTransmission || "";
+            var carFuel = Args.carFuel || "";
+
+            _appendTestDriveFrame(carVin, carImageUrl, carTitle, carEngine, carYear, carColor, carTransmission, carFuel);
             _showTestDrive();
         },
         closeTestDrive: _hideTestDrive

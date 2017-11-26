@@ -85,7 +85,7 @@
         <button type="button"
                 class="btn btn-secondary"
                 (click)="siteDetailsModalDismiss(); $event.stopPropagation();">
-            <span translate>sites.modal.cancel</span>
+            <span translate>general.actions.modalClose</span>
         </button>
         <button type="button"
                 [disabled]="isSiteDetailsModalApplyDisabled()"
@@ -93,7 +93,7 @@
                 (click)="siteDetailsModalApply(); $event.stopPropagation();">
             <i class="fa fa-spinner fa-pulse" *ngIf="isSiteDetailsModalApplyProcessing()"></i>
             <i class="fa fa-save" *ngIf="!isSiteDetailsModalApplyProcessing()"></i>
-            <span translate>sites.modal.apply</span>
+            <span translate>general.actions.modalApply</span>
         </button>
     </modal-footer>
 </modal>

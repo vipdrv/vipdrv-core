@@ -19,7 +19,9 @@
       "text_reset": "reset",
       "text_cancel": "cancel",
       "text_commit": "commit",
-      "text_accept": "accept"
+      "text_accept": "accept",
+      "modalClose": "Close",
+      "modalApply": "Save"
     },
     "table":{
       "headerText": {
