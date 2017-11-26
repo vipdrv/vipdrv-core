@@ -25,6 +25,8 @@ export class LeadsTableComponent implements OnInit {
     private _defaultFilter: any = null;
     protected maxPaginationSize: number = 3;
     protected pageSizeValues: Array<number> = [5, 10, 25, 50, 100];
+    /// service fields
+    protected firstLoadingPromise: Promise<void>;
     /// data fields
     protected totalCount: number;
     protected items: Array<LeadEntity>;
@@ -51,7 +53,17 @@ export class LeadsTableComponent implements OnInit {
         this.pageSize = Variable.isNotNullOrUndefined(this.pageSize) ? this.pageSize : this._defaultPageSize;
         this.sorting = Variable.isNotNullOrUndefined(this.sorting) ? this.sorting : this._defaultSorting;
         this.filter = Variable.isNotNullOrUndefined(this.filter) ? this.filter : this._defaultFilter;
-        this.getAllEntities();
+        const self = this;
+        self.firstLoadingPromise = self
+            .getAllEntities()
+            .then(
+                () => {
+                    self.firstLoadingPromise = null;
+                },
+                () => {
+                    self.firstLoadingPromise = null;
+                }
+            );
     }
     protected getAllEntities(): Promise<void> {
         const self = this;
@@ -136,6 +148,33 @@ export class LeadsTableComponent implements OnInit {
             setTimeout(() => this.pageNumber = this._defaultPageNumber, 0);
         }
     }
+    protected applyFilters(): Promise<void> {
+        let filtersWereNotChanged: boolean =
+            this.tableFilters.recievedDateTime === this.oldTableFilters.recievedDateTime &&
+            this.tableFilters.firstName === this.oldTableFilters.firstName &&
+            this.tableFilters.secondName === this.oldTableFilters.secondName &&
+            this.tableFilters.site === this.oldTableFilters.site &&
+            this.tableFilters.email === this.oldTableFilters.email &&
+            this.tableFilters.phone === this.oldTableFilters.phone &&
+            this.tableFilters.expert === this.oldTableFilters.expert &&
+            this.tableFilters.route === this.oldTableFilters.route &&
+            this.tableFilters.beverage === this.oldTableFilters.beverage;
+        if (!filtersWereNotChanged) {
+            this.oldTableFilters = {};
+            this.oldTableFilters.recievedDateTime = this.tableFilters.recievedDateTime;
+            this.oldTableFilters.firstName = this.tableFilters.firstName;
+            this.oldTableFilters.secondName = this.tableFilters.secondName;
+            this.oldTableFilters.site = this.tableFilters.site;
+            this.oldTableFilters.email = this.tableFilters.email;
+            this.oldTableFilters.phone = this.tableFilters.phone;
+            this.oldTableFilters.expert = this.tableFilters.expert;
+            this.oldTableFilters.route = this.tableFilters.route;
+            this.oldTableFilters.beverage = this.tableFilters.beverage;
+            return this.getAllEntities();
+        } else {
+            return Promise.resolve();
+        }
+    }
     /// predicates
     protected usePagination(): boolean {
         return this.pageSize < this.totalCount;
@@ -214,31 +253,17 @@ export class LeadsTableComponent implements OnInit {
         route: null,
         beverage: null
     };
-    applyFilters(): Promise<void> {
-        let filtersWereNotChanged: boolean =
-            this.tableFilters.recievedDateTime === this.oldTableFilters.recievedDateTime &&
-            this.tableFilters.firstName === this.oldTableFilters.firstName &&
-            this.tableFilters.secondName === this.oldTableFilters.secondName &&
-            this.tableFilters.site === this.oldTableFilters.site &&
-            this.tableFilters.email === this.oldTableFilters.email &&
-            this.tableFilters.phone === this.oldTableFilters.phone &&
-            this.tableFilters.expert === this.oldTableFilters.expert &&
-            this.tableFilters.route === this.oldTableFilters.route &&
-            this.tableFilters.beverage === this.oldTableFilters.beverage;
-        if (!filtersWereNotChanged) {
-            this.oldTableFilters = {};
-            this.oldTableFilters.recievedDateTime = this.tableFilters.recievedDateTime;
-            this.oldTableFilters.firstName = this.tableFilters.firstName;
-            this.oldTableFilters.secondName = this.tableFilters.secondName;
-            this.oldTableFilters.site = this.tableFilters.site;
-            this.oldTableFilters.email = this.tableFilters.email;
-            this.oldTableFilters.phone = this.tableFilters.phone;
-            this.oldTableFilters.expert = this.tableFilters.expert;
-            this.oldTableFilters.route = this.tableFilters.route;
-            this.oldTableFilters.beverage = this.tableFilters.beverage;
-            return this.getAllEntities();
-        } else {
-            return Promise.resolve();
-        }
+    /// button helpers
+    isButtonRefreshAllowed(): boolean {
+        return true;
     }
+    isButtonRefreshDisabled(): boolean {
+        return true;
+    }
+    isButtonRefreshProcessing(): boolean {
+        return true;
+    }
+
+    /// promise manager
+
 }
