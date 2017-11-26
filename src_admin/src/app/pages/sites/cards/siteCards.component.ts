@@ -59,7 +59,7 @@ export class SiteCardsComponent implements OnInit {
     protected getManyEntities(): Promise<void> {
         const self: SiteCardsComponent = this;
         const filter = {
-            userId: this.authorizationManager.lastUser.userId
+            userId: this.authorizationManager.currentUserId
         };
         self._getManyPromise = self.siteApiService
             .getAll(0, 10, null, filter)
@@ -178,7 +178,7 @@ export class SiteCardsComponent implements OnInit {
     }
     protected openModalOnCreate(): Promise<void> {
         this.selectedEntity = new SiteEntity();
-        this.selectedEntity.userId = this.authorizationManager.lastUser.userId;
+        this.selectedEntity.userId = this.authorizationManager.currentUserId;
         this._siteDetailsModalMode = 'Create';
         return this.siteDetailsModal.open();
     }

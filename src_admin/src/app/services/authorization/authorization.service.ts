@@ -2,125 +2,165 @@ import { Injectable } from '@angular/core';
 import { Router, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 import { Http, Response, RequestOptionsArgs, Headers } from '@angular/http';
 import { environment } from '../../../environments/environment';
-import { ILogger, ConsoleLogger, Variable } from './../../utils/index';
+import { Variable, ILogger, ConsoleLogger } from './../../utils/index';
 import { TokenResponse, UserIdentityInfo } from './../index';
 import { IAuthorizationService } from './i-authorization.service';
+import { UserEntity } from './../../entities/index';
 @Injectable()
 export class AuthorizationService implements IAuthorizationService {
-    private _lastUser: any;
+    /// service fields
+    protected postAuthRedirectUrlInStorageKey: string = 'postAuthRedirectUrl';
+    protected currentUserInfoInStorageKey: string = 'currentUserInfo';
+    private _currentUser: UserEntity;
+    private _currentUserId: number;
+    private _currentUserInfo: any;
     private _postAuthorizationDefaultUrl: string = '/';
-
-    get lastUser(): any {
-        //TODO: fix this after resolve singleton problem (should return just last user) - this service is singleton
-        //return this._lastUser;
-        return this.getStoredUser();
+    protected baseUrl: string;
+    /// public properties
+    get currentUserId(): number {
+        return Variable.isNotNullOrUndefined(this._currentUserId) ? this._currentUserId : null;
     }
-    get user(): Promise<any> {
-        return Promise.resolve(this.getStoredUser());
+    get currentUser(): UserEntity {
+        return Variable.isNotNullOrUndefined(this._currentUser) ? this._currentUser : null;
     }
-
     get postAuthRedirectUrl(): string {
-        let result: string = localStorage.getItem("postAuthRedirectUrl");
+        const result: string = localStorage.getItem(this.postAuthRedirectUrlInStorageKey);
         return result ? result : this._postAuthorizationDefaultUrl;
     }
     set postAuthRedirectUrl(value: string) {
-        localStorage.setItem("postAuthRedirectUrl", value);
+        localStorage.setItem(this.postAuthRedirectUrlInStorageKey, value);
     }
-
-    protected baseUrl: string;
     /// injected dependencies
-    //protected logger: ILogger;
+    protected logger: ILogger;
     protected router: Router;
     protected http: Http;
     /// ctor
     constructor(
-        //logger: ConsoleLogger,
+        logger: ConsoleLogger,
         router: Router,
         http: Http) {
-        //this.logger = logger;
+        this.logger = logger;
         this.router = router;
         this.http = http;
         this.baseUrl = environment.apiUrl;
-        this._lastUser = this.getStoredUser();
+        this.logger.logDebug('AuthorizationService: Service has been constructed.');
+        this.initializeService();
     }
-    protected getStoredUser(): any {
-        let storedUser;
-        if (sessionStorage.getItem('currentUser')) {
-            storedUser = JSON.parse(sessionStorage.getItem('currentUser'));
-        } else if (localStorage.getItem('currentUser')) {
-            storedUser = JSON.parse(localStorage.getItem('currentUser'));
-        } else {
-            storedUser = null;
+    /// methods
+    initializeService(): void {
+        this.applyStoredUserInfo();
+        if (Variable.isNotNullOrUndefined(this.currentUserId)) {
+            this.actualizeCurrentUserProfile();
         }
-        return storedUser;
     }
     /// authorization guard implementation
     canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
-        if (this._lastUser) {
+        if (Variable.isNotNullOrUndefined(this.currentUserId)) {
             return true;
         }
-        const storedUser = this.getStoredUser();
-        if (storedUser) {
-            this._lastUser = storedUser;
+        this.applyStoredUserInfo();
+        if (Variable.isNotNullOrUndefined(this.currentUserId)) {
             return true;
         }
         this.router.navigate(['/login'], { queryParams: { returnUrl: state.url } });
         return false;
     }
     /// methods
+    getAuthorizationToken(): string {
+        if (Variable.isNotNullOrUndefined(this._currentUserInfo)) {
+            return `${this._currentUserInfo.tokenType} ${this._currentUserInfo.token}`;
+        } else {
+            return null;
+        }
+    }
     signInViaUsername(login: string, password: string, isPersist: boolean): Promise<any> {
-        let self = this;
-        let body: any = {
+        const self = this;
+        const body: any = {
             'login': login,
             'password': password,
             'grantType': 'username'
         };
         return new Promise((resolve: any, reject: any) => {
+                return self.http
+                    .post(`${self.baseUrl}/token`, body)
+                    .subscribe(
+                        (res: any) => {
+                            resolve(self.handleResponse(res));
+                        },
+                        (error: any) => {
+                            return reject(error);
+                        });
+            })
+            .then(function (response: TokenResponse): Promise<void> {
+                if (isPersist) {
+                    localStorage.setItem(self.currentUserInfoInStorageKey, JSON.stringify(response));
+                } else {
+                    sessionStorage.setItem(self.currentUserInfoInStorageKey, JSON.stringify(response));
+                }
+                self.applyStoredUserInfo();
+                return self.actualizeCurrentUserProfile();
+            });
+    }
+    actualizeCurrentUserProfile(): Promise<void> {
+        const self = this;
+        return new Promise((resolve: any, reject: any) => {
             return self.http
-                .post(`${self.baseUrl}/token`, body)
+                .get(`${self.baseUrl}/api/user/${self.currentUserId}`, self.extendOptionsWithHeaders())
                 .subscribe(
                     (res: any) => {
                         resolve(self.handleResponse(res));
                     },
                     (error: any) => {
                         return reject(error);
-                    })
-        })
-            .then(function (response: TokenResponse) {
-                self._lastUser = response;
-                if (isPersist) {
-                    localStorage.setItem('currentUser', JSON.stringify(self._lastUser));
-                } else {
-                    sessionStorage.setItem('currentUser', JSON.stringify(self._lastUser));
-                }
+                    });
+            })
+            .then(function (response: UserEntity): void {
+                const entity: UserEntity = new UserEntity();
+                entity.initializeFromDto(response);
+                self._currentUser = entity;
+                self.logger.logTrase('AuthorizationService: Current user profile has been actualized.');
             });
     }
-    actualizeUserProfile(): Promise<void> {
-        // TODO: implement this to support user profile actualization
-        return Promise.resolve();
-    }
     signOut(): Promise<any> {
-        localStorage.removeItem('currentUser');
-        sessionStorage.removeItem('currentUser');
-        this._lastUser = null;
+        localStorage.removeItem(this.currentUserInfoInStorageKey);
+        sessionStorage.removeItem(this.currentUserInfoInStorageKey);
+        this._currentUser = null;
+        this._currentUserId = null;
         return Promise.resolve();
     }
-    handleAuthorizationCallback(): Promise<void> {
-        //this.logger.logDebug("HandleAuthorizationCallback method (in AuthorizationManager) called.");
-        return Promise.resolve();
+    handleUnauthorizedResponse(): Promise<void> {
+        this.logger.logWarning('AuthorizationService: handleUnauthorizedResponse method called.');
+        return this.router
+            .navigate(['/logout'], { queryParams: { returnUrl: this.router.url } })
+            .then(function (result: boolean): void {
+
+            });
+    }
+    isUnauthorizedError(reason: any): boolean {
+        return !!reason && reason.status === 401;
     }
     /// helpers
-    private extendOptionsWithHeaders(user: any, options?: RequestOptionsArgs): RequestOptionsArgs {
-        let opt: any = !options ? {} : options;
+    private applyStoredUserInfo(): void {
+        if (sessionStorage.getItem(this.currentUserInfoInStorageKey)) {
+            this._currentUserInfo = JSON.parse(sessionStorage.getItem(this.currentUserInfoInStorageKey));
+        } else if (localStorage.getItem(this.currentUserInfoInStorageKey)) {
+            this._currentUserInfo = JSON.parse(localStorage.getItem(this.currentUserInfoInStorageKey));
+        } else {
+            this._currentUserInfo = null;
+        }
+        if (Variable.isNotNullOrUndefined(this._currentUserInfo)) {
+            this._currentUserId = this._currentUserInfo.userId;
+        }
+    }
+    private extendOptionsWithHeaders(options?: RequestOptionsArgs): RequestOptionsArgs {
+        const opt: any = !options ? {} : options;
         opt.headers = !opt.headers ? new Headers() : opt.headers;
-        this.createAuthorizationHeader(opt.headers, user);
+        this.createAuthorizationHeader(opt.headers);
         this.createCorsHeader(opt.headers);
         return opt;
     }
-    private createAuthorizationHeader(headers: Headers, user: any): void {
-        if (Variable.isNotNullOrUndefined(user)) {
-            headers.append('Authorization', `Bearer ${user.token}`);
-        }
+    private createAuthorizationHeader(headers: Headers): void {
+        headers.append('Authorization', this.getAuthorizationToken());
     }
     private createCorsHeader(headers: Headers): void {
         headers.append('Access-Control-Allow-Origin', '*');

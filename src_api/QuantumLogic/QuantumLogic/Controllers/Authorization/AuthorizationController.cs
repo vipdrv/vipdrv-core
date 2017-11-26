@@ -24,10 +24,11 @@ namespace QuantumLogic.WebApi.Controllers.Authorization
     {
         #region Constants
 
+        protected const string TokenType = "bearer";
+
         protected const string IdentityName = "UserIdentity";
         protected const string UserIdClaimKey = "userId";
         protected const string UsernameClaimKey = "username";
-        protected const string AvatarUrlClaimKey = "avatarUrl";
         protected const string GrantedRolesClaimKey = "grantedRoles";
         protected const string GrantedPermissionsClaimKey = "grantedPermissions";
 
@@ -60,6 +61,10 @@ namespace QuantumLogic.WebApi.Controllers.Authorization
         [HttpPost("token")]
         public async Task<TokenResponse> CreateJwtTokenAsync([FromBody]TokenRequest request)
         {
+            if (request == null)
+            {
+                throw new ArgumentException(nameof(TokenRequest));
+            }
             TokenResponse response;
             try
             {
@@ -75,7 +80,7 @@ namespace QuantumLogic.WebApi.Controllers.Authorization
                             issuer: QLAuthenticationOptions.Issuer,
                             expires: expireDateTimeUtc);
                     response = new TokenResponse(
-                        token.Issuer, token.Audiences.ToList(), JwtTokenHandler.WriteToken(token), identityBox.Sub, expireDateTimeUtc,
+                        token.Issuer, token.Audiences.ToList(), JwtTokenHandler.WriteToken(token), TokenType, identityBox.Sub, expireDateTimeUtc,
                         await ParseIdentityInfoFromIdentityClaimsAsync(identityBox.ClaimsIdentity.Claims.ToDictionary((item) => item.Type, (item) => item.Value)));
                 }
                 else
@@ -110,17 +115,11 @@ namespace QuantumLogic.WebApi.Controllers.Authorization
             {
                 grantedPermissionsValue = null;
             }
-            string avatarUrl;
-            if (!identityClaims.TryGetValue(AvatarUrlClaimKey, out avatarUrl))
-            {
-                avatarUrl = String.Empty;
-            }
             IdentityInfo result = new IdentityInfo(
                 Int64.Parse(identityClaims[UserIdClaimKey]),
                 identityClaims[UsernameClaimKey],
                 String.IsNullOrEmpty(grantedRolesValue) ? new string[0] : grantedRolesValue.Split(','),
-                String.IsNullOrEmpty(grantedPermissionsValue) ? new string[0] : grantedPermissionsValue.Split(','),
-                avatarUrl);
+                String.IsNullOrEmpty(grantedPermissionsValue) ? new string[0] : grantedPermissionsValue.Split(','));
             return Task.FromResult(result);
         }
 
@@ -138,7 +137,6 @@ namespace QuantumLogic.WebApi.Controllers.Authorization
                     {
                         new Claim(UserIdClaimKey, userInfo.UserId.ToString()),
                         new Claim(UsernameClaimKey, userInfo.Username),
-                        new Claim(AvatarUrlClaimKey, userInfo.AvatarUrl ?? String.Empty),
                         new Claim(GrantedRolesClaimKey, String.Join(",", userInfo.GrantedRoles)),
                         new Claim(GrantedPermissionsClaimKey, String.Join(",", userInfo.GrantedPermissions))
                     });

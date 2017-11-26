@@ -57,10 +57,12 @@ export class InvitationsTableComponent implements OnInit {
     }
     protected getAllEntities(): Promise<void> {
         const self = this;
-        const userId: number = Variable.isNullOrUndefined(this.authorizationManager.lastUser) ?
-            null : this.authorizationManager.lastUser.userId;
         self.promiseService.applicationPromises.leads.getAll = self.userApiService
-            .getInvitations(userId, self.pageNumber - 1, self.pageSize, self.sorting)
+            .getInvitations(
+                this.authorizationManager.currentUserId,
+                self.pageNumber - 1,
+                self.pageSize,
+                self.sorting)
             .then(function (response: GetAllResponse<InvitationEntity>): Promise<void> {
                 self.totalCount = response.totalCount;
                 self.items = response.items;
@@ -129,7 +131,7 @@ export class InvitationsTableComponent implements OnInit {
     sendInvitation(): void {
         const self = this;
         self._sendInvitationPromise = self.userApiService
-            .createInvitation(self.authorizationManager.lastUser.userId, this.entity)
+            .createInvitation(self.authorizationManager.currentUserId, this.entity)
             .then(function(response: InvitationEntity): void {
                 self.items.splice(0, 0, response);
                 self.modalDismiss();
