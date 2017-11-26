@@ -16,6 +16,7 @@ namespace QuantumLogic.WebApi.DataModels.Dtos.Main.ApiStatus
             Assembly = aseembly;
             Configuration = configuration;
             BuildCounter = "-build.counter-";
+
         }
     }
 }
