@@ -29,8 +29,8 @@ export class UserProfileComponent implements OnInit {
     }
     /// methods
     ngOnInit(): void {
-        if (Variable.isNotNullOrUndefined(this.authorizationService.lastUser)) {
-            this.userId = this.authorizationService.lastUser.userId;
+        if (Variable.isNotNullOrUndefined(this.authorizationService.currentUserId)) {
+            this.userId = this.authorizationService.currentUserId;
             if (this.isUserIdDefined()) {
                 this.loadUser(this.userId);
             }
@@ -50,8 +50,8 @@ export class UserProfileComponent implements OnInit {
         this.user.phoneNumber = newPersonalInfo.phoneNumber;
         this.notifyObserversOnChangeProfile();
     }
-    notifyObserversOnChangeProfile(): void {
-        // TODO: notify auth service
+    notifyObserversOnChangeProfile(): Promise<void> {
+        return this.authorizationService.actualizeCurrentUserProfile();
     }
     /// predicates
     isUserIdDefined(): boolean {

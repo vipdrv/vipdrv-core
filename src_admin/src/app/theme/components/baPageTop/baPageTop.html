@@ -22,7 +22,7 @@
          *ngIf="isUserInfoDefined()">
       <div class="dropdown al-user-profile">
         <a class="profile-toggle-link dropdown-toggle" id="user-profile-dd" data-toggle="dropdown" aria-expanded="false">
-          <img src="{{userAvatarUrl()}}">
+          <img [src]="userAvatarUrl()">
         </a>
         <ul class="dropdown-menu top-dropdown-menu profile-dropdown" aria-labelledby="user-profile-dd">
           <li class="dropdown-item"><a routerLink="/pages/user-profile"><i class="fa fa-user"></i>My profile</a></li>
@@ -30,5 +30,8 @@
           <li class="dropdown-item"><a routerLink="/logout" class="signout"><i class="fa fa-power-off"></i>Sign out</a></li>
         </ul>
       </div>
+      <!--<div class="user-profile-username">-->
+        <!--<span style="color: white">{{getUsername()}}</span>-->
+      <!--</div>-->
     </div>
 </div>
