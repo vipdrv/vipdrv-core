@@ -9,6 +9,7 @@ import { IAuthorizationService, AuthorizationService } from './../../services/in
     templateUrl: 'registration.html'
 })
 export class RegistrationComponent implements OnInit, OnDestroy {
+    protected defaultAvatarUrl: string = 'https://www.b1g1.com/assets/admin/images/no_image_user.png';
     private _parameterSubscription: any; // type should be Subscription;
     private _afterRegistrationRedirectUrl: string = '';
     protected isUsernameValid: boolean = false;
@@ -22,7 +23,7 @@ export class RegistrationComponent implements OnInit, OnDestroy {
         firstName: null,
         secondName: null,
         phoneNumber: null,
-        avatarUrl: null
+        avatarUrl: this.defaultAvatarUrl
     };
     protected loading = false;
     protected checkingUsernamePromise: Promise<boolean> = null;

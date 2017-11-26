@@ -99,7 +99,7 @@
     };
 
     var globalState = {
-        isFormCompleted: false
+        isFormCompleted: true
     };
 
     // =======================================================================//

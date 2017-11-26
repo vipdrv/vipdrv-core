@@ -29,47 +29,49 @@ export abstract class CRUDApiService<TEntity extends IEntity<TKey>, TKey, TLight
             page, pageSize, sorting, filter);
     }
     get(id: TKey): Promise<TEntity> {
-        let self = this;
+        const self = this;
         return this.httpService
             .get(this.createUrlWithMethodNameAndParams('', String(id)))
             .then(function (response: any): TEntity {
-                let entity: TEntity = self.createEmptyEntity();
+                const entity: TEntity = self.createEmptyEntity();
                 entity.initializeFromDto(response);
                 return entity;
             });
     }
     create(entity: TEntity): Promise<TEntity> {
-        let self = this;
+        const self = this;
         return this.httpService
             .post(this.createUrlWithMethodName(''), entity)
             .then(function (response: any): TEntity {
-                let entity: TEntity = self.createEmptyEntity();
-                entity.initializeFromDto(response);
-                return entity;
+                const createdEntity: TEntity = self.createEmptyEntity();
+                createdEntity.initializeFromDto(response);
+                return createdEntity;
             });
     }
     update(entity: TEntity): Promise<TEntity> {
-        let self = this;
+        const self = this;
         return this.httpService
             .put(this.createUrlWithMethodName(''), entity)
             .then(function (response: any): TEntity {
-                let entity: TEntity = self.createEmptyEntity();
-                entity.initializeFromDto(response);
-                return entity;
+                const updatedEntity: TEntity = self.createEmptyEntity();
+                updatedEntity.initializeFromDto(response);
+                return updatedEntity;
             });
     }
     delete(id: TKey): Promise<void> {
         return this.httpService
             .delete(this.createUrlWithMethodNameAndParams('', String(id)))
-            .then(function (response: any): void { });
+            .then(function (response: any): void {
+
+            });
     }
     ///helpers
     protected innerGetMany<T extends IEntity<TKey>>(
         methodName: string, createEmptyT: () => T,
         page: number, pageSize: number, sorting, filter: any): Promise<GetAllResponse<T>> {
-        let pageParameter = new UrlParameter('page', page);
-        let pageSizeParameter = new UrlParameter('pageSize', pageSize);
-        let request = Variable.isNotNullOrUndefined(filter) ? filter : {};
+        const pageParameter = new UrlParameter('page', page);
+        const pageSizeParameter = new UrlParameter('pageSize', pageSize);
+        const request = Variable.isNotNullOrUndefined(filter) ? filter : {};
         request.sorting = sorting;
         return this.httpService
             .post(this.createUrlWithMethodNameAndUrlParams(methodName, pageParameter, pageSizeParameter), request)
@@ -80,9 +82,9 @@ export abstract class CRUDApiService<TEntity extends IEntity<TKey>, TKey, TLight
                 if (Variable.isNullOrUndefined(response.items)) {
                     throw new Error('GetMany method returns response with not defined items.');
                 }
-                let entities: Array<T> = new Array<T>();
+                const entities: Array<T> = new Array<T>();
                 response.items.forEach(function (item: any): void {
-                    let entity: T = createEmptyT();
+                    const entity: T = createEmptyT();
                     entity.initializeFromDto(item);
                     entities.push(entity);
                 });

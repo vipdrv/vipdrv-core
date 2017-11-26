@@ -22,22 +22,32 @@ export class BaPageTop {
         });
     }
 
-    public toggleMenu() {
+    toggleMenu() {
         this.isMenuCollapsed = !this.isMenuCollapsed;
         this._state.notifyDataChanged('menu.isCollapsed', this.isMenuCollapsed);
         return false;
     }
 
-    public scrolledChanged(isScrolled) {
+    scrolledChanged(isScrolled) {
         this.isScrolled = isScrolled;
     }
 
     isUserInfoDefined(): boolean {
-        return Variable.isNotNullOrUndefined(this.authorizationService.lastUser);
+        return Variable.isNotNullOrUndefined(this.authorizationService.currentUser);
+    }
+    getUsername(): string {
+        if (this.isUserInfoDefined()) {
+            return this.authorizationService.currentUser.username;
+        } else {
+            return null;
+        }
     }
     userAvatarUrl(): string {
-        // TODO: replace with real user avatar
-        const result: string = 'https://www.b1g1.com/assets/admin/images/no_image_user.png';
-        return result;
+        let avatarUrl: string;
+        if (Variable.isNotNullOrUndefined(this.authorizationService.currentUser)) {
+            avatarUrl = this.authorizationService.currentUser.avatarUrl;
+        }
+        const defaultAvatarUrl: string = 'https://www.b1g1.com/assets/admin/images/no_image_user.png';
+        return Variable.isNotNullOrUndefined(avatarUrl) ? avatarUrl : defaultAvatarUrl;
     }
 }

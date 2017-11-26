@@ -2,213 +2,127 @@ import { Injectable } from '@angular/core';
 import { Http, Response, RequestOptionsArgs, Headers } from '@angular/http';
 import { IHttpXService } from './i-httpX.service';
 import { IAuthorizationService, AuthorizationService } from './../index';
-//import { ILogger } from "./../logging/i-logger";
-//import { ConsoleLogger } from "./../logging/console/console.logger";
+import { ConsoleLogger, ILogger } from './../../utils/index';
 @Injectable()
 export class HttpXService implements IHttpXService {
     /// injected dependencies
     protected http: Http;
-    //protected logger: ILogger;
+    protected logger: ILogger;
     protected authorizationService: IAuthorizationService;
     /// ctor
     constructor(
         http: Http,
-        //logger: ConsoleLogger,
+        logger: ConsoleLogger,
         authorizationService: AuthorizationService) {
         this.http = http;
-        //this.logger = logger;
+        this.logger = logger;
         this.authorizationService = authorizationService;
+        this.logger.logDebug('HttpXService: Service has been constructed.');
     }
     /// methods
-    get(url: string, options?: RequestOptionsArgs, supressRecursion: boolean = false): Promise<any> {
-        let self: HttpXService = this;
+    get(url: string, options?: RequestOptionsArgs): Promise<any> {
+        const self: HttpXService = this;
         return new Promise((resolve: any, reject: any) => {
-            self.authorizationService.user
-                .then(function (user: any): any {
-                    return self.http
-                        .get(url, self.extendOptionsWithHeaders(user, options))
-                        .subscribe(
-                            (res: any) => {
-                                resolve(self.handleResponse(res));
-                            },
-                            (error: any) => {
-                                //TODO: resolve this
-                                return reject(error);
-                                // if (self.isUnauthorizedError(error)) {
-                                //     return self.authorizationManager.user
-                                //         .then(function (r: any): Promise<any> {
-                                //             if (!!r && !r.expired && !supressRecursion) {
-                                //                 return self.get(url, options, true);
-                                //             } else {
-                                //                 return self.authorizationManager.signIn();
-                                //             }
-                                //         });
-                                // } else {
-                                //     return reject(error);
-                                // }
-                            });
-                })
-                .catch((reason: any) => {
-                    self.handleCriticalError("get", reason);
-                });
+            return self.http
+                .get(url, self.extendOptionsWithHeaders(options))
+                .subscribe(
+                    (res: any) => {
+                        resolve(self.handleResponse(res));
+                    },
+                    (error: any) => {
+                        if (self.authorizationService.isUnauthorizedError(error)) {
+                            return self.authorizationService.handleUnauthorizedResponse();
+                        } else {
+                            return reject(error);
+                        }
+                    });
         });
     }
-    post(url: string, body: any, options?: RequestOptionsArgs, supressRecursion: boolean = false): Promise<any> {
-        let self: HttpXService = this;
+    post(url: string, body: any, options?: RequestOptionsArgs): Promise<any> {
+        const self: HttpXService = this;
         return new Promise((resolve: any, reject: any) => {
-            self.authorizationService.user
-                .then(function (user: any): any {
-                    return self.http
-                        .post(url, body, self.extendOptionsWithHeaders(user, options))
-                        .subscribe(
-                            (res: any) => {
-                                resolve(self.handleResponse(res));
-                            },
-                            (error: any) => {
-//TODO: resolve this
-                                return reject(error);
-
-                                // if (self.isUnauthorizedError(error)) {
-                                //     return self.authorizationManager.user
-                                //         .then(function (r: any): Promise<any> {
-                                //             if (!!r && !r.expired && !supressRecursion) {
-                                //                 return self.post(url, body, options, true);
-                                //             } else {
-                                //                 return self.authorizationManager.signIn();
-                                //             }
-                                //         });
-                                // } else {
-                                //     return reject(error);
-                                // }
-                            });
-                })
-                .catch((reason: any) => {
-                    self.handleCriticalError("post", reason);
-                });
+            return self.http
+                .post(url, body, self.extendOptionsWithHeaders(options))
+                .subscribe(
+                    (res: any) => {
+                        resolve(self.handleResponse(res));
+                    },
+                    (error: any) => {
+                        if (self.authorizationService.isUnauthorizedError(error)) {
+                            return self.authorizationService.handleUnauthorizedResponse();
+                        } else {
+                            return reject(error);
+                        }
+                    });
         });
     }
-    put(url: string, body: any, options?: RequestOptionsArgs, supressRecursion: boolean = false): Promise<any> {
-        let self: HttpXService = this;
+    put(url: string, body: any, options?: RequestOptionsArgs): Promise<any> {
+        const self: HttpXService = this;
         return new Promise((resolve: any, reject: any) => {
-            self.authorizationService.user
-                .then(function (user: any): any {
-                    return self.http
-                        .put(url, body, self.extendOptionsWithHeaders(user, options))
-                        .subscribe(
-                            (res: any) => {
-                                resolve(self.handleResponse(res));
-                            },
-                            (error: any) => {
-                                //TODO: resolve this
-                                return reject(error);
-                                // if (self.isUnauthorizedError(error)) {
-                                //     return self.authorizationManager.user
-                                //         .then(function (r: any): Promise<any> {
-                                //             if (!!r && !r.expired && !supressRecursion) {
-                                //                 return self.put(url, body, options, true);
-                                //             } else {
-                                //                 return self.authorizationManager.signIn();
-                                //             }
-                                //         });
-                                // } else {
-                                //     return reject(error);
-                                // }
-                            });
-                })
-                .catch((reason: any) => {
-                    self.handleCriticalError("put", reason);
-                });
+            return self.http
+                .put(url, body, self.extendOptionsWithHeaders(options))
+                .subscribe(
+                    (res: any) => {
+                        resolve(self.handleResponse(res));
+                    },
+                    (error: any) => {
+                        if (self.authorizationService.isUnauthorizedError(error)) {
+                            return self.authorizationService.handleUnauthorizedResponse();
+                        } else {
+                            return reject(error);
+                        }
+                    });
         });
     }
-    delete(url: string, options?: RequestOptionsArgs, supressRecursion: boolean = false): Promise<any> {
-        let self: HttpXService = this;
+    delete(url: string, options?: RequestOptionsArgs): Promise<any> {
+        const self: HttpXService = this;
         return new Promise((resolve: any, reject: any) => {
-            self.authorizationService.user
-                .then(function (user: any): any {
-                    return self.http
-                        .delete(url, self.extendOptionsWithHeaders(user, options))
-                        .subscribe(
-                            (res: any) => {
-                                resolve(self.handleResponse(res));
-                            },
-                            (error: any) => {
-                                //TODO: resolve this
-                                return reject(error);
-                                // if (self.isUnauthorizedError(error)) {
-                                //     return self.authorizationManager.user
-                                //         .then(function (r: any): Promise<any> {
-                                //             if (!!r && !r.expired && !supressRecursion) {
-                                //                 return self.delete(url, options, true);
-                                //             } else {
-                                //                 return self.authorizationManager.signIn();
-                                //             }
-                                //         });
-                                // } else {
-                                //     return reject(error);
-                                // }
-                            });
-                })
-                .catch((reason: any) => {
-                    self.handleCriticalError("delete", reason);
-                });
+            return self.http
+                .delete(url, self.extendOptionsWithHeaders(options))
+                .subscribe(
+                    (res: any) => {
+                        resolve(self.handleResponse(res));
+                    },
+                    (error: any) => {
+                        if (self.authorizationService.isUnauthorizedError(error)) {
+                            return self.authorizationService.handleUnauthorizedResponse();
+                        } else {
+                            return reject(error);
+                        }
+                    });
         });
     }
-    patch(url: string, body: any, options?: RequestOptionsArgs, supressRecursion: boolean = false): Promise<any> {
-        let self: HttpXService = this;
+    patch(url: string, body: any, options?: RequestOptionsArgs): Promise<any> {
+        const self: HttpXService = this;
         return new Promise((resolve: any, reject: any) => {
-            self.authorizationService.user
-                .then(function (user: any): any {
-                    return self.http
-                        .patch(url, body, self.extendOptionsWithHeaders(user, options))
-                        .subscribe(
-                            (res: any) => {
-                                resolve(self.handleResponse(res));
-                            },
-                            (error: any) => {
-                                //TODO: resolve this
-                                return reject(error);
-                                // if (self.isUnauthorizedError(error)) {
-                                //     return self.authorizationManager.user
-                                //         .then(function (r: any): Promise<any> {
-                                //             if (!!r && !r.expired && !supressRecursion) {
-                                //                 return self.patch(url, body, options, true);
-                                //             } else {
-                                //                 return self.authorizationManager.signIn();
-                                //             }
-                                //         });
-                                // } else {
-                                //     return reject(error);
-                                // }
-                            });
-                })
-                .catch((reason: any) => {
-                    self.handleCriticalError('patch', reason);
-                });
+            return self.http
+                .patch(url, body, self.extendOptionsWithHeaders(options))
+                .subscribe(
+                    (res: any) => {
+                        resolve(self.handleResponse(res));
+                    },
+                    (error: any) => {
+                        if (self.authorizationService.isUnauthorizedError(error)) {
+                            return self.authorizationService.handleUnauthorizedResponse();
+                        } else {
+                            return reject(error);
+                        }
+                    });
         });
-    }
-    /// predicates
-    isUnauthorizedError(reason: any): boolean {
-        return !!reason && reason.status === 401;
     }
     /// helpers
-    private handleCriticalError(methodName: string, reason: any): void {
-        //this.logger.logCritical("Auth critical error on http.service." + methodName + ": " + reason);
-        throw new Error(reason);
-    }
     private extendOptionsWithHeaders(user: any, options?: RequestOptionsArgs): RequestOptionsArgs {
-        let opt: any = !!options ? options : {};
-        opt.headers = !!opt.headers ? opt.headers : new Headers();
+        const opt: any = options ? options : {};
+        opt.headers = opt.headers ? opt.headers : new Headers();
         this.createAuthorizationHeader(opt.headers, user);
         this.createCorsHeader(opt.headers);
         return opt;
     }
     private createAuthorizationHeader(headers: Headers, user: any): void {
-        if (user) {
-            headers.append("Authorization", "Bearer " + user.token);
-        }
+        headers.append('Authorization', this.authorizationService.getAuthorizationToken());
     }
     private createCorsHeader(headers: Headers): void {
-        headers.append("Access-Control-Allow-Origin", "*");
+        headers.append('Access-Control-Allow-Origin', '*');
     }
     private handleResponse(response: Response): any {
         try {
