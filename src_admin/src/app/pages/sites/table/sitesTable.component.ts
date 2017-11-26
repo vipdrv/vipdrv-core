@@ -67,10 +67,9 @@ export class SitesTableComponent implements OnInit {
         return actionPromise;
     }
     protected getAllEntities(): Promise<void> {
-        let self = this;
+        const self = this;
         self.filter = Variable.isNullOrUndefined(self.filter) ? {} : self.filter;
-        self.filter.userId = Variable.isNullOrUndefined(this.authorizationManager.lastUser) ?
-            null : this.authorizationManager.lastUser.userId;
+        self.filter.userId = this.authorizationManager.currentUserId;
         self.promiseService.applicationPromises.sites.getAll.promise = self.siteApiService
             .getAll(self.pageNumber - 1, self.pageSize, self.sorting, self.filter)
             .then(function (response: GetAllResponse<SiteEntity>): Promise<void> {
@@ -84,12 +83,12 @@ export class SitesTableComponent implements OnInit {
         return self.promiseService.applicationPromises.sites.getAll.promise;
     }
     protected deleteEntity(id: number): Promise<void> {
-        let self = this;
+        const self = this;
         self.promiseService.applicationPromises.sites.delete.entityId = id;
         self.promiseService.applicationPromises.sites.delete.promise = self.siteApiService
             .delete(id)
             .then(function (): Promise<void> {
-                let elementIndex = self.items.findIndex((item: SiteEntity) => item.id === id);
+                const elementIndex = self.items.findIndex((item: SiteEntity) => item.id === id);
                 self.items.splice(elementIndex, 1);
                 return Promise.resolve();
             })
@@ -105,14 +104,14 @@ export class SitesTableComponent implements OnInit {
         return self.promiseService.applicationPromises.sites.delete.promise;
     }
     protected modalOpenCreate(): Promise<void> {
-        let self = this;
+        const self = this;
         self.entity = new SiteEntity();
-        self.entity.userId = this.authorizationManager.lastUser.userId;
+        self.entity.userId = this.authorizationManager.currentUserId;
         self.modal.open();
         return Promise.resolve();
     }
     protected modalOpenEdit(id: number): Promise<void> {
-        let self = this;
+        const self = this;
         self.entity = self.items.find((item: SiteEntity) => item.id === id);
         self.modal.open();
         self.promiseService.applicationPromises.sites.get.entityId = id;
@@ -134,13 +133,13 @@ export class SitesTableComponent implements OnInit {
         return self.promiseService.applicationPromises.sites.get.promise;
     }
     protected modalApply() {
-        let self = this;
+        const self = this;
         self.promiseService.applicationPromises.sites.addOrUpdate.entityId =
             self.entity.id ? self.entity.id : null;
         self.promiseService.applicationPromises.sites.addOrUpdate.promise = (self.entity.id ?
             self.siteApiService.update(self.entity) : self.siteApiService.create(self.entity))
             .then(function (entity: SiteEntity): Promise<void> {
-                let elementIndex = self.items.findIndex((item: SiteEntity) => item.id === entity.id);
+                const elementIndex = self.items.findIndex((item: SiteEntity) => item.id === entity.id);
                 if (elementIndex !== -1) {
                     self.items.splice(elementIndex, 1, entity);
                 } else {
@@ -177,7 +176,7 @@ export class SitesTableComponent implements OnInit {
         }
     }
     protected getModalBodyBusyPromises() {
-        let array: Array<Promise<void>> = [];
+        const array: Array<Promise<void>> = [];
         if (this.promiseService.applicationPromises.sites.getAll.promise) {
             array.push(this.promiseService.applicationPromises.sites.getAll.promise);
         }

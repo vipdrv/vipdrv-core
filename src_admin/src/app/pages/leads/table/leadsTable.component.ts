@@ -54,10 +54,9 @@ export class LeadsTableComponent implements OnInit {
         this.getAllEntities();
     }
     protected getAllEntities(): Promise<void> {
-        let self = this;
-        let filter = Object.assign({}, self.filter);
-        filter.userId = Variable.isNullOrUndefined(this.authorizationManager.lastUser) ?
-            null : this.authorizationManager.lastUser.userId;
+        const self = this;
+        const filter = Object.assign({}, self.filter);
+        filter.userId = this.authorizationManager.currentUserId;
         self.extendFilter(filter);
         self.promiseService.applicationPromises.leads.getAll = self.leadApiService
             .getAll(self.pageNumber - 1, self.pageSize, self.sorting, filter)
@@ -72,11 +71,11 @@ export class LeadsTableComponent implements OnInit {
         return self.promiseService.applicationPromises.leads.getAll;
     }
     protected deleteEntity(id: number): Promise<void> {
-        let self = this;
+        const self = this;
         self.promiseService.applicationPromises.leads.delete = self.leadApiService
             .delete(id)
             .then(function (): Promise<void> {
-                let elementIndex = self.items.findIndex((item: LeadEntity) => item.id === id);
+                const elementIndex = self.items.findIndex((item: LeadEntity) => item.id === id);
                 self.items.splice(elementIndex, 1);
                 return Promise.resolve();
             })
@@ -86,7 +85,7 @@ export class LeadsTableComponent implements OnInit {
         return self.promiseService.applicationPromises.leads.delete;
     }
     protected modalOpenInfo(id: number): Promise<void> {
-        let self = this;
+        const self = this;
         self.entity = self.items.find((item: LeadEntity) => item.id === id);
         self.modalInfo.open();
         self.promiseService.applicationPromises.leads.get = self.leadApiService
@@ -105,15 +104,17 @@ export class LeadsTableComponent implements OnInit {
         return this.modalInfo.dismiss();
     }
     protected exportDataToExcel(): Promise<void> {
-        let self = this;
-        let filter = Object.assign({}, self.filter)
+        const self = this;
+        const filter = Object.assign({}, self.filter)
         self.extendFilter(filter);
-        let userId = Variable.isNullOrUndefined(this.authorizationManager.lastUser) ?
-            null : this.authorizationManager.lastUser.userId;
         self.promiseService.applicationPromises.leads.exportToExcel = self.leadApiService
             /// #40 - download All entities from Lead table (ofc its stupid move - uncomment after see this)
             ///.exportToExcel(self.pageNumber - 1, self.pageSize, self.sorting, filter)
-            .exportToExcel(null, null, self.sorting, { 'userId': userId })
+            .exportToExcel(
+                null,
+                null,
+                self.sorting,
+                { 'userId': this.authorizationManager.currentUserId })
             .then(function (response: string): Promise<void> {
                 window.open(response, '_self', '');
                 return Promise.resolve();
@@ -160,7 +161,7 @@ export class LeadsTableComponent implements OnInit {
     tableFilterValueChanged(newValue: string, key: string): void {
         if (this.tableFilters[key] !== newValue) {
             this.tableFilters[key] = newValue;
-            let currentSyncKey: string = Extensions.generateGuid();
+            const currentSyncKey: string = Extensions.generateGuid();
             this.filterSyncKey = currentSyncKey;
             setTimeout(
                 () => {
