@@ -1,8 +1,8 @@
 import { Component, OnInit, Input, ViewChild } from '@angular/core';
 import { ModalComponent } from 'ng2-bs3-modal/ng2-bs3-modal';
-import { Variable, Extensions, PromiseService, ConsoleLogger, ILogger } from './../../../utils/index';
+import { Variable, Extensions, ILogger, ConsoleLogger } from './../../../utils/index';
 import { IAuthorizationService, AuthorizationService } from './../../../services/index';
-import { IUserApiService, UserApiService, GetAllResponse } from './../../../services/serverApi/index';
+import { IUserApiService, UserApiService, GetAllResponse } from './../../../services/index';
 import { InvitationEntity } from './../../../entities/index';
 @Component({
     selector: 'invitations-table',
@@ -35,17 +35,15 @@ export class InvitationsTableComponent implements OnInit {
     protected logger: ILogger;
     protected authorizationManager: IAuthorizationService;
     protected userApiService: IUserApiService;
-    protected promiseService: PromiseService;
     /// ctor
     constructor(
         logger: ConsoleLogger,
         authorizationManager: AuthorizationService,
-        userApiService: UserApiService,
-        promiseService: PromiseService) {
+        userApiService: UserApiService) {
         this.logger = logger;
         this.authorizationManager = authorizationManager;
         this.userApiService = userApiService;
-        this.promiseService = promiseService;
+        this.logger.logDebug('InvitationsTableComponent: Component has been constructed.');
     }
     /// methods
     ngOnInit(): void {
@@ -57,7 +55,7 @@ export class InvitationsTableComponent implements OnInit {
     }
     protected getAllEntities(): Promise<void> {
         const self = this;
-        self.promiseService.applicationPromises.leads.getAll = self.userApiService
+        self.getAllPromise = self.userApiService
             .getInvitations(
                 this.authorizationManager.currentUserId,
                 self.pageNumber - 1,
@@ -69,16 +67,16 @@ export class InvitationsTableComponent implements OnInit {
                 return Promise.resolve();
             })
             .then(
-                () => self.promiseService.applicationPromises.leads.getAll = null,
-                () => self.promiseService.applicationPromises.leads.getAll = null);
-        return self.promiseService.applicationPromises.leads.getAll;
+                () => self.getAllPromise = null,
+                () => self.getAllPromise = null);
+        return self.getAllPromise;
     }
     protected isDeleteAvailable(entity: InvitationEntity): boolean {
         return Variable.isNotNullOrUndefined(entity) && !entity.used;
     }
     protected deleteEntity(id: number): Promise<void> {
         const self = this;
-        // self.promiseService.applicationPromises.leads.delete = self.userApiService
+        // self.deleteEntityPromise = self.userApiService
         //     .delete(id)
         //     .then(function (): Promise<void> {
         //         const elementIndex = self.items.findIndex((item: InvitationEntity) => item.id === id);
@@ -86,9 +84,9 @@ export class InvitationsTableComponent implements OnInit {
         //         return Promise.resolve();
         //     })
         //     .then(
-        //         () => self.promiseService.applicationPromises.leads.delete = null,
-        //         () => self.promiseService.applicationPromises.leads.delete = null);
-        return self.promiseService.applicationPromises.leads.delete;
+        //         () => self.deleteEntityPromise = null,
+        //         () => self.deleteEntityPromise = null);
+        return self.deleteEntityPromise;
     }
     protected modalOpenInfo(id: number): Promise<void> {
         this.entity = this.items.find((item: InvitationEntity) => item.id === id);
@@ -160,4 +158,8 @@ export class InvitationsTableComponent implements OnInit {
         this.entity.availableSitesCount = 0;
         this.entity.roleId = 1;
     }
+    /// promise manager
+    protected getAllPromise: Promise<void>;
+    protected getEntityPromise: Promise<InvitationEntity>;
+    protected deleteEntityPromise: Promise<void>;
 }

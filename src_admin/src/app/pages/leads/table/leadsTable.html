@@ -176,8 +176,7 @@
         <span class="lead-modal-header-text" translate>leads.modal.title</span>
     </modal-header>
     <modal-body>
-        <div *ngIf="isSelectedEntityDefined()"
-             [ngBusy]="promiseService.applicationPromises.leads.get">
+        <div *ngIf="isSelectedEntityDefined()">
             <lead-details-info [entity]="entity"></lead-details-info>
         </div>
     </modal-body>

@@ -2,7 +2,8 @@ import { Component, OnInit, Input, ViewChild } from '@angular/core';
 import { ModalComponent } from 'ng2-bs3-modal/ng2-bs3-modal';
 import { Variable, Extensions, PromiseService, ConsoleLogger, ILogger } from './../../../utils/index';
 import { IAuthorizationService, AuthorizationService } from './../../../services/index';
-import { ILeadApiService, LeadApiService, GetAllResponse } from './../../../services/serverApi/index';
+import { ILeadApiService, LeadApiService, GetAllResponse } from './../../../services/index';
+import { ILeadEntityPolicyService, LeadEntityPolicyService } from './../../../services/index';
 import { LeadEntity } from './../../../entities/index';
 @Component({
     selector: 'leads-table',
@@ -33,14 +34,17 @@ export class LeadsTableComponent implements OnInit {
     protected logger: ILogger;
     protected authorizationManager: IAuthorizationService;
     protected leadApiService: ILeadApiService;
+    protected leadEntityPolicy: ILeadEntityPolicyService;
     /// ctor
     constructor(
         logger: ConsoleLogger,
         authorizationManager: AuthorizationService,
-        leadApiService: LeadApiService) {
+        leadApiService: LeadApiService,
+        leadEntityPolicy: LeadEntityPolicyService) {
         this.logger = logger;
         this.authorizationManager = authorizationManager;
         this.leadApiService = leadApiService;
+        this.leadEntityPolicy = leadEntityPolicy;
         this.logger.logDebug('LeadsTableComponent: Component has been constructed.');
     }
     /// methods
@@ -279,7 +283,7 @@ export class LeadsTableComponent implements OnInit {
     /// operation helpers
     // refresh button
     isRefreshAllowed(): boolean {
-        return true;
+        return this.leadEntityPolicy.canGet();
     }
     isRefreshDisabled(): boolean {
         return Variable.isNotNullOrUndefined(this.getAllPromise) ||
@@ -290,7 +294,7 @@ export class LeadsTableComponent implements OnInit {
     }
     // get entity
     isGetAllowed(entity: LeadEntity): boolean {
-        return true;
+        return this.leadEntityPolicy.canGetEntity(entity);
     }
     isGetDisabled(entity: LeadEntity): boolean {
         return Variable.isNotNullOrUndefined(this.getAllPromise) ||
@@ -303,7 +307,7 @@ export class LeadsTableComponent implements OnInit {
     }
     // export to excel
     isExportToExcelAllowed(): boolean {
-        return true;
+        return this.leadEntityPolicy.canExportDataToExcel();
     }
     isExportToExcelDisabled(): boolean {
         return Variable.isNotNullOrUndefined(this.exportToExcelPromise);
@@ -336,8 +340,8 @@ export class LeadsTableComponent implements OnInit {
     }
     /// promise manager
     protected firstLoadingPromise: Promise<void>;
-    protected getAllPromise;
-    protected getEntityId;
-    protected getEntityPromise;
-    protected exportToExcelPromise;
+    protected getAllPromise: Promise<void>;
+    protected getEntityId: number;
+    protected getEntityPromise: Promise<LeadEntity>;
+    protected exportToExcelPromise: Promise<void>;
 }

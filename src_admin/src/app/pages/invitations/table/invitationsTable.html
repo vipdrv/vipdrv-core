@@ -2,14 +2,14 @@
     <div class="invitations-table-header">
         <div style="float: left;">
             <button type="button"
-                    [disabled]="!!promiseService.applicationPromises.leads.getAll"
+                    [disabled]="!!getAllPromise"
                     class="btn btn-secondary btn-sm pull-left invitations-refresh-btn"
                     (click)="getAllEntities()">
-                <i class="fa fa-refresh fa-spin" *ngIf="!!promiseService.applicationPromises.leads.getAll"></i>
-                <i class="fa fa-refresh" *ngIf="!promiseService.applicationPromises.leads.getAll"></i>
+                <i class="fa fa-refresh fa-spin" *ngIf="!!getAllPromise"></i>
+                <i class="fa fa-refresh" *ngIf="!getAllPromise"></i>
             </button>
             <select class="form-control-sm invitations-page-size-control"
-                    [disabled]="!!promiseService.applicationPromises.leads.getAll"
+                    [disabled]="!!getAllPromise"
                     [(ngModel)]="pageSize"
                     (change)="onPageSizeChanged($event)">
                 <option *ngFor="let item of pageSizeValues"
@@ -21,7 +21,7 @@
         <div style="float: left;"
              *ngIf="usePagination()">
             <pagination class="pagination-sm"
-                        [disabled]="!!promiseService.applicationPromises.leads.getAll"
+                        [disabled]="!!getAllPromise"
                         [(ngModel)]="pageNumber"
                         [totalItems]="totalCount"
                         [itemsPerPage]="pageSize"
@@ -34,7 +34,7 @@
         </div>
     </div>
     <table class="invitations-table-body table table-bordered table-hover"
-           [ngBusy]="promiseService.applicationPromises.leads.getAll">
+           [ngBusy]="getAllPromise">
         <thead>
             <tr>
                 <th translate>invitations.table.invitationCode</th>
@@ -109,12 +109,12 @@
     </modal-header>
     <modal-body>
         <div *ngIf="isSelectedEntityDefined() && isOperationModeInfo"
-             [ngBusy]="promiseService.applicationPromises.leads.get">
+             [ngBusy]="getEntityPromise">
             <invitation-details-info [entity]="entity">
             </invitation-details-info>
         </div>
         <div *ngIf="isSelectedEntityDefined() && isOperationModeCreate"
-             [ngBusy]="promiseService.applicationPromises.leads.get">
+             [ngBusy]="getEntityPromise">
             <invitation-details-create [entity]="entity"
                                        (onEntityChange)="onEntityChange($event)">
             </invitation-details-create>
