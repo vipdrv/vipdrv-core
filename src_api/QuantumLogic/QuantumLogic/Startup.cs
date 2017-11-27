@@ -69,7 +69,7 @@ namespace QuantumLogic.WebApi
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory, IOptions<LoggingConfiguration> loggingConfiguration)
         {
             mainModule.Run(app.ApplicationServices);
-            RegisterLogger(env, loggerFactory, loggingConfiguration.Value);
+            // RegisterLogger(env, loggerFactory, loggingConfiguration.Value); // TODO: logs are disabled for now
             //app.Use(async (context, next) =>
             //    {
             //        // here all requests can be monitored 

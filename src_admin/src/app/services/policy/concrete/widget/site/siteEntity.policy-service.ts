@@ -12,10 +12,7 @@ export class SiteEntityPolicyService
     /// ctor
     constructor(logger: ConsoleLogger, authService: AuthorizationService) {
         super(logger, authService);
-        this.logger.logDebug('SiteEntityPolicyService has been constructed.');
+        this.logger.logDebug('SiteEntityPolicyService: Service has been constructed.');
     }
     /// methods
-    canUpdateEntity(entity: SiteEntity): boolean {
-        return true;
-    }
 }
