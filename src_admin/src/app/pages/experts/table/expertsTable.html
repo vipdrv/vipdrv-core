@@ -75,7 +75,15 @@
        size="lg"
        [backdrop]="'static'">
     <modal-header>
-        <span class="expert-modal-header-text" translate>experts.modal.title</span>
+        <h5 class="modal-title">
+            <span class="test-drive-modal-header-text" translate>experts.modal.title</span>
+        </h5>
+        <button type="button"
+                class="close"
+                aria-label="Close"
+                (click)="modalDismiss(); $event.stopPropagation();">
+            <span aria-hidden="true">&times;</span>
+        </button>
     </modal-header>
     <modal-body>
         <expert-details-info *ngIf="isSelectedEntityDefined() && isOperationModeInfo"
@@ -269,16 +277,15 @@
     </modal-body>
     <modal-footer>
         <button type="button"
-                class="btn btn-secondary"
-                data-dismiss="modal"
-                (click)="modalDismiss()">
-            <span translate>experts.modal.cancel</span>
+                class="btn btn-secondary test-drive-modal-close-btn"
+                (click)="modalDismiss(); $event.stopPropagation();">
+            <span translate>general.actions.modalClose</span>
         </button>
         <button type="button"
-                class="btn btn-primary"
+                class="btn btn-primary test-drive-modal-apply-btn"
                 *ngIf="isOperationModeAddOrUpdate"
-                (click)="modalApply()">
-            <span translate>experts.modal.apply</span>
+                (click)="modalApply(); $event.stopPropagation();">
+            <span translate>general.actions.modalApply</span>
         </button>
     </modal-footer>
 </modal>

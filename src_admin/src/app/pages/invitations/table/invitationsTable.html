@@ -105,7 +105,15 @@
 <modal #invitationDetailsModal
        [backdrop]="'static'">
     <modal-header>
-        <span class="invitation-modal-header-text" translate>invitations.modal.titleInfo</span>
+        <h5 class="modal-title">
+            <span class="test-drive-modal-header-text" translate>invitations.modal.titleInfo</span>
+        </h5>
+        <button type="button"
+                class="close"
+                aria-label="Close"
+                (click)="modalDismiss(); $event.stopPropagation();">
+            <span aria-hidden="true">&times;</span>
+        </button>
     </modal-header>
     <modal-body>
         <div *ngIf="isSelectedEntityDefined() && isOperationModeInfo"
@@ -122,16 +130,15 @@
     </modal-body>
     <modal-footer>
         <button type="button"
-                class="btn btn-default"
-                data-dismiss="modal"
-                (click)="modalDismiss()">
-            <span translate>invitations.modal.cancel</span>
+                class="btn btn-secondary test-drive-modal-close-btn"
+                (click)="modalDismiss(); $event.stopPropagation();">
+            <span translate>general.actions.modalClose</span>
         </button>
         <button type="button"
                 *ngIf="isSelectedEntityDefined() && isOperationModeCreate"
                 [disabled]="isSendInvitationDisabled()"
-                class="btn btn-primary"
-                (click)="sendInvitation()">
+                class="btn btn-primary test-drive-modal-apply-btn"
+                (click)="sendInvitation(); $event.stopPropagation();">
             <i class="fa fa-refresh fa-spin" *ngIf="isSendInvitationInProgress()"></i>
             <i class="fa fa-paper-plane" *ngIf="!isSendInvitationInProgress()"></i>
             <span translate>invitations.modal.apply</span>
