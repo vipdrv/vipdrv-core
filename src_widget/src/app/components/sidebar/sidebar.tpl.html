@@ -1,36 +1,38 @@
 <div class="row td-sidebar">
-    <img ng-if="$ctrl.userData.car.imageUrl != null" src="{{$ctrl.userData.car.imageUrl}}" class="td-sidebar__car-image pt-1 pl-2 pr-2 pb-1">
+
+    <img ng-if="$ctrl.userData.car.imageUrl != null" ng-src="{{$ctrl.userData.car.imageUrl}}" class="td-sidebar__car-image pt-1 pl-2 pr-2 pb-1">
+    <img ng-if="$ctrl.userData.car.imageUrl == null" src="/img/default-car.png" class="td-sidebar__car-image pt-1 pl-2 pr-2 pb-1">
 
     <div class="col-12">
-        <h4 class="text-primary">{{$ctrl.userData.car.title ? $ctrl.userData.car.title : 'Car Title'}}</h4>
+        <h4 class="text-primary text-overflow__ellipsis">{{$ctrl.userData.car.title ? $ctrl.userData.car.title : 'Car Title'}}</h4>
     </div>
 
     <div class="col-12">
         <p class="text-secondary m-0">Engine</p>
-        <p class="mb-2">{{$ctrl.userData.car.engine ? $ctrl.userData.car.engine : '-'}}</p>
+        <p class="mb-2 text-overflow__ellipsis">{{$ctrl.userData.car.engine ? $ctrl.userData.car.engine : '-'}}</p>
     </div>
     <div class="col-6">
         <p class="text-secondary m-0">Year</p>
-        <p class="mb-2">{{$ctrl.userData.car.year ? $ctrl.userData.car.year : '-'}}</p>
+        <p class="mb-2 text-overflow__ellipsis">{{$ctrl.userData.car.year ? $ctrl.userData.car.year : '-'}}</p>
     </div>
     <div class="col-6">
         <p class="text-secondary m-0">Color</p>
-        <p class="mb-2">{{$ctrl.userData.car.colour ? $ctrl.userData.car.colour : '-'}}</p>
+        <p class="mb-2 text-overflow__ellipsis">{{$ctrl.userData.car.colour ? $ctrl.userData.car.colour : '-'}}</p>
     </div>
     <div class="col-6">
         <p class="text-secondary m-0">Transmission</p>
-        <p class="mb-2">{{$ctrl.userData.car.transmission ? $ctrl.userData.car.transmission : '-'}}</p>
+        <p class="mb-2 text-overflow__ellipsis">{{$ctrl.userData.car.transmission ? $ctrl.userData.car.transmission : '-'}}</p>
     </div>
     <div class="col-6">
         <p class="text-secondary m-0">Fuel</p>
-        <p class="mb-3">{{$ctrl.userData.car.fuel ? $ctrl.userData.car.fuel : '-'}}</p>
+        <p class="mb-3 text-overflow__ellipsis">{{$ctrl.userData.car.fuel ? $ctrl.userData.car.fuel : '-'}}</p>
     </div>
 
     <div class="col-12 mb-1" ng-if="$ctrl.userData.calendar.date">
         <div class="media">
             <img class="d-flex mr-3" src="/img/icon-date.jpg">
             <!--<i class="d-flex mr-3 fa fa-calendar fa text-secondary" aria-hidden="true"></i>-->
-            <div class="media-body sidebar-media-item__body">
+            <div class="media-body sidebar-media-item__body text-overflow__ellipsis">
                 <span>{{$ctrl.userData.calendar.date}} {{$ctrl.userData.calendar.time}}</span>
             </div>
         </div>
@@ -40,7 +42,7 @@
         <div class="media">
             <img class="d-flex mr-3" src="/img/icon-expert.jpg">
             <!--<i class="d-flex mr-3 fa fa-user-o fa-2x text-secondary" aria-hidden="true"></i>-->
-            <div class="media-body sidebar-media-item__body">
+            <div class="media-body sidebar-media-item__body text-overflow__ellipsis">
                 <span>{{$ctrl.userData.expert.name}}</span>
             </div>
         </div>
@@ -50,7 +52,7 @@
         <div class="media">
             <img class="d-flex mr-3" src="/img/icon-beverage-2.jpg">
             <!--<i class="d-flex mr-3 fa fa-coffee fa-2x text-secondary" aria-hidden="true"></i>-->
-            <div class="media-body sidebar-media-item__body">
+            <div class="media-body sidebar-media-item__body text-overflow__ellipsis">
                 <span>{{$ctrl.userData.beverage.name}}</span>
             </div>
         </div>
@@ -59,7 +61,7 @@
     <div class="col-12" ng-if="$ctrl.userData.road.name">
         <div class="media">
             <img class="d-flex mr-3" src="/img/icon-road.jpg">
-            <div class="media-body sidebar-media-item__body">
+            <div class="media-body sidebar-media-item__body text-overflow__ellipsis">
                 <span>{{$ctrl.userData.road.name}}</span>
             </div>
         </div>

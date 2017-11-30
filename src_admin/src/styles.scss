@@ -35,7 +35,6 @@
   font-size: 20px;
 }
 
-
 /// test-drive template styles
 .test-drive-many-entities-template {
   margin-top: 5px;
@@ -47,11 +46,22 @@
 .test-drive-many-entities-template-body {
   margin-top: 5px;
   margin-bottom: 5px;
-  // is required to use ng-busy backdrop in this container
+// is required to use ng-busy backdrop in this container
   position: relative;
 }
 .test-drive-many-entities-template-footer {
   margin-top: 5px;
+}
+
+/// test-drive modal styles
+.test-drive-modal-close-btn {
+
+}
+.test-drive-modal-apply-btn {
+
+}
+.test-drive-modal-header-text {
+
 }
 
 /// test-drive loader styles
