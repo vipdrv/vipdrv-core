@@ -25,6 +25,11 @@ var TestDrive = TestDrive || (function () {
     var _appendWidgetFrame = function() {
         var elemDiv = document.createElement('div');
         elemDiv.className = "test-drive";
+
+        if (!document.body) {
+            document.body = document.createElement("body");;
+        }
+
         document.body.appendChild(elemDiv);
     };
 
@@ -113,4 +118,3 @@ var TestDrive = TestDrive || (function () {
 // =======================================================================//
 
 window.openTestDrive = TestDrive.openTestDrive;
-

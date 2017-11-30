@@ -6,6 +6,12 @@ a[href], input[type='submit'], input[type='image'], label[for], select, button, 
   cursor: pointer;
 }
 
+.text-overflow__ellipsis {
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
 // =======================================================================//
 // wizard-tab-content                                                     //
 // =======================================================================//
