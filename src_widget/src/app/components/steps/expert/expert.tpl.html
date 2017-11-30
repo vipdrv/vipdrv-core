@@ -6,16 +6,14 @@
 </div>
 
 <div class="row pr-3 td-cards">
-    <div class="card-deck">
-        <td-card class="col-md-6 col-sm-12 p-0 pt-3 pl-3"
-                 ng-repeat="expert in $ctrl.stepData"
-                 card-image="expert.photoUrl"
-                 card-title="expert.name"
-                 card-desc="expert.description"
-                 is-active-card="expert.name == $ctrl.userData.expert.name"
-                 ng-click="$ctrl.expertChanged(expert.id, expert.name)">
-        </td-card>
-    </div>
+    <td-card class="col-md-6 col-sm-12 p-0 pt-3 pl-3"
+             ng-repeat="expert in $ctrl.stepData"
+             card-image="expert.photoUrl"
+             card-title="expert.name"
+             card-desc="expert.description"
+             is-active-card="expert.name == $ctrl.userData.expert.name"
+             ng-click="$ctrl.expertChanged(expert.id, expert.name)">
+    </td-card>
 </div>
 
 <div class="row wizard-navigation-tab-next-button--desktop d-none d-md-block">
