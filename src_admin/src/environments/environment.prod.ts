@@ -1,4 +1,4 @@
 export const environment = {
     production: true,
-    apiUrl: 'http://api.testdrive.pw'
+    apiUrl: 'https://api.testdrive.pw'
 };
