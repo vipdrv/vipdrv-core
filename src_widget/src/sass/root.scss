@@ -22,9 +22,17 @@ a[href], input[type='submit'], input[type='image'], label[for], select, button, 
 }
 
 // =======================================================================//
-// debug                                                                  //
+// Moment Picker                                                          //
 // =======================================================================//
 
 .moment-picker td.selected {
+  background-image: linear-gradient(#007bff,#007bff) !important;
+}
+
+.moment-picker td.selected {
   background-color: #007bff !important;
+}
+
+.moment-picker td.highlighted {
+  background-image: none !important;
 }
