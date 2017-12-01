@@ -1,6 +1,6 @@
 module.exports = {
     production: true,
-    widgetUrl: 'http://widget.testdrive.pw',
-    apiBaseUrl: 'http://api.testdrive.pw/api',
+    widgetUrl: 'https://widget.testdrive.pw',
+    apiBaseUrl: 'https://api.testdrive.pw/api',
     defaultSiteId: 28
 };
