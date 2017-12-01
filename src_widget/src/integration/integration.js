@@ -8,7 +8,8 @@ var TestDrive = TestDrive || (function () {
     var _WidgetUrl = '%widgetUrl%';
 
     var _appendTestDriveFrame = function (vin, img, title, engine, year, colour, transmission, fuel) {
-        var url = `${_WidgetUrl}?site_id=${_SiteId}&vin=${vin}&imageUrl=${img}&title=${title}&engine=${engine}&year=${year}&colour=${colour}&transmission=${transmission}&fuel=${fuel}`;
+        var hash = Math.random().toString(36).substring(7);
+        var url = `${_WidgetUrl}?site_id=${_SiteId}&vin=${vin}&imageUrl=${img}&title=${title}&engine=${engine}&year=${year}&colour=${colour}&transmission=${transmission}&fuel=${fuel}&hash=${hash}`;
 
         var html =
             `<div class="test-drive__content">
@@ -112,9 +113,3 @@ var TestDrive = TestDrive || (function () {
         closeTestDrive: _hideTestDrive
     };
 }());
-
-// =======================================================================//
-// Widget Initialization                                                  //
-// =======================================================================//
-
-window.openTestDrive = TestDrive.openTestDrive;
