@@ -113,9 +113,3 @@ var TestDrive = TestDrive || (function () {
         closeTestDrive: _hideTestDrive
     };
 }());
-
-// =======================================================================//
-// Widget Initialization                                                  //
-// =======================================================================//
-
-window.openTestDrive = TestDrive.openTestDrive;
