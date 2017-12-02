@@ -87,7 +87,8 @@
     <modal-body>
         <div *ngIf="isSelectedEntityDefined()"
              [ngBusy]="siteDetailsModalApplyPromise">
-            <site-details-edit [entity]="selectedEntity"></site-details-edit>
+            <site-details-edit [entity]="selectedEntity"
+                               [isReadOnly]="isSiteDetailsComponentReadOnly()"></site-details-edit>
         </div>
     </modal-body>
     <modal-footer>

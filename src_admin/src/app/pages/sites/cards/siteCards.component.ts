@@ -227,6 +227,9 @@ export class SiteCardsComponent implements OnInit {
     protected isSelectedEntityDefined(): boolean {
         return Variable.isNotNullOrUndefined(this.selectedEntity);
     }
+    protected isSiteDetailsComponentReadOnly(): boolean {
+        return this.isSiteDetailsModalApplyProcessing();
+    }
     /// ---------------------------------------------------------------------------------------------------------------
     /// should be moved to action manager (or domain service)
     private _getManyPromise = null;

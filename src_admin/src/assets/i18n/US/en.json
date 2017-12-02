@@ -87,9 +87,9 @@
     "modal": {
       "title": "Site details",
       "siteName": "Name",
+      "siteNameHelp": "Enter the name of the site.",
       "siteUrl": "Url",
-      "cancel": "Cancel",
-      "apply": "Save"
+      "siteUrlHelp": "Enter the url of the site (like http://yoursite.url)."
     },
     "table": {
       "headerText_siteName": "Site name",
@@ -293,6 +293,12 @@
         "imageUrl": "Image direct url",
         "imageUrlHelp": "Define image via entering direct url to it."
       }
+    }
+  },
+  "validation": {
+    "sites": {
+      "invalidNameMessage": "Site name is not valid!",
+      "invalidUrlMessage": "Site url is not valid!"
     }
   }
 }

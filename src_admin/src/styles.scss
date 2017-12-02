@@ -78,10 +78,13 @@
 
 /// test-drive validation
 .test-drive-validation-message {
-
+  color: #dc3545;
 }
 .test-drive-invalid-input {
-
+  border-color: #dc3545;
+}
+.test-drive-valid-input {
+  border-color: #28a745;
 }
 
 /// test-drive loader styles

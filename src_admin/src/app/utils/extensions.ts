@@ -1,9 +1,9 @@
 import { DatePipe } from '@angular/common';
 import { Variable } from './variable';
-
 export namespace Extensions {
     /// regular expressions
     export const regExp = {
+        // language=JSRegexp
         email: /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
         phoneNumber: /^\d\d\d\d\d\d\d\d\d\d\d\d$/,
         // in format HH:mm:ss
@@ -28,6 +28,13 @@ export namespace Extensions {
         } else {
             throw new Error('Argument (dateTime) exceprion!');
         }
+    }
+    /// validation extensions
+    export function getInputValidationClass(isValidationActive: boolean, isValueValid: boolean): any {
+        return {
+            'test-drive-valid-input': isValidationActive && isValueValid,
+            'test-drive-invalid-input': isValidationActive && !isValueValid
+        };
     }
     /// promises extensions
     export function delay(timeout) {

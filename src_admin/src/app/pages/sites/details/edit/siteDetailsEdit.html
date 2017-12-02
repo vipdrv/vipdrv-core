@@ -23,16 +23,16 @@
                 <input id="site-name"
                        type="text"
                        class="form-control"
-                       [ngClass]="getSiteNameInputClass()"
+                       [ngClass]="extensions.getInputValidationClass(isValidationActive(), isSiteNameValid())"
                        [disabled]="isSiteNameInputDisabled()"
                        [(ngModel)]="entity.name">
                 <small class="form-text text-muted"
-                       *ngIf="isSiteNameValid()"
+                       *ngIf="!isValidationActive() || isSiteNameValid()"
                        translate>
                     sites.modal.siteNameHelp
                 </small>
                 <small class="form-text text-muted test-drive-validation-message"
-                       *ngIf="!isSiteNameValid()"
+                       *ngIf="isValidationActive() && !isSiteNameValid()"
                        translate>
                     {{ getSiteNameInvalidMessageKey() }}
                 </small>
@@ -49,16 +49,16 @@
                 <input id="site-url"
                        type="text"
                        class="form-control"
-                       [ngClass]="getSiteUrlInputClass()"
+                       [ngClass]="extensions.getInputValidationClass(isValidationActive(), isSiteUrlValid())"
                        [disabled]="isSiteUrlInputDisabled()"
                        [(ngModel)]="entity.url">
                 <small class="form-text text-muted"
-                       *ngIf="isSiteUrlValid()"
+                       *ngIf="!isValidationActive() || isSiteUrlValid()"
                        translate>
                     sites.modal.siteUrlHelp
                 </small>
                 <small class="form-text text-muted test-drive-validation-message"
-                       *ngIf="!isSiteUrlValid()"
+                       *ngIf="isValidationActive() && !isSiteUrlValid()"
                        translate>
                     {{ getSiteUrlInvalidMessageKey() }}
                 </small>
