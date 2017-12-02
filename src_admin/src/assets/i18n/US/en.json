@@ -282,5 +282,17 @@
         "phoneNumberHelp": "Enter your contact phone number (not required)."
       }
     }
+  },
+  "shared": {
+    "components": {
+      "imageSelect": {
+        "defineImageViaFile": "Set image via file",
+        "defineAvatarViaDirectUrl": "Set image via url",
+        "cancel": "Cancel",
+        "accept": "Accept",
+        "imageUrl": "Image direct url",
+        "imageUrlHelp": "Define image via entering direct url to it."
+      }
+    }
   }
 }

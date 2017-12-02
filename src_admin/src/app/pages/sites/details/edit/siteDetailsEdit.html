@@ -1,3 +1,13 @@
+<image-select [isReadOnly]="isImageComponentReadOnly()"
+              [imageUrl]="entity.imageUrl"
+              [defaultImageUrl]="defaultImageUrl"
+              [imageWidth]="imageWidth"
+              [imageHeight]="imageHeight"
+              [isRounded]="isImageRounded"
+              [imageAlt]="imageAlt"
+              [columnRules]="columnRules"
+              (imageUrlSelected)="onNewSiteImageSelected($event)"></image-select>
+<hr>
 <div class="form-group row">
     <label  class="col-2 col-form-label"
             for="siteName"
@@ -21,7 +31,7 @@
         <input id="siteUrl"
                type="text"
                class="form-control"
-               placeholder="http://your_site_url.com"
+               placeholder="http://yoursite.com"
                [(ngModel)]="entity.url"/>
     </div>
 </div>

@@ -95,8 +95,8 @@
                     <div class="expert-avatar-image">
                         <img class="rounded-circle"
                              [src]="getAvatar()"
-                             [width]="avatarWidth"
-                             [height]="avatarHeight">
+                             [width]="imageWidth"
+                             [height]="imageHeight">
                     </div>
                     <div class="expert-avatar-btns"
                          *ngIf="showAvatarButtons">
@@ -166,8 +166,8 @@
                                 <div class="row">
                                     <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                                         <img-cropper #cropper
-                                                     [image]="avatarCropperData"
-                                                     [settings]="avatarCropperSettings">
+                                                     [image]="imageCropperData"
+                                                     [settings]="imageCropperSettings">
                                         </img-cropper>
                                     </div>
                                 </div>
