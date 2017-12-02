@@ -84,11 +84,15 @@
   },
   "sites": {
     "title": "Sites",
+    "card": {
+      "leads": "Leads",
+      "new": "new"
+    },
     "modal": {
       "title": "Site details",
       "siteName": "Name",
       "siteNameHelp": "Enter the name of the site.",
-      "siteUrl": "Url",
+      "siteUrl": "Site url",
       "siteUrlHelp": "Enter the url of the site (like http://yoursite.url)."
     },
     "table": {

@@ -13,12 +13,17 @@ export class SiteValidationService implements ISiteValidationService {
     }
     /// methods
     isValid(entity: SiteEntity): boolean {
-        return this.isNameValid(entity) && this.isUrlValid(entity);
+        return this.isNameValid(entity) &&
+            this.isUrlValid(entity) &&
+            this.isImageUrlValid(entity);
     }
     isNameValid(entity: SiteEntity): boolean {
         return true;
     }
     isUrlValid(entity: SiteEntity): boolean {
+        return true;
+    }
+    isImageUrlValid(entity: SiteEntity): boolean {
         return true;
     }
     getInvalidNameMessageKey(entity: SiteEntity): string {

@@ -10,6 +10,7 @@ export class SiteEntity extends Entity {
     imageUrl: string;
     /// dto properties
     leadsAmount: number;
+    newLeadsAmount: number;
     expertsAmount: number;
     activeExpertsAmount: number;
     beveragesAmount: number;
@@ -33,6 +34,7 @@ export class SiteEntity extends Entity {
         this.url = mock.url;
         this.contacts = mock.contacts;
         this.leadsAmount = mock.leadsAmount;
+        this.newLeadsAmount = mock.newLeadsAmount;
         this.expertsAmount = mock.expertsAmount;
         this.activeExpertsAmount = mock.activeExpertsAmount;
         this.beveragesAmount = mock.beveragesAmount;

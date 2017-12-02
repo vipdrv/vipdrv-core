@@ -5,7 +5,9 @@ import { Variable, ConsoleLogger, ILogger } from './../../../utils/index';
 import { IAuthorizationService, AuthorizationService } from './../../../services/index';
 import { ISiteApiService, SiteApiService, GetAllResponse } from './../../../services/index';
 import { ISiteEntityPolicyService, SiteEntityPolicyService } from './../../../services/index';
+import { ISiteValidationService, SiteValidationService } from './../../../services/index';
 import { SiteEntity } from './../../../entities/index';
+import { SitesConstants } from './../sites.constants';
 @Component({
     selector: 'site-cards',
     styleUrls: ['./siteCards.scss'],
@@ -20,6 +22,8 @@ export class SiteCardsComponent implements OnInit {
     private _siteDetailsModalMode: string;
     protected siteDetailsModalApplyPromise: Promise<void>;
     protected firstLoadPromise: Promise<void>;
+    protected useValidationForSelectedEntity: boolean = false;
+    protected siteImageAlt: string = SitesConstants.siteImageAlt;
     /// data fields
     protected items: Array<SiteEntity>;
     protected selectedEntity: SiteEntity;
@@ -29,18 +33,21 @@ export class SiteCardsComponent implements OnInit {
     protected authorizationManager: IAuthorizationService;
     protected siteApiService: ISiteApiService;
     protected siteEntityPolicy: ISiteEntityPolicyService;
+    protected siteValidationService: ISiteValidationService;
     /// ctor
     constructor(
         logger: ConsoleLogger,
         router: Router,
         authorizationManager: AuthorizationService,
         siteApiService: SiteApiService,
-        siteEntityPolicy: SiteEntityPolicyService) {
+        siteEntityPolicy: SiteEntityPolicyService,
+        siteValidationService: SiteValidationService) {
         this.logger = logger;
         this.router = router;
         this.authorizationManager = authorizationManager;
         this.siteApiService = siteApiService;
         this.siteEntityPolicy = siteEntityPolicy;
+        this.siteValidationService = siteValidationService;
         logger.logDebug('SiteCardsComponent has been constructed.');
     }
     /// methods
@@ -55,6 +62,9 @@ export class SiteCardsComponent implements OnInit {
                 () => {
                     self.firstLoadPromise = null;
                 });
+    }
+    protected getNewLeadsForSuteUrl(siteId: number) {
+        return '/#/pages/leads';
     }
     protected getManyEntities(): Promise<void> {
         const self: SiteCardsComponent = this;
@@ -179,12 +189,18 @@ export class SiteCardsComponent implements OnInit {
     protected openModalOnCreate(): Promise<void> {
         this.selectedEntity = new SiteEntity();
         this.selectedEntity.userId = this.authorizationManager.currentUserId;
+        this.selectedEntity.imageUrl = SitesConstants.siteImageDefault;
         this._siteDetailsModalMode = 'Create';
         return this.siteDetailsModal.open();
     }
     protected siteDetailsModalApply(): Promise<void> {
-        const self = this;
-        self.siteDetailsModalApplyPromise = (self._siteDetailsModalMode === 'Create' ?
+        let actionPromise: Promise<void>;
+        if (!this.siteValidationService.isValid(this.selectedEntity)) {
+            this.useValidationForSelectedEntity = true;
+            actionPromise = Promise.resolve();
+        } else {
+            const self = this;
+            self.siteDetailsModalApplyPromise = (self._siteDetailsModalMode === 'Create' ?
                 self.createEntity(self.selectedEntity) :
                 self._siteDetailsModalMode === 'Update' ?
                     self.updateEntity(self.selectedEntity) :
@@ -200,6 +216,7 @@ export class SiteCardsComponent implements OnInit {
                         }
                         self.selectedEntity = null;
                         self._siteDetailsModalMode = null;
+                        self.useValidationForSelectedEntity = false;
                         return self.siteDetailsModal.close();
                     }
                 })
@@ -210,10 +227,13 @@ export class SiteCardsComponent implements OnInit {
                     () => {
                         self.siteDetailsModalApplyPromise = null;
                     });
-        return self.siteDetailsModalApplyPromise;
+            actionPromise = self.siteDetailsModalApplyPromise;
+        }
+        return actionPromise;
     }
     protected siteDetailsModalDismiss(): Promise<void> {
         this.selectedEntity = null;
+        this.useValidationForSelectedEntity = false;
         return this.siteDetailsModal.dismiss();
     }
     /// predicates
