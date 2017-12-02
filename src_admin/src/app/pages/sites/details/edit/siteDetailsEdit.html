@@ -1,37 +1,68 @@
-<image-select [isReadOnly]="isImageComponentReadOnly()"
-              [imageUrl]="entity.imageUrl"
-              [defaultImageUrl]="defaultImageUrl"
-              [imageWidth]="imageWidth"
-              [imageHeight]="imageHeight"
-              [isRounded]="isImageRounded"
-              [imageAlt]="imageAlt"
-              [columnRules]="columnRules"
-              (imageUrlSelected)="onNewSiteImageSelected($event)"></image-select>
-<hr>
-<div class="form-group row">
-    <label  class="col-2 col-form-label"
-            for="siteName"
-            translate>
-        sites.modal.siteName
-    </label>
-    <div class="col-10">
-        <input id="siteName"
-               type="text"
-               class="form-control"
-               [(ngModel)]="entity.name">
+<div class="test-drive-modal-body-edit-entity-container">
+    <div class="row test-drive-modal-body-edit-entity-container-row-image">
+        <div class="col-12">
+            <image-select [isReadOnly]="isImageComponentReadOnly()"
+                          [imageUrl]="entity.imageUrl"
+                          [defaultImageUrl]="defaultImageUrl"
+                          [imageWidth]="imageWidth"
+                          [imageHeight]="imageHeight"
+                          [isRounded]="isImageRounded"
+                          [imageAlt]="imageAlt"
+                          [columnRules]="columnRules"
+                          (imageUrlSelected)="onNewSiteImageSelected($event)"></image-select>
+        </div>
     </div>
-</div>
-<div class="form-group row">
-    <label  class="col-2 col-form-label"
-            for="siteUrl"
-            translate>
-        sites.modal.siteUrl
-    </label>
-    <div class="col-10">
-        <input id="siteUrl"
-               type="text"
-               class="form-control"
-               placeholder="http://yoursite.com"
-               [(ngModel)]="entity.url"/>
+    <hr>
+    <div class="row test-drive-modal-body-edit-entity-container-row-input">
+        <div class="col-12">
+            <div class="form-group">
+                <label for="site-name"
+                       translate>
+                    sites.modal.siteName
+                </label>
+                <input id="site-name"
+                       type="text"
+                       class="form-control"
+                       [ngClass]="getSiteNameInputClass()"
+                       [disabled]="isSiteNameInputDisabled()"
+                       [(ngModel)]="entity.name">
+                <small class="form-text text-muted"
+                       *ngIf="isSiteNameValid()"
+                       translate>
+                    sites.modal.siteNameHelp
+                </small>
+                <small class="form-text text-muted test-drive-validation-message"
+                       *ngIf="!isSiteNameValid()"
+                       translate>
+                    {{ getSiteNameInvalidMessageKey() }}
+                </small>
+            </div>
+        </div>
+    </div>
+    <div class="row test-drive-modal-body-edit-entity-container-row-input">
+        <div class="col-12">
+            <div class="form-group">
+                <label for="site-url"
+                       translate>
+                    sites.modal.siteUrl
+                </label>
+                <input id="site-url"
+                       type="text"
+                       class="form-control"
+                       [ngClass]="getSiteUrlInputClass()"
+                       [disabled]="isSiteUrlInputDisabled()"
+                       [(ngModel)]="entity.url">
+                <small class="form-text text-muted"
+                       *ngIf="isSiteUrlValid()"
+                       translate>
+                    sites.modal.siteUrlHelp
+                </small>
+                <small class="form-text text-muted test-drive-validation-message"
+                       *ngIf="!isSiteUrlValid()"
+                       translate>
+                    {{ getSiteUrlInvalidMessageKey() }}
+                </small>
+            </div>
+        </div>
     </div>
 </div>

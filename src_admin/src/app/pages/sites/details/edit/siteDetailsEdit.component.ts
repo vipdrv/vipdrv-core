@@ -34,4 +34,35 @@ export class SiteDetailsEditComponent {
     isImageComponentReadOnly(): boolean {
         return this.isReadOnly;
     }
+    /// methods for properties
+    // site name
+    protected getSiteNameInputClass(): any {
+        return {
+            'test-drive-invalid-input': !this.isSiteNameValid()
+        };
+    }
+    protected isSiteNameInputDisabled(): boolean {
+        return this.isReadOnly;
+    }
+    protected isSiteNameValid(): boolean {
+        return false;
+    }
+    protected getSiteNameInvalidMessageKey(): string {
+        return 'sites.modal.siteNameValidationMessage';
+    }
+    // site url
+    protected getSiteUrlInputClass(): any {
+        return {
+            'test-drive-invalid-input': !this.isSiteUrlValid()
+        };
+    }
+    protected isSiteUrlInputDisabled(): boolean {
+        return this.isReadOnly;
+    }
+    protected isSiteUrlValid(): boolean {
+        return false;
+    }
+    protected getSiteUrlInvalidMessageKey(): string {
+        return 'sites.modal.siteNameValidationMessage';
+    }
 }
