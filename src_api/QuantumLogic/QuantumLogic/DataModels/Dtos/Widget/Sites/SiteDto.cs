@@ -10,6 +10,7 @@ namespace QuantumLogic.WebApi.DataModels.Dtos.Widget.Sites
         public string Name { get; set; }
         public string Url { get; set; }
         public string Contacts { get; set; }
+        public string ImageUrl { get; set; }
         public int LeadsAmount { get; set; }
         public int ExpertsAmount { get; set; }
         public int BeveragesAmount { get; set; }
@@ -29,6 +30,7 @@ namespace QuantumLogic.WebApi.DataModels.Dtos.Widget.Sites
             Name = entity.Name;
             Url = entity.Url;
             Contacts = entity.Contacts;
+            ImageUrl = entity.ImageUrl;
             LeadsAmount = entity.Leads.Count;
             ExpertsAmount = entity.Experts.Count;
             BeveragesAmount = entity.Beverages.Count;
@@ -45,6 +47,7 @@ namespace QuantumLogic.WebApi.DataModels.Dtos.Widget.Sites
             entity.Name = Name;
             entity.Url = Url;
             entity.Contacts = Contacts;
+            entity.ImageUrl = ImageUrl;
             return entity;
         }
 
