@@ -71,9 +71,11 @@
     },
     "table": {
       "btnText_exportToExcel": "Export to Excel",
+      "headerText_fullName": "Full name",
       "headerText_firstName": "First name",
       "headerText_secondName": "Second name",
-      "headerText_received": "Recieved",
+      "headerText_isReachedByManager": "Reached",
+      "headerText_received": "Date",
       "headerText_siteName": "Site",
       "headerText_userEmail": "Email",
       "headerText_userPhone": "Phone",
@@ -303,6 +305,21 @@
     "sites": {
       "invalidNameMessage": "Site name is not valid!",
       "invalidUrlMessage": "Site url is not valid!"
+    }
+  },
+  "filters": {
+    "all": "All",
+    "date": {
+      "allTime": "All time",
+      "today": "Today",
+      "lastWeek": "Last week",
+      "thisMonth": "This month",
+      "lastMonth": "Last month"
+    },
+    "isReachedByManager": {
+      "all": "All",
+      "reached": "Yes",
+      "notReached": "No"
     }
   }
 }

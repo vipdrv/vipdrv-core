@@ -76,7 +76,7 @@ namespace QuantumLogic.WebApi.Controllers.Widget
             }
         }
         [HttpGet("{id}/week-schedule")]
-        public async Task<SiteWeekSchedule> GetWeekSchedule(int id)
+        public async Task<SiteWeekSchedule> GetWeekScheduleAsync(int id)
         {
             SiteWeekSchedule schedule;
             using (var uow = UowManager.CurrentOrCreateNew(true))

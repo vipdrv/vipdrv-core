@@ -15,6 +15,8 @@ namespace QuantumLogic.WebApi.DataModels.Dtos.Widget.Leads
         public string SecondName { get; set; }
         public string UserPhone { get; set; }
         public string UserEmail { get; set; }
+        public bool IsNew { get; set; }
+        public bool IsReachedByManager { get; set; }
         public DateTime BookingDateTimeUtc { get; set; }
         public string BookingDateTimeOutputUtc { get; set; }
 
@@ -27,7 +29,7 @@ namespace QuantumLogic.WebApi.DataModels.Dtos.Widget.Leads
 
         #endregion
 
-        #region ctor
+        #region Ctors
 
         public LeadDto() : base()
         {
@@ -63,6 +65,8 @@ namespace QuantumLogic.WebApi.DataModels.Dtos.Widget.Leads
             SecondName = entity.SecondName;
             UserPhone = entity.UserPhone;
             UserEmail = entity.UserEmail;
+            IsNew = entity.IsNew;
+            IsReachedByManager = entity.IsReachedByManager;
             SiteName = entity.Site.Name;
             ExpertName = entity.Expert.Name;
             BeverageName = entity.Beverage.Name;

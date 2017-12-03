@@ -68,7 +68,7 @@
                     type="submit"
                     [disabled]="loading"
                     (click)="login()">
-                <i class="fa fa-refresh fa-spin" *ngIf="!!loading"></i>
+                <i class="fa fa-spinner fa-pulse" *ngIf="!!loading"></i>
                 <i class="fa fa-sign-in" *ngIf="!loading"></i>
                 <span translate>Login</span>
             </button>

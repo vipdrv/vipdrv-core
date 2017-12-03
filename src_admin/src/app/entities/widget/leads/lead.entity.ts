@@ -14,16 +14,18 @@ export class LeadEntity extends Entity {
     expertName: string;
     routeName: string;
     beverageName: string;
-
+    isNew: boolean;
+    isReachedByManager: boolean;
+    /// ctor
     constructor() {
         super();
     }
-
+    /// methods
     initializeFromDto(dto: any): void {
         if (Variable.isNullOrUndefined(dto)) {
             return null;
         }
-        let mock: LeadEntity = <LeadEntity>dto;
+        const mock: LeadEntity = <LeadEntity>dto;
         super.initializeFromDto(dto);
         this.siteId = mock.siteId;
         this.expertId = mock.expertId;
@@ -34,6 +36,8 @@ export class LeadEntity extends Entity {
         this.secondName = mock.secondName;
         this.userPhone = mock.userPhone;
         this.userEmail = mock.userEmail;
+        this.isNew = mock.isNew;
+        this.isReachedByManager = mock.isReachedByManager;
         this.siteName = mock.siteName;
         this.expertName = mock.expertName;
         this.routeName = mock.routeName;

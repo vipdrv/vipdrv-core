@@ -1,34 +1,28 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using QuantumLogic.Core.Domain.Entities.WidgetModule;
+using QuantumLogic.Core.Domain.Services.Widget.Beverages;
+using QuantumLogic.Core.Domain.Services.Widget.Experts;
 using QuantumLogic.Core.Domain.Services.Widget.Leads;
+using QuantumLogic.Core.Domain.Services.Widget.Routes;
+using QuantumLogic.Core.Domain.Services.Widget.Sites;
 using QuantumLogic.Core.Domain.UnitOfWorks;
 using QuantumLogic.Core.Extensions.DateTimeEx;
 using QuantumLogic.Core.Utils.ContentManager;
+using QuantumLogic.Core.Utils.Email.Services;
+using QuantumLogic.Core.Utils.Email.Templates.TestDrive;
 using QuantumLogic.Core.Utils.Export.Entity.Concrete.Excel;
 using QuantumLogic.Core.Utils.Export.Entity.Concrete.Excel.DataModels;
 using QuantumLogic.WebApi.DataModels.Dtos.Widget.Leads;
+using QuantumLogic.WebApi.DataModels.Requests;
+using QuantumLogic.WebApi.DataModels.Requests.Widget.Booking;
 using QuantumLogic.WebApi.DataModels.Requests.Widget.Leads;
 using QuantumLogic.WebApi.DataModels.Responses;
 using QuantumLogic.WebApi.Providers.Export.Excel.Leads;
+using SendGrid.Helpers.Mail;
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using QuantumLogic.Core.Domain.Services.Widget.Beverages;
-using QuantumLogic.Core.Domain.Services.Widget.Experts;
-using QuantumLogic.Core.Domain.Services.Widget.Routes;
-using QuantumLogic.Core.Domain.Services.Widget.Sites;
-using QuantumLogic.Core.Utils.Email;
-using QuantumLogic.Core.Utils.Email.Providers.SendGrid;
-using QuantumLogic.Core.Utils.Email.Services;
-using QuantumLogic.Core.Utils.Email.Templates.TestDrive;
-using QuantumLogic.Data.EFContext;
-using QuantumLogic.WebApi.DataModels.Requests.Widget.Booking;
-using SendGrid.Helpers.Mail;
 
 namespace QuantumLogic.WebApi.Controllers.Widget
 {
@@ -106,21 +100,65 @@ namespace QuantumLogic.WebApi.Controllers.Widget
             return InnerGetAllAsync(BuildRetrieveManyFilter(request), request.Sorting, page, pageSize);
         }
 
+        #endregion
+
+        #region Custom methods
+
+        [Authorize]
+        [HttpPost("export/excel/{page?}/{pageSize?}")]
+        public async Task<string> ExportDataToExcelAsync([FromBody]LeadGetAllRequest request, uint? page = null, uint? pageSize = null)
+        {
+            Uri fileUrl;
+            TimeSpan timeZoneOffset = TimeSpan.Zero;
+            string fileName = $"TestDrive-Leads-{DateTime.UtcNow.FormatUtcDateTimeToUserFriendlyString(timeZoneOffset, "yyyyMMddHHmmss")}";
+            string worksheetsName = "leads";
+            using (var uow = UowManager.CurrentOrCreateNew(true))
+            {
+                ExcelExportSettings<Lead> settings = new ExcelExportSettings<Lead>(
+                    fileName, worksheetsName,
+                    DomainService, ContentManager,
+                    ExcelExportLeadOptionsProvider.GetEntityOptions((r) => r.UseByDefault, (key) => key, timeZoneOffset),
+                    BuildRetrieveManyFilter(request), request.Sorting, page ?? 0 * pageSize ?? 0, pageSize);
+                fileUrl = await ExcelExportService<Lead>.ExportDataAsync(settings);
+            }
+            return fileUrl.ToString();
+        }
+        [Authorize]
+        [HttpPatch("patch-is-new/{id}")]
+        public async Task PatchIsNewAsync([FromBody]PatchBoolPropertyRequest request, int id)
+        {
+            using (var uow = UowManager.CurrentOrCreateNew(true))
+            {
+                await((ILeadDomainService)DomainService).ChangeIsNewAsync(id, request.Value);
+                await uow.CompleteAsync();
+            }
+        }
+        [Authorize]
+        [HttpPatch("patch-is-reached-by-manager/{id}")]
+        public async Task PatchIsReachedByManagerAsync([FromBody]PatchBoolPropertyRequest request, int id)
+        {
+            using (var uow = UowManager.CurrentOrCreateNew(true))
+            {
+                await ((ILeadDomainService)DomainService).ChangeIsReachedByManagerAsync(id, request.Value);
+                await uow.CompleteAsync();
+            }
+        }
+
         [HttpPost("{siteId}/complete-booking")]
-        public async Task<LeadFullDto> CompleteBooking(int siteId, [FromBody]CompleteBookingRequest request)
+        public async Task<LeadFullDto> CompleteBookingAsync(int siteId, [FromBody]CompleteBookingRequest request)
         {
             // TODO: validate request
 
             var leadFullDto = new LeadFullDto(
-                0, 
-                siteId, 
+                0,
+                siteId,
                 (int)request.ExpertId,
                 (int)request.BeverageId,
-                (int)request.RoadId, 
-                request.BookingUser.FirstName, 
+                (int)request.RoadId,
+                request.BookingUser.FirstName,
                 request.BookingUser.LastName,
-                request.BookingUser.Phone, 
-                request.BookingUser.Email, 
+                request.BookingUser.Phone,
+                request.BookingUser.Email,
                 DateTime.Now);
 
             LeadFullDto result = await InnerCreateAsync(leadFullDto);
@@ -160,45 +198,35 @@ namespace QuantumLogic.WebApi.Controllers.Widget
             {
                 _testDriveEmailService.SendNewLeadNotificationEmail(new EmailAddress(email), newLeadNotificationEmailTemplate);
             }
-            
+
             return result;
         }
 
         #endregion
 
-        [Authorize]
-        [HttpPost("export/excel/{page?}/{pageSize?}")]
-        public async Task<string> ExportDataToExcelAsync([FromBody]LeadGetAllRequest request, uint? page = null, uint? pageSize = null)
-        {
-            Uri fileUrl;
-            TimeSpan timeZoneOffset = TimeSpan.Zero;
-            string fileName = $"TestDrive-Leads-{DateTime.UtcNow.FormatUtcDateTimeToUserFriendlyString(timeZoneOffset, "yyyyMMddHHmmss")}";
-            string worksheetsName = "leads";
-            using (var uow = UowManager.CurrentOrCreateNew(true))
-            {
-                ExcelExportSettings<Lead> settings = new ExcelExportSettings<Lead>(
-                    fileName, worksheetsName,
-                    DomainService, ContentManager,
-                    ExcelExportLeadOptionsProvider.GetEntityOptions((r) => r.UseByDefault, (key) => key, timeZoneOffset),
-                    BuildRetrieveManyFilter(request), request.Sorting, page ?? 0 * pageSize ?? 0, pageSize);
-                fileUrl = await ExcelExportService<Lead>.ExportDataAsync(settings);
-            }
-            return fileUrl.ToString();
-        }
+        #region Helpers
 
         protected virtual Expression<Func<Lead, bool>> BuildRetrieveManyFilter(LeadGetAllRequest request)
         {
             return (entity) =>
-                request.UserId == null || request.UserId == entity.Site.UserId &&
-                //(String.IsNullOrEmpty(request.RecievedDateTime) || entity.RecievedUtc) &&
-                (String.IsNullOrEmpty(request.FirstName) || !String.IsNullOrEmpty(entity.FirstName) && entity.FirstName.Contains(request.FirstName)) &&
-                (String.IsNullOrEmpty(request.SecondName) || !String.IsNullOrEmpty(entity.SecondName) && entity.SecondName.Contains(request.SecondName)) &&
-                (String.IsNullOrEmpty(request.Site) || !String.IsNullOrEmpty(entity.Site.Name) && entity.Site.Name.Contains(request.Site)) &&
-                (String.IsNullOrEmpty(request.Email) || !String.IsNullOrEmpty(entity.UserEmail) && entity.UserEmail.Contains(request.Email)) &&
+                (!request.UserId.HasValue || request.UserId.Value == entity.Site.UserId) &&
+                (!request.SiteId.HasValue || request.SiteId.Value == entity.SiteId) &&
+                (!request.ExpertId.HasValue || request.ExpertId.Value == entity.ExpertId) &&
+                (!request.RouteId.HasValue || request.RouteId.Value == entity.RouteId) &&
+                (!request.BeverageId.HasValue || request.BeverageId.Value == entity.BeverageId) &&
+                (!request.RecievedDateTime.HasValue || request.RecievedDateTime.Value <= entity.RecievedUtc) &&
+                (!request.IsReachedByManager.HasValue || request.IsReachedByManager.Value == entity.IsReachedByManager) &&
+                (String.IsNullOrEmpty(request.FullName) || !String.IsNullOrEmpty(entity.FullName) && entity.FullName.ToUpper().Contains(request.FullName.ToUpper())) &&
+                (String.IsNullOrEmpty(request.FirstName) || !String.IsNullOrEmpty(entity.FirstName) && entity.FirstName.ToUpper().Contains(request.FirstName.ToUpper())) &&
+                (String.IsNullOrEmpty(request.SecondName) || !String.IsNullOrEmpty(entity.SecondName) && entity.SecondName.ToUpper().Contains(request.SecondName.ToUpper())) &&
+                (String.IsNullOrEmpty(request.Site) || !String.IsNullOrEmpty(entity.Site.Name) && entity.Site.Name.ToUpper().Contains(request.Site.ToUpper())) &&
+                (String.IsNullOrEmpty(request.Email) || !String.IsNullOrEmpty(entity.UserEmail) && entity.UserEmail.ToUpper().Contains(request.Email.ToUpper())) &&
                 (String.IsNullOrEmpty(request.Phone) || !String.IsNullOrEmpty(entity.UserPhone) && entity.UserPhone.Contains(request.Phone)) &&
-                (String.IsNullOrEmpty(request.Expert) || !String.IsNullOrEmpty(entity.Expert.Name) && entity.Expert.Name.Contains(request.Expert)) &&
-                (String.IsNullOrEmpty(request.Route) || !String.IsNullOrEmpty(entity.Route.Name) && entity.Route.Name.Contains(request.Route)) &&
-                (String.IsNullOrEmpty(request.Beverage) || !String.IsNullOrEmpty(entity.Beverage.Name) && entity.Beverage.Name.Contains(request.Beverage));
+                (String.IsNullOrEmpty(request.Expert) || !String.IsNullOrEmpty(entity.Expert.Name) && entity.Expert.Name.ToUpper().Contains(request.Expert.ToUpper())) &&
+                (String.IsNullOrEmpty(request.Route) || !String.IsNullOrEmpty(entity.Route.Name) && entity.Route.Name.ToUpper().Contains(request.Route.ToUpper())) &&
+                (String.IsNullOrEmpty(request.Beverage) || !String.IsNullOrEmpty(entity.Beverage.Name) && entity.Beverage.Name.ToUpper().Contains(request.Beverage.ToUpper()));
         }
+
+        #endregion
     }
 }
