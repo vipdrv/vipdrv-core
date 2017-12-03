@@ -141,8 +141,10 @@ export class LeadsTableComponent implements OnInit {
     protected applyFilters(): Promise<void> {
         const filtersWereNotChanged: boolean =
             this.tableFilters.recievedDateTime === this.oldTableFilters.recievedDateTime &&
+            this.tableFilters.fullName === this.oldTableFilters.fullName &&
             this.tableFilters.firstName === this.oldTableFilters.firstName &&
             this.tableFilters.secondName === this.oldTableFilters.secondName &&
+            this.tableFilters.isReachedByManager === this.oldTableFilters.isReachedByManager &&
             this.tableFilters.site === this.oldTableFilters.site &&
             this.tableFilters.email === this.oldTableFilters.email &&
             this.tableFilters.phone === this.oldTableFilters.phone &&
@@ -152,8 +154,10 @@ export class LeadsTableComponent implements OnInit {
         if (!filtersWereNotChanged) {
             this.oldTableFilters = {};
             this.oldTableFilters.recievedDateTime = this.tableFilters.recievedDateTime;
+            this.oldTableFilters.fullName = this.tableFilters.fullName;
             this.oldTableFilters.firstName = this.tableFilters.firstName;
             this.oldTableFilters.secondName = this.tableFilters.secondName;
+            this.oldTableFilters.isReachedByManager = this.tableFilters.isReachedByManager;
             this.oldTableFilters.site = this.tableFilters.site;
             this.oldTableFilters.email = this.tableFilters.email;
             this.oldTableFilters.phone = this.tableFilters.phone;
@@ -193,7 +197,7 @@ export class LeadsTableComponent implements OnInit {
     /// helpers
     protected loadDetalizedEntity(id: number): Promise<LeadEntity> {
         const self = this;
-        self.logger.logTrase(`LeadsTableComponent: Get entity (id = ${id}) called.`);
+        self.logger.logTrase(`LeadsTableComponent: Get detalized entity (id = ${id}) called.`);
         self.getEntityId = id;
         self.getEntityPromise = self.leadApiService
             .get(id)
@@ -212,8 +216,10 @@ export class LeadsTableComponent implements OnInit {
     /// table filters
     protected tableFilters: any = {
         recievedDateTime: null,
+        fullName: null,
         firstName: null,
         secondName: null,
+        isReachedByManager: null,
         site: null,
         email: null,
         phone: null,
@@ -246,8 +252,14 @@ export class LeadsTableComponent implements OnInit {
         if (Variable.isNotNullOrUndefined(this.tableFilters.firstName) && this.tableFilters.firstName !== '') {
             filter.firstName = this.tableFilters.firstName;
         }
+        if (Variable.isNotNullOrUndefined(this.tableFilters.fullName) && this.tableFilters.fullName !== '') {
+            filter.fullName = this.tableFilters.fullName;
+        }
         if (Variable.isNotNullOrUndefined(this.tableFilters.secondName) && this.tableFilters.secondName !== '') {
             filter.secondName = this.tableFilters.secondName;
+        }
+        if (Variable.isNotNullOrUndefined(this.tableFilters.isReachedByManager)) {
+            filter.isReachedByManager = this.tableFilters.isReachedByManager;
         }
         if (Variable.isNotNullOrUndefined(this.tableFilters.site) && this.tableFilters.site !== '') {
             filter.site = this.tableFilters.site;
@@ -271,8 +283,10 @@ export class LeadsTableComponent implements OnInit {
     /// onblur filters
     protected oldTableFilters: any = {
         recievedDateTime: null,
+        fullName: null,
         firstName: null,
         secondName: null,
+        isReachedByManager: null,
         site: null,
         email: null,
         phone: null,

@@ -11,7 +11,7 @@ export namespace Extensions {
     };
     /// date time extensions
     export const dateTimeLocale: string = 'en-US';
-    export const dateTimePattern: string = ' MM/dd/yyyy HH:mm:ss';
+    export const dateTimePattern: string = ' MM/dd/yyyy HH:mm';
     export function formatDateTime(dateTime: string): string {
         if (Variable.isNotNullOrUndefined(dateTime)) {
             return new DatePipe(dateTimeLocale).transform(dateTime, dateTimePattern);

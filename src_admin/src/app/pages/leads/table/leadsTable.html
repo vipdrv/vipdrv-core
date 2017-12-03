@@ -56,8 +56,10 @@
                     <thead>
                     <tr>
                         <th translate>leads.table.headerText_received</th>
-                        <th translate>leads.table.headerText_firstName</th>
-                        <th translate>leads.table.headerText_secondName</th>
+                        <th translate>leads.table.headerText_fullName</th>
+                        <!--<th translate>leads.table.headerText_firstName</th>-->
+                        <!--<th translate>leads.table.headerText_secondName</th>-->
+                        <th translate>leads.table.headerText_isReachedByManager</th>
                         <th translate>leads.table.headerText_siteName</th>
                         <th translate>leads.table.headerText_userEmail</th>
                         <th translate>leads.table.headerText_userPhone</th>
@@ -79,16 +81,30 @@
                             <input type="text"
                                    class="form-control"
                                    [disabled]="isFilteringDisabled()"
-                                   [(ngModel)]="tableFilters.firstName"
+                                   [(ngModel)]="tableFilters.fullName"
                                    (blur)="applyFilters()"/>
                         </td>
                         <td>
                             <input type="text"
                                    class="form-control"
                                    [disabled]="isFilteringDisabled()"
-                                   [(ngModel)]="tableFilters.secondName"
+                                   [(ngModel)]="tableFilters.isReachedByManager"
                                    (blur)="applyFilters()"/>
                         </td>
+                        <!--<td>-->
+                            <!--<input type="text"-->
+                                   <!--class="form-control"-->
+                                   <!--[disabled]="isFilteringDisabled()"-->
+                                   <!--[(ngModel)]="tableFilters.firstName"-->
+                                   <!--(blur)="applyFilters()"/>-->
+                        <!--</td>-->
+                        <!--<td>-->
+                            <!--<input type="text"-->
+                                   <!--class="form-control"-->
+                                   <!--[disabled]="isFilteringDisabled()"-->
+                                   <!--[(ngModel)]="tableFilters.secondName"-->
+                                   <!--(blur)="applyFilters()"/>-->
+                        <!--</td>-->
                         <td>
                             <input type="text"
                                    class="form-control"
@@ -138,8 +154,10 @@
                         class="leads-table-body-row"
                         (click)="tryModalOpenInfo(item.id)">
                         <td>{{item.recievedDateTime}}</td>
-                        <td>{{item.firstName}}</td>
-                        <td>{{item.secondName}}</td>
+                        <td>{{item.firstName + ' ' + item.secondName}}</td>
+                        <!--<td>{{item.firstName}}</td>-->
+                        <!--<td>{{item.secondName}}</td>-->
+                        <td>{{item.isReachedByManager}}</td>
                         <td>{{item.siteName}}</td>
                         <td>{{item.userEmail}}</td>
                         <td>{{item.userPhone}}</td>

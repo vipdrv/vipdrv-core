@@ -29,6 +29,14 @@ namespace QuantumLogic.Core.Domain.Entities.WidgetModule
 
         #endregion
 
+        public string FullName
+        {
+            get
+            {
+                return FirstName == null && SecondName == null ? String.Empty : $"{FirstName} {SecondName}";
+            }
+        }
+
         #region Ctors
 
         public Lead()
