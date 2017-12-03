@@ -12,13 +12,7 @@ namespace QuantumLogic.WebApi.DataModels.Dtos.Widget.Sites
         public string Contacts { get; set; }
         public string ImageUrl { get; set; }
         public int LeadsAmount { get; set; }
-        public int ExpertsAmount { get; set; }
-        public int BeveragesAmount { get; set; }
-        public int RoutesAmount { get; set; }
-
-        public int ActiveExpertsAmount { get; set; }
-        public int ActiveBeveragesAmount { get; set; }
-        public int ActiveRoutesAmount { get; set; }
+        public int NewLeadsAmount { get; set; }
 
         #region Mapping
 
@@ -32,12 +26,7 @@ namespace QuantumLogic.WebApi.DataModels.Dtos.Widget.Sites
             Contacts = entity.Contacts;
             ImageUrl = entity.ImageUrl;
             LeadsAmount = entity.Leads.Count;
-            ExpertsAmount = entity.Experts.Count;
-            BeveragesAmount = entity.Beverages.Count;
-            RoutesAmount = entity.Routes.Count;
-            ActiveExpertsAmount = entity.Experts.Where(r => r.IsActive).Count();
-            ActiveBeveragesAmount = entity.Beverages.Where(r => r.IsActive).Count();
-            ActiveRoutesAmount = entity.Routes.Where(r => r.IsActive).Count();
+            NewLeadsAmount = entity.Leads.Count(r => r.IsNew);
         }
         public override Site MapToEntity()
         {

@@ -199,6 +199,7 @@ export class SiteCardsComponent implements OnInit {
             this.useValidationForSelectedEntity = true;
             actionPromise = Promise.resolve();
         } else {
+            this.useValidationForSelectedEntity = false;
             const self = this;
             self.siteDetailsModalApplyPromise = (self._siteDetailsModalMode === 'Create' ?
                 self.createEntity(self.selectedEntity) :
@@ -216,7 +217,6 @@ export class SiteCardsComponent implements OnInit {
                         }
                         self.selectedEntity = null;
                         self._siteDetailsModalMode = null;
-                        self.useValidationForSelectedEntity = false;
                         return self.siteDetailsModal.close();
                     }
                 })

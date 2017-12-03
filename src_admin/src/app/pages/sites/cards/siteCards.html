@@ -38,7 +38,8 @@
                                 sites.card.leads
                             </span>:
                             <b>{{entity.leadsAmount}}</b>
-                            <a href="{{getNewLeadsForSuteUrl(entity.id)}}">
+                            <a href="{{getNewLeadsForSuteUrl(entity.id)}}"
+                               *ngIf="entity.newLeadsAmount > 0">
                                 <span class="badge badge-danger"
                                       style="font-size: 100%">
                                     {{entity.newLeadsAmount}}
@@ -105,8 +106,7 @@
         </button>
     </modal-header>
     <modal-body>
-        <div *ngIf="isSelectedEntityDefined()"
-             [ngBusy]="siteDetailsModalApplyPromise">
+        <div *ngIf="isSelectedEntityDefined()">
             <site-details-edit [entity]="selectedEntity"
                                [isReadOnly]="isSiteDetailsComponentReadOnly()"
                                [useValidation]="useValidationForSelectedEntity"></site-details-edit>
