@@ -14,11 +14,25 @@ export class LeadApiService extends CRUDApiService<LeadEntity, number, LightEnti
         super(httpService, logger, 'lead');
     }
     /// methods
+    patchIsNew(id: number, value: boolean): Promise<void> {
+        const self = this;
+        const methodName: string = 'patch-is-new';
+        return self.httpService
+            .patch(this.createUrlWithMethodNameAndParams(methodName, String(id)), { 'value': value })
+            .then(function (response: any): void { });
+    }
+    patchIsReachedByManager(id: number, value: boolean): Promise<void> {
+        const self = this;
+        const methodName: string = 'patch-is-reached-by-manager';
+        return self.httpService
+            .patch(this.createUrlWithMethodNameAndParams(methodName, String(id)), { 'value': value })
+            .then(function (response: any): void { });
+    }
     exportToExcel(page: number, pageSize: number, sorting: string, filter: any): Promise<string> {
-        let methodName = 'export/excel';
-        let pageParameter = new UrlParameter('page', page);
-        let pageSizeParameter = new UrlParameter('pageSize', pageSize);
-        let request = Variable.isNotNullOrUndefined(filter) ? filter : {};
+        const methodName = 'export/excel';
+        const pageParameter = new UrlParameter('page', page);
+        const pageSizeParameter = new UrlParameter('pageSize', pageSize);
+        const request = Variable.isNotNullOrUndefined(filter) ? filter : {};
         request.sorting = sorting;
         return this.httpService
             .post(this.createUrlWithMethodNameAndUrlParams(methodName, pageParameter, pageSizeParameter), request)

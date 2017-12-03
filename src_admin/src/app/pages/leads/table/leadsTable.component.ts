@@ -4,7 +4,9 @@ import { Variable, Extensions, PromiseService, ConsoleLogger, ILogger } from './
 import { IAuthorizationService, AuthorizationService } from './../../../services/index';
 import { ILeadApiService, LeadApiService, GetAllResponse } from './../../../services/index';
 import { ILeadEntityPolicyService, LeadEntityPolicyService } from './../../../services/index';
+import { ISiteApiService, SiteApiService } from './../../../services/index';
 import { LeadEntity } from './../../../entities/index';
+import {forEach} from "@angular/router/src/utils/collection";
 @Component({
     selector: 'leads-table',
     styleUrls: ['./leadsTable.scss'],
@@ -30,21 +32,30 @@ export class LeadsTableComponent implements OnInit {
     protected totalCount: number;
     protected items: Array<LeadEntity>;
     protected entity: LeadEntity;
+    protected siteOptions: Array<any> = [
+        {
+            value: null,
+            displayText: 'filters.sites.all'
+        },
+    ];
     /// injected dependencies
     protected logger: ILogger;
     protected authorizationManager: IAuthorizationService;
     protected leadApiService: ILeadApiService;
     protected leadEntityPolicy: ILeadEntityPolicyService;
+    protected siteApiService: ISiteApiService;
     /// ctor
     constructor(
         logger: ConsoleLogger,
         authorizationManager: AuthorizationService,
         leadApiService: LeadApiService,
-        leadEntityPolicy: LeadEntityPolicyService) {
+        leadEntityPolicy: LeadEntityPolicyService,
+        siteApiService: SiteApiService) {
         this.logger = logger;
         this.authorizationManager = authorizationManager;
         this.leadApiService = leadApiService;
         this.leadEntityPolicy = leadEntityPolicy;
+        this.siteApiService = siteApiService;
         this.logger.logDebug('LeadsTableComponent: Component has been constructed.');
     }
     /// methods
@@ -54,6 +65,7 @@ export class LeadsTableComponent implements OnInit {
         this.sorting = Variable.isNotNullOrUndefined(this.sorting) ? this.sorting : this._defaultSorting;
         this.filter = Variable.isNotNullOrUndefined(this.filter) ? this.filter : this._defaultFilter;
         const self = this;
+        self.fillSitesFilter();
         self.firstLoadingPromise = self
             .getAllEntities()
             .then(
@@ -64,6 +76,30 @@ export class LeadsTableComponent implements OnInit {
                     self.firstLoadingPromise = null;
                 }
             );
+    }
+    protected fillSitesFilter(): Promise<void> {
+        const self = this;
+        self.logger.logTrase('LeadsTableComponent: Get relations (all sites) called.');
+        const filter = {
+            userId: this.authorizationManager.currentUserId
+        };
+        return self.siteApiService
+            .getAll(0, 25, 'name asc', filter)
+            .then(function (response: GetAllResponse<any>): void {
+                for (const site of response.items) {
+                    self.siteOptions.push({
+                        value: site.id,
+                        displayText: site.name
+                    });
+                }
+            })
+            .then(
+                () => {
+
+                },
+                () => {
+
+                });
     }
     protected getAllEntities(): Promise<void> {
         const self = this;
@@ -93,6 +129,7 @@ export class LeadsTableComponent implements OnInit {
             actionPromise = self.loadDetalizedEntity(id)
                 .then(function (entity: LeadEntity): Promise<void> {
                     self.entity = entity;
+                    self.changeIsNew(entityToSelect);
                     return self.modalInfo.open();
                 });
         } else {
@@ -141,6 +178,7 @@ export class LeadsTableComponent implements OnInit {
     protected applyFilters(): Promise<void> {
         const filtersWereNotChanged: boolean =
             this.tableFilters.recievedDateTime === this.oldTableFilters.recievedDateTime &&
+            this.tableFilters.siteId === this.oldTableFilters.siteId &&
             this.tableFilters.fullName === this.oldTableFilters.fullName &&
             this.tableFilters.firstName === this.oldTableFilters.firstName &&
             this.tableFilters.secondName === this.oldTableFilters.secondName &&
@@ -158,6 +196,7 @@ export class LeadsTableComponent implements OnInit {
             this.oldTableFilters.firstName = this.tableFilters.firstName;
             this.oldTableFilters.secondName = this.tableFilters.secondName;
             this.oldTableFilters.isReachedByManager = this.tableFilters.isReachedByManager;
+            this.oldTableFilters.siteId = this.tableFilters.siteId;
             this.oldTableFilters.site = this.tableFilters.site;
             this.oldTableFilters.email = this.tableFilters.email;
             this.oldTableFilters.phone = this.tableFilters.phone;
@@ -179,7 +218,8 @@ export class LeadsTableComponent implements OnInit {
         const result = {
             'leads-table-body-row': true,
             'leads-table-body-row-disabled': false,
-            'leads-table-body-row-processing': false
+            'leads-table-body-row-processing': false,
+            'leads-table-body-row-with-new-entity': false
         };
         if (this.isGetProcessing(entity)) {
             result['leads-table-body-row'] = false;
@@ -188,11 +228,81 @@ export class LeadsTableComponent implements OnInit {
             result['leads-table-body-row'] = false;
             result['leads-table-body-row-disabled'] = true;
         }
+        if (entity.isNew) {
+            result['leads-table-body-row-with-new-entity'] = true;
+        }
         return result;
+    }
+    protected changeIsReachedByManager(entity: LeadEntity): Promise<void> {
+        let actionPromise: Promise<void>;
+        if (this.isReachedByManagerDisabled(entity)) {
+            actionPromise = Promise.resolve();
+        } else {
+            const self = this;
+            const oldValue: boolean = entity.isReachedByManager;
+            self.logger.logTrase(`LeadsTableComponent: Patch isReachedByManager (entityId = ${entity.id}, value = ${!oldValue}) called.`);
+            entity.isReachedByManager = !oldValue;
+            self.reachedByManagerIdsPatchInProgress.push(entity.id);
+            actionPromise = self.leadApiService
+                .patchIsReachedByManager(entity.id, !oldValue)
+                .then(
+                    () => {
+                        const index = self.reachedByManagerIdsPatchInProgress.indexOf(entity.id);
+                        if (index > -1) {
+                            self.reachedByManagerIdsPatchInProgress.splice(index, 1);
+                        }
+                    },
+                    () => {
+                        entity.isReachedByManager = oldValue;
+                        const index = self.reachedByManagerIdsPatchInProgress.indexOf(entity.id);
+                        if (index > -1) {
+                            self.reachedByManagerIdsPatchInProgress.splice(index, 1);
+                        }
+                    }
+                );
+        }
+        return actionPromise;
+    }
+    protected changeIsNew(entity: LeadEntity): Promise<void> {
+        let actionPromise: Promise<void>;
+        if (this.isChangeIsNewDisabled(entity)) {
+            actionPromise = Promise.resolve();
+        } else {
+            const self = this;
+            const oldValue: boolean = entity.isNew;
+            self.logger.logTrase(`LeadsTableComponent: Patch isNew (entityId = ${entity.id}, value = ${!oldValue}) called.`);
+            entity.isNew = !oldValue;
+            self.isNewPatchInProgress.push(entity.id);
+            actionPromise = self.leadApiService
+                .patchIsNew(entity.id, !oldValue)
+                .then(
+                    () => {
+                        const index = self.isNewPatchInProgress.indexOf(entity.id);
+                        if (index > -1) {
+                            self.isNewPatchInProgress.splice(index, 1);
+                        }
+                    },
+                    () => {
+                        entity.isNew = oldValue;
+                        const index = self.isNewPatchInProgress.indexOf(entity.id);
+                        if (index > -1) {
+                            self.isNewPatchInProgress.splice(index, 1);
+                        }
+
+                    }
+                );
+        }
+        return actionPromise;
     }
     /// predicates
     protected isSelectedEntityDefined(): boolean {
         return Variable.isNotNullOrUndefined(this.entity);
+    }
+    protected isReachedByManagerDisabled(entity: LeadEntity): boolean {
+        return this.reachedByManagerIdsPatchInProgress.indexOf(entity.id) > -1;
+    }
+    protected isChangeIsNewDisabled(entity: LeadEntity): boolean {
+        return !entity.isNew || this.isNewPatchInProgress.indexOf(entity.id) > -1;
     }
     /// helpers
     protected loadDetalizedEntity(id: number): Promise<LeadEntity> {
@@ -220,6 +330,7 @@ export class LeadsTableComponent implements OnInit {
         firstName: null,
         secondName: null,
         isReachedByManager: null,
+        siteId: null,
         site: null,
         email: null,
         phone: null,
@@ -249,14 +360,22 @@ export class LeadsTableComponent implements OnInit {
         if (Variable.isNullOrUndefined(filter)) {
             throw new Error('Argument exception! (extendFilter requires defined argument filter)');
         }
-        if (Variable.isNotNullOrUndefined(this.tableFilters.firstName) && this.tableFilters.firstName !== '') {
-            filter.firstName = this.tableFilters.firstName;
+        if (Variable.isNotNullOrUndefined(
+            this.tableFilters.recievedDateTime) &&
+            this.tableFilters.recievedDateTime !== '') {
+            filter.recievedDateTime = this.tableFilters.recievedDateTime;
         }
         if (Variable.isNotNullOrUndefined(this.tableFilters.fullName) && this.tableFilters.fullName !== '') {
             filter.fullName = this.tableFilters.fullName;
         }
+        if (Variable.isNotNullOrUndefined(this.tableFilters.firstName) && this.tableFilters.firstName !== '') {
+            filter.firstName = this.tableFilters.firstName;
+        }
         if (Variable.isNotNullOrUndefined(this.tableFilters.secondName) && this.tableFilters.secondName !== '') {
             filter.secondName = this.tableFilters.secondName;
+        }
+        if (Variable.isNotNullOrUndefined(this.tableFilters.siteId)) {
+            filter.siteId = this.tableFilters.siteId;
         }
         if (Variable.isNotNullOrUndefined(this.tableFilters.isReachedByManager)) {
             filter.isReachedByManager = this.tableFilters.isReachedByManager;
@@ -287,6 +406,7 @@ export class LeadsTableComponent implements OnInit {
         firstName: null,
         secondName: null,
         isReachedByManager: null,
+        siteId: null,
         site: null,
         email: null,
         phone: null,
@@ -352,10 +472,49 @@ export class LeadsTableComponent implements OnInit {
         return Variable.isNotNullOrUndefined(this.getAllPromise) ||
             Variable.isNotNullOrUndefined(this.getEntityPromise);
     }
+    /// select controls service data
+    protected dateFilterOptions: Array<any> = [
+        {
+            value: null,
+            displayText: 'filters.date.allTime'
+        },
+        {
+            value: Extensions.todayValue(),
+            displayText: 'filters.date.today'
+        },
+        {
+            value: Extensions.lastWeekValue(),
+            displayText: 'filters.date.lastWeek'
+        },
+        {
+            value: Extensions.thisMonthValue(),
+            displayText: 'filters.date.thisMonth'
+        },
+        {
+            value: Extensions.lastMonthValue(),
+            displayText: 'filters.date.lastMonth'
+        },
+    ];
+    protected isReachedByManagerFilterOptions: Array<any> = [
+        {
+            value: null,
+            displayText: 'filters.isReachedByManager.all'
+        },
+        {
+            value: true,
+            displayText: 'filters.isReachedByManager.reached'
+        },
+        {
+            value: false,
+            displayText: 'filters.isReachedByManager.notReached'
+        },
+    ];
     /// promise manager
     protected firstLoadingPromise: Promise<void>;
     protected getAllPromise: Promise<void>;
     protected getEntityId: number;
     protected getEntityPromise: Promise<LeadEntity>;
     protected exportToExcelPromise: Promise<void>;
+    protected reachedByManagerIdsPatchInProgress: Array<number> = new Array<number>();
+    protected isNewPatchInProgress: Array<number> = new Array<number>();
 }

@@ -14,6 +14,7 @@ using QuantumLogic.Core.Utils.Email.Templates.TestDrive;
 using QuantumLogic.Core.Utils.Export.Entity.Concrete.Excel;
 using QuantumLogic.Core.Utils.Export.Entity.Concrete.Excel.DataModels;
 using QuantumLogic.WebApi.DataModels.Dtos.Widget.Leads;
+using QuantumLogic.WebApi.DataModels.Requests;
 using QuantumLogic.WebApi.DataModels.Requests.Widget.Booking;
 using QuantumLogic.WebApi.DataModels.Requests.Widget.Leads;
 using QuantumLogic.WebApi.DataModels.Responses;
@@ -99,21 +100,65 @@ namespace QuantumLogic.WebApi.Controllers.Widget
             return InnerGetAllAsync(BuildRetrieveManyFilter(request), request.Sorting, page, pageSize);
         }
 
+        #endregion
+
+        #region Custom methods
+
+        [Authorize]
+        [HttpPost("export/excel/{page?}/{pageSize?}")]
+        public async Task<string> ExportDataToExcelAsync([FromBody]LeadGetAllRequest request, uint? page = null, uint? pageSize = null)
+        {
+            Uri fileUrl;
+            TimeSpan timeZoneOffset = TimeSpan.Zero;
+            string fileName = $"TestDrive-Leads-{DateTime.UtcNow.FormatUtcDateTimeToUserFriendlyString(timeZoneOffset, "yyyyMMddHHmmss")}";
+            string worksheetsName = "leads";
+            using (var uow = UowManager.CurrentOrCreateNew(true))
+            {
+                ExcelExportSettings<Lead> settings = new ExcelExportSettings<Lead>(
+                    fileName, worksheetsName,
+                    DomainService, ContentManager,
+                    ExcelExportLeadOptionsProvider.GetEntityOptions((r) => r.UseByDefault, (key) => key, timeZoneOffset),
+                    BuildRetrieveManyFilter(request), request.Sorting, page ?? 0 * pageSize ?? 0, pageSize);
+                fileUrl = await ExcelExportService<Lead>.ExportDataAsync(settings);
+            }
+            return fileUrl.ToString();
+        }
+        [Authorize]
+        [HttpPatch("patch-is-new/{id}")]
+        public async Task PatchIsNewAsync([FromBody]PatchBoolPropertyRequest request, int id)
+        {
+            using (var uow = UowManager.CurrentOrCreateNew(true))
+            {
+                await((ILeadDomainService)DomainService).ChangeIsNewAsync(id, request.Value);
+                await uow.CompleteAsync();
+            }
+        }
+        [Authorize]
+        [HttpPatch("patch-is-reached-by-manager/{id}")]
+        public async Task PatchIsReachedByManagerAsync([FromBody]PatchBoolPropertyRequest request, int id)
+        {
+            using (var uow = UowManager.CurrentOrCreateNew(true))
+            {
+                await ((ILeadDomainService)DomainService).ChangeIsReachedByManagerAsync(id, request.Value);
+                await uow.CompleteAsync();
+            }
+        }
+
         [HttpPost("{siteId}/complete-booking")]
-        public async Task<LeadFullDto> CompleteBooking(int siteId, [FromBody]CompleteBookingRequest request)
+        public async Task<LeadFullDto> CompleteBookingAsync(int siteId, [FromBody]CompleteBookingRequest request)
         {
             // TODO: validate request
 
             var leadFullDto = new LeadFullDto(
-                0, 
-                siteId, 
+                0,
+                siteId,
                 (int)request.ExpertId,
                 (int)request.BeverageId,
-                (int)request.RoadId, 
-                request.BookingUser.FirstName, 
+                (int)request.RoadId,
+                request.BookingUser.FirstName,
                 request.BookingUser.LastName,
-                request.BookingUser.Phone, 
-                request.BookingUser.Email, 
+                request.BookingUser.Phone,
+                request.BookingUser.Email,
                 DateTime.Now);
 
             LeadFullDto result = await InnerCreateAsync(leadFullDto);
@@ -153,38 +198,21 @@ namespace QuantumLogic.WebApi.Controllers.Widget
             {
                 _testDriveEmailService.SendNewLeadNotificationEmail(new EmailAddress(email), newLeadNotificationEmailTemplate);
             }
-            
+
             return result;
         }
 
         #endregion
 
-        [Authorize]
-        [HttpPost("export/excel/{page?}/{pageSize?}")]
-        public async Task<string> ExportDataToExcelAsync([FromBody]LeadGetAllRequest request, uint? page = null, uint? pageSize = null)
-        {
-            Uri fileUrl;
-            TimeSpan timeZoneOffset = TimeSpan.Zero;
-            string fileName = $"TestDrive-Leads-{DateTime.UtcNow.FormatUtcDateTimeToUserFriendlyString(timeZoneOffset, "yyyyMMddHHmmss")}";
-            string worksheetsName = "leads";
-            using (var uow = UowManager.CurrentOrCreateNew(true))
-            {
-                ExcelExportSettings<Lead> settings = new ExcelExportSettings<Lead>(
-                    fileName, worksheetsName,
-                    DomainService, ContentManager,
-                    ExcelExportLeadOptionsProvider.GetEntityOptions((r) => r.UseByDefault, (key) => key, timeZoneOffset),
-                    BuildRetrieveManyFilter(request), request.Sorting, page ?? 0 * pageSize ?? 0, pageSize);
-                fileUrl = await ExcelExportService<Lead>.ExportDataAsync(settings);
-            }
-            return fileUrl.ToString();
-        }
+        #region Helpers
 
         protected virtual Expression<Func<Lead, bool>> BuildRetrieveManyFilter(LeadGetAllRequest request)
         {
             return (entity) =>
-                request.UserId == null || request.UserId == entity.Site.UserId &&
-                request.IsReachedByManager == null || request.IsReachedByManager == entity.IsReachedByManager &&
-                //(String.IsNullOrEmpty(request.RecievedDateTime) || entity.RecievedUtc) &&
+                (!request.UserId.HasValue || request.UserId.Value == entity.Site.UserId) &&
+                (!request.SiteId.HasValue || request.SiteId.Value == entity.SiteId) &&
+                (!request.RecievedDateTime.HasValue || request.RecievedDateTime.Value <= entity.RecievedUtc) &&
+                (!request.IsReachedByManager.HasValue || request.IsReachedByManager.Value == entity.IsReachedByManager) &&
                 (String.IsNullOrEmpty(request.FullName) || !String.IsNullOrEmpty(entity.FullName) && entity.FullName.ToUpper().Contains(request.FullName.ToUpper())) &&
                 (String.IsNullOrEmpty(request.FirstName) || !String.IsNullOrEmpty(entity.FirstName) && entity.FirstName.ToUpper().Contains(request.FirstName.ToUpper())) &&
                 (String.IsNullOrEmpty(request.SecondName) || !String.IsNullOrEmpty(entity.SecondName) && entity.SecondName.ToUpper().Contains(request.SecondName.ToUpper())) &&
@@ -195,5 +223,7 @@ namespace QuantumLogic.WebApi.Controllers.Widget
                 (String.IsNullOrEmpty(request.Route) || !String.IsNullOrEmpty(entity.Route.Name) && entity.Route.Name.ToUpper().Contains(request.Route.ToUpper())) &&
                 (String.IsNullOrEmpty(request.Beverage) || !String.IsNullOrEmpty(entity.Beverage.Name) && entity.Beverage.Name.ToUpper().Contains(request.Beverage.ToUpper()));
         }
+
+        #endregion
     }
 }

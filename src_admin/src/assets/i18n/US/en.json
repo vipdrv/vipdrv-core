@@ -306,5 +306,22 @@
       "invalidNameMessage": "Site name is not valid!",
       "invalidUrlMessage": "Site url is not valid!"
     }
+  },
+  "filters": {
+    "date": {
+      "allTime": "All time",
+      "today": "Today",
+      "lastWeek": "Last week",
+      "thisMonth": "This month",
+      "lastMonth": "Last month"
+    },
+    "isReachedByManager": {
+      "all": "All",
+      "reached": "Yes",
+      "notReached": "No"
+    },
+    "sites": {
+      "all": "All"
+    }
   }
 }

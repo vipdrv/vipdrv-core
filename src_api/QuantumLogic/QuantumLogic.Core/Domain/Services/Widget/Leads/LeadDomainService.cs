@@ -29,6 +29,22 @@ namespace QuantumLogic.Core.Domain.Services.Widget.Leads
             entity.RecievedUtc = DateTime.UtcNow;
             return base.CreateAsync(entity);
         }
+        public async Task ChangeIsNewAsync(int id, bool newValue)
+        {
+            Lead entity = await RetrieveAsync(id);
+            ((ILeadPolicy)Policy).PolicyUpdate(entity);
+            entity.IsNew = newValue;
+            ((ILeadValidationService)ValidationService).ValidateChangeIsNew(entity);
+            await Repository.UpdateAsync(entity);
+        }
+        public async Task ChangeIsReachedByManagerAsync(int id, bool newValue)
+        {
+            Lead entity = await RetrieveAsync(id);
+            ((ILeadPolicy)Policy).PolicyUpdate(entity);
+            entity.IsReachedByManager = newValue;
+            ((ILeadValidationService)ValidationService).ValidateChangeIsReachedByManager(entity);
+            await Repository.UpdateAsync(entity);
+        }
 
         protected override Task CascadeDeleteActionAsync(Lead entity)
         {
