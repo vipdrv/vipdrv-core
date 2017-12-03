@@ -12,6 +12,7 @@ namespace QuantumLogic.Core.Domain.Entities.WidgetModule
         public string Name { get; set; }
         public string Url { get; set; }
         public string Contacts { get; set; }
+        public string ImageUrl { get; set; }
 
         #endregion
 
@@ -76,6 +77,7 @@ namespace QuantumLogic.Core.Domain.Entities.WidgetModule
             Name = actualEntity.Name;
             Url = actualEntity.Url;
             Contacts = actualEntity.Contacts;
+            ImageUrl = actualEntity.ImageUrl;
         }
 
         #endregion

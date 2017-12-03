@@ -1,5 +1,5 @@
 <div class="avatar-update-container"
-     *ngIf="isAvatarUrlDefined()">
+     *ngIf="isImageUrlDefined()">
     <div class="avatar-update-container-body">
         <div class="row">
             <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
@@ -7,9 +7,9 @@
                     <div class="col-12">
                         <img class="rounded-circle"
                              alt=" "
-                             [src]="getAvatarUrl()"
-                             [width]="avatarWidth"
-                             [height]="avatarHeight">
+                             [src]="getImageUrl()"
+                             [width]="imageWidth"
+                             [height]="imageHeight">
                     </div>
                 </div>
                 <div class="row avatar-update-row"
@@ -18,13 +18,13 @@
                         <button type="button"
                                 class="btn btn-sm btn-secondary"
                                 [disabled]="isPatchAvatarProcessing()"
-                                (click)="startEditAvatarViaCropper()">
+                                (click)="startEditImageViaCropper()">
                             <span translate>userProfile.tabs.patchAvatarComponent.defineAvatarViaFile</span>
                         </button>
                         <button type="button"
                                 class="btn btn-sm btn-secondary"
                                 [disabled]="isPatchAvatarProcessing()"
-                                (click)="startEditAvatarViaUrlInput()">
+                                (click)="startEditImageViaUrlInput()">
                             <span translate>userProfile.tabs.patchAvatarComponent.defineAvatarViaDirectUrl</span>
                         </button>
                     </div>
@@ -35,13 +35,13 @@
                         <button type="button"
                                 class="btn btn-sm btn-secondary pull-left test-drive-left-standalone-btn"
                                 [disabled]="isPatchAvatarProcessing()"
-                                (click)="cancelEditAvatarViaCropper()">
+                                (click)="cancelEditImageViaCropper()">
                             <span translate>general.actions.text_cancel</span>
                         </button>
                         <button type="button"
                                 class="btn btn-sm btn-secondary pull-left test-drive-right-standalone-btn"
                                 [disabled]="!isCropperImageDefined() || isPatchAvatarProcessing()"
-                                (click)="commitEditAvatarViaCropper()">
+                                (click)="commitEditImageViaCropper()">
                             <span translate>general.actions.text_accept</span>
                         </button>
                     </div>
@@ -52,13 +52,13 @@
                         <button type="button"
                                 class="btn btn-sm btn-secondary pull-left test-drive-left-standalone-btn"
                                 [disabled]="isPatchAvatarProcessing()"
-                                (click)="cancelEditAvatarViaUrlInput()">
+                                (click)="cancelEditImageViaUrlInput()">
                             <span translate>general.actions.text_cancel</span>
                         </button>
                         <button type="button"
                                 class="btn btn-sm btn-secondary pull-left test-drive-right-standalone-btn"
-                                [disabled]="!isTempAvatarUrlDefined() || isPatchAvatarProcessing()"
-                                (click)="commitEditAvatarViaUrlInput()">
+                                [disabled]="!isTempImageUrlDefined() || isPatchAvatarProcessing()"
+                                (click)="commitEditImageViaUrlInput()">
                             <span translate>general.actions.text_accept</span>
                         </button>
                     </div>
@@ -69,8 +69,8 @@
                 <div class="row">
                     <div class="col-12">
                         <img-cropper #avatarCropper
-                                     [image]="avatarCropperData"
-                                     [settings]="avatarCropperSettings">
+                                     [image]="imageCropperData"
+                                     [settings]="imageCropperSettings">
                         </img-cropper>
                     </div>
                 </div>
@@ -81,7 +81,7 @@
                                    id="avatar-browse-file"
                                    class="custom-file-input"
                                    [disabled]="isPatchAvatarProcessing()"
-                                   (change)="browseFileChangeListenerInAvatarCropper($event)">
+                                   (change)="browseFileChangeListenerInImageCropper($event)">
                             <span class="custom-file-control"></span>
                         </label>
                     </div>
@@ -103,7 +103,7 @@
                            autofocus=""
                            placeholder="http://www.google.com/avatar.jpg"
                            [disabled]="isPatchAvatarProcessing()"
-                           [(ngModel)]="tempAvatarUrl">
+                           [(ngModel)]="tempImageUrl">
                     <small id="avatar-url-help"
                            class="form-text text-muted"
                            translate>
@@ -129,7 +129,7 @@
                         class="btn btn-secondary pull-right test-drive-left-standalone-btn"
                         *ngIf="isResetAvatarAllowed()"
                         [disabled]="isResetAvatarDisabled()"
-                        (click)="resetAvatar()">
+                        (click)="resetImage()">
                     <span translate>general.actions.text_reset</span>
                 </button>
             </div>

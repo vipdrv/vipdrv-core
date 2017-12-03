@@ -4,12 +4,18 @@
 .test-drive-standalone-btn {
   margin-left:2px;
   margin-right:2px;
+  margin-top:1px;
+  margin-bottom:1px;
 }
 .test-drive-left-standalone-btn {
   margin-right:2px;
+  margin-top:1px;
+  margin-bottom:1px;
 }
 .test-drive-right-standalone-btn {
   margin-left:2px;
+  margin-top:1px;
+  margin-bottom:1px;
 }
 
 /// test-drive page styles
@@ -54,6 +60,18 @@
 }
 
 /// test-drive modal styles
+.test-drive-modal-body-edit-entity-container {
+
+}
+.test-drive-modal-body-edit-entity-container-row-image {
+
+}
+.test-drive-modal-body-edit-entity-container-row-input {
+
+}
+.test-drive-modal-body-edit-entity-container-row-select {
+
+}
 .test-drive-modal-close-btn {
 
 }
@@ -62,6 +80,17 @@
 }
 .test-drive-modal-header-text {
 
+}
+
+/// test-drive validation
+.test-drive-validation-message {
+  color: #dc3545;
+}
+.test-drive-invalid-input {
+  border-color: #dc3545;
+}
+.test-drive-valid-input {
+  border-color: #28a745;
 }
 
 /// test-drive loader styles

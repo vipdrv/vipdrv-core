@@ -8,9 +8,10 @@ using QuantumLogic.Data.EFContext;
 namespace QuantumLogic.Data.Migrations
 {
     [DbContext(typeof(QuantumLogicDbContext))]
-    partial class QuantumLogicDbContextModelSnapshot : ModelSnapshot
+    [Migration("20171202200008_AddedImageUrlToSite")]
+    partial class AddedImageUrlToSite
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "1.1.2")
@@ -221,10 +222,6 @@ namespace QuantumLogic.Data.Migrations
                     b.Property<int>("ExpertId");
 
                     b.Property<string>("FirstName");
-
-                    b.Property<bool>("IsNew");
-
-                    b.Property<bool>("IsReachedByManager");
 
                     b.Property<DateTime>("RecievedUtc");
 

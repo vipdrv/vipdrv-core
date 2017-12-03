@@ -46,12 +46,12 @@ namespace QuantumLogic.Core.Domain.Services.Widget.Sites
         {
             return new List<Expression<Func<Site, object>>>()
             {
-                entity => entity.Beverages,
-                entity => entity.Experts,
+                //entity => entity.Beverages,
+                //entity => entity.Experts,
                 entity => entity.Leads,
-                entity => entity.Routes,
+                //entity => entity.Routes,
                 entity => entity.User,
-                entity => entity.WidgetTheme
+                //entity => entity.WidgetTheme
             }
             .ToArray();
         }

@@ -84,12 +84,16 @@
   },
   "sites": {
     "title": "Sites",
+    "card": {
+      "leads": "Leads",
+      "new": "new"
+    },
     "modal": {
       "title": "Site details",
       "siteName": "Name",
-      "siteUrl": "Url",
-      "cancel": "Cancel",
-      "apply": "Save"
+      "siteNameHelp": "Enter the name of the site.",
+      "siteUrl": "Site url",
+      "siteUrlHelp": "Enter the url of the site (like http://yoursite.url)."
     },
     "table": {
       "headerText_siteName": "Site name",
@@ -281,6 +285,24 @@
         "emailHelp": "Enter your contact e-mail (it will be used as main e-mail after commit).",
         "phoneNumberHelp": "Enter your contact phone number (not required)."
       }
+    }
+  },
+  "shared": {
+    "components": {
+      "imageSelect": {
+        "defineImageViaFile": "Set image via file",
+        "defineAvatarViaDirectUrl": "Set image via url",
+        "cancel": "Cancel",
+        "accept": "Accept",
+        "imageUrl": "Image direct url",
+        "imageUrlHelp": "Define image via entering direct url to it."
+      }
+    }
+  },
+  "validation": {
+    "sites": {
+      "invalidNameMessage": "Site name is not valid!",
+      "invalidUrlMessage": "Site url is not valid!"
     }
   }
 }
