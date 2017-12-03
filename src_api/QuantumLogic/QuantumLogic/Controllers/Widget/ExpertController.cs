@@ -58,8 +58,9 @@ namespace QuantumLogic.WebApi.Controllers.Widget
         public Task<GetAllResponse<ExpertDto>> GetAllAsync([FromBody]ExpertGetAllRequest request, uint page = 0, uint pageSize = 0)
         {
             Expression<Func<Expert, bool>> filter = (entity) =>
-               (!request.SiteId.HasValue || request.SiteId == entity.SiteId) &&
-               (String.IsNullOrEmpty(request.SiteBeautyId) || request.SiteBeautyId == entity.Site.BeautyId);
+                (!request.UserId.HasValue || request.UserId.Value == entity.Site.UserId) &&
+                (!request.SiteId.HasValue || request.SiteId.Value == entity.SiteId) &&
+                (String.IsNullOrEmpty(request.SiteBeautyId) || request.SiteBeautyId == entity.Site.BeautyId);
 
             return InnerGetAllAsync(filter, request.Sorting, page, pageSize);
         }

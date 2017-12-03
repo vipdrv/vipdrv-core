@@ -308,6 +308,7 @@
     }
   },
   "filters": {
+    "all": "All",
     "date": {
       "allTime": "All time",
       "today": "Today",
@@ -319,9 +320,6 @@
       "all": "All",
       "reached": "Yes",
       "notReached": "No"
-    },
-    "sites": {
-      "all": "All"
     }
   }
 }

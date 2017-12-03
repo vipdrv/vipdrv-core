@@ -211,6 +211,9 @@ namespace QuantumLogic.WebApi.Controllers.Widget
             return (entity) =>
                 (!request.UserId.HasValue || request.UserId.Value == entity.Site.UserId) &&
                 (!request.SiteId.HasValue || request.SiteId.Value == entity.SiteId) &&
+                (!request.ExpertId.HasValue || request.ExpertId.Value == entity.ExpertId) &&
+                (!request.RouteId.HasValue || request.RouteId.Value == entity.RouteId) &&
+                (!request.BeverageId.HasValue || request.BeverageId.Value == entity.BeverageId) &&
                 (!request.RecievedDateTime.HasValue || request.RecievedDateTime.Value <= entity.RecievedUtc) &&
                 (!request.IsReachedByManager.HasValue || request.IsReachedByManager.Value == entity.IsReachedByManager) &&
                 (String.IsNullOrEmpty(request.FullName) || !String.IsNullOrEmpty(entity.FullName) && entity.FullName.ToUpper().Contains(request.FullName.ToUpper())) &&

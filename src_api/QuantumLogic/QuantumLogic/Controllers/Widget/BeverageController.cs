@@ -57,7 +57,9 @@ namespace QuantumLogic.WebApi.Controllers.Widget
         [HttpPost("get-all/{page?}/{pageSize?}")]
         public Task<GetAllResponse<BeverageDto>> GetAllAsync([FromBody]BeverageGetAllRequest request, uint page = 0, uint pageSize = 0)
         {
-            Expression<Func<Beverage, bool>> filter = (entity) => request.SiteId.HasValue ? request.SiteId == entity.SiteId : true;
+            Expression<Func<Beverage, bool>> filter = (entity) =>
+                (!request.UserId.HasValue || request.UserId.Value == entity.Site.UserId) &&
+                (!request.SiteId.HasValue || request.SiteId.Value == entity.SiteId);
             return InnerGetAllAsync(filter, request.Sorting, page, pageSize);
         }
 

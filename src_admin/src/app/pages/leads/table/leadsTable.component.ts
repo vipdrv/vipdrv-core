@@ -5,8 +5,10 @@ import { IAuthorizationService, AuthorizationService } from './../../../services
 import { ILeadApiService, LeadApiService, GetAllResponse } from './../../../services/index';
 import { ILeadEntityPolicyService, LeadEntityPolicyService } from './../../../services/index';
 import { ISiteApiService, SiteApiService } from './../../../services/index';
+import { IExpertApiService, ExpertApiService } from './../../../services/index';
+import { IRouteApiService, RouteApiService } from './../../../services/index';
+import { IBeverageApiService, BeverageApiService } from './../../../services/index';
 import { LeadEntity } from './../../../entities/index';
-import {forEach} from "@angular/router/src/utils/collection";
 @Component({
     selector: 'leads-table',
     styleUrls: ['./leadsTable.scss'],
@@ -16,7 +18,7 @@ export class LeadsTableComponent implements OnInit {
     /// inputs
     @Input() pageNumber: number;
     @Input() pageSize: number;
-    @Input() sorting: string;
+    // @Input() sorting: string;
     @Input() filter: any;
     /// modals
     @ViewChild('leadDetailsInfoModal')
@@ -24,7 +26,7 @@ export class LeadsTableComponent implements OnInit {
     /// settings
     private _defaultPageNumber: number = 1;
     private _defaultPageSize: number = 10;
-    private _defaultSorting: string = 'recievedUtc desc';
+    // private _defaultSorting: string = 'recievedUtc desc';
     private _defaultFilter: any = null;
     protected maxPaginationSize: number = 3;
     protected pageSizeValues: Array<number> = [5, 10, 25, 50, 100];
@@ -35,7 +37,25 @@ export class LeadsTableComponent implements OnInit {
     protected siteOptions: Array<any> = [
         {
             value: null,
-            displayText: 'filters.sites.all'
+            displayText: 'filters.all'
+        },
+    ];
+    protected expertOptions: Array<any> = [
+        {
+            value: null,
+            displayText: 'filters.all'
+        },
+    ];
+    protected beverageOptions: Array<any> = [
+        {
+            value: null,
+            displayText: 'filters.all'
+        },
+    ];
+    protected routeOptions: Array<any> = [
+        {
+            value: null,
+            displayText: 'filters.all'
         },
     ];
     /// injected dependencies
@@ -44,28 +64,36 @@ export class LeadsTableComponent implements OnInit {
     protected leadApiService: ILeadApiService;
     protected leadEntityPolicy: ILeadEntityPolicyService;
     protected siteApiService: ISiteApiService;
+    protected expertApiService: IExpertApiService;
+    protected routeApiService: IRouteApiService;
+    protected beverageApiService: IBeverageApiService;
     /// ctor
     constructor(
         logger: ConsoleLogger,
         authorizationManager: AuthorizationService,
         leadApiService: LeadApiService,
         leadEntityPolicy: LeadEntityPolicyService,
-        siteApiService: SiteApiService) {
+        siteApiService: SiteApiService,
+        expertApiService: ExpertApiService,
+        routeApiService: RouteApiService,
+        beverageApiService: BeverageApiService) {
         this.logger = logger;
         this.authorizationManager = authorizationManager;
         this.leadApiService = leadApiService;
         this.leadEntityPolicy = leadEntityPolicy;
         this.siteApiService = siteApiService;
+        this.expertApiService = expertApiService;
+        this.routeApiService = routeApiService;
+        this.beverageApiService = beverageApiService;
         this.logger.logDebug('LeadsTableComponent: Component has been constructed.');
     }
     /// methods
     ngOnInit(): void {
         this.pageNumber = Variable.isNotNullOrUndefined(this.pageNumber) ? this.pageNumber : this._defaultPageNumber;
         this.pageSize = Variable.isNotNullOrUndefined(this.pageSize) ? this.pageSize : this._defaultPageSize;
-        this.sorting = Variable.isNotNullOrUndefined(this.sorting) ? this.sorting : this._defaultSorting;
+        // this.sorting = Variable.isNotNullOrUndefined(this.sorting) ? this.sorting : this._defaultSorting;
         this.filter = Variable.isNotNullOrUndefined(this.filter) ? this.filter : this._defaultFilter;
         const self = this;
-        self.fillSitesFilter();
         self.firstLoadingPromise = self
             .getAllEntities()
             .then(
@@ -76,6 +104,17 @@ export class LeadsTableComponent implements OnInit {
                     self.firstLoadingPromise = null;
                 }
             );
+        // now will not wait this (filters will be loaded in background without any reaction)
+        self.fillFilters();
+    }
+    protected fillFilters(): Promise<any[]> {
+        const fillFiltersPromises: [Promise<void>, Promise<void>] = [
+            this.fillSitesFilter(),
+            this.fillExpertsFilter(),
+            this.fillBeveragesFilter(),
+            this.fillRoutesFilter(),
+        ];
+        return Promise.all(fillFiltersPromises);
     }
     protected fillSitesFilter(): Promise<void> {
         const self = this;
@@ -84,12 +123,84 @@ export class LeadsTableComponent implements OnInit {
             userId: this.authorizationManager.currentUserId
         };
         return self.siteApiService
-            .getAll(0, 25, 'name asc', filter)
+            .getAll(0, 50, 'name asc', filter)
             .then(function (response: GetAllResponse<any>): void {
                 for (const site of response.items) {
                     self.siteOptions.push({
                         value: site.id,
                         displayText: site.name
+                    });
+                }
+            })
+            .then(
+                () => {
+
+                },
+                () => {
+
+                });
+    }
+    protected fillExpertsFilter(): Promise<void> {
+        const self = this;
+        self.logger.logTrase('LeadsTableComponent: Get relations (all experts) called.');
+        const filter = {
+            userId: this.authorizationManager.currentUserId
+        };
+        return self.expertApiService
+            .getAll(0, 50, 'name asc', filter)
+            .then(function (response: GetAllResponse<any>): void {
+                for (const entity of response.items) {
+                    self.expertOptions.push({
+                        value: entity.id,
+                        displayText: entity.name
+                    });
+                }
+            })
+            .then(
+                () => {
+
+                },
+                () => {
+
+                });
+    }
+    protected fillBeveragesFilter(): Promise<void> {
+        const self = this;
+        self.logger.logTrase('LeadsTableComponent: Get relations (all beverages) called.');
+        const filter = {
+            userId: this.authorizationManager.currentUserId
+        };
+        return self.beverageApiService
+            .getAll(0, 50, 'name asc', filter)
+            .then(function (response: GetAllResponse<any>): void {
+                for (const entity of response.items) {
+                    self.beverageOptions.push({
+                        value: entity.id,
+                        displayText: entity.name
+                    });
+                }
+            })
+            .then(
+                () => {
+
+                },
+                () => {
+
+                });
+    }
+    protected fillRoutesFilter(): Promise<void> {
+        const self = this;
+        self.logger.logTrase('LeadsTableComponent: Get relations (all routes) called.');
+        const filter = {
+            userId: this.authorizationManager.currentUserId
+        };
+        return self.routeApiService
+            .getAll(0, 50, 'name asc', filter)
+            .then(function (response: GetAllResponse<any>): void {
+                for (const route of response.items) {
+                    self.routeOptions.push({
+                        value: route.id,
+                        displayText: route.name
                     });
                 }
             })
@@ -108,7 +219,7 @@ export class LeadsTableComponent implements OnInit {
         filter.userId = this.authorizationManager.currentUserId;
         self.extendFilter(filter);
         self.getAllPromise = self.leadApiService
-            .getAll(self.pageNumber - 1, self.pageSize, self.sorting, filter)
+            .getAll(self.pageNumber - 1, self.pageSize, self.buildSorting(), filter)
             .then(function (response: GetAllResponse<LeadEntity>): Promise<void> {
                 self.totalCount = response.totalCount;
                 self.items = response.items;
@@ -148,11 +259,11 @@ export class LeadsTableComponent implements OnInit {
         self.extendFilter(filter);
         self.exportToExcelPromise = self.leadApiService
             /// #40 - download All entities from Lead table (ofc its stupid move - uncomment after see this)
-            ///.exportToExcel(self.pageNumber - 1, self.pageSize, self.sorting, filter)
+            ///.exportToExcel(self.pageNumber - 1, self.pageSize, self.buildSorting(), filter)
             .exportToExcel(
                 null,
                 null,
-                self.sorting,
+                self.buildSorting(),
                 { 'userId': this.authorizationManager.currentUserId })
             .then(function (response: string): Promise<void> {
                 window.open(response, '_self', '');
@@ -179,6 +290,9 @@ export class LeadsTableComponent implements OnInit {
         const filtersWereNotChanged: boolean =
             this.tableFilters.recievedDateTime === this.oldTableFilters.recievedDateTime &&
             this.tableFilters.siteId === this.oldTableFilters.siteId &&
+            this.tableFilters.expertId === this.oldTableFilters.expertId &&
+            this.tableFilters.routeId === this.oldTableFilters.routeId &&
+            this.tableFilters.beverageId === this.oldTableFilters.beverageId &&
             this.tableFilters.fullName === this.oldTableFilters.fullName &&
             this.tableFilters.firstName === this.oldTableFilters.firstName &&
             this.tableFilters.secondName === this.oldTableFilters.secondName &&
@@ -197,6 +311,9 @@ export class LeadsTableComponent implements OnInit {
             this.oldTableFilters.secondName = this.tableFilters.secondName;
             this.oldTableFilters.isReachedByManager = this.tableFilters.isReachedByManager;
             this.oldTableFilters.siteId = this.tableFilters.siteId;
+            this.oldTableFilters.expertId = this.tableFilters.expertId;
+            this.oldTableFilters.routeId = this.tableFilters.routeId;
+            this.oldTableFilters.beverageId = this.tableFilters.beverageId;
             this.oldTableFilters.site = this.tableFilters.site;
             this.oldTableFilters.email = this.tableFilters.email;
             this.oldTableFilters.phone = this.tableFilters.phone;
@@ -331,6 +448,9 @@ export class LeadsTableComponent implements OnInit {
         secondName: null,
         isReachedByManager: null,
         siteId: null,
+        expertId: null,
+        routeId: null,
+        beverageId: null,
         site: null,
         email: null,
         phone: null,
@@ -377,6 +497,15 @@ export class LeadsTableComponent implements OnInit {
         if (Variable.isNotNullOrUndefined(this.tableFilters.siteId)) {
             filter.siteId = this.tableFilters.siteId;
         }
+        if (Variable.isNotNullOrUndefined(this.tableFilters.expertId)) {
+            filter.expertId = this.tableFilters.expertId;
+        }
+        if (Variable.isNotNullOrUndefined(this.tableFilters.routeId)) {
+            filter.routeId = this.tableFilters.routeId;
+        }
+        if (Variable.isNotNullOrUndefined(this.tableFilters.beverageId)) {
+            filter.beverageId = this.tableFilters.beverageId;
+        }
         if (Variable.isNotNullOrUndefined(this.tableFilters.isReachedByManager)) {
             filter.isReachedByManager = this.tableFilters.isReachedByManager;
         }
@@ -407,6 +536,9 @@ export class LeadsTableComponent implements OnInit {
         secondName: null,
         isReachedByManager: null,
         siteId: null,
+        expertId: null,
+        routeId: null,
+        beverageId: null,
         site: null,
         email: null,
         phone: null,
@@ -509,6 +641,79 @@ export class LeadsTableComponent implements OnInit {
             displayText: 'filters.isReachedByManager.notReached'
         },
     ];
+    /// sorting
+    protected sortingRules: Array<any> = [
+        {
+          field: 'recievedUtc',
+          isAsc: false,
+        },
+    ];
+    protected isSortingAsc(targetField: string): boolean {
+        const rule = this.getSortingRule(targetField);
+        return Variable.isNotNullOrUndefined(rule) && rule.isAsc;
+    }
+    protected isSortingDesc(targetField: string): boolean {
+        const rule = this.getSortingRule(targetField);
+        return Variable.isNotNullOrUndefined(rule) && !rule.isAsc;
+    }
+    protected getSortingRule(targetField: string): any {
+        const elems = this.sortingRules.filter(r => r.field === targetField);
+        return elems.length === 1 ? elems[0] : null;
+    }
+    protected getSortingIndex(targetField: string): number {
+        let result: number;
+        if (this.sortingRules.length > 1) {
+            const index = this.sortingRules.findIndex(r => r.field === targetField);
+            if (index > -1) {
+                result = index + 1;
+            }
+        } else {
+            result = null;
+        }
+        return result;
+    }
+    protected changeSorting(targetField: string): Promise<void> {
+        let actionPromise: Promise<void>;
+        if (this.isChangeSortingDisabled()) {
+            actionPromise = Promise.resolve();
+        } else {
+            const rule = this.getSortingRule(targetField);
+            if (Variable.isNotNullOrUndefined(rule)) {
+                if (rule.isAsc) {
+                    rule.isAsc = false;
+                } else {
+                    const index = this.sortingRules.findIndex(r => r.field === targetField);
+                    if (index > -1) {
+                        this.sortingRules.splice(index, 1);
+                    }
+                }
+            } else {
+                this.sortingRules.push({
+                    field: targetField,
+                    isAsc: true,
+                });
+            }
+            actionPromise = this.getAllEntities();
+        }
+        return actionPromise;
+    }
+    protected isChangeSortingDisabled(): boolean {
+        return Variable.isNotNullOrUndefined(this.getAllPromise) ||
+            Variable.isNotNullOrUndefined(this.getEntityPromise);
+    }
+    protected buildSorting(): string {
+        let sorting: string = null;
+        if (this.sortingRules.length > 0) {
+            sorting = '';
+            for (let i = 0; i < this.sortingRules.length; i++) {
+                sorting += `${this.sortingRules[i].field} ${this.sortingRules[i].isAsc ? 'asc' : 'desc'}`;
+                if (i < this.sortingRules.length - 1) {
+                    sorting += ', '
+                }
+            }
+        }
+        return sorting;
+    }
     /// promise manager
     protected firstLoadingPromise: Promise<void>;
     protected getAllPromise: Promise<void>;

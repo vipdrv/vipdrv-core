@@ -7,17 +7,32 @@
 .leads-table-header {
 
 }
+.leads-table-body-column {
+
+}
+.leads-table-body-column-with-sorting {
+  cursor: pointer;
+}
 .leads-table-body-column-date {
   width: 140px;
 }
 .leads-table-body-column-reached {
-  width: 90px;
+  width: 110px;
 }
 .leads-table-body-column-site {
-  width: 200px;
+  width: 180px;
 }
 .leads-table-body-column-phone {
   width: 100px;
+}
+.leads-table-body-column-expert {
+  width: 150px;
+}
+.leads-table-body-column-route {
+  width: 150px;
+}
+.leads-table-body-column-beverage {
+  width: 150px;
 }
 .leads-export-btn {
 
