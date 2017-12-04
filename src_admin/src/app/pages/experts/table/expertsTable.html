@@ -178,6 +178,7 @@
                     <div class="collapse" id="collapseExample">
                         <div class="card card-block">
                             <working-hours-simple [workingHours]="entity.workingHours"
+                                                  [isComponentReadonly]="isWorkingHoursComponentReadonly(entity)"
                                                   (workingHoursChanged)='actualizeWorkingHours($event)'>
                             </working-hours-simple>
                         </div>

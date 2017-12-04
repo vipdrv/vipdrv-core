@@ -271,6 +271,9 @@ export class ExpertsTableComponent implements OnInit {
     protected isSelectedEntityDefined(): boolean {
         return Variable.isNotNullOrUndefined(this.entity);
     }
+    protected isWorkingHoursComponentReadonly(entity: ExpertEntity) {
+        return false;
+    }
     /// helpers
     private getPageNumber(): number {
         return Variable.isNotNullOrUndefined(this.pageNumber) ? this.pageNumber : this._defaultPageNumber;
