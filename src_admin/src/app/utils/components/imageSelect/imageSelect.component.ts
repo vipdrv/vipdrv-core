@@ -1,4 +1,5 @@
-import { Component, ViewChild, Input, Output, EventEmitter, OnInit } from '@angular/core';
+import { Component, ViewChild, Input, Output, EventEmitter } from '@angular/core';
+import { OnInit, OnChanges, SimpleChanges, SimpleChange } from '@angular/core';
 import { CropperSettings, ImageCropperComponent } from 'ng2-img-cropper';
 import { Variable } from './../../../utils/index';
 const enum ComponentMode {
@@ -11,7 +12,7 @@ const enum ComponentMode {
     styleUrls: ['./imageSelect.scss'],
     templateUrl: './imageSelect.html',
 })
-export class ImageSelectComponent implements OnInit {
+export class ImageSelectComponent implements OnInit, OnChanges {
     /// inputs
     @Input() isReadOnly: boolean = false;
     @Input() imageUrl: string;
@@ -43,6 +44,13 @@ export class ImageSelectComponent implements OnInit {
         this.newImageUrl = this.imageUrl;
         this.componentMode = 1;
         this.initializeImageCropper();
+    }
+    ngOnChanges(changes: SimpleChanges) {
+        const workingHoursChange: SimpleChange = changes['imageUrl'];
+        if (Variable.isNotNullOrUndefined(workingHoursChange) &&
+            this.newImageUrl !== this.imageUrl) {
+            this.newImageUrl = this.imageUrl;
+        }
     }
     getColumnRules(): string{
         return this.columnRules;

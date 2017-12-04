@@ -70,8 +70,8 @@
                     <div class="user-profile-tab-content"
                          *ngIf="isUserDefined()">
                         <user-avatar-update [userId]="userId"
-                                            [imageUrl]="user.avatarUrl"
-                                            (imageUrlSelected)='onUpdateAvatarUrl($event)'></user-avatar-update>
+                                            [avatarUrl]="user.avatarUrl"
+                                            (avatarUrlPatched)='onUpdateAvatarUrl($event)'></user-avatar-update>
                     </div>
                 </div>
                 <div id="changePassword"
