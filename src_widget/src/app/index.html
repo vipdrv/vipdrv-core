@@ -13,6 +13,24 @@
     <script type="text/javascript" src="app.js?hash=%hash%"></script>
     <script src="https://use.fontawesome.com/b9989cd145.js"></script>
 </head>
+
+<!-- AddEvent script -->
+<script type="text/javascript" src="https://addevent.com/libs/atc/1.6.1/atc.min.js" async defer></script>
+
+<!-- AddEvent Settings -->
+<script type="text/javascript">
+    window.addeventasync = function() {
+        addeventatc.settings({
+            appleical  : {show:false, text:"Apple Calendar"},
+            google     : {show:true, text:"Google <em></em>"},
+            outlook    : {show:false, text:"Outlook"},
+            outlookcom : {show:false, text:"Outlook.com <em>(online)</em>"},
+            yahoo      : {show:false, text:"Yahoo <em>(online)</em>"}
+        });
+    };
+</script>
+
+
 <body class="h-100">
 <div ng-app="myApp" class="h-100">
     <td-root class="h-100"></td-root>
