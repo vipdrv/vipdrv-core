@@ -62,7 +62,7 @@
                 <button type="button"
                         class="btn btn-outline-danger btn-sm"
                         translate
-                        (click)="deleteEntity(item.id); $event.stopPropagation();">
+                        (click)="openConfirmationDeleteModal(item.id); $event.stopPropagation();">
                     general.actions.text_delete
                 </button>
             </td>
@@ -91,105 +91,16 @@
         </route-details-info>
         <div *ngIf="isSelectedEntityDefined() && isOperationModeAddOrUpdate">
             <div class="row">
-                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-                    <div class="route-avatar-image">
-                        <img class="rounded-circle"
-                             [src]="getAvatar()"
-                             [width]="imageWidth"
-                             [height]="imageHeight">
-                    </div>
-                    <div class="route-avatar-btns"
-                         *ngIf="showAvatarButtons">
-                        <button type="button"
-                                class="btn btn-sm btn-secondary"
-                                (click)="browseAvatar()">
-                            <span translate>routes.modal.browseAvatar</span>
-                        </button>
-                        <button type="button"
-                                class="btn btn-sm btn-secondary"
-                                (click)="changeAvatarUrl()">
-                            <span translate>routes.modal.changeAvatarUrl</span>
-                        </button>
-                    </div>
-                    <div class="route-avatar-change-url"
-                         *ngIf="showAvatarChangeUrl">
-                        <div class="row">
-                            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-                                <div class="form-group row">
-                                    <label class="col-2 col-form-label"
-                                           for="routePhotoUrl"
-                                           translate>
-                                        routes.modal.routePhotoUrl
-                                    </label>
-                                    <div class="col-10">
-                                        <input id="routePhotoUrl"
-                                               type="text"
-                                               class="form-control"
-                                               placeholder="http://www.google.com/avatar.jpg"
-                                               [(ngModel)]="stubAvatarUrl">
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-                                        <button type="button"
-                                                style="margin-left: 2px; margin-right: 2px;"
-                                                class="btn btn-sm btn-primary pull-right"
-                                                (click)="changeAvatarUrlAccept()">
-                                            <span translate>routes.modal.changeAvatarUrlAccept</span>
-                                        </button>
-                                        <button type="button"
-                                                style="margin-left: 2px; margin-right: 2px;"
-                                                class="btn btn-sm btn-default pull-right"
-                                                (click)="changeAvatarUrlCancel()">
-                                            <span translate>routes.modal.changeAvatarUrlCancel</span>
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="route-avatar-browse"
-                         *ngIf="showAvatarBrowse">
-                        <div class="row">
-                            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-                                <div class="row">
-                                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-                                        <label class="custom-file">
-                                            <input type="file"
-                                                   id="avatar-browse-file"
-                                                   class="custom-file-input"
-                                                   (change)="avatarBrowseFileChangeListener($event)">
-                                            <span class="custom-file-control"></span>
-                                        </label>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-                                        <img-cropper #cropper
-                                                     [image]="imageCropperData"
-                                                     [settings]="imageCropperSettings">
-                                        </img-cropper>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-                                        <button type="button"
-                                                style="margin-left: 2px; margin-right: 2px;"
-                                                class="btn btn-sm btn-primary pull-right"
-                                                (click)="showAvatarBrowseAccept()">
-                                            <span translate>routes.modal.avatarBrowseAccept</span>
-                                        </button>
-                                        <button type="button"
-                                                style="margin-left: 2px; margin-right: 2px;"
-                                                class="btn btn-sm btn-default pull-right"
-                                                (click)="showAvatarBrowseCancel()">
-                                            <span translate>routes.modal.avatarBrowseCancel</span>
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                <div class="col-12">
+                    <image-select [isReadOnly]="isImageComponentReadOnly()"
+                                  [imageUrl]="entity.photoUrl"
+                                  [defaultImageUrl]="defaultImageUrl"
+                                  [imageWidth]="imageWidth"
+                                  [imageHeight]="imageHeight"
+                                  [isRounded]="isImageRounded"
+                                  [imageAlt]="imageAlt"
+                                  [columnRules]="columnRules"
+                                  (imageUrlSelected)="onNewAvatarSelected($event)"></image-select>
                 </div>
             </div>
             <hr>
@@ -233,6 +144,41 @@
                 *ngIf="isOperationModeAddOrUpdate"
                 (click)="modalApply(); $event.stopPropagation();">
             <span translate>general.actions.modalApply</span>
+        </button>
+    </modal-footer>
+</modal>
+
+<modal #confirmationDeleteModal
+       [backdrop]="'static'">
+    <modal-header>
+        <h5 class="modal-title">
+            <span class="test-drive-modal-header-text" translate>
+                confirmation.title
+            </span>
+        </h5>
+        <button type="button"
+                class="close"
+                aria-label="Close"
+                (click)="closeConfirmationDeleteModal(); $event.stopPropagation();">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </modal-header>
+    <modal-body>
+        <span [translateParams]="{ routeName: getDeleteCandidateDisplayText() }"
+              translate>
+            confirmation.routeDeleteAnswer_routeName
+        </span>
+    </modal-body>
+    <modal-footer>
+        <button type="button"
+                class="btn btn-secondary test-drive-modal-close-btn"
+                (click)="closeConfirmationDeleteModal(); $event.stopPropagation();">
+            <span translate>confirmation.cancel</span>
+        </button>
+        <button type="button"
+                class="btn btn-primary test-drive-modal-apply-btn"
+                (click)="acceptConfirmationDeleteModal(); $event.stopPropagation();">
+            <span translate>confirmation.confirm</span>
         </button>
     </modal-footer>
 </modal>
