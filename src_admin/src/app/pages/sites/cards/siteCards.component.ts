@@ -27,6 +27,7 @@ export class SiteCardsComponent implements OnInit {
     /// data fields
     protected items: Array<SiteEntity>;
     protected selectedEntity: SiteEntity;
+    protected totalCount: number;
     /// injected dependencies
     protected logger: ILogger;
     protected router: Router;
@@ -72,9 +73,10 @@ export class SiteCardsComponent implements OnInit {
             userId: this.authorizationManager.currentUserId
         };
         self._getManyPromise = self.siteApiService
-            .getAll(0, 10, null, filter)
+            .getAll(0, 25, null, filter)
             .then(function (response: GetAllResponse<SiteEntity>): Promise<void> {
                 self.items = response.items;
+                self.totalCount = response.totalCount;
                 self._getManyPromise = null;
                 return Promise.resolve();
             })
@@ -131,6 +133,7 @@ export class SiteCardsComponent implements OnInit {
                     .findIndex((item: SiteEntity) => item.id === id);
                 if (elementIndex > -1) {
                     self.items.splice(elementIndex, 1);
+                    self.totalCount--;
                 }
                 return Promise.resolve();
             })
@@ -214,6 +217,7 @@ export class SiteCardsComponent implements OnInit {
                             self.items.splice(elementIndex, 1, response);
                         } else {
                             self.items.push(response);
+                            self.totalCount++;
                         }
                         self.selectedEntity = null;
                         self._siteDetailsModalMode = null;
@@ -289,7 +293,9 @@ export class SiteCardsComponent implements OnInit {
         //     this._getEntityId === entity.id;
     }
     isActionCreateAllowed(): boolean {
-        return this.siteEntityPolicy.canCreate();
+        return this.siteEntityPolicy.canCreate() &&
+            this.authorizationManager.currentUser &&
+            this.authorizationManager.currentUser.maxSitesCount > this.totalCount;
     }
     isActionCreateDisabled(): boolean {
         return this.isAnyActionProcessing();

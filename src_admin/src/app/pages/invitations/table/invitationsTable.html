@@ -91,7 +91,6 @@
                 <td>
                     <button type="button"
                             class="btn btn-outline-danger btn-sm"
-                            [disabled]="true"
                             *ngIf="isDeleteAvailable(item)"
                             (click)="deleteEntity(item.id); $event.stopPropagation();">
                         <span translate>invitations.actions.delete</span>
