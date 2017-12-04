@@ -24,8 +24,6 @@ export class ExpertsTableComponent implements OnInit {
     protected confirmationDeleteModal: ModalComponent;
     @ViewChild('expertDetailsModal')
     protected modal: ModalComponent;
-    @ViewChild('cropper', undefined)
-    protected cropper: ImageCropperComponent;
     /// fields
     private _defaultPageNumber: number = 0;
     private _defaultPageSize: number = 100;
@@ -36,11 +34,6 @@ export class ExpertsTableComponent implements OnInit {
     protected totalCount: number;
     protected items: Array<ExpertEntity>;
     protected entity: ExpertEntity;
-    protected avatarWidth: number;
-    protected avatarHeight: number;
-    protected avatarCropperData: any;
-    protected avatarCropperSettings: CropperSettings;
-    protected stubAvatarUrl: string;
     protected isOperationModeInfo: boolean;
     protected isOperationModeAddOrUpdate: boolean;
     /// properties
@@ -72,13 +65,10 @@ export class ExpertsTableComponent implements OnInit {
     constructor(siteApiService: ExpertApiService, contentApiService: ContentApiService) {
         this.expertApiService = siteApiService;
         this.contentApiService = contentApiService;
-        this.avatarWidth = 150;
-        this.avatarHeight = 150;
     }
     /// methods
     ngOnInit(): void {
         let self = this;
-        self.initializeAvatarCropper();
         self.getAllEntities()
             .then(() => self._isInitialized = true);
     }
@@ -222,7 +212,7 @@ export class ExpertsTableComponent implements OnInit {
         let self = this;
         self.entity = new ExpertEntity();
         self.entity.siteId = this.siteId;
-        self.entity.photoUrl = ExpertsConstants.ExpertAvatarDefault;
+        self.entity.photoUrl = ExpertsConstants.expertImageDefault;
         self.entity.isActive = true;
         self.entity.order = this.getNewEntityOrder();
         self.isOperationModeAddOrUpdate = true;
@@ -270,63 +260,6 @@ export class ExpertsTableComponent implements OnInit {
         this.isOperationModeAddOrUpdate = false;
         return this.modal.dismiss();
     }
-    // avatar
-    protected getAvatar(): any {
-        let avatar;
-        if (this.showAvatarBrowse && this.avatarCropperData && this.avatarCropperData.image) {
-            avatar = this.avatarCropperData.image;
-        } else if (this.showAvatarChangeUrl) {
-            avatar = this.stubAvatarUrl;
-        } else {
-            avatar = this.entity.photoUrl;
-        }
-        return avatar;
-    }
-    protected browseAvatar(): void {
-        this.avatarCropperData = {};
-        this.showAvatarButtons = false;
-        this.showAvatarBrowse = true;
-    }
-    protected showAvatarBrowseAccept(): void {
-        let self = this;
-        self.contentApiService
-            .postImage(self.avatarCropperData.image)
-            .then(function (imageUrl: string) {
-                // TODO: remove this stub result after implementing #27 - content controller
-                self.entity.photoUrl = self.avatarCropperData.image; // imageUrl;
-                self.showAvatarBrowseCancel();
-            });
-    }
-    protected showAvatarBrowseCancel(): void {
-        this.avatarCropperData = {};
-        this.showAvatarBrowse = false;
-        this.showAvatarButtons = true;
-    }
-    protected avatarBrowseFileChangeListener($event) {
-        let image: any = new Image();
-        let file: File = $event.target.files[0];
-        let fileReader: FileReader = new FileReader();
-        let self = this;
-        fileReader.onloadend = function (loadEvent: any): void {
-            image.src = loadEvent.target.result;
-            self.cropper.setImage(image);
-
-        };
-        fileReader.readAsDataURL(file);
-    }
-    protected changeAvatarUrl(): void {
-        this.showAvatarButtons = false;
-        this.showAvatarChangeUrl = true;
-    }
-    protected changeAvatarUrlAccept(): void {
-        this.entity.photoUrl = this.stubAvatarUrl;
-        this.changeAvatarUrlCancel();
-    }
-    protected changeAvatarUrlCancel(): void {
-        this.stubAvatarUrl = null;
-        this.showAvatarChangeUrl = false;
-        this.showAvatarButtons = true;
-    }
     // working hours
     protected actualizeWorkingHours(actualWorkingHours: Array<WorkingInterval>): void {
         this.entity.workingHours = actualWorkingHours;
@@ -357,21 +290,6 @@ export class ExpertsTableComponent implements OnInit {
             maxOrder = this.items[i].order > maxOrder ? this.items[i].order : maxOrder;
         }
         return maxOrder === 0 ? 0 : maxOrder + 1;
-    }
-    private initializeAvatarCropper(): void {
-        this.avatarCropperSettings = new CropperSettings();
-        this.avatarCropperSettings.rounded = true;
-        this.avatarCropperSettings.noFileInput = true;
-        this.avatarCropperSettings.minWithRelativeToResolution = true;
-        this.avatarCropperSettings.minWidth = this.avatarWidth;
-        this.avatarCropperSettings.minHeight = this.avatarHeight;
-        this.avatarCropperSettings.width = this.avatarWidth;
-        this.avatarCropperSettings.height = this.avatarHeight;
-        this.avatarCropperSettings.croppedWidth = this.avatarWidth;
-        this.avatarCropperSettings.croppedHeight = this.avatarHeight;
-        this.avatarCropperSettings.canvasWidth = this.avatarWidth * 2;
-        this.avatarCropperSettings.canvasHeight = this.avatarHeight * 2;
-        this.avatarCropperData = {};
     }
     /// confirmation delete modal
     protected deleteCandidateId: number;
@@ -404,5 +322,20 @@ export class ExpertsTableComponent implements OnInit {
         return self.confirmationDeleteModal
             .close()
             .then(() => self.deleteCandidateId = null);
+    }
+    /// move to new component
+    // avatar select
+    protected defaultImageUrl: string = ExpertsConstants.expertImageDefault;
+    protected imageWidth: number = ExpertsConstants.expertImageWidth;
+    protected imageHeight: number = ExpertsConstants.expertImageHeight;
+    protected isImageRounded: boolean = ExpertsConstants.isExpertImageRounded;
+    protected imageAlt: string = ExpertsConstants.expertImageAlt;
+    protected columnRules: string = 'col-xs-12 col-sm-12 col-md-12 col-lg-6 col-xl-6';
+    protected isImageComponentReadOnly(): boolean {
+        return false;
+    }
+    protected onNewAvatarSelected(newImageUrl: string): void {
+        this.entity.photoUrl = newImageUrl;
+        // this.logger.logTrase('...Component: New expert image has been selected.');
     }
 }

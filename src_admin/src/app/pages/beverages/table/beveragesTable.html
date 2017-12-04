@@ -91,105 +91,16 @@
         </beverage-details-info>
         <div *ngIf="isSelectedEntityDefined() && isOperationModeAddOrUpdate">
             <div class="row">
-                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-                    <div class="beverage-avatar-image">
-                        <img class="rounded-circle"
-                             [src]="getAvatar()"
-                             [width]="imageWidth"
-                             [height]="imageHeight">
-                    </div>
-                    <div class="beverage-avatar-btns"
-                         *ngIf="showAvatarButtons">
-                        <button type="button"
-                                class="btn btn-sm btn-secondary"
-                                (click)="browseAvatar()">
-                            <span translate>beverages.modal.browseAvatar</span>
-                        </button>
-                        <button type="button"
-                                class="btn btn-sm btn-secondary"
-                                (click)="changeAvatarUrl()">
-                            <span translate>beverages.modal.changeAvatarUrl</span>
-                        </button>
-                    </div>
-                    <div class="beverage-avatar-change-url"
-                         *ngIf="showAvatarChangeUrl">
-                        <div class="row">
-                            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-                                <div class="form-group row">
-                                    <label class="col-2 col-form-label"
-                                           for="beveragePhotoUrl"
-                                           translate>
-                                        beverages.modal.beveragePhotoUrl
-                                    </label>
-                                    <div class="col-10">
-                                        <input id="beveragePhotoUrl"
-                                               type="text"
-                                               class="form-control"
-                                               placeholder="http://www.google.com/avatar.jpg"
-                                               [(ngModel)]="stubAvatarUrl">
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-                                        <button type="button"
-                                                style="margin-left: 2px; margin-right: 2px;"
-                                                class="btn btn-sm btn-primary pull-right"
-                                                (click)="changeAvatarUrlAccept()">
-                                            <span translate>beverages.modal.changeAvatarUrlAccept</span>
-                                        </button>
-                                        <button type="button"
-                                                style="margin-left: 2px; margin-right: 2px;"
-                                                class="btn btn-sm btn-default pull-right"
-                                                (click)="changeAvatarUrlCancel()">
-                                            <span translate>beverages.modal.changeAvatarUrlCancel</span>
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="beverage-avatar-browse"
-                         *ngIf="showAvatarBrowse">
-                        <div class="row">
-                            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-                                <div class="row">
-                                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-                                        <label class="custom-file">
-                                            <input type="file"
-                                                   id="avatar-browse-file"
-                                                   class="custom-file-input"
-                                                   (change)="avatarBrowseFileChangeListener($event)">
-                                            <span class="custom-file-control"></span>
-                                        </label>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-                                        <img-cropper #cropper
-                                                     [image]="imageCropperData"
-                                                     [settings]="imageCropperSettings">
-                                        </img-cropper>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-                                        <button type="button"
-                                                style="margin-left: 2px; margin-right: 2px;"
-                                                class="btn btn-sm btn-primary pull-right"
-                                                (click)="showAvatarBrowseAccept()">
-                                            <span translate>beverages.modal.avatarBrowseAccept</span>
-                                        </button>
-                                        <button type="button"
-                                                style="margin-left: 2px; margin-right: 2px;"
-                                                class="btn btn-sm btn-default pull-right"
-                                                (click)="showAvatarBrowseCancel()">
-                                            <span translate>beverages.modal.avatarBrowseCancel</span>
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                <div class="col-12">
+                    <image-select [isReadOnly]="isImageComponentReadOnly()"
+                                  [imageUrl]="entity.photoUrl"
+                                  [defaultImageUrl]="defaultImageUrl"
+                                  [imageWidth]="imageWidth"
+                                  [imageHeight]="imageHeight"
+                                  [isRounded]="isImageRounded"
+                                  [imageAlt]="imageAlt"
+                                  [columnRules]="columnRules"
+                                  (imageUrlSelected)="onNewAvatarSelected($event)"></image-select>
                 </div>
             </div>
             <hr>
