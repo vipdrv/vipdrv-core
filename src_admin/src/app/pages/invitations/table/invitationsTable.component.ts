@@ -76,16 +76,19 @@ export class InvitationsTableComponent implements OnInit {
     }
     protected deleteEntity(id: number): Promise<void> {
         const self = this;
-        // self.deleteEntityPromise = self.userApiService
-        //     .delete(id)
-        //     .then(function (): Promise<void> {
-        //         const elementIndex = self.items.findIndex((item: InvitationEntity) => item.id === id);
-        //         self.items.splice(elementIndex, 1);
-        //         return Promise.resolve();
-        //     })
-        //     .then(
-        //         () => self.deleteEntityPromise = null,
-        //         () => self.deleteEntityPromise = null);
+        self.deleteEntityPromise = self.userApiService
+            .deleteInvitation(id)
+            .then(function (): Promise<void> {
+                const elementIndex = self.items
+                    .findIndex((item: InvitationEntity) => item.id === id);
+                if (elementIndex > -1) {
+                    self.items.splice(elementIndex, 1);
+                }
+                return Promise.resolve();
+            })
+            .then(
+                () => self.deleteEntityPromise = null,
+                () => self.deleteEntityPromise = null);
         return self.deleteEntityPromise;
     }
     protected modalOpenInfo(id: number): Promise<void> {

@@ -10,4 +10,5 @@ export interface IUserApiService extends ICRUDApiService<UserEntity, number, Lig
     patchPassword(userId: number, oldPassword: string, newPassword: string): Promise<void>;
     patchAvatar(userId: number, newAvatarUrl: string): Promise<void>;
     patchPersonalInfo(userId: number, firstName: string, secondName: string, email: string, phoneNumber: string): Promise<void>;
+    deleteInvitation(id: number): Promise<void>;
 }

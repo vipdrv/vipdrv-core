@@ -150,6 +150,17 @@ namespace QuantumLogic.WebApi.Controllers.Main
             return dto;
         }
 
+        [Authorize]
+        [HttpDelete("invitation/{id}")]
+        public async Task DeleteInvitationAsync(int invitatorId, int id)
+        {
+            using (var uow = UowManager.CurrentOrCreateNew(true))
+            {
+                await InvitationDomainService.DeleteAsync(id);
+                await uow.CompleteAsync();
+            }
+        }
+
         [HttpPost("{invitationCode}")]
         public async Task RegisterAsync([FromBody]UserFullDto request, string invitationCode)
         {
