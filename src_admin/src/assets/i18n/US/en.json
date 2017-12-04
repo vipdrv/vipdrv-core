@@ -299,7 +299,7 @@
         "cancel": "Cancel",
         "accept": "Accept",
         "imageUrl": "Image direct url",
-        "imageUrlHelp": "Define image via entering direct url to it."
+        "imageUrlHelp": "Define image via entering direct url to it (like http://www.google.com/image.jpg)."
       }
     }
   },
