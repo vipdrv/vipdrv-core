@@ -20,6 +20,9 @@ export class BeveragesTableComponent implements OnInit {
     @Input() filter: any;
     @Input() siteId: number;
     @Output() onBeveragesChange: EventEmitter<any> = new EventEmitter<any>();
+    /// modals
+    @ViewChild('confirmationDeleteModal')
+    protected confirmationDeleteModal: ModalComponent;
     @ViewChild('beverageDetailsModal')
     protected modal: ModalComponent;
     @ViewChild('cropper', undefined)
@@ -366,5 +369,37 @@ export class BeveragesTableComponent implements OnInit {
         this.avatarCropperSettings.canvasWidth = this.avatarWidth * 2;
         this.avatarCropperSettings.canvasHeight = this.avatarHeight * 2;
         this.avatarCropperData = {};
+    }
+    /// confirmation delete modal
+    protected deleteCandidateId: number;
+    protected getDeleteCandidateDisplayText(): string {
+        let result;
+        if (Variable.isNotNullOrUndefined(this.deleteCandidateId)) {
+            const elementIndex = this.items
+                .findIndex((item: BeverageEntity) => item.id === this.deleteCandidateId);
+            if (elementIndex > -1) {
+                result = this.items[elementIndex].name;
+            }
+        }
+        return Variable.isNotNullOrUndefined(result) ? result : '';
+    }
+    protected openConfirmationDeleteModal(candidateId: number): Promise<void> {
+        this.deleteCandidateId = candidateId;
+        return this.confirmationDeleteModal.open();
+    }
+    protected acceptConfirmationDeleteModal(): Promise<void> {
+        const self = this;
+        return self.confirmationDeleteModal
+            .close()
+            .then(() => {
+                self.deleteEntity(self.deleteCandidateId);
+                self.deleteCandidateId = null;
+            });
+    }
+    protected closeConfirmationDeleteModal(): Promise<void> {
+        const self = this;
+        return self.confirmationDeleteModal
+            .close()
+            .then(() => self.deleteCandidateId = null);
     }
 }

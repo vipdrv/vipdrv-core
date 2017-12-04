@@ -323,5 +323,15 @@
       "reached": "Yes",
       "notReached": "No"
     }
+  },
+  "confirmation": {
+    "title": "Confirmation",
+    "cancel": "No",
+    "confirm": "Yes",
+    "siteDeleteAnswer_siteName": "Do you want to delete site {{siteName}}?",
+    "expertDeleteAnswer_expertName": "Do you want to delete expert {{expertName}}?",
+    "routeDeleteAnswer_routeName": "Do you want to delete route {{routeName}}?",
+    "beverageDeleteAnswer_beverageName": "Do you want to delete beverage {{beverageName}}?",
+    "invitationDeleteAnswer_invitationEmail": "Do you want to delete invitation for email {{invitationEmail}}?"
   }
 }
