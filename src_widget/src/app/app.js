@@ -77,15 +77,21 @@
         },
         expert: {
             id: null,
-            name: null
+            img: null,
+            name: null,
+            description: null
         },
         beverage: {
             id: null,
-            name: null
+            img: null,
+            name: null,
+            description: null
         },
         road: {
             id: null,
-            name: null
+            img: null,
+            name: null,
+            description: null
         },
         car: {
             imageUrl: null,
