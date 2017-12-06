@@ -12,8 +12,11 @@
                     self.userData.user.comment = $scope.comment;
 
                     api.completeBooking(self.userData).then(function () {
-                        self.completeForm();
+
                     });
+
+                    self.completeForm();
+
                 };
             },
             templateUrl: 'src/app/components/steps/registration/user-details.tpl.html',

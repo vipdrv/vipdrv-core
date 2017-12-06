@@ -1,13 +1,45 @@
 (function () {
     angular.module('myApp')
         .component('tdCompleteStep', {
-            controller: function () {
+            controller: function ($timeout, $window) {
                 var self = this;
+
+                self.$onInit = function() {
+                    var my_awesome_script = $window.document.createElement('script');
+                    my_awesome_script.setAttribute('src','https://addevent.com/libs/atc/1.6.1/atc.min.js');
+
+                    $window.document.head.appendChild(my_awesome_script);
+
+                    $window.addeventasync = function(){
+                        addeventatc.settings({
+                            appleical  : {show:true, text:"Apple Calendar"},
+                            google     : {show:true, text:"Google <em>(online)</em>"},
+                            outlook    : {show:true, text:"Outlook"},
+                            outlookcom : {show:true, text:"Outlook.com <em>(online)</em>"},
+                            yahoo      : {show:false, text:"Yahoo <em>(online)</em>"}
+                        });
+                    };
+                };
 
                 self.startDate = '2017-12-18 11:00';
                 self.endDate = '2017-12-18 13:00';
                 self.eventTitle = 'VIP Test Drive';
                 self.eventDescription = 'Description of the event';
+
+                // =======================================================================//
+                // SMS Sending                                                            //
+                // =======================================================================//
+
+                self.isSmsSended = false;
+                self.isSmsLoading = false;
+
+                self.sendSms = function () {
+                    self.isSmsLoading = true;
+                    $timeout(function () {
+                        self.isSmsSended = true;
+                        self.isSmsLoading = false;
+                    }, 2000);
+                }
 
 
 

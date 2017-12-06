@@ -10,9 +10,11 @@
                     self.validateStep();
                 };
 
-                self.expertChanged = function (id, name) {
+                self.expertChanged = function (id, img, name, description) {
                     self.userData.expert.id = id;
+                    self.userData.expert.img = img;
                     self.userData.expert.name = name;
+                    self.userData.expert.description = description;
                     self.validateStep();
                 };
 
