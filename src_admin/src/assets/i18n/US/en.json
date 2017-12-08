@@ -1,6 +1,6 @@
 {
   "general": {
-    "applicationName": "TestDrive",
+    "applicationName": "VIP Test Drive",
     "menu": {
       "pages": "Pages",
       "home": "Home",
@@ -213,17 +213,25 @@
     }
   },
   "registration": {
-    "headerMessage": "register in our service!",
     "messageInfo": "Please, fill out the registration form.",
-    "invitationCode": "Activation key",
+    "invitationCode": "Invitation code",
+    "invitationCodeHelp": "Enter your invitation code (from invitation e-mail).",
     "firstName": "First name",
-    "secondName": "Second name",
+    "firstNameHelp": "Enter your first name.",
+    "secondName": "Last name",
+    "secondNameHelp": "Enter your last name.",
     "email": "Email",
+    "emailHelp": "Enter your e-mail.",
     "phoneNumber": "Phone number",
+    "phoneNumberHelp": "Enter your contact phone number (not required).",
     "username": "Username",
+    "usernameHelp": "Choose your username.",
     "password": "Password",
-    "confirmPassword": "Password (confirm)",
-    "applyRegistration": "Sign up"
+    "passwordHelp": "Enter your password.",
+    "confirmPassword": "Password (repeat)",
+    "confirmPasswordHelp": "Repeat your password to avoid mistakes.",
+    "applyRegistration": "Sign up",
+    "cancel": "Cancel"
   },
   "invitations": {
     "title": "Invitations management",
@@ -307,6 +315,17 @@
     "sites": {
       "invalidNameMessage": "Site name is not valid!",
       "invalidUrlMessage": "Site url is not valid!"
+    },
+    "registrationModel": {
+      "invalidEmailMessage": "Email address is not valid!",
+      "invalidFirstNameMessage": "First name is required field!",
+      "invalidSecondNameMessage": "Last name is required field!",
+      "invalidPasswordMessage": "Password is required field!",
+      "invalidRepeatPasswordMessage": "Repeated password must be equal to the password!",
+      "invalidAvatarUrlMessage": "Avatar url is required field!",
+      "invalidPhoneNumberMessage": "Phone number is not valid!",
+      "invalidEmptyUsernameMessage": "Username is required field!",
+      "invalidUsernameMessage": "This username is busy!"
     }
   },
   "filters": {

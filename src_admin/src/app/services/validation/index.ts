@@ -2,6 +2,9 @@ export * from './validation.module';
 
 export * from './i-validation-service';
 
+export * from './concrete/registrationModel/i-registrationModel.validation-service';
+export * from './concrete/registrationModel/registrationModel.validation-service';
+
 export * from './concrete/entity/invitation/i-invitation.validation-service';
 export * from './concrete/entity/invitation/invitation.validation-service';
 
