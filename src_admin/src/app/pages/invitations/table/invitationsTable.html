@@ -91,9 +91,8 @@
                 <td>
                     <button type="button"
                             class="btn btn-outline-danger btn-sm"
-                            [disabled]="true"
                             *ngIf="isDeleteAvailable(item)"
-                            (click)="deleteEntity(item.id); $event.stopPropagation();">
+                            (click)="openConfirmationDeleteModal(item.id); $event.stopPropagation();">
                         <span translate>invitations.actions.delete</span>
                     </button>
                 </td>
@@ -142,6 +141,41 @@
             <i class="fa fa-refresh fa-spin" *ngIf="isSendInvitationInProgress()"></i>
             <i class="fa fa-paper-plane" *ngIf="!isSendInvitationInProgress()"></i>
             <span translate>invitations.modal.apply</span>
+        </button>
+    </modal-footer>
+</modal>
+
+<modal #confirmationDeleteModal
+       [backdrop]="'static'">
+    <modal-header>
+        <h5 class="modal-title">
+            <span class="test-drive-modal-header-text" translate>
+                confirmation.title
+            </span>
+        </h5>
+        <button type="button"
+                class="close"
+                aria-label="Close"
+                (click)="closeConfirmationDeleteModal(); $event.stopPropagation();">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </modal-header>
+    <modal-body>
+        <span [translateParams]="{ invitationEmail: getDeleteCandidateDisplayText() }"
+              translate>
+            confirmation.invitationDeleteAnswer_invitationEmail
+        </span>
+    </modal-body>
+    <modal-footer>
+        <button type="button"
+                class="btn btn-secondary test-drive-modal-close-btn"
+                (click)="closeConfirmationDeleteModal(); $event.stopPropagation();">
+            <span translate>confirmation.cancel</span>
+        </button>
+        <button type="button"
+                class="btn btn-primary test-drive-modal-apply-btn"
+                (click)="acceptConfirmationDeleteModal(); $event.stopPropagation();">
+            <span translate>confirmation.confirm</span>
         </button>
     </modal-footer>
 </modal>

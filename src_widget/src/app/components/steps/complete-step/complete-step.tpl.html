@@ -1,11 +1,158 @@
 <div class="row">
-    <div class="col mt-5">
-        <h1 class="text-center text-secondary">Booking completed</h1>
-
-        <p class="text-center text-secondary">You can now manage your booking from the test drive portal</p>
-        <div class="text-center mt-5">
-            <img src="/img/finish-step.png">
-        </div>
-
+    <div class="col-12 pt-2 pb-2">
+        <h4 class="text-center text-primary">Booking completed</h4>
     </div>
 </div>
+
+<div class="row">
+    <div class="col-sm-12 col-md-12 col-lg-8">
+        <table class="table complete-booking-table">
+            <tbody>
+            <tr>
+                <td class="complete-booking-table__header d-none d-md-block d-lg-block">Date</td>
+                <td>
+                    <div class="media" ng-show="!$ctrl.userData.calendar.date">
+                        <img class="mr-3 rounded complete-booking-table__image"
+                             ng-src="data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2275%22%20height%3D%2275%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2075%2075%22%20preserveAspectRatio%3D%22none%22%3E%3Cdefs%3E%3Cstyle%20type%3D%22text%2Fcss%22%3E%23holder_1602938c8f2%20text%20%7B%20fill%3Argba(255%2C255%2C255%2C.75)%3Bfont-weight%3Anormal%3Bfont-family%3AHelvetica%2C%20monospace%3Bfont-size%3A10pt%20%7D%20%3C%2Fstyle%3E%3C%2Fdefs%3E%3Cg%20id%3D%22holder_1602938c8f2%22%3E%3Crect%20width%3D%2275%22%20height%3D%2275%22%20fill%3D%22%23777%22%3E%3C%2Frect%3E%3Cg%3E%3Ctext%20x%3D%2219.34375%22%20y%3D%2242%22%3E75x75%3C%2Ftext%3E%3C%2Fg%3E%3C%2Fg%3E%3C%2Fsvg%3E"
+                             alt="Generic placeholder image">
+                        <div class="media-body">
+                            <h5 class="mt-0 mb-1">Skipped</h5>
+                        </div>
+                    </div>
+                    <div class="media" ng-show="$ctrl.userData.calendar.date">
+                        <img class="mr-3 rounded complete-booking-table__image"
+                             src="/img/date-icon-2.png"
+                             alt="Generic placeholder image">
+                        <div class="media-body">
+                            <h5 class="mt-0 mb-1">{{$ctrl.userData.calendar.date|usaDateFormat}}</h5>
+                            {{$ctrl.userData.calendar.time}}
+                        </div>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td class="complete-booking-table__header d-none d-md-block d-lg-block">Salesperson</td>
+                <td>
+                    <div class="media" ng-show="$ctrl.userData.expert.name == 'Skipped'">
+                        <img class="mr-3 rounded complete-booking-table__image"
+                             src="data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2275%22%20height%3D%2275%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2075%2075%22%20preserveAspectRatio%3D%22none%22%3E%3Cdefs%3E%3Cstyle%20type%3D%22text%2Fcss%22%3E%23holder_1602938c8f2%20text%20%7B%20fill%3Argba(255%2C255%2C255%2C.75)%3Bfont-weight%3Anormal%3Bfont-family%3AHelvetica%2C%20monospace%3Bfont-size%3A10pt%20%7D%20%3C%2Fstyle%3E%3C%2Fdefs%3E%3Cg%20id%3D%22holder_1602938c8f2%22%3E%3Crect%20width%3D%2275%22%20height%3D%2275%22%20fill%3D%22%23777%22%3E%3C%2Frect%3E%3Cg%3E%3Ctext%20x%3D%2219.34375%22%20y%3D%2242%22%3E75x75%3C%2Ftext%3E%3C%2Fg%3E%3C%2Fg%3E%3C%2Fsvg%3E"
+                             alt="Generic placeholder image">
+                        <div class="media-body">
+                            <h5 class="mt-0 mb-1">Skipped</h5>
+                        </div>
+                    </div>
+                    <div class="media" ng-show="$ctrl.userData.expert.name != 'Skipped'">
+                        <img class="mr-3 rounded complete-booking-table__image"
+                             ng-src="{{$ctrl.userData.expert.img}}"
+                             alt="Generic placeholder image">
+                        <div class="media-body">
+                            <h5 class="mt-0 mb-1" ng-if="$ctrl.userData.expert.name">{{$ctrl.userData.expert.name}}</h5>
+                            {{$ctrl.userData.expert.description}}
+                        </div>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td class="complete-booking-table__header d-none d-md-block d-lg-block">Beverage</td>
+                <td>
+                    <div class="media" ng-show="$ctrl.userData.beverage.name == 'Skipped'">
+                        <img class="mr-3 rounded complete-booking-table__image"
+                             ng-src="{{$ctrl.userData.beverage.img}}"
+                             alt="Generic placeholder image">
+                        <div class="media-body">
+                            <h5 class="mt-0 mb-1">Skipped</h5>
+                        </div>
+                    </div>
+                    <div class="media" ng-show="$ctrl.userData.beverage.name != 'Skipped'">
+                        <img class="mr-3 rounded complete-booking-table__image"
+                             ng-src="{{$ctrl.userData.beverage.img}}"
+                             alt="Generic placeholder image">
+                        <div class="media-body">
+                            <h5 class="mt-0 mb-1">{{$ctrl.userData.beverage.name}}</h5>
+                            {{$ctrl.userData.beverage.description}}
+                        </div>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td class="complete-booking-table__header d-none d-md-block d-lg-block">Route</td>
+                <td>
+                    <div class="media" ng-show="$ctrl.userData.road.name == 'Skipped'">
+                        <img class="mr-3 rounded complete-booking-table__image"
+                             src="data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2275%22%20height%3D%2275%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2075%2075%22%20preserveAspectRatio%3D%22none%22%3E%3Cdefs%3E%3Cstyle%20type%3D%22text%2Fcss%22%3E%23holder_1602938c8f2%20text%20%7B%20fill%3Argba(255%2C255%2C255%2C.75)%3Bfont-weight%3Anormal%3Bfont-family%3AHelvetica%2C%20monospace%3Bfont-size%3A10pt%20%7D%20%3C%2Fstyle%3E%3C%2Fdefs%3E%3Cg%20id%3D%22holder_1602938c8f2%22%3E%3Crect%20width%3D%2275%22%20height%3D%2275%22%20fill%3D%22%23777%22%3E%3C%2Frect%3E%3Cg%3E%3Ctext%20x%3D%2219.34375%22%20y%3D%2242%22%3E75x75%3C%2Ftext%3E%3C%2Fg%3E%3C%2Fg%3E%3C%2Fsvg%3E"
+                             alt="Generic placeholder image">
+                        <div class="media-body">
+                            <h5 class="mt-0 mb-1">Skipped</h5>
+                        </div>
+                    </div>
+                    <div class="media" ng-show="$ctrl.userData.road.name != 'Skipped'">
+                        <img class="mr-3 rounded complete-booking-table__image"
+                             ng-src="{{$ctrl.userData.road.img}}"
+                             alt="Generic placeholder image">
+                        <div class="media-body">
+                            <h5 class="mt-0 mb-1">{{$ctrl.userData.road.name}}</h5>
+                            {{$ctrl.userData.road.description}}
+                        </div>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="col-4 d-none d-lg-block">
+        <div class="card">
+            <img class="card-img-top" src="http://www.testdrive.pw/bmw.jpg" alt="Card image cap">
+            <div class="card-body" style="padding: 0.25rem 1.25rem 0.25rem 1.25rem;">
+                <div class="row">
+                    <div class="col-12">
+                        <h4 class="text-primary text-overflow__ellipsis ng-binding">BMW M140i</h4>
+                    </div>
+                    <div class="col-12">
+                        <p class="text-secondary m-0">Engine</p>
+                        <p class="mb-2 text-overflow__ellipsis ng-binding">3.8 litre twin-turbo V6</p>
+                    </div>
+                    <div class="col-6">
+                        <p class="text-secondary m-0">Year</p>
+                        <p class="mb-2 text-overflow__ellipsis ng-binding">2017</p>
+                    </div>
+                    <div class="col-6">
+                        <p class="text-secondary m-0">Color</p>
+                        <p class="mb-2 text-overflow__ellipsis ng-binding">Blue</p>
+                    </div>
+                    <div class="col-6">
+                        <p class="text-secondary m-0">Transmission</p>
+                        <p class="mb-2 text-overflow__ellipsis ng-binding">Manual</p>
+                    </div>
+                    <div class="col-6">
+                        <p class="text-secondary m-0">Fuel</p>
+                        <p class="mb-3 text-overflow__ellipsis ng-binding">Gasoline</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<p></p>
+
+<div class="container text-center">
+    <p>
+        <button class="btn btn-primary" ng-click="$ctrl.sendSms()" ng-disabled="$ctrl.isSmsSended">
+            <span ng-show="!$ctrl.isSmsSended">Send me SMS</span> <i class="fa fa-spinner fa-spin fa-1x fa-fw"
+                                                                     ng-show="$ctrl.isSmsLoading"></i>
+            <span ng-show="$ctrl.isSmsSended">SMS Sent</span>
+        </button>
+
+        <button title="Add to Calendar" class="addeventatc">
+            Add to Calendar
+            <span class="start">{{$ctrl.startDate}}</span>
+            <span class="end">{{$ctrl.endDate}}</span>
+            <span class="timezone">America/Los_Angeles</span>
+            <span class="title">{{$ctrl.eventTitle}}</span>
+            <span class="description">{{$ctrl.eventDescription}}</span>
+            <span class="location">Palm Springs, CA, USA</span>
+        </button>
+    </p>
+</div>
+
+

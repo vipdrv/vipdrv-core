@@ -222,6 +222,10 @@ namespace QuantumLogic.Data.Migrations
 
                     b.Property<string>("FirstName");
 
+                    b.Property<bool>("IsNew");
+
+                    b.Property<bool>("IsReachedByManager");
+
                     b.Property<DateTime>("RecievedUtc");
 
                     b.Property<int>("RouteId");
@@ -279,6 +283,8 @@ namespace QuantumLogic.Data.Migrations
                     b.Property<string>("BeautyId");
 
                     b.Property<string>("Contacts");
+
+                    b.Property<string>("ImageUrl");
 
                     b.Property<string>("Name");
 

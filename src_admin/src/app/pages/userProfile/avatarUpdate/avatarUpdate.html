@@ -1,115 +1,16 @@
-<div class="avatar-update-container"
-     *ngIf="isAvatarUrlDefined()">
+<div class="avatar-update-container">
     <div class="avatar-update-container-body">
         <div class="row">
-            <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
-                <div class="row">
-                    <div class="col-12">
-                        <img class="rounded-circle"
-                             alt=" "
-                             [src]="getAvatarUrl()"
-                             [width]="avatarWidth"
-                             [height]="avatarHeight">
-                    </div>
-                </div>
-                <div class="row avatar-update-row"
-                     *ngIf="isModeView()">
-                    <div class="col-12">
-                        <button type="button"
-                                class="btn btn-sm btn-secondary"
-                                [disabled]="isPatchAvatarProcessing()"
-                                (click)="startEditAvatarViaCropper()">
-                            <span translate>userProfile.tabs.patchAvatarComponent.defineAvatarViaFile</span>
-                        </button>
-                        <button type="button"
-                                class="btn btn-sm btn-secondary"
-                                [disabled]="isPatchAvatarProcessing()"
-                                (click)="startEditAvatarViaUrlInput()">
-                            <span translate>userProfile.tabs.patchAvatarComponent.defineAvatarViaDirectUrl</span>
-                        </button>
-                    </div>
-                </div>
-                <div class="row avatar-update-row"
-                     *ngIf="isModeEditViaCropper()">
-                    <div class="col-12">
-                        <button type="button"
-                                class="btn btn-sm btn-secondary pull-left test-drive-left-standalone-btn"
-                                [disabled]="isPatchAvatarProcessing()"
-                                (click)="cancelEditAvatarViaCropper()">
-                            <span translate>general.actions.text_cancel</span>
-                        </button>
-                        <button type="button"
-                                class="btn btn-sm btn-secondary pull-left test-drive-right-standalone-btn"
-                                [disabled]="!isCropperImageDefined() || isPatchAvatarProcessing()"
-                                (click)="commitEditAvatarViaCropper()">
-                            <span translate>general.actions.text_accept</span>
-                        </button>
-                    </div>
-                </div>
-                <div class="row avatar-update-row"
-                     *ngIf="isModeEditViaUrlInput()">
-                    <div class="col-12">
-                        <button type="button"
-                                class="btn btn-sm btn-secondary pull-left test-drive-left-standalone-btn"
-                                [disabled]="isPatchAvatarProcessing()"
-                                (click)="cancelEditAvatarViaUrlInput()">
-                            <span translate>general.actions.text_cancel</span>
-                        </button>
-                        <button type="button"
-                                class="btn btn-sm btn-secondary pull-left test-drive-right-standalone-btn"
-                                [disabled]="!isTempAvatarUrlDefined() || isPatchAvatarProcessing()"
-                                (click)="commitEditAvatarViaUrlInput()">
-                            <span translate>general.actions.text_accept</span>
-                        </button>
-                    </div>
-                </div>
-            </div>
-            <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6"
-                 *ngIf="isModeEditViaCropper()">
-                <div class="row">
-                    <div class="col-12">
-                        <img-cropper #avatarCropper
-                                     [image]="avatarCropperData"
-                                     [settings]="avatarCropperSettings">
-                        </img-cropper>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-12">
-                        <label class="custom-file">
-                            <input type="file"
-                                   id="avatar-browse-file"
-                                   class="custom-file-input"
-                                   [disabled]="isPatchAvatarProcessing()"
-                                   (change)="browseFileChangeListenerInAvatarCropper($event)">
-                            <span class="custom-file-control"></span>
-                        </label>
-                    </div>
-                </div>
-            </div>
-            <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6"
-                 *ngIf="isModeEditViaUrlInput()">
-                <div class="hidden-sm-down avatar-update-url-input"></div>
-                <div class="form-group">
-                    <label for="avatar-url"
-                           translate>
-                        userProfile.tabs.patchAvatarComponent.avatarUrl
-                    </label>
-                    <input id="avatar-url"
-                           type="text"
-                           name="avatar-url"
-                           class="form-control"
-                           required=""
-                           autofocus=""
-                           placeholder="http://www.google.com/avatar.jpg"
-                           [disabled]="isPatchAvatarProcessing()"
-                           [(ngModel)]="tempAvatarUrl">
-                    <small id="avatar-url-help"
-                           class="form-text text-muted"
-                           translate>
-                        userProfile.tabs.patchAvatarComponent.avatarUrlHelp
-                    </small>
-                </div>
+            <div class="col-12">
+                <image-select [isReadOnly]="isImageComponentReadOnly()"
+                              [imageUrl]="newAvatarUrl"
+                              [defaultImageUrl]="defaultImageUrl"
+                              [imageWidth]="imageWidth"
+                              [imageHeight]="imageHeight"
+                              [isRounded]="isImageRounded"
+                              [imageAlt]="imageAlt"
+                              [columnRules]="columnRules"
+                              (imageUrlSelected)="onNewAvatarSelected($event)"></image-select>
             </div>
         </div>
     </div>

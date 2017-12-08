@@ -16,6 +16,8 @@ import { Ng2BootstrapModule } from 'ng2-bootstrap';
 import { PaginationModule } from 'ng2-bootstrap';
 import { Ng2TableModule } from 'ng2-table/ng2-table';
 
+import { Ng2Bs3ModalModule } from 'ng2-bs3-modal/ng2-bs3-modal';
+
 @NgModule({
     imports: [
         CommonModule,
@@ -25,7 +27,8 @@ import { Ng2TableModule } from 'ng2-table/ng2-table';
         Ng2TableModule,
         PaginationModule,
         routing,
-        Ng2BootstrapModule
+        Ng2BootstrapModule,
+        Ng2Bs3ModalModule
     ],
     declarations: [
         Test,

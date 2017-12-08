@@ -51,7 +51,12 @@ export const routes: Routes = [
                 canActivate: [AuthorizationService]
             },
             {
-                path: 'invitations',
+                path: 'settings',
+                loadChildren: './settings/settings.module#SettingsModule',
+                canActivate: [AuthorizationService]
+            },
+            {
+                path: 'settings/invitations',
                 loadChildren: './invitations/invitations.module#InvitationsModule',
                 canActivate: [AuthorizationService]
             },

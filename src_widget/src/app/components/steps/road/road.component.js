@@ -12,9 +12,11 @@
                     }
                 };
 
-                $scope.itemChanged = function (id, name) {
+                $scope.itemChanged = function (id, img, name, description) {
                     self.userData.road.id = id;
+                    self.userData.road.img = img;
                     self.userData.road.name = name;
+                    self.userData.road.description = description;
                     self.validateStep();
                 };
 

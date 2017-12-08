@@ -82,6 +82,13 @@ export class UserApiService extends CRUDApiService<UserEntity, number, LightEnti
                 return responseEntity;
             });
     }
+    deleteInvitation(id: number): Promise<void> {
+        return this.httpService
+            .delete(this.createUrlWithMethodNameAndParams('invitation', String(id)))
+            .then(function (response: any): void {
+
+            });
+    }
     getInvitations(userId: number, page: number, pageSize: number, sorting: string): Promise<GetAllResponse<InvitationEntity>> {
         const self = this;
         const methodName: string = `${userId}/invitation`;

@@ -12,9 +12,11 @@
                     }
                 };
 
-                $scope.itemChanged = function (id, name) {
+                $scope.itemChanged = function (id, img, name, description) {
                     self.userData.beverage.id = id;
+                    self.userData.beverage.img = img;
                     self.userData.beverage.name = name;
+                    self.userData.beverage.description = description;
                     self.validateStep();
                 };
 

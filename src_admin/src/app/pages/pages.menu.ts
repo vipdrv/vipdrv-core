@@ -34,7 +34,7 @@ export const PAGES_MENU = [
                   icon: 'ion-ios-paper-outline',
                   selected: false,
                   expanded: false,
-                  order: 1
+                  order: 2
               }
           }
       },
@@ -46,9 +46,36 @@ export const PAGES_MENU = [
                   icon: 'ion-ios-list-outline',
                   selected: false,
                   expanded: false,
-                  order: 1
+                  order: 3
               }
           }
+      },
+      {
+          path: 'settings',
+          data: {
+              menu: {
+                  title: 'general.menu.settings',
+                  icon: 'ion-settings',
+                  selected: false,
+                  expanded: false,
+                  order: 4
+              }
+          },
+          children: [
+              {
+                  path: 'invitations',
+                  data: {
+                      menu: {
+                          title: 'general.menu.invitations',
+                          // icon: 'ion-ios-filing-outline',
+                          icon: 'ion-android-folder-open',
+                          selected: false,
+                          expanded: false,
+                          order: 0
+                      }
+                  }
+              }
+          ]
       }
     ]
   }

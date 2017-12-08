@@ -7,6 +7,8 @@
       "integration": "Integration",
       "leads": "Leads",
       "sites": "Sites",
+      "settings": "Settings",
+      "invitations": "Invitations",
       "test": "Test-page"
     },
     "actions": {
@@ -71,9 +73,11 @@
     },
     "table": {
       "btnText_exportToExcel": "Export to Excel",
+      "headerText_fullName": "Full name",
       "headerText_firstName": "First name",
       "headerText_secondName": "Second name",
-      "headerText_received": "Recieved",
+      "headerText_isReachedByManager": "Reached",
+      "headerText_received": "Date",
       "headerText_siteName": "Site",
       "headerText_userEmail": "Email",
       "headerText_userPhone": "Phone",
@@ -84,12 +88,16 @@
   },
   "sites": {
     "title": "Sites",
+    "card": {
+      "leads": "Leads",
+      "new": "new"
+    },
     "modal": {
       "title": "Site details",
       "siteName": "Name",
-      "siteUrl": "Url",
-      "cancel": "Cancel",
-      "apply": "Save"
+      "siteNameHelp": "Enter the name of the site.",
+      "siteUrl": "Site url",
+      "siteUrlHelp": "Enter the url of the site (like http://yoursite.url)."
     },
     "table": {
       "headerText_siteName": "Site name",
@@ -282,5 +290,48 @@
         "phoneNumberHelp": "Enter your contact phone number (not required)."
       }
     }
+  },
+  "shared": {
+    "components": {
+      "imageSelect": {
+        "defineImageViaFile": "Set image via file",
+        "defineAvatarViaDirectUrl": "Set image via url",
+        "cancel": "Cancel",
+        "accept": "Accept",
+        "imageUrl": "Image direct url",
+        "imageUrlHelp": "Define image via entering direct url to it (like http://www.google.com/image.jpg)."
+      }
+    }
+  },
+  "validation": {
+    "sites": {
+      "invalidNameMessage": "Site name is not valid!",
+      "invalidUrlMessage": "Site url is not valid!"
+    }
+  },
+  "filters": {
+    "all": "All",
+    "date": {
+      "allTime": "All time",
+      "today": "Today",
+      "lastWeek": "Last week",
+      "thisMonth": "This month",
+      "lastMonth": "Last month"
+    },
+    "isReachedByManager": {
+      "all": "All",
+      "reached": "Yes",
+      "notReached": "No"
+    }
+  },
+  "confirmation": {
+    "title": "Confirmation",
+    "cancel": "No",
+    "confirm": "Yes",
+    "siteDeleteAnswer_siteName": "Do you want to delete site {{siteName}}?",
+    "expertDeleteAnswer_expertName": "Do you want to delete expert {{expertName}}?",
+    "routeDeleteAnswer_routeName": "Do you want to delete route {{routeName}}?",
+    "beverageDeleteAnswer_beverageName": "Do you want to delete beverage {{beverageName}}?",
+    "invitationDeleteAnswer_invitationEmail": "Do you want to delete invitation for email {{invitationEmail}}?"
   }
 }

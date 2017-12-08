@@ -5,7 +5,9 @@ import { Variable, ConsoleLogger, ILogger } from './../../../utils/index';
 import { IAuthorizationService, AuthorizationService } from './../../../services/index';
 import { ISiteApiService, SiteApiService, GetAllResponse } from './../../../services/index';
 import { ISiteEntityPolicyService, SiteEntityPolicyService } from './../../../services/index';
+import { ISiteValidationService, SiteValidationService } from './../../../services/index';
 import { SiteEntity } from './../../../entities/index';
+import { SitesConstants } from './../sites.constants';
 @Component({
     selector: 'site-cards',
     styleUrls: ['./siteCards.scss'],
@@ -14,33 +16,41 @@ import { SiteEntity } from './../../../entities/index';
 export class SiteCardsComponent implements OnInit {
     /// inputs
     /// modals
+    @ViewChild('confirmationDeleteModal')
+    protected confirmationDeleteModal: ModalComponent;
     @ViewChild('siteDetailsModal')
     protected siteDetailsModal: ModalComponent;
     /// service fields
     private _siteDetailsModalMode: string;
     protected siteDetailsModalApplyPromise: Promise<void>;
     protected firstLoadPromise: Promise<void>;
+    protected useValidationForSelectedEntity: boolean = false;
+    protected siteImageAlt: string = SitesConstants.siteImageAlt;
     /// data fields
     protected items: Array<SiteEntity>;
     protected selectedEntity: SiteEntity;
+    protected totalCount: number;
     /// injected dependencies
     protected logger: ILogger;
     protected router: Router;
     protected authorizationManager: IAuthorizationService;
     protected siteApiService: ISiteApiService;
     protected siteEntityPolicy: ISiteEntityPolicyService;
+    protected siteValidationService: ISiteValidationService;
     /// ctor
     constructor(
         logger: ConsoleLogger,
         router: Router,
         authorizationManager: AuthorizationService,
         siteApiService: SiteApiService,
-        siteEntityPolicy: SiteEntityPolicyService) {
+        siteEntityPolicy: SiteEntityPolicyService,
+        siteValidationService: SiteValidationService) {
         this.logger = logger;
         this.router = router;
         this.authorizationManager = authorizationManager;
         this.siteApiService = siteApiService;
         this.siteEntityPolicy = siteEntityPolicy;
+        this.siteValidationService = siteValidationService;
         logger.logDebug('SiteCardsComponent has been constructed.');
     }
     /// methods
@@ -56,15 +66,19 @@ export class SiteCardsComponent implements OnInit {
                     self.firstLoadPromise = null;
                 });
     }
+    protected getNewLeadsForSuteUrl(siteId: number) {
+        return '/#/pages/leads';
+    }
     protected getManyEntities(): Promise<void> {
         const self: SiteCardsComponent = this;
         const filter = {
             userId: this.authorizationManager.currentUserId
         };
         self._getManyPromise = self.siteApiService
-            .getAll(0, 10, null, filter)
+            .getAll(0, 25, null, filter)
             .then(function (response: GetAllResponse<SiteEntity>): Promise<void> {
                 self.items = response.items;
+                self.totalCount = response.totalCount;
                 self._getManyPromise = null;
                 return Promise.resolve();
             })
@@ -121,6 +135,7 @@ export class SiteCardsComponent implements OnInit {
                     .findIndex((item: SiteEntity) => item.id === id);
                 if (elementIndex > -1) {
                     self.items.splice(elementIndex, 1);
+                    self.totalCount--;
                 }
                 return Promise.resolve();
             })
@@ -179,12 +194,19 @@ export class SiteCardsComponent implements OnInit {
     protected openModalOnCreate(): Promise<void> {
         this.selectedEntity = new SiteEntity();
         this.selectedEntity.userId = this.authorizationManager.currentUserId;
+        this.selectedEntity.imageUrl = SitesConstants.siteImageDefault;
         this._siteDetailsModalMode = 'Create';
         return this.siteDetailsModal.open();
     }
     protected siteDetailsModalApply(): Promise<void> {
-        const self = this;
-        self.siteDetailsModalApplyPromise = (self._siteDetailsModalMode === 'Create' ?
+        let actionPromise: Promise<void>;
+        if (!this.siteValidationService.isValid(this.selectedEntity)) {
+            this.useValidationForSelectedEntity = true;
+            actionPromise = Promise.resolve();
+        } else {
+            this.useValidationForSelectedEntity = false;
+            const self = this;
+            self.siteDetailsModalApplyPromise = (self._siteDetailsModalMode === 'Create' ?
                 self.createEntity(self.selectedEntity) :
                 self._siteDetailsModalMode === 'Update' ?
                     self.updateEntity(self.selectedEntity) :
@@ -197,6 +219,7 @@ export class SiteCardsComponent implements OnInit {
                             self.items.splice(elementIndex, 1, response);
                         } else {
                             self.items.push(response);
+                            self.totalCount++;
                         }
                         self.selectedEntity = null;
                         self._siteDetailsModalMode = null;
@@ -210,10 +233,13 @@ export class SiteCardsComponent implements OnInit {
                     () => {
                         self.siteDetailsModalApplyPromise = null;
                     });
-        return self.siteDetailsModalApplyPromise;
+            actionPromise = self.siteDetailsModalApplyPromise;
+        }
+        return actionPromise;
     }
     protected siteDetailsModalDismiss(): Promise<void> {
         this.selectedEntity = null;
+        this.useValidationForSelectedEntity = false;
         return this.siteDetailsModal.dismiss();
     }
     /// predicates
@@ -226,6 +252,9 @@ export class SiteCardsComponent implements OnInit {
     }
     protected isSelectedEntityDefined(): boolean {
         return Variable.isNotNullOrUndefined(this.selectedEntity);
+    }
+    protected isSiteDetailsComponentReadOnly(): boolean {
+        return this.isSiteDetailsModalApplyProcessing();
     }
     /// ---------------------------------------------------------------------------------------------------------------
     /// should be moved to action manager (or domain service)
@@ -266,7 +295,9 @@ export class SiteCardsComponent implements OnInit {
         //     this._getEntityId === entity.id;
     }
     isActionCreateAllowed(): boolean {
-        return this.siteEntityPolicy.canCreate();
+        return this.siteEntityPolicy.canCreate() &&
+            this.authorizationManager.currentUser &&
+            this.authorizationManager.currentUser.maxSitesCount > this.totalCount;
     }
     isActionCreateDisabled(): boolean {
         return this.isAnyActionProcessing();
@@ -298,5 +329,37 @@ export class SiteCardsComponent implements OnInit {
         return Variable.isNotNullOrUndefined(this._deletePromise) &&
             Variable.isNotNullOrUndefined(entity) &&
             this._deleteEntityId === entity.id;
+    }
+    /// confirmation delete modal
+    protected deleteCandidateId: number;
+    protected getDeleteCandidateDisplayText(): string {
+        let result;
+        if (Variable.isNotNullOrUndefined(this.deleteCandidateId)) {
+            const elementIndex = this.items
+                .findIndex((item: SiteEntity) => item.id === this.deleteCandidateId);
+            if (elementIndex > -1) {
+                result = this.items[elementIndex].name;
+            }
+        }
+        return Variable.isNotNullOrUndefined(result) ? result : '';
+    }
+    protected openConfirmationDeleteModal(candidateId: number): Promise<void> {
+        this.deleteCandidateId = candidateId;
+        return this.confirmationDeleteModal.open();
+    }
+    protected acceptConfirmationDeleteModal(): Promise<void> {
+        const self = this;
+        return self.confirmationDeleteModal
+            .close()
+            .then(() => {
+                self.deleteEntity(self.deleteCandidateId);
+                self.deleteCandidateId = null;
+            });
+    }
+    protected closeConfirmationDeleteModal(): Promise<void> {
+        const self = this;
+        return self.confirmationDeleteModal
+            .close()
+            .then(() => self.deleteCandidateId = null);
     }
 }

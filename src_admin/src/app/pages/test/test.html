@@ -23,3 +23,40 @@
         setModeTest
     </button>
 </div>
+
+<button class="btn btn-outline-primary btn-sm"
+        type="button"
+        (click)="testModal1.open()">
+    open 1
+</button>
+<button class="btn btn-outline-primary btn-sm"
+        type="button"
+        (click)="testModal2.open()">
+    open 2
+</button>
+
+
+<modal #testModal1
+       [backdrop]="'static'">
+    <modal-header>
+        1
+    </modal-header>
+    <modal-body>
+        1
+    </modal-body>
+    <modal-footer>
+        1
+    </modal-footer>
+</modal>
+<modal #testModal2
+       [backdrop]="'static'">
+    <modal-header>
+        2
+    </modal-header>
+    <modal-body>
+        2
+    </modal-body>
+    <modal-footer>
+        2
+    </modal-footer>
+</modal>

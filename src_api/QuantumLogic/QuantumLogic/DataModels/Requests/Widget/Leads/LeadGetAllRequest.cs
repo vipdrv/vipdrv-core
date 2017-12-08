@@ -1,8 +1,15 @@
-﻿namespace QuantumLogic.WebApi.DataModels.Requests.Widget.Leads
+﻿using System;
+
+namespace QuantumLogic.WebApi.DataModels.Requests.Widget.Leads
 {
     public class LeadGetAllRequest : GetAllRequest
     {
-        public string RecievedDateTime { get; set; }
+        public int? SiteId { get; set; }
+        public int? ExpertId { get; set; }
+        public int? RouteId { get; set; }
+        public int? BeverageId { get; set; }
+        public DateTime? RecievedDateTime { get; set; }
+        public string FullName { get; set; }
         public string FirstName { get; set; }
         public string SecondName { get; set; }
         public string Site { get; set; }
@@ -11,5 +18,6 @@
         public string Expert { get; set; }
         public string Route { get; set; }
         public string Beverage { get; set; }
+        public bool? IsReachedByManager { get; set; }
     }
 }

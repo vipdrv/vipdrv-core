@@ -20,10 +20,11 @@ export class BeveragesTableComponent implements OnInit {
     @Input() filter: any;
     @Input() siteId: number;
     @Output() onBeveragesChange: EventEmitter<any> = new EventEmitter<any>();
+    /// modals
+    @ViewChild('confirmationDeleteModal')
+    protected confirmationDeleteModal: ModalComponent;
     @ViewChild('beverageDetailsModal')
     protected modal: ModalComponent;
-    @ViewChild('cropper', undefined)
-    protected cropper: ImageCropperComponent;
     /// fields
     private _defaultPageNumber: number = 0;
     private _defaultPageSize: number = 100;
@@ -34,11 +35,6 @@ export class BeveragesTableComponent implements OnInit {
     protected totalCount: number;
     protected items: Array<BeverageEntity>;
     protected entity: BeverageEntity;
-    protected avatarWidth: number;
-    protected avatarHeight: number;
-    protected avatarCropperData: any;
-    protected avatarCropperSettings: CropperSettings;
-    protected stubAvatarUrl: string;
     protected isOperationModeInfo: boolean;
     protected isOperationModeAddOrUpdate: boolean;
     /// properties
@@ -70,13 +66,10 @@ export class BeveragesTableComponent implements OnInit {
     constructor(siteApiService: BeverageApiService, contentApiService: ContentApiService) {
         this.beverageApiService = siteApiService;
         this.contentApiService = contentApiService;
-        this.avatarWidth = 150;
-        this.avatarHeight = 150;
     }
     /// methods
     ngOnInit(): void {
         let self = this;
-        self.initializeAvatarCropper();
         self.getAllEntities()
             .then(() => self._isInitialized = true);
     }
@@ -220,7 +213,7 @@ export class BeveragesTableComponent implements OnInit {
         let self = this;
         self.entity = new BeverageEntity();
         self.entity.siteId = this.siteId;
-        self.entity.photoUrl = BeveragesConstants.BeverageImageDefault;
+        self.entity.photoUrl = BeveragesConstants.beverageImageDefault;
         self.entity.isActive = true;
         self.entity.order = this.getNewEntityOrder();
         self.isOperationModeAddOrUpdate = true;
@@ -268,63 +261,6 @@ export class BeveragesTableComponent implements OnInit {
         this.isOperationModeInfo = false;
         return this.modal.dismiss();
     }
-    // avatar
-    protected getAvatar(): any {
-        let avatar;
-        if (this.showAvatarBrowse && this.avatarCropperData && this.avatarCropperData.image) {
-            avatar = this.avatarCropperData.image;
-        } else if (this.showAvatarChangeUrl) {
-            avatar = this.stubAvatarUrl;
-        } else {
-            avatar = this.entity.photoUrl;
-        }
-        return avatar;
-    }
-    protected browseAvatar(): void {
-        this.avatarCropperData = {};
-        this.showAvatarButtons = false;
-        this.showAvatarBrowse = true;
-    }
-    protected showAvatarBrowseAccept(): void {
-        let self = this;
-        self.contentApiService
-            .postImage(self.avatarCropperData.image)
-            .then(function (imageUrl: string) {
-                // TODO: remove this stub result after implementing #27 - content controller
-                self.entity.photoUrl = self.avatarCropperData.image; // imageUrl;
-                self.showAvatarBrowseCancel();
-            });
-    }
-    protected showAvatarBrowseCancel(): void {
-        this.avatarCropperData = {};
-        this.showAvatarBrowse = false;
-        this.showAvatarButtons = true;
-    }
-    protected avatarBrowseFileChangeListener($event) {
-        let image: any = new Image();
-        let file: File = $event.target.files[0];
-        let fileReader: FileReader = new FileReader();
-        let self = this;
-        fileReader.onloadend = function (loadEvent: any): void {
-            image.src = loadEvent.target.result;
-            self.cropper.setImage(image);
-
-        };
-        fileReader.readAsDataURL(file);
-    }
-    protected changeAvatarUrl(): void {
-        this.showAvatarButtons = false;
-        this.showAvatarChangeUrl = true;
-    }
-    protected changeAvatarUrlAccept(): void {
-        this.entity.photoUrl = this.stubAvatarUrl;
-        this.changeAvatarUrlCancel();
-    }
-    protected changeAvatarUrlCancel(): void {
-        this.stubAvatarUrl = null;
-        this.showAvatarChangeUrl = false;
-        this.showAvatarButtons = true;
-    }
     /// predicates
     protected isInitialized(): boolean {
         return this._isInitialized;
@@ -352,19 +288,51 @@ export class BeveragesTableComponent implements OnInit {
         }
         return maxOrder === 0 ? 0 : maxOrder + 1;
     }
-    private initializeAvatarCropper(): void {
-        this.avatarCropperSettings = new CropperSettings();
-        this.avatarCropperSettings.rounded = true;
-        this.avatarCropperSettings.noFileInput = true;
-        this.avatarCropperSettings.minWithRelativeToResolution = true;
-        this.avatarCropperSettings.minWidth = this.avatarWidth;
-        this.avatarCropperSettings.minHeight = this.avatarHeight;
-        this.avatarCropperSettings.width = this.avatarWidth;
-        this.avatarCropperSettings.height = this.avatarHeight;
-        this.avatarCropperSettings.croppedWidth = this.avatarWidth;
-        this.avatarCropperSettings.croppedHeight = this.avatarHeight;
-        this.avatarCropperSettings.canvasWidth = this.avatarWidth * 2;
-        this.avatarCropperSettings.canvasHeight = this.avatarHeight * 2;
-        this.avatarCropperData = {};
+    /// confirmation delete modal
+    protected deleteCandidateId: number;
+    protected getDeleteCandidateDisplayText(): string {
+        let result;
+        if (Variable.isNotNullOrUndefined(this.deleteCandidateId)) {
+            const elementIndex = this.items
+                .findIndex((item: BeverageEntity) => item.id === this.deleteCandidateId);
+            if (elementIndex > -1) {
+                result = this.items[elementIndex].name;
+            }
+        }
+        return Variable.isNotNullOrUndefined(result) ? result : '';
+    }
+    protected openConfirmationDeleteModal(candidateId: number): Promise<void> {
+        this.deleteCandidateId = candidateId;
+        return this.confirmationDeleteModal.open();
+    }
+    protected acceptConfirmationDeleteModal(): Promise<void> {
+        const self = this;
+        return self.confirmationDeleteModal
+            .close()
+            .then(() => {
+                self.deleteEntity(self.deleteCandidateId);
+                self.deleteCandidateId = null;
+            });
+    }
+    protected closeConfirmationDeleteModal(): Promise<void> {
+        const self = this;
+        return self.confirmationDeleteModal
+            .close()
+            .then(() => self.deleteCandidateId = null);
+    }
+    /// move to new component
+    // avatar select
+    protected defaultImageUrl: string = BeveragesConstants.beverageImageDefault;
+    protected imageWidth: number = BeveragesConstants.beverageImageWidth;
+    protected imageHeight: number = BeveragesConstants.beverageImageHeight;
+    protected isImageRounded: boolean = BeveragesConstants.isBeverageImageRounded;
+    protected imageAlt: string = BeveragesConstants.beverageImageAlt;
+    protected columnRules: string = 'col-xs-12 col-sm-12 col-md-12 col-lg-6 col-xl-6';
+    protected isImageComponentReadOnly(): boolean {
+        return false;
+    }
+    protected onNewAvatarSelected(newImageUrl: string): void {
+        this.entity.photoUrl = newImageUrl;
+        // this.logger.logTrase('...Component: New beverage image has been selected.');
     }
 }

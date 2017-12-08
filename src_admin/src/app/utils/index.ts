@@ -19,3 +19,6 @@ export { WorkingHoursComponent } from './components/working-hours/advanced/worki
 export { WorkingHoursSimpleComponent } from './components/working-hours/simple/workingHours.simple.component';
 export * from './components/working-hours/models/workingInterval';
 export * from './components/working-hours/models/dayOfWeekSchedule';
+
+export { ImageSelectComponent } from './components/imageSelect/imageSelect.component';
+export * from './components/imageSelect/imageSelect.component';

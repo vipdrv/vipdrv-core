@@ -26,20 +26,39 @@
             <div class="card-group col-xs-12 col-sm-12 col-md-6 col-lg-4 col-xl-3"
                  *ngFor="let entity of items">
                 <div class="card site-card">
-                    <div class="card-header text-center">
-                        {{entity.name}}
-                    </div>
+                    <img class="card-img-top test-drive-card-site-image"
+                         src="{{entity.imageUrl}}"
+                         alt="{{siteImageAlt}}">
                     <div class="card-block">
-                        <div class="card-text">
-                            <site-card [entity]="entity"></site-card>
-                        </div>
+                        <h4 class="card-title">
+                            {{entity.name}}
+                        </h4>
+                        <p class="card-text">
+                            <span translate>
+                                sites.card.leads
+                            </span>:
+                            <b>{{entity.leadsAmount}}</b>
+                            <a href="{{getNewLeadsForSuteUrl(entity.id)}}"
+                               *ngIf="entity.newLeadsAmount > 0">
+                                <span class="badge badge-danger"
+                                      style="font-size: 100%">
+                                    {{entity.newLeadsAmount}}
+                                    <span translate>
+                                        sites.card.new
+                                    </span>
+                                </span>
+                            </a>
+                        </p>
+                        <a href="{{entity.url}}" class="card-link" target="_blank">
+                            {{entity.url}}
+                        </a>
                     </div>
                     <div class="card-footer bg-transparent">
                         <button class="btn btn-sm btn-outline-danger pull-right test-drive-right-standalone-btn"
                                 type="button"
                                 *ngIf="isActionDeleteAllowed(entity)"
                                 [disabled]="isActionDeleteDisabled(entity)"
-                                (click)="deleteEntity(entity.id); $event.stopPropagation();">
+                                (click)="openConfirmationDeleteModal(entity.id); $event.stopPropagation();">
                             <i class="fa fa-spinner fa-pulse" *ngIf="isActionDeleteProcessing(entity)"></i>
                             <i class="fa fa-times" *ngIf="!isActionDeleteProcessing(entity)"></i>
                             <span translate>general.actions.text_delete</span>
@@ -71,10 +90,13 @@
 </div>
 
 <modal #siteDetailsModal
+       size="lg"
        [backdrop]="'static'">
     <modal-header>
         <h5 class="modal-title">
-            <span class="test-drive-modal-header-text" translate>sites.modal.title</span>
+            <span class="test-drive-modal-header-text" translate>
+                sites.modal.title
+            </span>
         </h5>
         <button type="button"
                 class="close"
@@ -84,9 +106,10 @@
         </button>
     </modal-header>
     <modal-body>
-        <div *ngIf="isSelectedEntityDefined()"
-             [ngBusy]="siteDetailsModalApplyPromise">
-            <site-details-edit [entity]="selectedEntity"></site-details-edit>
+        <div *ngIf="isSelectedEntityDefined()">
+            <site-details-edit [entity]="selectedEntity"
+                               [isReadOnly]="isSiteDetailsComponentReadOnly()"
+                               [useValidation]="useValidationForSelectedEntity"></site-details-edit>
         </div>
     </modal-body>
     <modal-footer>
@@ -102,6 +125,41 @@
             <i class="fa fa-spinner fa-pulse" *ngIf="isSiteDetailsModalApplyProcessing()"></i>
             <i class="fa fa-save" *ngIf="!isSiteDetailsModalApplyProcessing()"></i>
             <span translate>general.actions.modalApply</span>
+        </button>
+    </modal-footer>
+</modal>
+
+<modal #confirmationDeleteModal
+       [backdrop]="'static'">
+    <modal-header>
+        <h5 class="modal-title">
+            <span class="test-drive-modal-header-text" translate>
+                confirmation.title
+            </span>
+        </h5>
+        <button type="button"
+                class="close"
+                aria-label="Close"
+                (click)="closeConfirmationDeleteModal(); $event.stopPropagation();">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </modal-header>
+    <modal-body>
+        <span [translateParams]="{ siteName: getDeleteCandidateDisplayText() }"
+              translate>
+            confirmation.siteDeleteAnswer_siteName
+        </span>
+    </modal-body>
+    <modal-footer>
+        <button type="button"
+                class="btn btn-secondary test-drive-modal-close-btn"
+                (click)="closeConfirmationDeleteModal(); $event.stopPropagation();">
+            <span translate>confirmation.cancel</span>
+        </button>
+        <button type="button"
+                class="btn btn-primary test-drive-modal-apply-btn"
+                (click)="acceptConfirmationDeleteModal(); $event.stopPropagation();">
+            <span translate>confirmation.confirm</span>
         </button>
     </modal-footer>
 </modal>

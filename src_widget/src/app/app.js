@@ -1,6 +1,8 @@
 (function () {
     var app = angular.module('myApp', ['templates', 'moment-picker']);
 
+
+
     // =======================================================================//
     // App Configs                                                            //
     // =======================================================================//
@@ -15,7 +17,7 @@
     var widgetTabs = {
         time: {
             id: 'time',
-            title: 'Select date & time',
+            title: 'Select Date & Time',
             icon: 'fa fa-clock-o fa-2x',
             isActive: true,
             isLocked: false,
@@ -77,15 +79,21 @@
         },
         expert: {
             id: null,
-            name: null
+            img: null,
+            name: null,
+            description: null
         },
         beverage: {
             id: null,
-            name: null
+            img: null,
+            name: null,
+            description: null
         },
         road: {
             id: null,
-            name: null
+            img: null,
+            name: null,
+            description: null
         },
         car: {
             imageUrl: null,

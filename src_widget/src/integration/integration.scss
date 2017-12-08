@@ -62,7 +62,8 @@
 }
 
 .frame-header__title {
-  width: 95%;
+  margin-left: 5%;
+  width: 90%;
   text-align: center;
   float: left;
   line-height: 50px;
@@ -70,8 +71,8 @@
 
 @media (max-width: 1022px) {
   .frame-header__title {
-    width: 85%;
-    padding-left: 15%;
+    width: 70%;
+    margin-left: 15%;
   }
 }
 

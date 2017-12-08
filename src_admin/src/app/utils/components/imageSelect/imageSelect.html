@@ -1,0 +1,111 @@
+<div class="row image-select-container"
+     *ngIf="isImageUrlDefined()">
+    <div class="{{getColumnRules()}}">
+        <div class="row">
+            <div class="col-12">
+                <img alt="{{getImageAlt()}}"
+                     [ngClass]="getImageClass()"
+                     [src]="getImageUrl()"
+                     [width]="imageWidth"
+                     [height]="imageHeight">
+            </div>
+        </div>
+        <div class="row image-select-container-row"
+             *ngIf="isModeView()">
+            <div class="col-12">
+                <button type="button"
+                        class="btn btn-sm btn-secondary"
+                        [disabled]="isComponentReadOnly()"
+                        (click)="startEditImageViaCropper()">
+                    <span translate>shared.components.imageSelect.defineImageViaFile</span>
+                </button>
+                <button type="button"
+                        class="btn btn-sm btn-secondary"
+                        [disabled]="isComponentReadOnly()"
+                        (click)="startEditImageViaUrlInput()">
+                    <span translate>shared.components.imageSelect.defineAvatarViaDirectUrl</span>
+                </button>
+            </div>
+        </div>
+        <div class="row image-select-container-row"
+             *ngIf="isModeEditViaCropper()">
+            <div class="col-12">
+                <button type="button"
+                        class="btn btn-sm btn-secondary pull-left test-drive-left-standalone-btn"
+                        [disabled]="isComponentReadOnly()"
+                        (click)="cancelEditImageViaCropper()">
+                    <span translate>shared.components.imageSelect.cancel</span>
+                </button>
+                <button type="button"
+                        class="btn btn-sm btn-secondary pull-left test-drive-right-standalone-btn"
+                        [disabled]="!isCropperImageDefined() || isComponentReadOnly()"
+                        (click)="commitEditImageViaCropper()">
+                    <span translate>shared.components.imageSelect.accept</span>
+                </button>
+            </div>
+        </div>
+        <div class="row image-select-container-row"
+             *ngIf="isModeEditViaUrlInput()">
+            <div class="col-12">
+                <button type="button"
+                        class="btn btn-sm btn-secondary pull-left test-drive-left-standalone-btn"
+                        [disabled]="isComponentReadOnly()"
+                        (click)="cancelEditImageViaUrlInput()">
+                    <span translate>shared.components.imageSelect.cancel</span>
+                </button>
+                <button type="button"
+                        class="btn btn-sm btn-secondary pull-left test-drive-right-standalone-btn"
+                        [disabled]="!isTempImageUrlDefined() || isComponentReadOnly()"
+                        (click)="commitEditImageViaUrlInput()">
+                    <span translate>shared.components.imageSelect.accept</span>
+                </button>
+            </div>
+        </div>
+    </div>
+    <div class="{{getColumnRules()}}"
+         *ngIf="isModeEditViaCropper()">
+        <div class="row">
+            <div class="col-12">
+                <img-cropper #imageCropper
+                             [image]="imageCropperData"
+                             [settings]="imageCropperSettings">
+                </img-cropper>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <label class="custom-file">
+                    <input type="file"
+                           id="image-browse-file"
+                           class="custom-file-input"
+                           [disabled]="isComponentReadOnly()"
+                           (change)="browseFileChangeListenerInImageCropper($event)">
+                    <span class="custom-file-control"></span>
+                </label>
+            </div>
+        </div>
+    </div>
+    <div class="{{getColumnRules()}}"
+         *ngIf="isModeEditViaUrlInput()">
+        <div class="hidden-sm-down image-select-url-input-margin"></div>
+        <div class="form-group">
+            <label for="image-url"
+                   translate>
+                shared.components.imageSelect.imageUrl
+            </label>
+            <input id="image-url"
+                   type="text"
+                   name="image-url"
+                   class="form-control"
+                   required=""
+                   autofocus=""
+                   [disabled]="isComponentReadOnly()"
+                   [(ngModel)]="tempImageUrl">
+            <small id="image-url-help"
+                   class="form-text text-muted"
+                   translate>
+                shared.components.imageSelect.imageUrlHelp
+            </small>
+        </div>
+    </div>
+</div>

@@ -10,11 +10,16 @@ import { DayOfWeekSchedule } from '../models/dayOfWeekSchedule';
     templateUrl: './workingHours.simple.html',
 })
 export class WorkingHoursSimpleComponent implements OnInit, OnChanges {
+    /// inputs
+    @Input() isComponentReadonly: boolean = false;
     @Input() workingHours: Array<WorkingInterval>;
+    /// outputs
     @Output() workingHoursChanged: EventEmitter<Array<WorkingInterval>> = new EventEmitter<Array<WorkingInterval>>();
+    /// fields
+    private _isSaveProcessing: boolean = false;
     protected actualEntities: Array<DayOfWeekSchedule>;
     protected switcherSettings = ApplicationConstants.switcherSettings;
-    private _isSaveProcessing: boolean = false;
+    /// ctor
     constructor() { }
     ngOnInit(): void {
         this.undoChanges();
@@ -26,6 +31,46 @@ export class WorkingHoursSimpleComponent implements OnInit, OnChanges {
             this.actualEntities !== this.workingHours) {
             this.undoChanges();
         }
+    }
+    protected getStartTimeSelectOptions(interval: DayOfWeekSchedule): Array<any> {
+        const options: Array<any> = new Array<any>();
+        const endTimeIndex: number = this.timeSelectOptions
+            .findIndex(r => r.value === interval.endTime);
+        if (endTimeIndex > -1) {
+            for (let i = 0; i < endTimeIndex; i++) {
+                options.push(this.timeSelectOptions[i]);
+            }
+        }
+        return options;
+    }
+    protected getEndTimeSelectOptions(interval: DayOfWeekSchedule): Array<any> {
+        const options: Array<any> = new Array<any>();
+        const startTimeIndex: number = this.timeSelectOptions
+            .findIndex(r => r.value === interval.startTime);
+        if (startTimeIndex > -1) {
+            for (let i = startTimeIndex + 1; i < this.timeSelectOptions.length; i++) {
+                options.push(this.timeSelectOptions[i]);
+            }
+        }
+        return options;
+    }
+    protected changedStartTimeForTimeInterval(interval: DayOfWeekSchedule): void {
+        if (interval.isValid()) {
+            interval.commitEdit();
+            interval.startEdit();
+        }
+        this.submitWorkingHours();
+    }
+    protected changedEndTimeForTimeInterval(interval: DayOfWeekSchedule): void {
+        if (interval.isValid()) {
+            interval.commitEdit();
+            interval.startEdit();
+        }
+        this.submitWorkingHours();
+    }
+    protected changedIsActiveForTimeInterval(interval: DayOfWeekSchedule): void {
+        interval.isActive = !interval.isActive;
+        this.submitWorkingHours();
     }
     protected submitWorkingHours(): void {
         this._isSaveProcessing = true;
@@ -41,6 +86,12 @@ export class WorkingHoursSimpleComponent implements OnInit, OnChanges {
     protected isSaveProcessing(): boolean {
         return this._isSaveProcessing;
     }
+    protected isSelectStartTimeDisabled(interval: DayOfWeekSchedule): boolean {
+        return !interval.isActive || this.isComponentReadonly || this.isSaveProcessing();
+    }
+    protected isSelectEndTimeDisabled(interval: DayOfWeekSchedule): boolean {
+        return !interval.isActive || this.isComponentReadonly || this.isSaveProcessing();
+    }
     /// helpers
     protected initializeDayOfWeekIntervals() {
         this.actualEntities = [];
@@ -55,7 +106,107 @@ export class WorkingHoursSimpleComponent implements OnInit, OnChanges {
                     entity.isActive = false;
                 }
             }
+            entity.isEditProcessing = true;
             this.actualEntities.push(entity);
         }
     }
+    /// select options
+    protected timeSelectOptions: Array<any> = [
+        {
+            value: '00:00:00',
+            displayText: '00:00 AM'
+        },
+        {
+            value: '01:00:00',
+            displayText: '01:00 AM'
+        },
+        {
+            value: '02:00:00',
+            displayText: '02:00 AM'
+        },
+        {
+            value: '03:00:00',
+            displayText: '03:00 AM'
+        },
+        {
+            value: '04:00:00',
+            displayText: '04:00 AM'
+        },
+        {
+            value: '05:00:00',
+            displayText: '05:00 AM'
+        },
+        {
+            value: '06:00:00',
+            displayText: '06:00 AM'
+        },
+        {
+            value: '07:00:00',
+            displayText: '07:00 AM'
+        },
+        {
+            value: '08:00:00',
+            displayText: '08:00 AM'
+        },
+        {
+            value: '09:00:00',
+            displayText: '09:00 AM'
+        },
+        {
+            value: '10:00:00',
+            displayText: '10:00 AM'
+        },
+        {
+            value: '11:00:00',
+            displayText: '11:00 AM'
+        },
+        {
+            value: '12:00:00',
+            displayText: '00:00 PM'
+        },
+        {
+            value: '13:00:00',
+            displayText: '01:00 PM'
+        },
+        {
+            value: '14:00:00',
+            displayText: '02:00 PM'
+        },
+        {
+            value: '15:00:00',
+            displayText: '03:00 PM'
+        },
+        {
+            value: '16:00:00',
+            displayText: '04:00 PM'
+        },
+        {
+            value: '17:00:00',
+            displayText: '05:00 PM'
+        },
+        {
+            value: '18:00:00',
+            displayText: '06:00 PM'
+        },
+        {
+            value: '19:00:00',
+            displayText: '07:00 PM'
+        },
+        {
+            value: '20:00:00',
+            displayText: '08:00 PM'
+        },
+        {
+            value: '21:00:00',
+            displayText: '09:00 PM'
+        },
+        {
+            value: '22:00:00',
+            displayText: '10:00 PM'
+        },
+        {
+            value: '23:00:00',
+            displayText: '11:00 PM'
+        },
+    ];
 }

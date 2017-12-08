@@ -14,6 +14,8 @@ import { PromiseService } from './promises/promise.service';
 import { WorkingHoursComponent } from './components/working-hours/advanced/workingHours.component';
 import { WorkingHoursSimpleComponent } from './components/working-hours/simple/workingHours.simple.component';
 
+import { ImageSelectComponent } from './components/imageSelect/imageSelect.component';
+
 @NgModule({
     imports: [
         CommonModule,
@@ -24,12 +26,14 @@ import { WorkingHoursSimpleComponent } from './components/working-hours/simple/w
     declarations: [
         WorkingHoursComponent,
         WorkingHoursSimpleComponent,
-        ImageCropperComponent
+        ImageCropperComponent,
+        ImageSelectComponent
     ],
     exports: [
         WorkingHoursComponent,
         WorkingHoursSimpleComponent,
-        ImageCropperComponent
+        ImageCropperComponent,
+        ImageSelectComponent
     ],
     providers: [
         ConsoleLogger,

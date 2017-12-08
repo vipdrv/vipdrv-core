@@ -15,6 +15,8 @@ namespace QuantumLogic.Core.Domain.Entities.WidgetModule
         public string SecondName { get; set; }
         public string UserPhone { get; set; }
         public string UserEmail { get; set; }
+        public bool IsNew { get; set; }
+        public bool IsReachedByManager { get; set; }
 
         #endregion
 
@@ -26,6 +28,14 @@ namespace QuantumLogic.Core.Domain.Entities.WidgetModule
         public virtual Beverage Beverage { get; set; }
 
         #endregion
+
+        public string FullName
+        {
+            get
+            {
+                return FirstName == null && SecondName == null ? String.Empty : $"{FirstName} {SecondName}";
+            }
+        }
 
         #region Ctors
 

@@ -55,81 +55,199 @@
                 <table class="leads-table-body table table-bordered table-hover">
                     <thead>
                     <tr>
-                        <th translate>leads.table.headerText_received</th>
-                        <th translate>leads.table.headerText_firstName</th>
-                        <th translate>leads.table.headerText_secondName</th>
-                        <th translate>leads.table.headerText_siteName</th>
-                        <th translate>leads.table.headerText_userEmail</th>
-                        <th translate>leads.table.headerText_userPhone</th>
-                        <th translate>leads.table.headerText_expertName</th>
-                        <th translate>leads.table.headerText_roadName</th>
-                        <th translate>leads.table.headerText_beverageName</th>
+                        <th class="leads-table-body-column leads-table-body-column-with-sorting leads-table-body-column-date"
+                            (click)="changeSorting('recievedUtc')"
+                            translate>
+                            leads.table.headerText_received
+                            <span class="soring-index pull-right">
+                                &nbsp;{{getSortingIndex('recievedUtc')}}
+                            </span>
+                            <i class="fa fa-sort-amount-asc pull-right"
+                               aria-hidden="true"
+                               *ngIf="isSortingAsc('recievedUtc')"></i>
+                            <i class="fa fa-sort-amount-desc pull-right"
+                               aria-hidden="true"
+                               *ngIf="isSortingDesc('recievedUtc')"></i>
+                        </th>
+                        <th class="leads-table-body-column leads-table-body-column-with-sorting"
+                            (click)="changeSorting('firstName')"
+                            translate>
+                            leads.table.headerText_fullName
+                            <span class="soring-index pull-right">
+                                &nbsp;{{getSortingIndex('firstName')}}
+                            </span>
+                            <i class="fa fa-sort-amount-asc pull-right"
+                               aria-hidden="true"
+                               *ngIf="isSortingAsc('firstName')"></i>
+                            <i class="fa fa-sort-amount-desc pull-right"
+                               aria-hidden="true"
+                               *ngIf="isSortingDesc('firstName')"></i>
+                        </th>
+                        <!--<th class="leads-table-body-column"
+                            translate>
+                            leads.table.headerText_firstName
+                        </th>-->
+                        <!--<th class="leads-table-body-column"
+                            translate>
+                            leads.table.headerText_secondName
+                        </th>-->
+                        <th class="leads-table-body-column leads-table-body-column-with-sorting leads-table-body-column-reached"
+                            (click)="changeSorting('isReachedByManager')"
+                            translate>
+                            leads.table.headerText_isReachedByManager
+                            <span class="soring-index pull-right">
+                                &nbsp;{{getSortingIndex('isReachedByManager')}}
+                            </span>
+                            <i class="fa fa-sort-amount-asc pull-right"
+                               aria-hidden="true"
+                               *ngIf="isSortingAsc('isReachedByManager')"></i>
+                            <i class="fa fa-sort-amount-desc pull-right"
+                               aria-hidden="true"
+                               *ngIf="isSortingDesc('isReachedByManager')"></i>
+                        </th>
+                        <th class="leads-table-body-column leads-table-body-column-site"
+                            translate>
+                            leads.table.headerText_siteName
+                        </th>
+                        <th class="leads-table-body-column"
+                            translate>
+                            leads.table.headerText_userEmail
+                        </th>
+                        <th class="leads-table-body-column leads-table-body-column-phone"
+                            translate>
+                            leads.table.headerText_userPhone
+                        </th>
+                        <th class="leads-table-body-column leads-table-body-column-expert"
+                            translate>
+                            leads.table.headerText_expertName
+                        </th>
+                        <th class="leads-table-body-column leads-table-body-column-route"
+                            translate>
+                            leads.table.headerText_roadName
+                        </th>
+                        <th class="leads-table-body-column leads-table-body-column-beverage"
+                            translate>
+                            leads.table.headerText_beverageName
+                        </th>
                     </tr>
                     </thead>
                     <tr class="leads-table-body-row-filters"
                         *ngIf="isFilteringAllowed()">
                         <td>
+                            <select class="form-control form-control-sm"
+                                    [disabled]="isFilteringDisabled()"
+                                    (change)="applyFilters()"
+                                    [(ngModel)]="tableFilters.recievedDateTime">
+                                <option *ngFor="let option of dateFilterOptions"
+                                        [ngValue]="option.value">
+                                    <span translate>{{option.displayText}}</span>
+                                </option>
+                            </select>
+                        </td>
+                        <td>
+                            <input type="text"
+                                   class="form-control form-control-sm"
+                                   [disabled]="isFilteringDisabled()"
+                                   [(ngModel)]="tableFilters.fullName"
+                                   (blur)="applyFilters()"/>
+                        </td>
+                        <td>
+                            <select class="form-control form-control-sm"
+                                    [disabled]="isFilteringDisabled()"
+                                    (change)="applyFilters()"
+                                    [(ngModel)]="tableFilters.isReachedByManager">
+                                <option *ngFor="let option of isReachedByManagerFilterOptions"
+                                        [ngValue]="option.value">
+                                    <span translate>{{option.displayText}}</span>
+                                </option>
+                            </select>
+                        </td>
+                        <!--<td>-->
                             <!--<input type="text"-->
-                            <!--class="form-control"-->
-                            <!--[disabled]="isFilteringDisabled()"-->
-                            <!--(ngModelChange)="tableFilterValueChanged($event, 'recievedDateTime')"-->
-                            <!--[ngModel]="tableFilters.recievedDateTime"/>-->
+                                   <!--class="form-control form-control-sm"-->
+                                   <!--[disabled]="isFilteringDisabled()"-->
+                                   <!--[(ngModel)]="tableFilters.firstName"-->
+                                   <!--(blur)="applyFilters()"/>-->
+                        <!--</td>-->
+                        <!--<td>-->
+                            <!--<input type="text"-->
+                                   <!--class="form-control form-control-sm"-->
+                                   <!--[disabled]="isFilteringDisabled()"-->
+                                   <!--[(ngModel)]="tableFilters.secondName"-->
+                                   <!--(blur)="applyFilters()"/>-->
+                        <!--</td>-->
+                        <td>
+                            <select class="form-control form-control-sm"
+                                    [disabled]="isFilteringDisabled()"
+                                    (change)="applyFilters()"
+                                    [(ngModel)]="tableFilters.siteId">
+                                <option *ngFor="let option of siteOptions"
+                                        [ngValue]="option.value">
+                                    <span translate>{{option.displayText}}</span>
+                                </option>
+                            </select>
                         </td>
                         <td>
                             <input type="text"
-                                   class="form-control"
-                                   [disabled]="isFilteringDisabled()"
-                                   [(ngModel)]="tableFilters.firstName"
-                                   (blur)="applyFilters()"/>
-                        </td>
-                        <td>
-                            <input type="text"
-                                   class="form-control"
-                                   [disabled]="isFilteringDisabled()"
-                                   [(ngModel)]="tableFilters.secondName"
-                                   (blur)="applyFilters()"/>
-                        </td>
-                        <td>
-                            <input type="text"
-                                   class="form-control"
-                                   [disabled]="isFilteringDisabled()"
-                                   [(ngModel)]="tableFilters.site"
-                                   (blur)="applyFilters()">
-                        </td>
-                        <td>
-                            <input type="text"
-                                   class="form-control"
+                                   class="form-control form-control-sm"
                                    [disabled]="isFilteringDisabled()"
                                    [(ngModel)]="tableFilters.email"
                                    (blur)="applyFilters()"/>
                         </td>
                         <td>
                             <input type="text"
-                                   class="form-control"
+                                   class="form-control form-control-sm"
                                    [disabled]="isFilteringDisabled()"
                                    [(ngModel)]="tableFilters.phone"
                                    (blur)="applyFilters()"/>
                         </td>
                         <td>
-                            <input type="text"
-                                   class="form-control"
-                                   [disabled]="isFilteringDisabled()"
-                                   [(ngModel)]="tableFilters.expert"
-                                   (blur)="applyFilters()"/>
+                            <select class="form-control form-control-sm"
+                                    [disabled]="isFilteringDisabled()"
+                                    (change)="applyFilters()"
+                                    [(ngModel)]="tableFilters.expertId">
+                                <option *ngFor="let option of expertOptions"
+                                        [ngValue]="option.value">
+                                    <span translate>{{option.displayText}}</span>
+                                </option>
+                            </select>
+                            <!--<input type="text"-->
+                                   <!--class="form-control form-control-sm"-->
+                                   <!--[disabled]="isFilteringDisabled()"-->
+                                   <!--[(ngModel)]="tableFilters.expert"-->
+                                   <!--(blur)="applyFilters()"/>-->
                         </td>
                         <td>
-                            <input type="text"
-                                   class="form-control"
-                                   [disabled]="isFilteringDisabled()"
-                                   [(ngModel)]="tableFilters.route"
-                                   (blur)="applyFilters()"/>
+                            <select class="form-control form-control-sm"
+                                    [disabled]="isFilteringDisabled()"
+                                    (change)="applyFilters()"
+                                    [(ngModel)]="tableFilters.routeId">
+                                <option *ngFor="let option of routeOptions"
+                                        [ngValue]="option.value">
+                                    <span translate>{{option.displayText}}</span>
+                                </option>
+                            </select>
+                            <!--<input type="text"-->
+                                   <!--class="form-control form-control-sm"-->
+                                   <!--[disabled]="isFilteringDisabled()"-->
+                                   <!--[(ngModel)]="tableFilters.route"-->
+                                   <!--(blur)="applyFilters()"/>-->
                         </td>
                         <td>
-                            <input type="text"
-                                   class="form-control"
-                                   [disabled]="isFilteringDisabled()"
-                                   [(ngModel)]="tableFilters.beverage"
-                                   (blur)="applyFilters()"/>
+                            <select class="form-control form-control-sm"
+                                    [disabled]="isFilteringDisabled()"
+                                    (change)="applyFilters()"
+                                    [(ngModel)]="tableFilters.beverageId">
+                                <option *ngFor="let option of beverageOptions"
+                                        [ngValue]="option.value">
+                                    <span translate>{{option.displayText}}</span>
+                                </option>
+                            </select>
+                            <!--<input type="text"-->
+                                   <!--class="form-control form-control-sm"-->
+                                   <!--[disabled]="isFilteringDisabled()"-->
+                                   <!--[(ngModel)]="tableFilters.beverage"-->
+                                   <!--(blur)="applyFilters()"/>-->
                         </td>
                     </tr>
                     <tbody>
@@ -137,25 +255,38 @@
                         [ngClass]="getClassesForLeadTableRow(item)"
                         class="leads-table-body-row"
                         (click)="tryModalOpenInfo(item.id)">
-                        <td>{{item.recievedDateTime}}</td>
-                        <td>{{item.firstName}}</td>
-                        <td>{{item.secondName}}</td>
-                        <td>{{item.siteName}}</td>
-                        <td>{{item.userEmail}}</td>
-                        <td>{{item.userPhone}}</td>
-                        <td>
+                        <td class="leads-table-body-column">{{item.recievedDateTime}}</td>
+                        <td class="leads-table-body-column">{{item.firstName + ' ' + item.secondName}}</td>
+                        <!--<td class="leads-table-body-column">{{item.firstName}}</td>-->
+                        <!--<td class="leads-table-body-column">{{item.secondName}}</td>-->
+                        <td class="leads-table-body-column">
+                            <label class="custom-control custom-checkbox mb-2 mr-sm-2 mb-sm-0"
+                                   style="cursor: default"
+                                   (click)="changeIsReachedByManager(item); $event.stopPropagation();">
+                                <input type="checkbox"
+                                       class="custom-control-input"
+                                       [disabled]="isReachedByManagerDisabled(item)"
+                                       [ngModel]="item.isReachedByManager">
+                                <span class="custom-control-indicator"></span>
+                                <span class="custom-control-description"></span>
+                            </label>
+                        </td>
+                        <td class="leads-table-body-column">{{item.siteName}}</td>
+                        <td class="leads-table-body-column">{{item.userEmail}}</td>
+                        <td class="leads-table-body-column">{{item.userPhone}}</td>
+                        <td class="leads-table-body-column">
                             <span class="badge badge-info leads-table-badge-class"
                                   *ngIf="item.expertName">
                                 {{item.expertName}}
                             </span>
                         </td>
-                        <td>
+                        <td class="leads-table-body-column">
                             <span class="badge badge-info leads-table-badge-class"
                                   *ngIf="item.routeName">
                                 {{item.routeName}}
                             </span>
                         </td>
-                        <td>
+                        <td class="leads-table-body-column">
                             <span class="badge badge-info leads-table-badge-class"
                                   *ngIf="item.beverageName">
                                 {{item.beverageName}}

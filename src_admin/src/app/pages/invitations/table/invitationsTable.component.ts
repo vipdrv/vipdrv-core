@@ -16,6 +16,8 @@ export class InvitationsTableComponent implements OnInit {
     @Input() sorting: string;
     @Input() filter: any;
     /// modals
+    @ViewChild('confirmationDeleteModal')
+    protected confirmationDeleteModal: ModalComponent;
     @ViewChild('invitationDetailsModal')
     protected modalDetails: ModalComponent;
     /// settings
@@ -76,16 +78,19 @@ export class InvitationsTableComponent implements OnInit {
     }
     protected deleteEntity(id: number): Promise<void> {
         const self = this;
-        // self.deleteEntityPromise = self.userApiService
-        //     .delete(id)
-        //     .then(function (): Promise<void> {
-        //         const elementIndex = self.items.findIndex((item: InvitationEntity) => item.id === id);
-        //         self.items.splice(elementIndex, 1);
-        //         return Promise.resolve();
-        //     })
-        //     .then(
-        //         () => self.deleteEntityPromise = null,
-        //         () => self.deleteEntityPromise = null);
+        self.deleteEntityPromise = self.userApiService
+            .deleteInvitation(id)
+            .then(function (): Promise<void> {
+                const elementIndex = self.items
+                    .findIndex((item: InvitationEntity) => item.id === id);
+                if (elementIndex > -1) {
+                    self.items.splice(elementIndex, 1);
+                }
+                return Promise.resolve();
+            })
+            .then(
+                () => self.deleteEntityPromise = null,
+                () => self.deleteEntityPromise = null);
         return self.deleteEntityPromise;
     }
     protected modalOpenInfo(id: number): Promise<void> {
@@ -162,4 +167,36 @@ export class InvitationsTableComponent implements OnInit {
     protected getAllPromise: Promise<void>;
     protected getEntityPromise: Promise<InvitationEntity>;
     protected deleteEntityPromise: Promise<void>;
+    /// confirmation delete modal
+    protected deleteCandidateId: number;
+    protected getDeleteCandidateDisplayText(): string {
+        let result;
+        if (Variable.isNotNullOrUndefined(this.deleteCandidateId)) {
+            const elementIndex = this.items
+                .findIndex((item: InvitationEntity) => item.id === this.deleteCandidateId);
+            if (elementIndex > -1) {
+                result = this.items[elementIndex].email;
+            }
+        }
+        return Variable.isNotNullOrUndefined(result) ? result : '';
+    }
+    protected openConfirmationDeleteModal(candidateId: number): Promise<void> {
+        this.deleteCandidateId = candidateId;
+        return this.confirmationDeleteModal.open();
+    }
+    protected acceptConfirmationDeleteModal(): Promise<void> {
+        const self = this;
+        return self.confirmationDeleteModal
+            .close()
+            .then(() => {
+                self.deleteEntity(self.deleteCandidateId);
+                self.deleteCandidateId = null;
+            });
+    }
+    protected closeConfirmationDeleteModal(): Promise<void> {
+        const self = this;
+        return self.confirmationDeleteModal
+            .close()
+            .then(() => self.deleteCandidateId = null);
+    }
 }
