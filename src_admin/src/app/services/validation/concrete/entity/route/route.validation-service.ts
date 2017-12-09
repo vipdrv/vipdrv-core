@@ -27,9 +27,9 @@ export class RouteValidationService
             Variable.isNotNullOrUndefined(entity.description);
     }
     getInvalidNameMessageKey(entity: RouteEntity): string {
-        return 'validation.beverages.name';
+        return 'validation.routes.name';
     }
     getInvalidDescriptionMessageKey(entity: RouteEntity): string {
-        return 'validation.beverages.description';
+        return 'validation.routes.description';
     }
 }

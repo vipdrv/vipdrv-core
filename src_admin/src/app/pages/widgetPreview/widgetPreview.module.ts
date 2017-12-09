@@ -8,7 +8,6 @@ import { BusyModule } from 'angular2-busy';
 import { UtilsModule } from './../../utils/index';
 import { routing } from './widgetPreview.routing';
 import { WidgetPreviewComponent } from './widgetPreview.component';
-
 @NgModule({
     imports: [
         CommonModule,
@@ -18,13 +17,13 @@ import { WidgetPreviewComponent } from './widgetPreview.component';
         routing,
         UtilsModule,
         Ng2Bs3ModalModule,
-        BusyModule
+        BusyModule,
     ],
     exports: [
-        WidgetPreviewComponent
+        WidgetPreviewComponent,
     ],
     declarations: [
-        WidgetPreviewComponent
+        WidgetPreviewComponent,
     ],
     providers: []
 })
