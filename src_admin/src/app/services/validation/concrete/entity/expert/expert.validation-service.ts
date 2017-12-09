@@ -32,14 +32,14 @@ export class ExpertValidationService
         return Variable.isNotNullOrUndefined(entity) &&
             (
                 Variable.isNullOrUndefined(entity.linkedinUrl) ||
-                entity.linkedinUrl.startsWith('http://www.linkedin.com')
+                entity.linkedinUrl.startsWith('https://www.linkedin.com')
             );
     }
     isValidFacebookUrl(entity: ExpertEntity): boolean {
         return Variable.isNotNullOrUndefined(entity) &&
             (
                 Variable.isNullOrUndefined(entity.facebookUrl) ||
-                entity.facebookUrl.startsWith('http://www.facebook.com')
+                entity.facebookUrl.startsWith('https://www.facebook.com')
             );
     }
     getInvalidNameMessageKey(entity: ExpertEntity): string {

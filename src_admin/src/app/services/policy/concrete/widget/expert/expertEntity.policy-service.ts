@@ -15,4 +15,16 @@ export class ExpertEntityPolicyService
         this.logger.logDebug('ExpertEntityPolicyService: Service has been constructed.');
     }
     /// methods
+    canUpdateOrder(): boolean {
+        return true;
+    }
+    canUpdateActivity(): boolean {
+        return true;
+    }
+    canUpdateOrderForEntity(entity: ExpertEntity): boolean {
+        return true && this.canUpdateOrder();
+    }
+    canUpdateActivityForEntity(entity: ExpertEntity): boolean {
+        return true && this.canUpdateActivity();
+    }
 }

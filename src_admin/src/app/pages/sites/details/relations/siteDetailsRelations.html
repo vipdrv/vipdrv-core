@@ -98,48 +98,60 @@
                      class="tab-pane fade show active"
                      role="tabpanel"
                      aria-labelledby="overview-tab">
-                    <site-overview [entity]="entity"></site-overview>
+                    <div class="site-relation-container">
+                        <site-overview [entity]="entity"></site-overview>
+                    </div>
                 </div>
                 <div id="experts"
                      class="tab-pane fade show"
                      role="tabpanel"
                      aria-labelledby="experts-tab">
-                    <experts-table [siteId]="entity.id"
-                                   [filter]="getExpertsFilter()"
-                                   (onExpertsChange)="actualizeExpertsInfo($event)">
-                    </experts-table>
+                    <div class="site-relation-container">
+                        <experts-table [siteId]="entity.id"
+                                       [filter]="getExpertsFilter()"
+                                       (onEntityChanged)="actualizeExpertsInfo($event)">
+                        </experts-table>
+                    </div>
                 </div>
                 <div id="beverages"
                      class="tab-pane fade show"
                      role="tabpanel"
                      aria-labelledby="beverages-tab">
-                    <beverages-table [siteId]="entity.id"
-                                     [filter]="getBeveragesFilter()"
-                                     (onBeveragesChange)="actualizeBeveragesInfo($event)">
-                    </beverages-table>
+                    <div class="site-relation-container">
+                        <beverages-table [siteId]="entity.id"
+                                         [filter]="getBeveragesFilter()"
+                                         (onBeveragesChange)="actualizeBeveragesInfo($event)">
+                        </beverages-table>
+                    </div>
                 </div>
                 <div id="routes"
                      class="tab-pane fade show"
                      role="tabpanel"
                      aria-labelledby="routes-tab">
-                    <routes-table [siteId]="entity.id"
-                                  [filter]="getRoutesFilter()"
-                                  (onRoutesChange)="actualizeRoutesInfo($event)">
-                    </routes-table>
+                    <div class="site-relation-container">
+                        <routes-table [siteId]="entity.id"
+                                      [filter]="getRoutesFilter()"
+                                      (onRoutesChange)="actualizeRoutesInfo($event)">
+                        </routes-table>
+                    </div>
                 </div>
                 <div id="notifications"
                      class="tab-pane fade show"
                      role="tabpanel"
                      aria-labelledby="notifications-tab">
-                    <site-contacts [siteContacts]="entity.contacts"
-                                   (onSaveSiteContacts)="patchSiteContacts($event)">
-                    </site-contacts>
+                    <div class="site-relation-container">
+                        <site-contacts [siteContacts]="entity.contacts"
+                                       (onSaveSiteContacts)="patchSiteContacts($event)">
+                        </site-contacts>
+                    </div>
                 </div>
                 <div id="widget-preview"
                      class="tab-pane fade show"
                      role="tabpanel"
                      aria-labelledby="widget-preview-tab">
-                    <widget-preview [id]="entity.id"></widget-preview>
+                    <div class="site-relation-container">
+                        <widget-preview [id]="entity.id"></widget-preview>
+                    </div>
                 </div>
             </div>
         </div>

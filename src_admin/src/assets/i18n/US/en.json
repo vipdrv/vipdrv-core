@@ -150,17 +150,14 @@
       "title": "Expert details",
       "cancel": "Cancel",
       "apply": "Save",
-      "browseAvatar": "Browse",
-      "changeAvatarUrl": "Set url",
-      "changeAvatarUrlCancel": "Cancel",
-      "changeAvatarUrlAccept": "Accept",
-      "avatarBrowseAccept": "Accept",
-      "avatarBrowseCancel": "Cancel",
-      "expertPhotoUrl": "Url",
-      "expertName": "Name",
-      "expertDescription": "Description",
-      "linkedinUrl": "Linkedin",
-      "facebookUrl": "Facebook",
+      "expertName": "Full name",
+      "expertNameHelp": "Enter full name of the expert.",
+      "expertDescription": "About the expert",
+      "expertDescriptionHelp": "Enter few words about the expert.",
+      "linkedinUrl": "Linkedin profile",
+      "linkedinUrlHelp": "Enter direct link to the experts LinkedIn profile like https://www.linkedin.com/... (is not required).",
+      "facebookUrl": "Facebook profile",
+      "facebookUrlHelp": "Enter direct link to the experts Facebook profile like https://www.facebook.com/... (is not required).",
       "expertActivity": "Is active",
       "expertOrder": "Order",
       "weekSchedule": "Week schedule"
@@ -334,10 +331,10 @@
       "invalidAvailableSitesCount": "Maximum allowed count of sites is not valid (should be number higher then 0)!"
     },
     "experts": {
-      "name": "",
-      "description": "",
-      "linkedInUrl": "",
-      "facebookUrl": ""
+      "name": "Experts full name is not valid (this field is required)!",
+      "description": "Info about the expert is not valid (this field is required)!",
+      "linkedInUrl": "LinkedIn profile's direct link is not valid! (should be like https://www.linkedin.com/...)",
+      "facebookUrl": "Facebook profile's direct link is not valid! (should be like https://www.facebook.com/...)"
     }
   },
   "filters": {

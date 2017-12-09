@@ -81,6 +81,12 @@ namespace QuantumLogic.WebApi.Controllers.Widget
         {
             return ChangeOrderAsync(id, request.Value);
         }
+        [Authorize]
+        [HttpPatch("swap-orders")]
+        public Task SwapOrdersAsync([FromBody]SwapOrdersRequest<int> request)
+        {
+            return SwapOrdersAsync(request.Key1, request.Key2);
+        }
 
         #endregion
     }
