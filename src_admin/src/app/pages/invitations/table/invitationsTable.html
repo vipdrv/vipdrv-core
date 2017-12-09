@@ -71,7 +71,7 @@
                     <tr *ngFor="let item of items"
                         class="invitations-table-body-row"
                         [ngClass]="getClassesForTableRow(item)"
-                        (click)="tryModalOpenInfo(item.id)">
+                        (click)="tryModalOpenInfo(item.id); $event.stopPropagation();">
                         <td class="invitations-table-body-column">{{item.invitationCode}}</td>
                         <td class="invitations-table-body-column">{{item.email}}</td>
                         <!--<td>{{item.phoneNumber}}</td>-->

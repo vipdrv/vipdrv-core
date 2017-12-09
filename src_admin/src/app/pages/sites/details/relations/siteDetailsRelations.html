@@ -1,5 +1,5 @@
-<div class="site-details-template">
-    <div class="row site-details-template-header">
+<div class="test-drive-page">
+    <div class="row test-drive-page-title">
         <div class="col-12">
             <nav aria-label="breadcrumb" role="navigation">
                 <ol class="breadcrumb test-drive-breadcrumb">
@@ -17,7 +17,7 @@
             </nav>
         </div>
     </div>
-    <div class="row ng-busy-parent-container">
+    <div class="row test-drive-page-content ng-busy-parent-container">
         <div class="col-12"
              [ngBusy]="promiseService.applicationPromises.sites.get.promise">
             <ul class="nav nav-tabs"
@@ -79,17 +79,6 @@
                         sites.details.tabs.notifications
                     </a>
                 </li>
-                <!--<li class="nav-item">-->
-                <!--<a id="theme-tab"-->
-                <!--class="nav-link"-->
-                <!--href="#theme"-->
-                <!--data-toggle="tab"-->
-                <!--role="tab"-->
-                <!--aria-controls="theme-tab"-->
-                <!--translate>-->
-                <!--sites.details.tabs.theme-->
-                <!--</a>-->
-                <!--</li>-->
                 <li class="nav-item">
                     <a id="widget-preview-tab"
                        class="nav-link"
@@ -146,13 +135,6 @@
                                    (onSaveSiteContacts)="patchSiteContacts($event)">
                     </site-contacts>
                 </div>
-                <!--<div id="theme"-->
-                <!--class="tab-pane fade show"-->
-                <!--role="tabpanel"-->
-                <!--aria-labelledby="theme-tab">-->
-                <!--theme component (not implemented yet)-->
-                <!--// Should patch theme for current site entity-->
-                <!--</div>-->
                 <div id="widget-preview"
                      class="tab-pane fade show"
                      role="tabpanel"
