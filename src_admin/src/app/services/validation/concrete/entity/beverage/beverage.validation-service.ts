@@ -14,6 +14,22 @@ export class BeverageValidationService
     }
     /// methods
     isValid(entity: BeverageEntity): boolean {
-        return true;
+        return Variable.isNotNullOrUndefined(entity) &&
+            this.isValidName(entity) &&
+            this.isValidDescription(entity);
+    }
+    isValidName(entity: BeverageEntity): boolean {
+        return Variable.isNotNullOrUndefined(entity) &&
+            Variable.isNotNullOrUndefined(entity.name);
+    }
+    isValidDescription(entity: BeverageEntity): boolean {
+        return Variable.isNotNullOrUndefined(entity) &&
+            Variable.isNotNullOrUndefined(entity.description);
+    }
+    getInvalidNameMessageKey(entity: BeverageEntity): string {
+        return 'validation.beverages.name';
+    }
+    getInvalidDescriptionMessageKey(entity: BeverageEntity): string {
+        return 'validation.beverages.description';
     }
 }

@@ -15,4 +15,16 @@ export class BeverageEntityPolicyService
         this.logger.logDebug('BeverageEntityPolicyService: Service has been constructed.');
     }
     /// methods
+    canUpdateOrder(): boolean {
+        return true;
+    }
+    canUpdateActivity(): boolean {
+        return true;
+    }
+    canUpdateOrderForEntity(entity: BeverageEntity): boolean {
+        return true && this.canUpdateOrder();
+    }
+    canUpdateActivityForEntity(entity: BeverageEntity): boolean {
+        return true && this.canUpdateActivity();
+    }
 }

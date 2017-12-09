@@ -12,7 +12,6 @@ import { ExpertDetailsInfoComponent } from './details/info/expertDetailsInfo.com
 import { ExpertDetailsEditComponent } from './details/edit/expertDetailsEdit.component';
 import { ExpertsComponent } from './experts.component';
 import { routing } from './experts.routing';
-
 @NgModule({
     imports: [
         CommonModule,
