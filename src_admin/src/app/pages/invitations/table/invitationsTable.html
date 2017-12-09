@@ -1,104 +1,122 @@
-<div class="invitations-table-template">
-    <div class="invitations-table-header">
-        <div style="float: left;">
-            <button type="button"
-                    [disabled]="!!getAllPromise"
-                    class="btn btn-secondary btn-sm pull-left invitations-refresh-btn"
-                    (click)="getAllEntities()">
-                <i class="fa fa-refresh fa-spin" *ngIf="!!getAllPromise"></i>
-                <i class="fa fa-refresh" *ngIf="!getAllPromise"></i>
-            </button>
-            <select class="form-control-sm invitations-page-size-control"
-                    [disabled]="!!getAllPromise"
-                    [(ngModel)]="pageSize"
-                    (change)="onPageSizeChanged($event)">
-                <option *ngFor="let item of pageSizeValues"
-                        [ngValue]="item">
-                    {{item}}
-                </option>
-            </select>
-        </div>
-        <div style="float: left;"
-             *ngIf="usePagination()">
-            <pagination class="pagination-sm"
-                        [disabled]="!!getAllPromise"
-                        [(ngModel)]="pageNumber"
-                        [totalItems]="totalCount"
-                        [itemsPerPage]="pageSize"
-                        [maxSize]="maxPaginationSize"
-                        [boundaryLinks]="true"
-                        [rotate]="false"
-                        (pageChanged)="onPageNumberChanged($event)"
-                        (numPages)="numPages = $event">
-            </pagination>
+<div class="many-entities-template">
+    <div class="row test-drive-many-entities-template-header">
+        <div class="col-12">
+            <div class="pull-left">
+                <button type="button"
+                        *ngIf="isRefreshAllowed()"
+                        [disabled]="isRefreshDisabled()"
+                        class="btn btn-secondary btn-sm pull-left invitations-refresh-btn"
+                        (click)="getAllEntities()">
+                    <i class="fa fa-refresh fa-spin" *ngIf="isRefreshProcessing()"></i>
+                    <i class="fa fa-refresh" *ngIf="!isRefreshProcessing()"></i>
+                </button>
+                <select class="form-control-sm invitations-page-size-control"
+                        *ngIf="isPageSizeChangeAllowed()"
+                        [disabled]="isPageSizeChangeDisabled()"
+                        [(ngModel)]="pageSize"
+                        (change)="onPageSizeChanged($event)">
+                    <option *ngFor="let item of pageSizeValues"
+                            [ngValue]="item">
+                        {{item}}
+                    </option>
+                </select>
+            </div>
+            <div class="pull-left"
+                 *ngIf="isPaginationAllowed()">
+                <pagination class="pagination-sm"
+                            [disabled]="isPaginationDisabled()"
+                            [(ngModel)]="pageNumber"
+                            [totalItems]="totalCount"
+                            [itemsPerPage]="pageSize"
+                            [maxSize]="maxPaginationSize"
+                            [boundaryLinks]="true"
+                            [rotate]="false"
+                            (pageChanged)="onPageNumberChanged($event)"
+                            (numPages)="numPages = $event">
+                </pagination>
+            </div>
+            <div class="pull-right">
+                <button type="button"
+                        class="btn btn-outline-success btn-sm pull-right"
+                        *ngIf="isOperationCreateAllowed()"
+                        [disabled]="isAnyOperationWithEntityProcessing()"
+                        (click)="modalOpenCreate(); $event.stopPropagation();">
+                    <i class="fa fa-refresh fa-spin" *ngIf="isOperationCreateProcessing()"></i>
+                    <i class="fa fa-plus" *ngIf="!isOperationCreateProcessing()"></i>
+                    <span translate>general.actions.text_create</span>
+                </button>
+            </div>
         </div>
     </div>
-    <table class="invitations-table-body table table-bordered table-hover"
-           [ngBusy]="getAllPromise">
-        <thead>
-            <tr>
-                <th translate>invitations.table.invitationCode</th>
-                <th translate>invitations.table.email</th>
-                <!--<th translate>invitations.table.phoneNumber</th>-->
-                <th translate>invitations.table.role</th>
-                <th translate>invitations.table.availableSitesCount</th>
-                <th translate>invitations.table.used</th>
-                <th translate>invitations.table.invitator</th>
-                <!--<th translate>invitations.table.createdTime</th>-->
-                <!--<th translate>invitations.table.usedTime</th>-->
-                <th class="invitations-table-body-column-actions">
-                    <button type="button"
-                            class="btn btn-outline-success btn-sm"
-                            translate
-                            (click)="modalOpenCreate(); $event.stopPropagation();">
-                        general.actions.text_create
-                    </button>
-                </th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr *ngFor="let item of items"
-                class="invitations-table-body-row"
-                (click)="modalOpenInfo(item.id)">
-                <td>{{item.invitationCode}}</td>
-                <td>{{item.email}}</td>
-                <!--<td>{{item.phoneNumber}}</td>-->
-                <td>
-                    <span class="badge badge-info invitations-table-badge-class">
-                        {{item.role}}
-                    </span>
-                </td>
-                <td>{{item.availableSitesCount}}</td>
-                <td>
-                    <span class="badge badge-warning invitations-table-badge-class"
-                          *ngIf="!item.used"
-                          translate>
-                        invitations.status.pending
-                    </span>
-                    <span class="badge badge-success invitations-table-badge-class"
-                          *ngIf="!!item.used"
-                          translate>
-                        invitations.status.accepted
-                    </span>
-                </td>
-                <td>
-                    <span class="badge badge-info invitations-table-badge-class">
-                        {{item.invitator}}
-                    </span>
-                </td>
-                <!--<td>{{item.createdTime}}</td>-->
-                <!--<td>{{item.usedTime}}</td>-->
-                <td>
-                    <button type="button"
-                            class="btn btn-outline-danger btn-sm"
-                            *ngIf="isDeleteAvailable(item)"
-                            (click)="openConfirmationDeleteModal(item.id); $event.stopPropagation();">
-                        <span translate>invitations.actions.delete</span>
-                    </button>
-                </td>
-            </tr>
-        </tbody>
-    </table>
+    <div class="test-drive-many-entities-template-body">
+        <div class="row"
+             [ngBusy]="firstLoadingPromise">
+            <div class="col-12">
+                <table class="invitations-table-body table table-bordered table-hover">
+                    <thead>
+                    <tr>
+                        <th class="invitations-table-body-column" translate>invitations.table.invitationCode</th>
+                        <th class="invitations-table-body-column" translate>invitations.table.email</th>
+                        <!--<th class="invitations-table-body-column" translate>invitations.table.phoneNumber</th>-->
+                        <th class="invitations-table-body-column" translate>invitations.table.role</th>
+                        <th class="invitations-table-body-column" translate>invitations.table.availableSitesCount</th>
+                        <th class="invitations-table-body-column" translate>invitations.table.used</th>
+                        <th class="invitations-table-body-column" translate>invitations.table.invitator</th>
+                        <!--<th class="invitations-table-body-column" translate>invitations.table.createdTime</th>-->
+                        <!--<th class="invitations-table-body-column" translate>invitations.table.usedTime</th>-->
+                        <th class="invitations-table-body-column" class="invitations-table-body-column-actions"></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr *ngFor="let item of items"
+                        class="invitations-table-body-row"
+                        [ngClass]="getClassesForTableRow(item)"
+                        (click)="tryModalOpenInfo(item.id)">
+                        <td class="invitations-table-body-column">{{item.invitationCode}}</td>
+                        <td class="invitations-table-body-column">{{item.email}}</td>
+                        <!--<td>{{item.phoneNumber}}</td>-->
+                        <td class="invitations-table-body-column">
+                            <span class="badge badge-info invitations-table-badge-class">
+                                {{item.role}}
+                            </span>
+                        </td>
+                        <td class="invitations-table-body-column">{{item.availableSitesCount}}</td>
+                        <td class="invitations-table-body-column">
+                            <span class="badge badge-warning invitations-table-badge-class"
+                                  *ngIf="!item.used"
+                                  translate>
+                                invitations.status.pending
+                            </span>
+                            <span class="badge badge-success invitations-table-badge-class"
+                                  *ngIf="!!item.used"
+                                  translate>
+                                invitations.status.accepted
+                            </span>
+                        </td>
+                        <td class="invitations-table-body-column">
+                            <span class="badge badge-info invitations-table-badge-class">
+                                {{item.invitator}}
+                            </span>
+                        </td>
+                        <!--<td class="invitations-table-body-column">{{item.createdTime}}</td>-->
+                        <!--<td class="invitations-table-body-column">{{item.usedTime}}</td>-->
+                        <td class="invitations-table-body-column">
+                            <button type="button"
+                                    class="btn btn-outline-danger btn-sm"
+                                    *ngIf="isDeleteAvailable(item)"
+                                    [disabled]="isAnyOperationWithEntityProcessing()"
+                                    (click)="openConfirmationDeleteModal(item.id); $event.stopPropagation();">
+                                <i class="fa fa-refresh fa-spin" *ngIf="isDeleteProcessing(item)"></i>
+                                <i class="fa fa-times" *ngIf="!isDeleteProcessing(item)"></i>
+                                <span translate>invitations.actions.delete</span>
+                            </button>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
 </div>
 
 <modal #invitationDetailsModal
@@ -123,6 +141,8 @@
         <div *ngIf="isSelectedEntityDefined() && isOperationModeCreate"
              [ngBusy]="getEntityPromise">
             <invitation-details-create [entity]="entity"
+                                       [useValidation]="isValidationUsedForSelectedEntity()"
+                                       [isProcessing]="isSendInvitationInProgress()"
                                        (onEntityChange)="onEntityChange($event)">
             </invitation-details-create>
         </div>

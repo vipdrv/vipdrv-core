@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { Variable, Extensions } from './../../utils/index';
+import { Variable, Extensions, ILogger, ConsoleLogger } from './../../utils/index';
 import { IUserApiService, UserApiService } from './../../services/serverApi/index';
 import { IAuthorizationService, AuthorizationService } from './../../services/index';
 import { IRegistrationModelValidationService, RegistrationModelValidationService } from './../../services/index';
@@ -25,6 +25,7 @@ export class RegistrationComponent implements OnInit, OnDestroy {
     protected useValidation: boolean;
     /// injected dependencies
     protected extensions = Extensions;
+    protected logger: ILogger;
     protected userApiService: IUserApiService;
     protected authorizationManager: IAuthorizationService;
     protected validationService: IRegistrationModelValidationService;
@@ -32,12 +33,15 @@ export class RegistrationComponent implements OnInit, OnDestroy {
     constructor(
         protected route: ActivatedRoute,
         protected router: Router,
+        logger: ConsoleLogger,
         userApiService: UserApiService,
         authorizationManager: AuthorizationService,
         registrationModelValidationService: RegistrationModelValidationService) {
         this.userApiService = userApiService;
         this.authorizationManager = authorizationManager;
         this.validationService = registrationModelValidationService;
+        this.logger = logger;
+        this.logger.logDebug('RegistrationComponent: Component has been constructed.');
     }
     /// methods
     ngOnInit(): void {

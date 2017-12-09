@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Variable, ConsoleLogger } from './../../../../../utils/index';
+import { Variable, Extensions, ConsoleLogger } from './../../../../../utils/index';
 import { InvitationEntity } from './../../../../../entities/index';
 import { ObjectValidationService } from './../../../object.validation-service';
 import { IInvitationValidationService } from './i-invitation.validation-service';
@@ -14,6 +14,18 @@ export class InvitationValidationService
     }
     /// methods
     isValid(entity: InvitationEntity): boolean {
-        return true;
+        return this.isValidEmail(entity) && this.isValidAvailableSitesCount(entity);
+    }
+    isValidEmail(entity: InvitationEntity): boolean {
+        return Variable.isNotNullOrUndefined(entity) && Extensions.regExp.email.test(entity.email);
+    }
+    isValidAvailableSitesCount(entity: InvitationEntity): boolean {
+        return Variable.isNotNullOrUndefined(entity) && entity.availableSitesCount > 0;
+    }
+    getInvalidEmailMessageKey(entity: InvitationEntity): string {
+        return 'validation.invitations.invalidEmailMessage';
+    }
+    getInvalidAvailableSitesCountMessageKey(entity: InvitationEntity): string {
+        return 'validation.invitations.invalidAvailableSitesCount';
     }
 }

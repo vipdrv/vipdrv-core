@@ -260,11 +260,13 @@
       "apply": "Send invitation",
       "invitationCode": "Invitation code",
       "email": "Email",
+      "emailHelp": "Enter email to send invitation.",
       "phoneNumber": "Phone number",
       "createdTime": "Creation time",
       "used": "Status",
       "usedTime": "Accepted time",
-      "availableSitesCount": "Sites max count",
+      "availableSitesCount": "Allowed count of sites",
+      "availableSitesCountHelp": "Enter maximum allowed count of sites for invited user.",
       "role": "Expected role",
       "invitator": "Creator"
     }
@@ -326,6 +328,10 @@
       "invalidPhoneNumberMessage": "Phone number is not valid!",
       "invalidEmptyUsernameMessage": "Username is required field!",
       "invalidUsernameMessage": "This username is busy!"
+    },
+    "invitations": {
+      "invalidEmailMessage": "Email address is not valid!",
+      "invalidAvailableSitesCount": "Maximum allowed count of sites is not valid (should be number higher then 0)!"
     }
   },
   "filters": {
