@@ -15,4 +15,16 @@ export class RouteEntityPolicyService
         this.logger.logDebug('RouteEntityPolicyService: Service has been constructed.');
     }
     /// methods
+    canUpdateOrder(): boolean {
+        return true;
+    }
+    canUpdateActivity(): boolean {
+        return true;
+    }
+    canUpdateOrderForEntity(entity: RouteEntity): boolean {
+        return true && this.canUpdateOrder();
+    }
+    canUpdateActivityForEntity(entity: RouteEntity): boolean {
+        return true && this.canUpdateActivity();
+    }
 }

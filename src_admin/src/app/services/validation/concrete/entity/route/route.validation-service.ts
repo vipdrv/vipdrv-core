@@ -14,6 +14,22 @@ export class RouteValidationService
     }
     /// methods
     isValid(entity: RouteEntity): boolean {
-        return true;
+        return Variable.isNotNullOrUndefined(entity) &&
+            this.isValidName(entity) &&
+            this.isValidDescription(entity);
+    }
+    isValidName(entity: RouteEntity): boolean {
+        return Variable.isNotNullOrUndefined(entity) &&
+            Variable.isNotNullOrUndefined(entity.name);
+    }
+    isValidDescription(entity: RouteEntity): boolean {
+        return Variable.isNotNullOrUndefined(entity) &&
+            Variable.isNotNullOrUndefined(entity.description);
+    }
+    getInvalidNameMessageKey(entity: RouteEntity): string {
+        return 'validation.beverages.name';
+    }
+    getInvalidDescriptionMessageKey(entity: RouteEntity): string {
+        return 'validation.beverages.description';
     }
 }
