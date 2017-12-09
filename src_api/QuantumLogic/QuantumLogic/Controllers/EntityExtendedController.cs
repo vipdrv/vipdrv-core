@@ -36,5 +36,13 @@ namespace QuantumLogic.WebApi.Controllers
                 await uow.CompleteAsync();
             }
         }
+        protected virtual async Task SwapOrdersAsync(TPrimaryKey key1, TPrimaryKey key2)
+        {
+            using (var uow = UowManager.CurrentOrCreateNew(true))
+            {
+                await ((IEntityExtendedDomainService<TEntity, TPrimaryKey>)DomainService).SwapOrdersAsync(key1, key2);
+                await uow.CompleteAsync();
+            }
+        }
     }
 }

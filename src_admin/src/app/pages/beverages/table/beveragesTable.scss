@@ -2,51 +2,57 @@
   margin-top: 25px;
 }
 .beverages-table-body {
+  //font-size: 85%;
+}
+.beverages-table-header {
 
 }
+.beverages-table-body-column {
+
+}
+.beverages-table-body-column {
+  text-align: center;
+}
+.beverages-table-body-row {
+
+}
+.beverages-table-body-row:hover {
+  cursor: pointer;
+}
+.beverages-table-body-row-disabled {
+
+}
+.beverages-table-body-row-disabled:hover {
+
+}
+.beverages-table-body-row-processing {
+  background-color: #e8eaf6;
+}
+.beverages-table-body-row-processing:hover {
+  background-color: #c5cae9;
+}
+.beverages-table-body-row-deactivated {
+
+}
+.beverages-table-body-row-deactivated:hover {
+
+}
+
 .beverages-table-body-column-actions {
-  width: 140px;
+  width: 170px;
 }
 .beverages-table-body-column-photo {
   width: 80px;
 }
 .beverages-table-body-column-order {
-
+  width: 120px;
 }
 .beverages-table-body-column-activity {
+  width: 120px;
+}
+.beverages-table-body-column-header-full-name {
 
 }
-.beverages-table-body-column-name {
-
-}
-
-.beverage-modal-header-text {
-
-}
-.beverage-avatar-image {
-  width: 180px;
-  height: 180px;
-}
-.beverage-avatar-btns {
-
-}
-.beverage-avatar-browse {
-
-}
-.beverage-avatar-change-url {
-
-}
-.beverages-table-body-row-active {
-  //background-color: #f1f8e9;
-}
-.beverages-table-body-row-active:hover {
-  cursor: pointer;
-  //background-color: #dcedc8;
-}
-.beverages-table-body-row-not-active {
-  //background-color: #fff3e0;
-}
-.beverages-table-body-row-not-active:hover {
-  cursor: pointer;
-  //background-color: #ffe0b2;
+.beverages-table-body-column-body-full-name {
+  text-align: left !important;
 }

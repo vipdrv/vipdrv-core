@@ -50,7 +50,7 @@ namespace QuantumLogic.Data.EFContext
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             // optionsBuilder.UseSqlServer(DataConfiguration.DefaultConnection.ConnectionString);
-            
+
             // TODO: hardcoded connection string
             optionsBuilder.UseSqlServer("Server=mssql-ukr.elrondsoft.com;Database=dev_testdrive;User Id=sa-testdrive; Password=nUqhXX9CpXVbbxdE;");
             //Database.SetCommandTimeout(DBCommandTimeout);

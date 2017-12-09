@@ -1,29 +1,60 @@
-<div class="form-group row">
-    <label  class="col-4 col-form-label"
-            for="email"
-            translate>
-        invitations.modal.email
-    </label>
-    <div class="col-8">
-        <input id="email"
-               type="email"
-               class="form-control"
-               (ngModelChange)="onChangeEmail($event)"
-               [ngModel]="entity.email">
+<div class="test-drive-modal-body-edit-entity-container">
+    <div class="row test-drive-modal-body-edit-entity-container-row-input">
+        <div class="col-12">
+            <div class="form-group">
+                <label for="email"
+                       translate>
+                    invitations.modal.email
+                </label>
+                <input id="email"
+                       name="email"
+                       type="email"
+                       class="form-control"
+                       [ngClass]="extensions.getInputValidationClass(isValidationActive(), validationService.isValidEmail(entity))"
+                       [disabled]="isFormProcessing()"
+                       (ngModelChange)="onChangeEmail($event)"
+                       [ngModel]="entity.email">
+                <small class="form-text text-muted"
+                       *ngIf="!isValidationActive() || validationService.isValidEmail(entity)"
+                       translate>
+                    invitations.modal.emailHelp
+                </small>
+                <small class="form-text test-drive-validation-message"
+                       *ngIf="isValidationActive() && !validationService.isValidEmail(entity)"
+                       translate>
+                    {{ validationService.getInvalidEmailMessageKey(entity) }}
+                </small>
+            </div>
+        </div>
     </div>
-</div>
-<div class="form-group row">
-    <label  class="col-4 col-form-label"
-            for="siteUrl"
-            translate>
-        invitations.modal.availableSitesCount
-    </label>
-    <div class="col-8">
-        <input id="siteUrl"
-               type="number"
-               min="0"
-               class="form-control"
-               (ngModelChange)="onChangeSiteCount($event)"
-               [ngModel]="entity.availableSitesCount"/>
+    <div class="row test-drive-modal-body-edit-entity-container-row-input">
+        <div class="col-12">
+            <div class="form-group">
+                <label for="availableSitesCount"
+                       translate>
+                    invitations.modal.availableSitesCount
+                </label>
+                <input id="availableSitesCount"
+                       name="availableSitesCount"
+                       type="number"
+                       min="0"
+                       max="100"
+                       class="form-control"
+                       [ngClass]="extensions.getInputValidationClass(isValidationActive(), validationService.isValidAvailableSitesCount(entity))"
+                       [disabled]="isFormProcessing()"
+                       (ngModelChange)="onChangeSiteCount($event)"
+                       [ngModel]="entity.availableSitesCount">
+                <small class="form-text text-muted"
+                       *ngIf="!isValidationActive() || validationService.isValidAvailableSitesCount(entity)"
+                       translate>
+                    invitations.modal.availableSitesCountHelp
+                </small>
+                <small class="form-text test-drive-validation-message"
+                       *ngIf="isValidationActive() && !validationService.isValidAvailableSitesCount(entity)"
+                       translate>
+                    {{ validationService.getInvalidAvailableSitesCountMessageKey(entity) }}
+                </small>
+            </div>
+        </div>
     </div>
 </div>

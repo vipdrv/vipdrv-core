@@ -252,8 +252,8 @@
                     </tr>
                     <tbody>
                     <tr *ngFor="let item of items"
-                        [ngClass]="getClassesForLeadTableRow(item)"
                         class="leads-table-body-row"
+                        [ngClass]="getClassesForLeadTableRow(item)"
                         (click)="tryModalOpenInfo(item.id)">
                         <td class="leads-table-body-column">{{item.recievedDateTime}}</td>
                         <td class="leads-table-body-column">{{item.firstName + ' ' + item.secondName}}</td>

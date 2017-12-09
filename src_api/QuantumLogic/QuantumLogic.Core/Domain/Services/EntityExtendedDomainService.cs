@@ -33,5 +33,19 @@ namespace QuantumLogic.Core.Domain.Services
             ((IEntityExtendedValidationService<TEntity, TPrimaryKey>)ValidationService).ValidateChangeOrder(entity);
             await Repository.UpdateAsync(entity);
         }
+        public virtual async Task SwapOrdersAsync(TPrimaryKey key1, TPrimaryKey key2)
+        {
+            TEntity entity1 = await RetrieveAsync(key1);
+            ((IEntityExtendedPolicy<TEntity, TPrimaryKey>)Policy).PolicyChangeOrder(entity1);
+            TEntity entity2 = await RetrieveAsync(key2);
+            ((IEntityExtendedPolicy<TEntity, TPrimaryKey>)Policy).PolicyChangeOrder(entity2);
+            int stub = entity1.Order;
+            entity1.Order = entity2.Order;
+            entity2.Order = stub;
+            ((IEntityExtendedValidationService<TEntity, TPrimaryKey>)ValidationService).ValidateChangeOrder(entity1);
+            ((IEntityExtendedValidationService<TEntity, TPrimaryKey>)ValidationService).ValidateChangeOrder(entity2);
+            await Repository.UpdateAsync(entity1);
+            await Repository.UpdateAsync(entity2);
+        }
     }
 }

@@ -35,6 +35,18 @@ namespace QuantumLogic.Core.Domain.Services
         /// <exception cref="Exceptions.Validation.ValidateEntityPropertiesException">Thrown when this entity properties are not valid</exception>
         /// <exception cref="Exceptions.Validation.ValidateEntityRelationsException">Thrown when this entity relations are not valid</exception>
         Task ChangeOrderAsync(TPrimaryKey id, int newValue);
+        /// <summary>
+        /// Is used to swap entity orders for two entities via domain rules
+        /// </summary> 
+        /// <param name="key1">first candidate key</param>
+        /// <param name="key2">second candidate key</param>
+        /// <returns>task of updating entity order</returns>
+        /// <exception cref="Exceptions.NotSupported.OperationIsNotSupportedException">Thrown when this operation is not supported for current entity</exception>
+        /// <exception cref="Exceptions.Policy.EntityPolicyException">Thrown when this operation access is denied</exception>
+        /// <exception cref="Exceptions.Validation.ValidationException">Thrown when this entity is not valid</exception>
+        /// <exception cref="Exceptions.Validation.ValidateEntityPropertiesException">Thrown when this entity properties are not valid</exception>
+        /// <exception cref="Exceptions.Validation.ValidateEntityRelationsException">Thrown when this entity relations are not valid</exception>
+        Task SwapOrdersAsync(TPrimaryKey key1, TPrimaryKey key2);
 
     }
 }

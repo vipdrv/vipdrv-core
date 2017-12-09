@@ -18,15 +18,22 @@ export abstract class CRUDXApiService<TEntity extends IEntity<TKey>, TKey, TLigh
     patchActivity(id: TKey, value: boolean): Promise<void> {
         const self = this;
         const methodName: string = 'change-activity';
-        return this.httpService
-            .patch(this.createUrlWithMethodNameAndParams(methodName, String(id)), { 'value': value })
+        return self.httpService
+            .patch(self.createUrlWithMethodNameAndParams(methodName, String(id)), { 'value': value })
             .then(function (response: any): void { });
     }
     patchOrder(id: TKey, value: number): Promise<void> {
         const self = this;
         const methodName: string = 'change-order';
-        return this.httpService
-            .patch(this.createUrlWithMethodNameAndParams(methodName, String(id)), { 'value': value })
+        return self.httpService
+            .patch(self.createUrlWithMethodNameAndParams(methodName, String(id)), { 'value': value })
+            .then(function (response: any): void { });
+    }
+    swapOrders(id1: TKey, id2: TKey): Promise<void> {
+        const self = this;
+        const methodName: string = 'swap-orders';
+        return self.httpService
+            .patch(self.createUrlWithMethodName(methodName), { 'key1': id1, 'key2': id2 })
             .then(function (response: any): void { });
     }
 }

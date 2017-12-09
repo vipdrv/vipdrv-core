@@ -51,7 +51,7 @@ export class SiteCardsComponent implements OnInit {
         this.siteApiService = siteApiService;
         this.siteEntityPolicy = siteEntityPolicy;
         this.siteValidationService = siteValidationService;
-        logger.logDebug('SiteCardsComponent has been constructed.');
+        logger.logDebug('SiteCardsComponent: Component has been constructed.');
     }
     /// methods
     ngOnInit(): void {

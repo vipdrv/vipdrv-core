@@ -1,14 +1,15 @@
 import { Injectable } from '@angular/core';
-import { Variable, ILogger, ConsoleLogger } from './../../../../../utils/index';
+import { Variable, ConsoleLogger } from './../../../../../utils/index';
 import { SiteEntity } from './../../../../../entities/index';
+import { ObjectValidationService } from './../../../object.validation-service';
 import { ISiteValidationService } from './i-site.validation-service';
 @Injectable()
-export class SiteValidationService implements ISiteValidationService {
-    /// injected dependencies
-    protected logger: ILogger;
+export class SiteValidationService
+    extends ObjectValidationService<SiteEntity>
+    implements ISiteValidationService {
     /// ctor
     constructor(logger: ConsoleLogger) {
-        this.logger = logger;
+        super(logger);
         this.logger.logDebug('SiteValidationService: Service has been constructed.');
     }
     /// methods
