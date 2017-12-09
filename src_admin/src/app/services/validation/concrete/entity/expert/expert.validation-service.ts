@@ -14,6 +14,44 @@ export class ExpertValidationService
     }
     /// methods
     isValid(entity: ExpertEntity): boolean {
-        return true;
+        return Variable.isNotNullOrUndefined(entity) &&
+            this.isValidName(entity) &&
+            this.isValidDescription(entity) &&
+            this.isValidLinkedInUrl(entity) &&
+            this.isValidFacebookUrl(entity);
+    }
+    isValidName(entity: ExpertEntity): boolean {
+        return Variable.isNotNullOrUndefined(entity) &&
+            Variable.isNotNullOrUndefined(entity.name);
+    }
+    isValidDescription(entity: ExpertEntity): boolean {
+        return Variable.isNotNullOrUndefined(entity) &&
+            Variable.isNotNullOrUndefined(entity.description);
+    }
+    isValidLinkedInUrl(entity: ExpertEntity): boolean {
+        return Variable.isNotNullOrUndefined(entity) &&
+            (
+                Variable.isNullOrUndefined(entity.linkedinUrl) ||
+                entity.linkedinUrl.startsWith('http://www.linkedin.com')
+            );
+    }
+    isValidFacebookUrl(entity: ExpertEntity): boolean {
+        return Variable.isNotNullOrUndefined(entity) &&
+            (
+                Variable.isNullOrUndefined(entity.facebookUrl) ||
+                entity.facebookUrl.startsWith('http://www.facebook.com')
+            );
+    }
+    getInvalidNameMessageKey(entity: ExpertEntity): string {
+        return 'validation.experts.name';
+    }
+    getInvalidDescriptionMessageKey(entity: ExpertEntity): string {
+        return 'validation.experts.description';
+    }
+    getInvalidLinkedInUrlMessageKey(entity: ExpertEntity): string {
+        return 'validation.experts.linkedInUrl';
+    }
+    getInvalidFacebookUrlMessageKey(entity: ExpertEntity): string {
+        return 'validation.experts.facebookUrl';
     }
 }

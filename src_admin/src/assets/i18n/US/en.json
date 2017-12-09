@@ -332,6 +332,12 @@
     "invitations": {
       "invalidEmailMessage": "Email address is not valid!",
       "invalidAvailableSitesCount": "Maximum allowed count of sites is not valid (should be number higher then 0)!"
+    },
+    "experts": {
+      "name": "",
+      "description": "",
+      "linkedInUrl": "",
+      "facebookUrl": ""
     }
   },
   "filters": {

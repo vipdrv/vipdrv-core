@@ -89,103 +89,10 @@
         <expert-details-info *ngIf="isSelectedEntityDefined() && isOperationModeInfo"
                              [entity]="entity">
         </expert-details-info>
-        <div *ngIf="isSelectedEntityDefined() && isOperationModeAddOrUpdate">
-            <div class="row">
-                <div class="col-12">
-                    <image-select [isReadOnly]="isImageComponentReadOnly()"
-                                  [imageUrl]="entity.photoUrl"
-                                  [defaultImageUrl]="defaultImageUrl"
-                                  [imageWidth]="imageWidth"
-                                  [imageHeight]="imageHeight"
-                                  [isRounded]="isImageRounded"
-                                  [imageAlt]="imageAlt"
-                                  [columnRules]="columnRules"
-                                  (imageUrlSelected)="onNewAvatarSelected($event)"></image-select>
-                </div>
-            </div>
-            <hr>
-            <div class="form-group row">
-                <label class="col-2 col-form-label"
-                       for="expertName"
-                       translate>
-                    experts.modal.expertName
-                </label>
-                <div class="col-10">
-                    <input id="expertName"
-                           type="text"
-                           class="form-control"
-                           [(ngModel)]="entity.name">
-                </div>
-            </div>
-            <div class="form-group row">
-                <label class="col-2 col-form-label"
-                       for="expertDescription"
-                       translate>
-                    experts.modal.expertDescription
-                </label>
-                <div class="col-10">
-                    <textarea id="expertDescription"
-                              type="text"
-                              class="form-control"
-                              rows="3"
-                              [(ngModel)]="entity.description"></textarea>
-                </div>
-            </div>
-            <div class="form-group row">
-                <label class="col-2 col-form-label"
-                       for="linkedinUrl"
-                       translate>
-                    experts.modal.linkedinUrl
-                </label>
-                <div class="col-10">
-                    <input id="linkedinUrl"
-                           type="text"
-                           class="form-control"
-                           placeholder="https://www.linkedin.com/"
-                           [(ngModel)]="entity.linkedinUrl">
-                </div>
-            </div>
-            <div class="form-group row">
-                <label class="col-2 col-form-label"
-                       for="facebookUrl"
-                       translate>
-                    experts.modal.facebookUrl
-                </label>
-                <div class="col-10">
-                    <input id="facebookUrl"
-                           type="text"
-                           class="form-control"
-                           placeholder="https://www.facebook.com/"
-                           [(ngModel)]="entity.facebookUrl">
-                </div>
-            </div>
-            <hr>
-            <div class="row">
-                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-                    <div class="row">
-                        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-                            <button class="btn btn-sm btn-info pull-left experts-week-intervals-accordion-control-btn"
-                                    type="button"
-                                    data-toggle="collapse"
-                                    data-target="#collapseExample"
-                                    aria-expanded="false"
-                                    aria-controls="collapseExample">
-                                <i class="fa fa-list-alt"></i>
-                                <span translate>experts.modal.weekSchedule</span>
-                            </button>
-                        </div>
-                    </div>
-                    <div class="collapse" id="collapseExample">
-                        <div class="card card-block">
-                            <working-hours-simple [workingHours]="entity.workingHours"
-                                                  [isComponentReadonly]="isWorkingHoursComponentReadonly(entity)"
-                                                  (workingHoursChanged)='actualizeWorkingHours($event)'>
-                            </working-hours-simple>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+        <expert-details-edit *ngIf="isSelectedEntityDefined() && isOperationModeAddOrUpdate"
+                             [isReadOnly]=""
+                             [useValidation]=""
+                             [entity]="entity"></expert-details-edit>
     </modal-body>
     <modal-footer>
         <button type="button"
