@@ -41,7 +41,7 @@
                         *ngIf="isOperationCreateAllowed()"
                         [disabled]="isAnyOperationWithEntityProcessing()"
                         (click)="modalOpenCreate(); $event.stopPropagation();">
-                    <i class="fa fa-refresh fa-spin" *ngIf="isOperationCreateProcessing()"></i>
+                    <i class="fa fa-spinner fa-pulse" *ngIf="isOperationCreateProcessing()"></i>
                     <i class="fa fa-plus" *ngIf="!isOperationCreateProcessing()"></i>
                     <span translate>general.actions.text_create</span>
                 </button>
@@ -106,7 +106,7 @@
                                     *ngIf="isDeleteAvailable(item)"
                                     [disabled]="isAnyOperationWithEntityProcessing()"
                                     (click)="openConfirmationDeleteModal(item.id); $event.stopPropagation();">
-                                <i class="fa fa-refresh fa-spin" *ngIf="isDeleteProcessing(item)"></i>
+                                <i class="fa fa-spinner fa-pulse" *ngIf="isDeleteProcessing(item)"></i>
                                 <i class="fa fa-times" *ngIf="!isDeleteProcessing(item)"></i>
                                 <span translate>invitations.actions.delete</span>
                             </button>
@@ -158,7 +158,7 @@
                 [disabled]="isSendInvitationDisabled()"
                 class="btn btn-primary test-drive-modal-apply-btn"
                 (click)="sendInvitation(); $event.stopPropagation();">
-            <i class="fa fa-refresh fa-spin" *ngIf="isSendInvitationInProgress()"></i>
+            <i class="fa fa-spinner fa-pulse" *ngIf="isSendInvitationInProgress()"></i>
             <i class="fa fa-paper-plane" *ngIf="!isSendInvitationInProgress()"></i>
             <span translate>invitations.modal.apply</span>
         </button>

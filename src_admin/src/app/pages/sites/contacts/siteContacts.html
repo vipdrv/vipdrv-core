@@ -166,7 +166,7 @@
                 type="button"
                 [disabled]="isSaveProcessing()"
                 (click)="saveSiteContacts()">
-            <i class="fa fa-refresh fa-spin" *ngIf="isSaveProcessing()"></i>
+            <i class="fa fa-spinner fa-pulse" *ngIf="isSaveProcessing()"></i>
             <i class="fa fa-save" *ngIf="!isSaveProcessing()"></i>
             <span translate>general.actions.text_save</span>
         </button>

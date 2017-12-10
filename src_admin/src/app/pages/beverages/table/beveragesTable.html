@@ -14,7 +14,7 @@
                     *ngIf="entityPolicyService.canCreate()"
                     [disabled]="isAnyOperationWithEntityProcessing()"
                     (click)="createModalOpen(); $event.stopPropagation();">
-                <i class="fa fa-refresh fa-spin" *ngIf="isOperationCreateProcessing()"></i>
+                <i class="fa fa-spinner fa-pulse" *ngIf="isOperationCreateProcessing()"></i>
                 <i class="fa fa-plus" *ngIf="!isOperationCreateProcessing()"></i>
                 <span translate>general.actions.text_create</span>
             </button>
@@ -78,14 +78,14 @@
                                     class="btn btn-sm btn-secondary"
                                     [disabled]="isDecrementOrderDisabled(item) || !entityPolicyService.canUpdateOrderForEntity(item)"
                                     (click)="decrementOrder(item); $event.stopPropagation();">
-                                <i class="fa fa-refresh fa-spin" *ngIf="isOperationChangeOrderProcessing(item)"></i>
+                                <i class="fa fa-spinner fa-pulse" *ngIf="isOperationChangeOrderProcessing(item)"></i>
                                 <i class="fa fa-chevron-up" *ngIf="!isOperationChangeOrderProcessing(item)"></i>
                             </button>
                             <button type="button"
                                     class="btn btn-sm btn-secondary"
                                     [disabled]="isIncrementOrderDisabled(item) || !entityPolicyService.canUpdateOrderForEntity(item)"
                                     (click)="incrementOrder(item); $event.stopPropagation();">
-                                <i class="fa fa-refresh fa-spin" *ngIf="isOperationChangeOrderProcessing(item)"></i>
+                                <i class="fa fa-spinner fa-pulse" *ngIf="isOperationChangeOrderProcessing(item)"></i>
                                 <i class="fa fa-chevron-down" *ngIf="!isOperationChangeOrderProcessing(item)"></i>
                             </button>
                         </td>
@@ -95,7 +95,7 @@
                                     *ngIf="entityPolicyService.canUpdateEntity(item)"
                                     [disabled]="isAnyOperationWithEntityProcessing()"
                                     (click)="editModalOpen(item.id); $event.stopPropagation();">
-                                <i class="fa fa-refresh fa-spin" *ngIf="isOperationEditProcessing(item)"></i>
+                                <i class="fa fa-spinner fa-pulse" *ngIf="isOperationEditProcessing(item)"></i>
                                 <i class="fa fa-edit" *ngIf="!isOperationEditProcessing(item)"></i>
                                 <span translate>general.actions.text_edit</span>
                             </button>
@@ -104,7 +104,7 @@
                                     *ngIf="entityPolicyService.canDeleteEntity(item)"
                                     [disabled]="isAnyOperationWithEntityProcessing()"
                                     (click)="openConfirmationDeleteModal(item.id); $event.stopPropagation();">
-                                <i class="fa fa-refresh fa-spin" *ngIf="isOperationDeleteProcessing(item)"></i>
+                                <i class="fa fa-spinner fa-pulse" *ngIf="isOperationDeleteProcessing(item)"></i>
                                 <i class="fa fa-times" *ngIf="!isOperationDeleteProcessing(item)"></i>
                                 <span translate>general.actions.text_delete</span>
                             </button>
@@ -180,7 +180,7 @@
                 class="btn btn-primary test-drive-modal-apply-btn pull-right"
                 [disabled]="isEditModalReadOnly()"
                 (click)="modalApply(); $event.stopPropagation();">
-            <i class="fa fa-refresh fa-spin" *ngIf="isOperationSaveProcessing(selectedEntity)"></i>
+            <i class="fa fa-spinner fa-pulse" *ngIf="isOperationSaveProcessing(selectedEntity)"></i>
             <i class="fa fa-save" *ngIf="!isOperationSaveProcessing(selectedEntity)"></i>
             <span translate>general.actions.modalApply</span>
         </button>

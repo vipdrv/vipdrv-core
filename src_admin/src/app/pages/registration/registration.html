@@ -223,7 +223,7 @@
                         type="submit"
                         [disabled]="isRegistrationDisabled()"
                         (click)="register()">
-                    <i class="fa fa-refresh fa-spin" *ngIf="isFormProcessing()"></i>
+                    <i class="fa fa-spinner fa-pulse" *ngIf="isFormProcessing()"></i>
                     <i class="fa fa-sign-in" *ngIf="!isFormProcessing()"></i>
                     <span translate>
                         registration.applyRegistration
