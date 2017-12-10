@@ -9,7 +9,7 @@
   top: 0;
   left: 0;
   background-color: rgba(33, 33, 33, 0.48);
-  z-index: 99999;
+  z-index: 2147483647;
   transform: scale(0);
   will-change: transform;
 }
@@ -100,5 +100,14 @@
   overflow: hidden;
 }
 
+/* ======================================================================= */
+/* Dirty hack overflow chat window on https://www.vipdrv.com/                                                             */
+/* Will expand that list later with another page Add's
+/* - Hubspot
+/* ======================================================================= */
+
+#hubspot-messages-iframe-container {
+  z-index: 2147483646 !important;
+}
 
 

@@ -40,7 +40,7 @@
 
                 self.startDate = '2017-12-18 11:00';
                 self.endDate = '2017-12-18 13:00';
-                self.eventTitle = 'VIP Test Drive';
+                self.eventTitle = 'VIPdrv - VIP Test Drive';
                 self.eventDescription = 'Description of the event';
 
                 // =======================================================================//

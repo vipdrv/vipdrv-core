@@ -12,3 +12,5 @@ import { Pages } from './pages.component';
   declarations: [Pages]
 })
 export class PagesModule { }
+
+
