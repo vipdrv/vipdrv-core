@@ -1,10 +1,9 @@
 {
   "general": {
-    "applicationName": "VIP Test Drive",
+    "applicationName": "VIPdrv - VIP Test Drive",
     "menu": {
       "pages": "Pages",
       "home": "Home",
-      "integration": "Integration",
       "leads": "Leads",
       "sites": "Sites",
       "settings": "Settings",
