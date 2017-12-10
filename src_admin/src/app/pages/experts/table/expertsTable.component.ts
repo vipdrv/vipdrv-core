@@ -316,6 +316,14 @@ export class ExpertsTableComponent implements OnInit {
             );
     }
     protected modalApply(): Promise<void> {
+        if (Variable.isNotNullOrUndefined(this.selectedEntity)) {
+            if (this.selectedEntity.facebookUrl === '') {
+                this.selectedEntity.facebookUrl = null;
+            }
+            if (this.selectedEntity.linkedinUrl === '') {
+                this.selectedEntity.linkedinUrl = null;
+            }
+        }
         if (this.entityValidationService.isValid(this.selectedEntity)) {
             const self = this;
             self._useValidation = false;
