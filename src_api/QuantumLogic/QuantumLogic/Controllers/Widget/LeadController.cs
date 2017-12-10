@@ -147,8 +147,6 @@ namespace QuantumLogic.WebApi.Controllers.Widget
         [HttpPost("{siteId}/complete-booking")]
         public async Task<LeadFullDto> CompleteBookingAsync(int siteId, [FromBody]CompleteBookingRequest request)
         {
-            // TODO: validate request
-
             var leadFullDto = new LeadFullDto(
                 0,
                 siteId,
@@ -159,7 +157,10 @@ namespace QuantumLogic.WebApi.Controllers.Widget
                 request.BookingUser.LastName,
                 request.BookingUser.Phone,
                 request.BookingUser.Email,
-                DateTime.Now);
+                request.BookingCar.ImageUrl,
+                request.BookingCar.Title,
+                request.BookingCar.Vin,
+                DateTime.Now); // TODO: replace with real date
 
             LeadFullDto result = await InnerCreateAsync(leadFullDto);
 
@@ -184,7 +185,7 @@ namespace QuantumLogic.WebApi.Controllers.Widget
             var newLeadNotificationEmailTemplate = new NewLeadNotificationEmailTemplate(
                 request.BookingCar.Title,
                 request.BookingCar.ImageUrl,
-                request.BookingCar.VIN,
+                request.BookingCar.Vin,
                 request.BookingUser.FirstName,
                 request.BookingUser.LastName,
                 request.BookingUser.Phone,

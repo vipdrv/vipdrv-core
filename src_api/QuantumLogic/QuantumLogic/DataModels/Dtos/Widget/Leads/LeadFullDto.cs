@@ -13,13 +13,16 @@ namespace QuantumLogic.WebApi.DataModels.Dtos.Widget.Leads
         public LeadFullDto(
             int id,
             int siteId,
-            int expertId,
+            int? expertId,
             int? beverageId,
-            int routeId,
+            int? routeId,
             string firstName,
             string secondName,
             string userPhone,
             string userEmail,
+            string carImageUrl,
+            string carTitle,
+            string carVin,
             DateTime bookingDateTimeUtc)
             : base(
                   id,
@@ -31,6 +34,9 @@ namespace QuantumLogic.WebApi.DataModels.Dtos.Widget.Leads
                   secondName,
                   userPhone,
                   userEmail,
+                  carImageUrl,
+                  carTitle,
+                  carVin,
                   bookingDateTimeUtc)
         { }
 
