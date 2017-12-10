@@ -10,12 +10,17 @@ namespace QuantumLogic.WebApi.Authorization.PermissionCheckers
     {
         public Task<bool> IsGrantedAsync(string permissionId)
         {
-            return Task.FromResult(true);
+            return Task.FromResult(IsGranted(permissionId));
         }
 
         public Task<bool> IsGrantedAsync(long userId, string permissionId)
         {
             return Task.FromResult(true);
+        }
+
+        public bool IsGranted(string permissionId)
+        {
+            return true;
         }
     }
 }

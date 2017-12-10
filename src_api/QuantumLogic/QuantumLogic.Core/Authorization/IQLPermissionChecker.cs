@@ -20,5 +20,11 @@ namespace QuantumLogic.Core.Authorization
         /// <param name="permissionId">permission identifier</param>
         /// <returns>predicate result</returns>
         Task<bool> IsGrantedAsync(long userId, string permissionId);
+        /// <summary>
+        /// Is used to checks if current user is granted for a permission (sync vesion of <see cref="QuantumLogic.Core.Authorization.IQLPermissionChecker.IsGrantedAsync"/>)
+        /// </summary>
+        /// <param name="permissionId">permission identifier</param>
+        /// <returns>predicate result</returns>
+        bool IsGranted(string permissionId);
     }
 }
