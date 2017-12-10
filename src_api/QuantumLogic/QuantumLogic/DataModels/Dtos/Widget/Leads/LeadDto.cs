@@ -7,14 +7,17 @@ namespace QuantumLogic.WebApi.DataModels.Dtos.Widget.Leads
     public class LeadDto : EntityDto<Lead, int>
     {
         public int SiteId { get; set; }
-        public int ExpertId { get; set; }
+        public int? ExpertId { get; set; }
         public int? BeverageId { get; set; }
-        public int RouteId { get; set; }
+        public int? RouteId { get; set; }
         public string RecievedUtc { get; set; }
         public string FirstName { get; set; }
         public string SecondName { get; set; }
         public string UserPhone { get; set; }
         public string UserEmail { get; set; }
+        public string CarImageUrl { get; set; }
+        public string CarTitle { get; set; }
+        public string CarVin { get; set; }
         public bool IsNew { get; set; }
         public bool IsReachedByManager { get; set; }
         public DateTime BookingDateTimeUtc { get; set; }
@@ -35,7 +38,19 @@ namespace QuantumLogic.WebApi.DataModels.Dtos.Widget.Leads
         {
         }
 
-        public LeadDto(int id, int siteId, int expertId, int? beverageId, int routeId, string firstName, string secondName, string userPhone, string userEmail, DateTime bookingDateTimeUtc) : this()
+        public LeadDto(int id, 
+            int siteId, 
+            int? expertId, 
+            int? beverageId, 
+            int? routeId, 
+            string firstName, 
+            string secondName, 
+            string userPhone, 
+            string userEmail, 
+            string carImageUrl,
+            string carTitle,
+            string carVin,
+            DateTime bookingDateTimeUtc) : this()
         {
             Id = id;
             SiteId = siteId;
@@ -46,6 +61,9 @@ namespace QuantumLogic.WebApi.DataModels.Dtos.Widget.Leads
             SecondName = secondName;
             UserPhone = userPhone;
             UserEmail = userEmail;
+            CarImageUrl = carImageUrl;
+            CarTitle = carTitle;
+            CarVin = carVin;
             BookingDateTimeUtc = bookingDateTimeUtc;
         }
 
@@ -65,6 +83,9 @@ namespace QuantumLogic.WebApi.DataModels.Dtos.Widget.Leads
             SecondName = entity.SecondName;
             UserPhone = entity.UserPhone;
             UserEmail = entity.UserEmail;
+            CarImageUrl = entity.CarImageUrl;
+            CarTitle = entity.CarTitle;
+            CarVin = entity.CarVin;
             IsNew = entity.IsNew;
             IsReachedByManager = entity.IsReachedByManager;
             SiteName = entity.Site.Name;
@@ -84,6 +105,10 @@ namespace QuantumLogic.WebApi.DataModels.Dtos.Widget.Leads
             entity.SecondName = SecondName;
             entity.UserPhone = UserPhone;
             entity.UserEmail = UserEmail;
+            entity.CarImageUrl = CarImageUrl;
+            entity.CarTitle = CarTitle;
+            entity.CarVin = CarVin;
+
             return entity;
         }
 

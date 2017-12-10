@@ -7,14 +7,17 @@ namespace QuantumLogic.Core.Domain.Entities.WidgetModule
         #region Fields
 
         public int SiteId { get; set; }
-        public int ExpertId { get; set; }
+        public int? ExpertId { get; set; }
         public int? BeverageId { get; set; }
-        public int RouteId { get; set; }
+        public int? RouteId { get; set; }
         public DateTime RecievedUtc { get; set; }
         public string FirstName { get; set; }
         public string SecondName { get; set; }
         public string UserPhone { get; set; }
         public string UserEmail { get; set; }
+        public string CarImageUrl { get; set; }
+        public string CarTitle { get; set; }
+        public string CarVin { get; set; }
         public bool IsNew { get; set; }
         public bool IsReachedByManager { get; set; }
 
