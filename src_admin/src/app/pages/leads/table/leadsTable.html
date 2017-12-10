@@ -41,7 +41,7 @@
                         [disabled]="isExportToExcelDisabled()"
                         class="btn btn-outline-primary btn-sm pull-right leads-export-btn"
                         (click)="exportDataToExcel()">
-                    <i class="fa fa-refresh fa-spin" *ngIf="isExportToExcelProcessing()"></i>
+                    <i class="fa fa-spinner fa-pulse" *ngIf="isExportToExcelProcessing()"></i>
                     <i class="fa fa-file-excel-o" *ngIf="!isExportToExcelProcessing()"></i>
                     <span translate>leads.table.btnText_exportToExcel</span>
                 </button>
