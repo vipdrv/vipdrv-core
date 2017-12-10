@@ -16,6 +16,10 @@ export class LeadEntity extends Entity {
     beverageName: string;
     isNew: boolean;
     isReachedByManager: boolean;
+    bookingDateTimeUtc: string;
+    carTitle: string;
+    carVin: string;
+    carImageUrl: string;
     /// ctor
     constructor() {
         super();
@@ -42,5 +46,9 @@ export class LeadEntity extends Entity {
         this.expertName = mock.expertName;
         this.routeName = mock.routeName;
         this.beverageName = mock.beverageName;
+        this.bookingDateTimeUtc = Extensions.formatUtcDateTimeToLocalTimezone(dto.bookingDateTimeOutputUtc);;
+        this.carTitle = mock.carTitle;
+        this.carVin = mock.carVin;
+        this.carImageUrl = mock.carImageUrl;
     }
 }

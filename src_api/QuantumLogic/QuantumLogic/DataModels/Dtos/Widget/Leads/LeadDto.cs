@@ -6,6 +6,8 @@ namespace QuantumLogic.WebApi.DataModels.Dtos.Widget.Leads
 {
     public class LeadDto : EntityDto<Lead, int>
     {
+        #region Fields
+
         public int SiteId { get; set; }
         public int? ExpertId { get; set; }
         public int? BeverageId { get; set; }
@@ -15,13 +17,14 @@ namespace QuantumLogic.WebApi.DataModels.Dtos.Widget.Leads
         public string SecondName { get; set; }
         public string UserPhone { get; set; }
         public string UserEmail { get; set; }
-        public string CarImageUrl { get; set; }
         public string CarTitle { get; set; }
         public string CarVin { get; set; }
         public bool IsNew { get; set; }
         public bool IsReachedByManager { get; set; }
         public DateTime BookingDateTimeUtc { get; set; }
         public string BookingDateTimeOutputUtc { get; set; }
+
+        #endregion
 
         #region Relations
 
@@ -46,8 +49,7 @@ namespace QuantumLogic.WebApi.DataModels.Dtos.Widget.Leads
             string firstName, 
             string secondName, 
             string userPhone, 
-            string userEmail, 
-            string carImageUrl,
+            string userEmail,
             string carTitle,
             string carVin,
             DateTime bookingDateTimeUtc) : this()
@@ -61,7 +63,6 @@ namespace QuantumLogic.WebApi.DataModels.Dtos.Widget.Leads
             SecondName = secondName;
             UserPhone = userPhone;
             UserEmail = userEmail;
-            CarImageUrl = carImageUrl;
             CarTitle = carTitle;
             CarVin = carVin;
             BookingDateTimeUtc = bookingDateTimeUtc;
@@ -83,7 +84,6 @@ namespace QuantumLogic.WebApi.DataModels.Dtos.Widget.Leads
             SecondName = entity.SecondName;
             UserPhone = entity.UserPhone;
             UserEmail = entity.UserEmail;
-            CarImageUrl = entity.CarImageUrl;
             CarTitle = entity.CarTitle;
             CarVin = entity.CarVin;
             IsNew = entity.IsNew;
@@ -105,10 +105,8 @@ namespace QuantumLogic.WebApi.DataModels.Dtos.Widget.Leads
             entity.SecondName = SecondName;
             entity.UserPhone = UserPhone;
             entity.UserEmail = UserEmail;
-            entity.CarImageUrl = CarImageUrl;
             entity.CarTitle = CarTitle;
             entity.CarVin = CarVin;
-
             return entity;
         }
 
