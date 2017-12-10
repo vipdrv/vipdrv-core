@@ -4,11 +4,11 @@ namespace QuantumLogic.WebApi.DataModels.Dtos.Widget.Leads
 {
     public class LeadFullDto : LeadDto
     {
-        #region ctor
+        #region Ctors
 
-        public LeadFullDto() : base()
-        {
-        }
+        public LeadFullDto() 
+            : base()
+        { }
 
         public LeadFullDto(
             int id,
@@ -41,6 +41,5 @@ namespace QuantumLogic.WebApi.DataModels.Dtos.Widget.Leads
         { }
 
         #endregion
-
     }
 }
