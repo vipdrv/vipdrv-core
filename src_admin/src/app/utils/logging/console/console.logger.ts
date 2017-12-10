@@ -2,24 +2,20 @@
 import { ILogger } from "./../i-logger";
 import { BaseLogger } from "./../base.logger";
 import { LogLevel } from "./../log-level";
-
+import { environment } from '../../../../environments/environment';
 @Injectable()
 export class ConsoleLogger extends BaseLogger implements ILogger {
-    private _defaultState: boolean = true;
-
     /// ctor
-
     constructor() {
         super();
-        if (this._defaultState) {
+
+        if (environment && environment.enabeLogging) {
             this.enableAll();
         } else {
             this.disableAll();
         }
     }
-
     /// methods
-
     logTrase(message: string): void {
         this.logMessageUsingConsole(
             this.getCurrentTime() + " - " +

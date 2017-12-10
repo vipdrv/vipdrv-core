@@ -15,4 +15,7 @@ export class SiteEntityPolicyService
         this.logger.logDebug('SiteEntityPolicyService: Service has been constructed.');
     }
     /// methods
+    canUpdateContacts(): boolean {
+        return true;
+    }
 }
