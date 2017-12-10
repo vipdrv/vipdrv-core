@@ -68,6 +68,9 @@
       "expertName": "Expert: ",
       "routeName": "Road: ",
       "beverageName": "Beverage: ",
+      "bookingDateTimeUtc": "Booking date: ",
+      "carTitle": "Car title: ",
+      "carVin": "Car vin: ",
       "cancel": "Close"
     },
     "table": {
