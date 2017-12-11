@@ -19,7 +19,7 @@ namespace QuantumLogic.Core.Constants
 
         #region Global QuantumLogic permission names
 
-        public const string CanAll = "CanAllAll";
+        public const string CanAllAll = "CanAllAll";
         public const string CanRetrieve = "CanRetrieveAll";
         public const string CanCreate = "CanCreateAll";
         public const string CanUpdate = "CanUpdateAll";
@@ -41,23 +41,19 @@ namespace QuantumLogic.Core.Constants
 
         public const string CanAllSite = "CanAllSite";
         public const string CanRetrieveSite = "CanRetrieveSite";
-        public const string CanRetrieveOnwSite = "CanRetrieveOnwSite";
         public const string CanCreateSite = "CanCreateSite";
         public const string CanUpdateSite = "CanUpdateSite";
         public const string CanDeleteSite = "CanDeleteSite";
-        public const string CanChangeSiteContacts = "CanChangeSiteContacts";
+        public const string CanUpdateOwnSite = "CanUpdateOwnSite";
+        public const string CanDeleteOwnSite = "CanDeleteOwnSite";
 
         public const string CanAllExpert = "CanAllExpert";
         public const string CanRetrieveExpert = "CanRetrieveExpert";
         public const string CanCreateExpert = "CanCreateExpert";
         public const string CanUpdateExpert = "CanUpdateExpert";
         public const string CanDeleteExpert = "CanDeleteExpert";
-
-        public const string CanAllBeverage = "CanAllBeverage";
-        public const string CanRetrieveBeverage = "CanRetrieveBeverage";
-        public const string CanCreateBeverage = "CanCreateBeverage";
-        public const string CanUpdateBeverage = "CanUpdateBeverage";
-        public const string CanDeleteBeverage = "CanDeleteBeverage";
+        public const string CanUpdateOwnExpert = "CanUpdateOwnExpert";
+        public const string CanDeleteOnwExpert = "CanDeleteOnwExpert";
 
         #endregion
 

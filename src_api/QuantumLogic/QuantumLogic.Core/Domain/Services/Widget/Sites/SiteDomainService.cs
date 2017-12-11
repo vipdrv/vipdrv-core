@@ -24,7 +24,7 @@ namespace QuantumLogic.Core.Domain.Services.Widget.Sites
         public async Task ChangeContactsAsync(int id, string newValue)
         {
             Site entity = await RetrieveAsync(id);
-            ((ISitePolicy)Policy).PolicyChangeContacts(entity);
+            ((ISitePolicy)Policy).CanUpdate(entity);
             entity.Contacts = newValue;
             ((ISiteValidationService)ValidationService).ValidateChangeContacts(entity);
             await Repository.UpdateAsync(entity);
