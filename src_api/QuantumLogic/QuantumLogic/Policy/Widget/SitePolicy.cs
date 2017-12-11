@@ -61,6 +61,8 @@ namespace QuantumLogic.WebApi.Policy.Widget
 
         protected override bool CanRetrieve(Site entity, bool throwEntityPolicyException)
         {
+            return true;
+
             if (!InnerRetrieveAllFilter(new List<Site>() { entity }.AsQueryable()).Any())
             {
                 if (throwEntityPolicyException)
@@ -69,8 +71,6 @@ namespace QuantumLogic.WebApi.Policy.Widget
                 }
                 return false;
             }
-
-            return true;
         }
 
         protected override bool CanCreate(Site entity, bool throwEntityPolicyException)

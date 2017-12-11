@@ -24,14 +24,7 @@ namespace QuantumLogic.WebApi.Policy.Widget
 
         protected override bool CanRetrieve(Expert entity, bool throwEntityPolicyException)
         {
-            var result = PermissionChecker.IsGrantedAsync(QuantumLogicPermissionNames.CanRetrieveExpert).Result;
-
-            if (!result && throwEntityPolicyException)
-            {
-                throw new EntityPolicyException();
-            }
-
-            return result;
+            return true;
         }
 
         protected override bool CanCreate(Expert entity, bool throwEntityPolicyException)

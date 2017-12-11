@@ -160,7 +160,7 @@ namespace QuantumLogic.WebApi.Controllers.Widget
                 request.BookingCar.ImageUrl,
                 request.BookingCar.Title,
                 request.BookingCar.Vin,
-                DateTime.Now); // TODO: replace with real date
+                $"{request.BookingDateTime.Date} {request.BookingDateTime.Time}" );
 
             LeadFullDto result = await InnerCreateAsync(leadFullDto);
 
@@ -174,7 +174,7 @@ namespace QuantumLogic.WebApi.Controllers.Widget
                 new CompleteBookingEmailTemplate(
                     request.BookingUser.FirstName,
                     request.BookingUser.LastName,
-                    request.BookingDateTime.Date + request.BookingDateTime.Time, // TODO: refactor
+                    $"{request.BookingDateTime.Date} {request.BookingDateTime.Time}",
                     request.BookingCar.ImageUrl,
                     request.BookingCar.Title,
                     expert.Name,
@@ -190,7 +190,7 @@ namespace QuantumLogic.WebApi.Controllers.Widget
                 request.BookingUser.LastName,
                 request.BookingUser.Phone,
                 request.BookingUser.Email,
-                request.BookingDateTime.Date + request.BookingDateTime.Time, // TODO: refactor
+                $"{request.BookingDateTime.Date} {request.BookingDateTime.Time}",
                 expert.Name,
                 beverage.Name,
                 road.Name);

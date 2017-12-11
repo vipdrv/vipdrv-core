@@ -18,6 +18,7 @@ namespace QuantumLogic.Core.Domain.Entities.WidgetModule
         public string CarImageUrl { get; set; }
         public string CarTitle { get; set; }
         public string CarVin { get; set; }
+        public DateTime BookingDateTimeUtc { get; set; }
         public bool IsNew { get; set; }
         public bool IsReachedByManager { get; set; }
 
@@ -46,7 +47,16 @@ namespace QuantumLogic.Core.Domain.Entities.WidgetModule
             : base()
         { }
 
-        public Lead(int id, int siteId, int expertId, int beverageId, int routeId, DateTime recieved, string firstname, string secondName, string userPhone, string userEmail)
+        public Lead(int id, 
+            int siteId, 
+            int expertId, 
+            int beverageId,
+            int routeId, 
+            DateTime recieved,
+            string firstname, 
+            string secondName, 
+            string userPhone, 
+            string userEmail)
             : this()
         {
             Id = id;
