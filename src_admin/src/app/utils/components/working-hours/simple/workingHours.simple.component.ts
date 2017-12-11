@@ -69,8 +69,10 @@ export class WorkingHoursSimpleComponent implements OnInit, OnChanges {
         this.submitWorkingHours();
     }
     protected changedIsActiveForTimeInterval(interval: DayOfWeekSchedule): void {
-        interval.isActive = !interval.isActive;
-        this.submitWorkingHours();
+        if (!this.isCheckboxDisabled(interval)) {
+            interval.isActive = !interval.isActive;
+            this.submitWorkingHours();
+        }
     }
     protected submitWorkingHours(): void {
         this._isSaveProcessing = true;
@@ -91,6 +93,9 @@ export class WorkingHoursSimpleComponent implements OnInit, OnChanges {
     }
     protected isSelectEndTimeDisabled(interval: DayOfWeekSchedule): boolean {
         return !interval.isActive || this.isComponentReadonly || this.isSaveProcessing();
+    }
+    protected isCheckboxDisabled(interval: DayOfWeekSchedule): boolean {
+        return this.isComponentReadonly || this.isSaveProcessing();
     }
     /// helpers
     protected initializeDayOfWeekIntervals() {

@@ -36,11 +36,6 @@ export const routes: Routes = [
                 canActivate: [AuthorizationService]
             },
             {
-                path: 'integration',
-                loadChildren: './integration/integration.module#IntegrationModule',
-                canActivate: [AuthorizationService]
-            },
-            {
                 path: 'leads',
                 loadChildren: './leads/leads.module#LeadsModule',
                 canActivate: [AuthorizationService]

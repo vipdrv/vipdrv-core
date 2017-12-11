@@ -11,7 +11,7 @@ export class SiteApiService extends CRUDApiService<SiteEntity, number, LightEnti
         httpService: HttpXService,
         logger: ConsoleLogger) {
         super(httpService, logger, 'site');
-        this.logger.logDebug('SiteApiService has been constructed.');
+        this.logger.logDebug('SiteApiService: Service has been constructed.');
     }
     /// methods
     patchContacts(id: number, value: any): Promise<void> {

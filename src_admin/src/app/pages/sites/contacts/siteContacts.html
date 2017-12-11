@@ -12,7 +12,8 @@
                 </div>
                 <div class="col-xl-8 col-lg-8 col-md-10 col-sm-10 col-10">
                     <div class="input-group input-group-sm">
-                        <span class="input-group-btn">
+                        <span class="input-group-btn"
+                              *ngIf="policyService.canUpdateContacts()">
                             <button class="btn btn-sm btn-primary site-notifications-email-entity-start-edit-btn"
                                     type="button"
                                     *ngIf="!item.isEditProcessing"
@@ -38,7 +39,8 @@
                                *ngIf="item.isEditProcessing"
                                [disabled]="isSaveProcessing()"
                                [(ngModel)]="item.editValue"/>
-                        <span class="input-group-btn">
+                        <span class="input-group-btn"
+                              *ngIf="policyService.canUpdateContacts()">
                             <button class="btn btn-sm btn-danger site-notifications-email-entity-remove-btn"
                                     type="button"
                                     *ngIf="!item.isEditProcessing"
@@ -57,7 +59,8 @@
                     </div>
                 </div>
             </div>
-            <div class="row site-notifications-email-entity-row">
+            <div class="row site-notifications-email-entity-row"
+                 *ngIf="policyService.canUpdateContacts()">
                 <div class="col-xl-1 col-lg-1 col-md-1 col-sm-1 col-1">
                 </div>
                 <div class="col-xl-8 col-lg-8 col-md-10 col-sm-10 col-10">
@@ -91,7 +94,8 @@
                 </div>
                 <div class="col-xl-8 col-lg-8 col-md-10 col-sm-10 col-10">
                     <div class="input-group input-group-sm">
-                        <span class="input-group-btn">
+                        <span class="input-group-btn"
+                              *ngIf="policyService.canUpdateContacts()">
                             <button class="btn btn-sm btn-primary site-notifications-sms-entity-start-edit-btn"
                                     type="button"
                                     *ngIf="!item.isEditProcessing"
@@ -118,7 +122,8 @@
                                *ngIf="item.isEditProcessing"
                                [disabled]="isSaveProcessing()"
                                [(ngModel)]="item.editValue"/>
-                        <span class="input-group-btn">
+                        <span class="input-group-btn"
+                              *ngIf="policyService.canUpdateContacts()">
                             <button class="btn btn-sm btn-danger site-notifications-sms-entity-remove-btn"
                                     type="button"
                                     *ngIf="!item.isEditProcessing"
@@ -137,7 +142,8 @@
                     </div>
                 </div>
             </div>
-            <div class="row site-notifications-sms-entity-row">
+            <div class="row site-notifications-sms-entity-row"
+                 *ngIf="policyService.canUpdateContacts()">
                 <div class="col-xl-1 col-lg-1 col-md-1 col-sm-1 col-1">
                 </div>
                 <div class="col-xl-8 col-lg-8 col-md-10 col-sm-10 col-10">
@@ -161,12 +167,13 @@
             </div>
         </div>
     </div>
-    <div class="site-notifications-template-footer">
+    <div class="site-notifications-template-footer"
+         *ngIf="policyService.canUpdateContacts()">
         <button class="btn btn-primary pull-right site-notifications-template-footer-btn"
                 type="button"
                 [disabled]="isSaveProcessing()"
                 (click)="saveSiteContacts()">
-            <i class="fa fa-refresh fa-spin" *ngIf="isSaveProcessing()"></i>
+            <i class="fa fa-spinner fa-pulse" *ngIf="isSaveProcessing()"></i>
             <i class="fa fa-save" *ngIf="!isSaveProcessing()"></i>
             <span translate>general.actions.text_save</span>
         </button>

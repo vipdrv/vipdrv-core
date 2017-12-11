@@ -1,8 +1,10 @@
 import { Component, OnInit, Input, ViewChild } from '@angular/core';
 import { ModalComponent } from 'ng2-bs3-modal/ng2-bs3-modal';
-import { Variable, Extensions, ILogger, ConsoleLogger } from './../../../utils/index';
+import { Variable, ILogger, ConsoleLogger } from './../../../utils/index';
 import { IAuthorizationService, AuthorizationService } from './../../../services/index';
 import { IUserApiService, UserApiService, GetAllResponse } from './../../../services/index';
+import { IInvitationEntityPolicyService, InvitationEntityPolicyService } from './../../../services/index';
+import { IInvitationValidationService, InvitationValidationService } from './../../../services/index';
 import { InvitationEntity } from './../../../entities/index';
 @Component({
     selector: 'invitations-table',
@@ -29,6 +31,7 @@ export class InvitationsTableComponent implements OnInit {
     protected pageSizeValues: Array<number> = [5, 10, 25, 50, 100];
     protected isOperationModeInfo: boolean = false;
     protected isOperationModeCreate: boolean = false;
+    protected useValidationForSelectedEntity: boolean = false;
     /// data fields
     protected totalCount: number;
     protected items: Array<InvitationEntity>;
@@ -37,14 +40,20 @@ export class InvitationsTableComponent implements OnInit {
     protected logger: ILogger;
     protected authorizationManager: IAuthorizationService;
     protected userApiService: IUserApiService;
+    protected policyService: IInvitationEntityPolicyService;
+    protected validationService: IInvitationValidationService;
     /// ctor
     constructor(
         logger: ConsoleLogger,
         authorizationManager: AuthorizationService,
-        userApiService: UserApiService) {
+        userApiService: UserApiService,
+        policyService: InvitationEntityPolicyService,
+        validationService: InvitationValidationService) {
         this.logger = logger;
         this.authorizationManager = authorizationManager;
         this.userApiService = userApiService;
+        this.policyService = policyService;
+        this.validationService = validationService;
         this.logger.logDebug('InvitationsTableComponent: Component has been constructed.');
     }
     /// methods
@@ -53,7 +62,12 @@ export class InvitationsTableComponent implements OnInit {
         this.pageSize = Variable.isNotNullOrUndefined(this.pageSize) ? this.pageSize : this._defaultPageSize;
         this.sorting = Variable.isNotNullOrUndefined(this.sorting) ? this.sorting : this._defaultSorting;
         this.filter = Variable.isNotNullOrUndefined(this.filter) ? this.filter : this._defaultFilter;
-        this.getAllEntities();
+        const self = this;
+        self.firstLoadingPromise = self
+            .getAllEntities()
+            .then(
+                () => self.firstLoadingPromise = null,
+                () => self.firstLoadingPromise = null);
     }
     protected getAllEntities(): Promise<void> {
         const self = this;
@@ -73,11 +87,9 @@ export class InvitationsTableComponent implements OnInit {
                 () => self.getAllPromise = null);
         return self.getAllPromise;
     }
-    protected isDeleteAvailable(entity: InvitationEntity): boolean {
-        return Variable.isNotNullOrUndefined(entity) && !entity.used;
-    }
     protected deleteEntity(id: number): Promise<void> {
         const self = this;
+        self.deleteEntityId = id;
         self.deleteEntityPromise = self.userApiService
             .deleteInvitation(id)
             .then(function (): Promise<void> {
@@ -89,19 +101,35 @@ export class InvitationsTableComponent implements OnInit {
                 return Promise.resolve();
             })
             .then(
-                () => self.deleteEntityPromise = null,
-                () => self.deleteEntityPromise = null);
+                () => {
+                    self.deleteEntityPromise = null,
+                    self.deleteEntityId = null
+                },
+                () => {
+                    self.deleteEntityPromise = null,
+                    self.deleteEntityId = null
+                });
         return self.deleteEntityPromise;
     }
-    protected modalOpenInfo(id: number): Promise<void> {
-        this.entity = this.items.find((item: InvitationEntity) => item.id === id);
-        this.isOperationModeInfo = true;
-        return this.modalDetails.open();
+    protected tryModalOpenInfo(id: number): Promise<void> {
+        let actionPromise: Promise<void>;
+        const entityToSelect = this.items.find((item: InvitationEntity) => item.id === id);
+        if (Variable.isNotNullOrUndefined(entityToSelect) &&
+            this.isGetAvailable(entityToSelect) &&
+            !this.isGetProcessing(entityToSelect)) {
+            this.entity = entityToSelect;
+            this.isOperationModeInfo = true;
+            return this.modalDetails.open();
+        } else {
+            actionPromise = Promise.resolve();
+        }
+        return actionPromise;
     }
     protected modalDismiss(): Promise<void> {
         this.entity = null;
         this.isOperationModeInfo = false;
         this.isOperationModeCreate = false;
+        this.useValidationForSelectedEntity = false;
         return this.modalDetails.dismiss();
     }
     protected onPageNumberChanged(): void {
@@ -116,45 +144,121 @@ export class InvitationsTableComponent implements OnInit {
             setTimeout(() => this.pageNumber = this._defaultPageNumber, 0);
         }
     }
+    protected getClassesForTableRow(entity: InvitationEntity): any {
+        const result = {
+            'invitations-table-body-row': true,
+            'invitations-table-body-row-disabled': false,
+            'invitations-table-body-row-processing': false,
+            'invitations-table-body-row-with-pending-entity': false
+        };
+        if (this.isGetProcessing(entity)) {
+            result['invitations-table-body-row'] = false;
+            result['invitations-table-body-row-processing'] = true;
+        } else if (this.isGetProcessing(entity)) {
+            result['invitations-table-body-row'] = false;
+            result['invitations-table-body-row-disabled'] = true;
+        }
+        if (Variable.isNotNullOrUndefined(entity) && !entity.used) {
+            result['invitations-table-body-row-with-pending-entity'] = true;
+        }
+        return result;
+    }
     /// predicates
-    protected usePagination(): boolean {
-        return this.pageSize < this.totalCount;
+    protected isRefreshAllowed(): boolean {
+        return this.policyService.canGet();
+    }
+    protected isRefreshDisabled(): boolean {
+        return this.isAnyOperationWithEntityProcessing();
+    }
+    protected isRefreshProcessing(): boolean {
+        return Variable.isNotNullOrUndefined(this.getAllPromise);
+    }
+    protected isOperationCreateAllowed(): boolean {
+        return this.policyService.canCreate();
+    }
+    protected isOperationCreateProcessing(): boolean {
+        return Variable.isNotNullOrUndefined(this.sendInvitationPromise);
+    }
+    protected isDeleteAvailable(entity: InvitationEntity): boolean {
+        return Variable.isNotNullOrUndefined(entity)  &&
+            !entity.used &&
+            this.policyService.canDeleteEntity(entity);
+    }
+    protected isDeleteProcessing(entity: InvitationEntity): boolean {
+        return Variable.isNotNullOrUndefined(this.deleteEntityPromise) &&
+            Variable.isNotNullOrUndefined(this.deleteEntityId) &&
+            Variable.isNotNullOrUndefined(entity) &&
+            this.deleteEntityId === entity.id;
+    }
+    protected isGetAvailable(entity: InvitationEntity): boolean {
+        return Variable.isNotNullOrUndefined(entity) &&
+            this.policyService.canGetEntity(entity);
+    }
+    protected isGetProcessing(entity: InvitationEntity): boolean {
+        return Variable.isNotNullOrUndefined(this.getEntityPromise) &&
+            Variable.isNotNullOrUndefined(this.getEntityId) &&
+            Variable.isNotNullOrUndefined(entity) &&
+            this.getEntityId === entity.id;
+    }
+    protected isAnyOperationWithEntityProcessing(): boolean {
+        return this.isRefreshProcessing() ||
+            this.isOperationCreateProcessing() ||
+            Variable.isNotNullOrUndefined(this.getEntityPromise) ||
+            Variable.isNotNullOrUndefined(this.deleteEntityPromise);
     }
     protected isSelectedEntityDefined(): boolean {
         return Variable.isNotNullOrUndefined(this.entity);
     }
-
+    protected isValidationUsedForSelectedEntity(): boolean {
+        return this.useValidationForSelectedEntity;
+    }
+    protected isPageSizeChangeAllowed(): boolean {
+        return true;
+    }
+    protected isPageSizeChangeDisabled(): boolean {
+        return Variable.isNotNullOrUndefined(this.getAllPromise) ||
+            Variable.isNotNullOrUndefined(this.getEntityPromise);
+    }
+    protected isPaginationAllowed(): boolean {
+        return this.pageSize < this.totalCount;
+    }
+    protected isPaginationDisabled(): boolean {
+        return Variable.isNotNullOrUndefined(this.getAllPromise) ||
+            Variable.isNotNullOrUndefined(this.getEntityPromise);
+    }
     /// send invite
-    private _sendInvitationPromise = null;
-    protected modalOpenCreate(id: number): Promise<void> {
+    protected modalOpenCreate(): Promise<void> {
         this.initializeEntityToCreate();
         this.isOperationModeCreate = true;
         return this.modalDetails.open();
     }
-    sendInvitation(): void {
-        const self = this;
-        self._sendInvitationPromise = self.userApiService
-            .createInvitation(self.authorizationManager.currentUserId, this.entity)
-            .then(function(response: InvitationEntity): void {
-                self.items.splice(0, 0, response);
-                self.modalDismiss();
-                self._sendInvitationPromise = null;
-            }).catch(function (reason) {
-                self._sendInvitationPromise = null;
-            });
+    protected sendInvitation(): Promise<void> {
+        if (this.validationService.isValid(this.entity)) {
+            const self = this;
+            self.useValidationForSelectedEntity = false;
+            self.sendInvitationPromise = self.userApiService
+                .createInvitation(self.authorizationManager.currentUserId, this.entity)
+                .then(function (response: InvitationEntity): void {
+                    self.items.splice(0, 0, response);
+                    self.modalDismiss();
+                    self.sendInvitationPromise = null;
+                }).catch(function (reason) {
+                    self.sendInvitationPromise = null;
+                });
+            return self.sendInvitationPromise;
+        } else {
+            this.useValidationForSelectedEntity = true;
+            return Promise.resolve();
+        }
     }
     protected onEntityChange(newValue: InvitationEntity): void {
         this.entity = newValue;
     }
     protected isSendInvitationDisabled(): boolean {
-        return this.isSendInvitationInProgress() ||
-            Variable.isNullOrUndefined(this.entity) || !this.isValidEmail(this.entity.email);
+        return this.isSendInvitationInProgress();
     }
     protected isSendInvitationInProgress(): boolean {
-        return Variable.isNotNullOrUndefined(this._sendInvitationPromise);
-    }
-    protected isValidEmail(value: string): boolean {
-        return Extensions.regExp.email.test(value)
+        return Variable.isNotNullOrUndefined(this.sendInvitationPromise);
     }
     private initializeEntityToCreate(): void {
         this.entity = new InvitationEntity();
@@ -164,9 +268,13 @@ export class InvitationsTableComponent implements OnInit {
         this.entity.roleId = 1;
     }
     /// promise manager
+    protected firstLoadingPromise: Promise<void>;
     protected getAllPromise: Promise<void>;
     protected getEntityPromise: Promise<InvitationEntity>;
+    protected getEntityId: number;
+    protected sendInvitationPromise: Promise<void>;
     protected deleteEntityPromise: Promise<void>;
+    protected deleteEntityId: number;
     /// confirmation delete modal
     protected deleteCandidateId: number;
     protected getDeleteCandidateDisplayText(): string {

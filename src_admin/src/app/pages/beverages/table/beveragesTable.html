@@ -1,148 +1,187 @@
-<div class="beverages-table-template">
-    <table class="beverages-table-body table table-bordered table-hover"
-           *ngIf="isInitialized()">
-        <thead>
-        <tr>
-            <th translate class="beverages-table-body-column-photo">beverages.table.headerText_avatar</th>
-            <th translate class="beverages-table-body-column-name">beverages.table.headerText_beverageName</th>
-            <th translate class="beverages-table-body-column-activity">general.table.headerText.activity</th>
-            <th translate class="beverages-table-body-column-order">general.table.headerText.order</th>
-            <th class="beverages-table-body-column-actions">
-                <button type="button"
-                        class="btn btn-outline-success btn-sm"
-                        translate
-                        (click)="modalOpenCreate(); $event.stopPropagation();">
-                    general.actions.text_create
-                </button>
-            </th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr *ngFor="let item of items"
-            (click)="modalOpenInfo(item.id)"
-            ngClass="{{getEntityRowClass(item)}}">
-            <td>
-                <img class="rounded-circle"
-                     alt="no photo"
-                     [src]="item.photoUrl"
-                     [width]="50"
-                     [height]="50">
-            </td>
-            <td>{{item.name}}</td>
-            <td>
-                <ui-switch color="{{switcherSettings.color}}"
-                           switchColor="{{switcherSettings.switchColor}}"
-                           defaultBgColor="{{switcherSettings.defaultBgColor}}"
-                           defaultBoColor="{{switcherSettings.defaultBoColor}}"
-                           (click)="onChangeEntityActivity(item); $event.stopPropagation();"
-                           [ngModel]="item.isActive">
-                </ui-switch>
-            </td>
-            <td>
-                <button type="button"
-                        class="btn btn-sm btn-secondary"
-                        [disabled]="!canDecrementOrder(item)"
-                        (click)="decrementOrder(item); $event.stopPropagation();">
-                    <i class="fa fa-chevron-up" aria-hidden="true"></i>
-                </button>
-                <button type="button"
-                        class="btn btn-sm btn-secondary"
-                        [disabled]="!canIncrementOrder(item)"
-                        (click)="incrementOrder(item); $event.stopPropagation();">
-                    <i class="fa fa-chevron-down" aria-hidden="true"></i>
-                </button>
-            </td>
-            <td class="beverages-table-body-column-actions">
-                <button type="button"
-                        class="btn btn-outline-primary btn-sm"
-                        translate
-                        (click)="modalOpenEdit(item.id); $event.stopPropagation();">
-                    general.actions.text_edit
-                </button>
-                <button type="button"
-                        class="btn btn-outline-danger btn-sm"
-                        translate
-                        (click)="openConfirmationDeleteModal(item.id); $event.stopPropagation();">
-                    general.actions.text_delete
-                </button>
-            </td>
-        </tr>
-        </tbody>
-    </table>
+<div class="many-entities-template">
+    <div class="row test-drive-many-entities-template-header">
+        <div class="col-12">
+            <button class="btn btn-secondary btn-sm pull-left test-drive-left-standalone-btn"
+                    type="button"
+                    *ngIf="entityPolicyService.canGet()"
+                    [disabled]="isAnyOperationWithEntityProcessing()"
+                    (click)="getAllEntities(); $event.stopPropagation();">
+                <i class="fa fa-refresh fa-spin" *ngIf="isOperationGetManyProcessing()"></i>
+                <i class="fa fa-refresh" *ngIf="!isOperationGetManyProcessing()"></i>
+            </button>
+            <button type="button"
+                    class="btn btn-outline-success btn-sm pull-right test-drive-right-standalone-btn"
+                    *ngIf="entityPolicyService.canCreate()"
+                    [disabled]="isAnyOperationWithEntityProcessing()"
+                    (click)="createModalOpen(); $event.stopPropagation();">
+                <i class="fa fa-spinner fa-pulse" *ngIf="isOperationCreateProcessing()"></i>
+                <i class="fa fa-plus" *ngIf="!isOperationCreateProcessing()"></i>
+                <span translate>general.actions.text_create</span>
+            </button>
+        </div>
+    </div>
+    <div class="test-drive-many-entities-template-body">
+        <div class="row"
+             [ngBusy]="firstLoadingPromise">
+            <div class="col-12">
+                <table class="beverages-table-body table table-bordered table-hover">
+                    <thead>
+                    <tr>
+                        <th class="beverages-table-body-column beverages-table-body-column-photo"
+                            translate>
+                            beverages.table.headerText_avatar
+                        </th>
+                        <th class="beverages-table-body-column beverages-table-body-column-header-full-name"
+                            translate>
+                            beverages.table.headerText_beverageName
+                        </th>
+                        <th class="beverages-table-body-column beverages-table-body-column-activity"
+                            translate>
+                            general.table.headerText.activity
+                        </th>
+                        <th class="beverages-table-body-column beverages-table-body-column-order"
+                            *ngIf="entityPolicyService.canUpdateOrder()"
+                            translate>
+                            general.table.headerText.order
+                        </th>
+                        <th class="beverages-table-body-column beverages-table-body-column-actions"></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr class="beverages-table-body-row"
+                        [ngClass]="getClassesForTableRow(item)"
+                        *ngFor="let item of items"
+                        (click)="tryInfoModalOpen(item)">
+                        <td class="beverages-table-body-column">
+                            <img class="rounded-circle"
+                                 alt="no photo"
+                                 [src]="item.photoUrl"
+                                 [width]="imageInTableWidth"
+                                 [height]="imageInTableHeight">
+                        </td>
+                        <td class="beverages-table-body-column  beverages-table-body-column-body-full-name">
+                            {{item.name}}
+                        </td>
+                        <td class="beverages-table-body-column">
+                            <ui-switch color="{{switcherSettings.color}}"
+                                       switchColor="{{switcherSettings.switchColor}}"
+                                       defaultBgColor="{{switcherSettings.defaultBgColor}}"
+                                       defaultBoColor="{{switcherSettings.defaultBoColor}}"
+                                       [disabled]="isOperationChangeActivityDisabled(item) || !entityPolicyService.canUpdateActivityForEntity(item)"
+                                       (click)="onChangeEntityActivity(item); $event.stopPropagation();"
+                                       [ngModel]="item.isActive">
+                            </ui-switch>
+                        </td>
+                        <td class="beverages-table-body-column"
+                            *ngIf="entityPolicyService.canUpdateOrder()">
+                            <button type="button"
+                                    class="btn btn-sm btn-secondary"
+                                    [disabled]="isDecrementOrderDisabled(item) || !entityPolicyService.canUpdateOrderForEntity(item)"
+                                    (click)="decrementOrder(item); $event.stopPropagation();">
+                                <i class="fa fa-spinner fa-pulse" *ngIf="isOperationChangeOrderProcessing(item)"></i>
+                                <i class="fa fa-chevron-up" *ngIf="!isOperationChangeOrderProcessing(item)"></i>
+                            </button>
+                            <button type="button"
+                                    class="btn btn-sm btn-secondary"
+                                    [disabled]="isIncrementOrderDisabled(item) || !entityPolicyService.canUpdateOrderForEntity(item)"
+                                    (click)="incrementOrder(item); $event.stopPropagation();">
+                                <i class="fa fa-spinner fa-pulse" *ngIf="isOperationChangeOrderProcessing(item)"></i>
+                                <i class="fa fa-chevron-down" *ngIf="!isOperationChangeOrderProcessing(item)"></i>
+                            </button>
+                        </td>
+                        <td class="beverages-table-body-column beverages-table-body-column-actions">
+                            <button type="button"
+                                    class="btn btn-outline-primary btn-sm test-drive-left-standalone-btn"
+                                    *ngIf="entityPolicyService.canUpdateEntity(item)"
+                                    [disabled]="isAnyOperationWithEntityProcessing()"
+                                    (click)="editModalOpen(item.id); $event.stopPropagation();">
+                                <i class="fa fa-spinner fa-pulse" *ngIf="isOperationEditProcessing(item)"></i>
+                                <i class="fa fa-edit" *ngIf="!isOperationEditProcessing(item)"></i>
+                                <span translate>general.actions.text_edit</span>
+                            </button>
+                            <button type="button"
+                                    class="btn btn-outline-danger btn-sm test-drive-right-standalone-btn"
+                                    *ngIf="entityPolicyService.canDeleteEntity(item)"
+                                    [disabled]="isAnyOperationWithEntityProcessing()"
+                                    (click)="openConfirmationDeleteModal(item.id); $event.stopPropagation();">
+                                <i class="fa fa-spinner fa-pulse" *ngIf="isOperationDeleteProcessing(item)"></i>
+                                <i class="fa fa-times" *ngIf="!isOperationDeleteProcessing(item)"></i>
+                                <span translate>general.actions.text_delete</span>
+                            </button>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
 </div>
 
-<modal #beverageDetailsModal
+<modal #infoModal
        size="lg"
        [backdrop]="'static'">
     <modal-header>
         <h5 class="modal-title">
-            <span class="test-drive-modal-header-text" translate>beverages.modal.title</span>
+            <span class="test-drive-modal-header-text" translate>
+                beverages.modal.titleInfo
+            </span>
         </h5>
         <button type="button"
                 class="close"
                 aria-label="Close"
-                (click)="modalDismiss(); $event.stopPropagation();">
+                (click)="infoModalDismiss(); $event.stopPropagation();">
             <span aria-hidden="true">&times;</span>
         </button>
     </modal-header>
     <modal-body>
-        <beverage-details-info *ngIf="isSelectedEntityDefined() && isOperationModeInfo"
-                             [entity]="entity">
+        <beverage-details-info *ngIf="isSelectedEntityDefined()"
+                             [entity]="selectedEntity">
         </beverage-details-info>
-        <div *ngIf="isSelectedEntityDefined() && isOperationModeAddOrUpdate">
-            <div class="row">
-                <div class="col-12">
-                    <image-select [isReadOnly]="isImageComponentReadOnly()"
-                                  [imageUrl]="entity.photoUrl"
-                                  [defaultImageUrl]="defaultImageUrl"
-                                  [imageWidth]="imageWidth"
-                                  [imageHeight]="imageHeight"
-                                  [isRounded]="isImageRounded"
-                                  [imageAlt]="imageAlt"
-                                  [columnRules]="columnRules"
-                                  (imageUrlSelected)="onNewAvatarSelected($event)"></image-select>
-                </div>
-            </div>
-            <hr>
-            <div class="form-group row">
-                <label class="col-2 col-form-label"
-                       for="beverageName"
-                       translate>
-                    beverages.modal.beverageName
-                </label>
-                <div class="col-10">
-                    <input id="beverageName"
-                           type="text"
-                           class="form-control"
-                           [(ngModel)]="entity.name">
-                </div>
-            </div>
-            <div class="form-group row">
-                <label class="col-2 col-form-label"
-                       for="beverageDescription"
-                       translate>
-                    beverages.modal.beverageDescription
-                </label>
-                <div class="col-10">
-                    <textarea id="beverageDescription"
-                              type="text"
-                              class="form-control"
-                              rows="5"
-                              [(ngModel)]="entity.description"></textarea>
-                </div>
-            </div>
-        </div>
     </modal-body>
     <modal-footer>
         <button type="button"
-                class="btn btn-secondary test-drive-modal-close-btn"
-                (click)="modalDismiss(); $event.stopPropagation();">
+                class="btn btn-secondary test-drive-modal-close-btn pull-right test-drive-right-standalone-btn"
+                (click)="infoModalDismiss(); $event.stopPropagation();">
+            <span translate>general.actions.modalClose</span>
+        </button>
+    </modal-footer>
+</modal>
+
+<modal #editModal
+       size="lg"
+       [backdrop]="'static'">
+    <modal-header>
+        <h5 class="modal-title">
+            <span class="test-drive-modal-header-text" translate>
+                beverages.modal.titleEdit
+            </span>
+        </h5>
+        <button type="button"
+                class="close"
+                aria-label="Close"
+                (click)="editModalDismiss(); $event.stopPropagation();">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </modal-header>
+    <modal-body>
+        <beverage-details-edit *ngIf="isSelectedEntityDefined()"
+                             [isReadOnly]="isEditModalReadOnly()"
+                             [useValidation]="isValidationActivated()"
+                             [entity]="selectedEntity">
+        </beverage-details-edit>
+    </modal-body>
+    <modal-footer>
+        <button type="button"
+                class="btn btn-secondary test-drive-modal-close-btn pull-right"
+                (click)="editModalDismiss(); $event.stopPropagation();">
             <span translate>general.actions.modalClose</span>
         </button>
         <button type="button"
-                class="btn btn-primary test-drive-modal-apply-btn"
-                *ngIf="isOperationModeAddOrUpdate"
+                class="btn btn-primary test-drive-modal-apply-btn pull-right"
+                [disabled]="isEditModalReadOnly()"
                 (click)="modalApply(); $event.stopPropagation();">
+            <i class="fa fa-spinner fa-pulse" *ngIf="isOperationSaveProcessing(selectedEntity)"></i>
+            <i class="fa fa-save" *ngIf="!isOperationSaveProcessing(selectedEntity)"></i>
             <span translate>general.actions.modalApply</span>
         </button>
     </modal-footer>

@@ -1,12 +1,40 @@
 import { Component, OnInit, Input, Output, EventEmitter, OnChanges, SimpleChanges, SimpleChange } from '@angular/core';
 import { Variable, Extensions, ILogger, ConsoleLogger, PromiseService } from '../../../utils/index';
+import { ISiteEntityPolicyService, SiteEntityPolicyService } from './../../../services/index';
+import { ISiteValidationService, SiteValidationService } from './../../../services/index';
+/// is used like entity for contacts (internal model)
+class ContactEntity {
+    value: string;
+    editValue: string;
+    isEditProcessing: boolean;
+    /// ctor
+    constructor(value: string) {
+        this.value = value;
+        this.editValue = this.value;
+        this.isEditProcessing = false;
+    }
+    /// methods
+    startEdit(): void {
+        this.isEditProcessing = true;
+    }
+    commitEdit(): void {
+        this.value = this.editValue;
+        this.isEditProcessing = false;
+    }
+    undoEdit(): void {
+        this.isEditProcessing = false;
+    }
+}
 @Component({
     selector: 'site-contacts',
     styleUrls: ['./siteContacts.scss'],
     templateUrl: './siteContacts.html',
 })
 export class SiteContactsComponent implements OnInit, OnChanges {
+    /// inputs
     @Input() siteContacts: string;
+    @Input() isReadOnly: boolean = false;
+    /// outputs
     @Output() onSaveSiteContacts: EventEmitter<string> = new EventEmitter<string>();
     /// fields
     private _contacts: string = '';
@@ -17,17 +45,26 @@ export class SiteContactsComponent implements OnInit, OnChanges {
     /// injected dependencies
     protected logger: ILogger;
     protected promiseService: PromiseService;
+    protected policyService: ISiteEntityPolicyService;
+    protected validationService: ISiteValidationService;
     /// ctor
-    constructor(logger: ConsoleLogger, promiseService: PromiseService) {
+    constructor(
+        logger: ConsoleLogger,
+        promiseService: PromiseService,
+        policyService: SiteEntityPolicyService,
+        validationService: SiteValidationService) {
         this.logger = logger;
         this.promiseService = promiseService;
+        this.policyService = policyService;
+        this.validationService = validationService;
+        this.logger.logDebug('SiteContactsComponent: Component has been constructed.');
     }
     /// methods
     ngOnInit(): void {
         this.initializeNotificationEntities();
     }
     ngOnChanges(changes: SimpleChanges) {
-        let siteContactsChange: SimpleChange = changes['siteContacts'];
+        const siteContactsChange: SimpleChange = changes['siteContacts'];
         if (Variable.isNotNullOrUndefined(siteContactsChange) &&
             this._contacts !== this.siteContacts) {
             this._contacts = this.siteContacts;
@@ -50,7 +87,7 @@ export class SiteContactsComponent implements OnInit, OnChanges {
         this.newEmailEntity = new ContactEntity('');
     }
     protected deleteEmailFromContacts(emailEntity: any): void {
-        let index = this.emailEntities.findIndex((r) => r === emailEntity);
+        const index = this.emailEntities.findIndex((r) => r === emailEntity);
         if (index > -1) {
             this.emailEntities.splice(index, 1);
         }
@@ -65,7 +102,7 @@ export class SiteContactsComponent implements OnInit, OnChanges {
         this.newSMSEntity = new ContactEntity('');
     }
     protected deleteSMSFromContacts(smsEntity: any): void {
-        let index = this.smsEntities.findIndex((r) => r === smsEntity);
+        const index = this.smsEntities.findIndex((r) => r === smsEntity);
         if (index > -1) {
             this.smsEntities.splice(index, 1);
         }
@@ -82,7 +119,7 @@ export class SiteContactsComponent implements OnInit, OnChanges {
         return Extensions.regExp.phoneNumber.test(value) && !this.containsContactsEntityValue(this.smsEntities, value);
     }
     protected isSaveProcessing(): boolean {
-        return Variable.isNotNullOrUndefined(this.promiseService.applicationPromises.sites.patch.contactsPromise);
+        return this.isReadOnly;
     }
     private containsContactsEntityValue(collection: Array<ContactEntity>, value: string): boolean {
         return Variable.isNullOrUndefined(collection) || Variable.isNullOrUndefined(collection.length) ||
@@ -90,7 +127,7 @@ export class SiteContactsComponent implements OnInit, OnChanges {
     }
     /// helpers
     private parseContactEntitiesString(str: string, globalSeparator: string, localSeparator: string, globalPosition: number): Array<ContactEntity> {
-        let result = [];
+        const result = [];
         if (str && str.indexOf(globalSeparator) > -1) {
             let arr = str.split(globalSeparator);
             if (arr.length > globalPosition && arr[globalPosition] !== '') {
@@ -101,28 +138,5 @@ export class SiteContactsComponent implements OnInit, OnChanges {
             }
         }
         return result
-    }
-}
-/// is used like entity for contacts (internal model)
-class ContactEntity {
-    value: string;
-    editValue: string;
-    isEditProcessing: boolean;
-    /// ctor
-    constructor(value: string) {
-        this.value = value;
-        this.editValue = this.value;
-        this.isEditProcessing = false;
-    }
-    /// methods
-    startEdit(): void {
-        this.isEditProcessing = true;
-    }
-    commitEdit(): void {
-        this.value = this.editValue;
-        this.isEditProcessing = false;
-    }
-    undoEdit(): void {
-        this.isEditProcessing = false;
     }
 }

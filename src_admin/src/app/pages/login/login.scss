@@ -1,20 +1,13 @@
-body {
-  background: #eee !important;
+.background {
+  height: 100vh;
+  background: #eee;
 }
 
-.wrapper {
-  margin-top: 80px;
-  margin-bottom: 80px;
+.td-loginform__container {
+  background: #fff;
+  display: flow-root;
 }
 
-.form-signin {
-  max-width: 400px;
-  padding: 15px 35px 45px;
-  margin: 0 auto;
-  background-color: #fff;
-  border: 1px solid rgba(0,0,0,0.1);
-}
-
-.login-form-row {
-  margin-top: 20px;
+.login-form-top-spacing {
+  height: 100px;
 }

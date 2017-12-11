@@ -5,7 +5,7 @@
                     [disabled]="!!promiseService.applicationPromises.sites.getAll.promise"
                     class="btn btn-secondary btn-sm pull-left sites-refresh-btn"
                     (click)="getAllEntities()">
-                <i class="fa fa-refresh fa-spin" *ngIf="!!promiseService.applicationPromises.sites.getAll.promise"></i>
+                <i class="fa fa-spinner fa-pulse" *ngIf="!!promiseService.applicationPromises.sites.getAll.promise"></i>
                 <i class="fa fa-refresh" *ngIf="!promiseService.applicationPromises.sites.getAll.promise"></i>
             </button>
             <select class="form-control-sm sites-page-size-control"
@@ -44,7 +44,7 @@
                             [disabled]="isBtnCreateBusy()"
                             class="btn btn-outline-success btn-sm"
                             (click)="modalOpenCreate(); $event.stopPropagation();">
-                        <i class="fa fa-refresh fa-spin" *ngIf="isBtnCreateBusy()"></i>
+                        <i class="fa fa-spinner fa-pulse" *ngIf="isBtnCreateBusy()"></i>
                         <i class="fa fa-plus" *ngIf="!isBtnCreateBusy()"></i>
                         <span translate>general.actions.text_create</span>
                     </button>
@@ -62,7 +62,7 @@
                             [disabled]="isBtnEditBusy(item.id)"
                             class="btn btn-outline-primary btn-sm"
                             (click)="modalOpenEdit(item.id); $event.stopPropagation();">
-                        <i class="fa fa-refresh fa-spin" *ngIf="isBtnEditBusy(item.id)"></i>
+                        <i class="fa fa-spinner fa-pulse" *ngIf="isBtnEditBusy(item.id)"></i>
                         <i class="fa fa-edit" *ngIf="!isBtnEditBusy(item.id)"></i>
                         <span translate>general.actions.text_edit</span>
                     </button>
@@ -70,7 +70,7 @@
                             [disabled]="isBtnDeleteBusy(item.id)"
                             class="btn btn-outline-danger btn-sm"
                             (click)="deleteEntity(item.id); $event.stopPropagation();">
-                        <i class="fa fa-refresh fa-spin" *ngIf="isBtnDeleteBusy(item.id)"></i>
+                        <i class="fa fa-spinner fa-pulse" *ngIf="isBtnDeleteBusy(item.id)"></i>
                         <i class="fa fa-times" *ngIf="!isBtnDeleteBusy(item.id)"></i>
                         <span translate>general.actions.text_delete</span>
                     </button>
@@ -110,7 +110,7 @@
                 class="btn btn-primary test-drive-modal-apply-btn"
                 [disabled]="isBtnModalApplyBusy()"
                 (click)="modalApply()">
-            <i class="fa fa-refresh fa-spin" *ngIf="isBtnModalApplyBusy()"></i>
+            <i class="fa fa-spinner fa-pulse" *ngIf="isBtnModalApplyBusy()"></i>
             <i class="fa fa-save" *ngIf="!isBtnModalApplyBusy()"></i>
             <span translate>sites.modal.apply</span>
         </button>

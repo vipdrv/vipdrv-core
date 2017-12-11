@@ -5,7 +5,7 @@ export namespace Extensions {
     export const regExp = {
         // language=JSRegexp
         email: /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
-        phoneNumber: /^\d\d\d\d\d\d\d\d\d\d\d\d$/,
+        phoneNumber: /^(\d|\d\d)\d\d\d\d\d\d\d\d\d\d$/,
         // in format HH:mm:ss
         time: /^(?:2[0-3]|[01][0-9]):[0-5][0-9]:[0-5][0-9]$/
     };
@@ -17,7 +17,7 @@ export namespace Extensions {
         if (Variable.isNotNullOrUndefined(dateTime)) {
             return new DatePipe(dateTimeLocale).transform(dateTime, dateTimePattern);
         } else {
-            throw new Error('Argument (dateTime) exceprion!');
+            throw new Error('Argument (dateTime) exception!');
         }
     }
     export function formatUtcDateTimeToLocalTimezone(dateTime: string): string {
@@ -27,7 +27,7 @@ export namespace Extensions {
                     .toString());
             return res;
         } else {
-            throw new Error('Argument (dateTime) exceprion!');
+            throw new Error('Argument (dateTime) exception!');
         }
     }
     export function todayValue(): string {

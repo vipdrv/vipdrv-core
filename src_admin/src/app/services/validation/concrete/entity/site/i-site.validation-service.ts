@@ -1,4 +1,4 @@
-import { SiteEntity } from './../../../../../entities/widget/sites/site.entity';
+import { SiteEntity } from './../../../../../entities/index';
 import { IValidationService } from './../../../i-validation-service';
 export interface ISiteValidationService extends IValidationService<SiteEntity> {
     isNameValid(site: SiteEntity): boolean;

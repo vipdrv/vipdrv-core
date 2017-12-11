@@ -218,7 +218,13 @@ namespace QuantumLogic.Data.Migrations
 
                     b.Property<int?>("BeverageId");
 
-                    b.Property<int>("ExpertId");
+                    b.Property<string>("CarImageUrl");
+
+                    b.Property<string>("CarTitle");
+
+                    b.Property<string>("CarVin");
+
+                    b.Property<int?>("ExpertId");
 
                     b.Property<string>("FirstName");
 
@@ -228,7 +234,7 @@ namespace QuantumLogic.Data.Migrations
 
                     b.Property<DateTime>("RecievedUtc");
 
-                    b.Property<int>("RouteId");
+                    b.Property<int?>("RouteId");
 
                     b.Property<string>("SecondName");
 

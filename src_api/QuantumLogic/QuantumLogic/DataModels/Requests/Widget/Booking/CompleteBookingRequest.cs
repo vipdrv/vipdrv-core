@@ -29,8 +29,6 @@ namespace QuantumLogic.WebApi.DataModels.Requests.Widget.Booking
         public string LastName { get; set; }
         public string Phone { get; set; }
         public string Email { get; set; }
-        public bool AllowToUsePhone { get; set; }
-        public bool AllowToUseEmail { get; set; }
     }
 
     public class BookingDateTime
@@ -41,8 +39,13 @@ namespace QuantumLogic.WebApi.DataModels.Requests.Widget.Booking
     
     public class BookingCar
     {
-        public string VIN { get; set; }
+        public string Vin { get; set; }
         public string ImageUrl { get; set; }
         public string Title { get; set; }
+        public string Engine { get; set; }
+        public string Year { get; set; }
+        public string Color { get; set; }
+        public string Transmission { get; set; }
+        public string Fuel { get; set; }
     }
 }

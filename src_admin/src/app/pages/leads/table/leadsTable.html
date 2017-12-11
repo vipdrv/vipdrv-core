@@ -41,7 +41,7 @@
                         [disabled]="isExportToExcelDisabled()"
                         class="btn btn-outline-primary btn-sm pull-right leads-export-btn"
                         (click)="exportDataToExcel()">
-                    <i class="fa fa-refresh fa-spin" *ngIf="isExportToExcelProcessing()"></i>
+                    <i class="fa fa-spinner fa-pulse" *ngIf="isExportToExcelProcessing()"></i>
                     <i class="fa fa-file-excel-o" *ngIf="!isExportToExcelProcessing()"></i>
                     <span translate>leads.table.btnText_exportToExcel</span>
                 </button>
@@ -252,8 +252,8 @@
                     </tr>
                     <tbody>
                     <tr *ngFor="let item of items"
-                        [ngClass]="getClassesForLeadTableRow(item)"
                         class="leads-table-body-row"
+                        [ngClass]="getClassesForLeadTableRow(item)"
                         (click)="tryModalOpenInfo(item.id)">
                         <td class="leads-table-body-column">{{item.recievedDateTime}}</td>
                         <td class="leads-table-body-column">{{item.firstName + ' ' + item.secondName}}</td>

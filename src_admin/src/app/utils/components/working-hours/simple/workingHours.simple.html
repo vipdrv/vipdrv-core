@@ -33,6 +33,7 @@
                                    (click)="changedIsActiveForTimeInterval(item); $event.stopPropagation();">
                                 <input type="checkbox"
                                        class="custom-control-input"
+                                       [disabled]="isCheckboxDisabled(item)"
                                        [ngModel]="item.isActive">
                                 <span class="custom-control-indicator"></span>
                                 <span class="custom-control-description"></span>

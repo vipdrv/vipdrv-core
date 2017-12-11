@@ -19,17 +19,17 @@ import { routing } from './leads.routing';
         routing,
         Ng2Bs3ModalModule,
         PaginationModule,
-        BusyModule
+        BusyModule,
     ],
     exports: [
         LeadsComponent,
         LeadsTableComponent,
-        LeadDetailsInfoComponent
+        LeadDetailsInfoComponent,
     ],
     declarations: [
         LeadsComponent,
         LeadsTableComponent,
-        LeadDetailsInfoComponent
+        LeadDetailsInfoComponent,
     ],
     providers: []
 })

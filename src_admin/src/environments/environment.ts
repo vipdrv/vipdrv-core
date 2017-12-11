@@ -5,5 +5,6 @@
 
 export const environment = {
     production: false,
+    enabeLogging: false,
     apiUrl: 'http://localhost:5000'
 };

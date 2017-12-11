@@ -1,10 +1,9 @@
 {
   "general": {
-    "applicationName": "TestDrive",
+    "applicationName": "VIPdrv - VIP Test Drive",
     "menu": {
       "pages": "Pages",
       "home": "Home",
-      "integration": "Integration",
       "leads": "Leads",
       "sites": "Sites",
       "settings": "Settings",
@@ -69,6 +68,9 @@
       "expertName": "Expert: ",
       "routeName": "Road: ",
       "beverageName": "Beverage: ",
+      "bookingDateTimeUtc": "Booking date: ",
+      "carTitle": "Car title: ",
+      "carVin": "Car vin: ",
       "cancel": "Close"
     },
     "table": {
@@ -147,20 +149,16 @@
       "headerText_expertName": "Expert name"
     },
     "modal": {
-      "title": "Expert details",
-      "cancel": "Cancel",
-      "apply": "Save",
-      "browseAvatar": "Browse",
-      "changeAvatarUrl": "Set url",
-      "changeAvatarUrlCancel": "Cancel",
-      "changeAvatarUrlAccept": "Accept",
-      "avatarBrowseAccept": "Accept",
-      "avatarBrowseCancel": "Cancel",
-      "expertPhotoUrl": "Url",
-      "expertName": "Name",
-      "expertDescription": "Description",
-      "linkedinUrl": "Linkedin",
-      "facebookUrl": "Facebook",
+      "titleInfo": "Expert details",
+      "titleEdit": "Expert details",
+      "expertName": "Full name",
+      "expertNameHelp": "Enter the full name of the expert.",
+      "expertDescription": "About the expert",
+      "expertDescriptionHelp": "Type few words about the expert.",
+      "linkedinUrl": "Linkedin profile",
+      "linkedinUrlHelp": "Enter direct link to the experts LinkedIn profile like https://www.linkedin.com/... (is not required).",
+      "facebookUrl": "Facebook profile",
+      "facebookUrlHelp": "Enter direct link to the experts Facebook profile like https://www.facebook.com/... (is not required).",
       "expertActivity": "Is active",
       "expertOrder": "Order",
       "weekSchedule": "Week schedule"
@@ -173,18 +171,12 @@
       "headerText_beverageName": "Beverage name"
     },
     "modal": {
-      "title": "Beverage details",
-      "cancel": "Cancel",
-      "apply": "Save",
-      "browseAvatar": "Browse",
-      "changeAvatarUrl": "Set url",
-      "changeAvatarUrlCancel": "Cancel",
-      "changeAvatarUrlAccept": "Accept",
-      "avatarBrowseAccept": "Accept",
-      "avatarBrowseCancel": "Cancel",
-      "beveragePhotoUrl": "Url",
+      "titleInfo": "Beverage details",
+      "titleEdit": "Beverage details",
       "beverageName": "Name",
+      "beverageNameHelp": "Enter the name of the beverage.",
       "beverageDescription": "Description",
+      "beverageDescriptionHelp": "Type few words about the expert.",
       "beverageActivity": "Is active",
       "beverageOrder": "Order"
     }
@@ -196,34 +188,36 @@
       "headerText_routeName": "Route name"
     },
     "modal": {
-      "title": "Route details",
-      "cancel": "Cancel",
-      "apply": "Save",
-      "browseAvatar": "Browse",
-      "changeAvatarUrl": "Set url",
-      "changeAvatarUrlCancel": "Cancel",
-      "changeAvatarUrlAccept": "Accept",
-      "avatarBrowseAccept": "Accept",
-      "avatarBrowseCancel": "Cancel",
-      "routePhotoUrl": "Url",
+      "titleInfo": "Route details",
+      "titleEdit": "Route details",
       "routeName": "Name",
+      "routeNameHelp": "Enter the name of the route.",
       "routeDescription": "Description",
+      "routeDescriptionHelp": "Type few words about the route.",
       "routeActivity": "Is active",
       "routeOrder": "Order"
     }
   },
   "registration": {
-    "headerMessage": "register in our service!",
     "messageInfo": "Please, fill out the registration form.",
-    "invitationCode": "Activation key",
+    "invitationCode": "Invitation code",
+    "invitationCodeHelp": "Enter your invitation code (from invitation e-mail).",
     "firstName": "First name",
-    "secondName": "Second name",
+    "firstNameHelp": "Enter your first name.",
+    "secondName": "Last name",
+    "secondNameHelp": "Enter your last name.",
     "email": "Email",
+    "emailHelp": "Enter your e-mail.",
     "phoneNumber": "Phone number",
+    "phoneNumberHelp": "Enter your contact phone number (not required).",
     "username": "Username",
+    "usernameHelp": "Choose your username.",
     "password": "Password",
-    "confirmPassword": "Password (confirm)",
-    "applyRegistration": "Sign up"
+    "passwordHelp": "Enter your password.",
+    "confirmPassword": "Password (repeat)",
+    "confirmPasswordHelp": "Repeat your password to avoid mistakes.",
+    "applyRegistration": "Sign up",
+    "cancel": "Cancel"
   },
   "invitations": {
     "title": "Invitations management",
@@ -252,11 +246,13 @@
       "apply": "Send invitation",
       "invitationCode": "Invitation code",
       "email": "Email",
+      "emailHelp": "Enter email to send invitation.",
       "phoneNumber": "Phone number",
       "createdTime": "Creation time",
       "used": "Status",
       "usedTime": "Accepted time",
-      "availableSitesCount": "Sites max count",
+      "availableSitesCount": "Allowed count of sites",
+      "availableSitesCountHelp": "Enter maximum allowed count of sites for invited user.",
       "role": "Expected role",
       "invitator": "Creator"
     }
@@ -307,6 +303,35 @@
     "sites": {
       "invalidNameMessage": "Site name is not valid!",
       "invalidUrlMessage": "Site url is not valid!"
+    },
+    "registrationModel": {
+      "invalidEmailMessage": "Email address is not valid!",
+      "invalidFirstNameMessage": "First name is required field!",
+      "invalidSecondNameMessage": "Last name is required field!",
+      "invalidPasswordMessage": "Password is required field!",
+      "invalidRepeatPasswordMessage": "Repeated password must be equal to the password!",
+      "invalidAvatarUrlMessage": "Avatar url is required field!",
+      "invalidPhoneNumberMessage": "Phone number is not valid!",
+      "invalidEmptyUsernameMessage": "Username is required field!",
+      "invalidUsernameMessage": "This username is busy!"
+    },
+    "invitations": {
+      "invalidEmailMessage": "Email address is not valid!",
+      "invalidAvailableSitesCount": "Maximum allowed count of sites is not valid (should be number higher then 0)!"
+    },
+    "experts": {
+      "name": "Expert's full name is not valid (this field is required)!",
+      "description": "Info about the expert is not valid (this field is required)!",
+      "linkedInUrl": "LinkedIn profile's direct link is not valid! (should be like https://www.linkedin.com/...)",
+      "facebookUrl": "Facebook profile's direct link is not valid! (should be like https://www.facebook.com/...)"
+    },
+    "beverages": {
+      "name": "Beverage's name is not valid (this field is required)!",
+      "description": "Info about the beverage is not valid (this field is required)!"
+    },
+    "routes": {
+      "name": "Route's name is not valid (this field is required)!",
+      "description": "Info about the route is not valid (this field is required)!"
     }
   },
   "filters": {

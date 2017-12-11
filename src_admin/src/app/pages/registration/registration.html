@@ -1,7 +1,10 @@
 <div class="wrapper">
     <form class="form-registration">
-        <span class="form-registration-heading-app-name" translate>general.applicationName</span> -
-        <span class="form-registration-heading-message" translate>registration.headerMessage</span>
+        <h2 class="form-signin-heading">
+            <span translate>
+                general.applicationName
+            </span>
+        </h2>
         <hr>
         <div class="alert alert-danger alert-dismissible fade show"
              role="alert"
@@ -20,142 +23,221 @@
                 registration.messageInfo
             </span>
         </div>
-        <div class="row form-registration-row">
+        <hr>
+        <div class="row test-drive-modal-body-edit-entity-container-row-input">
             <div class="col-12">
 
             </div>
         </div>
-        <div class="row form-registration-row">
-            <label  class="col-4 col-form-label"
-                    for="invitationCode"
-                    translate>
-                registration.invitationCode
-            </label>
-            <div class="col-8">
-                <input id="invitationCode"
-                       type="text"
-                       name="invitationCode"
-                       class="form-control"
-                       required=""
-                       autofocus=""
-                       placeholder="00000000-0000-0000-0000-000000000000"
-                       [(ngModel)]="invitationCode">
+        <div class="row test-drive-modal-body-edit-entity-container-row-input">
+            <div class="col-12">
+                <div class="form-group">
+                    <label for="invitation-code"
+                           translate>
+                        registration.invitationCode
+                    </label>
+                    <input id="invitation-code"
+                           name="invitationCode"
+                           type="text"
+                           class="form-control"
+                           [disabled]="isFormProcessing()"
+                           [(ngModel)]="invitationCode">
+                    <small class="form-text text-muted"
+                           translate>
+                        registration.invitationCodeHelp
+                    </small>
+                </div>
             </div>
         </div>
-        <div class="row form-registration-row">
-            <label  class="col-4 col-form-label"
-                    for="firstName"
-                    translate>
-                registration.firstName
-            </label>
-            <div class="col-8">
-                <input id="firstName"
-                       type="text"
-                       name="firstName"
-                       class="form-control"
-                       required=""
-                       autofocus=""
-                       placeholder="John"
-                       [(ngModel)]="model.firstName">
+        <div class="row test-drive-modal-body-edit-entity-container-row-input">
+            <div class="col-12">
+                <div class="form-group">
+                    <label for="first-name"
+                           translate>
+                        registration.firstName
+                    </label>
+                    <input id="first-name"
+                           name="firstName"
+                           type="text"
+                           class="form-control"
+                           [ngClass]="extensions.getInputValidationClass(isValidationActive(), validationService.isValidFirstName(model))"
+                           [disabled]="isFormProcessing()"
+                           [(ngModel)]="model.firstName">
+                    <small class="form-text text-muted"
+                           *ngIf="!isValidationActive() || validationService.isValidFirstName(model)"
+                           translate>
+                        registration.firstNameHelp
+                    </small>
+                    <small class="form-text test-drive-validation-message"
+                           *ngIf="isValidationActive() && !validationService.isValidFirstName(model)"
+                           translate>
+                        {{ validationService.getInvalidFirstNameMessageKey(model) }}
+                    </small>
+                </div>
             </div>
         </div>
-        <div class="row form-registration-row">
-            <label  class="col-4 col-form-label"
-                    for="secondName"
-                    translate>
-                registration.secondName
-            </label>
-            <div class="col-8">
-                <input id="secondName"
-                       type="text"
-                       name="secondName"
-                       class="form-control"
-                       required=""
-                       autofocus=""
-                       placeholder="Doe"
-                       [(ngModel)]="model.secondName">
+        <div class="row test-drive-modal-body-edit-entity-container-row-input">
+            <div class="col-12">
+                <div class="form-group">
+                    <label for="second-name"
+                           translate>
+                        registration.secondName
+                    </label>
+                    <input id="second-name"
+                           name="lastName"
+                           type="text"
+                           class="form-control"
+                           [ngClass]="extensions.getInputValidationClass(isValidationActive(), validationService.isValidSecondName(model))"
+                           [disabled]="isFormProcessing()"
+                           [(ngModel)]="model.secondName">
+                    <small class="form-text text-muted"
+                           *ngIf="!isValidationActive() || validationService.isValidSecondName(model)"
+                           translate>
+                        registration.secondNameHelp
+                    </small>
+                    <small class="form-text test-drive-validation-message"
+                           *ngIf="isValidationActive() && !validationService.isValidSecondName(model)"
+                           translate>
+                        {{ validationService.getInvalidSecondNameMessageKey(model) }}
+                    </small>
+                </div>
             </div>
         </div>
-        <div class="row form-registration-row">
-            <label  class="col-4 col-form-label"
-                    for="email"
-                    translate>
-                registration.email
-            </label>
-            <div class="col-8">
-                <input id="email"
-                       type="email"
-                       name="email"
-                       class="form-control"
-                       required=""
-                       autofocus=""
-                       placeholder="john.doe@email.com"
-                       [(ngModel)]="model.email">
+        <div class="row test-drive-modal-body-edit-entity-container-row-input">
+            <div class="col-12">
+                <div class="form-group">
+                    <label for="email"
+                           translate>
+                        registration.email
+                    </label>
+                    <input id="email"
+                           name="email"
+                           type="email"
+                           class="form-control"
+                           [ngClass]="extensions.getInputValidationClass(isValidationActive(), validationService.isValidEmail(model))"
+                           [disabled]="isFormProcessing()"
+                           [(ngModel)]="model.email">
+                    <small class="form-text text-muted"
+                           *ngIf="!isValidationActive() || validationService.isValidEmail(model)"
+                           translate>
+                        registration.emailHelp
+                    </small>
+                    <small class="form-text test-drive-validation-message"
+                           *ngIf="isValidationActive() && !validationService.isValidEmail(model)"
+                           translate>
+                        {{ validationService.getInvalidEmailMessageKey(model) }}
+                    </small>
+                </div>
             </div>
         </div>
-        <div class="row form-registration-row">
-            <label  class="col-4 col-form-label"
-                    for="username"
-                    translate>
-                registration.username
-            </label>
-            <div class="col-8">
-                <input id="username"
-                       type="text"
-                       name="username"
-                       class="form-control"
-                       required=""
-                       autofocus=""
-                       placeholder="JDoe"
-                       (ngModelChange)="usernameChanged($event)"
-                       [ngModel]="model.username">
+        <div class="row test-drive-modal-body-edit-entity-container-row-input">
+            <div class="col-12">
+                <div class="form-group">
+                    <label for="username"
+                           translate>
+                        registration.username
+                    </label>
+                    <input id="username"
+                           name="username"
+                           type="text"
+                           class="form-control"
+                           [ngClass]="extensions.getInputValidationClass(isValidationActive() && !isUsernameCheckProcessing(), isUsernameValid)"
+                           [disabled]="isFormProcessing()"
+                           (ngModelChange)="usernameChanged($event)"
+                           [ngModel]="model.username">
+                    <small class="form-text text-muted"
+                           *ngIf="!isValidationActive() || isUsernameValid || isUsernameCheckProcessing()"
+                           translate>
+                        registration.usernameHelp
+                    </small>
+                    <small class="form-text test-drive-validation-message"
+                           *ngIf="isValidationActive() && !isUsernameValid && !isUsernameEmpty() && !isUsernameCheckProcessing()"
+                           translate>
+                        validation.registrationModel.invalidUsernameMessage
+                    </small>
+                    <small class="form-text test-drive-validation-message"
+                           *ngIf="isValidationActive() && !isUsernameValid&& isUsernameEmpty() && !isUsernameCheckProcessing()"
+                           translate>
+                        validation.registrationModel.invalidEmptyUsernameMessage
+                    </small>
+                </div>
             </div>
         </div>
-        <div class="row form-registration-row">
-            <label class="col-4 col-form-label"
-                   for="password"
-                   translate>
-                registration.password
-            </label>
-            <div class="col-8">
-                <input id="password"
-                       type="password"
-                       name="password"
-                       class="form-control"
-                       required=""
-                       autofocus=""
-                       placeholder="Password"
-                       [(ngModel)]="model.password">
+        <div class="row test-drive-modal-body-edit-entity-container-row-input">
+            <div class="col-12">
+                <div class="form-group">
+                    <label for="password"
+                           translate>
+                        registration.password
+                    </label>
+                    <input id="password"
+                           name="password"
+                           type="password"
+                           class="form-control"
+                           [ngClass]="extensions.getInputValidationClass(isValidationActive(), validationService.isValidPassword(model))"
+                           [disabled]="isFormProcessing()"
+                           [(ngModel)]="model.password">
+                    <small class="form-text text-muted"
+                           *ngIf="!isValidationActive() || validationService.isValidPassword(model)"
+                           translate>
+                        registration.passwordHelp
+                    </small>
+                    <small class="form-text test-drive-validation-message"
+                           *ngIf="isValidationActive() && !validationService.isValidPassword(model)"
+                           translate>
+                        {{ validationService.getInvalidPasswordMessageKey(model) }}
+                    </small>
+                </div>
             </div>
         </div>
-        <div class="row form-registration-row">
-            <label class="col-4 col-form-label"
-                   for="confirmPassword"
-                   translate>
-                registration.confirmPassword
-            </label>
-            <div class="col-8">
-                <input id="confirmPassword"
-                       type="password"
-                       name="confirmPassword"
-                       class="form-control"
-                       required=""
-                       autofocus=""
-                       placeholder="Repeat password"
-                       [(ngModel)]="confirmPassword">
+        <div class="row test-drive-modal-body-edit-entity-container-row-input">
+            <div class="col-12">
+                <div class="form-group">
+                    <label for="repeatedPassword"
+                           translate>
+                        registration.confirmPassword
+                    </label>
+                    <input id="repeatedPassword"
+                           name="repeatedPassword"
+                           type="password"
+                           class="form-control"
+                           [ngClass]="extensions.getInputValidationClass(isValidationActive(), validationService.isValidRepeatPassword(model))"
+                           [disabled]="isFormProcessing()"
+                           [(ngModel)]="model.repeatPassword">
+                    <small class="form-text text-muted"
+                           *ngIf="!isValidationActive() || validationService.isValidRepeatPassword(model)"
+                           translate>
+                        registration.confirmPasswordHelp
+                    </small>
+                    <small class="form-text test-drive-validation-message"
+                           *ngIf="isValidationActive() && !validationService.isValidRepeatPassword(model)"
+                           translate>
+                        {{ validationService.getInvalidRepeatPasswordMessageKey(model) }}
+                    </small>
+                </div>
             </div>
         </div>
-        <div style="margin-top: 10px;">
-            <button class="btn btn-success pull-right"
-                    type="submit"
-                    [disabled]="loading || !isRegistrationAvailable()"
-                    (click)="register()">
-                <i class="fa fa-refresh fa-spin" *ngIf="!!loading"></i>
-                <i class="fa fa-check" *ngIf="!loading"></i>
-                <span translate>
-                    registration.applyRegistration
-                </span>
-            </button>
+        <div class="row test-drive-modal-body-edit-entity-container-row-input">
+            <div class="col-12">
+                <button class="btn btn-success pull-right test-drive-right-standalone-btn"
+                        type="submit"
+                        [disabled]="isRegistrationDisabled()"
+                        (click)="register()">
+                    <i class="fa fa-spinner fa-pulse" *ngIf="isFormProcessing()"></i>
+                    <i class="fa fa-sign-in" *ngIf="!isFormProcessing()"></i>
+                    <span translate>
+                        registration.applyRegistration
+                    </span>
+                </button>
+                <button class="btn btn-default pull-left test-drive-left-standalone-btn"
+                        type="submit"
+                        [disabled]="isFormProcessing()"
+                        (click)="cancelRegistration()">
+                    <span translate>
+                        registration.cancel
+                    </span>
+                </button>
+            </div>
         </div>
     </form>
 </div>
