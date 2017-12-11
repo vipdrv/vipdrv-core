@@ -53,7 +53,7 @@ namespace QuantumLogic.Core.Constants
         public const string CanUpdateExpert = "CanUpdateExpert";
         public const string CanDeleteExpert = "CanDeleteExpert";
         public const string CanUpdateOwnExpert = "CanUpdateOwnExpert";
-        public const string CanDeleteOnwExpert = "CanDeleteOnwExpert";
+        public const string CanDeleteOwnExpert = "CanDeleteOwnExpert";
 
         #endregion
 

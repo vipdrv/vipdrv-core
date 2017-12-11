@@ -39,7 +39,7 @@ namespace QuantumLogic.WebApi
 
         protected override void ConfigureServices(IServiceCollection services)
         {
-            services.AddScoped<IQLSession, QLSession>();
+            services.AddScoped<IQLSession, HttpContextSession>();
             services.AddScoped<IQLPermissionChecker, QLPermissionChecker>();
             services.AddTransient<JwtSecurityTokenHandler, JwtSecurityTokenHandler>();
 

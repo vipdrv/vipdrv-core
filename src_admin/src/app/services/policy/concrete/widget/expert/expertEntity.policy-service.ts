@@ -3,10 +3,11 @@ import { ConsoleLogger } from './../../../../../utils/index';
 import { ExpertEntity } from './../../../../../entities/index';
 import { AuthorizationService } from './../../../../index';
 import { IExpertEntityPolicyService } from './i-expertEntity.policy-service';
-import { AlwaysLoyalEntityPolicyService } from '../../../alwaysLoyalEntity.policy-service';
+import { AbstractEntityPolicyService } from '../../../abstractEntity.policy-service';
+
 @Injectable()
 export class ExpertEntityPolicyService
-    extends AlwaysLoyalEntityPolicyService<ExpertEntity>
+    extends AbstractEntityPolicyService<ExpertEntity>
     implements IExpertEntityPolicyService {
     /// injected dependencies
     /// ctor
@@ -15,16 +16,51 @@ export class ExpertEntityPolicyService
         this.logger.logDebug('ExpertEntityPolicyService: Service has been constructed.');
     }
     /// methods
+    canGet(): boolean {
+        return true;
+    }
+
+    canCreate(): boolean {
+        return undefined;
+    }
+
+    canUpdate(): boolean {
+        return undefined;
+    }
+
+    canDelete(): boolean {
+        return undefined;
+    }
+
+    protected innerCanGetEntity(entity: ExpertEntity): boolean {
+        return true;
+    }
+
+    protected innerCanCreateEntity(entity: ExpertEntity): boolean {
+        return undefined;
+    }
+
+    protected innerCanUpdateEntity(entity: ExpertEntity): boolean {
+        return undefined;
+    }
+
+    protected innerCanDeleteEntity(entity: ExpertEntity): boolean {
+        return undefined;
+    }
+
     canUpdateOrder(): boolean {
-        return true;
+        return undefined;
     }
+
     canUpdateActivity(): boolean {
-        return true;
+        return undefined;
     }
+
     canUpdateOrderForEntity(entity: ExpertEntity): boolean {
-        return true && this.canUpdateOrder();
+        return undefined;
     }
+
     canUpdateActivityForEntity(entity: ExpertEntity): boolean {
-        return true && this.canUpdateActivity();
+        return undefined;
     }
 }

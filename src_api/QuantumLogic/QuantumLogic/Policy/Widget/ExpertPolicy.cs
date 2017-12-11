@@ -1,10 +1,10 @@
-﻿using System.Linq;
-using QuantumLogic.Core.Authorization;
+﻿using QuantumLogic.Core.Authorization;
 using QuantumLogic.Core.Constants;
 using QuantumLogic.Core.Domain.Entities.WidgetModule;
 using QuantumLogic.Core.Domain.Policy.WidgetModule;
 using QuantumLogic.Core.Exceptions.Policy;
-using QuantumLogic.Data.EFContext;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace QuantumLogic.WebApi.Policy.Widget
 {
@@ -25,59 +25,60 @@ namespace QuantumLogic.WebApi.Policy.Widget
 
         protected override bool CanRetrieve(Expert entity, bool throwEntityPolicyException)
         {
-            return true;
+            bool result = InnerRetrieveAllFilter(new List<Expert>() { entity }.AsQueryable()).Any();
+            if (!result && throwEntityPolicyException)
+            {
+                throw new EntityPolicyException();
+            }
+            return result;
         }
 
         protected override bool CanCreate(Expert entity, bool throwEntityPolicyException)
         {
-            var result = PermissionChecker.IsGranted(QuantumLogicPermissionNames.CanAllAll) ||
-                         PermissionChecker.IsGranted(QuantumLogicPermissionNames.CanAllExpert) ||
-                         PermissionChecker.IsGranted(QuantumLogicPermissionNames.CanCreateExpert);
+            bool result = PermissionChecker.IsGranted(QuantumLogicPermissionNames.CanAllAll) ||
+                PermissionChecker.IsGranted(QuantumLogicPermissionNames.CanAllExpert) ||
+                PermissionChecker.IsGranted(QuantumLogicPermissionNames.CanCreateExpert);
 
             if (!result && throwEntityPolicyException)
             {
                 throw new EntityPolicyException();
             }
 
-            return true;
+            return result;
         }
 
         protected override bool CanUpdate(Expert entity, bool throwEntityPolicyException)
         {
-            var result = PermissionChecker.IsGranted(QuantumLogicPermissionNames.CanAllAll) ||
-                         PermissionChecker.IsGranted(QuantumLogicPermissionNames.CanAllExpert) ||
-                         PermissionChecker.IsGranted(QuantumLogicPermissionNames.CanUpdateExpert);
+            bool result = PermissionChecker.IsGranted(QuantumLogicPermissionNames.CanAllAll) ||
+                PermissionChecker.IsGranted(QuantumLogicPermissionNames.CanAllExpert) ||
+                PermissionChecker.IsGranted(QuantumLogicPermissionNames.CanUpdateExpert) ||
+                Session.UserId.HasValue &&
+                PermissionChecker.IsGranted(QuantumLogicPermissionNames.CanUpdateOwnExpert) &&
+                Session.UserId.Value == entity.Site.UserId;
 
-            if (result || (PermissionChecker.IsGranted(QuantumLogicPermissionNames.CanUpdateOwnExpert) && EntityBelongsToUserSite(Session.UserId, entity.SiteId)))
-            {
-                return true;
-            }
-
-            if (throwEntityPolicyException)
+            if (!result && throwEntityPolicyException)
             {
                 throw new EntityPolicyException();
             }
 
-            return false;
+            return result;
         }
 
         protected override bool CanDelete(Expert entity, bool throwEntityPolicyException)
         {
-            var result = PermissionChecker.IsGranted(QuantumLogicPermissionNames.CanAllAll) ||
-                         PermissionChecker.IsGranted(QuantumLogicPermissionNames.CanAllExpert) ||
-                         PermissionChecker.IsGranted(QuantumLogicPermissionNames.CanDeleteExpert);
+            bool result = PermissionChecker.IsGranted(QuantumLogicPermissionNames.CanAllAll) ||
+                PermissionChecker.IsGranted(QuantumLogicPermissionNames.CanAllExpert) ||
+                PermissionChecker.IsGranted(QuantumLogicPermissionNames.CanDeleteExpert) ||
+                Session.UserId.HasValue &&
+                PermissionChecker.IsGranted(QuantumLogicPermissionNames.CanDeleteOwnExpert) && 
+                Session.UserId.Value == entity.Site.UserId;
 
-            if (result || (PermissionChecker.IsGranted(QuantumLogicPermissionNames.CanDeleteOnwExpert) && EntityBelongsToUserSite(Session.UserId, entity.SiteId)))
-            {
-                return true;
-            }
-
-            if (throwEntityPolicyException)
+            if (!result && throwEntityPolicyException)
             {
                 throw new EntityPolicyException();
             }
 
-            return false;
+            return result;
         }
 
         protected override bool CanChangeActivity(Expert entity, bool throwEntityPolicyException)
@@ -88,15 +89,6 @@ namespace QuantumLogic.WebApi.Policy.Widget
         protected override bool CanChangeOrder(Expert entity, bool throwEntityPolicyException)
         {
             return CanUpdate(entity, throwEntityPolicyException);
-        }
-
-        private bool EntityBelongsToUserSite(long? userId, int siteId)
-        {
-            if (siteId == new QuantumLogicDbContext().Sites.SingleOrDefault(r => r.UserId == userId).Id)
-            {
-                return true;
-            }
-            return false;
         }
     }
 }

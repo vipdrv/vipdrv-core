@@ -1,4 +1,4 @@
-import { Variable } from "./../../../utils/index";
+import { Variable } from "../../../utils/variable";
 import { Entity, IPassivable, IOrderable } from "./../../index";
 
 export class BeverageEntity extends Entity implements IPassivable, IOrderable {

@@ -32,4 +32,8 @@ export abstract class AbstractEntityPolicyService<TEntity> implements IEntityPol
     protected abstract innerCanCreateEntity(entity: TEntity): boolean;
     protected abstract innerCanUpdateEntity(entity: TEntity): boolean;
     protected abstract innerCanDeleteEntity(entity: TEntity): boolean;
+    // Is used to check if permission is granted for current User
+    protected isGrantedPermission(permission: string): boolean {
+        return this.authService.currentUserPermissions.indexOf(permission) > -1;
+    }
 }
