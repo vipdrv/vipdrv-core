@@ -20,11 +20,11 @@ export class BeverageValidationService
     }
     isValidName(entity: BeverageEntity): boolean {
         return Variable.isNotNullOrUndefined(entity) &&
-            Variable.isNotNullOrUndefined(entity.name);
+            Variable.isNotNullOrUndefinedOrEmptyString(entity.name);
     }
     isValidDescription(entity: BeverageEntity): boolean {
         return Variable.isNotNullOrUndefined(entity) &&
-            Variable.isNotNullOrUndefined(entity.description);
+            Variable.isNotNullOrUndefinedOrEmptyString(entity.description);
     }
     getInvalidNameMessageKey(entity: BeverageEntity): string {
         return 'validation.beverages.name';
