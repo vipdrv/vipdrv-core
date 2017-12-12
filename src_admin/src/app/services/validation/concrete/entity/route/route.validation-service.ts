@@ -20,11 +20,11 @@ export class RouteValidationService
     }
     isValidName(entity: RouteEntity): boolean {
         return Variable.isNotNullOrUndefined(entity) &&
-            Variable.isNotNullOrUndefined(entity.name);
+            Variable.isNotNullOrUndefinedOrEmptyString(entity.name);
     }
     isValidDescription(entity: RouteEntity): boolean {
         return Variable.isNotNullOrUndefined(entity) &&
-            Variable.isNotNullOrUndefined(entity.description);
+            Variable.isNotNullOrUndefinedOrEmptyString(entity.description);
     }
     getInvalidNameMessageKey(entity: RouteEntity): string {
         return 'validation.routes.name';

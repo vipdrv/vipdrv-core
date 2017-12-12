@@ -423,7 +423,8 @@ export class ExpertsTableComponent implements OnInit {
             this.updateActivityEntityIds.indexOf(entity.id) > -1;
     }
     protected isOperationChangeActivityDisabled(entity: ExpertEntity) {
-        return this.isOperationChangeActivityProcessing(entity) ||
+        return !this.entityPolicyService.canUpdateActivityForEntity(entity) ||
+            this.isOperationChangeActivityProcessing(entity) ||
             this.isOperationGetManyProcessing() ||
             this.isOperationEditProcessing(entity) ||
             this.isOperationDeleteProcessing(entity) ||

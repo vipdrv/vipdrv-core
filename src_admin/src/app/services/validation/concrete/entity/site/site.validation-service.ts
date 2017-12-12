@@ -19,13 +19,16 @@ export class SiteValidationService
             this.isImageUrlValid(entity);
     }
     isNameValid(entity: SiteEntity): boolean {
-        return true;
+        return Variable.isNotNullOrUndefined(entity) &&
+            Variable.isNotNullOrUndefinedOrEmptyString(entity.name);
     }
     isUrlValid(entity: SiteEntity): boolean {
-        return true;
+        return Variable.isNotNullOrUndefined(entity) &&
+            Variable.isNotNullOrUndefinedOrEmptyString(entity.url);
     }
     isImageUrlValid(entity: SiteEntity): boolean {
-        return true;
+        return Variable.isNotNullOrUndefined(entity) &&
+            Variable.isNotNullOrUndefinedOrEmptyString(entity.imageUrl);
     }
     getInvalidNameMessageKey(entity: SiteEntity): string {
         return 'validation.sites.invalidNameMessage';
