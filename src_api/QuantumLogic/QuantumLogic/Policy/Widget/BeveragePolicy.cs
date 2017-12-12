@@ -1,10 +1,14 @@
-﻿using QuantumLogic.Core.Authorization;
+﻿using System.Collections.Generic;
+using System.Linq;
+using QuantumLogic.Core.Authorization;
+using QuantumLogic.Core.Constants;
 using QuantumLogic.Core.Domain.Entities.WidgetModule;
 using QuantumLogic.Core.Domain.Policy.WidgetModule;
+using QuantumLogic.Core.Exceptions.Policy;
 
 namespace QuantumLogic.WebApi.Policy.Widget
 {
-    public class BeveragePolicy : NullEntityExtendedPolicy<Beverage, int>, IBeveragePolicy
+    public class BeveragePolicy : EntityExtendedPolicy<Beverage, int>, IBeveragePolicy
     {
         #region Ctors
 
@@ -13,5 +17,78 @@ namespace QuantumLogic.WebApi.Policy.Widget
         { }
 
         #endregion
+
+        protected override IQueryable<Beverage> InnerRetrieveAllFilter(IQueryable<Beverage> query)
+        {
+            return query;
+        }
+
+        protected override bool CanRetrieve(Beverage entity, bool throwEntityPolicyException)
+        {
+            bool result = InnerRetrieveAllFilter(new List<Beverage>() {entity}.AsQueryable()).Any();
+            if (!result && throwEntityPolicyException)
+            {
+                throw new EntityPolicyException();
+            }
+            return result;
+        }
+
+        protected override bool CanCreate(Beverage entity, bool throwEntityPolicyException)
+        {
+            bool result = PermissionChecker.IsGranted(QuantumLogicPermissionNames.CanAllAll) ||
+                          PermissionChecker.IsGranted(QuantumLogicPermissionNames.CanAllBeverage) ||
+                          PermissionChecker.IsGranted(QuantumLogicPermissionNames.CanCreateBeverage);
+
+            if (!result && throwEntityPolicyException)
+            {
+                throw new EntityPolicyException();
+            }
+
+            return result;
+        }
+
+        protected override bool CanUpdate(Beverage entity, bool throwEntityPolicyException)
+        {
+            bool result = PermissionChecker.IsGranted(QuantumLogicPermissionNames.CanAllAll) ||
+                          PermissionChecker.IsGranted(QuantumLogicPermissionNames.CanAllBeverage) ||
+                          PermissionChecker.IsGranted(QuantumLogicPermissionNames.CanUpdateBeverage) ||
+                          Session.UserId.HasValue &&
+                          PermissionChecker.IsGranted(QuantumLogicPermissionNames.CanUpdateOwnBeverage) &&
+                          Session.UserId.Value == entity.Site.UserId;
+
+            if (!result && throwEntityPolicyException)
+            {
+                throw new EntityPolicyException();
+            }
+
+            return result;
+        }
+
+        protected override bool CanDelete(Beverage entity, bool throwEntityPolicyException)
+        {
+            bool result = PermissionChecker.IsGranted(QuantumLogicPermissionNames.CanAllAll) ||
+                          PermissionChecker.IsGranted(QuantumLogicPermissionNames.CanAllBeverage) ||
+                          PermissionChecker.IsGranted(QuantumLogicPermissionNames.CanDeleteBeverage) ||
+                          Session.UserId.HasValue &&
+                          PermissionChecker.IsGranted(QuantumLogicPermissionNames.CanDeleteOwnBeverage) &&
+                          Session.UserId.Value == entity.Site.UserId;
+
+            if (!result && throwEntityPolicyException)
+            {
+                throw new EntityPolicyException();
+            }
+
+            return result;
+        }
+
+        protected override bool CanChangeActivity(Beverage entity, bool throwEntityPolicyException)
+        {
+            return CanUpdate(entity, throwEntityPolicyException);
+        }
+
+        protected override bool CanChangeOrder(Beverage entity, bool throwEntityPolicyException)
+        {
+            return CanUpdate(entity, throwEntityPolicyException);
+        }
     }
 }

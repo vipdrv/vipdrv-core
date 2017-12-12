@@ -8,15 +8,6 @@ namespace QuantumLogic.Core.Constants
 {
     public class QuantumLogicPermissionNames
     {
-        #region QuantumLogic menu visibility permissions
-
-        public const string CanViewMenuHome = "CanViewMenuHome";
-        public const string CanViewMenuSites = "CanViewMenuSites";
-        public const string CanViewMenuLeads = "CanViewMenuLeads";
-        public const string CanViewMenuSettings = "CanViewMenuSettings";
-
-        #endregion
-
         #region Global QuantumLogic permission names
 
         public const string CanAllAll = "CanAllAll";
@@ -24,6 +15,15 @@ namespace QuantumLogic.Core.Constants
         public const string CanCreate = "CanCreateAll";
         public const string CanUpdate = "CanUpdateAll";
         public const string CanDelete = "CanDeleteAll";
+
+        #endregion
+
+        #region QuantumLogic menu visibility permissions
+
+        public const string CanViewMenuHome = "CanViewMenuHome";
+        public const string CanViewMenuSites = "CanViewMenuSites";
+        public const string CanViewMenuLeads = "CanViewMenuLeads";
+        public const string CanViewMenuSettings = "CanViewMenuSettings";
 
         #endregion
 
@@ -54,6 +54,32 @@ namespace QuantumLogic.Core.Constants
         public const string CanDeleteExpert = "CanDeleteExpert";
         public const string CanUpdateOwnExpert = "CanUpdateOwnExpert";
         public const string CanDeleteOwnExpert = "CanDeleteOwnExpert";
+
+        public const string CanAllBeverage = "CanAllBeverage";
+        public const string CanRetrieveBeverage = "CanRetrieveBeverage";
+        public const string CanCreateBeverage = "CanCreateBeverage";
+        public const string CanUpdateBeverage = "CanUpdateBeverage";
+        public const string CanDeleteBeverage = "CanDeleteBeverage";
+        public const string CanUpdateOwnBeverage = "CanUpdateOwnBeverage";
+        public const string CanDeleteOwnBeverage = "CanDeleteOwnBeverage";
+
+        public const string CanAllRoute = "CanAllRoute";
+        public const string CanRetrieveRoute = "CanRetrieveRoute";
+        public const string CanCreateRoute = "CanCreateRoute";
+        public const string CanUpdateRoute = "CanUpdateRoute";
+        public const string CanDeleteRoute = "CanDeleteRoute";
+        public const string CanUpdateOwnRoute = "CanUpdateOwnRoute";
+        public const string CanDeleteOwnRoute = "CanDeleteOwnRoute";
+
+        public const string CanAllLead = "CanAllLead";
+        public const string CanRetrieveLead = "CanRetrieveLead";
+        public const string CanCreateLead = "CanCreateLead";
+        public const string CanUpdateLead = "CanUpdateLead";
+        public const string CanDeleteLead = "CanDeleteLead";
+        public const string CanRetrieveOwnLead = "CanRetrieveOwnLead";
+        public const string CanUpdateOwnLead = "CanUpdateOwnLead";
+        public const string CanDeleteOwnLead = "CanDeleteOwnLead";
+
 
         #endregion
 

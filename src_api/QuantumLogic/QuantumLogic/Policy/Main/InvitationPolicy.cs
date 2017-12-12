@@ -1,10 +1,11 @@
-﻿using QuantumLogic.Core.Authorization;
+﻿using System.Linq;
+using QuantumLogic.Core.Authorization;
 using QuantumLogic.Core.Domain.Entities.MainModule;
 using QuantumLogic.Core.Domain.Policy.Main;
 
 namespace QuantumLogic.WebApi.Policy.Main
 {
-    public class InvitationPolicy : NullEntityPolicy<Invitation, int>, IInvitationPolicy
+    public class InvitationPolicy : EntityPolicy<Invitation, int>, IInvitationPolicy
     {
         #region Ctors
 
@@ -26,6 +27,31 @@ namespace QuantumLogic.WebApi.Policy.Main
         protected virtual bool CanUse(Invitation entity, bool throwEntityPolicyException)
         {
             return true;
+        }
+
+        protected override IQueryable<Invitation> InnerRetrieveAllFilter(IQueryable<Invitation> query)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        protected override bool CanRetrieve(Invitation entity, bool throwEntityPolicyException)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        protected override bool CanCreate(Invitation entity, bool throwEntityPolicyException)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        protected override bool CanUpdate(Invitation entity, bool throwEntityPolicyException)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        protected override bool CanDelete(Invitation entity, bool throwEntityPolicyException)
+        {
+            throw new System.NotImplementedException();
         }
     }
 }

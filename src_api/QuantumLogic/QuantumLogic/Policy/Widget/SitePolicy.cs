@@ -45,40 +45,36 @@ namespace QuantumLogic.WebApi.Policy.Widget
 
         protected override bool CanUpdate(Site entity, bool throwEntityPolicyException)
         {
-            var result = PermissionChecker.IsGranted(QuantumLogicPermissionNames.CanAllAll) ||
-                         PermissionChecker.IsGranted(QuantumLogicPermissionNames.CanAllSite) ||
-                         PermissionChecker.IsGranted(QuantumLogicPermissionNames.CanUpdateSite);
+            bool result = PermissionChecker.IsGranted(QuantumLogicPermissionNames.CanAllAll) ||
+                          PermissionChecker.IsGranted(QuantumLogicPermissionNames.CanAllSite) ||
+                          PermissionChecker.IsGranted(QuantumLogicPermissionNames.CanUpdateSite) ||
+                          Session.UserId.HasValue &&
+                          PermissionChecker.IsGranted(QuantumLogicPermissionNames.CanUpdateOwnSite) &&
+                          Session.UserId.Value == entity.Id;
 
-            if (result || (PermissionChecker.IsGranted(QuantumLogicPermissionNames.CanUpdateOwnSite) && Session.UserId == entity.Id))
-            {
-                return true;
-            }
-
-            if (throwEntityPolicyException)
+            if (!result && throwEntityPolicyException)
             {
                 throw new EntityPolicyException();
             }
 
-            return false;
+            return result;
         }
 
         protected override bool CanDelete(Site entity, bool throwEntityPolicyException)
         {
-            var result = PermissionChecker.IsGranted(QuantumLogicPermissionNames.CanAllAll) ||
-                         PermissionChecker.IsGranted(QuantumLogicPermissionNames.CanAllSite) ||
-                         PermissionChecker.IsGranted(QuantumLogicPermissionNames.CanDeleteSite);
+            bool result = PermissionChecker.IsGranted(QuantumLogicPermissionNames.CanAllAll) ||
+                          PermissionChecker.IsGranted(QuantumLogicPermissionNames.CanAllSite) ||
+                          PermissionChecker.IsGranted(QuantumLogicPermissionNames.CanDeleteSite) ||
+                          Session.UserId.HasValue &&
+                          PermissionChecker.IsGranted(QuantumLogicPermissionNames.CanDeleteOwnSite) &&
+                          Session.UserId.Value == entity.Id;
 
-            if (result || (PermissionChecker.IsGranted(QuantumLogicPermissionNames.CanDeleteOwnSite) && Session.UserId == entity.Id))
-            {
-                return true;
-            }
-
-            if (throwEntityPolicyException)
+            if (!result && throwEntityPolicyException)
             {
                 throw new EntityPolicyException();
             }
 
-            return false;
+            return result;
         }
     }
 }

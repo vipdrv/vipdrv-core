@@ -4,7 +4,7 @@ using QuantumLogic.Core.Domain.Policy.Main;
 
 namespace QuantumLogic.WebApi.Policy.Main
 {
-    public class UserPolicy : NullEntityPolicy<User, int>, IUserPolicy
+    public class UserPolicy : EntityPolicy<User, int>, IUserPolicy
     {
         #region Ctors
 

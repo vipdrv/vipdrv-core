@@ -4,6 +4,8 @@ import { ExpertEntity } from './../../../../../entities/index';
 import { AuthorizationService } from './../../../../index';
 import { IExpertEntityPolicyService } from './i-expertEntity.policy-service';
 import { AbstractEntityPolicyService } from '../../../abstractEntity.policy-service';
+import { permissionNames } from '../../../../../constants/index';
+import { Variable } from '../../../../../utils/variable';
 
 @Injectable()
 export class ExpertEntityPolicyService
@@ -21,15 +23,21 @@ export class ExpertEntityPolicyService
     }
 
     canCreate(): boolean {
-        return undefined;
+        return this.isGrantedPermission(permissionNames.canAllAll) ||
+            this.isGrantedPermission(permissionNames.canAllExpert) ||
+            this.isGrantedPermission(permissionNames.canCreateExpert);
     }
 
     canUpdate(): boolean {
-        return undefined;
+        return this.isGrantedPermission(permissionNames.canAllAll) ||
+            this.isGrantedPermission(permissionNames.canAllExpert) ||
+            this.isGrantedPermission(permissionNames.canUpdateExpert);
     }
 
     canDelete(): boolean {
-        return undefined;
+        return this.isGrantedPermission(permissionNames.canAllAll) ||
+            this.isGrantedPermission(permissionNames.canAllExpert) ||
+            this.isGrantedPermission(permissionNames.canDeleteExpert);
     }
 
     protected innerCanGetEntity(entity: ExpertEntity): boolean {
@@ -37,30 +45,40 @@ export class ExpertEntityPolicyService
     }
 
     protected innerCanCreateEntity(entity: ExpertEntity): boolean {
-        return undefined;
+        return true;
     }
 
     protected innerCanUpdateEntity(entity: ExpertEntity): boolean {
-        return undefined;
+        const isExpertFromOwnSite = true; // TODO: implement policy for onwSites
+
+        return this.canUpdate() ||
+            Variable.isNotNullOrUndefined(this.authService.currentUserId) &&
+            this.isGrantedPermission(permissionNames.canUpdateOwnExpert) &&
+            isExpertFromOwnSite;
     }
 
     protected innerCanDeleteEntity(entity: ExpertEntity): boolean {
-        return undefined;
+        const isExpertFromOwnSite = true; // TODO: implement policy for onwSites
+
+        return this.canDelete() ||
+            Variable.isNotNullOrUndefined(this.authService.currentUserId) &&
+            this.isGrantedPermission(permissionNames.canDeleteOwnExpert) &&
+            isExpertFromOwnSite;
     }
 
     canUpdateOrder(): boolean {
-        return undefined;
+        return this.canUpdate();
     }
 
     canUpdateActivity(): boolean {
-        return undefined;
+        return this.canUpdate();
     }
 
     canUpdateOrderForEntity(entity: ExpertEntity): boolean {
-        return undefined;
+        return this.innerCanUpdateEntity(entity);
     }
 
     canUpdateActivityForEntity(entity: ExpertEntity): boolean {
-        return undefined;
+        return this.innerCanUpdateEntity(entity);
     }
 }

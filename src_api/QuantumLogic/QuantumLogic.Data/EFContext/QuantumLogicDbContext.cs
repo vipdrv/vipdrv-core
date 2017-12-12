@@ -20,6 +20,10 @@ namespace QuantumLogic.Data.EFContext
 
         #region Ctors
 
+        public QuantumLogicDbContext()
+            : base()
+        { }
+
         public QuantumLogicDbContext(IOptions<DataConfiguration> dataConfiguration)
             : base()
         {
@@ -42,10 +46,6 @@ namespace QuantumLogic.Data.EFContext
         public virtual DbSet<WidgetTheme> WidgetThemes { get; set; }
 
         #endregion
-
-        public QuantumLogicDbContext()
-            : base()
-        { }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

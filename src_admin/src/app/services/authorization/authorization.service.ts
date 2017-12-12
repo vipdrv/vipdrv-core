@@ -22,9 +22,10 @@ export class AuthorizationService implements IAuthorizationService {
     }
     get currentUserPermissions(): Array<string> {
         let grantedPermissions = new Array<string>();
-        if (Variable.isNotNullOrUndefined(this.currentUser) &&
-            Variable.isNotNullOrUndefined(this.currentUser.grantedPermissions)) {
-            grantedPermissions = this.currentUser.grantedPermissions;
+
+        if (Variable.isNotNullOrUndefined(this._currentUserInfo) &&
+            Variable.isNotNullOrUndefined(this._currentUserInfo.grantedPermissions)) {
+            grantedPermissions = this._currentUserInfo.grantedPermissions;
         }
 
         return grantedPermissions;

@@ -11,35 +11,35 @@ export class SiteEntityPolicyService
     implements ISiteEntityPolicyService {
 
     canGet(): boolean {
-        return false;
+        return true;
     }
 
     canCreate(): boolean {
-        return false;
+        return true;
     }
 
     canUpdate(): boolean {
-        return false;
+        return true;
     }
 
     canDelete(): boolean {
-        return undefined;
+        return true;
     }
 
     protected innerCanGetEntity(entity: SiteEntity): boolean {
-        return false;
+        return true;
     }
 
     protected innerCanCreateEntity(entity: SiteEntity): boolean {
-        return false;
+        return true;
     }
 
     protected innerCanUpdateEntity(entity: SiteEntity): boolean {
-        return false;
+        return true;
     }
 
     protected innerCanDeleteEntity(entity: SiteEntity): boolean {
-        return false;
+        return true;
     }
     /// injected dependencies
     /// ctor
