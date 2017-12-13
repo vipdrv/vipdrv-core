@@ -8,10 +8,10 @@ namespace QuantumLogic.Core.Utils.Email.Services
 {
     public class TestDriveEmailService : ITestDriveEmailService
     {
-        protected const string CompleteBookingSubject = "Thak you for complete booking";
+        protected const string CompleteBookingSubject = "You Upcoming Test Drive";
         protected const string NewLeadNotificationSubject = "New Lead!";
         protected const string DealerInvitationSubject = "Welcome to TetsDrive";
-        protected static EmailAddress EmailFrom = new EmailAddress("test@example.com", "Example User");
+        protected static EmailAddress EmailFrom = new EmailAddress("no-reply@vipdrv.com", "VIPdrv - VIP Test Drive");
         protected IEmailProvider EmailProvider { get; private set; }
 
         public TestDriveEmailService(IEmailProvider emailProvider)
