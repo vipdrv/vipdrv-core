@@ -26,6 +26,7 @@ export class PersonalInfoComponent implements OnInit {
         email: null,
         phoneNumber: null
     };
+    protected usaPhoneMask = Extensions.masks.usaPhoneMask;
     /// injected dependencies
     protected logger: ILogger;
     protected userApiService: IUserApiService;

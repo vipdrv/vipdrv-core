@@ -16,7 +16,7 @@ namespace QuantumLogic.Core.Constants
         public const string CanUpdateAll = "CanUpdateAll";
         public const string CanDeleteAll = "CanDeleteAll";
 
-        public const string CanAllOwn = "CanAllAll";
+        public const string CanAllOwn = "CanAllOwn";
 
         #endregion
 

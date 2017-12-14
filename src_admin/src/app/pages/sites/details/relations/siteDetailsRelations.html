@@ -141,6 +141,7 @@
                      aria-labelledby="notifications-tab">
                     <div class="site-relation-container">
                         <site-contacts [siteContacts]="entity.contacts"
+                                       [isReadOnly]="isSiteContactsReadOnly()"
                                        (onSaveSiteContacts)="patchSiteContacts($event)">
                         </site-contacts>
                     </div>

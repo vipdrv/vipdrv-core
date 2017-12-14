@@ -11,6 +11,7 @@ import { PersonalInfoComponent } from './personalInfo/personalInfo.component';
 import { PasswordUpdateComponent } from './passwordUpdate/passwordUpdate.component';
 import { AvatarUpdateComponent } from './avatarUpdate/avatarUpdate.component';
 import { routing } from './userProfile.routing';
+import { TextMaskModule } from 'angular2-text-mask';
 @NgModule({
     imports: [
         CommonModule,
@@ -21,6 +22,7 @@ import { routing } from './userProfile.routing';
         Ng2Bs3ModalModule,
         BusyModule,
         UtilsModule,
+        TextMaskModule
     ],
     exports: [
         UserProfileComponent,

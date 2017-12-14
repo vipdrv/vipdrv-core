@@ -14,7 +14,8 @@ namespace QuantumLogic.WebApi.Policy.Widget
 
         public LeadPolicy(IQLPermissionChecker permissionChecker, IQLSession session)
             : base(permissionChecker, session)
-        { }
+        {
+        }
 
         #endregion
 
@@ -30,12 +31,12 @@ namespace QuantumLogic.WebApi.Policy.Widget
 
             if (!result && resultOwn)
             {
-                query = query.Where(r => r.Site.Id == Session.UserId.Value);
+                query = query.Where(r => r.Site.UserId == Session.UserId.Value);
             }
 
             if (!result && !resultOwn)
             {
-                query = query.DefaultIfEmpty();
+                query = query.Where(r => false);
             }
 
             return query;
@@ -43,7 +44,7 @@ namespace QuantumLogic.WebApi.Policy.Widget
 
         protected override bool CanRetrieve(Lead entity, bool throwEntityPolicyException)
         {
-            bool result = InnerRetrieveAllFilter(new List<Lead>() { entity }.AsQueryable()).Any();
+            bool result = InnerRetrieveAllFilter(new List<Lead>() {entity}.AsQueryable()).Any();
             if (!result && throwEntityPolicyException)
             {
                 throw new EntityPolicyException();
