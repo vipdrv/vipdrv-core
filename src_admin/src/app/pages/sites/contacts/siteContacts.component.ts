@@ -42,6 +42,7 @@ export class SiteContactsComponent implements OnInit, OnChanges {
     protected newEmailEntity: ContactEntity;
     protected smsEntities: Array<ContactEntity>;
     protected newSMSEntity: ContactEntity;
+    protected usaPhoneMask = Extensions.masks.usaPhoneMask;
     /// injected dependencies
     protected logger: ILogger;
     protected promiseService: PromiseService;

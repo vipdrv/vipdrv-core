@@ -5,7 +5,7 @@ import { AuthorizationService } from './../../../../index';
 import { IExpertEntityPolicyService } from './i-expertEntity.policy-service';
 import { AbstractEntityPolicyService } from '../../../abstractEntity.policy-service';
 import { permissionNames } from '../../../../../constants/index';
-import { Variable } from '../../../../../utils/variable';
+import { Variable } from '../../../../../utils/index';
 
 @Injectable()
 export class ExpertEntityPolicyService

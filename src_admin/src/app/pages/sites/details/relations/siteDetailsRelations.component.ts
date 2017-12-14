@@ -167,4 +167,8 @@ export class SiteDetailsRelationsComponent implements OnInit, OnDestroy {
                     self.promiseService.applicationPromises.sites.patch.contactsPromise = null;
                 });
     }
+
+    protected isSiteContactsReadOnly(): boolean {
+        return Variable.isNotNullOrUndefined(this.promiseService.applicationPromises.sites.patch.contactsPromise);
+    }
 }
