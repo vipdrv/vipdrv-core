@@ -176,7 +176,7 @@
       "beverageName": "Name",
       "beverageNameHelp": "Enter the name of the beverage.",
       "beverageDescription": "Description",
-      "beverageDescriptionHelp": "Type few words about the expert.",
+      "beverageDescriptionHelp": "Type few words about the beverage.",
       "beverageActivity": "Is active",
       "beverageOrder": "Order"
     }

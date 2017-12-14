@@ -1,7 +1,6 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 import { Subscription } from 'rxjs/Rx';
-
 import { BaMenuService } from '../../services';
 import { GlobalState } from '../../../global.state';
 
@@ -11,10 +10,8 @@ import { GlobalState } from '../../../global.state';
   styleUrls: ['./baMenu.scss']
 })
 export class BaMenu {
-
   @Input() sidebarCollapsed: boolean = false;
   @Input() menuHeight: number;
-
   @Output() expandMenu = new EventEmitter<any>();
 
   public menuItems: any[];
@@ -42,7 +39,6 @@ export class BaMenu {
 
   public ngOnInit(): void {
     this._onRouteChange = this._router.events.subscribe((event) => {
-
       if (event instanceof NavigationEnd) {
         if (this.menuItems) {
           this.selectMenuAndNotify();

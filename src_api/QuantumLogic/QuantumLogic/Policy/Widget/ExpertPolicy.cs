@@ -36,8 +36,9 @@ namespace QuantumLogic.WebApi.Policy.Widget
         protected override bool CanCreate(Expert entity, bool throwEntityPolicyException)
         {
             bool result = PermissionChecker.IsGranted(QuantumLogicPermissionNames.CanAllAll) ||
-                PermissionChecker.IsGranted(QuantumLogicPermissionNames.CanAllExpert) ||
-                PermissionChecker.IsGranted(QuantumLogicPermissionNames.CanCreateExpert);
+                          PermissionChecker.IsGranted(QuantumLogicPermissionNames.CanAllExpert) ||
+                          PermissionChecker.IsGranted(QuantumLogicPermissionNames.CanCreateExpert) ||
+                          PermissionChecker.IsGranted(QuantumLogicPermissionNames.CanAllOwn);
 
             if (!result && throwEntityPolicyException)
             {
@@ -50,11 +51,13 @@ namespace QuantumLogic.WebApi.Policy.Widget
         protected override bool CanUpdate(Expert entity, bool throwEntityPolicyException)
         {
             bool result = PermissionChecker.IsGranted(QuantumLogicPermissionNames.CanAllAll) ||
-                PermissionChecker.IsGranted(QuantumLogicPermissionNames.CanAllExpert) ||
-                PermissionChecker.IsGranted(QuantumLogicPermissionNames.CanUpdateExpert) ||
-                Session.UserId.HasValue &&
-                PermissionChecker.IsGranted(QuantumLogicPermissionNames.CanUpdateOwnExpert) &&
-                Session.UserId.Value == entity.Site.UserId;
+                          PermissionChecker.IsGranted(QuantumLogicPermissionNames.CanAllExpert) ||
+                          PermissionChecker.IsGranted(QuantumLogicPermissionNames.CanUpdateExpert) ||
+                          Session.UserId.HasValue &&
+                          Session.UserId.Value == entity.Site.UserId &&
+                          (PermissionChecker.IsGranted(QuantumLogicPermissionNames.CanAllOwn) ||
+                           PermissionChecker.IsGranted(QuantumLogicPermissionNames.CanUpdateOwnExpert));
+                
 
             if (!result && throwEntityPolicyException)
             {
@@ -67,11 +70,12 @@ namespace QuantumLogic.WebApi.Policy.Widget
         protected override bool CanDelete(Expert entity, bool throwEntityPolicyException)
         {
             bool result = PermissionChecker.IsGranted(QuantumLogicPermissionNames.CanAllAll) ||
-                PermissionChecker.IsGranted(QuantumLogicPermissionNames.CanAllExpert) ||
-                PermissionChecker.IsGranted(QuantumLogicPermissionNames.CanDeleteExpert) ||
-                Session.UserId.HasValue &&
-                PermissionChecker.IsGranted(QuantumLogicPermissionNames.CanDeleteOwnExpert) && 
-                Session.UserId.Value == entity.Site.UserId;
+                          PermissionChecker.IsGranted(QuantumLogicPermissionNames.CanAllExpert) ||
+                          PermissionChecker.IsGranted(QuantumLogicPermissionNames.CanDeleteExpert) ||
+                          Session.UserId.HasValue &&
+                          Session.UserId.Value == entity.Site.UserId &&
+                          (PermissionChecker.IsGranted(QuantumLogicPermissionNames.CanAllOwn) ||
+                           PermissionChecker.IsGranted(QuantumLogicPermissionNames.CanDeleteOwnExpert));
 
             if (!result && throwEntityPolicyException)
             {

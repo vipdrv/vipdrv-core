@@ -25,19 +25,22 @@ export class ExpertEntityPolicyService
     canCreate(): boolean {
         return this.isGrantedPermission(permissionNames.canAllAll) ||
             this.isGrantedPermission(permissionNames.canAllExpert) ||
-            this.isGrantedPermission(permissionNames.canCreateExpert);
+            this.isGrantedPermission(permissionNames.canCreateExpert) ||
+            this.isGrantedPermission(permissionNames.canAllOwn);
     }
 
     canUpdate(): boolean {
         return this.isGrantedPermission(permissionNames.canAllAll) ||
             this.isGrantedPermission(permissionNames.canAllExpert) ||
-            this.isGrantedPermission(permissionNames.canUpdateExpert);
+            this.isGrantedPermission(permissionNames.canUpdateExpert) ||
+            this.isGrantedPermission(permissionNames.canAllOwn);
     }
 
     canDelete(): boolean {
         return this.isGrantedPermission(permissionNames.canAllAll) ||
             this.isGrantedPermission(permissionNames.canAllExpert) ||
-            this.isGrantedPermission(permissionNames.canDeleteExpert);
+            this.isGrantedPermission(permissionNames.canDeleteExpert) ||
+            this.isGrantedPermission(permissionNames.canAllOwn);
     }
 
     protected innerCanGetEntity(entity: ExpertEntity): boolean {
@@ -53,7 +56,6 @@ export class ExpertEntityPolicyService
 
         return this.canUpdate() ||
             Variable.isNotNullOrUndefined(this.authService.currentUserId) &&
-            this.isGrantedPermission(permissionNames.canUpdateOwnExpert) &&
             isExpertFromOwnSite;
     }
 
@@ -62,7 +64,6 @@ export class ExpertEntityPolicyService
 
         return this.canDelete() ||
             Variable.isNotNullOrUndefined(this.authService.currentUserId) &&
-            this.isGrantedPermission(permissionNames.canDeleteOwnExpert) &&
             isExpertFromOwnSite;
     }
 

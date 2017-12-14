@@ -23,7 +23,10 @@ namespace QuantumLogic.WebApi.Policy.Widget
             bool result = PermissionChecker.IsGranted(QuantumLogicPermissionNames.CanAllAll) ||
                           PermissionChecker.IsGranted(QuantumLogicPermissionNames.CanAllLead) ||
                           PermissionChecker.IsGranted(QuantumLogicPermissionNames.CanRetrieveLead);
-            bool resultOwn = PermissionChecker.IsGranted(QuantumLogicPermissionNames.CanRetrieveOwnLead);
+
+            bool resultOwn = Session.UserId.HasValue &&
+                             (PermissionChecker.IsGranted(QuantumLogicPermissionNames.CanAllOwn) ||
+                              PermissionChecker.IsGranted(QuantumLogicPermissionNames.CanRetrieveOwnLead));
 
             if (!result && resultOwn)
             {
@@ -59,8 +62,9 @@ namespace QuantumLogic.WebApi.Policy.Widget
                           PermissionChecker.IsGranted(QuantumLogicPermissionNames.CanAllLead) ||
                           PermissionChecker.IsGranted(QuantumLogicPermissionNames.CanUpdateLead) ||
                           Session.UserId.HasValue &&
-                          PermissionChecker.IsGranted(QuantumLogicPermissionNames.CanUpdateOwnLead) &&
-                          Session.UserId.Value == entity.Site.UserId;
+                          Session.UserId.Value == entity.Site.UserId &&
+                          (PermissionChecker.IsGranted(QuantumLogicPermissionNames.CanAllOwn) ||
+                           PermissionChecker.IsGranted(QuantumLogicPermissionNames.CanUpdateOwnLead));
 
             if (!result && throwEntityPolicyException)
             {
@@ -76,8 +80,9 @@ namespace QuantumLogic.WebApi.Policy.Widget
                           PermissionChecker.IsGranted(QuantumLogicPermissionNames.CanAllLead) ||
                           PermissionChecker.IsGranted(QuantumLogicPermissionNames.CanDeleteLead) ||
                           Session.UserId.HasValue &&
-                          PermissionChecker.IsGranted(QuantumLogicPermissionNames.CanDeleteOwnLead) &&
-                          Session.UserId.Value == entity.Site.UserId;
+                          Session.UserId.Value == entity.Site.UserId &&
+                          (PermissionChecker.IsGranted(QuantumLogicPermissionNames.CanAllOwn) ||
+                           PermissionChecker.IsGranted(QuantumLogicPermissionNames.CanDeleteOwnLead));
 
             if (!result && throwEntityPolicyException)
             {

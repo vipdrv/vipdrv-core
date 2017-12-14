@@ -37,6 +37,7 @@ namespace QuantumLogic.WebApi.Policy.Widget
         {
             bool result = PermissionChecker.IsGranted(QuantumLogicPermissionNames.CanAllAll) ||
                           PermissionChecker.IsGranted(QuantumLogicPermissionNames.CanAllRoute) ||
+                          PermissionChecker.IsGranted(QuantumLogicPermissionNames.CanAllOwn) ||
                           PermissionChecker.IsGranted(QuantumLogicPermissionNames.CanCreateRoute);
 
             if (!result && throwEntityPolicyException)
@@ -53,8 +54,9 @@ namespace QuantumLogic.WebApi.Policy.Widget
                           PermissionChecker.IsGranted(QuantumLogicPermissionNames.CanAllRoute) ||
                           PermissionChecker.IsGranted(QuantumLogicPermissionNames.CanUpdateRoute) ||
                           Session.UserId.HasValue &&
-                          PermissionChecker.IsGranted(QuantumLogicPermissionNames.CanUpdateOwnRoute) &&
-                          Session.UserId.Value == entity.Site.UserId;
+                          Session.UserId.Value == entity.Site.UserId &&
+                          (PermissionChecker.IsGranted(QuantumLogicPermissionNames.CanAllOwn) ||
+                           PermissionChecker.IsGranted(QuantumLogicPermissionNames.CanUpdateOwnRoute));
 
             if (!result && throwEntityPolicyException)
             {
@@ -70,8 +72,9 @@ namespace QuantumLogic.WebApi.Policy.Widget
                           PermissionChecker.IsGranted(QuantumLogicPermissionNames.CanAllRoute) ||
                           PermissionChecker.IsGranted(QuantumLogicPermissionNames.CanDeleteRoute) ||
                           Session.UserId.HasValue &&
-                          PermissionChecker.IsGranted(QuantumLogicPermissionNames.CanDeleteOwnRoute) &&
-                          Session.UserId.Value == entity.Site.UserId;
+                          Session.UserId.Value == entity.Site.UserId &&
+                          (PermissionChecker.IsGranted(QuantumLogicPermissionNames.CanAllOwn) ||
+                           PermissionChecker.IsGranted(QuantumLogicPermissionNames.CanDeleteOwnRoute));
 
             if (!result && throwEntityPolicyException)
             {

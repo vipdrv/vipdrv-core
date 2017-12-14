@@ -11,29 +11,30 @@ namespace QuantumLogic.Core.Constants
         #region Global QuantumLogic permission names
 
         public const string CanAllAll = "CanAllAll";
-        public const string CanRetrieve = "CanRetrieveAll";
-        public const string CanCreate = "CanCreateAll";
-        public const string CanUpdate = "CanUpdateAll";
-        public const string CanDelete = "CanDeleteAll";
+        public const string CanRetrieveAll = "CanRetrieveAll";
+        public const string CanCreateAll = "CanCreateAll";
+        public const string CanUpdateAll = "CanUpdateAll";
+        public const string CanDeleteAll = "CanDeleteAll";
 
-        #endregion
-
-        #region QuantumLogic menu visibility permissions
-
-        public const string CanViewMenuHome = "CanViewMenuHome";
-        public const string CanViewMenuSites = "CanViewMenuSites";
-        public const string CanViewMenuLeads = "CanViewMenuLeads";
-        public const string CanViewMenuSettings = "CanViewMenuSettings";
+        public const string CanAllOwn = "CanAllAll";
 
         #endregion
 
         #region MainModule QuantumLogic permission names
 
-        public const string CanAllRole = "CanAllRole";
-        public const string CanRetrieveRole = "CanRetrieveRole";
-        public const string CanCreateRole = "CanCreateRole";
-        public const string CanUpdateRole = "CanUpdateRole";
-        public const string CanDeleteRole = "CanDeleteRole";
+        public const string CanAllUser = "CanAllUser";
+        public const string CanRetrieveUser = "CanRetrieveUser";
+        public const string CanCreateUser = "CanCreateUser";
+        public const string CanUpdateUser = "CanUpdateUser";
+        public const string CanDeleteUser = "CanDeleteUser";
+        public const string CanRetrieveOwnUser = "CanRetrieveOwnUser";
+        public const string CanUpdateOwnUser = "CanUpdateOwnUser";
+
+        public const string CanAllInvitation = "CanAllInvitation";
+        public const string CanRetrieveInvitation = "CanRetrieveInvitation";
+        public const string CanCreateInvitation = "CanCreateInvitation";
+        public const string CanUpdateInvitation = "CanUpdateInvitation";
+        public const string CanDeleteInvitation = "CanDeleteInvitation";
 
         #endregion
 
@@ -80,6 +81,14 @@ namespace QuantumLogic.Core.Constants
         public const string CanUpdateOwnLead = "CanUpdateOwnLead";
         public const string CanDeleteOwnLead = "CanDeleteOwnLead";
 
+        #endregion
+
+        #region QuantumLogic menu visibility permissions
+
+        public const string CanViewMenuHome = "CanViewMenuHome";
+        public const string CanViewMenuSites = "CanViewMenuSites";
+        public const string CanViewMenuLeads = "CanViewMenuLeads";
+        public const string CanViewMenuSettings = "CanViewMenuSettings";
 
         #endregion
 

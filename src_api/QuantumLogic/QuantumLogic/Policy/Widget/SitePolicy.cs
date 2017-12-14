@@ -33,6 +33,7 @@ namespace QuantumLogic.WebApi.Policy.Widget
         {
             var result = PermissionChecker.IsGranted(QuantumLogicPermissionNames.CanAllAll) ||
                          PermissionChecker.IsGranted(QuantumLogicPermissionNames.CanAllSite) ||
+                         PermissionChecker.IsGranted(QuantumLogicPermissionNames.CanAllOwn) ||
                          PermissionChecker.IsGranted(QuantumLogicPermissionNames.CanCreateSite);
 
             if (!result && throwEntityPolicyException)
@@ -49,8 +50,9 @@ namespace QuantumLogic.WebApi.Policy.Widget
                           PermissionChecker.IsGranted(QuantumLogicPermissionNames.CanAllSite) ||
                           PermissionChecker.IsGranted(QuantumLogicPermissionNames.CanUpdateSite) ||
                           Session.UserId.HasValue &&
-                          PermissionChecker.IsGranted(QuantumLogicPermissionNames.CanUpdateOwnSite) &&
-                          Session.UserId.Value == entity.Id;
+                          Session.UserId.Value == entity.Id &&
+                          (PermissionChecker.IsGranted(QuantumLogicPermissionNames.CanAllOwn) ||
+                           PermissionChecker.IsGranted(QuantumLogicPermissionNames.CanUpdateOwnSite));
 
             if (!result && throwEntityPolicyException)
             {
@@ -66,8 +68,9 @@ namespace QuantumLogic.WebApi.Policy.Widget
                           PermissionChecker.IsGranted(QuantumLogicPermissionNames.CanAllSite) ||
                           PermissionChecker.IsGranted(QuantumLogicPermissionNames.CanDeleteSite) ||
                           Session.UserId.HasValue &&
-                          PermissionChecker.IsGranted(QuantumLogicPermissionNames.CanDeleteOwnSite) &&
-                          Session.UserId.Value == entity.Id;
+                          Session.UserId.Value == entity.Id &&
+                          (PermissionChecker.IsGranted(QuantumLogicPermissionNames.CanAllOwn) ||
+                           PermissionChecker.IsGranted(QuantumLogicPermissionNames.CanDeleteOwnSite));
 
             if (!result && throwEntityPolicyException)
             {

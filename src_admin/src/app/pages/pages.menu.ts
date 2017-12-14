@@ -21,7 +21,7 @@ export const PAGES_MENU = [{
                     icon: 'ion-ios-list-outline',
                     selected: false,
                     expanded: false,
-                    order: 3
+                    order: 1
                 }
             }
         },
@@ -45,7 +45,7 @@ export const PAGES_MENU = [{
                     icon: 'ion-settings',
                     selected: false,
                     expanded: false,
-                    order: 4
+                    order: 3
                 }
             },
             children: [
