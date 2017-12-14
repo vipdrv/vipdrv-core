@@ -262,7 +262,7 @@
                       <td>
                         <p>Hi {{customerFirstName}} {{customerLastName}}. <br>We've confirmed your test drive booking. Details below.</p>
 						<p style="text-align: center;">
-							<img src="https://www.testdrive.pw/bmw.jpg" style="border-radius: 5px;">
+							<img src="{{vehicleImgUrl}}" style="border-radius: 5px;">
 						</p>
 						<p><b>Vehicle:</b> {{vehicleTitle}}</p>
 						<p><b>Date & Time:</b> {{bookingDateTime}}</p>
@@ -271,24 +271,26 @@
 						<p><b>Road:</b> {{roadName}}</p>
 						<p>The Dealership is looking forward to your visit on {{bookingDateTime}}</p>
 						<hr>
-						<b>Nissan of Bowie</b><br>
-						Bowie Street, San Antonio, TX, United States<br>     
+						<b>{{dealerName}}</b><br>
+						{{dealerAddress}}<br>
+						{{dealerPhone}}<br>
+						<!-- 8:30am-7pm<br> -->
+						<a href="{{dealerSiteUrl}}" target="_blank">{{dealerSiteUrl}}</a>
 						
-						<br>
-						<br>
-						<br>
-						1864 High Grove Lane #100
-						Naperville, IL 60540
+						<!--<b>Nissan of Bowie</b><br>
+						4 Bowie Street, San Antonio, TX, United States<br>
+						202-555-0128<br>
+						8:30am-7pm<br> 
+						<a href="https://www.dealerinspire.com">www.dealerinspire.com</a>-->
 						
 						<!-- dealerName -->
+						<!-- dealerPhone -->
 						<!-- postalCode -->
 						<!-- dealerStreet -->
 						<!-- dealerCity   -->
 						<!-- dealerState  -->
 						<!-- dealerCounry -->
-						
-						8:30am-7pm<br> <!-- dealerPhone -->
-						<a href="https://www.dealerinspire.com">www.dealerinspire.com</a> <!-- dealerUrl -->
+						<!-- dealerSite -->
                       </td>
                     </tr>
                   </table>

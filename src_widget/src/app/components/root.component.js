@@ -1,7 +1,7 @@
 (function () {
     angular.module('myApp')
         .component('tdRoot', {
-            controller: function ($scope, globalState, userData, widgetTabs) {
+            controller: function ($scope, globalState, userData, widgetTabs, api) {
                 $scope.userData = userData;
                 $scope.globalState = globalState;
 
@@ -33,6 +33,15 @@
                 // =======================================================================//
                 // Widget Initialization                                                  //
                 // =======================================================================//
+
+                self.$onInit = function () {
+                    self.site = null;
+
+                    api.retrieveSite().then(function (data) {
+                        self.site = data;
+                    });
+                };
+
 
             },
             templateUrl: 'src/app/components/root.tpl.html'

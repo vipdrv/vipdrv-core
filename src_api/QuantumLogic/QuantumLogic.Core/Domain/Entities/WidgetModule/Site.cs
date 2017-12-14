@@ -11,8 +11,11 @@ namespace QuantumLogic.Core.Domain.Entities.WidgetModule
         public string BeautyId { get; set; }
         public string Name { get; set; }
         public string Url { get; set; }
-        public string Contacts { get; set; }
+        public string NotificationContacts { get; set; }
         public string ImageUrl { get; set; }
+        public string DealerName { get; set; }
+        public string DealerAddress { get; set; }
+        public string DealerPhone { get; set; }
 
         #endregion
 
@@ -38,7 +41,13 @@ namespace QuantumLogic.Core.Domain.Entities.WidgetModule
             Leads = new HashSet<Lead>();
         }
 
-        public Site(int id, int userId, string beautyId, string name, string url, string contacts)
+        public Site(int id, 
+            int userId,
+            string beautyId, 
+            string name, 
+            string url,
+            string notificationContacts
+            )
             : this()
         {
             Id = id;
@@ -46,7 +55,7 @@ namespace QuantumLogic.Core.Domain.Entities.WidgetModule
             BeautyId = beautyId;
             Name = name;
             Url = url;
-            Contacts = contacts;
+            NotificationContacts = notificationContacts;
         }
 
         #endregion
@@ -76,8 +85,11 @@ namespace QuantumLogic.Core.Domain.Entities.WidgetModule
             BeautyId = actualEntity.BeautyId;
             Name = actualEntity.Name;
             Url = actualEntity.Url;
-            Contacts = actualEntity.Contacts;
+            NotificationContacts = actualEntity.NotificationContacts;
             ImageUrl = actualEntity.ImageUrl;
+            DealerName = actualEntity.DealerName;
+            DealerAddress = actualEntity.DealerAddress;
+            DealerPhone = actualEntity.DealerPhone;
         }
 
         #endregion

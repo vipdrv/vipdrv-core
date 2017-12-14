@@ -291,7 +291,7 @@ namespace QuantumLogic.Data.Migrations
 
                     b.Property<string>("BeautyId");
 
-                    b.Property<string>("Contacts");
+                    b.Property<string>("NotificationContacts");
 
                     b.Property<string>("ImageUrl");
 

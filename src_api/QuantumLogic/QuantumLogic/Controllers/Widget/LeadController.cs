@@ -179,9 +179,13 @@ namespace QuantumLogic.WebApi.Controllers.Widget
                     request.BookingCar.Title,
                     expert.Name,
                     beverage.Name,
-                    road.Name));
+                    road.Name,
+                    site.Name, // TODO: site.dealerName
+                    "", // TODO: site.dealerAddress
+                    "", // TODO: site.dealerPhone
+                    site.Url));
 
-            var emails = site.Contacts.Split(';')[0].Split(',');
+            var emails = site.NotificationContacts.Split(';')[0].Split(',');
             var newLeadNotificationEmailTemplate = new NewLeadNotificationEmailTemplate(
                 request.BookingCar.Title,
                 request.BookingCar.ImageUrl,
