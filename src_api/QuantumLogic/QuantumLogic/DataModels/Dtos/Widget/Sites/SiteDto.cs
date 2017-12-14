@@ -13,6 +13,9 @@ namespace QuantumLogic.WebApi.DataModels.Dtos.Widget.Sites
         public string ImageUrl { get; set; }
         public int LeadsAmount { get; set; }
         public int NewLeadsAmount { get; set; }
+        public string DealerName { get; set; }
+        public string DealerAddress { get; set; }
+        public string DealerPhone { get; set; }
 
         #region Mapping
 
@@ -23,10 +26,13 @@ namespace QuantumLogic.WebApi.DataModels.Dtos.Widget.Sites
             BeautyId = entity.BeautyId;
             Name = entity.Name;
             Url = entity.Url;
-            Contacts = entity.Contacts;
+            Contacts = entity.NotificationContacts;
             ImageUrl = entity.ImageUrl;
             LeadsAmount = entity.Leads.Count;
             NewLeadsAmount = entity.Leads.Count(r => r.IsNew);
+            DealerName = entity.DealerName;
+            DealerAddress = entity.DealerAddress;
+            DealerPhone = entity.DealerPhone;
         }
         public override Site MapToEntity()
         {
@@ -35,8 +41,11 @@ namespace QuantumLogic.WebApi.DataModels.Dtos.Widget.Sites
             entity.BeautyId = BeautyId;
             entity.Name = Name;
             entity.Url = Url;
-            entity.Contacts = Contacts;
+            entity.NotificationContacts = Contacts;
             entity.ImageUrl = ImageUrl;
+            entity.DealerName = DealerName;
+            entity.DealerAddress = DealerAddress;
+            entity.DealerPhone = DealerPhone;
             return entity;
         }
 

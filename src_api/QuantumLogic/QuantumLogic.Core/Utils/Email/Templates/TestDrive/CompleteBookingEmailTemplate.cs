@@ -17,6 +17,10 @@ namespace QuantumLogic.Core.Utils.Email.Templates.TestDrive
         private readonly string _expertName;
         private readonly string _beverageName;
         private readonly string _roadName;
+        private readonly string _dealerName;
+        private readonly string _dealerAddress;
+        private readonly string _dealerPhone;
+        private readonly string _dealerSiteUrl;
 
         public CompleteBookingEmailTemplate(
             string customerFirstName,
@@ -26,7 +30,12 @@ namespace QuantumLogic.Core.Utils.Email.Templates.TestDrive
             string vehicleTitle,
             string expertName,
             string beverageName,
-            string roadName)
+            string roadName,
+            string dealerName,
+            string dealerAddress, 
+            string dealerPhone,
+            string dealerSiteUrl
+            )
         {
             _vehicleTitle = vehicleTitle;
             _vehicleImgUrl = vehicleImgUrl;
@@ -36,23 +45,39 @@ namespace QuantumLogic.Core.Utils.Email.Templates.TestDrive
             _expertName = expertName;
             _beverageName = beverageName;
             _roadName = roadName;
+            _dealerName = dealerName;
+            _dealerAddress = dealerAddress;
+            _dealerPhone = dealerPhone;
+            _dealerSiteUrl = dealerSiteUrl;
         }
 
         public string AsHtml()
         {
-            // TODO: use method as async
             var html = new HttpClient().GetStringAsync(TemplateUrl).Result;
 
+            #region Vehicle
             html = html.Replace("{{vehicleTitle}}", _vehicleTitle);
             html = html.Replace("{{vehicleImgUrl}}", _vehicleImgUrl);
+            #endregion
 
+            #region Customer
             html = html.Replace("{{customerFirstName}}", _customerFirstName);
             html = html.Replace("{{customerLastName}}", _customerLastName);
+            #endregion
 
+            #region Booking
             html = html.Replace("{{bookingDateTime}}", _bookingDateTime);
             html = html.Replace("{{expertName}}", _expertName);
             html = html.Replace("{{beverageName}}", _beverageName);
             html = html.Replace("{{roadName}}", _roadName);
+            #endregion
+
+            #region Dealer info
+            html = html.Replace("{{dealerName}}", _dealerName);
+            html = html.Replace("{{dealerAddress}}", _dealerAddress);
+            html = html.Replace("{{dealerPhone}}", _dealerPhone);
+            html = html.Replace("{{dealerSiteUrl}}", _dealerSiteUrl);
+            #endregion
 
             return html;
         }

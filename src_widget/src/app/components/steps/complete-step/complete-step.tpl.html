@@ -163,12 +163,29 @@
 
         <button title="Add to Calendar" class="addeventatc">
             Add to Calendar
-            <span class="start">{{$ctrl.startDate}}</span>
-            <span class="end">{{$ctrl.endDate}}</span>
+            <span class="start">{{$ctrl.userData.calendar.date}} {{$ctrl.userData.calendar.time}}</span>
+            <!--<span class="end">{{$ctrl.endDate}}</span>-->
             <span class="timezone">America/Los_Angeles</span>
-            <span class="title">{{$ctrl.eventTitle}}</span>
-            <span class="description">{{$ctrl.eventDescription}}</span>
-            <span class="location">Palm Springs, CA, USA</span>
+            <span class="title">VIPdrv - VIP Test Drive</span>
+            <span class="description">
+                <p>Hi {{$ctrl.userData.user.firstName}} {{$ctrl.userData.user.lastName}}. <br>We've confirmed your test drive booking. Details below.</p>
+                <p style="text-align: center;">
+                    <img src="{{$ctrl.userData.car.imageUrl}}" style="border-radius: 5px;">
+                </p>
+                <p><b>Vehicle:</b> {{$ctrl.userData.car.title}}</p>
+                <p><b>Date & Time:</b> {{$ctrl.userData.calendar.date}} {{$ctrl.userData.calendar.time}}</p>
+                <p><b>Expert:</b> {{$ctrl.userData.expert.name}}</p>
+                <p><b>Beverage:</b> {{$ctrl.userData.beverage.name}}</p>
+                <p><b>Road:</b> {{$ctrl.userData.road.name}}</p>
+                <p>The Dealership is looking forward to your visit on {{bookingDateTime}}</p>
+                <hr>
+                <b>{{$ctrl.siteData.name}}</b><br>
+                {{$ctrl.siteData.address}}<br>
+                {{$ctrl.siteData.phone}}<br>
+                <!-- 8:30am-7pm<br> -->
+                <a href="{{$ctrl.siteData.url}}" target="_blank">{{$ctrl.siteData.url}}</a>
+            </span>
+            <span class="location">{{$ctrl.siteData.address ? $ctrl.siteData.address : 'Dealer Address'}}</span>
         </button>
     </p>
 </div>

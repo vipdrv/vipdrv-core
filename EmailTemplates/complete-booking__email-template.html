@@ -262,7 +262,7 @@
                       <td>
                         <p>Hi {{customerFirstName}} {{customerLastName}}. <br>We've confirmed your test drive booking. Details below.</p>
 						<p style="text-align: center;">
-							<img src="https://www.testdrive.pw/bmw.jpg" style="border-radius: 5px;">
+							<img src="{{vehicleImgUrl}}" style="border-radius: 5px;">
 						</p>
 						<p><b>Vehicle:</b> {{vehicleTitle}}</p>
 						<p><b>Date & Time:</b> {{bookingDateTime}}</p>
@@ -275,7 +275,7 @@
 						{{dealerAddress}}<br>
 						{{dealerPhone}}<br>
 						<!-- 8:30am-7pm<br> -->
-						<a href="https://www.dealerinspire.com">www.dealerinspire.com</a>
+						<a href="{{dealerSiteUrl}}" target="_blank">{{dealerSiteUrl}}</a>
 						
 						<!--<b>Nissan of Bowie</b><br>
 						4 Bowie Street, San Antonio, TX, United States<br>
