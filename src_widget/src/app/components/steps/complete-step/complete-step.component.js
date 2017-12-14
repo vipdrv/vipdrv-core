@@ -61,7 +61,8 @@
             templateUrl: 'src/app/components/steps/complete-step/complete-step.tpl.html',
             bindings: {
                 car: '<',
-                userData: '<'
+                userData: '<',
+                siteData: '<'
             }
         });
 })();

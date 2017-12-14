@@ -13,6 +13,7 @@ namespace QuantumLogic.Core.Domain.Entities.WidgetModule
         public string Url { get; set; }
         public string Contacts { get; set; }
         public string ImageUrl { get; set; }
+        public string DealerName { get; set; }
 
         #endregion
 

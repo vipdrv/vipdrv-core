@@ -87,6 +87,23 @@
                 return promise;
             };
 
+            this.retrieveSite = function () {
+                var req = {
+                    method: 'GET',
+                    url: apiBaseUrl + '/site/' + siteId,
+                    headers: {
+                        'content-type': 'application/json'
+                    }
+                };
+
+                var promise = $http(req).then(function (responce) {
+                    return responce.data;
+                }, function () {
+                });
+
+                return promise;
+            };
+
             this.completeBooking = function (userData) {
                 var data = JSON.stringify(mapToBookingRequestDto(userData));
 
