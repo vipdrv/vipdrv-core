@@ -5,6 +5,8 @@ export interface IAuthorizationService extends CanActivate {
     postAuthRedirectUrl: string;
     // returns current user id or null
     currentUserId: number;
+    // returns currecnt user permissions
+    currentUserPermissions: Array<string>;
     // returns current user or null
     currentUser: UserEntity;
     // returns auth token (with prefix) that can be just used in Authorization header or null (if not token)

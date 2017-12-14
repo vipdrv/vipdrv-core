@@ -2,6 +2,7 @@ import { ILogger } from './../../utils/index';
 import { IAuthorizationService } from './../index';
 import { IEntityPolicyService } from './i-entity.policy-service';
 import { AbstractEntityPolicyService } from './abstractEntity.policy-service';
+
 export abstract class AlwaysLoyalEntityPolicyService<TEntity>
     extends AbstractEntityPolicyService<TEntity>
     implements IEntityPolicyService<TEntity> {

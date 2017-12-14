@@ -102,9 +102,19 @@ namespace QuantumLogic.WebApi.Controllers.Authorization
         {
             return ParseIdentityInfoFromIdentityClaimsAsync(HttpContext.User.Claims.ToDictionary((item) => item.Type, (item) => item.Value));
         }
-
+        /// <summary>
+        /// Is used to parse indentity info from user claims
+        /// </summary>
+        /// <param name="identityClaims">Identity Claims</param>
+        /// <returns>Identity Info</returns>
+        /// <exception cref="System.ArgumentException">Thrown when identity claims are null or empty</exception>
         public static Task<IdentityInfo> ParseIdentityInfoFromIdentityClaimsAsync(IDictionary<string, string> identityClaims)
         {
+            if (identityClaims == null || identityClaims.Count == 0)
+            {
+                throw new ArgumentException(nameof(identityClaims));
+            }
+
             string grantedRolesValue;
             if (!identityClaims.TryGetValue(GrantedRolesClaimKey, out grantedRolesValue))
             {

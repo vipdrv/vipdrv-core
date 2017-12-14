@@ -20,6 +20,16 @@ export class AuthorizationService implements IAuthorizationService {
     get currentUserId(): number {
         return Variable.isNotNullOrUndefined(this._currentUserId) ? this._currentUserId : null;
     }
+    get currentUserPermissions(): Array<string> {
+        let grantedPermissions = new Array<string>();
+
+        if (Variable.isNotNullOrUndefined(this._currentUserInfo) &&
+            Variable.isNotNullOrUndefined(this._currentUserInfo.grantedPermissions)) {
+            grantedPermissions = this._currentUserInfo.grantedPermissions;
+        }
+
+        return grantedPermissions;
+    }
     get currentUser(): UserEntity {
         return Variable.isNotNullOrUndefined(this._currentUser) ? this._currentUser : null;
     }

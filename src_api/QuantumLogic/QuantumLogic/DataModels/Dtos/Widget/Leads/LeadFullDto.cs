@@ -9,11 +9,23 @@ namespace QuantumLogic.WebApi.DataModels.Dtos.Widget.Leads
 
         #region Ctors
 
-        public LeadFullDto() 
+        public LeadFullDto()
             : base()
         { }
 
-        public LeadFullDto(int id, int siteId, int? expertId, int? beverageId, int? routeId, string firstName, string secondName, string userPhone, string userEmail, string carImageUrl, string carTitle, string carVin, DateTime bookingDateTimeUtc)
+        public LeadFullDto(int id,
+            int siteId,
+            int? expertId,
+            int? beverageId,
+            int? routeId,
+            string firstName,
+            string secondName,
+            string userPhone,
+            string userEmail,
+            string carImageUrl,
+            string carTitle,
+            string carVin,
+            string bookingDateTimeUtc)
             : base(
                   id,
                   siteId,
