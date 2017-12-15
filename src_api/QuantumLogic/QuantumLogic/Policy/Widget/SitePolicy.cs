@@ -50,7 +50,7 @@ namespace QuantumLogic.WebApi.Policy.Widget
                           PermissionChecker.IsGranted(QuantumLogicPermissionNames.CanAllSite) ||
                           PermissionChecker.IsGranted(QuantumLogicPermissionNames.CanUpdateSite) ||
                           Session.UserId.HasValue &&
-                          Session.UserId.Value == entity.Id &&
+                          Session.UserId.Value == entity.UserId &&
                           (PermissionChecker.IsGranted(QuantumLogicPermissionNames.CanAllOwn) ||
                            PermissionChecker.IsGranted(QuantumLogicPermissionNames.CanUpdateOwnSite));
 
@@ -68,7 +68,7 @@ namespace QuantumLogic.WebApi.Policy.Widget
                           PermissionChecker.IsGranted(QuantumLogicPermissionNames.CanAllSite) ||
                           PermissionChecker.IsGranted(QuantumLogicPermissionNames.CanDeleteSite) ||
                           Session.UserId.HasValue &&
-                          Session.UserId.Value == entity.Id &&
+                          Session.UserId.Value == entity.UserId &&
                           (PermissionChecker.IsGranted(QuantumLogicPermissionNames.CanAllOwn) ||
                            PermissionChecker.IsGranted(QuantumLogicPermissionNames.CanDeleteOwnSite));
 

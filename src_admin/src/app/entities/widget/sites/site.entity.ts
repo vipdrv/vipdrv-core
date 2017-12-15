@@ -17,6 +17,10 @@ export class SiteEntity extends Entity {
     activeBeveragesAmount: number;
     routesAmount: number;
     activeRoutesAmount: number;
+    dealerName: string;
+    dealerAddress: string;
+    dealerPhone: string;
+
     /// ctor
     constructor() {
         super();
@@ -42,5 +46,8 @@ export class SiteEntity extends Entity {
         this.routesAmount = mock.routesAmount;
         this.activeRoutesAmount = mock.activeRoutesAmount;
         this.imageUrl = mock.imageUrl;
+        this.dealerName = mock.dealerName;
+        this.dealerAddress = mock.dealerAddress;
+        this.dealerPhone = mock.dealerPhone;
     }
 }

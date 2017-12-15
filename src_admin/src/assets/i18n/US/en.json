@@ -79,7 +79,7 @@
       "headerText_firstName": "First name",
       "headerText_secondName": "Second name",
       "headerText_isReachedByManager": "Reached",
-      "headerText_received": "Date",
+      "headerText_received": "Received",
       "headerText_siteName": "Site",
       "headerText_userEmail": "Email",
       "headerText_userPhone": "Phone",
@@ -96,7 +96,7 @@
     },
     "modal": {
       "title": "Site details",
-      "siteName": "Name",
+      "siteName": "Site Name",
       "siteNameHelp": "Enter the name of the site.",
       "siteUrl": "Site url",
       "siteUrlHelp": "Enter the url of the site (like http://yoursite.url)."

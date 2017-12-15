@@ -21,7 +21,7 @@ namespace QuantumLogic.WebApi.Policy.Main
         protected override IQueryable<User> InnerRetrieveAllFilter(IQueryable<User> query)
         {
             bool result = PermissionChecker.IsGranted(QuantumLogicPermissionNames.CanAllAll) ||
-                          PermissionChecker.IsGranted(QuantumLogicPermissionNames.CanAllUser) || // CanAllOwn
+                          PermissionChecker.IsGranted(QuantumLogicPermissionNames.CanAllUser) ||
                           PermissionChecker.IsGranted(QuantumLogicPermissionNames.CanRetrieveUser);
 
             if (result)
