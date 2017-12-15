@@ -16,12 +16,12 @@
     <div class="row test-drive-modal-body-edit-entity-container-row-input">
         <div class="col-12">
             <div class="form-group">
-                <label for="beverageName"
+                <label for="routeName"
                        translate>
-                    beverages.modal.beverageName
+                    routes.modal.routeName
                 </label>
-                <input id="beverageName"
-                       name="beverageName"
+                <input id="routeName"
+                       name="routeName"
                        type="text"
                        class="form-control"
                        [ngClass]="extensions.getInputValidationClass(isValidationActive(), validationService.isValidName(entity))"
@@ -30,7 +30,7 @@
                 <small class="form-text text-muted"
                        *ngIf="!isValidationActive() || validationService.isValidName(entity)"
                        translate>
-                    beverages.modal.beverageNameHelp
+                    routes.modal.routeNameHelp
                 </small>
                 <small class="form-text test-drive-validation-message"
                        *ngIf="isValidationActive() && !validationService.isValidName(entity)"
@@ -43,12 +43,12 @@
     <div class="row test-drive-modal-body-edit-entity-container-row-input">
         <div class="col-12">
             <div class="form-group">
-                <label for="beverageDescription"
+                <label for="routeDescription"
                        translate>
-                    beverages.modal.beverageDescription
+                    routes.modal.routeDescription
                 </label>
-                <textarea id="beverageDescription"
-                          name="beverageDescription"
+                <textarea id="routeDescription"
+                          name="routeDescription"
                           type="text"
                           rows="3"
                           class="form-control"
@@ -58,7 +58,7 @@
                 <small class="form-text text-muted"
                        *ngIf="!isValidationActive() || validationService.isValidDescription(entity)"
                        translate>
-                    beverages.modal.beverageDescriptionHelp
+                    routes.modal.routeDescriptionHelp
                 </small>
                 <small class="form-text test-drive-validation-message"
                        *ngIf="isValidationActive() && !validationService.isValidDescription(entity)"
