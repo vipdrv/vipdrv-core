@@ -160,7 +160,7 @@ namespace QuantumLogic.WebApi.Controllers.Widget
                 request.BookingCar.ImageUrl,
                 request.BookingCar.Title,
                 request.BookingCar.Vin,
-                DateTime.Now); // TODO: replace with real date
+                $"{request.BookingDateTime.Date} {request.BookingDateTime.Time}" );
 
             LeadFullDto result = await InnerCreateAsync(leadFullDto);
 
@@ -174,14 +174,19 @@ namespace QuantumLogic.WebApi.Controllers.Widget
                 new CompleteBookingEmailTemplate(
                     request.BookingUser.FirstName,
                     request.BookingUser.LastName,
-                    request.BookingDateTime.Date + request.BookingDateTime.Time, // TODO: refactor
+                    request.BookingDateTime.Date + " " + request.BookingDateTime.Time,
                     request.BookingCar.ImageUrl,
                     request.BookingCar.Title,
                     expert.Name,
                     beverage.Name,
-                    road.Name));
+                    road.Name,
+#warning Fill parameter with real Data
+                    site.Name, // TODO: site.dealerName 
+                    "", // TODO: site.dealerAddress
+                    "", // TODO: site.dealerPhone
+                    site.Url));
 
-            var emails = site.Contacts.Split(';')[0].Split(',');
+            var emails = site.NotificationContacts.Split(';')[0].Split(',');
             var newLeadNotificationEmailTemplate = new NewLeadNotificationEmailTemplate(
                 request.BookingCar.Title,
                 request.BookingCar.ImageUrl,
@@ -190,7 +195,7 @@ namespace QuantumLogic.WebApi.Controllers.Widget
                 request.BookingUser.LastName,
                 request.BookingUser.Phone,
                 request.BookingUser.Email,
-                request.BookingDateTime.Date + request.BookingDateTime.Time, // TODO: refactor
+                request.BookingDateTime.Date + " "+ request.BookingDateTime.Time,
                 expert.Name,
                 beverage.Name,
                 road.Name);

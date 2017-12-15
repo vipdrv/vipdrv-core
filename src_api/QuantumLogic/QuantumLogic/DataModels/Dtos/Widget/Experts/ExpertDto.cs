@@ -1,5 +1,7 @@
-﻿using QuantumLogic.Core.Domain.Entities;
+﻿using System.Collections.Generic;
+using QuantumLogic.Core.Domain.Entities;
 using QuantumLogic.Core.Domain.Entities.WidgetModule;
+using QuantumLogic.Core.Utils.Scheduling.Week;
 
 namespace QuantumLogic.WebApi.DataModels.Dtos.Widget.Experts
 {
@@ -13,6 +15,7 @@ namespace QuantumLogic.WebApi.DataModels.Dtos.Widget.Experts
         public string PhotoUrl { get; set; }
         public string FacebookUrl { get; set; }
         public string LinkedinUrl { get; set; }
+        public IList<DayOfWeekInterval> WorkingHours { get; set; }
 
         #region Mapping
 
@@ -27,6 +30,7 @@ namespace QuantumLogic.WebApi.DataModels.Dtos.Widget.Experts
             PhotoUrl = entity.PhotoUrl;
             FacebookUrl = entity.FacebookUrl;
             LinkedinUrl = entity.LinkedinUrl;
+            WorkingHours = DayOfWeekInterval.Parse(entity.WorkingHours);
         }
         public override Expert MapToEntity()
         {

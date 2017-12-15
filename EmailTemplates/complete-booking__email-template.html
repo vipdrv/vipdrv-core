@@ -3,7 +3,7 @@
   <head>
     <meta name="viewport" content="width=device-width" />
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <title>Simple Transactional Email</title>
+    <title>VIPdrv - VIP Test Drive</title>
     <style>
       /* -------------------------------------
           GLOBAL RESETS
@@ -251,7 +251,7 @@
           <div class="content">
 
             <!-- START CENTERED WHITE CONTAINER -->
-            <span class="preheader">This is preheader text. Some clients will show this text as a preview.</span>
+            <span class="preheader">VIPdrv - VIP Test Drive</span>
             <table class="main">
 
               <!-- START MAIN CONTENT AREA -->
@@ -260,34 +260,37 @@
                   <table border="0" cellpadding="0" cellspacing="0">
                     <tr>
                       <td>
-                        <p>Hi there {{customerFirstName}} {{customerLastName}}, we recieved your Test Drive booking</p>
-                        <img src="{{vehicleImgUrl}}" style="border-radius: 5px;">
+                        <p>Hi {{customerFirstName}} {{customerLastName}}. <br>We've confirmed your test drive booking. Details below.</p>
+						<p style="text-align: center;">
+							<img src="{{vehicleImgUrl}}" style="border-radius: 5px;">
+						</p>
 						<p><b>Vehicle:</b> {{vehicleTitle}}</p>
 						<p><b>Date & Time:</b> {{bookingDateTime}}</p>
 						<p><b>Expert:</b> {{expertName}}</p>
 						<p><b>Beverage:</b> {{beverageName}}</p>
 						<p><b>Road:</b> {{roadName}}</p>
-						<p>Our managers will contact you soon, have a nice day!</p>
-						<table border="0" cellpadding="0" cellspacing="0" class="btn btn-primary">
-                          <tbody>
-                            <tr>
-                              <td align="left">
-                                <table border="0" cellpadding="0" cellspacing="0">
-                                  <tbody>
-                                    <tr>
-                                      <td> <a href="www.testdrive.pw" target="_blank">Confirm my TestDrive</a> </td>
-                                    </tr>
-                                  </tbody>
-                                </table>
-                              </td>
-                            </tr>
-                          </tbody>
-                        </table>
+						<p>The Dealership is looking forward to your visit on {{bookingDateTime}}</p>
+						<hr>
+						<b>{{dealerName}}</b><br>
+						{{dealerAddress}}<br>
+						{{dealerPhone}}<br>
+						<!-- 8:30am-7pm<br> -->
+						<a href="{{dealerSiteUrl}}" target="_blank">{{dealerSiteUrl}}</a>
 						
-                        <!-- 
-						<p>This is a really simple email template. Its sole purpose is to get the recipient to click the button with no distractions.</p>
-                        <p>Good luck! Hope it works.</p> 
-						-->
+						<!--<b>Nissan of Bowie</b><br>
+						4 Bowie Street, San Antonio, TX, United States<br>
+						202-555-0128<br>
+						8:30am-7pm<br> 
+						<a href="https://www.dealerinspire.com">www.dealerinspire.com</a>-->
+						
+						<!-- dealerName -->
+						<!-- dealerPhone -->
+						<!-- postalCode -->
+						<!-- dealerStreet -->
+						<!-- dealerCity   -->
+						<!-- dealerState  -->
+						<!-- dealerCounry -->
+						<!-- dealerSite -->
                       </td>
                     </tr>
                   </table>
@@ -302,8 +305,8 @@
               <table border="0" cellpadding="0" cellspacing="0">
                 <tr>
                   <td class="content-block">
-                    <span class="apple-link">Company Inc, 3 Abbey Road, San Francisco CA 94102</span>
-                    <br> Don't like these emails? <a href="http://i.imgur.com/CScmqnj.gif">Unsubscribe</a>.
+                    <span class="apple-link">Joint Venture Digital, 78206 Varner Road, Suite D, Palm Desert, CA, 92211, United States 760-469-9296</span>
+                    <br>Visit us <a href="http://www.vipdrv.com">www.vipdrv.com</a>.
                   </td>
                 </tr>
               </table>

@@ -22,11 +22,11 @@ export class ExpertValidationService
     }
     isValidName(entity: ExpertEntity): boolean {
         return Variable.isNotNullOrUndefined(entity) &&
-            Variable.isNotNullOrUndefined(entity.name);
+            Variable.isNotNullOrUndefinedOrEmptyString(entity.name);
     }
     isValidDescription(entity: ExpertEntity): boolean {
         return Variable.isNotNullOrUndefined(entity) &&
-            Variable.isNotNullOrUndefined(entity.description);
+            Variable.isNotNullOrUndefinedOrEmptyString(entity.description);
     }
     isValidLinkedInUrl(entity: ExpertEntity): boolean {
         return Variable.isNotNullOrUndefined(entity) &&

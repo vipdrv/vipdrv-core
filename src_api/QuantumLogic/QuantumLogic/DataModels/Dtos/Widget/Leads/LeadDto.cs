@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 using QuantumLogic.Core.Constants;
 using QuantumLogic.Core.Domain.Entities.WidgetModule;
 
@@ -19,10 +20,9 @@ namespace QuantumLogic.WebApi.DataModels.Dtos.Widget.Leads
         public string UserEmail { get; set; }
         public string CarTitle { get; set; }
         public string CarVin { get; set; }
+        public string BookingDateTimeUtc { get; set; }
         public bool IsNew { get; set; }
         public bool IsReachedByManager { get; set; }
-        public DateTime BookingDateTimeUtc { get; set; }
-        public string BookingDateTimeOutputUtc { get; set; }
 
         #endregion
 
@@ -41,18 +41,18 @@ namespace QuantumLogic.WebApi.DataModels.Dtos.Widget.Leads
         {
         }
 
-        public LeadDto(int id, 
-            int siteId, 
-            int? expertId, 
-            int? beverageId, 
-            int? routeId, 
-            string firstName, 
-            string secondName, 
-            string userPhone, 
+        public LeadDto(int id,
+            int siteId,
+            int? expertId,
+            int? beverageId,
+            int? routeId,
+            string firstName,
+            string secondName,
+            string userPhone,
             string userEmail,
             string carTitle,
             string carVin,
-            DateTime bookingDateTimeUtc) : this()
+            string bookingDateTimeUtc) : this()
         {
             Id = id;
             SiteId = siteId;
@@ -86,13 +86,14 @@ namespace QuantumLogic.WebApi.DataModels.Dtos.Widget.Leads
             UserEmail = entity.UserEmail;
             CarTitle = entity.CarTitle;
             CarVin = entity.CarVin;
+            BookingDateTimeUtc = entity.BookingDateTimeUtc.ToString(QuantumLogicConstants.OutputDateTimeFormat);
             IsNew = entity.IsNew;
             IsReachedByManager = entity.IsReachedByManager;
             SiteName = entity.Site.Name;
             ExpertName = entity.Expert.Name;
             BeverageName = entity.Beverage.Name;
             RouteName = entity.Route.Name;
-            BookingDateTimeOutputUtc = BookingDateTimeUtc.ToString(QuantumLogicConstants.OutputDateTimeFormat);
+
         }
         public override Lead MapToEntity()
         {
@@ -107,6 +108,8 @@ namespace QuantumLogic.WebApi.DataModels.Dtos.Widget.Leads
             entity.UserEmail = UserEmail;
             entity.CarTitle = CarTitle;
             entity.CarVin = CarVin;
+            entity.BookingDateTimeUtc = DateTime.Parse(BookingDateTimeUtc);
+
             return entity;
         }
 

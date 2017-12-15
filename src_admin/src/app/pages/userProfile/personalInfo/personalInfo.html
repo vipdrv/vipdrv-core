@@ -42,7 +42,7 @@
                     </span>:
                 </div>
                 <div class="col-7 personal-info-value-container">
-                    +{{user.phoneNumber}}
+                    {{user.phoneNumber}}
                 </div>
             </div>
             <div class="row personal-info-row">
@@ -135,13 +135,13 @@
                             registration.phoneNumber
                         </label>
                         <div class="input-group input-group-sm">
-                            <span class="input-group-addon site-notifications-sms-entity-plus-text-addon">+</span>
                             <input id="phone-number"
                                    type="tel"
                                    name="phone-number"
                                    class="form-control"
                                    required=""
                                    autofocus=""
+                                   [textMask]="{mask: usaPhoneMask}"
                                    [disabled]="isPatchPersonalInfoProcessing()"
                                    [(ngModel)]="newPersonalInfo.phoneNumber">
                         </div>

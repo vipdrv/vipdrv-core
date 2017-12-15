@@ -88,14 +88,12 @@
                     <span translate>sites.details.notifications.sms</span>:
                 </div>
             </div>
-            <div class="row site-notifications-sms-entity-row"
-                 *ngFor="let item of smsEntities">
-                <div class="col-xl-1 col-lg-1 col-md-1 col-sm-1 col-1">
-                </div>
+
+            <div class="row site-notifications-sms-entity-row" *ngFor="let item of smsEntities">
+                <div class="col-xl-1 col-lg-1 col-md-1 col-sm-1 col-1"></div>
                 <div class="col-xl-8 col-lg-8 col-md-10 col-sm-10 col-10">
                     <div class="input-group input-group-sm">
-                        <span class="input-group-btn"
-                              *ngIf="policyService.canUpdateContacts()">
+                        <span class="input-group-btn" *ngIf="policyService.canUpdateContacts()">
                             <button class="btn btn-sm btn-primary site-notifications-sms-entity-start-edit-btn"
                                     type="button"
                                     *ngIf="!item.isEditProcessing"
@@ -111,7 +109,6 @@
                                 <i class="fa fa-undo"></i>
                             </button>
                         </span>
-                        <span class="input-group-addon site-notifications-sms-entity-plus-text-addon">+</span>
                         <input class="form-control form-control-sm"
                                type="tel"
                                *ngIf="!item.isEditProcessing"
@@ -121,9 +118,9 @@
                                type="tel"
                                *ngIf="item.isEditProcessing"
                                [disabled]="isSaveProcessing()"
+                               [textMask]="{mask: usaPhoneMask}"
                                [(ngModel)]="item.editValue"/>
-                        <span class="input-group-btn"
-                              *ngIf="policyService.canUpdateContacts()">
+                        <span class="input-group-btn" *ngIf="policyService.canUpdateContacts()">
                             <button class="btn btn-sm btn-danger site-notifications-sms-entity-remove-btn"
                                     type="button"
                                     *ngIf="!item.isEditProcessing"
@@ -142,15 +139,14 @@
                     </div>
                 </div>
             </div>
-            <div class="row site-notifications-sms-entity-row"
-                 *ngIf="policyService.canUpdateContacts()">
-                <div class="col-xl-1 col-lg-1 col-md-1 col-sm-1 col-1">
-                </div>
+
+            <div class="row site-notifications-sms-entity-row" *ngIf="policyService.canUpdateContacts()">
+                <div class="col-xl-1 col-lg-1 col-md-1 col-sm-1 col-1"></div>
                 <div class="col-xl-8 col-lg-8 col-md-10 col-sm-10 col-10">
                     <hr>
                     <div class="input-group input-group-sm">
-                        <span class="input-group-addon site-notifications-sms-entity-plus-text-addon">+</span>
                         <input type="tel"
+                               [textMask]="{mask: usaPhoneMask}"
                                [disabled]="isSaveProcessing()"
                                class="form-control form-control-sm"
                                [(ngModel)]="newSMSEntity.value"/>
@@ -165,6 +161,7 @@
                     </div>
                 </div>
             </div>
+
         </div>
     </div>
     <div class="site-notifications-template-footer"

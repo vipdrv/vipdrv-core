@@ -9,7 +9,8 @@ export const PAGES_MENU = [{
                     icon: 'ion-android-home',
                     selected: false,
                     expanded: false,
-                    order: 0
+                    order: 0,
+                    requiredPermission: 'CanViewMenuHome'
                 }
             }
         },
@@ -21,7 +22,8 @@ export const PAGES_MENU = [{
                     icon: 'ion-ios-list-outline',
                     selected: false,
                     expanded: false,
-                    order: 3
+                    order: 1,
+                    requiredPermission: 'CanViewMenuSites'
                 }
             }
         },
@@ -33,7 +35,8 @@ export const PAGES_MENU = [{
                     icon: 'ion-ios-paper-outline',
                     selected: false,
                     expanded: false,
-                    order: 2
+                    order: 2,
+                    requiredPermission: 'CanViewMenuLeads'
                 }
             }
         },
@@ -45,7 +48,8 @@ export const PAGES_MENU = [{
                     icon: 'ion-settings',
                     selected: false,
                     expanded: false,
-                    order: 4
+                    order: 3,
+                    requiredPermission: 'CanViewMenuSettings'
                 }
             },
             children: [
@@ -58,7 +62,8 @@ export const PAGES_MENU = [{
                             icon: 'ion-android-folder-open',
                             selected: false,
                             expanded: false,
-                            order: 0
+                            order: 0,
+                            requiredPermission: 'CanViewMenuInvitations'
                         }
                     }
                 }

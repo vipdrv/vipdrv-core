@@ -8,9 +8,10 @@ using QuantumLogic.Data.EFContext;
 namespace QuantumLogic.Data.Migrations
 {
     [DbContext(typeof(QuantumLogicDbContext))]
-    partial class QuantumLogicDbContextModelSnapshot : ModelSnapshot
+    [Migration("20171211021552_AddedBookingDateTime")]
+    partial class AddedBookingDateTime
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "1.1.2")
@@ -290,17 +291,11 @@ namespace QuantumLogic.Data.Migrations
 
                     b.Property<string>("BeautyId");
 
-                    b.Property<string>("DealerAddress");
-
-                    b.Property<string>("DealerName");
-
-                    b.Property<string>("DealerPhone");
+                    b.Property<string>("NotificationContacts");
 
                     b.Property<string>("ImageUrl");
 
                     b.Property<string>("Name");
-
-                    b.Property<string>("NotificationContacts");
 
                     b.Property<string>("Url");
 

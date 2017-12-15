@@ -9,6 +9,7 @@
                 <i class="fa fa-refresh fa-spin" *ngIf="isOperationGetManyProcessing()"></i>
                 <i class="fa fa-refresh" *ngIf="!isOperationGetManyProcessing()"></i>
             </button>
+
             <button type="button"
                     class="btn btn-outline-success btn-sm pull-right test-drive-right-standalone-btn"
                     *ngIf="entityPolicyService.canCreate()"
@@ -67,7 +68,7 @@
                                        switchColor="{{switcherSettings.switchColor}}"
                                        defaultBgColor="{{switcherSettings.defaultBgColor}}"
                                        defaultBoColor="{{switcherSettings.defaultBoColor}}"
-                                       [disabled]="isOperationChangeActivityDisabled(item) || !entityPolicyService.canUpdateActivityForEntity(item)"
+                                       [disabled]="isOperationChangeActivityDisabled(item)"
                                        (click)="onChangeEntityActivity(item); $event.stopPropagation();"
                                        [ngModel]="item.isActive">
                             </ui-switch>

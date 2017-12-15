@@ -12,9 +12,10 @@
                           (imageUrlSelected)="onNewSiteImageSelected($event)"></image-select>
         </div>
     </div>
+
     <hr>
-    <div class="row test-drive-modal-body-edit-entity-container-row-input">
-        <div class="col-12">
+    <div class="row">
+        <div class="col-sm-12 col-md-6 col-lg-6">
             <div class="form-group">
                 <label for="site-name"
                        translate>
@@ -38,9 +39,7 @@
                 </small>
             </div>
         </div>
-    </div>
-    <div class="row test-drive-modal-body-edit-entity-container-row-input">
-        <div class="col-12">
+        <div class="col-sm-12 col-md-6 col-lg-6">
             <div class="form-group">
                 <label for="site-url"
                        translate>
@@ -65,4 +64,33 @@
             </div>
         </div>
     </div>
+    <hr>
+    <div class="row">
+        <div class="col-sm-12 col-md-6 col-lg-6">
+            <div class="form-group">
+                <label>Dealer Name</label>
+                <input type="text"
+                       class="form-control"
+                       [(ngModel)]="entity.dealerName">
+            </div>
+        </div>
+        <div class="col-sm-12 col-md-6 col-lg-6">
+            <div class="form-group">
+                <label>Dealer Phone</label>
+                <input type="text"
+                       class="form-control"
+                       [(ngModel)]="entity.dealerPhone">
+            </div>
+        </div>
+        <div class="col-12">
+            <div class="form-group">
+                <label>Dealer Address</label>
+                <input type="text"
+                       class="form-control"
+                       [(ngModel)]="entity.dealerAddress">
+            </div>
+        </div>
+    </div>
+
+
 </div>

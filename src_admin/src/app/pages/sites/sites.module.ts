@@ -21,6 +21,8 @@ import { routing } from './sites.routing';
 
 import { SiteCardsComponent } from './cards/siteCards.component';
 import { SiteCardComponent } from './cards/siteCard.component';
+import { TextMaskModule } from 'angular2-text-mask';
+
 @NgModule({
     imports: [
         CommonModule,
@@ -35,7 +37,8 @@ import { SiteCardComponent } from './cards/siteCard.component';
         BeveragesModule,
         ExpertsModule,
         RoutesModule,
-        WidgetPreviewModule
+        WidgetPreviewModule,
+        TextMaskModule
     ],
     exports: [
         SitesComponent,
