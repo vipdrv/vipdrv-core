@@ -11,7 +11,6 @@ import { SitesTableComponent } from './table/sitesTable.component';
 import { BeveragesModule } from './../beverages/index';
 import { ExpertsModule } from './../experts/index';
 import { RoutesModule } from './../routes/index';
-import { WidgetPreviewModule } from './../widgetPreview/index';
 import { SiteDetailsEditComponent } from './details/edit/siteDetailsEdit.component';
 import { SiteDetailsRelationsComponent } from './details/relations/siteDetailsRelations.component';
 import { SiteOverviewComponent } from './overview/siteOverview.component';
@@ -37,7 +36,6 @@ import { TextMaskModule } from 'angular2-text-mask';
         BeveragesModule,
         ExpertsModule,
         RoutesModule,
-        WidgetPreviewModule,
         TextMaskModule
     ],
     exports: [

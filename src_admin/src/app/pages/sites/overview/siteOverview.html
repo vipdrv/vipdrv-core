@@ -1,28 +1,19 @@
 <div class="site-overview-template"
      *ngIf="isEntityDefined()">
-    <div class="row site-overview-template-body-row-name">
-        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-            <span class="site-overview-template-info-label"
-                  translate>
-                sites.overview.name
-            </span>
-            <span class="site-overview-template-info-value">
-                {{entity.name}}
-            </span>
-        </div>
-    </div>
-    <div class="row site-overview-template-body-row-beauty-id">
-        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-            <span class="site-overview-template-info-label"
-                  translate>
-                sites.overview.beautyId
-            </span>
-            <span class="site-overview-template-info-value">
-                {{entity.beautyId}}
-            </span>
-        </div>
-    </div>
-    <div class="row site-overview-template-body-row-experts">
+    <!--<div class="row site-overview-template-body-row-name">-->
+        <!--<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">-->
+            <!--<span class="site-overview-template-info-label"-->
+                  <!--translate>-->
+                <!--sites.overview.name-->
+            <!--</span>-->
+            <!--<span class="site-overview-template-info-value">-->
+                <!--{{entity.name}}-->
+            <!--</span>-->
+        <!--</div>-->
+    <!--</div>-->
+
+    <h4>Wizard</h4>
+    <div class="row">
         <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
             <span class="site-overview-template-info-label"
                   translate>
@@ -52,7 +43,7 @@
             </span>
         </div>
     </div>
-    <div class="row site-overview-template-body-row-beverages">
+    <div class="row">
         <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
             <span class="site-overview-template-info-label"
                   translate>
@@ -82,7 +73,7 @@
             </span>
         </div>
     </div>
-    <div class="row site-overview-template-body-row-routes">
+    <div class="row">
         <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
             <span class="site-overview-template-info-label"
                   translate>
@@ -104,12 +95,40 @@
                   translate>
                 sites.overview.noActiveRoutes
             </span>
-            <span class="badge badge-warning"
+            <p class="badge badge-warning"
                   *ngIf="showNotActiveRoutesAmount()"
                   [translateParams]="{ amount: entity.routesAmount - entity.activeRoutesAmount }"
                   translate>
                 sites.overview.notActiveRoutes_amount
+            </p>
+        </div>
+    </div>
+    <hr>
+    <h4>Integration</h4>
+    <div class="row">
+        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+            <span class="site-overview-template-info-label" translate>
+                sites.overview.siteId
             </span>
+            <span class="site-overview-template-info-value">
+                {{entity.id}}
+            </span>
+            <p>Check out our <a href="http://www.testdrive.pw/" target="_blank">Integration guide</a></p>
+        </div>
+    </div>
+    <hr>
+    <h4>Widget preview</h4>
+    <div class="row">
+        <div class="col-12">
+            <p></p>
+            <button class="btn btn-primary" onclick="TestDrive.openTestDrive({carVin: 'JTJGA31U940015971',
+                                          carImageUrl: 'https://www.testdrive.pw/bmw.jpg',
+                                          carTitle: 'BMW M140i',
+                                          carEngine: '3.8 litre twin-turbo V6',
+                                          carYear: '2017',
+                                          carColor: 'Blue',
+                                          carTransmission: 'Manual',
+                                          carFuel: 'Gasoline'})">Open Widget</button>
         </div>
     </div>
 </div>

@@ -169,9 +169,7 @@
             <span class="title">VIPdrv - VIP Test Drive</span>
             <span class="description">
                 <p>Hi {{$ctrl.userData.user.firstName}} {{$ctrl.userData.user.lastName}}. <br>We've confirmed your test drive booking. Details below.</p>
-                <p style="text-align: center;">
-                    <img src="{{$ctrl.userData.car.imageUrl}}" style="border-radius: 5px;">
-                </p>
+
                 <p><b>Vehicle:</b> {{$ctrl.userData.car.title}}</p>
                 <p><b>Date & Time:</b> {{$ctrl.userData.calendar.date}} {{$ctrl.userData.calendar.time}}</p>
                 <p><b>Expert:</b> {{$ctrl.userData.expert.name}}</p>
@@ -183,7 +181,7 @@
                 {{$ctrl.siteData.address}}<br>
                 {{$ctrl.siteData.phone}}<br>
                 <!-- 8:30am-7pm<br> -->
-                <a href="{{$ctrl.siteData.url}}" target="_blank">{{$ctrl.siteData.url}}</a>
+                {{$ctrl.siteData.url}}
             </span>
             <span class="location">{{$ctrl.siteData.address ? $ctrl.siteData.address : 'Dealer Address'}}</span>
         </button>

@@ -108,6 +108,7 @@
     },
     "overview":{
       "name": "Name:",
+      "siteId": "SiteId:",
       "beautyId": "Beauty id:",
       "experts": "Experts:",
       "noExperts": "no experts",
