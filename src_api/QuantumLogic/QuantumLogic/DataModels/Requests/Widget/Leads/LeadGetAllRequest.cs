@@ -8,7 +8,8 @@ namespace QuantumLogic.WebApi.DataModels.Requests.Widget.Leads
         public int? ExpertId { get; set; }
         public int? RouteId { get; set; }
         public int? BeverageId { get; set; }
-        public DateTime? RecievedDateTime { get; set; }
+        public DateTime? RecievedDateTimeUtc { get; set; }
+        public DateTime? BookingDateTimeUtc { get; set; }
         public string FullName { get; set; }
         public string FirstName { get; set; }
         public string SecondName { get; set; }

@@ -288,7 +288,8 @@ export class LeadsTableComponent implements OnInit {
     }
     protected applyFilters(): Promise<void> {
         const filtersWereNotChanged: boolean =
-            this.tableFilters.recievedDateTime === this.oldTableFilters.recievedDateTime &&
+            this.tableFilters.recievedDateTimeUtc === this.oldTableFilters.recievedDateTimeUtc &&
+            this.tableFilters.bookingDateTimeUtc === this.oldTableFilters.bookingDateTimeUtc &&
             this.tableFilters.siteId === this.oldTableFilters.siteId &&
             this.tableFilters.expertId === this.oldTableFilters.expertId &&
             this.tableFilters.routeId === this.oldTableFilters.routeId &&
@@ -305,7 +306,8 @@ export class LeadsTableComponent implements OnInit {
             this.tableFilters.beverage === this.oldTableFilters.beverage;
         if (!filtersWereNotChanged) {
             this.oldTableFilters = {};
-            this.oldTableFilters.recievedDateTime = this.tableFilters.recievedDateTime;
+            this.oldTableFilters.recievedDateTimeUtc = this.tableFilters.recievedDateTimeUtc;
+            this.oldTableFilters.bookingDateTimeUtc = this.tableFilters.bookingDateTimeUtc;
             this.oldTableFilters.fullName = this.tableFilters.fullName;
             this.oldTableFilters.firstName = this.tableFilters.firstName;
             this.oldTableFilters.secondName = this.tableFilters.secondName;
@@ -442,7 +444,8 @@ export class LeadsTableComponent implements OnInit {
     }
     /// table filters
     protected tableFilters: any = {
-        recievedDateTime: null,
+        recievedDateTimeUtc: null,
+        bookingDateTimeUtc: null,
         fullName: null,
         firstName: null,
         secondName: null,
@@ -481,9 +484,14 @@ export class LeadsTableComponent implements OnInit {
             throw new Error('Argument exception! (extendFilter requires defined argument filter)');
         }
         if (Variable.isNotNullOrUndefined(
-            this.tableFilters.recievedDateTime) &&
-            this.tableFilters.recievedDateTime !== '') {
-            filter.recievedDateTime = this.tableFilters.recievedDateTime;
+            this.tableFilters.recievedDateTimeUtc) &&
+            this.tableFilters.recievedDateTimeUtc !== '') {
+            filter.recievedDateTimeUtc = this.tableFilters.recievedDateTimeUtc;
+        }
+        if (Variable.isNotNullOrUndefined(
+                this.tableFilters.bookingDateTimeUtc) &&
+            this.tableFilters.bookingDateTimeUtc !== '') {
+            filter.bookingDateTimeUtc = this.tableFilters.bookingDateTimeUtc;
         }
         if (Variable.isNotNullOrUndefined(this.tableFilters.fullName) && this.tableFilters.fullName !== '') {
             filter.fullName = this.tableFilters.fullName;
@@ -530,7 +538,8 @@ export class LeadsTableComponent implements OnInit {
     }
     /// onblur filters
     protected oldTableFilters: any = {
-        recievedDateTime: null,
+        recievedDateTimeUtc: null,
+        bookingDateTimeUtc: null,
         fullName: null,
         firstName: null,
         secondName: null,

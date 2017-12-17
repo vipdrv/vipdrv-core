@@ -105,6 +105,20 @@
                                aria-hidden="true"
                                *ngIf="isSortingDesc('isReachedByManager')"></i>
                         </th>
+                        <th class="leads-table-body-column leads-table-body-column-with-sorting leads-table-body-column-date"
+                            (click)="changeSorting('bookingDateTimeUtc')"
+                            translate>
+                            leads.table.headerText_bookingDateTimeUtc
+                            <span class="soring-index pull-right">
+                                &nbsp;{{getSortingIndex('bookingDateTimeUtc')}}
+                            </span>
+                            <i class="fa fa-sort-amount-asc pull-right"
+                               aria-hidden="true"
+                               *ngIf="isSortingAsc('bookingDateTimeUtc')"></i>
+                            <i class="fa fa-sort-amount-desc pull-right"
+                               aria-hidden="true"
+                               *ngIf="isSortingDesc('bookingDateTimeUtc')"></i>
+                        </th>
                         <th class="leads-table-body-column leads-table-body-column-site"
                             translate>
                             leads.table.headerText_siteName
@@ -137,7 +151,7 @@
                             <select class="form-control form-control-sm"
                                     [disabled]="isFilteringDisabled()"
                                     (change)="applyFilters()"
-                                    [(ngModel)]="tableFilters.recievedDateTime">
+                                    [(ngModel)]="tableFilters.recievedDateTimeUtc">
                                 <option *ngFor="let option of dateFilterOptions"
                                         [ngValue]="option.value">
                                     <span translate>{{option.displayText}}</span>
@@ -157,6 +171,17 @@
                                     (change)="applyFilters()"
                                     [(ngModel)]="tableFilters.isReachedByManager">
                                 <option *ngFor="let option of isReachedByManagerFilterOptions"
+                                        [ngValue]="option.value">
+                                    <span translate>{{option.displayText}}</span>
+                                </option>
+                            </select>
+                        </td>
+                        <td>
+                            <select class="form-control form-control-sm"
+                                    [disabled]="isFilteringDisabled()"
+                                    (change)="applyFilters()"
+                                    [(ngModel)]="tableFilters.bookingDateTimeUtc">
+                                <option *ngFor="let option of dateFilterOptions"
                                         [ngValue]="option.value">
                                     <span translate>{{option.displayText}}</span>
                                 </option>
@@ -255,7 +280,7 @@
                         class="leads-table-body-row"
                         [ngClass]="getClassesForLeadTableRow(item)"
                         (click)="tryModalOpenInfo(item.id)">
-                        <td class="leads-table-body-column">{{item.recievedDateTime}}</td>
+                        <td class="leads-table-body-column">{{item.recievedDateTimeUtc}}</td>
                         <td class="leads-table-body-column">{{item.firstName + ' ' + item.secondName}}</td>
                         <!--<td class="leads-table-body-column">{{item.firstName}}</td>-->
                         <!--<td class="leads-table-body-column">{{item.secondName}}</td>-->
@@ -271,6 +296,7 @@
                                 <span class="custom-control-description"></span>
                             </label>
                         </td>
+                        <td class="leads-table-body-column">{{item.bookingDateTimeUtc}}</td>
                         <td class="leads-table-body-column">{{item.siteName}}</td>
                         <td class="leads-table-body-column">{{item.userEmail}}</td>
                         <td class="leads-table-body-column">{{item.userPhone}}</td>
