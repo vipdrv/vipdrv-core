@@ -15,6 +15,7 @@ export class AvatarUpdateComponent implements OnInit{
     @Output() avatarUrlPatched: EventEmitter<string> = new EventEmitter<string>();
     /// service fields
     protected patchAvatarPromise: Promise<void>;
+    protected forceAcceptImage: boolean = false;
     /// fields
     protected newAvatarUrl: string;
     /// injected dependencies
@@ -30,44 +31,51 @@ export class AvatarUpdateComponent implements OnInit{
     ngOnInit(): void {
         this.newAvatarUrl = this.avatarUrl;
     }
-    patchAvatar(): Promise<void> {
-        const self = this;
-        this.logger.logTrase('AvatarUpdateComponent: Patch user avatar called.');
-        self.patchAvatarPromise = self.userApiService
-            .patchAvatar(self.userId, self.newAvatarUrl)
-            .then(function(): void {
-                self.avatarUrlPatched.emit(self.newAvatarUrl);
-            })
-            .then(
-                () => {
-                    self.patchAvatarPromise = null;
-                },
-                () => {
-                    self.patchAvatarPromise = null;
-                },
-            );
-        return self.patchAvatarPromise;
+    protected onResetForceAcceptImage(): void {
+        this.forceAcceptImage = false;
     }
-    resetAvatar(): void {
+    protected patchAvatar(): void {
+        const self = this;
+        self.logger.logTrase('AvatarUpdateComponent: Patch user avatar called.');
+        self.forceAcceptImage = true;
+        setTimeout(
+            function () {
+                self.patchAvatarPromise = self.userApiService
+                    .patchAvatar(self.userId, self.newAvatarUrl)
+                    .then(function(): void {
+                        self.avatarUrlPatched.emit(self.newAvatarUrl);
+                    })
+                    .then(
+                        () => {
+                            self.patchAvatarPromise = null;
+                        },
+                        () => {
+                            self.patchAvatarPromise = null;
+                        },
+                    );
+            },
+            0);
+    }
+    protected resetAvatar(): void {
         this.newAvatarUrl = this.avatarUrl;
     }
     /// predicates
-    isUserIdDefined(): boolean {
+    protected isUserIdDefined(): boolean {
         return Variable.isNotNullOrUndefined(this.userId);
     }
-    isPatchAvatarAllowed(): boolean {
+    protected isPatchAvatarAllowed(): boolean {
         return Variable.isNotNullOrUndefined(this.userId);
     }
-    isPatchAvatarDisabled(): boolean {
+    protected isPatchAvatarDisabled(): boolean {
         return this.isPatchAvatarProcessing();
     }
-    isPatchAvatarProcessing(): boolean {
+    protected isPatchAvatarProcessing(): boolean {
         return Variable.isNotNullOrUndefined(this.patchAvatarPromise);
     }
-    isResetAvatarAllowed(): boolean {
+    protected isResetAvatarAllowed(): boolean {
         return true;
     }
-    isResetAvatarDisabled(): boolean {
+    protected isResetAvatarDisabled(): boolean {
         return this.isPatchAvatarProcessing();
     }
     // avatar select

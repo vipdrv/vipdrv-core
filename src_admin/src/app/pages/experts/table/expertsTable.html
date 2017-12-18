@@ -168,7 +168,9 @@
         <expert-details-edit *ngIf="isSelectedEntityDefined()"
                              [isReadOnly]="isEditModalReadOnly()"
                              [useValidation]="isValidationActivated()"
-                             [entity]="selectedEntity"></expert-details-edit>
+                             [entity]="selectedEntity"
+                             [forceAcceptImage]="forceAcceptImage"
+                             (resetForceAcceptImage)="onResetForceAcceptImage($event)"></expert-details-edit>
     </modal-body>
     <modal-footer>
         <button type="button"

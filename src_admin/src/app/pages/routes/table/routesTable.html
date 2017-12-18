@@ -165,9 +165,11 @@
     </modal-header>
     <modal-body>
         <route-details-edit *ngIf="isSelectedEntityDefined()"
-                               [isReadOnly]="isEditModalReadOnly()"
-                               [useValidation]="isValidationActivated()"
-                               [entity]="selectedEntity">
+                            [isReadOnly]="isEditModalReadOnly()"
+                            [useValidation]="isValidationActivated()"
+                            [entity]="selectedEntity"
+                            [forceAcceptImage]="forceAcceptImage"
+                            (resetForceAcceptImage)="onResetForceAcceptImage($event)">
         </route-details-edit>
     </modal-body>
     <modal-footer>

@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { Extensions, ILogger, ConsoleLogger } from './../../../../utils/index';
 import { RouteEntity } from './../../../../entities/index';
 import { IRouteValidationService, RouteValidationService } from './../../../../services/index';
@@ -13,6 +13,9 @@ export class RouteDetailsEditComponent {
     @Input() entity: RouteEntity;
     @Input() isReadOnly: boolean = false;
     @Input() useValidation: boolean = false;
+    @Input() forceAcceptImage: boolean = false;
+    /// outputs
+    @Output() resetForceAcceptImage: EventEmitter<void> = new EventEmitter<void>();
     /// fields
     protected defaultImageUrl: string = RoutesConstants.routeImageDefault;
     protected imageWidth: number = RoutesConstants.routeImageWidth;
@@ -34,6 +37,9 @@ export class RouteDetailsEditComponent {
     protected onNewImageSelected(newImageUrl: string): void {
         this.entity.photoUrl = newImageUrl;
         this.logger.logTrase('RouteDetailsEditComponent: New route image has been selected.');
+    }
+    protected onResetForceAcceptImage(): void {
+        this.resetForceAcceptImage.emit();
     }
     /// predicates
     protected isImageComponentReadOnly(): boolean {
