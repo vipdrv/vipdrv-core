@@ -25,6 +25,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using QuantumLogic.Core.Utils.Sms;
 using QuantumLogic.Data.EFContext;
 
 namespace QuantumLogic.WebApi.Controllers.Widget
@@ -163,7 +164,7 @@ namespace QuantumLogic.WebApi.Controllers.Widget
                 request.BookingCar.ImageUrl,
                 request.BookingCar.Title,
                 request.BookingCar.Vin,
-                $"{request.Calendar.Date} {request.Calendar.Time}");
+                $"{request.bookingDateTime.Date} {request.bookingDateTime.Time}");
 
             // LeadFullDto result = await InnerCreateAsync(leadFullDto);
 
@@ -184,7 +185,7 @@ namespace QuantumLogic.WebApi.Controllers.Widget
                 new CompleteBookingEmailTemplate(
                     request.BookingUser.FirstName,
                     request.BookingUser.LastName,
-                    request.Calendar.Date + " " + request.Calendar.Time,
+                    request.bookingDateTime.Date + " " + request.bookingDateTime.Time,
                     request.BookingCar.ImageUrl,
                     request.BookingCar.Title,
                     expert.Name,
@@ -204,7 +205,7 @@ namespace QuantumLogic.WebApi.Controllers.Widget
                 request.BookingUser.LastName,
                 request.BookingUser.Phone,
                 request.BookingUser.Email,
-                request.Calendar.Date + " " + request.Calendar.Time,
+                request.bookingDateTime.Date + " " + request.bookingDateTime.Time,
                 expert.Name,
                 beverage.Name,
                 road.Name);
@@ -213,8 +214,23 @@ namespace QuantumLogic.WebApi.Controllers.Widget
             {
                 _testDriveEmailService.SendNewLeadNotificationEmail(new EmailAddress(email), newLeadNotificationEmailTemplate);
             }
-
+            
             return null;
+        }
+
+        [HttpPost("{siteId}/send-sms")]
+        public async Task SendSmsAsync(int siteId, [FromBody] SmsNotificationRequest request)
+        {
+            ISmsService smsService = new TwilioSmsService();
+
+            string smsContent = $"Your Upcoming Test Drive \n \n" +
+                                $"Vehicle: {request.VehicleTitle} \n" +
+                                $"Date & Time: {request.DateTime} \n" +
+                                $"Expert: {request.ExpertTitle} \n" +
+                                $"Beverage: {request.BeverageTitle} \n" +
+                                $"Road: {request.RoadTitle} \n";
+
+            await smsService.SendSms(request.Phone, smsContent);
         }
 
         #endregion

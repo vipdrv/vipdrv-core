@@ -98,6 +98,7 @@ namespace QuantumLogic.WebApi.DataModels.Dtos.Widget.Leads
         public override Lead MapToEntity()
         {
             Lead entity = base.MapToEntity();
+            entity.RecievedUtc = DateTime.Now;
             entity.SiteId = SiteId;
             entity.ExpertId = ExpertId;
             entity.BeverageId = BeverageId;

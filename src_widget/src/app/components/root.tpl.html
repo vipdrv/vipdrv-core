@@ -9,9 +9,9 @@
                 switch-tab="$ctrl.switchTab(tab.id)">
         </td-wizard-navigation-tab>
     </div>
-    <div class="row td-wizard__root" ng-if="!globalState.isFormCompleted">
+    <div class="row td-wizard__root" ng-if="!$ctrl.globalState.isFormCompleted">
         <td-wizard-tab-content class="col td-wizard"></td-wizard-tab-content>
         <td-sidebar class="col-3 td-car-details d-none d-md-block bg-white" user-data="$ctrl.userData"></td-sidebar>
     </div>
-    <td-complete-step ng-if="globalState.isFormCompleted" user-data="$ctrl.userData" site-data="$ctrl.site" class="h-100"></td-complete-step>
+    <td-complete-step ng-if="$ctrl.globalState.isFormCompleted" user-data="$ctrl.userData" site-data="$ctrl.site" class="h-100"></td-complete-step>
 </div>
