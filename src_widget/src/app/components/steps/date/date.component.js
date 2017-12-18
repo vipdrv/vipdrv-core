@@ -1,26 +1,21 @@
 (function () {
     angular.module('myApp')
         .component('tdDate', {
-            controller: function ($scope, $window) {
+            controller: function ($scope) {
 
                 // =======================================================================//
                 // Variables                                                              //
                 // =======================================================================//
 
                 var self = this;
+
                 self.isStepValid = false;
                 self.minDateString = moment().subtract(0, 'day').format('YYYY-MM-DD');
                 self.timeIntervals = [];
-
-                self.widgetWorkingHours = {
-                    0: {startTime: '23:59', endTime: '00:00', isActive: false},
-                    1: {startTime: '23:59', endTime: '00:00', isActive: false},
-                    2: {startTime: '23:59', endTime: '00:00', isActive: false},
-                    3: {startTime: '23:59', endTime: '00:00', isActive: false},
-                    4: {startTime: '23:59', endTime: '00:00', isActive: false},
-                    5: {startTime: '23:59', endTime: '00:00', isActive: false},
-                    6: {startTime: '23:59', endTime: '00:00', isActive: false}
-                };
+                self.mobileDateTimeInput= null;
+                self.widgetWorkingHours = null;
+                self.stepDataDidLoaded = false;
+                self.isLoading = true;
 
                 // =======================================================================//
                 // Init                                                                   //
@@ -28,33 +23,62 @@
 
                 self.$onInit = function () {
                     self.dateImput = self.userData.calendar.date;
+                    self.mobileDateTimeInput = self.userData.calendar.date;
                     self.validateStep();
                 };
 
                 self.$onChanges = function ({stepData}) {
                     if (angular.isDefined(stepData)) {
                         if (!stepData.isFirstChange()) {
-                            self.extractWorkingHoursFormExperts(stepData.currentValue);
+                            self.isLoading = false;
+                            self.stepDataDidLoaded = true;
+                            self.widgetWorkingHours = self.mapToWidgetWorkingHours(self.stepData.workingHours);
 
-                            var dayOfWeek = new Date().getDay();
-                            var startTime = self.widgetWorkingHours[dayOfWeek].startTime;
-                            var endTime = self.widgetWorkingHours[dayOfWeek].endTime;
+                            var currentDayOfWeek = new Date().getDay();
+                            var startTime = self.widgetWorkingHours[currentDayOfWeek].startTime;
+                            var endTime = self.widgetWorkingHours[currentDayOfWeek].endTime;
                             self.timeIntervals = self.stplitTimeToInvervals(startTime, endTime);
 
                             self.isSelectable = function (date, type) {
                                 var dayOfWeek = date.format('d');
+
+                                return self.widgetWorkingHours[dayOfWeek].isActive;
+                            };
+
+                            self.isSelectableMobile = function (date, type) {
+                                var dayOfWeek = date.format('d');
+
                                 return self.widgetWorkingHours[dayOfWeek].isActive;
                             };
                         }
                     }
                 };
 
-                self.isSelectable = function (date, type) {
-                    return true;
+                self.mapToWidgetWorkingHours = function (siteWorkingHours) {
+                    var defaultWorkingHours = {
+                        0: {startTime: '09:00:00', endTime: '18:00:00', isActive: false},
+                        1: {startTime: '09:00:00', endTime: '18:00:00', isActive: false},
+                        2: {startTime: '09:00:00', endTime: '18:00:00', isActive: false},
+                        3: {startTime: '09:00:00', endTime: '18:00:00', isActive: false},
+                        4: {startTime: '09:00:00', endTime: '18:00:00', isActive: false},
+                        5: {startTime: '09:00:00', endTime: '18:00:00', isActive: false},
+                        6: {startTime: '09:00:00', endTime: '18:00:00', isActive: false}
+                    };
+
+                    for (var key in siteWorkingHours) {
+                        var day = siteWorkingHours[key];
+
+                        defaultWorkingHours[day.dayOfWeek].isActive = true;
+                        defaultWorkingHours[day.dayOfWeek].startTime = day.startTime;
+                        defaultWorkingHours[day.dayOfWeek].endTime = day.endTime;
+                    }
+
+                    return defaultWorkingHours;
                 };
 
                 self.dateChanged = function (oldValue, newValue) {
                     var arr = newValue._i.split(' ');
+
                     self.userData.calendar.date = arr[0];
                     var dayOfWeek = arr[1];
                     self.validateStep();
@@ -63,6 +87,19 @@
                     var endTime = self.widgetWorkingHours[dayOfWeek].endTime;
 
                     self.timeIntervals = self.stplitTimeToInvervals(startTime, endTime);
+                };
+
+                self.mobileDateChanged = function(oldValue, newValue) {
+                    var arr = newValue._i.split(' ');
+
+                    var date = arr[0];
+                    var hours = arr[1].split(' ')[0].split(':')[0];
+                    var amPm = arr[2];
+
+                    self.userData.calendar.date = date;
+                    self.userData.calendar.time = hours + ':' + '00 ' + amPm;
+
+                    self.validateStep();
                 };
 
                 self.timeChanged = function (time) {
@@ -149,6 +186,7 @@
                         }
                     }
                 };
+
             },
             templateUrl: 'src/app/components/steps/date/date.tpl.html',
             bindings: {

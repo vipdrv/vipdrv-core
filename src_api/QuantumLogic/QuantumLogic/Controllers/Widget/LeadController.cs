@@ -21,8 +21,12 @@ using QuantumLogic.WebApi.DataModels.Responses;
 using QuantumLogic.WebApi.Providers.Export.Excel.Leads;
 using SendGrid.Helpers.Mail;
 using System;
+using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
+using QuantumLogic.Core.Utils.Sms;
+using QuantumLogic.Data.EFContext;
 
 namespace QuantumLogic.WebApi.Controllers.Widget
 {
@@ -34,6 +38,7 @@ namespace QuantumLogic.WebApi.Controllers.Widget
         private readonly IRouteDomainService _routeDomainService;
         private readonly ITestDriveEmailService _testDriveEmailService;
         private readonly ISiteDomainService _siteDomainService;
+        private readonly ISmsService _smsService;
 
         #region Injected dependencies
 
@@ -44,7 +49,7 @@ namespace QuantumLogic.WebApi.Controllers.Widget
         #region Ctors
 
         public LeadController(
-            IQLUnitOfWorkManager uowManager, 
+            IQLUnitOfWorkManager uowManager,
             ILeadDomainService domainService,
             IExpertDomainService expertDomainService,
             IBeverageDomainService beverageDomainService,
@@ -59,6 +64,7 @@ namespace QuantumLogic.WebApi.Controllers.Widget
             _routeDomainService = routeDomainService;
             _siteDomainService = siteDomainService;
             _testDriveEmailService = testDriveEmailService;
+            _smsService = new TwilioSmsService();
             ContentManager = contentManager;
         }
 
@@ -129,7 +135,7 @@ namespace QuantumLogic.WebApi.Controllers.Widget
         {
             using (var uow = UowManager.CurrentOrCreateNew(true))
             {
-                await((ILeadDomainService)DomainService).ChangeIsNewAsync(id, request.Value);
+                await ((ILeadDomainService)DomainService).ChangeIsNewAsync(id, request.Value);
                 await uow.CompleteAsync();
             }
         }
@@ -160,9 +166,16 @@ namespace QuantumLogic.WebApi.Controllers.Widget
                 request.BookingCar.ImageUrl,
                 request.BookingCar.Title,
                 request.BookingCar.Vin,
-                $"{request.BookingDateTime.Date} {request.BookingDateTime.Time}" );
+                $"{request.BookingDateTime.Date} {request.BookingDateTime.Time}");
 
-            LeadFullDto result = await InnerCreateAsync(leadFullDto);
+            // LeadFullDto result = await InnerCreateAsync(leadFullDto);
+
+            // TODO: rewrite this nightmare
+            QuantumLogicDbContext context = new QuantumLogicDbContext();
+            context.Leads.Add(leadFullDto.MapToEntity());
+
+            context.SaveChanges();
+            context.Dispose();
 
             var expert = await _expertDomainService.RetrieveAsync((int)request.ExpertId);
             var beverage = await _beverageDomainService.RetrieveAsync((int)request.BeverageId);
@@ -180,10 +193,9 @@ namespace QuantumLogic.WebApi.Controllers.Widget
                     expert.Name,
                     beverage.Name,
                     road.Name,
-#warning Fill parameter with real Data
-                    site.Name, // TODO: site.dealerName 
-                    "", // TODO: site.dealerAddress
-                    "", // TODO: site.dealerPhone
+                    site.DealerName,
+                    site.DealerAddress,
+                    site.DealerPhone,
                     site.Url));
 
             var emails = site.NotificationContacts.Split(';')[0].Split(',');
@@ -195,7 +207,7 @@ namespace QuantumLogic.WebApi.Controllers.Widget
                 request.BookingUser.LastName,
                 request.BookingUser.Phone,
                 request.BookingUser.Email,
-                request.BookingDateTime.Date + " "+ request.BookingDateTime.Time,
+                request.BookingDateTime.Date + " " + request.BookingDateTime.Time,
                 expert.Name,
                 beverage.Name,
                 road.Name);
@@ -205,7 +217,33 @@ namespace QuantumLogic.WebApi.Controllers.Widget
                 _testDriveEmailService.SendNewLeadNotificationEmail(new EmailAddress(email), newLeadNotificationEmailTemplate);
             }
 
-            return result;
+            string smsContent = $"Good news, you have a new Lead for {site.Name} \n \n" +
+                                $"Vehicle: {request.BookingCar.Title} {request.BookingCar.Vin}\n" +
+                                $"Date & Time: {request.BookingDateTime.Date + request.BookingDateTime.Time} \n" +
+                                $"Expert: {expert.Name} \n" +
+                                $"Beverage: {beverage.Name} \n" +
+                                $"Road: {road.Name} \n";
+
+            var phoneNumbers = site.NotificationContacts.Split(';')[1].Split(',');
+            foreach (var number in phoneNumbers)
+            {
+                await _smsService.SendSms(number, smsContent);
+            }
+
+            return null;
+        }
+
+        [HttpPost("{siteId}/send-sms")]
+        public async Task SendSmsAsync(int siteId, [FromBody] SmsNotificationRequest request)
+        {
+            string smsContent = $"Your Upcoming Test Drive \n \n" +
+                                $"Vehicle: {request.VehicleTitle} \n" +
+                                $"Date & Time: {request.DateTime} \n" +
+                                $"Expert: {request.ExpertTitle} \n" +
+                                $"Beverage: {request.BeverageTitle} \n" +
+                                $"Road: {request.RoadTitle} \n";
+
+            await _smsService.SendSms(request.Phone, smsContent);
         }
 
         #endregion
@@ -220,7 +258,8 @@ namespace QuantumLogic.WebApi.Controllers.Widget
                 (!request.ExpertId.HasValue || request.ExpertId.Value == entity.ExpertId) &&
                 (!request.RouteId.HasValue || request.RouteId.Value == entity.RouteId) &&
                 (!request.BeverageId.HasValue || request.BeverageId.Value == entity.BeverageId) &&
-                (!request.RecievedDateTime.HasValue || request.RecievedDateTime.Value <= entity.RecievedUtc) &&
+                (!request.RecievedDateTimeUtc.HasValue || request.RecievedDateTimeUtc.Value <= entity.RecievedUtc) &&
+                (!request.BookingDateTimeUtc.HasValue || request.BookingDateTimeUtc.Value <= entity.BookingDateTimeUtc) &&
                 (!request.IsReachedByManager.HasValue || request.IsReachedByManager.Value == entity.IsReachedByManager) &&
                 (String.IsNullOrEmpty(request.FullName) || !String.IsNullOrEmpty(entity.FullName) && entity.FullName.ToUpper().Contains(request.FullName.ToUpper())) &&
                 (String.IsNullOrEmpty(request.FirstName) || !String.IsNullOrEmpty(entity.FirstName) && entity.FirstName.ToUpper().Contains(request.FirstName.ToUpper())) &&

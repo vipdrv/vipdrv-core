@@ -17,7 +17,8 @@ var TestDrive = TestDrive || (function () {
                     <div class="frame-header__title">Test Drive Booking</div>
                     <div class="frame-header__cross" onclick="TestDrive.closeTestDrive()">&#10006;</div>
                  </div>
-                 <iframe class="test-drive__frame" src="${encodeURI(url)}" frameBorder="0"></iframe>
+                 <img id="test-drive__frame-spinner" src="http://www.testdrive.pw/spinner.gif">
+                 <iframe class="test-drive__frame" src="${encodeURI(url)}" frameBorder="0" onload="document.getElementById('test-drive__frame-spinner').style.display='none';"></iframe>
              </div>`;
 
         document.getElementsByClassName('test-drive')[0].innerHTML = html;

@@ -17,11 +17,17 @@ export class SiteOverviewComponent implements OnInit, OnDestroy {
         this.promiseService = promiseService;
     }
     /// methods
-    ngOnInit(): void { }
+    ngOnInit(): void {
+        this.initWidget();
+    }
     ngOnDestroy(): void { }
     /// predicates
     protected isEntityDefined(): boolean {
         return Variable.isNotNullOrUndefined(this.entity);
+    }
+    protected initWidget(): void {
+        (<any>window).TestDrive.init({ SiteId: this.entity.id });
+        this.logger.logTrase(`WidgetPreviewComponent: Widget has been initialized for the site (siteId = ${this.entity.id}).`);
     }
     // experts
     protected showNoExperts(): boolean {

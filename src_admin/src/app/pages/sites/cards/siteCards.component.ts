@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, ViewChild } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { ModalComponent } from 'ng2-bs3-modal/ng2-bs3-modal';
 import { Variable, ConsoleLogger, ILogger } from './../../../utils/index';
@@ -8,6 +8,7 @@ import { ISiteEntityPolicyService, SiteEntityPolicyService } from './../../../se
 import { ISiteValidationService, SiteValidationService } from './../../../services/index';
 import { SiteEntity } from './../../../entities/index';
 import { SitesConstants } from './../sites.constants';
+import {promise} from "selenium-webdriver";
 @Component({
     selector: 'site-cards',
     styleUrls: ['./siteCards.scss'],
@@ -15,6 +16,8 @@ import { SitesConstants } from './../sites.constants';
 })
 export class SiteCardsComponent implements OnInit {
     /// inputs
+    /// outputs
+    @Output() resetForceAcceptImage: EventEmitter<void> = new EventEmitter<void>();
     /// modals
     @ViewChild('confirmationDeleteModal')
     protected confirmationDeleteModal: ModalComponent;
@@ -26,6 +29,7 @@ export class SiteCardsComponent implements OnInit {
     protected firstLoadPromise: Promise<void>;
     protected useValidationForSelectedEntity: boolean = false;
     protected siteImageAlt: string = SitesConstants.siteImageAlt;
+    protected forceAcceptImage: boolean = false;
     /// data fields
     protected items: Array<SiteEntity>;
     protected selectedEntity: SiteEntity;
@@ -65,6 +69,9 @@ export class SiteCardsComponent implements OnInit {
                 () => {
                     self.firstLoadPromise = null;
                 });
+    }
+    protected onResetForceAcceptImage(): void {
+        this.forceAcceptImage = false;
     }
     protected getNewLeadsForSuteUrl(siteId: number) {
         return '/#/pages/leads';
@@ -198,44 +205,46 @@ export class SiteCardsComponent implements OnInit {
         this._siteDetailsModalMode = 'Create';
         return this.siteDetailsModal.open();
     }
-    protected siteDetailsModalApply(): Promise<void> {
-        let actionPromise: Promise<void>;
+    protected siteDetailsModalApply(): void {
         if (!this.siteValidationService.isValid(this.selectedEntity)) {
             this.useValidationForSelectedEntity = true;
-            actionPromise = Promise.resolve();
         } else {
             this.useValidationForSelectedEntity = false;
+            this.forceAcceptImage = true;
             const self = this;
-            self.siteDetailsModalApplyPromise = (self._siteDetailsModalMode === 'Create' ?
-                self.createEntity(self.selectedEntity) :
-                self._siteDetailsModalMode === 'Update' ?
-                    self.updateEntity(self.selectedEntity) :
-                    Promise.resolve(self.selectedEntity))
-                .then(function (response: SiteEntity): Promise<void> {
-                    if (Variable.isNotNullOrUndefined(response)) {
-                        const elementIndex = self.items
-                            .findIndex((item: SiteEntity) => item.id === response.id);
-                        if (elementIndex !== -1) {
-                            self.items.splice(elementIndex, 1, response);
-                        } else {
-                            self.items.push(response);
-                            self.totalCount++;
-                        }
-                        self.selectedEntity = null;
-                        self._siteDetailsModalMode = null;
-                        return self.siteDetailsModal.close();
-                    }
-                })
-                .then(
-                    () => {
-                        self.siteDetailsModalApplyPromise = null;
-                    },
-                    () => {
-                        self.siteDetailsModalApplyPromise = null;
-                    });
-            actionPromise = self.siteDetailsModalApplyPromise;
+            // hack: is used to put this operation to the end of stack
+            setTimeout(
+                function() {
+                    self.siteDetailsModalApplyPromise = (self._siteDetailsModalMode === 'Create' ?
+                        self.createEntity(self.selectedEntity) :
+                        self._siteDetailsModalMode === 'Update' ?
+                            self.updateEntity(self.selectedEntity) :
+                            Promise.resolve(self.selectedEntity))
+                        .then(function (response: SiteEntity): Promise<void> {
+                            if (Variable.isNotNullOrUndefined(response)) {
+                                const elementIndex = self.items
+                                    .findIndex((item: SiteEntity) => item.id === response.id);
+                                if (elementIndex !== -1) {
+                                    self.items.splice(elementIndex, 1, response);
+                                } else {
+                                    self.items.push(response);
+                                    self.totalCount++;
+                                }
+                                self.selectedEntity = null;
+                                self._siteDetailsModalMode = null;
+                                return self.siteDetailsModal.close();
+                            }
+                        })
+                        .then(
+                            () => {
+                                self.siteDetailsModalApplyPromise = null;
+                            },
+                            () => {
+                                self.siteDetailsModalApplyPromise = null;
+                            });
+                },
+                0);
         }
-        return actionPromise;
     }
     protected siteDetailsModalDismiss(): Promise<void> {
         this.selectedEntity = null;

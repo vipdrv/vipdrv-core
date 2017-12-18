@@ -5,7 +5,7 @@ export class LeadEntity extends Entity {
     expertId: number;
     beverageId: number;
     routeId: number;
-    recievedDateTime: string;
+    recievedDateTimeUtc: string;
     firstName: number;
     secondName: number;
     userPhone: string;
@@ -35,7 +35,7 @@ export class LeadEntity extends Entity {
         this.expertId = mock.expertId;
         this.beverageId = mock.beverageId;
         this.routeId = mock.routeId;
-        this.recievedDateTime = Extensions.formatUtcDateTimeToLocalTimezone(dto.recievedUtc);
+        this.recievedDateTimeUtc = Extensions.formatUtcDateTimeToLocalTimezone(dto.recievedUtc);
         this.firstName = mock.firstName;
         this.secondName = mock.secondName;
         this.userPhone = mock.userPhone;

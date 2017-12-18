@@ -12,13 +12,18 @@ a[href], input[type='submit'], input[type='image'], label[for], select, button, 
   overflow: hidden;
 }
 
+.td-spinner {
+  margin: 20% auto 0%;
+  display: table;
+}
+
 // =======================================================================//
 // wizard-tab-content                                                     //
 // =======================================================================//
 
 .test-drive-widget__root {
   height: 100%;
-  // overflow: hidden;
+  overflow: hidden;
 }
 
 // =======================================================================//
@@ -26,7 +31,7 @@ a[href], input[type='submit'], input[type='image'], label[for], select, button, 
 // =======================================================================//
 
 .moment-picker td.selected {
-  background-image: linear-gradient(#007bff,#007bff) !important;
+  background-image: linear-gradient(#007bff, #007bff) !important;
 }
 
 .moment-picker td.selected {

@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { Extensions, ILogger, ConsoleLogger } from './../../../../utils/index';
 import { SiteEntity } from './../../../../entities/index';
 import { ISiteValidationService, SiteValidationService } from './../../../../services/index';
@@ -13,6 +13,9 @@ export class SiteDetailsEditComponent {
     @Input() entity: SiteEntity;
     @Input() isReadOnly: boolean = false;
     @Input() useValidation: boolean = false;
+    @Input() forceAcceptImage: boolean = false;
+    /// outputs
+    @Output() resetForceAcceptImage: EventEmitter<void> = new EventEmitter<void>();
     /// fields
     protected defaultImageUrl: string = SitesConstants.siteImageDefault;
     protected imageWidth: number = SitesConstants.siteImageWidth;
@@ -34,6 +37,9 @@ export class SiteDetailsEditComponent {
     protected onNewSiteImageSelected(newImageUrl: string): void {
         this.entity.imageUrl = newImageUrl;
         this.logger.logTrase('SiteDetailsEditComponent: New site image has been selected.');
+    }
+    protected onResetForceAcceptImage(): void {
+        this.resetForceAcceptImage.emit();
     }
     /// predicates
     protected isImageComponentReadOnly(): boolean {
