@@ -163,25 +163,24 @@
 
         <button title="Add to Calendar" class="addeventatc">
             Add to Calendar
-            <span class="start">{{$ctrl.userData.calendar.date}} {{$ctrl.userData.calendar.time}}</span>
-            <!--<span class="end">{{$ctrl.endDate}}</span>-->
-            <span class="timezone">America/Los_Angeles</span>
+            <!--<span class="start">{{$ctrl.userData.calendar.date}} {{$ctrl.userData.calendar.time}}</span>-->
+            <span class="start">2017-12-20 4:00 PM</span>
+            <span class="timezone">Europe/Kiev</span>
             <span class="title">VIPdrv - VIP Test Drive</span>
             <span class="description">
-                <p>Hi {{$ctrl.userData.user.firstName}} {{$ctrl.userData.user.lastName}}. <br>We've confirmed your test drive booking. Details below.</p>
-
-                <p><b>Vehicle:</b> {{$ctrl.userData.car.title}}</p>
-                <p><b>Date & Time:</b> {{$ctrl.userData.calendar.date}} {{$ctrl.userData.calendar.time}}</p>
-                <p><b>Expert:</b> {{$ctrl.userData.expert.name}}</p>
-                <p><b>Beverage:</b> {{$ctrl.userData.beverage.name}}</p>
-                <p><b>Road:</b> {{$ctrl.userData.road.name}}</p>
-                <p>The Dealership is looking forward to your visit on {{bookingDateTime}}</p>
-                <hr>
-                <b>{{$ctrl.siteData.name}}</b><br>
+                Hi {{$ctrl.userData.user.firstName}} {{$ctrl.userData.user.lastName}}.<br>
+                We've confirmed your test drive booking. Details below.<br><br>
+                Vehicle: {{$ctrl.userData.car.title}}<br>
+                Date & Time: {{$ctrl.userData.calendar.date}} {{$ctrl.userData.calendar.time}}<br>
+                Expert: {{$ctrl.userData.expert.name}}<br>
+                Beverage: {{$ctrl.userData.beverage.name}}<br>
+                Road: {{$ctrl.userData.road.name}}<br><br>
+                The Dealership is looking forward to your visit.<br>
+                {{$ctrl.siteData.name}}<br>
                 {{$ctrl.siteData.address}}<br>
                 {{$ctrl.siteData.phone}}<br>
                 <!-- 8:30am-7pm<br> -->
-                {{$ctrl.siteData.url}}
+                {{$ctrl.siteData.url}}<br>
             </span>
             <span class="location">{{$ctrl.siteData.address ? $ctrl.siteData.address : 'Dealer Address'}}</span>
         </button>
