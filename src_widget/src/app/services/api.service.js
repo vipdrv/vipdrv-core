@@ -97,6 +97,34 @@
                 };
 
                 var promise = $http(req).then(function (responce) {
+                    responce.data.workingHours = [
+                        {
+                            "dayOfWeek": 1,
+                            "startTime": "08:00:00",
+                            "endTime": "18:00:00"
+                        },
+                        {
+                            "dayOfWeek": 2,
+                            "startTime": "06:00:00",
+                            "endTime": "14:00:00"
+                        },
+                        {
+                            "dayOfWeek": 3,
+                            "startTime": "08:00:00",
+                            "endTime": "20:00:00"
+                        },
+                        {
+                            "dayOfWeek": 4,
+                            "startTime": "08:00:00",
+                            "endTime": "18:00:00"
+                        },
+                        {
+                            "dayOfWeek": 5,
+                            "startTime": "08:00:00",
+                            "endTime": "18:00:00"
+                        }
+                    ];
+
                     return responce.data;
                 }, function () {
                 });

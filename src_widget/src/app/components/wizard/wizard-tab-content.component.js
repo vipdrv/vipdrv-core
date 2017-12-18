@@ -65,13 +65,13 @@
                 // =======================================================================//
 
                 self.$onInit = function () {
-                    self.openHours = [];
+                    self.site = [];
                     self.experts = [];
                     self.beverages = [];
                     self.roads = [];
 
-                    api.retrieveOpenHours().then(function (data) {
-                        self.openHours = data.workingIntervals;
+                    api.retrieveSite().then(function (data) {
+                        self.site = data;
                     });
                     api.retrieveExperts().then(function (data) {
                         self.experts = data.items;
