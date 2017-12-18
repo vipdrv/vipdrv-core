@@ -1,5 +1,5 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
-import { Extensions, ILogger, ConsoleLogger } from './../../../../utils/index';
+import { Extensions, ILogger, ConsoleLogger, WorkingInterval } from './../../../../utils/index';
 import { SiteEntity } from './../../../../entities/index';
 import { ISiteValidationService, SiteValidationService } from './../../../../services/index';
 import { SitesConstants } from './../../sites.constants';
@@ -41,12 +41,18 @@ export class SiteDetailsEditComponent {
     protected onResetForceAcceptImage(): void {
         this.resetForceAcceptImage.emit();
     }
+    protected onActualizeWorkingHours(newWorkingHours: Array<WorkingInterval>): void {
+        this.entity.workingHours = newWorkingHours;
+    }
     /// predicates
     protected isImageComponentReadOnly(): boolean {
         return this.isReadOnly;
     }
     protected isValidationActive(): boolean {
         return this.useValidation;
+    }
+    protected isWeekScheduleComponentReadOnly(): boolean {
+        return this.isReadOnly;
     }
     /// methods for properties
     // site name

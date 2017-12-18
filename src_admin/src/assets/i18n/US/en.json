@@ -100,7 +100,8 @@
       "siteName": "Site Name",
       "siteNameHelp": "Enter the name of the site.",
       "siteUrl": "Site url",
-      "siteUrlHelp": "Enter the url of the site (like http://yoursite.url)."
+      "siteUrlHelp": "Enter the url of the site (like http://yoursite.url).",
+      "weekSchedule": "Week schedule"
     },
     "table": {
       "headerText_siteName": "Site name",
