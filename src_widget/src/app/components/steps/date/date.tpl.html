@@ -2,13 +2,14 @@
     <div class="col-md-6 col-sm-12 d-none d-sm-none d-md-none d-lg-block d-xl-block">
         <h2 class="wizard-tab-content__title text-center text-md-left">Select Date</h2>
         <p></p>
-        <div moment-picker="$ctrl.dateImput"
+        <div ng-if="$ctrl.stepDataDidLoaded"
+             moment-picker="$ctrl.dateImput"
              change="$ctrl.dateChanged(oldValue, newValue)"
+             min-date="$ctrl.minDateString"
+             selectable="$ctrl.isSelectable(date, type)"
              format="YYYY-MM-DD d"
              min-view="month"
              max-view="month"
-             min-date="$ctrl.minDateString"
-             selectable="$ctrl.isSelectable(date, type)"
              today="true"
              keyboard="true"
              inline="true"
@@ -34,11 +35,14 @@
     <div class="col-sm-12 d-sm-block d-md-block d-lg-none d-xl-none">
         <h2 class="wizard-tab-content__title text-center">Select Date & Time</h2>
         <p></p>
-        <div moment-picker="ctrl.dateTimeInput"
-             format="LL LTS"
+        <div ng-if="$ctrl.stepDataDidLoaded"
+             moment-picker="$ctrl.dateTimeInput"
+             change="$ctrl.mobileDateChanged(oldValue, newValue)"
+             selectable="$ctrl.isSelectableMobile(date, type)"
+             format="YYYY-MM-DD LT"
              min-view="month"
-             max-view="hour"
-             min-date="'2017-09-26'"
+             max-view="day"
+             min-date="$ctrl.minDateString"
              today="true"
              inline="true"
              class="test-drive__date-picker">

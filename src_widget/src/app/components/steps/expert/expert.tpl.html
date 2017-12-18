@@ -13,7 +13,9 @@
              card-desc="expert.description"
              is-active-card="expert.name == $ctrl.userData.expert.name"
              ng-click="$ctrl.expertChanged(expert.id, expert.photoUrl, expert.name, expert.description)">
+
     </td-card>
+    <!-- ng-if=(expert.isActive && isAvaliable(expert.workingHours)) -->
 </div>
 
 <div class="row wizard-navigation-tab-next-button--desktop d-none d-md-block">

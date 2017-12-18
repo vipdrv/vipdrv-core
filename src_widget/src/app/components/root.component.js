@@ -1,33 +1,31 @@
 (function () {
     angular.module('myApp')
-        .component('tdRoot', {
-            controller: function ($scope, globalState, userData, widgetTabs, api) {
-                $scope.userData = userData;
-                $scope.globalState = globalState;
-
+        .component('root', {
+            controller: function ($scope, globalState, userData, widgetTabs, api, clientId) {
                 var self = this;
-                $scope.widgetTabs = widgetTabs;
 
-                $scope.switchTab = function (tabId) {
+                self.userData = userData;
+                self.clientId = clientId;
+                self.widgetTabs = widgetTabs;
+                self.globalState = globalState;
 
-                    if ($scope.widgetTabs[tabId].isActive) {
-                        // console.log('Tab is already active');
+                self.switchTab = function (tabId) {
+                    if (self.widgetTabs[tabId].isActive) {
                         return;
                     }
 
-                    if ($scope.widgetTabs[tabId].isLocked) {
-                        // console.log('Tab is locked');
+                    if (self.widgetTabs[tabId].isLocked) {
                         return;
                     }
 
                     for (var key in self.widgetTabs) {
-                        $scope.widgetTabs[key].isActive = false;
+                        self.widgetTabs[key].isActive = false;
                     }
 
-                    for (var key in $scope.widgetTabs) {
-                        $scope.widgetTabs[key].isActive = false;
+                    for (var key in self.widgetTabs) {
+                        self.widgetTabs[key].isActive = false;
                     }
-                    $scope.widgetTabs[tabId].isActive = true;
+                    self.widgetTabs[tabId].isActive = true;
                 };
 
                 // =======================================================================//
@@ -35,6 +33,7 @@
                 // =======================================================================//
 
                 self.$onInit = function () {
+
                     self.site = null;
 
                     api.retrieveSite().then(function (data) {

@@ -1,7 +1,9 @@
 (function () {
     var app = angular.module('myApp', ['templates', 'moment-picker']);
 
-
+    app.factory('clientId', function clientIdFactory(api) {
+        return 'a12345654321x';
+    });
 
     // =======================================================================//
     // App Configs                                                            //
@@ -111,7 +113,7 @@
     };
 
     // =======================================================================//
-    // Parse Url Params                                                       //
+    // Widget Initialization                                                  //
     // =======================================================================//
 
     var url = new FiltersFromUrl(window.location.search).get();
@@ -141,5 +143,4 @@
     app.value('userData', userData);
     app.value('apiBaseUrl', apiBaseUrl);
     app.value('siteId', siteId);
-
 })();
