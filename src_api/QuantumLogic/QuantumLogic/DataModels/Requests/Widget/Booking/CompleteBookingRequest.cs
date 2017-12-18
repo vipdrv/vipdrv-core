@@ -9,7 +9,7 @@ namespace QuantumLogic.WebApi.DataModels.Requests.Widget.Booking
     public class CompleteBookingRequest
     {
         public BookingUser BookingUser { get; set; }
-        public BookingDateTime BookingDateTime { get; set; }
+        public BookingDateTime Calendar { get; set; }
         public BookingCar BookingCar { get; set; }
         public int? ExpertId { get; set;}
         public int? BeverageId { get; set; }
@@ -18,7 +18,7 @@ namespace QuantumLogic.WebApi.DataModels.Requests.Widget.Booking
         public CompleteBookingRequest()
         {
             BookingUser = new BookingUser();
-            BookingDateTime = new BookingDateTime();
+            Calendar = new BookingDateTime();
             BookingCar = new BookingCar();
         }
     }

@@ -21,8 +21,11 @@ using QuantumLogic.WebApi.DataModels.Responses;
 using QuantumLogic.WebApi.Providers.Export.Excel.Leads;
 using SendGrid.Helpers.Mail;
 using System;
+using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
+using QuantumLogic.Data.EFContext;
 
 namespace QuantumLogic.WebApi.Controllers.Widget
 {
@@ -44,7 +47,7 @@ namespace QuantumLogic.WebApi.Controllers.Widget
         #region Ctors
 
         public LeadController(
-            IQLUnitOfWorkManager uowManager, 
+            IQLUnitOfWorkManager uowManager,
             ILeadDomainService domainService,
             IExpertDomainService expertDomainService,
             IBeverageDomainService beverageDomainService,
@@ -129,7 +132,7 @@ namespace QuantumLogic.WebApi.Controllers.Widget
         {
             using (var uow = UowManager.CurrentOrCreateNew(true))
             {
-                await((ILeadDomainService)DomainService).ChangeIsNewAsync(id, request.Value);
+                await ((ILeadDomainService)DomainService).ChangeIsNewAsync(id, request.Value);
                 await uow.CompleteAsync();
             }
         }
@@ -160,9 +163,16 @@ namespace QuantumLogic.WebApi.Controllers.Widget
                 request.BookingCar.ImageUrl,
                 request.BookingCar.Title,
                 request.BookingCar.Vin,
-                $"{request.BookingDateTime.Date} {request.BookingDateTime.Time}" );
+                $"{request.Calendar.Date} {request.Calendar.Time}");
 
-            LeadFullDto result = await InnerCreateAsync(leadFullDto);
+            // LeadFullDto result = await InnerCreateAsync(leadFullDto);
+
+            // TODO: rewrite this nightmare
+            QuantumLogicDbContext context = new QuantumLogicDbContext();
+            context.Leads.Add(leadFullDto.MapToEntity());
+
+            context.SaveChanges();
+            context.Dispose();
 
             var expert = await _expertDomainService.RetrieveAsync((int)request.ExpertId);
             var beverage = await _beverageDomainService.RetrieveAsync((int)request.BeverageId);
@@ -174,16 +184,15 @@ namespace QuantumLogic.WebApi.Controllers.Widget
                 new CompleteBookingEmailTemplate(
                     request.BookingUser.FirstName,
                     request.BookingUser.LastName,
-                    request.BookingDateTime.Date + " " + request.BookingDateTime.Time,
+                    request.Calendar.Date + " " + request.Calendar.Time,
                     request.BookingCar.ImageUrl,
                     request.BookingCar.Title,
                     expert.Name,
                     beverage.Name,
                     road.Name,
-#warning Fill parameter with real Data
-                    site.Name, // TODO: site.dealerName 
-                    "", // TODO: site.dealerAddress
-                    "", // TODO: site.dealerPhone
+                    site.DealerName,
+                    site.DealerAddress,
+                    site.DealerPhone,
                     site.Url));
 
             var emails = site.NotificationContacts.Split(';')[0].Split(',');
@@ -195,7 +204,7 @@ namespace QuantumLogic.WebApi.Controllers.Widget
                 request.BookingUser.LastName,
                 request.BookingUser.Phone,
                 request.BookingUser.Email,
-                request.BookingDateTime.Date + " "+ request.BookingDateTime.Time,
+                request.Calendar.Date + " " + request.Calendar.Time,
                 expert.Name,
                 beverage.Name,
                 road.Name);
@@ -205,7 +214,7 @@ namespace QuantumLogic.WebApi.Controllers.Widget
                 _testDriveEmailService.SendNewLeadNotificationEmail(new EmailAddress(email), newLeadNotificationEmailTemplate);
             }
 
-            return result;
+            return null;
         }
 
         #endregion
