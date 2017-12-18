@@ -38,6 +38,12 @@
                     self.userData.expert.name = 'Skipped';
                     self.completeStep({tabId: self.tabId});
                 };
+
+                self.isAvaliable = function(expertWorkingHours) {
+                    // TODO: replace with implementation
+                    return true;
+                }
+
             },
             templateUrl: 'src/app/components/steps/expert/expert.tpl.html',
             bindings: {
