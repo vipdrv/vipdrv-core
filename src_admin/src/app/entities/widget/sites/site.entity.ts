@@ -1,4 +1,4 @@
-import { Variable } from './../../../utils/index';
+import { Variable, WorkingInterval } from './../../../utils/index';
 import { Entity } from './../../index';
 export class SiteEntity extends Entity {
     /// entity properties
@@ -20,6 +20,7 @@ export class SiteEntity extends Entity {
     dealerName: string;
     dealerAddress: string;
     dealerPhone: string;
+    workingHours: Array<WorkingInterval>;
 
     /// ctor
     constructor() {
@@ -49,5 +50,6 @@ export class SiteEntity extends Entity {
         this.dealerName = mock.dealerName;
         this.dealerAddress = mock.dealerAddress;
         this.dealerPhone = mock.dealerPhone;
+        this.workingHours = WorkingInterval.initializeManyFromDto(dto.workingHours);
     }
 }

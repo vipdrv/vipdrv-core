@@ -1,4 +1,7 @@
 ﻿using QuantumLogic.Core.Domain.Entities.WidgetModule;
+using QuantumLogic.Core.Utils.Scheduling.Week;
+using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace QuantumLogic.WebApi.DataModels.Dtos.Widget.Sites
@@ -13,6 +16,8 @@ namespace QuantumLogic.WebApi.DataModels.Dtos.Widget.Sites
         public int ActiveBeveragesAmount { get; set; }
         public int ActiveRoutesAmount { get; set; }
 
+        public IList<DayOfWeekInterval> WorkingHours { get; set; }
+
         public override void MapFromEntity(Site entity)
         {
             base.MapFromEntity(entity);
@@ -22,6 +27,14 @@ namespace QuantumLogic.WebApi.DataModels.Dtos.Widget.Sites
             ActiveExpertsAmount = entity.Experts.Where(r => r.IsActive).Count();
             ActiveBeveragesAmount = entity.Beverages.Where(r => r.IsActive).Count();
             ActiveRoutesAmount = entity.Routes.Where(r => r.IsActive).Count();
+            WorkingHours = DayOfWeekInterval.Parse(entity.WorkingHours);
+        }
+
+        public override Site MapToEntity()
+        {
+            Site entity = base.MapToEntity();
+            entity.WorkingHours = String.Join(DayOfWeekInterval.DayOfWeekIntervalsSeparator.ToString(), DayOfWeekInterval.Purify(WorkingHours).Select(r => r.ToString()));
+            return entity;
         }
     }
 }
