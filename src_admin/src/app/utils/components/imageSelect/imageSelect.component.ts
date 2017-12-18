@@ -22,8 +22,10 @@ export class ImageSelectComponent implements OnInit, OnChanges {
     @Input() isRounded: boolean = false;
     @Input() imageAlt: string = 'image';
     @Input() columnRules: string = 'col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6';
+    @Input() forceAcceptImage: boolean = false;
     /// outputs
     @Output() imageUrlSelected: EventEmitter<string> = new EventEmitter<string>();
+    @Output() resetForceAcceptImage: EventEmitter<void> = new EventEmitter<void>();
     /// view children
     @ViewChild('imageCropper', undefined)
     protected imageCropper: ImageCropperComponent;
@@ -46,10 +48,21 @@ export class ImageSelectComponent implements OnInit, OnChanges {
         this.initializeImageCropper();
     }
     ngOnChanges(changes: SimpleChanges) {
-        const workingHoursChange: SimpleChange = changes['imageUrl'];
-        if (Variable.isNotNullOrUndefined(workingHoursChange) &&
+        const imageChanged: SimpleChange = changes['imageUrl'];
+        if (Variable.isNotNullOrUndefined(imageChanged) &&
             this.newImageUrl !== this.imageUrl) {
             this.newImageUrl = this.imageUrl;
+        }
+        const imageAccepted: SimpleChange = changes['forceAcceptImage'];
+        if (Variable.isNotNullOrUndefined(imageAccepted)
+            && imageAccepted.currentValue
+            && imageAccepted.currentValue !== imageAccepted.previousValue) {
+            if (this.componentMode === ComponentMode.EditViaCropper) {
+                this.commitEditImageViaCropper();
+            } else if (this.componentMode === ComponentMode.EditViaUrlInput) {
+                this.commitEditImageViaUrlInput();
+            }
+            this.resetForceAcceptImage.emit();
         }
     }
     getColumnRules(): string{

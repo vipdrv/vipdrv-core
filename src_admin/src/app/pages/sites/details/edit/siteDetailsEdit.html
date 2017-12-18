@@ -9,7 +9,9 @@
                           [isRounded]="isImageRounded"
                           [imageAlt]="imageAlt"
                           [columnRules]="columnRules"
-                          (imageUrlSelected)="onNewSiteImageSelected($event)"></image-select>
+                          [forceAcceptImage]="forceAcceptImage"
+                          (imageUrlSelected)="onNewSiteImageSelected($event)"
+                          (resetForceAcceptImage)="onResetForceAcceptImage($event)"></image-select>
         </div>
     </div>
 

@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { Extensions, ILogger, ConsoleLogger, WorkingInterval } from './../../../../utils/index';
 import { ExpertEntity } from './../../../../entities/index';
 import { IExpertValidationService, ExpertValidationService } from './../../../../services/index';
@@ -13,6 +13,9 @@ export class ExpertDetailsEditComponent {
     @Input() entity: ExpertEntity;
     @Input() isReadOnly: boolean = false;
     @Input() useValidation: boolean = false;
+    @Input() forceAcceptImage: boolean = false;
+    /// outputs
+    @Output() resetForceAcceptImage: EventEmitter<void> = new EventEmitter<void>();
     /// fields
     protected defaultImageUrl: string = ExpertsConstants.expertImageDefault;
     protected imageWidth: number = ExpertsConstants.expertImageWidth;
@@ -37,6 +40,9 @@ export class ExpertDetailsEditComponent {
     }
     protected onActualizeWorkingHours(newWorkingHours: Array<WorkingInterval>): void {
         this.entity.workingHours = newWorkingHours;
+    }
+    protected onResetForceAcceptImage(): void {
+        this.resetForceAcceptImage.emit();
     }
     /// predicates
     protected isImageComponentReadOnly(): boolean {

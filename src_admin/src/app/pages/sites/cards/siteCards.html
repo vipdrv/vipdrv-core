@@ -109,7 +109,9 @@
         <div *ngIf="isSelectedEntityDefined()">
             <site-details-edit [entity]="selectedEntity"
                                [isReadOnly]="isSiteDetailsComponentReadOnly()"
-                               [useValidation]="useValidationForSelectedEntity"></site-details-edit>
+                               [useValidation]="useValidationForSelectedEntity"
+                               [forceAcceptImage]="forceAcceptImage"
+                               (resetForceAcceptImage)="onResetForceAcceptImage($event)"></site-details-edit>
         </div>
     </modal-body>
     <modal-footer>

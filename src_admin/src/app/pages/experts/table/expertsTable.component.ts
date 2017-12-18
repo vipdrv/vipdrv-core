@@ -18,6 +18,7 @@ export class ExpertsTableComponent implements OnInit {
     @Input() filter: any;
     /// outputs
     @Output() onEntityChanged: EventEmitter<any> = new EventEmitter<any>();
+    @Output() resetForceAcceptImage: EventEmitter<void> = new EventEmitter<void>();
     /// children
     @ViewChild('confirmationDeleteModal')
     protected confirmationDeleteModal: ModalComponent;
@@ -33,6 +34,7 @@ export class ExpertsTableComponent implements OnInit {
     private _useValidation: boolean = false;
     protected imageInTableWidth: number = 50;
     protected imageInTableHeight: number = 50;
+    protected forceAcceptImage: boolean = false;
     /// promise fields
     protected firstLoadingPromise: Promise<void>;
     protected getAllPromise: Promise<void>;
@@ -75,6 +77,9 @@ export class ExpertsTableComponent implements OnInit {
             .then(
                 () => self.firstLoadingPromise = null,
                 () => self.firstLoadingPromise = null);
+    }
+    protected onResetForceAcceptImage(): void {
+        this.forceAcceptImage = false;
     }
     protected notifyOnChanges(entityActivated: boolean = false, entityDeactivated: boolean = false): void {
         if (Variable.isNotNullOrUndefined(this.onEntityChanged)) {
@@ -315,7 +320,7 @@ export class ExpertsTableComponent implements OnInit {
                 }
             );
     }
-    protected modalApply(): Promise<void> {
+    protected modalApply(): void {
         if (Variable.isNotNullOrUndefined(this.selectedEntity)) {
             if (this.selectedEntity.facebookUrl === '') {
                 this.selectedEntity.facebookUrl = null;
@@ -327,37 +332,40 @@ export class ExpertsTableComponent implements OnInit {
         if (this.entityValidationService.isValid(this.selectedEntity)) {
             const self = this;
             self._useValidation = false;
-            const operationPromise: Promise<ExpertEntity> = self.selectedEntity.id ?
-                self.entityApiService.update(self.selectedEntity) :
-                self.entityApiService.create(self.selectedEntity);
-            self.saveEntityId = self.selectedEntity.id;
-            self.savePromise = operationPromise
-                .then(function (entity: ExpertEntity): Promise<void> {
-                    const elementIndex = self.items.findIndex((item: ExpertEntity) => item.id === entity.id);
-                    if (elementIndex !== -1) {
-                        self.items.splice(elementIndex, 1, entity);
-                        self.notifyOnChanges();
-                    } else {
-                        self.items.push(entity);
-                        self.totalCount++;
-                        self.notifyOnChanges(entity.isActive, !entity.isActive);
-                    }
-                    return self.editModalDismiss();
-                })
-                .then(
-                    () => {
-                        self.saveEntityId = null;
-                        self.savePromise = null;
-                    },
-                    () => {
-                        self.saveEntityId = null;
-                        self.savePromise = null;
-                    }
-                );
-            return self.savePromise;
+            self.forceAcceptImage = true;
+            setTimeout(
+                function () {
+                    const operationPromise: Promise<ExpertEntity> = self.selectedEntity.id ?
+                        self.entityApiService.update(self.selectedEntity) :
+                        self.entityApiService.create(self.selectedEntity);
+                    self.saveEntityId = self.selectedEntity.id;
+                    self.savePromise = operationPromise
+                        .then(function (entity: ExpertEntity): Promise<void> {
+                            const elementIndex = self.items.findIndex((item: ExpertEntity) => item.id === entity.id);
+                            if (elementIndex !== -1) {
+                                self.items.splice(elementIndex, 1, entity);
+                                self.notifyOnChanges();
+                            } else {
+                                self.items.push(entity);
+                                self.totalCount++;
+                                self.notifyOnChanges(entity.isActive, !entity.isActive);
+                            }
+                            return self.editModalDismiss();
+                        })
+                        .then(
+                            () => {
+                                self.saveEntityId = null;
+                                self.savePromise = null;
+                            },
+                            () => {
+                                self.saveEntityId = null;
+                                self.savePromise = null;
+                            }
+                        );
+                },
+                0);
         } else {
             this._useValidation = true;
-            return Promise.resolve();
         }
     }
     protected editModalDismiss(): Promise<void> {
