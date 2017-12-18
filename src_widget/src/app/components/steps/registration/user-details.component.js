@@ -15,8 +15,8 @@
 
                     });
 
-                    self.completeForm();
 
+                    self.completeForm();
                 };
             },
             templateUrl: 'src/app/components/steps/registration/user-details.tpl.html',

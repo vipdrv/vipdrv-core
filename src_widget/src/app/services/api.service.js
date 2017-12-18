@@ -152,9 +152,49 @@
                 return promise;
             };
 
+            this.sendMeSms = function (userData) {
+                var req = {
+                    method: 'POST',
+                    url: apiBaseUrl + '/lead/' + siteId + '/send-sms',
+                    headers: {
+                        'content-type': 'application/json'
+                    },
+                    data: JSON.stringify(mapToSmsDto(userData))
+                };
+
+                var promise = $http(req).then(function (responce) {
+                    return responce.data;
+                }, function () {
+                });
+
+                return promise;
+            };
+
             // =======================================================================//
             // Get Widget Data                                                        //
             // =======================================================================//
+
+
+            var mapToSmsDto = function (userData) {
+
+                var smsDto = {
+                    phone: null,
+                    dateTime: null,
+                    vehicleTitle: null,
+                    expertTitle: null,
+                    beverageTitle: null,
+                    roadTitle: null
+                };
+
+                smsDto.phone = userData.user.phone;
+                smsDto.dateTime = userData.calendar.date + ' ' + userData.calendar.time;
+                smsDto.vehicleTitle = userData.car.title;
+                smsDto.expertTitle = userData.expert.name;
+                smsDto.beverageTitle = userData.beverage.name;
+                smsDto.roadTitle = userData.road.name;
+
+                return smsDto;
+            };
 
             var mapToBookingRequestDto = function (userData) {
 

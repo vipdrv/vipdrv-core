@@ -14,7 +14,7 @@
 
     angular.module('myApp')
         .component('tdCompleteStep', {
-            controller: function ($timeout, $window) {
+            controller: function ($timeout, $window, api) {
                 var self = this;
 
                 // =======================================================================//
@@ -47,10 +47,11 @@
 
                 self.sendSms = function () {
                     self.isSmsLoading = true;
-                    $timeout(function () {
+
+                    api.sendMeSms(self.userData).then(function () {
                         self.isSmsSended = true;
                         self.isSmsLoading = false;
-                    }, 2000);
+                    });
                 }
             },
             templateUrl: 'src/app/components/steps/complete-step/complete-step.tpl.html',
