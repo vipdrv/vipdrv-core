@@ -25,5 +25,11 @@ namespace QuantumLogic.Tests.Core.Utils.Email
             var emailTo = new EmailAddress("ultramarine256@gmail.com", "Evgeny Platonov");
             // driveEmailService.SendDealerInvitationEmail(emailTo, );
         }
+
+        [Test]
+        public void EmptyTest__ShouldParseFromTeamCity()
+        {
+            Console.WriteLine("#313 Test Passed");
+        }
     }
 }

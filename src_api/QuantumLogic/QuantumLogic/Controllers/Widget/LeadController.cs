@@ -38,6 +38,7 @@ namespace QuantumLogic.WebApi.Controllers.Widget
         private readonly IRouteDomainService _routeDomainService;
         private readonly ITestDriveEmailService _testDriveEmailService;
         private readonly ISiteDomainService _siteDomainService;
+        private readonly ISmsService _smsService;
 
         #region Injected dependencies
 
@@ -63,6 +64,7 @@ namespace QuantumLogic.WebApi.Controllers.Widget
             _routeDomainService = routeDomainService;
             _siteDomainService = siteDomainService;
             _testDriveEmailService = testDriveEmailService;
+            _smsService = new TwilioSmsService();
             ContentManager = contentManager;
         }
 
@@ -214,15 +216,26 @@ namespace QuantumLogic.WebApi.Controllers.Widget
             {
                 _testDriveEmailService.SendNewLeadNotificationEmail(new EmailAddress(email), newLeadNotificationEmailTemplate);
             }
-            
+
+            string smsContent = $"Good news, you have a new Lead for {site.Name} \n \n" +
+                                $"Vehicle: {request.BookingCar.Title} {request.BookingCar.Vin}\n" +
+                                $"Date & Time: {request.BookingDateTime.Date + request.BookingDateTime.Time} \n" +
+                                $"Expert: {expert.Name} \n" +
+                                $"Beverage: {beverage.Name} \n" +
+                                $"Road: {road.Name} \n";
+
+            var phoneNumbers = site.NotificationContacts.Split(';')[1].Split(',');
+            foreach (var number in phoneNumbers)
+            {
+                await _smsService.SendSms(number, smsContent);
+            }
+
             return null;
         }
 
         [HttpPost("{siteId}/send-sms")]
         public async Task SendSmsAsync(int siteId, [FromBody] SmsNotificationRequest request)
         {
-            ISmsService smsService = new TwilioSmsService();
-
             string smsContent = $"Your Upcoming Test Drive \n \n" +
                                 $"Vehicle: {request.VehicleTitle} \n" +
                                 $"Date & Time: {request.DateTime} \n" +
@@ -230,7 +243,7 @@ namespace QuantumLogic.WebApi.Controllers.Widget
                                 $"Beverage: {request.BeverageTitle} \n" +
                                 $"Road: {request.RoadTitle} \n";
 
-            await smsService.SendSms(request.Phone, smsContent);
+            await _smsService.SendSms(request.Phone, smsContent);
         }
 
         #endregion
