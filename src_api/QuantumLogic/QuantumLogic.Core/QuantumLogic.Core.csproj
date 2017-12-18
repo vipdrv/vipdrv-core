@@ -14,4 +14,8 @@
     <PackageReference Include="WindowsAzure.Storage" Version="8.4.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Utils\ADFGenerator\Templates\" />
+  </ItemGroup>
+
 </Project>

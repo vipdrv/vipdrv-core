@@ -15,6 +15,7 @@
                 self.mobileDateTimeInput= null;
                 self.widgetWorkingHours = null;
                 self.stepDataDidLoaded = false;
+                self.isLoading = true;
 
                 // =======================================================================//
                 // Init                                                                   //
@@ -29,6 +30,7 @@
                 self.$onChanges = function ({stepData}) {
                     if (angular.isDefined(stepData)) {
                         if (!stepData.isFirstChange()) {
+                            self.isLoading = false;
                             self.stepDataDidLoaded = true;
                             self.widgetWorkingHours = self.mapToWidgetWorkingHours(self.stepData.workingHours);
 

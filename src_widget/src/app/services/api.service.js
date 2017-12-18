@@ -101,22 +101,22 @@
                         {
                             "dayOfWeek": 1,
                             "startTime": "08:00:00",
-                            "endTime": "18:00:00"
+                            "endTime": "19:00:00"
                         },
                         {
                             "dayOfWeek": 2,
-                            "startTime": "06:00:00",
-                            "endTime": "14:00:00"
+                            "startTime": "08:00:00",
+                            "endTime": "19:00:00"
                         },
                         {
                             "dayOfWeek": 3,
                             "startTime": "08:00:00",
-                            "endTime": "20:00:00"
+                            "endTime": "8:00:00"
                         },
                         {
                             "dayOfWeek": 4,
                             "startTime": "08:00:00",
-                            "endTime": "18:00:00"
+                            "endTime": "19:00:00"
                         },
                         {
                             "dayOfWeek": 5,
