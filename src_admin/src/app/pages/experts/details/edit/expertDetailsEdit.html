@@ -19,6 +19,7 @@
         <div class="col-12">
             <div class="form-group">
                 <label for="expertName"
+                       class="test-drive-input-label"
                        translate>
                     experts.modal.expertName
                 </label>
@@ -45,7 +46,36 @@
     <div class="row test-drive-modal-body-edit-entity-container-row-input">
         <div class="col-12">
             <div class="form-group">
+                <label for="expertTitle"
+                       class="test-drive-input-label"
+                       translate>
+                    experts.modal.expertTitle
+                </label>
+                <input id="expertTitle"
+                       name="expertTitle"
+                       type="text"
+                       class="form-control"
+                       [ngClass]="extensions.getInputValidationClass(isValidationActive(), validationService.isValidTitle(entity))"
+                       [disabled]="isComponentReadOnly()"
+                       [(ngModel)]="entity.title">
+                <small class="form-text text-muted"
+                       *ngIf="!isValidationActive() || validationService.isValidTitle(entity)"
+                       translate>
+                    experts.modal.expertTitleHelp
+                </small>
+                <small class="form-text test-drive-validation-message"
+                       *ngIf="isValidationActive() && !validationService.isValidTitle(entity)"
+                       translate>
+                    {{ validationService.getInvalidTitleMessageKey(entity) }}
+                </small>
+            </div>
+        </div>
+    </div>
+    <div class="row test-drive-modal-body-edit-entity-container-row-input">
+        <div class="col-12">
+            <div class="form-group">
                 <label for="expertDescription"
+                       class="test-drive-input-label"
                        translate>
                     experts.modal.expertDescription
                 </label>
@@ -70,10 +100,123 @@
             </div>
         </div>
     </div>
+    <div class="row hidden-lg-up test-drive-modal-body-edit-entity-container-row-input">
+        <div class="col-12">
+            <div class="form-group">
+                <label for="expertEmail"
+                       class="test-drive-input-label"
+                       translate>
+                    experts.modal.expertEmail
+                </label>
+                <input id="expertEmail"
+                       name="expertEmail"
+                       type="email"
+                       class="form-control"
+                       [ngClass]="extensions.getInputValidationClass(isValidationActive(), validationService.isValidEmail(entity))"
+                       [disabled]="isComponentReadOnly()"
+                       [(ngModel)]="entity.email">
+                <small class="form-text text-muted"
+                       *ngIf="!isValidationActive() || validationService.isValidEmail(entity)"
+                       translate>
+                    experts.modal.expertEmailHelp
+                </small>
+                <small class="form-text test-drive-validation-message"
+                       *ngIf="isValidationActive() && !validationService.isValidEmail(entity)"
+                       translate>
+                    {{ validationService.getInvalidEmailMessageKey(entity) }}
+                </small>
+            </div>
+        </div>
+    </div>
+    <div class="row hidden-lg-up test-drive-modal-body-edit-entity-container-row-input">
+        <div class="col-12">
+            <div class="form-group">
+                <label for="expertPhoneNumber"
+                       class="test-drive-input-label"
+                       translate>
+                    experts.modal.expertPhoneNumber
+                </label>
+                <input id="expertPhoneNumber"
+                       name="expertPhoneNumber"
+                       type="tel"
+                       class="form-control"
+                       [ngClass]="extensions.getInputValidationClass(isValidationActive(), validationService.isValidPhoneNumber(entity))"
+                       [disabled]="isComponentReadOnly()"
+                       [textMask]="{mask: usaPhoneMask}"
+                       [(ngModel)]="entity.phoneNumber">
+                <small class="form-text text-muted"
+                       *ngIf="!isValidationActive() || validationService.isValidPhoneNumber(entity)"
+                       translate>
+                    experts.modal.expertPhoneNumberHelp
+                </small>
+                <small class="form-text test-drive-validation-message"
+                       *ngIf="isValidationActive() && !validationService.isValidPhoneNumber(entity)"
+                       translate>
+                    {{ validationService.getInvalidPhoneNumberMessageKey(entity) }}
+                </small>
+            </div>
+        </div>
+    </div>
+    <div class="row hidden-md-down test-drive-modal-body-edit-entity-container-row-input">
+        <div class="col-6">
+            <div class="form-group">
+                <label for="expertEmailCol6"
+                       class="test-drive-input-label"
+                       translate>
+                    experts.modal.expertEmail
+                </label>
+                <input id="expertEmailCol6"
+                       name="expertEmail"
+                       type="email"
+                       class="form-control"
+                       [ngClass]="extensions.getInputValidationClass(isValidationActive(), validationService.isValidEmail(entity))"
+                       [disabled]="isComponentReadOnly()"
+                       [(ngModel)]="entity.email">
+                <small class="form-text text-muted"
+                       *ngIf="!isValidationActive() || validationService.isValidEmail(entity)"
+                       translate>
+                    experts.modal.expertEmailHelp
+                </small>
+                <small class="form-text test-drive-validation-message"
+                       *ngIf="isValidationActive() && !validationService.isValidEmail(entity)"
+                       translate>
+                    {{ validationService.getInvalidEmailMessageKey(entity) }}
+                </small>
+            </div>
+        </div>
+        <div class="col-6">
+            <div class="form-group">
+                <label for="expertPhoneNumberCol6"
+                       class="test-drive-input-label"
+                       translate>
+                    experts.modal.expertPhoneNumber
+                </label>
+                <input id="expertPhoneNumberCol6"
+                       name="expertPhoneNumber"
+                       type="tel"
+                       class="form-control"
+                       [ngClass]="extensions.getInputValidationClass(isValidationActive(), validationService.isValidPhoneNumber(entity))"
+                       [disabled]="isComponentReadOnly()"
+                       [textMask]="{mask: usaPhoneMask}"
+                       [(ngModel)]="entity.phoneNumber">
+                <small class="form-text text-muted"
+                       *ngIf="!isValidationActive() || validationService.isValidPhoneNumber(entity)"
+                       translate>
+                    experts.modal.expertPhoneNumberHelp
+                </small>
+                <small class="form-text test-drive-validation-message"
+                       *ngIf="isValidationActive() && !validationService.isValidPhoneNumber(entity)"
+                       translate>
+                    {{ validationService.getInvalidPhoneNumberMessageKey(entity) }}
+                </small>
+            </div>
+        </div>
+    </div>
     <div class="row test-drive-modal-body-edit-entity-container-row-input">
         <div class="col-12">
             <div class="form-group">
                 <label for="linkedinUrl"
+                       class="test-drive-input-label"
                        translate>
                     experts.modal.linkedinUrl
                 </label>
@@ -101,6 +244,7 @@
         <div class="col-12">
             <div class="form-group">
                 <label for="facebookUrl"
+                       class="test-drive-input-label"
                        translate>
                     experts.modal.facebookUrl
                 </label>

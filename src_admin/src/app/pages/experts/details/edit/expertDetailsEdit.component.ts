@@ -23,6 +23,7 @@ export class ExpertDetailsEditComponent {
     protected isImageRounded: boolean = ExpertsConstants.isExpertImageRounded;
     protected imageAlt: string = ExpertsConstants.expertImageAlt;
     protected columnRules: string = 'col-xs-12 col-sm-12 col-md-12 col-lg-6 col-xl-6';
+    protected usaPhoneMask = Extensions.masks.usaPhoneMask;
     /// injected dependencies
     protected extensions = Extensions;
     protected logger: ILogger;

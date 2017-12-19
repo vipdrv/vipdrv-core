@@ -59,7 +59,10 @@
                                        [disabled]="loading"
                                        [(ngModel)]="model.isPersist">
                                 <span class="custom-control-indicator"></span>
-                                <span class="custom-control-description">Remember me</span>
+                                <span class="custom-control-description"
+                                      translate>
+                                    general.actions.rememberMe
+                                </span>
                             </label>
                         </div>
                         <div class="mt-2">
@@ -69,7 +72,9 @@
                                     (click)="login()">
                                 <i class="fa fa-spinner fa-pulse" *ngIf="!!loading"></i>
                                 <i class="fa fa-sign-in" *ngIf="!loading"></i>
-                                <span translate>Login</span>
+                                <span translate>
+                                    general.actions.login
+                                </span>
                             </button>
                         </div>
                     </form>

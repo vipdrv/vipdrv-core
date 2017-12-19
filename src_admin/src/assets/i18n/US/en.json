@@ -11,6 +11,8 @@
       "test": "Test-page"
     },
     "actions": {
+      "login": "Login",
+      "rememberMe": "Remember me",
       "text_info": "info",
       "text_create": "create",
       "text_update": "edit",
@@ -149,7 +151,8 @@
     "title": "Experts",
     "table": {
       "headerText_avatar": "Avatar",
-      "headerText_expertName": "Expert name"
+      "headerText_expertName": "Expert name",
+      "headerText_expertTitle": "Title of the expert"
     },
     "modal": {
       "titleInfo": "Expert details",
@@ -157,14 +160,20 @@
       "expertName": "Full name",
       "expertNameHelp": "Enter the full name of the expert.",
       "expertDescription": "About the expert",
-      "expertDescriptionHelp": "Type few words about the expert.",
+      "expertDescriptionHelp": "Type few words about the expert (is not required).",
       "linkedinUrl": "Linkedin profile",
       "linkedinUrlHelp": "Enter direct link to the experts LinkedIn profile like https://www.linkedin.com/... (is not required).",
       "facebookUrl": "Facebook profile",
       "facebookUrlHelp": "Enter direct link to the experts Facebook profile like https://www.facebook.com/... (is not required).",
       "expertActivity": "Is active",
       "expertOrder": "Order",
-      "weekSchedule": "Week schedule"
+      "weekSchedule": "Week schedule",
+      "expertTitle": "Title of the expert",
+      "expertTitleHelp": "Enter the title of the expert.",
+      "expertEmail": "Contact e-mail",
+      "expertEmailHelp": "Enter the contact e-mail of the expert (is not required).",
+      "expertPhoneNumber": "Contact phone number",
+      "expertPhoneNumberHelp": "Enter the contact phone number of the expert (is not required)."
     }
   },
   "beverages": {
@@ -324,9 +333,12 @@
     },
     "experts": {
       "name": "Expert's full name is not valid (this field is required)!",
-      "description": "Info about the expert is not valid (this field is required)!",
+      "title": "Expert's title is not valid (this field is required)!",
+      "description": "Info about the expert is not valid!",
       "linkedInUrl": "LinkedIn profile's direct link is not valid! (should be like https://www.linkedin.com/...)",
-      "facebookUrl": "Facebook profile's direct link is not valid! (should be like https://www.facebook.com/...)"
+      "facebookUrl": "Facebook profile's direct link is not valid! (should be like https://www.facebook.com/...)",
+      "email": "E-mail is not valid!",
+      "phoneNumber": "Phone number is not valid!"
     },
     "beverages": {
       "name": "Beverage's name is not valid (this field is required)!",
