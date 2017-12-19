@@ -6,6 +6,7 @@ import { NgaModule } from '../../theme/nga.module';
 import { Ng2Bs3ModalModule } from 'ng2-bs3-modal/ng2-bs3-modal';
 import { PaginationModule } from 'ng2-bootstrap';
 import { BusyModule } from 'angular2-busy';
+import { TextMaskModule } from 'angular2-text-mask';
 import { UtilsModule } from './../../utils/index';
 import { SitesTableComponent } from './table/sitesTable.component';
 import { BeveragesModule } from './../beverages/index';
@@ -20,7 +21,6 @@ import { routing } from './sites.routing';
 
 import { SiteCardsComponent } from './cards/siteCards.component';
 import { SiteCardComponent } from './cards/siteCard.component';
-import { TextMaskModule } from 'angular2-text-mask';
 
 @NgModule({
     imports: [

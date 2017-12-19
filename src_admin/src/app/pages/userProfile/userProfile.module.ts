@@ -5,13 +5,13 @@ import { AppTranslationModule } from '../../app.translation.module';
 import { NgaModule } from '../../theme/nga.module';
 import { Ng2Bs3ModalModule } from 'ng2-bs3-modal/ng2-bs3-modal';
 import { BusyModule } from 'angular2-busy';
+import { TextMaskModule } from 'angular2-text-mask';
 import { UtilsModule } from './../../utils/index';
 import { UserProfileComponent } from './userProfile.component';
 import { PersonalInfoComponent } from './personalInfo/personalInfo.component';
 import { PasswordUpdateComponent } from './passwordUpdate/passwordUpdate.component';
 import { AvatarUpdateComponent } from './avatarUpdate/avatarUpdate.component';
 import { routing } from './userProfile.routing';
-import { TextMaskModule } from 'angular2-text-mask';
 @NgModule({
     imports: [
         CommonModule,
