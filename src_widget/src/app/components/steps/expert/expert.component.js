@@ -40,6 +40,9 @@
                 };
 
                 self.isAvaliable = function(expertWorkingHours) {
+
+                    console.log(expertWorkingHours);
+
                     // TODO: replace with implementation
                     return true;
                 }

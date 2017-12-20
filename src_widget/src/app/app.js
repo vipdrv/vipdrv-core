@@ -77,7 +77,8 @@
         },
         calendar: {
             date: null,
-            time: null
+            time: null,
+            dayOfWeek: null
         },
         expert: {
             id: null,
