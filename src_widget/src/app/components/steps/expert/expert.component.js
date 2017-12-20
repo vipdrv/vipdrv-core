@@ -4,7 +4,8 @@
             controller: function ($scope) {
                 var self = this;
 
-                self.isStepValid = null;
+                self.isStepValid = false;
+                self.isNoSalesPersonAvaliable = true;
 
                 self.$onInit = function () {
                     self.validateStep();
@@ -30,21 +31,47 @@
                     self.validateStep();
                     if (self.isStepValid) {
                         self.completeStep({tabId: self.tabId});
+                        self.userData.calendar.isSkipped = false;
                     }
                 };
 
                 $scope.skipStep = function () {
-                    self.userData.expert.id = 0;
                     self.userData.expert.name = 'Skipped';
+                    self.userData.calendar.isSkipped = true;
                     self.completeStep({tabId: self.tabId});
                 };
 
                 self.isAvaliable = function(expertWorkingHours) {
+                    if (self.userData.calendar.isSkipped) {
+                        self.isNoSalesPersonAvaliable = false;
+                        return true;
+                    }
 
-                    console.log(expertWorkingHours);
+                    var workingHours = [];
 
-                    // TODO: replace with implementation
-                    return true;
+                    for(var key in expertWorkingHours) {
+                        var day = expertWorkingHours[key];
+                        workingHours[day.dayOfWeek] = {
+                            startTime: day.startTime,
+                            endTime: day.endTime
+                        }
+                    }
+
+                    var selectedDay = workingHours[self.userData.calendar.dayOfWeek];
+                    var selectedTime = self.userData.calendar.time;
+
+                    if (selectedDay != null) {
+                        var selectedHour = moment(selectedTime, 'HH:mm A').get('hour');
+                        var startTime = parseInt(selectedDay.startTime.split(':')[0]);
+                        var endTime = parseInt(selectedDay.endTime.split(':')[0]);
+
+                        if (startTime <= selectedHour && selectedHour <= endTime) {
+                            self.isNoSalesPersonAvaliable = false;
+                            return true;
+                        }
+                    }
+
+                    return false;
                 }
 
             },

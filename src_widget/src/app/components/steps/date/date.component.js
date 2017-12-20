@@ -101,6 +101,7 @@
 
                     self.userData.calendar.time = cleatTimeIfInvalid(self.userData.calendar.time, dayOfWeek);
                     self.userData.calendar.date = arr[0];
+                    self.userData.calendar.dayOfWeek = dayOfWeek;
                     self.validateStep();
 
                     var startTime = self.widgetWorkingHours[dayOfWeek].startTime;
@@ -133,12 +134,13 @@
 
                     self.userData.calendar.date = date;
                     self.userData.calendar.time = hours + ':' + '00 ' + amPm;
-
+                    self.userData.calendar.isSkipped = false;
                     self.validateStep();
                 };
 
                 self.timeChanged = function (time) {
                     self.userData.calendar.time = time;
+                    self.userData.calendar.isSkipped = false;
                     self.validateStep();
                 };
 
@@ -161,6 +163,7 @@
                 };
 
                 $scope.skipStep = function () {
+                    self.userData.calendar.isSkipped = true;
                     self.completeStep({tabId: self.tabId});
                 };
 

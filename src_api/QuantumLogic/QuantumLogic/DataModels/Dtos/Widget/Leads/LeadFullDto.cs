@@ -25,20 +25,19 @@ namespace QuantumLogic.WebApi.DataModels.Dtos.Widget.Leads
             string carImageUrl,
             string carTitle,
             string carVin,
-            string bookingDateTimeUtc)
-            : base(
-                  id,
-                  siteId,
-                  expertId,
-                  beverageId,
-                  routeId,
-                  firstName,
-                  secondName,
-                  userPhone,
-                  userEmail,
-                  carTitle,
-                  carVin,
-                  bookingDateTimeUtc)
+            DateTime bookingDateTimeUtc)
+            : base(id,
+                   siteId,
+                   expertId,
+                   beverageId,
+                   routeId,
+                   firstName,
+                   secondName,
+                   userPhone,
+                   userEmail,
+                   carTitle,
+                   carVin,
+                   bookingDateTimeUtc)
         {
             CarImageUrl = carImageUrl;
         }

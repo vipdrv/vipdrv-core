@@ -1,5 +1,8 @@
-﻿using QuantumLogic.Core.Domain.Entities.MainModule;
+﻿using System;
+using QuantumLogic.Core.Domain.Entities.MainModule;
 using System.Collections.Generic;
+using System.Linq;
+using QuantumLogic.Core.Extensions.StringEx;
 
 namespace QuantumLogic.Core.Domain.Entities.WidgetModule
 {
@@ -31,6 +34,40 @@ namespace QuantumLogic.Core.Domain.Entities.WidgetModule
 
         #endregion
 
+        public IList<string> EmailAdresses
+        {
+            get
+            {
+                if (!String.IsNullOrEmpty(NotificationContacts))
+                {
+                    string[] contactsArr = NotificationContacts.Split(';');
+                    if (contactsArr.Any() && !String.IsNullOrEmpty(contactsArr[0]))
+                    {
+                        return contactsArr[0].Split(',');
+                    }
+                }
+
+                return new List<string>(0);
+            }
+        }
+
+        public IList<string> PhoneNumbers
+        {
+            get
+            {
+                if (!String.IsNullOrEmpty(NotificationContacts))
+                {
+                    string[] contactsArr = NotificationContacts.Split(';');
+                    if (contactsArr.Any() && !String.IsNullOrEmpty(contactsArr[1]))
+                    {
+                        return contactsArr[1].Split(',');
+                    }
+                }
+
+                return new List<string>(0);
+            }
+        }
+
         #region Ctors
 
         public Site()
@@ -42,10 +79,10 @@ namespace QuantumLogic.Core.Domain.Entities.WidgetModule
             Leads = new HashSet<Lead>();
         }
 
-        public Site(int id, 
+        public Site(int id,
             int userId,
-            string beautyId, 
-            string name, 
+            string beautyId,
+            string name,
             string url,
             string notificationContacts
             )

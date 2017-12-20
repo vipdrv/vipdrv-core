@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Net;
 using QuantumLogic.Core.Utils.Email.Templates;
 using QuantumLogic.Core.Utils.Email.Templates.TestDrive;

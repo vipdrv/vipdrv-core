@@ -1,10 +1,8 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using QuantumLogic.Core.Authorization;
 using QuantumLogic.Core.Domain.Entities.WidgetModule;
-using QuantumLogic.Core.Domain.Services.Widget.Beverages;
-using QuantumLogic.Core.Domain.Services.Widget.Experts;
 using QuantumLogic.Core.Domain.Services.Widget.Leads;
-using QuantumLogic.Core.Domain.Services.Widget.Routes;
 using QuantumLogic.Core.Domain.Services.Widget.Sites;
 using QuantumLogic.Core.Domain.UnitOfWorks;
 using QuantumLogic.Core.Extensions.DateTimeEx;
@@ -13,6 +11,7 @@ using QuantumLogic.Core.Utils.Email.Services;
 using QuantumLogic.Core.Utils.Email.Templates.TestDrive;
 using QuantumLogic.Core.Utils.Export.Entity.Concrete.Excel;
 using QuantumLogic.Core.Utils.Export.Entity.Concrete.Excel.DataModels;
+using QuantumLogic.Core.Utils.Sms;
 using QuantumLogic.WebApi.DataModels.Dtos.Widget.Leads;
 using QuantumLogic.WebApi.DataModels.Requests;
 using QuantumLogic.WebApi.DataModels.Requests.Widget.Booking;
@@ -21,28 +20,23 @@ using QuantumLogic.WebApi.DataModels.Responses;
 using QuantumLogic.WebApi.Providers.Export.Excel.Leads;
 using SendGrid.Helpers.Mail;
 using System;
-using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
-using QuantumLogic.Core.Utils.Sms;
-using QuantumLogic.Data.EFContext;
+using QuantumLogic.Core.Constants;
+using QuantumLogic.Core.Utils.Sms.Templates;
 
 namespace QuantumLogic.WebApi.Controllers.Widget
 {
     [Route("api/lead")]
     public class LeadController : EntityController<Lead, int, LeadDto, LeadFullDto>
     {
-        private readonly IExpertDomainService _expertDomainService;
-        private readonly IBeverageDomainService _beverageDomainService;
-        private readonly IRouteDomainService _routeDomainService;
-        private readonly ITestDriveEmailService _testDriveEmailService;
-        private readonly ISiteDomainService _siteDomainService;
-        private readonly ISmsService _smsService;
-
         #region Injected dependencies
 
         public IContentManager ContentManager { get; private set; }
+        public ISiteDomainService SiteDomainService { get; }
+        protected readonly ITestDriveEmailService TestDriveEmailService;
+        protected readonly ISmsService SmsService;
+        protected readonly IQLSession Session;
 
         #endregion
 
@@ -51,21 +45,17 @@ namespace QuantumLogic.WebApi.Controllers.Widget
         public LeadController(
             IQLUnitOfWorkManager uowManager,
             ILeadDomainService domainService,
-            IExpertDomainService expertDomainService,
-            IBeverageDomainService beverageDomainService,
-            IRouteDomainService routeDomainService,
-            ISiteDomainService siteDomainService,
             IContentManager contentManager,
-            ITestDriveEmailService testDriveEmailService)
+            ITestDriveEmailService testDriveEmailService,
+            IQLSession session,
+            ISiteDomainService siteDomainService)
             : base(uowManager, domainService)
         {
-            _expertDomainService = expertDomainService;
-            _beverageDomainService = beverageDomainService;
-            _routeDomainService = routeDomainService;
-            _siteDomainService = siteDomainService;
-            _testDriveEmailService = testDriveEmailService;
-            _smsService = new TwilioSmsService();
+            TestDriveEmailService = testDriveEmailService;
+            Session = session;
+            SmsService = new TwilioSmsService();
             ContentManager = contentManager;
+            SiteDomainService = siteDomainService;
         }
 
         #endregion
@@ -153,97 +143,53 @@ namespace QuantumLogic.WebApi.Controllers.Widget
         [HttpPost("{siteId}/complete-booking")]
         public async Task<LeadFullDto> CompleteBookingAsync(int siteId, [FromBody]CompleteBookingRequest request)
         {
-            var leadFullDto = new LeadFullDto(
-                0,
-                siteId,
-                (int)request.ExpertId,
-                (int)request.BeverageId,
-                (int)request.RoadId,
-                request.BookingUser.FirstName,
-                request.BookingUser.LastName,
-                request.BookingUser.Phone,
-                request.BookingUser.Email,
-                request.BookingCar.ImageUrl,
-                request.BookingCar.Title,
-                request.BookingCar.Vin,
-                $"{request.BookingDateTime.Date} {request.BookingDateTime.Time}");
-
-            // LeadFullDto result = await InnerCreateAsync(leadFullDto);
-
-            // TODO: rewrite this nightmare
-            QuantumLogicDbContext context = new QuantumLogicDbContext();
-            context.Leads.Add(leadFullDto.MapToEntity());
-
-            context.SaveChanges();
-            context.Dispose();
-
-            var expert = await _expertDomainService.RetrieveAsync((int)request.ExpertId);
-            var beverage = await _beverageDomainService.RetrieveAsync((int)request.BeverageId);
-            var road = await _routeDomainService.RetrieveAsync((int)request.RoadId);
-            var site = await _siteDomainService.RetrieveAsync(siteId);
-
-            _testDriveEmailService.SendCompleteBookingEmail(
-                new EmailAddress(request.BookingUser.Email, $"{request.BookingUser.FirstName} {request.BookingUser.LastName}"),
-                new CompleteBookingEmailTemplate(
-                    request.BookingUser.FirstName,
-                    request.BookingUser.LastName,
-                    request.BookingDateTime.Date + " " + request.BookingDateTime.Time,
-                    request.BookingCar.ImageUrl,
-                    request.BookingCar.Title,
-                    expert.Name,
-                    beverage.Name,
-                    road.Name,
-                    site.DealerName,
-                    site.DealerAddress,
-                    site.DealerPhone,
-                    site.Url));
-
-            var emails = site.NotificationContacts.Split(';')[0].Split(',');
-            var newLeadNotificationEmailTemplate = new NewLeadNotificationEmailTemplate(
-                request.BookingCar.Title,
-                request.BookingCar.ImageUrl,
-                request.BookingCar.Vin,
-                request.BookingUser.FirstName,
-                request.BookingUser.LastName,
-                request.BookingUser.Phone,
-                request.BookingUser.Email,
-                request.BookingDateTime.Date + " " + request.BookingDateTime.Time,
-                expert.Name,
-                beverage.Name,
-                road.Name);
-
-            foreach (var email in emails)
+            if (request == null)
             {
-                _testDriveEmailService.SendNewLeadNotificationEmail(new EmailAddress(email), newLeadNotificationEmailTemplate);
+                throw new ArgumentNullException(nameof(request));
             }
 
-            string smsContent = $"Good news, you have a new Lead for {site.Name} \n \n" +
-                                $"Vehicle: {request.BookingCar.Title} {request.BookingCar.Vin}\n" +
-                                $"Date & Time: {request.BookingDateTime.Date + request.BookingDateTime.Time} \n" +
-                                $"Expert: {expert.Name} \n" +
-                                $"Beverage: {beverage.Name} \n" +
-                                $"Road: {road.Name} \n";
+            var leadFullDto = request.MapToLeadFullDto(siteId);
+            leadFullDto.NormalizeAsRequest();
+            Lead entity;
 
-            var phoneNumbers = site.NotificationContacts.Split(';')[1].Split(',');
-            foreach (var number in phoneNumbers)
+            using (var uow = UowManager.CurrentOrCreateNew(true))
             {
-                await _smsService.SendSms(number, smsContent);
+                Session.UserId = (await SiteDomainService.RetrieveAsync(siteId)).UserId;
+                Lead stubEntity = await DomainService.CreateAsync(leadFullDto.MapToEntity());
+                await uow.CompleteAsync();
+                entity = await DomainService.RetrieveAsync(stubEntity.Id);
+            }
+            LeadFullDto createdEntity = new LeadFullDto();
+            createdEntity.MapFromEntity(entity);
+
+            TestDriveEmailService.SendCompleteBookingEmail(
+                new EmailAddress(entity.UserEmail, $"{entity.FirstName} {entity.SecondName}"),
+                new Core.Utils.Email.Templates.TestDrive.CompleteBookingEmailTemplate(entity));
+
+            var newLeadNotificationEmailTemplate = new NewLeadNotificationEmailTemplate(entity);
+            foreach (var email in entity.Site.EmailAdresses)
+            {
+                TestDriveEmailService.SendNewLeadNotificationEmail(new EmailAddress(email), newLeadNotificationEmailTemplate);
             }
 
-            return null;
+            var newLeadNotificationSmsTemplate = new NewLeadNotificationSmsTemplate(entity);
+            foreach (var number in entity.Site.PhoneNumbers)
+            {
+                await SmsService.SendSms(number, newLeadNotificationSmsTemplate);
+            }
+
+            return createdEntity;
         }
 
         [HttpPost("{siteId}/send-sms")]
         public async Task SendSmsAsync(int siteId, [FromBody] SmsNotificationRequest request)
         {
-            string smsContent = $"Your Upcoming Test Drive \n \n" +
-                                $"Vehicle: {request.VehicleTitle} \n" +
-                                $"Date & Time: {request.DateTime} \n" +
-                                $"Expert: {request.ExpertTitle} \n" +
-                                $"Beverage: {request.BeverageTitle} \n" +
-                                $"Road: {request.RoadTitle} \n";
-
-            await _smsService.SendSms(request.Phone, smsContent);
+            await SmsService.SendSms(request.Phone, new CompleteBookingSmsTemplate(
+                request.VehicleTitle,
+                request.BookingDateTime,
+                request.ExpertTitle,
+                request.BeverageTitle,
+                request.RoadTitle));
         }
 
         #endregion
