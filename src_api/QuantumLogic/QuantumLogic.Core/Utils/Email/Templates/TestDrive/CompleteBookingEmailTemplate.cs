@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Net.Http;
 using System.Text;
 using QuantumLogic.Core.Constants;
+using QuantumLogic.Core.Domain.Entities.WidgetModule;
 
 namespace QuantumLogic.Core.Utils.Email.Templates.TestDrive
 {
@@ -11,7 +12,7 @@ namespace QuantumLogic.Core.Utils.Email.Templates.TestDrive
         protected const string TemplateUrl = "https://generalstandart256.blob.core.windows.net/testdrive-email-templates/complete-booking__email-template.html";
         private readonly string _customerFirstName;
         private readonly string _customerLastName;
-        private readonly string _bookingDateTime;
+        private readonly DateTime _bookingDateTime;
         private readonly string _vehicleImgUrl;
         private readonly string _vehicleTitle;
         private readonly string _expertName;
@@ -25,7 +26,7 @@ namespace QuantumLogic.Core.Utils.Email.Templates.TestDrive
         public CompleteBookingEmailTemplate(
             string customerFirstName,
             string customerLastName,
-            string bookingDateTime,
+            DateTime bookingDateTime,
             string vehicleImgUrl,
             string vehicleTitle,
             string expertName,
@@ -51,6 +52,22 @@ namespace QuantumLogic.Core.Utils.Email.Templates.TestDrive
             _dealerSiteUrl = dealerSiteUrl;
         }
 
+        public CompleteBookingEmailTemplate(Lead lead)
+        {
+            _vehicleTitle = lead.CarTitle;
+            _vehicleImgUrl = lead.CarImageUrl;
+            _customerFirstName = lead.FirstName;
+            _customerLastName = lead.SecondName;
+            _bookingDateTime = lead.BookingDateTimeUtc;
+            _expertName = lead.Expert.Name;
+            _beverageName = lead.Beverage.Name;
+            _roadName = lead.Route.Name;
+            _dealerName = lead.Site.DealerName;
+            _dealerAddress = lead.Site.DealerAddress;
+            _dealerPhone = lead.Site.DealerPhone;
+            _dealerSiteUrl = lead.Site.Url;
+        }
+
         public string AsHtml()
         {
             var html = new HttpClient().GetStringAsync(TemplateUrl).Result;
@@ -66,7 +83,7 @@ namespace QuantumLogic.Core.Utils.Email.Templates.TestDrive
             #endregion
 
             #region Booking
-            html = html.Replace("{{bookingDateTime}}", _bookingDateTime);
+            html = html.Replace("{{bookingDateTime}}", _bookingDateTime.ToString(QuantumLogicConstants.OutputDateTimeFormat));
             html = html.Replace("{{expertName}}", _expertName);
             html = html.Replace("{{beverageName}}", _beverageName);
             html = html.Replace("{{roadName}}", _roadName);

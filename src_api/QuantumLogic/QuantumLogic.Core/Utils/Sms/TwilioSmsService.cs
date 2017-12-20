@@ -3,12 +3,13 @@ using System.Collections.Generic;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using QuantumLogic.Core.Utils.Sms.Templates;
 
 namespace QuantumLogic.Core.Utils.Sms
 {
     public class TwilioSmsService : ISmsService
     {
-        private HttpClient _httpClient;
+        private readonly HttpClient _httpClient;
         private readonly string _apiUrl;
         private readonly string _authHeader;
 
@@ -19,12 +20,12 @@ namespace QuantumLogic.Core.Utils.Sms
             _authHeader = "Basic QUM5NTRlNDM2MjY5ZjczYzMxMmY4YWUwZDg3ZWM4ODZiZTpiODIzNWM1ZGRjM2EwMWQwMmI2YzFmNjhlZGVjZWM4Ng==";
         }
 
-        public Task<HttpResponseMessage> SendSms(string to, string content)
+        public Task<HttpResponseMessage> SendSms(string to, ISmsTemplate smsTemplate)
         {
             var valueCollection = new Dictionary<string, string>();
             valueCollection.Add("To", to);
             valueCollection.Add("From", "+12244123577");
-            valueCollection.Add("Body", content);
+            valueCollection.Add("Body", smsTemplate.AsPlainText());
 
             _httpClient.DefaultRequestHeaders.Add("Authorization", _authHeader);
             var req = new HttpRequestMessage(HttpMethod.Post, _apiUrl) { Content = new FormUrlEncodedContent(valueCollection) };

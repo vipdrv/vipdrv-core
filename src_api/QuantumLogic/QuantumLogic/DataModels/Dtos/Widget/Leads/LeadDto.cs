@@ -20,7 +20,7 @@ namespace QuantumLogic.WebApi.DataModels.Dtos.Widget.Leads
         public string UserEmail { get; set; }
         public string CarTitle { get; set; }
         public string CarVin { get; set; }
-        public string BookingDateTimeUtc { get; set; }
+        public DateTime BookingDateTimeUtc { get; set; }
         public bool IsNew { get; set; }
         public bool IsReachedByManager { get; set; }
 
@@ -52,7 +52,7 @@ namespace QuantumLogic.WebApi.DataModels.Dtos.Widget.Leads
             string userEmail,
             string carTitle,
             string carVin,
-            string bookingDateTimeUtc) : this()
+            DateTime bookingDateTimeUtc) : this()
         {
             Id = id;
             SiteId = siteId;
@@ -86,7 +86,7 @@ namespace QuantumLogic.WebApi.DataModels.Dtos.Widget.Leads
             UserEmail = entity.UserEmail;
             CarTitle = entity.CarTitle;
             CarVin = entity.CarVin;
-            BookingDateTimeUtc = entity.BookingDateTimeUtc.ToString(QuantumLogicConstants.OutputDateTimeFormat);
+            BookingDateTimeUtc = entity.BookingDateTimeUtc;
             IsNew = entity.IsNew;
             IsReachedByManager = entity.IsReachedByManager;
             SiteName = entity.Site.Name;
@@ -109,7 +109,7 @@ namespace QuantumLogic.WebApi.DataModels.Dtos.Widget.Leads
             entity.UserEmail = UserEmail;
             entity.CarTitle = CarTitle;
             entity.CarVin = CarVin;
-            entity.BookingDateTimeUtc = DateTime.Parse(BookingDateTimeUtc);
+            entity.BookingDateTimeUtc = BookingDateTimeUtc;
 
             return entity;
         }

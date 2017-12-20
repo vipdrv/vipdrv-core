@@ -77,27 +77,33 @@
         },
         calendar: {
             date: null,
-            time: null
+            time: null,
+            dayOfWeek: null,
+            isSkipped: null
         },
         expert: {
             id: null,
             img: null,
             name: null,
-            description: null
+            description: null,
+            isSkipped: null
         },
         beverage: {
             id: null,
             img: null,
             name: null,
-            description: null
+            description: null,
+            isSkipped: null
         },
         road: {
             id: null,
             img: null,
             name: null,
-            description: null
+            description: null,
+            isSkipped: null
         },
         car: {
+            vin: null,
             imageUrl: null,
             title: null,
             engine: null,

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Net.Http;
 using System.Text;
 using QuantumLogic.Core.Constants;
+using QuantumLogic.Core.Domain.Entities.WidgetModule;
 
 namespace QuantumLogic.Core.Utils.Email.Templates.TestDrive
 {
@@ -15,7 +16,7 @@ namespace QuantumLogic.Core.Utils.Email.Templates.TestDrive
         private readonly string _customerLastName;
         private readonly string _customerPhone;
         private readonly string _customerEmail;
-        private readonly string _bookingDateTime;
+        private readonly DateTime _bookingDateTime;
         private readonly string _vehicleTitle;
         private readonly string _expertName;
         private readonly string _beverageName;
@@ -29,7 +30,7 @@ namespace QuantumLogic.Core.Utils.Email.Templates.TestDrive
             string customerLastName,
             string customerPhone,
             string customerEmail,
-            string bookingDateTime, 
+            DateTime bookingDateTime, 
             string expertName, 
             string beverageName,
             string roadName)
@@ -47,6 +48,21 @@ namespace QuantumLogic.Core.Utils.Email.Templates.TestDrive
             _roadName = roadName;
         }
 
+        public NewLeadNotificationEmailTemplate(Lead lead)
+        {
+            _vehicleImgUrl = lead.CarImageUrl;
+            _VIN = lead.CarVin;
+            _customerFirstName = lead.FirstName;
+            _customerLastName = lead.SecondName;
+            _customerPhone = lead.UserPhone;
+            _customerEmail = lead.UserEmail;
+            _bookingDateTime = lead.BookingDateTimeUtc;
+            _vehicleTitle = lead.CarTitle;
+            _expertName = lead.Expert.Name;
+            _beverageName = lead.Beverage.Name;
+            _roadName = lead.Route.Name;
+        }
+
         public string AsHtml()
         {
             // TODO: use method as async
@@ -61,7 +77,7 @@ namespace QuantumLogic.Core.Utils.Email.Templates.TestDrive
             html = html.Replace("{{customerPhone}}", _customerPhone);
             html = html.Replace("{{customerEmail}}", _customerEmail);
 
-            html = html.Replace("{{bookingDateTime}}", _bookingDateTime);
+            html = html.Replace("{{bookingDateTime}}", _bookingDateTime.ToString(QuantumLogicConstants.OutputDateTimeFormat));
             html = html.Replace("{{expertName}}", _expertName);
             html = html.Replace("{{beverageName}}", _beverageName);
             html = html.Replace("{{roadName}}", _roadName);

@@ -4,6 +4,9 @@ using System.Threading.Tasks;
 
 namespace QuantumLogic.Core.Utils.ContentManager
 {
+    /// <summary>
+    /// Is used to operate with files via Azure storage 
+    /// </summary>
     public interface IContentManager
     {
         /// <summary>

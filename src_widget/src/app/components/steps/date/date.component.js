@@ -8,50 +8,70 @@
                 // =======================================================================//
 
                 var self = this;
-
                 self.isStepValid = false;
-                self.minDateString = moment().subtract(0, 'day').format('YYYY-MM-DD');
-                self.timeIntervals = [];
-                self.mobileDateTimeInput= null;
-                self.widgetWorkingHours = null;
-                self.stepDataDidLoaded = false;
                 self.isLoading = true;
+                self.minDateString = null;
+                self.timeIntervals = [];
+                self.dateImput = null;
+                self.mobileDateTimeInput = null;
+                self.widgetWorkingHours = null;
+                self.isSelectable = null;
+                self.isSelectableMobile = null;
 
                 // =======================================================================//
                 // Init                                                                   //
                 // =======================================================================//
 
                 self.$onInit = function () {
+                    self.minDateString = moment().subtract(0, 'day').format('YYYY-MM-DD');
                     self.dateImput = self.userData.calendar.date;
                     self.mobileDateTimeInput = self.userData.calendar.date;
                     self.validateStep();
+
+                    if (self.stepData && self.stepData.id != null) {
+                        self.isLoading = false;
+                        self.initStep();
+                    }
                 };
 
                 self.$onChanges = function ({stepData}) {
                     if (angular.isDefined(stepData)) {
                         if (!stepData.isFirstChange()) {
                             self.isLoading = false;
-                            self.stepDataDidLoaded = true;
-                            self.widgetWorkingHours = self.mapToWidgetWorkingHours(self.stepData.workingHours);
-
-                            var currentDayOfWeek = new Date().getDay();
-                            var startTime = self.widgetWorkingHours[currentDayOfWeek].startTime;
-                            var endTime = self.widgetWorkingHours[currentDayOfWeek].endTime;
-                            self.timeIntervals = self.stplitTimeToInvervals(startTime, endTime);
-
-                            self.isSelectable = function (date, type) {
-                                var dayOfWeek = date.format('d');
-
-                                return self.widgetWorkingHours[dayOfWeek].isActive;
-                            };
-
-                            self.isSelectableMobile = function (date, type) {
-                                var dayOfWeek = date.format('d');
-
-                                return self.widgetWorkingHours[dayOfWeek].isActive;
-                            };
+                            self.initStep();
                         }
                     }
+                };
+
+                self.initStep = function () {
+                    self.widgetWorkingHours = self.mapToWidgetWorkingHours(self.stepData.workingHours);
+
+                    var currentDayOfWeek = new Date().getDay();
+                    var startTime = self.widgetWorkingHours[currentDayOfWeek].startTime;
+                    var endTime = self.widgetWorkingHours[currentDayOfWeek].endTime;
+
+                    self.timeIntervals = self.stplitTimeToInvervals(startTime, endTime);
+
+                    self.isSelectable = function (date, type) {
+                        var dayOfWeek = date.format('d');
+                        return self.widgetWorkingHours[dayOfWeek].isActive;
+                    };
+
+                    self.isSelectableMobile = function (date, type) {
+                        var selectedDayOfWeek = date.format('d');
+                        var isDayAvalibale = self.widgetWorkingHours[selectedDayOfWeek].isActive;
+
+                        var isTimeAvalibale = false;
+                        var selectedHour =  date.hours();
+                        var startTime = self.widgetWorkingHours[selectedDayOfWeek].startTime.split(':')[0];
+                        var endTime = self.widgetWorkingHours[selectedDayOfWeek].endTime.split(':')[0];
+
+                        if (startTime <= selectedHour && selectedHour <= endTime) {
+                            var isTimeAvalibale = true;
+                        }
+
+                        return isDayAvalibale && isTimeAvalibale;
+                    };
                 };
 
                 self.mapToWidgetWorkingHours = function (siteWorkingHours) {
@@ -67,7 +87,6 @@
 
                     for (var key in siteWorkingHours) {
                         var day = siteWorkingHours[key];
-
                         defaultWorkingHours[day.dayOfWeek].isActive = true;
                         defaultWorkingHours[day.dayOfWeek].startTime = day.startTime;
                         defaultWorkingHours[day.dayOfWeek].endTime = day.endTime;
@@ -78,9 +97,11 @@
 
                 self.dateChanged = function (oldValue, newValue) {
                     var arr = newValue._i.split(' ');
-
-                    self.userData.calendar.date = arr[0];
                     var dayOfWeek = arr[1];
+
+                    self.userData.calendar.time = cleatTimeIfInvalid(self.userData.calendar.time, dayOfWeek);
+                    self.userData.calendar.date = arr[0];
+                    self.userData.calendar.dayOfWeek = dayOfWeek;
                     self.validateStep();
 
                     var startTime = self.widgetWorkingHours[dayOfWeek].startTime;
@@ -89,7 +110,22 @@
                     self.timeIntervals = self.stplitTimeToInvervals(startTime, endTime);
                 };
 
-                self.mobileDateChanged = function(oldValue, newValue) {
+                function cleatTimeIfInvalid(selectedTime, dayOfWeek) {
+                    if (!selectedTime) {
+                        return selectedTime;
+                    }
+
+                    var selectedHour = moment(selectedTime, 'HH:mm A').get('hour');
+                    var startTime = parseInt(self.widgetWorkingHours[dayOfWeek].startTime.split(':')[0]);
+                    var endTime = parseInt(self.widgetWorkingHours[dayOfWeek].endTime.split(':')[0]);
+
+                    if (!(startTime <= selectedHour && selectedHour <= endTime)) {
+                        return null;
+                    }
+                    return selectedTime;
+                }
+
+                self.mobileDateChanged = function (oldValue, newValue) {
                     var arr = newValue._i.split(' ');
 
                     var date = arr[0];
@@ -98,12 +134,13 @@
 
                     self.userData.calendar.date = date;
                     self.userData.calendar.time = hours + ':' + '00 ' + amPm;
-
+                    self.userData.calendar.isSkipped = false;
                     self.validateStep();
                 };
 
                 self.timeChanged = function (time) {
                     self.userData.calendar.time = time;
+                    self.userData.calendar.isSkipped = false;
                     self.validateStep();
                 };
 
@@ -126,6 +163,7 @@
                 };
 
                 $scope.skipStep = function () {
+                    self.userData.calendar.isSkipped = true;
                     self.completeStep({tabId: self.tabId});
                 };
 
@@ -144,47 +182,6 @@
                     }
 
                     return timeIntervalsArr;
-                };
-
-                self.hoursAsMiliseconds = function (hh_mm) {
-                    var arr = hh_mm.split(':');
-                    var hours = arr[0];
-                    var minutes = arr[1];
-
-                    return new Date('2000', '01', '01', hours, minutes).getTime();
-                };
-
-                self.cropSeconds = function (hh_mm_ss) {
-                    var arr = hh_mm_ss.split(':');
-                    return arr[0] + ':' + arr[1];
-                };
-
-                self.extractWorkingHoursFormExperts = function (experts) {
-                    for (var key in experts) {
-                        var expert = experts[key];
-
-                        if (expert.isActive == true) {
-                            for (var key in expert.workingHours) {
-                                var expertWorkingHours = expert.workingHours[key];
-                                var dayOfWeek = expertWorkingHours.dayOfWeek;
-                                self.widgetWorkingHours[dayOfWeek].isActive = true;
-
-                                var expertStartTime = self.hoursAsMiliseconds(expertWorkingHours.startTime);
-                                var expertEndTime = self.hoursAsMiliseconds(expertWorkingHours.endTime);
-
-                                var widgetStartTime = self.hoursAsMiliseconds(self.widgetWorkingHours[dayOfWeek].startTime);
-                                var widgetEndTime = self.hoursAsMiliseconds(self.widgetWorkingHours[dayOfWeek].endTime);
-
-                                if (expertStartTime < widgetStartTime) {
-                                    self.widgetWorkingHours[dayOfWeek].startTime = self.cropSeconds(expertWorkingHours.startTime);
-                                }
-
-                                if (expertEndTime > widgetEndTime) {
-                                    self.widgetWorkingHours[dayOfWeek].endTime = self.cropSeconds(expertWorkingHours.endTime);
-                                }
-                            }
-                        }
-                    }
                 };
 
             },

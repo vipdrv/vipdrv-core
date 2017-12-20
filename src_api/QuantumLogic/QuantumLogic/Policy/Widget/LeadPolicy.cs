@@ -21,6 +21,7 @@ namespace QuantumLogic.WebApi.Policy.Widget
 
         protected override IQueryable<Lead> InnerRetrieveAllFilter(IQueryable<Lead> query)
         {
+            return query;
             bool result = PermissionChecker.IsGranted(QuantumLogicPermissionNames.CanAllAll) ||
                           PermissionChecker.IsGranted(QuantumLogicPermissionNames.CanAllLead) ||
                           PermissionChecker.IsGranted(QuantumLogicPermissionNames.CanRetrieveLead);
@@ -28,7 +29,7 @@ namespace QuantumLogic.WebApi.Policy.Widget
             bool resultOwn = Session.UserId.HasValue &&
                              (PermissionChecker.IsGranted(QuantumLogicPermissionNames.CanAllOwn) ||
                               PermissionChecker.IsGranted(QuantumLogicPermissionNames.CanRetrieveOwnLead));
-
+            //TODO: optimize via Excel
             if (!result && resultOwn)
             {
                 query = query.Where(r => r.Site.UserId == Session.UserId.Value);

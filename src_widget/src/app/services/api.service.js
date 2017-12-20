@@ -7,23 +7,6 @@
             // Get Widget Data                                                        //
             // =======================================================================//
 
-            this.retrieveOpenHours = function () {
-                var req = {
-                    method: 'GET',
-                    url: apiBaseUrl + '/site/' + siteId + '/week-schedule',
-                    headers: {
-                        'content-type': 'application/json'
-                    }
-                };
-
-                var promise = $http(req).then(function (responce) {
-                    return responce.data;
-                }, function () {
-                });
-
-                return promise;
-            };
-
             this.retrieveExperts = function () {
                 var req = {
                     method: 'POST',
@@ -146,12 +129,11 @@
             // Get Widget Data                                                        //
             // =======================================================================//
 
-
             var mapToSmsDto = function (userData) {
 
                 var smsDto = {
                     phone: null,
-                    dateTime: null,
+                    bookingDateTime: null,
                     vehicleTitle: null,
                     expertTitle: null,
                     beverageTitle: null,
@@ -159,7 +141,7 @@
                 };
 
                 smsDto.phone = userData.user.phone;
-                smsDto.dateTime = userData.calendar.date + ' ' + userData.calendar.time;
+                smsDto.bookingDateTime = moment(userData.calendar.date + userData.calendar.time).format('YYYY-MM-DD HH:MM');
                 smsDto.vehicleTitle = userData.car.title;
                 smsDto.expertTitle = userData.expert.name;
                 smsDto.beverageTitle = userData.beverage.name;
@@ -175,12 +157,10 @@
                         "firstName": null,
                         "lastName": null,
                         "phone": null,
-                        "email": null
+                        "email": null,
+                        "comment": null
                     },
-                    "bookingDateTime": {
-                        "date": null,
-                        "time": null
-                    },
+                    "bookingDateTime": null,
                     "bookingCar": {
                         "VIN": null,
                         "imageUrl": null,
@@ -195,11 +175,14 @@
                 bookingDto.bookingUser.lastName = userData.user.lastName;
                 bookingDto.bookingUser.phone = userData.user.phone;
                 bookingDto.bookingUser.email = userData.user.email;
+                bookingDto.bookingUser.comment = userData.user.comment;
 
-                bookingDto.bookingDateTime.date = userData.calendar.date;
-                bookingDto.bookingDateTime.time = userData.calendar.time;
+                if (userData.calendar.date && userData.calendar.time) {
+                    var dateTime = userData.calendar.date + ' '+ userData.calendar.time;
+                    bookingDto.bookingDateTime = moment(dateTime).format('YYYY-MM-DD HH:MM');
+                }
 
-                bookingDto.bookingCar.VIN = "1FTEF25N9RLB80787"; // TODO: Fake VIN
+                bookingDto.bookingCar.VIN = userData.car.vin;
                 bookingDto.bookingCar.imageUrl = userData.car.imageUrl;
                 bookingDto.bookingCar.title = userData.car.title;
 
@@ -209,6 +192,5 @@
 
                 return bookingDto;
             };
-
         });
 })();

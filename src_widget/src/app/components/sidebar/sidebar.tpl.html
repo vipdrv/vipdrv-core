@@ -1,7 +1,7 @@
 <div class="row td-sidebar">
 
-    <img ng-if="$ctrl.userData.car.imageUrl != null" ng-src="{{$ctrl.userData.car.imageUrl}}" class="td-sidebar__car-image pt-1 pl-2 pr-2 pb-1">
-    <img ng-if="$ctrl.userData.car.imageUrl == null" src="/img/default-car.png" class="td-sidebar__car-image pt-1 pl-2 pr-2 pb-1">
+    <img ng-if="$ctrl.userData.car.imageUrl != null" ng-src="{{$ctrl.userData.car.imageUrl}}" class="td-sidebar__car-image">
+    <img ng-if="$ctrl.userData.car.imageUrl == null" src="/img/default-car.png" class="td-sidebar__car-image">
 
     <div class="col-12">
         <h4 class="text-primary text-overflow__ellipsis">{{$ctrl.userData.car.title ? $ctrl.userData.car.title : 'Car Title'}}</h4>
