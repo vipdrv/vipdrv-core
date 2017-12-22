@@ -1,10 +1,12 @@
 (function () {
     angular.module('myApp')
         .component('tdBeverage', {
-            controller: function ($scope) {
-                var self = this;
+            controller: function ($scope, dealerData, userData) {
 
+                var self = this;
                 self.isStepValid = null;
+                self.dealerData = dealerData;
+                self.userData = userData;
 
                 self.$onInit = function () {
                     if (self.userData.beverage.name === null) {
@@ -42,8 +44,6 @@
             },
             templateUrl: 'src/app/components/steps/beverage/beverage.tpl.html',
             bindings: {
-                userData: '=',
-                stepData: '<',
                 tabId: '<',
                 completeStep: '&'
             }

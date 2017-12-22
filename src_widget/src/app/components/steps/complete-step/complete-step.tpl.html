@@ -109,7 +109,7 @@
             <div class="card-body" style="padding: 0.25rem 1.25rem 0.25rem 1.25rem;">
                 <div class="row">
                     <div class="col-12">
-                        <h5 class="text-overflow__ellipsis ng-binding">{{$ctrl.userData.car.title ? $ctrl.userData.car.title : 'Car Title'}}</h5>
+                        <h5 class="text-overflow__ellipsis ng-binding">{{$ctrl.userData.car.title ? $ctrl.userData.car.title : 'Vehicle Title'}}</h5>
                     </div>
                     <div class="col-8">
                         <p class="text-secondary m-0">Engine</p>
@@ -125,13 +125,12 @@
 
         <div class="card mt-2" style="max-height: 310px; overflow: auto;">
             <div class="card-body" style="padding: 0.5rem 1.25rem 0.5rem 1.25rem;">
-                <h5 class="text-overflow__ellipsis">{{$ctrl.siteData.name ? $ctrl.siteData.name : '-'}}</h5>
-                {{$ctrl.siteData.address ? $ctrl.siteData.address : 'Dealer Address'}}<br>
-                {{$ctrl.siteData.phone ? $ctrl.siteData.phone : 'Dealer Phone'}}<br>
-                <a href="{{$ctrl.siteData.url}}" target="_blank">{{$ctrl.siteData.url}}</a>
+                <h5 class="text-overflow__ellipsis">{{$ctrl.dealerData.name ? $ctrl.dealerData.name : 'Not specified'}}</h5>
+                {{$ctrl.dealerData.address ? $ctrl.dealerData.address : 'Dealer Address'}}<br>
+                {{$ctrl.dealerData.phone ? $ctrl.dealerData.phone : 'Dealer Phone'}}<br>
+                <a href="{{$ctrl.dealerData.url}}" target="_blank">{{$ctrl.dealerData.siteUrl}}</a>
             </div>
         </div>
-
     </div>
 </div>
 <p></p>
@@ -139,8 +138,8 @@
 <div class="container text-center">
     <p>
         <button class="btn btn-primary" ng-click="$ctrl.sendSms()" ng-disabled="$ctrl.isSmsSended">
-            <span ng-show="!$ctrl.isSmsSended">Send me SMS</span> <i class="fa fa-spinner fa-spin fa-1x fa-fw"
-                                                                     ng-show="$ctrl.isSmsLoading"></i>
+            <span ng-show="!$ctrl.isSmsSended">Send me SMS</span>
+            <i class="fa fa-spinner fa-spin fa-1x fa-fw" ng-show="$ctrl.isSmsLoading"></i>
             <span ng-show="$ctrl.isSmsSended">SMS Sent</span>
         </button>
 
@@ -151,20 +150,22 @@
             <span class="title">VIPdrv - VIP Test Drive</span>
             <span class="description">
                 Hi {{$ctrl.userData.user.firstName}} {{$ctrl.userData.user.lastName}}.<br>
-                We've confirmed your test drive booking. Details below.<br><br>
-                Vehicle: {{$ctrl.userData.car.title}}<br>
+                We've confirmed your test drive booking. Details below.<br>
+                <br>
+                Vehicle: {{$ctrl.userData.car.title ? $ctrl.userData.car.title : 'Not specified'}}<br>
                 Date & Time: {{$ctrl.userData.calendar.date}} {{$ctrl.userData.calendar.time}}<br>
                 Expert: {{$ctrl.userData.expert.name}}<br>
                 Beverage: {{$ctrl.userData.beverage.name}}<br>
-                Road: {{$ctrl.userData.road.name}}<br><br>
+                Road: {{$ctrl.userData.road.name}}<br>
+                <br>
                 The Dealership is looking forward to your visit.<br>
-                {{$ctrl.siteData.name}}<br>
-                {{$ctrl.siteData.address}}<br>
-                {{$ctrl.siteData.phone}}<br>
+                {{$ctrl.dealerData.name}}<br>
+                {{$ctrl.dealerData.address}}<br>
+                {{$ctrl.dealerData.phone}}<br>
                 <!-- 8:30am-7pm<br> -->
-                {{$ctrl.siteData.url}}<br>
+                {{$ctrl.dealerData.siteUrl}}<br>
             </span>
-            <span class="location">{{$ctrl.siteData.address ? $ctrl.siteData.address : 'Dealer Address'}}</span>
+            <span class="location">{{$ctrl.dealerData.address ? $ctrl.dealerData.address : 'Dealer Address'}}</span>
         </button>
     </p>
 </div>

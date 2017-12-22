@@ -1,9 +1,11 @@
 (function () {
     angular.module('myApp')
         .component('tdExpert', {
-            controller: function ($scope) {
-                var self = this;
+            controller: function ($scope, dealerData, userData) {
 
+                var self = this;
+                self.dealerData = dealerData;
+                self.userData = userData;
                 self.isStepValid = false;
                 self.isNoSalesPersonAvaliable = true;
 
@@ -77,8 +79,6 @@
             },
             templateUrl: 'src/app/components/steps/expert/expert.tpl.html',
             bindings: {
-                userData: '=',
-                stepData: '<',
                 tabId: '<',
                 completeStep: '&'
             }

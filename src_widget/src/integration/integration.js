@@ -29,7 +29,8 @@ var TestDrive = TestDrive || (function () {
         elemDiv.className = "test-drive";
 
         if (!document.body) {
-            document.body = document.createElement("body");;
+            document.body = document.createElement("body");
+            document.body.style.display = 'table';
         }
 
         document.body.appendChild(elemDiv);

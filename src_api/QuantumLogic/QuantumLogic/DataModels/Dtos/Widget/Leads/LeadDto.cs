@@ -18,9 +18,11 @@ namespace QuantumLogic.WebApi.DataModels.Dtos.Widget.Leads
         public string SecondName { get; set; }
         public string UserPhone { get; set; }
         public string UserEmail { get; set; }
+        public string UserComment { get; set; }
         public string CarTitle { get; set; }
         public string CarVin { get; set; }
-        public DateTime BookingDateTimeUtc { get; set; }
+        public string VdpUrl { get; set; }
+        public DateTime? BookingDateTimeUtc { get; set; }
         public bool IsNew { get; set; }
         public bool IsReachedByManager { get; set; }
 
@@ -50,9 +52,12 @@ namespace QuantumLogic.WebApi.DataModels.Dtos.Widget.Leads
             string secondName,
             string userPhone,
             string userEmail,
+            string userComment,
             string carTitle,
             string carVin,
-            DateTime bookingDateTimeUtc) : this()
+            string vdpUrl,
+            DateTime? bookingDateTimeUtc,
+            bool isNew) : this()
         {
             Id = id;
             SiteId = siteId;
@@ -63,9 +68,12 @@ namespace QuantumLogic.WebApi.DataModels.Dtos.Widget.Leads
             SecondName = secondName;
             UserPhone = userPhone;
             UserEmail = userEmail;
+            UserComment = userComment;
             CarTitle = carTitle;
             CarVin = carVin;
+            VdpUrl = vdpUrl;
             BookingDateTimeUtc = bookingDateTimeUtc;
+            IsNew = isNew;
         }
 
         #endregion
@@ -84,16 +92,17 @@ namespace QuantumLogic.WebApi.DataModels.Dtos.Widget.Leads
             SecondName = entity.SecondName;
             UserPhone = entity.UserPhone;
             UserEmail = entity.UserEmail;
+            UserComment = entity.UserComment;
             CarTitle = entity.CarTitle;
             CarVin = entity.CarVin;
+            VdpUrl = entity.VdpUrl;
             BookingDateTimeUtc = entity.BookingDateTimeUtc;
             IsNew = entity.IsNew;
             IsReachedByManager = entity.IsReachedByManager;
             SiteName = entity.Site.Name;
-            ExpertName = entity.Expert.Name;
-            BeverageName = entity.Beverage.Name;
-            RouteName = entity.Route.Name;
-
+            ExpertName = (entity.Expert != null) ? entity.Expert.Name : "Skipped by customer";
+            BeverageName = (entity.Beverage != null) ? entity.Beverage.Name : "Skipped by customer";
+            RouteName = (entity.Route != null) ? entity.Route.Name : "Skipped by customer";
         }
         public override Lead MapToEntity()
         {
@@ -107,9 +116,12 @@ namespace QuantumLogic.WebApi.DataModels.Dtos.Widget.Leads
             entity.SecondName = SecondName;
             entity.UserPhone = UserPhone;
             entity.UserEmail = UserEmail;
+            entity.UserComment = UserComment;
             entity.CarTitle = CarTitle;
             entity.CarVin = CarVin;
+            entity.VdpUrl = VdpUrl;
             entity.BookingDateTimeUtc = BookingDateTimeUtc;
+            entity.IsNew = IsNew;
 
             return entity;
         }

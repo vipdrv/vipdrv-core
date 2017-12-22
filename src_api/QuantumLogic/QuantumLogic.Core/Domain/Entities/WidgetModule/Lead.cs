@@ -15,10 +15,12 @@ namespace QuantumLogic.Core.Domain.Entities.WidgetModule
         public string SecondName { get; set; }
         public string UserPhone { get; set; }
         public string UserEmail { get; set; }
+        public string UserComment { get; set; }
         public string CarImageUrl { get; set; }
+        public string VdpUrl { get; set; }
         public string CarTitle { get; set; }
         public string CarVin { get; set; }
-        public DateTime BookingDateTimeUtc { get; set; }
+        public DateTime? BookingDateTimeUtc { get; set; }
         public bool IsNew { get; set; }
         public bool IsReachedByManager { get; set; }
 

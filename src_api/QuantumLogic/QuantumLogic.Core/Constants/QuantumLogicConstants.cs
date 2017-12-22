@@ -4,6 +4,6 @@
     {
         public const string FakePassword = "P@ssw0rd";
         public const string OutputDateTimeFormat = "yyyy-MM-dd HH:mm:ss";
-        public const string WidgetDateTimeFormat = "yyyy-MM-dd h:mm:ss tt";
+        public const string UsaTimeFormat = "MM/dd/yyyy h:mm tt";
     }
 }

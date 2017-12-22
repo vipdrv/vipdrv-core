@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Net.Http;
 using System.Text;
 using QuantumLogic.Core.Constants;
@@ -12,9 +13,10 @@ namespace QuantumLogic.Core.Utils.Email.Templates.TestDrive
         protected const string TemplateUrl = "https://generalstandart256.blob.core.windows.net/testdrive-email-templates/complete-booking__email-template.html";
         private readonly string _customerFirstName;
         private readonly string _customerLastName;
-        private readonly DateTime _bookingDateTime;
+        private DateTime? _bookingDateTime;
         private readonly string _vehicleImgUrl;
         private readonly string _vehicleTitle;
+        private readonly string _vdpUrl;
         private readonly string _expertName;
         private readonly string _beverageName;
         private readonly string _roadName;
@@ -29,16 +31,18 @@ namespace QuantumLogic.Core.Utils.Email.Templates.TestDrive
             DateTime bookingDateTime,
             string vehicleImgUrl,
             string vehicleTitle,
+            string vdpUrl,
             string expertName,
             string beverageName,
             string roadName,
             string dealerName,
-            string dealerAddress, 
+            string dealerAddress,
             string dealerPhone,
             string dealerSiteUrl
             )
         {
             _vehicleTitle = vehicleTitle;
+            _vdpUrl = vdpUrl;
             _vehicleImgUrl = vehicleImgUrl;
             _customerFirstName = customerFirstName;
             _customerLastName = customerLastName;
@@ -56,12 +60,13 @@ namespace QuantumLogic.Core.Utils.Email.Templates.TestDrive
         {
             _vehicleTitle = lead.CarTitle;
             _vehicleImgUrl = lead.CarImageUrl;
+            _vdpUrl = lead.VdpUrl;
             _customerFirstName = lead.FirstName;
             _customerLastName = lead.SecondName;
             _bookingDateTime = lead.BookingDateTimeUtc;
-            _expertName = lead.Expert.Name;
-            _beverageName = lead.Beverage.Name;
-            _roadName = lead.Route.Name;
+            _expertName = (lead.Expert != null) ? lead.Expert.Name : "Skipped by customer";
+            _beverageName = (lead.Beverage != null) ? lead.Beverage.Name : "Skipped by customer";
+            _roadName = (lead.Route != null) ? lead.Route.Name : "Skipped by customer";
             _dealerName = lead.Site.DealerName;
             _dealerAddress = lead.Site.DealerAddress;
             _dealerPhone = lead.Site.DealerPhone;
@@ -75,6 +80,7 @@ namespace QuantumLogic.Core.Utils.Email.Templates.TestDrive
             #region Vehicle
             html = html.Replace("{{vehicleTitle}}", _vehicleTitle);
             html = html.Replace("{{vehicleImgUrl}}", _vehicleImgUrl);
+            html = html.Replace("{{vdpUrl}}", _vdpUrl);
             #endregion
 
             #region Customer
@@ -83,7 +89,7 @@ namespace QuantumLogic.Core.Utils.Email.Templates.TestDrive
             #endregion
 
             #region Booking
-            html = html.Replace("{{bookingDateTime}}", _bookingDateTime.ToString(QuantumLogicConstants.OutputDateTimeFormat));
+            html = html.Replace("{{bookingDateTime}}", _bookingDateTime.GetValueOrDefault().ToString(QuantumLogicConstants.UsaTimeFormat, CultureInfo.InvariantCulture));
             html = html.Replace("{{expertName}}", _expertName);
             html = html.Replace("{{beverageName}}", _beverageName);
             html = html.Replace("{{roadName}}", _roadName);

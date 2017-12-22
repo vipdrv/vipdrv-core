@@ -9,23 +9,29 @@ namespace QuantumLogic.Core.Utils.Sms.Templates
     public class CompleteBookingSmsTemplate : ISmsTemplate
     {
         public string VehicleTitle { get; }
-        public DateTime BookingDateTime { get; }
+        public DateTime? BookingDateTime { get; }
         public string ExpertName { get; }
         public string BeverageName { get; }
         public string RoadName { get; }
+        public string DealerName { get; set; }
+        public string DealerPhone { get; set; }
 
         public CompleteBookingSmsTemplate(
             string vehicleTitle,
             DateTime bookingDateTime,
             string expertName,
             string beverageName,
-            string roadName)
+            string roadName,
+            string dealerName,
+            string dealerPhone)
         {
             VehicleTitle = vehicleTitle;
             BookingDateTime = bookingDateTime;
             ExpertName = expertName;
             BeverageName = beverageName;
             RoadName = roadName;
+            DealerName = dealerName;
+            DealerPhone = dealerPhone;
         }
 
         public CompleteBookingSmsTemplate(Lead lead)
@@ -41,10 +47,12 @@ namespace QuantumLogic.Core.Utils.Sms.Templates
         {
             return $"Your Upcoming Test Drive \n \n" +
                    $"Vehicle: {VehicleTitle} \n" +
-                   $"Date & Time: {BookingDateTime.ToString(QuantumLogicConstants.OutputDateTimeFormat)} \n" +
+                   $"Date & Time: {BookingDateTime.GetValueOrDefault().ToString(QuantumLogicConstants.OutputDateTimeFormat)} \n" +
                    $"Expert: {ExpertName} \n" +
                    $"Beverage: {BeverageName} \n" +
-                   $"Road: {RoadName} \n";
+                   $"Road: {RoadName} \n\n" +
+                   $"{DealerName} \n" +
+                   $"{DealerPhone} \n";
         }
     }
 }
