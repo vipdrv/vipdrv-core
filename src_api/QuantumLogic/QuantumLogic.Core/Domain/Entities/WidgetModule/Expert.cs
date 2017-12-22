@@ -5,15 +5,18 @@
         #region Fields
 
         public int SiteId { get; set; }
-        public string Name { get; set; }
-        public string Description { get; set; }
-        public int Order { get; set; }
-        public bool IsActive { get; set; }
         public string PhotoUrl { get; set; }
+        public string Name { get; set; }
+        public string Title { get; set; }
+        public string Description { get; set; }
+        public string Email { get; set; }
+        public string PhoneNumber { get; set; }
         public string FacebookUrl { get; set; }
         public string LinkedinUrl { get; set; }
         public string WorkingHours { get; set; }
-        
+        public int Order { get; set; }
+        public bool IsActive { get; set; }
+
         #endregion
 
         #region Relations
@@ -67,11 +70,14 @@
         public void UpdateFrom(Expert actualEntity)
         {
             SiteId = actualEntity.SiteId;
+            PhotoUrl = actualEntity.PhotoUrl;
             Name = actualEntity.Name;
+            Title = actualEntity.Title;
             Description = actualEntity.Description;
+            Email = actualEntity.Email;
+            PhoneNumber = actualEntity.PhoneNumber;
             Order = actualEntity.Order;
             IsActive = actualEntity.IsActive;
-            PhotoUrl = actualEntity.PhotoUrl;
             FacebookUrl = actualEntity.FacebookUrl;
             LinkedinUrl = actualEntity.LinkedinUrl;
             WorkingHours = actualEntity.WorkingHours;

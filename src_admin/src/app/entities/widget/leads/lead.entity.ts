@@ -46,7 +46,7 @@ export class LeadEntity extends Entity {
         this.expertName = mock.expertName;
         this.routeName = mock.routeName;
         this.beverageName = mock.beverageName;
-        this.bookingDateTimeUtc = Extensions.formatUtcDateTimeToLocalTimezone(dto.bookingDateTimeUtc);
+        this.bookingDateTimeUtc = Extensions.formatNullableUtcDateTimeToLocalTimezone(dto.bookingDateTimeUtc);
         this.carTitle = mock.carTitle;
         this.carVin = mock.carVin;
         this.carImageUrl = mock.carImageUrl;

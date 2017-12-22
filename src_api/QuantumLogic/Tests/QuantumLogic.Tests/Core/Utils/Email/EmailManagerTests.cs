@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Text;
 using System.Threading.Tasks;
 using NUnit.Framework;
+using QuantumLogic.Core.Constants;
 using QuantumLogic.Core.Domain.Entities.WidgetModule;
 using QuantumLogic.Core.Utils.Email;
 using QuantumLogic.Core.Utils.Email.Providers.SendGrid;
@@ -29,7 +31,16 @@ namespace QuantumLogic.Tests.Core.Utils.Email
         [Test]
         public void EmptyTest__ShouldParseFromTeamCity()
         {
-            Console.WriteLine("#313 Test Passed");
+
+            string dateTime = DateTime.Now.ToString(QuantumLogicConstants.UsaTimeFormat, CultureInfo.InvariantCulture);
+
+            DateTime? nullableDateTime = null;
+
+            string result = nullableDateTime.GetValueOrDefault()
+                .ToString(QuantumLogicConstants.UsaTimeFormat, CultureInfo.InvariantCulture);
+
+            Console.WriteLine(result);
+
         }
     }
 }

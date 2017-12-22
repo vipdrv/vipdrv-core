@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace QuantumLogic.Core.Authorization
 {
@@ -8,7 +7,7 @@ namespace QuantumLogic.Core.Authorization
     /// </summary>
     public interface IQLSession
     {
-        long? UserId { get; }
+        long? UserId { get; set; }
         string Username { get; }
         ISet<string> GrantedPermissions { get; }
     }

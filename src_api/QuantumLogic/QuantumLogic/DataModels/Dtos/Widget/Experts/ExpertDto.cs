@@ -8,14 +8,17 @@ namespace QuantumLogic.WebApi.DataModels.Dtos.Widget.Experts
     public class ExpertDto : EntityDto<Expert, int>, IPassivable, IOrderable
     {
         public int SiteId { get; set; }
-        public string Name { get; set; }
-        public string Description { get; set; }
-        public int Order { get; set; }
-        public bool IsActive { get; set; }
         public string PhotoUrl { get; set; }
+        public string Name { get; set; }
+        public string Title { get; set; }
+        public string Description { get; set; }
+        public string Email { get; set; }
+        public string PhoneNumber { get; set; }
         public string FacebookUrl { get; set; }
         public string LinkedinUrl { get; set; }
         public IList<DayOfWeekInterval> WorkingHours { get; set; }
+        public int Order { get; set; }
+        public bool IsActive { get; set; }
 
         #region Mapping
 
@@ -23,26 +26,32 @@ namespace QuantumLogic.WebApi.DataModels.Dtos.Widget.Experts
         {
             base.MapFromEntity(entity);
             SiteId = entity.SiteId;
-            Name = entity.Name;
-            Description = entity.Description;
-            Order = entity.Order;
-            IsActive = entity.IsActive;
             PhotoUrl = entity.PhotoUrl;
+            Name = entity.Name;
+            Title = entity.Title;
+            Description = entity.Description;
+            Email = entity.Email;
+            PhoneNumber = entity.PhoneNumber;
             FacebookUrl = entity.FacebookUrl;
             LinkedinUrl = entity.LinkedinUrl;
             WorkingHours = DayOfWeekInterval.Parse(entity.WorkingHours);
+            Order = entity.Order;
+            IsActive = entity.IsActive;
         }
         public override Expert MapToEntity()
         {
             Expert entity = base.MapToEntity();
             entity.SiteId = SiteId;
-            entity.Name = Name;
-            entity.Description = Description;
-            entity.Order = Order;
-            entity.IsActive = IsActive;
             entity.PhotoUrl = PhotoUrl;
+            entity.Name = Name;
+            entity.Title = Title;
+            entity.Description = Description;
+            entity.Email = Email;
+            entity.PhoneNumber = PhoneNumber;
             entity.FacebookUrl = FacebookUrl;
             entity.LinkedinUrl = LinkedinUrl;
+            entity.Order = Order;
+            entity.IsActive = IsActive;
             return entity;
         }
 

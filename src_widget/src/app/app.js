@@ -77,34 +77,65 @@
         },
         calendar: {
             date: null,
-            time: null
+            time: null,
+            dayOfWeek: null,
+            isSkipped: null
         },
         expert: {
             id: null,
             img: null,
             name: null,
-            description: null
+            description: null,
+            isSkipped: null
         },
         beverage: {
             id: null,
             img: null,
             name: null,
-            description: null
+            description: null,
+            isSkipped: null
         },
         road: {
             id: null,
             img: null,
             name: null,
-            description: null
+            description: null,
+            isSkipped: null
         },
         car: {
+            vin: null,
             imageUrl: null,
+            vdpUrl: null,
             title: null,
             engine: null,
             year: null,
             colour: null,
             transmission: null,
             fuel: null
+        }
+    };
+
+    var dealerData = {
+        siteId: null,
+        name: null,
+        phone: null,
+        address: null,
+        siteUrl: null,
+        workingHours: [],
+        experts: {
+            isStepEnabled: true,
+            stepOrder: 0,
+            items: []
+        },
+        beverages: {
+            isStepEnabled: true,
+            stepOrder: 1,
+            items: []
+        },
+        roads: {
+            isStepEnabled: true,
+            stepOrder: 2,
+            items: []
         }
     };
 
@@ -122,6 +153,7 @@
 
     var vin = url.vin || null;
     var imageUrl = url.imageUrl || null;
+    var vdpUrl = url.vdpUrl || null;
     var title = url.title || null;
     var engine = url.engine || null;
     var year = url.year || null;
@@ -131,6 +163,7 @@
 
     userData.car.vin = vin;
     userData.car.imageUrl = imageUrl;
+    userData.car.vdpUrl = vdpUrl;
     userData.car.title = title;
     userData.car.engine = engine;
     userData.car.year = year;
@@ -141,6 +174,7 @@
     app.value('widgetTabs', widgetTabs);
     app.value('globalState', globalState);
     app.value('userData', userData);
+    app.value('dealerData', dealerData);
     app.value('apiBaseUrl', apiBaseUrl);
     app.value('siteId', siteId);
 })();

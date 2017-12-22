@@ -11,7 +11,8 @@ namespace QuantumLogic.WebApi.DataModels.Dtos.Widget.Leads
 
         public LeadFullDto()
             : base()
-        { }
+        {
+        }
 
         public LeadFullDto(int id,
             int siteId,
@@ -22,23 +23,29 @@ namespace QuantumLogic.WebApi.DataModels.Dtos.Widget.Leads
             string secondName,
             string userPhone,
             string userEmail,
+            string userComment,
             string carImageUrl,
             string carTitle,
             string carVin,
-            string bookingDateTimeUtc)
+            string vdpUrl,
+            DateTime? bookingDateTimeUtc,
+            bool isNew)
             : base(
-                  id,
-                  siteId,
-                  expertId,
-                  beverageId,
-                  routeId,
-                  firstName,
-                  secondName,
-                  userPhone,
-                  userEmail,
-                  carTitle,
-                  carVin,
-                  bookingDateTimeUtc)
+                  id: id,
+                  siteId: siteId,
+                  expertId: expertId,
+                  beverageId: beverageId,
+                  routeId: routeId,
+                  firstName: firstName,
+                  secondName: secondName,
+                  userPhone: userPhone,
+                  userEmail: userEmail,
+                  userComment: userComment,
+                  carTitle: carTitle,
+                  carVin: carVin,
+                  vdpUrl: vdpUrl,
+                  bookingDateTimeUtc: bookingDateTimeUtc, 
+                  isNew: isNew)
         {
             CarImageUrl = carImageUrl;
         }
@@ -52,6 +59,7 @@ namespace QuantumLogic.WebApi.DataModels.Dtos.Widget.Leads
             base.MapFromEntity(entity);
             CarImageUrl = entity.CarImageUrl;
         }
+
         public override Lead MapToEntity()
         {
             Lead entity = base.MapToEntity();

@@ -34,6 +34,16 @@ export namespace Extensions {
             throw new Error('Argument (dateTime) exception!');
         }
     }
+    export function formatNullableUtcDateTimeToLocalTimezone(dateTime: string): string {
+        if (Variable.isNotNullOrUndefined(dateTime)) {
+            const res = formatDateTime(
+                new Date((new Date(dateTime)).getTime() - (60 * 1000 * new Date().getTimezoneOffset()))
+                    .toString());
+            return res;
+        } else {
+            return null;
+        }
+    }
     export function todayValue(): string {
         const date = new Date();
         const dateWithoutTimezone = new Date(

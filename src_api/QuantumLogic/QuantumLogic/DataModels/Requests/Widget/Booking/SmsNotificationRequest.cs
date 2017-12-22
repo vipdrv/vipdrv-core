@@ -8,10 +8,12 @@ namespace QuantumLogic.WebApi.DataModels.Requests.Widget.Booking
     public class SmsNotificationRequest
     {
         public string Phone { get; set; }
-        public string DateTime { get; set; }
+        public DateTime BookingDateTime { get; set; }
         public string VehicleTitle { get; set; }
-        public string ExpertTitle { get; set; }
-        public string BeverageTitle { get; set; }
-        public string RoadTitle { get; set; }
+        public string ExpertName { get; set; }
+        public string BeverageName { get; set; }
+        public string RoadName { get; set; }
+        public string DealerName { get; set; }
+        public string DealerPhone { get; set; }
     }
 }

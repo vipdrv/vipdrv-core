@@ -1,5 +1,5 @@
 <div class="many-entities-template">
-    <div class="row test-drive-many-entities-template-header">
+    <div class="row test-drive-many-entities-template-header mt-2">
         <div class="col-12">
             <button class="btn btn-secondary btn-sm pull-left test-drive-left-standalone-btn"
                     type="button"
@@ -9,7 +9,6 @@
                 <i class="fa fa-refresh fa-spin" *ngIf="isOperationGetManyProcessing()"></i>
                 <i class="fa fa-refresh" *ngIf="!isOperationGetManyProcessing()"></i>
             </button>
-
             <button type="button"
                     class="btn btn-outline-success btn-sm pull-right test-drive-right-standalone-btn"
                     *ngIf="entityPolicyService.canCreate()"
@@ -36,6 +35,10 @@
                             translate>
                             experts.table.headerText_expertName
                         </th>
+                        <th class="experts-table-body-column experts-table-body-column-header-full-name"
+                            translate>
+                            experts.table.headerText_expertTitle
+                        </th>
                         <th class="experts-table-body-column experts-table-body-column-activity"
                             translate>
                             general.table.headerText.activity
@@ -60,8 +63,11 @@
                                  [width]="imageInTableWidth"
                                  [height]="imageInTableHeight">
                         </td>
-                        <td class="experts-table-body-column  experts-table-body-column-body-full-name">
+                        <td class="experts-table-body-column experts-table-body-column-body-full-name">
                             {{item.name}}
+                        </td>
+                        <td class="experts-table-body-column experts-table-body-column-body-title">
+                            {{item.title}}
                         </td>
                         <td class="experts-table-body-column">
                             <ui-switch color="{{switcherSettings.color}}"
