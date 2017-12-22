@@ -1,13 +1,15 @@
 (function () {
     angular.module('myApp')
         .component('tdDate', {
-            controller: function ($scope) {
+            controller: function ($scope, $interval, dealerData, userData) {
 
                 // =======================================================================//
                 // Variables                                                              //
                 // =======================================================================//
 
                 var self = this;
+                self.dealerData = dealerData;
+                self.userData = userData;
                 self.isStepValid = false;
                 self.isLoading = true;
                 self.minDateString = null;
@@ -22,29 +24,45 @@
                 // Init                                                                   //
                 // =======================================================================//
 
+                self.stop;
+
                 self.$onInit = function () {
                     self.minDateString = moment().subtract(0, 'day').format('YYYY-MM-DD');
                     self.dateImput = self.userData.calendar.date;
                     self.mobileDateTimeInput = self.userData.calendar.date;
                     self.validateStep();
 
-                    if (self.stepData && self.stepData.id != null) {
+                    if (self.dealerData.siteId != null) {
                         self.isLoading = false;
                         self.initStep();
+                    } else {
+                        self.isLoading = true;
+                        self.stop = $interval(function () {
+                            if (self.dealerData.siteId == null) {
+                                // console.log('loading');
+                            } else {
+                                self.isLoading = false;
+                                self.stopInterval();
+                                self.initStep();
+                            }
+                        }, 100);
+
                     }
                 };
 
-                self.$onChanges = function ({stepData}) {
-                    if (angular.isDefined(stepData)) {
-                        if (!stepData.isFirstChange()) {
-                            self.isLoading = false;
-                            self.initStep();
-                        }
+                self.stopInterval = function() {
+                    if (angular.isDefined(self.stop)) {
+                        $interval.cancel(self.stop);
+                        self.stop = undefined;
                     }
                 };
+
+                // =======================================================================//
+                // Step Logic                                                             //
+                // =======================================================================//
 
                 self.initStep = function () {
-                    self.widgetWorkingHours = self.mapToWidgetWorkingHours(self.stepData.workingHours);
+                    self.widgetWorkingHours = self.mapToWidgetWorkingHours(self.dealerData.workingHours);
 
                     var currentDayOfWeek = new Date().getDay();
                     var startTime = self.widgetWorkingHours[currentDayOfWeek].startTime;
@@ -62,7 +80,7 @@
                         var isDayAvalibale = self.widgetWorkingHours[selectedDayOfWeek].isActive;
 
                         var isTimeAvalibale = false;
-                        var selectedHour =  date.hours();
+                        var selectedHour = date.hours();
                         var startTime = self.widgetWorkingHours[selectedDayOfWeek].startTime.split(':')[0];
                         var endTime = self.widgetWorkingHours[selectedDayOfWeek].endTime.split(':')[0];
 
@@ -187,8 +205,6 @@
             },
             templateUrl: 'src/app/components/steps/date/date.tpl.html',
             bindings: {
-                userData: '=',
-                stepData: '<',
                 tabId: '<',
                 completeStep: '&'
             }

@@ -8,9 +8,10 @@ using QuantumLogic.Data.EFContext;
 namespace QuantumLogic.Data.Migrations
 {
     [DbContext(typeof(QuantumLogicDbContext))]
-    partial class QuantumLogicDbContextModelSnapshot : ModelSnapshot
+    [Migration("20171222001346_AddedVdpUrl")]
+    partial class AddedVdpUrl
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "1.1.2")
@@ -224,7 +225,7 @@ namespace QuantumLogic.Data.Migrations
 
                     b.Property<int?>("BeverageId");
 
-                    b.Property<DateTime?>("BookingDateTimeUtc");
+                    b.Property<DateTime>("BookingDateTimeUtc");
 
                     b.Property<string>("CarImageUrl");
 

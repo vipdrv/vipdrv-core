@@ -19,7 +19,7 @@ namespace QuantumLogic.WebApi.Providers.Export.Excel.Leads
                 new EntityPropertyMapper<Lead>("SecondName", localize("Second name"), (r => r.SecondName), true),
                 new EntityPropertyMapper<Lead>("Site", localize("Site"), (r => r.Site.Name), true),
                 new EntityPropertyMapper<Lead>("RecievedDateTimeUtc", localize("Recieved date"), (r => r.RecievedUtc.FormatUtcDateTimeToUserFriendlyString(timeZoneOffset)), true),
-                new EntityPropertyMapper<Lead>("BookingDateTimeUtc", localize("Booking date"), (r => r.BookingDateTimeUtc.FormatUtcDateTimeToUserFriendlyString(timeZoneOffset)), true),
+                new EntityPropertyMapper<Lead>("BookingDateTimeUtc", localize("Booking date"), (r => r.BookingDateTimeUtc.GetValueOrDefault().FormatUtcDateTimeToUserFriendlyString(timeZoneOffset)), true),
                 new EntityPropertyMapper<Lead>("Expert", localize("Expert"), (r => r.Expert.Name), true),
                 new EntityPropertyMapper<Lead>("Route", localize("Route"), (r => r.Route.Name), true),
                 new EntityPropertyMapper<Lead>("Beverage", localize("Beverage"), (r => r.Beverage.Name), true),

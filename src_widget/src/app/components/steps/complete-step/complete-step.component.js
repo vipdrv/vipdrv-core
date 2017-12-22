@@ -14,8 +14,11 @@
 
     angular.module('myApp')
         .component('tdCompleteStep', {
-            controller: function ($timeout, $window, api) {
+            controller: function ($timeout, $window, api, dealerData, userData) {
+
                 var self = this;
+                self.dealerData = dealerData;
+                self.userData = userData;
 
                 // =======================================================================//
                 // Calendar Event                                                         //
@@ -47,8 +50,8 @@
 
                 self.sendSms = function () {
                     self.isSmsLoading = true;
-
-                    api.sendMeSms(self.userData).then(function () {
+                    debugger;
+                    api.sendMeSms(self.userData, self.dealerData).then(function () {
                         self.isSmsSended = true;
                         self.isSmsLoading = false;
                     });
@@ -57,7 +60,6 @@
             templateUrl: 'src/app/components/steps/complete-step/complete-step.tpl.html',
             bindings: {
                 car: '<',
-                userData: '<',
                 siteData: '<'
             }
         });

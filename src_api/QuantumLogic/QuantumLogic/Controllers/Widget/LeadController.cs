@@ -12,6 +12,7 @@ using QuantumLogic.Core.Utils.Email.Templates.TestDrive;
 using QuantumLogic.Core.Utils.Export.Entity.Concrete.Excel;
 using QuantumLogic.Core.Utils.Export.Entity.Concrete.Excel.DataModels;
 using QuantumLogic.Core.Utils.Sms;
+using QuantumLogic.Core.Utils.Sms.Templates;
 using QuantumLogic.WebApi.DataModels.Dtos.Widget.Leads;
 using QuantumLogic.WebApi.DataModels.Requests;
 using QuantumLogic.WebApi.DataModels.Requests.Widget.Booking;
@@ -22,8 +23,6 @@ using SendGrid.Helpers.Mail;
 using System;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using QuantumLogic.Core.Constants;
-using QuantumLogic.Core.Utils.Sms.Templates;
 
 namespace QuantumLogic.WebApi.Controllers.Widget
 {
@@ -32,8 +31,8 @@ namespace QuantumLogic.WebApi.Controllers.Widget
     {
         #region Injected dependencies
 
-        public IContentManager ContentManager { get; private set; }
-        public ISiteDomainService SiteDomainService { get; }
+        protected readonly IContentManager ContentManager;
+        protected readonly ISiteDomainService SiteDomainService;
         protected readonly ITestDriveEmailService TestDriveEmailService;
         protected readonly ISmsService SmsService;
         protected readonly IQLSession Session;
@@ -148,48 +147,55 @@ namespace QuantumLogic.WebApi.Controllers.Widget
                 throw new ArgumentNullException(nameof(request));
             }
 
-            var leadFullDto = request.MapToLeadFullDto(siteId);
+            LeadFullDto leadFullDto = request.MapToLeadFullDto(siteId);
             leadFullDto.NormalizeAsRequest();
-            Lead entity;
 
-            using (var uow = UowManager.CurrentOrCreateNew(true))
+            Lead createdLead;
+            using (var uow = UowManager.CurrentOrCreateNew())
             {
                 Session.UserId = (await SiteDomainService.RetrieveAsync(siteId)).UserId;
                 Lead stubEntity = await DomainService.CreateAsync(leadFullDto.MapToEntity());
                 await uow.CompleteAsync();
-                entity = await DomainService.RetrieveAsync(stubEntity.Id);
+                createdLead = await DomainService.RetrieveAsync(stubEntity.Id);
             }
-            LeadFullDto createdEntity = new LeadFullDto();
-            createdEntity.MapFromEntity(entity);
+            LeadFullDto createLeadFullDto = new LeadFullDto();
+            createLeadFullDto.MapFromEntity(createdLead);
 
             TestDriveEmailService.SendCompleteBookingEmail(
-                new EmailAddress(entity.UserEmail, $"{entity.FirstName} {entity.SecondName}"),
-                new Core.Utils.Email.Templates.TestDrive.CompleteBookingEmailTemplate(entity));
+                new EmailAddress(createdLead.UserEmail, $"{createdLead.FirstName} {createdLead.SecondName}"),
+                new CompleteBookingEmailTemplate(createdLead));
 
-            var newLeadNotificationEmailTemplate = new NewLeadNotificationEmailTemplate(entity);
-            foreach (var email in entity.Site.EmailAdresses)
+            var newLeadNotificationEmailTemplate = new NewLeadNotificationEmailTemplate(createdLead);
+            foreach (var email in createdLead.Site.EmailAdresses)
             {
                 TestDriveEmailService.SendNewLeadNotificationEmail(new EmailAddress(email), newLeadNotificationEmailTemplate);
             }
 
-            var newLeadNotificationSmsTemplate = new NewLeadNotificationSmsTemplate(entity);
-            foreach (var number in entity.Site.PhoneNumbers)
+            var newLeadNotificationSmsTemplate = new NewLeadNotificationSmsTemplate(createdLead);
+            foreach (var number in createdLead.Site.PhoneNumbers)
             {
                 await SmsService.SendSms(number, newLeadNotificationSmsTemplate);
             }
 
-            return createdEntity;
+            return createLeadFullDto;
         }
 
         [HttpPost("{siteId}/send-sms")]
         public async Task SendSmsAsync(int siteId, [FromBody] SmsNotificationRequest request)
         {
+            if (request == null)
+            {
+                throw new ArgumentNullException(nameof(request));
+            }
+
             await SmsService.SendSms(request.Phone, new CompleteBookingSmsTemplate(
                 request.VehicleTitle,
                 request.BookingDateTime,
-                request.ExpertTitle,
-                request.BeverageTitle,
-                request.RoadTitle));
+                request.ExpertName,
+                request.BeverageName,
+                request.RoadName,
+                request.DealerName,
+                request.DealerPhone));
         }
 
         #endregion
