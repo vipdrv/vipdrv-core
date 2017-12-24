@@ -13,6 +13,7 @@ namespace QuantumLogic.Core.Utils.Email.Templates.TestDrive
         protected const string TemplateUrl = "https://generalstandart256.blob.core.windows.net/testdrive-email-templates/complete-booking__email-template.html";
         private readonly string _customerFirstName;
         private readonly string _customerLastName;
+        private readonly string _customerComment;
         private DateTime? _bookingDateTime;
         private readonly string _vehicleImgUrl;
         private readonly string _vehicleTitle;
@@ -28,7 +29,7 @@ namespace QuantumLogic.Core.Utils.Email.Templates.TestDrive
         public CompleteBookingEmailTemplate(
             string customerFirstName,
             string customerLastName,
-            DateTime bookingDateTime,
+            DateTime? bookingDateTime,
             string vehicleImgUrl,
             string vehicleTitle,
             string vdpUrl,
@@ -63,6 +64,7 @@ namespace QuantumLogic.Core.Utils.Email.Templates.TestDrive
             _vdpUrl = lead.VdpUrl;
             _customerFirstName = lead.FirstName;
             _customerLastName = lead.SecondName;
+            _customerComment = lead.UserComment;
             _bookingDateTime = lead.BookingDateTimeUtc;
             _expertName = (lead.Expert != null) ? lead.Expert.Name : "Skipped by customer";
             _beverageName = (lead.Beverage != null) ? lead.Beverage.Name : "Skipped by customer";
@@ -86,6 +88,7 @@ namespace QuantumLogic.Core.Utils.Email.Templates.TestDrive
             #region Customer
             html = html.Replace("{{customerFirstName}}", _customerFirstName);
             html = html.Replace("{{customerLastName}}", _customerLastName);
+            html = html.Replace("{{customerComment}}", _customerComment);
             #endregion
 
             #region Booking

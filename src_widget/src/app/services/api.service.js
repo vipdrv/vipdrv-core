@@ -144,7 +144,7 @@
 
                 if (userData.calendar.date && userData.calendar.time) {
                     var dateTime = userData.calendar.date + ' ' + userData.calendar.time;
-                    smsDto.bookingDateTime = moment(dateTime).format('YYYY-MM-DD HH:MM');
+                    smsDto.bookingDateTime = moment(dateTime).format('YYYY-MM-DD HH:mm');
                 }
                 smsDto.phone = userData.user.phone || null;
                 smsDto.vehicleTitle = userData.car.title || "Not specified";
@@ -186,7 +186,7 @@
 
                 if (userData.calendar.date && userData.calendar.time) {
                     var dateTime = userData.calendar.date + ' ' + userData.calendar.time;
-                    bookingDto.bookingDateTime = moment(dateTime).format('YYYY-MM-DD HH:MM');
+                    bookingDto.bookingDateTime = moment(dateTime).format('YYYY-MM-DD HH:mm');
                 }
 
                 bookingDto.bookingCar.title = userData.car.title || "Not specified";

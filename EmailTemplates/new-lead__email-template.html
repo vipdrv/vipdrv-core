@@ -3,7 +3,7 @@
   <head>
     <meta name="viewport" content="width=device-width" />
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <title>Simple Transactional Email</title>
+    <title>VIPdrv - VIP Test Drive</title>
     <style>
       /* -------------------------------------
           GLOBAL RESETS
@@ -260,18 +260,24 @@
                   <table border="0" cellpadding="0" cellspacing="0">
                     <tr>
                       <td>
-                        <h2>New Lead</h2><br>
+                        <h2>VIPdrv - VIP Test Drive</h2><br>
 						<p style="text-align: center;">
-							<img src="{{vehicleImgUrl}}" style="border-radius: 5px;">
+							<a href="{{vdpUrl}}">
+								<img src="{{vehicleImgUrl}}" style="border-radius: 5px;">
+							</a>	
 						</p>
-						<b>Vehicle:</b> <a href="{{vdpUrl}}">{{vehicleTitle}}</a><br>
+						<b>Vehicle</b><br>
+						<b>Name:</b> {{vehicleTitle}}<br>
 						<b>VIN:</b> {{VIN}}<br>
 						<br>
+						<b>Customer</b><br>
 						<b>Name:</b> {{customerFirstName}} {{customerLastName}}<br>
 						<b>Phone:</b> {{customerPhone}}<br>
 						<b>Email:</b> {{customerEmail}}<br>
+						<b>Comment:</b> {{customerComment}}<br>
 						<br>
-						<b>Booking Date & Time:</b> {{bookingDateTime}}<br>
+						<b>Booking details</b><br>
+						<b>Date & Time:</b> {{bookingDateTime}}<br>
 						<b>Expert:</b> {{expertName}}<br>
 						<b>Beverage:</b> {{beverageName}}<br>
 						<b>Road:</b> {{roadName}}<br>
@@ -289,8 +295,9 @@
               <table border="0" cellpadding="0" cellspacing="0">
                 <tr>
                   <td class="content-block">
-                    <span class="apple-link">Company Inc, 3 Abbey Road, San Francisco CA 94102</span>
-                    <br> Don't like these emails? <a href="http://i.imgur.com/CScmqnj.gif">Unsubscribe</a>.
+				    VIPdrv | Joint Venture Digital<br>
+					78206 Varner Road, Suite D<br>
+					Palm Desert, CA 92211<br>
                   </td>
                 </tr>
               </table>
