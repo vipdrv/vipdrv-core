@@ -46,7 +46,6 @@
                                 self.initStep();
                             }
                         }, 100);
-
                     }
                 };
 
@@ -68,7 +67,7 @@
                     var startTime = self.widgetWorkingHours[currentDayOfWeek].startTime;
                     var endTime = self.widgetWorkingHours[currentDayOfWeek].endTime;
 
-                    self.timeIntervals = self.stplitTimeToInvervals(startTime, endTime);
+                    self.timeIntervals = self.splitTimeToInvervals(startTime, endTime);
 
                     self.isSelectable = function (date, type) {
                         var dayOfWeek = date.format('d');
@@ -117,7 +116,7 @@
                     var arr = newValue._i.split(' ');
                     var dayOfWeek = arr[1];
 
-                    self.userData.calendar.time = cleatTimeIfInvalid(self.userData.calendar.time, dayOfWeek);
+                    self.userData.calendar.time = cleanTimeIfInvalid(self.userData.calendar.time, dayOfWeek);
                     self.userData.calendar.date = arr[0];
                     self.userData.calendar.dayOfWeek = dayOfWeek;
                     self.validateStep();
@@ -125,10 +124,10 @@
                     var startTime = self.widgetWorkingHours[dayOfWeek].startTime;
                     var endTime = self.widgetWorkingHours[dayOfWeek].endTime;
 
-                    self.timeIntervals = self.stplitTimeToInvervals(startTime, endTime);
+                    self.timeIntervals = self.splitTimeToInvervals(startTime, endTime);
                 };
 
-                function cleatTimeIfInvalid(selectedTime, dayOfWeek) {
+                function cleanTimeIfInvalid(selectedTime, dayOfWeek) {
                     if (!selectedTime) {
                         return selectedTime;
                     }
@@ -189,7 +188,7 @@
                 // Helpers                                                                //
                 // =======================================================================//
 
-                self.stplitTimeToInvervals = function (startTime, endTime) {
+                self.splitTimeToInvervals = function (startTime, endTime) {
                     var start = moment('2000-01-01 ' + startTime);
                     var end = moment('2000-01-01 ' + endTime);
                     var timeIntervalsArr = [];
