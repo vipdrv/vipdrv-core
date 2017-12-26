@@ -1,16 +1,12 @@
 (function () {
-    var app = angular.module('myApp', ['templates', 'moment-picker']);
-
-    app.factory('clientId', function clientIdFactory(api) {
-        return 'a12345654321x';
-    });
+    var app = angular.module('myApp', ['templates', 'moment-picker', 'ngTextTruncate']);
 
     // =======================================================================//
     // App Configs                                                            //
     // =======================================================================//
 
     var apiBaseUrl = '%apiBaseUrl%';
-    var siteId = '%siteId%';
+    var defaultSiteId = '%siteId%';
 
     // =======================================================================//
     // Global Variables                                                       //
@@ -49,14 +45,6 @@
             isLocked: true,
             isCompleted: false
         },
-        // music: {
-        //     id: 'road',
-        //     icon: 'fa fa-music fa-2x',
-        //     title: 'Select music',
-        //     isActive: false,
-        //     isLocked: true,
-        //     isCompleted: false
-        // },
         details: {
             id: 'details',
             icon: 'fa fa-handshake-o fa-2x',
@@ -67,7 +55,7 @@
         }
     };
 
-    var userData = {
+    var bookingData = {
         user: {
             firstName: null,
             lastName: null,
@@ -143,38 +131,14 @@
         isFormCompleted: false
     };
 
-    // =======================================================================//
-    // Widget Initialization                                                  //
-    // =======================================================================//
-
-    var url = new FiltersFromUrl(window.location.search).get();
-
-    var siteId = url.site_id || siteId;
-
-    var vin = url.vin || null;
-    var imageUrl = url.imageUrl || null;
-    var vdpUrl = url.vdpUrl || null;
-    var title = url.title || null;
-    var engine = url.engine || null;
-    var year = url.year || null;
-    var colour = url.colour || null;
-    var transmission = url.transmission || null;
-    var fuel = url.fuel || null;
-
-    userData.car.vin = vin;
-    userData.car.imageUrl = imageUrl;
-    userData.car.vdpUrl = vdpUrl;
-    userData.car.title = title;
-    userData.car.engine = engine;
-    userData.car.year = year;
-    userData.car.colour = colour;
-    userData.car.transmission = transmission;
-    userData.car.fuel = fuel;
-
     app.value('widgetTabs', widgetTabs);
     app.value('globalState', globalState);
-    app.value('userData', userData);
+    app.value('bookingData', bookingData);
     app.value('dealerData', dealerData);
     app.value('apiBaseUrl', apiBaseUrl);
+
+    var url = new FiltersFromUrl(window.location.search).get();
+    var siteId = url.site_id || defaultSiteId;
     app.value('siteId', siteId);
+
 })();

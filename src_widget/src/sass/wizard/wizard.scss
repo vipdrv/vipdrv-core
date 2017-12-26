@@ -78,7 +78,7 @@
 // =======================================================================//
 
 .td-cards {
-  max-height: calc(100% - 176px);
+  max-height: calc(100% - 170px);
   overflow: auto;
 }
 
@@ -91,6 +91,7 @@
 .td-card__content {
   padding: 1em;
   cursor: pointer;
+  min-height: 104px;
 }
 
 .td-card__body {
@@ -143,4 +144,10 @@
 .td-scrollbar::-webkit-scrollbar-thumb {
   border-radius: 10px;
   background-color: #007bff;
+}
+
+@media (max-width: 758px) {
+  .td-scrollbar::-webkit-scrollbar-track, .td-scrollbar::-webkit-scrollbar, .td-scrollbar::-webkit-scrollbar-thumb {
+    display: none;
+  }
 }

@@ -27,7 +27,7 @@
                  ng-repeat="time in $ctrl.timeIntervals"
                  ng-click="$ctrl.timeChanged(time)">
                 <div class="td-time__item"
-                     ng-class="time == $ctrl.userData.calendar.time ? 'td-time__item--active' : ''">
+                     ng-class="time == $ctrl.bookingData.calendar.time ? 'td-time__item--active' : ''">
                     {{time}}
                 </div>
             </div>

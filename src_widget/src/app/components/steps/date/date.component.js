@@ -1,7 +1,7 @@
 (function () {
     angular.module('myApp')
         .component('tdDate', {
-            controller: function ($scope, $interval, dealerData, userData) {
+            controller: function ($scope, $interval, dealerData, bookingData) {
 
                 // =======================================================================//
                 // Variables                                                              //
@@ -9,7 +9,7 @@
 
                 var self = this;
                 self.dealerData = dealerData;
-                self.userData = userData;
+                self.bookingData = bookingData;
                 self.isStepValid = false;
                 self.isLoading = true;
                 self.minDateString = null;
@@ -28,8 +28,8 @@
 
                 self.$onInit = function () {
                     self.minDateString = moment().subtract(0, 'day').format('YYYY-MM-DD');
-                    self.dateImput = self.userData.calendar.date;
-                    self.mobileDateTimeInput = self.userData.calendar.date;
+                    self.dateImput = self.bookingData.calendar.date;
+                    self.mobileDateTimeInput = self.bookingData.calendar.date;
                     self.validateStep();
 
                     if (self.dealerData.siteId != null) {
@@ -116,9 +116,9 @@
                     var arr = newValue._i.split(' ');
                     var dayOfWeek = arr[1];
 
-                    self.userData.calendar.time = cleanTimeIfInvalid(self.userData.calendar.time, dayOfWeek);
-                    self.userData.calendar.date = arr[0];
-                    self.userData.calendar.dayOfWeek = dayOfWeek;
+                    self.bookingData.calendar.time = cleanTimeIfInvalid(self.bookingData.calendar.time, dayOfWeek);
+                    self.bookingData.calendar.date = arr[0];
+                    self.bookingData.calendar.dayOfWeek = dayOfWeek;
                     self.validateStep();
 
                     var startTime = self.widgetWorkingHours[dayOfWeek].startTime;
@@ -149,20 +149,20 @@
                     var hours = arr[1].split(' ')[0].split(':')[0];
                     var amPm = arr[2];
 
-                    self.userData.calendar.date = date;
-                    self.userData.calendar.time = hours + ':' + '00 ' + amPm;
-                    self.userData.calendar.isSkipped = false;
+                    self.bookingData.calendar.date = date;
+                    self.bookingData.calendar.time = hours + ':' + '00 ' + amPm;
+                    self.bookingData.calendar.isSkipped = false;
                     self.validateStep();
                 };
 
                 self.timeChanged = function (time) {
-                    self.userData.calendar.time = time;
-                    self.userData.calendar.isSkipped = false;
+                    self.bookingData.calendar.time = time;
+                    self.bookingData.calendar.isSkipped = false;
                     self.validateStep();
                 };
 
                 self.validateStep = function () {
-                    if (self.userData.calendar.date != null && self.userData.calendar.time != null) {
+                    if (self.bookingData.calendar.date != null && self.bookingData.calendar.time != null) {
                         self.isStepValid = true;
                     } else {
                         self.isStepValid = false;
@@ -180,7 +180,7 @@
                 };
 
                 $scope.skipStep = function () {
-                    self.userData.calendar.isSkipped = true;
+                    self.bookingData.calendar.isSkipped = true;
                     self.completeStep({tabId: self.tabId});
                 };
 

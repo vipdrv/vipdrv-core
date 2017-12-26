@@ -11,7 +11,7 @@
             <tr>
                 <td class="complete-booking-table__header d-none d-md-block d-lg-block">Date</td>
                 <td>
-                    <div class="media" ng-show="!$ctrl.userData.calendar.date">
+                    <div class="media" ng-show="!$ctrl.bookingData.calendar.date">
                         <img class="mr-3 rounded complete-booking-table__image"
                              ng-src="data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2275%22%20height%3D%2275%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2075%2075%22%20preserveAspectRatio%3D%22none%22%3E%3Cdefs%3E%3Cstyle%20type%3D%22text%2Fcss%22%3E%23holder_1602938c8f2%20text%20%7B%20fill%3Argba(255%2C255%2C255%2C.75)%3Bfont-weight%3Anormal%3Bfont-family%3AHelvetica%2C%20monospace%3Bfont-size%3A10pt%20%7D%20%3C%2Fstyle%3E%3C%2Fdefs%3E%3Cg%20id%3D%22holder_1602938c8f2%22%3E%3Crect%20width%3D%2275%22%20height%3D%2275%22%20fill%3D%22%23777%22%3E%3C%2Frect%3E%3Cg%3E%3Ctext%20x%3D%2219.34375%22%20y%3D%2242%22%3E75x75%3C%2Ftext%3E%3C%2Fg%3E%3C%2Fg%3E%3C%2Fsvg%3E"
                              alt="Generic placeholder image">
@@ -19,13 +19,13 @@
                             <h5 class="mt-0 mb-1">Skipped</h5>
                         </div>
                     </div>
-                    <div class="media" ng-show="$ctrl.userData.calendar.date">
+                    <div class="media" ng-show="$ctrl.bookingData.calendar.date">
                         <img class="mr-3 rounded complete-booking-table__image"
                              src="/img/date-icon-2.png"
                              alt="Generic placeholder image">
                         <div class="media-body">
-                            <h5 class="mt-0 mb-1">{{$ctrl.userData.calendar.date|usaDateFormat}}</h5>
-                            {{$ctrl.userData.calendar.time}}
+                            <h5 class="mt-0 mb-1">{{$ctrl.bookingData.calendar.date|usaDateFormat}}</h5>
+                            {{$ctrl.bookingData.calendar.time}}
                         </div>
                     </div>
                 </td>
@@ -33,7 +33,7 @@
             <tr>
                 <td class="complete-booking-table__header d-none d-md-block d-lg-block">Salesperson</td>
                 <td>
-                    <div class="media" ng-show="$ctrl.userData.expert.name == 'Skipped'">
+                    <div class="media" ng-show="$ctrl.bookingData.expert.name == 'Skipped'">
                         <img class="mr-3 rounded complete-booking-table__image"
                              ng-src="data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2275%22%20height%3D%2275%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2075%2075%22%20preserveAspectRatio%3D%22none%22%3E%3Cdefs%3E%3Cstyle%20type%3D%22text%2Fcss%22%3E%23holder_1602938c8f2%20text%20%7B%20fill%3Argba(255%2C255%2C255%2C.75)%3Bfont-weight%3Anormal%3Bfont-family%3AHelvetica%2C%20monospace%3Bfont-size%3A10pt%20%7D%20%3C%2Fstyle%3E%3C%2Fdefs%3E%3Cg%20id%3D%22holder_1602938c8f2%22%3E%3Crect%20width%3D%2275%22%20height%3D%2275%22%20fill%3D%22%23777%22%3E%3C%2Frect%3E%3Cg%3E%3Ctext%20x%3D%2219.34375%22%20y%3D%2242%22%3E75x75%3C%2Ftext%3E%3C%2Fg%3E%3C%2Fg%3E%3C%2Fsvg%3E"
                              alt="Generic placeholder image">
@@ -41,13 +41,13 @@
                             <h5 class="mt-0 mb-1">Skipped</h5>
                         </div>
                     </div>
-                    <div class="media" ng-show="$ctrl.userData.expert.name != 'Skipped'">
+                    <div class="media" ng-show="$ctrl.bookingData.expert.name != 'Skipped'">
                         <img class="mr-3 rounded complete-booking-table__image"
-                             ng-src="{{$ctrl.userData.expert.img}}"
+                             ng-src="{{$ctrl.bookingData.expert.img}}"
                              alt="Generic placeholder image">
                         <div class="media-body">
-                            <h5 class="mt-0 mb-1" ng-if="$ctrl.userData.expert.name">{{$ctrl.userData.expert.name}}</h5>
-                            {{$ctrl.userData.expert.description}}
+                            <h5 class="mt-0 mb-1" ng-if="$ctrl.bookingData.expert.name">{{$ctrl.bookingData.expert.name}}</h5>
+                            {{$ctrl.bookingData.expert.description}}
                         </div>
                     </div>
                 </td>
@@ -55,7 +55,7 @@
             <tr>
                 <td class="complete-booking-table__header d-none d-md-block d-lg-block">Beverage</td>
                 <td>
-                    <div class="media" ng-show="$ctrl.userData.beverage.name == 'Skipped'">
+                    <div class="media" ng-show="$ctrl.bookingData.beverage.name == 'Skipped'">
                         <img class="mr-3 rounded complete-booking-table__image"
                              src="data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2275%22%20height%3D%2275%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2075%2075%22%20preserveAspectRatio%3D%22none%22%3E%3Cdefs%3E%3Cstyle%20type%3D%22text%2Fcss%22%3E%23holder_1602938c8f2%20text%20%7B%20fill%3Argba(255%2C255%2C255%2C.75)%3Bfont-weight%3Anormal%3Bfont-family%3AHelvetica%2C%20monospace%3Bfont-size%3A10pt%20%7D%20%3C%2Fstyle%3E%3C%2Fdefs%3E%3Cg%20id%3D%22holder_1602938c8f2%22%3E%3Crect%20width%3D%2275%22%20height%3D%2275%22%20fill%3D%22%23777%22%3E%3C%2Frect%3E%3Cg%3E%3Ctext%20x%3D%2219.34375%22%20y%3D%2242%22%3E75x75%3C%2Ftext%3E%3C%2Fg%3E%3C%2Fg%3E%3C%2Fsvg%3E"
                              alt="Generic placeholder image">
@@ -63,13 +63,13 @@
                             <h5 class="mt-0 mb-1">Skipped</h5>
                         </div>
                     </div>
-                    <div class="media" ng-show="$ctrl.userData.beverage.name != 'Skipped'">
+                    <div class="media" ng-show="$ctrl.bookingData.beverage.name != 'Skipped'">
                         <img class="mr-3 rounded complete-booking-table__image"
-                             ng-src="{{$ctrl.userData.beverage.img}}"
+                             ng-src="{{$ctrl.bookingData.beverage.img}}"
                              alt="Generic placeholder image">
                         <div class="media-body">
-                            <h5 class="mt-0 mb-1">{{$ctrl.userData.beverage.name}}</h5>
-                            {{$ctrl.userData.beverage.description}}
+                            <h5 class="mt-0 mb-1">{{$ctrl.bookingData.beverage.name}}</h5>
+                            {{$ctrl.bookingData.beverage.description}}
                         </div>
                     </div>
                 </td>
@@ -77,7 +77,7 @@
             <tr>
                 <td class="complete-booking-table__header d-none d-md-block d-lg-block">Route</td>
                 <td>
-                    <div class="media" ng-show="$ctrl.userData.road.name == 'Skipped'">
+                    <div class="media" ng-show="$ctrl.bookingData.road.name == 'Skipped'">
                         <img class="mr-3 rounded complete-booking-table__image"
                              src="data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2275%22%20height%3D%2275%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2075%2075%22%20preserveAspectRatio%3D%22none%22%3E%3Cdefs%3E%3Cstyle%20type%3D%22text%2Fcss%22%3E%23holder_1602938c8f2%20text%20%7B%20fill%3Argba(255%2C255%2C255%2C.75)%3Bfont-weight%3Anormal%3Bfont-family%3AHelvetica%2C%20monospace%3Bfont-size%3A10pt%20%7D%20%3C%2Fstyle%3E%3C%2Fdefs%3E%3Cg%20id%3D%22holder_1602938c8f2%22%3E%3Crect%20width%3D%2275%22%20height%3D%2275%22%20fill%3D%22%23777%22%3E%3C%2Frect%3E%3Cg%3E%3Ctext%20x%3D%2219.34375%22%20y%3D%2242%22%3E75x75%3C%2Ftext%3E%3C%2Fg%3E%3C%2Fg%3E%3C%2Fsvg%3E"
                              alt="Generic placeholder image">
@@ -85,13 +85,13 @@
                             <h5 class="mt-0 mb-1">Skipped</h5>
                         </div>
                     </div>
-                    <div class="media" ng-show="$ctrl.userData.road.name != 'Skipped'">
+                    <div class="media" ng-show="$ctrl.bookingData.road.name != 'Skipped'">
                         <img class="mr-3 rounded complete-booking-table__image"
-                             ng-src="{{$ctrl.userData.road.img}}"
+                             ng-src="{{$ctrl.bookingData.road.img}}"
                              alt="Generic placeholder image">
                         <div class="media-body">
-                            <h5 class="mt-0 mb-1">{{$ctrl.userData.road.name}}</h5>
-                            {{$ctrl.userData.road.description}}
+                            <h5 class="mt-0 mb-1">{{$ctrl.bookingData.road.name}}</h5>
+                            {{$ctrl.bookingData.road.description}}
                         </div>
                     </div>
                 </td>
@@ -103,21 +103,21 @@
     <div class="col-4 d-none d-lg-block">
 
         <div class="card">
-            <img ng-if="$ctrl.userData.car.imageUrl != null" ng-src="{{$ctrl.userData.car.imageUrl}}" class="card-img-top">
-            <img ng-if="$ctrl.userData.car.imageUrl == null" src="/img/default-car.png" class="card-img-top">
+            <img ng-if="$ctrl.bookingData.car.imageUrl != null" ng-src="{{$ctrl.bookingData.car.imageUrl}}" class="card-img-top">
+            <img ng-if="$ctrl.bookingData.car.imageUrl == null" src="/img/default-car.png" class="card-img-top">
 
             <div class="card-body" style="padding: 0.25rem 1.25rem 0.25rem 1.25rem;">
                 <div class="row">
                     <div class="col-12">
-                        <h5 class="text-overflow__ellipsis ng-binding">{{$ctrl.userData.car.title ? $ctrl.userData.car.title : 'Vehicle Title'}}</h5>
+                        <h5 class="text-overflow__ellipsis ng-binding">{{$ctrl.bookingData.car.title ? $ctrl.bookingData.car.title : 'Vehicle Title'}}</h5>
                     </div>
                     <div class="col-8">
                         <p class="text-secondary m-0">Engine</p>
-                        <p class="mb-2 text-overflow__ellipsis ng-binding">{{$ctrl.userData.car.engine ? $ctrl.userData.car.engine : '-'}}</p>
+                        <p class="mb-2 text-overflow__ellipsis ng-binding">{{$ctrl.bookingData.car.engine ? $ctrl.bookingData.car.engine : '-'}}</p>
                     </div>
                     <div class="col-4">
                         <p class="text-secondary m-0">Year</p>
-                        <p class="mb-2 text-overflow__ellipsis ng-binding">{{$ctrl.userData.car.year ? $ctrl.userData.car.year : '-'}}</p>
+                        <p class="mb-2 text-overflow__ellipsis ng-binding">{{$ctrl.bookingData.car.year ? $ctrl.bookingData.car.year : '-'}}</p>
                     </div>
                 </div>
             </div>
@@ -145,18 +145,18 @@
 
         <button title="Add to Calendar" class="addeventatc">
             Add to Calendar
-            <span class="start">{{$ctrl.userData.calendar.date}} {{$ctrl.userData.calendar.time}}</span>
+            <span class="start">{{$ctrl.bookingData.calendar.date}} {{$ctrl.bookingData.calendar.time}}</span>
             <span class="timezone">Europe/Kiev</span>
             <span class="title">VIPdrv - VIP Test Drive</span>
             <span class="description">
-                Hi {{$ctrl.userData.user.firstName}} {{$ctrl.userData.user.lastName}}.<br>
+                Hi {{$ctrl.bookingData.user.firstName}} {{$ctrl.bookingData.user.lastName}}.<br>
                 We've confirmed your test drive booking. Details below.<br>
                 <br>
-                Vehicle: {{$ctrl.userData.car.title ? $ctrl.userData.car.title : 'Not specified'}}<br>
-                Date & Time: {{$ctrl.userData.calendar.date}} {{$ctrl.userData.calendar.time}}<br>
-                Expert: {{$ctrl.userData.expert.name}}<br>
-                Beverage: {{$ctrl.userData.beverage.name}}<br>
-                Road: {{$ctrl.userData.road.name}}<br>
+                Vehicle: {{$ctrl.bookingData.car.title ? $ctrl.bookingData.car.title : 'Not specified'}}<br>
+                Date & Time: {{$ctrl.bookingData.calendar.date}} {{$ctrl.bookingData.calendar.time}}<br>
+                Expert: {{$ctrl.bookingData.expert.name}}<br>
+                Beverage: {{$ctrl.bookingData.beverage.name}}<br>
+                Road: {{$ctrl.bookingData.road.name}}<br>
                 <br>
                 The Dealership is looking forward to your visit.<br>
                 {{$ctrl.dealerData.name}}<br>

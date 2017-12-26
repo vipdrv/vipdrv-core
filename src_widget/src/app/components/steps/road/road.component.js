@@ -1,29 +1,34 @@
 (function () {
     angular.module('myApp')
         .component('tdRoad', {
-            controller: function ($scope, dealerData, userData) {
+            controller: function ($scope, dealerData, bookingData) {
 
                 var self = this;
                 self.isStepValid = null;
                 self.dealerData = dealerData;
-                self.userData = userData;
+                self.bookingData = bookingData;
 
                 self.$onInit = function () {
-                    if (self.userData.road.name === null) {
+                    if (self.bookingData.road.name === null) {
                         this.isStepValid = false;
                     }
                 };
 
-                $scope.itemChanged = function (id, img, name, description) {
-                    self.userData.road.id = id;
-                    self.userData.road.img = img;
-                    self.userData.road.name = name;
-                    self.userData.road.description = description;
+                $scope.itemChanged = function ($event, id, img, name, description) {
+                    var clickOnEvent = $event.target.className.includes('ngTruncateToggleText');
+                    if (clickOnEvent) {
+                        return;
+                    }
+
+                    self.bookingData.road.id = id;
+                    self.bookingData.road.img = img;
+                    self.bookingData.road.name = name;
+                    self.bookingData.road.description = description;
                     self.validateStep();
                 };
 
                 this.validateStep = function () {
-                    if (self.userData.road.title === null) {
+                    if (self.bookingData.road.title === null) {
                         self.isStepValid = false;
                     } else {
                         self.isStepValid = true;
@@ -37,8 +42,8 @@
                     }
                 };
                 $scope.skipStep = function () {
-                    self.userData.road.id = 0;
-                    self.userData.road.name = "Skipped";
+                    self.bookingData.road.id = 0;
+                    self.bookingData.road.name = "Skipped";
                     self.completeStep({tabId: self.tabId});
                 };
             },
