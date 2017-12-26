@@ -117,101 +117,200 @@ export class WorkingHoursSimpleComponent implements OnInit, OnChanges {
     }
     /// select options
     protected timeSelectOptions: Array<any> = [
-        {
-            value: '00:00:00',
-            displayText: '00:00 AM'
-        },
+        // {
+        //     value: '00:00:00',
+        //     displayText: '12:00 AM'
+        // },
+        // {
+        //     value: '00:30:00',
+        //     displayText: '12:30 AM'
+        // },
         {
             value: '01:00:00',
             displayText: '01:00 AM'
+        },
+        {
+            value: '01:30:00',
+            displayText: '01:30 AM'
         },
         {
             value: '02:00:00',
             displayText: '02:00 AM'
         },
         {
+            value: '02:30:00',
+            displayText: '02:30 AM'
+        },
+        {
             value: '03:00:00',
             displayText: '03:00 AM'
+        },
+        {
+            value: '03:30:00',
+            displayText: '03:30 AM'
         },
         {
             value: '04:00:00',
             displayText: '04:00 AM'
         },
         {
+            value: '04:30:00',
+            displayText: '04:30 AM'
+        },
+        {
             value: '05:00:00',
             displayText: '05:00 AM'
+        },
+        {
+            value: '05:30:00',
+            displayText: '05:30 AM'
         },
         {
             value: '06:00:00',
             displayText: '06:00 AM'
         },
         {
+            value: '06:30:00',
+            displayText: '06:30 AM'
+        },
+        {
             value: '07:00:00',
             displayText: '07:00 AM'
+        },
+        {
+            value: '07:30:00',
+            displayText: '07:30 AM'
         },
         {
             value: '08:00:00',
             displayText: '08:00 AM'
         },
         {
+            value: '08:30:00',
+            displayText: '08:30 AM'
+        },
+        {
             value: '09:00:00',
             displayText: '09:00 AM'
+        },
+        {
+            value: '09:30:00',
+            displayText: '09:30 AM'
         },
         {
             value: '10:00:00',
             displayText: '10:00 AM'
         },
         {
+            value: '10:30:00',
+            displayText: '10:30 AM'
+        },
+        {
             value: '11:00:00',
             displayText: '11:00 AM'
         },
         {
+            value: '11:30:00',
+            displayText: '11:30 AM'
+        },
+        {
             value: '12:00:00',
-            displayText: '00:00 PM'
+            displayText: '12:00 PM'
+        },
+        {
+            value: '12:30:00',
+            displayText: '12:30 PM'
         },
         {
             value: '13:00:00',
             displayText: '01:00 PM'
         },
         {
+            value: '13:30:00',
+            displayText: '01:30 PM'
+        },
+        {
             value: '14:00:00',
             displayText: '02:00 PM'
+        },
+        {
+            value: '14:30:00',
+            displayText: '02:30 PM'
         },
         {
             value: '15:00:00',
             displayText: '03:00 PM'
         },
         {
+            value: '15:30:00',
+            displayText: '03:30 PM'
+        },
+        {
             value: '16:00:00',
             displayText: '04:00 PM'
+        },
+        {
+            value: '16:30:00',
+            displayText: '04:30 PM'
         },
         {
             value: '17:00:00',
             displayText: '05:00 PM'
         },
         {
+            value: '17:30:00',
+            displayText: '05:30 PM'
+        },
+        {
             value: '18:00:00',
             displayText: '06:00 PM'
+        },
+        {
+            value: '18:30:00',
+            displayText: '06:30 PM'
         },
         {
             value: '19:00:00',
             displayText: '07:00 PM'
         },
         {
+            value: '19:30:00',
+            displayText: '07:30 PM'
+        },
+        {
             value: '20:00:00',
             displayText: '08:00 PM'
+        },
+        {
+            value: '20:30:00',
+            displayText: '08:30 PM'
         },
         {
             value: '21:00:00',
             displayText: '09:00 PM'
         },
         {
+            value: '21:30:00',
+            displayText: '09:30 PM'
+        },
+        {
             value: '22:00:00',
             displayText: '10:00 PM'
+        },
+        {
+            value: '22:30:00',
+            displayText: '10:30 PM'
         },
         {
             value: '23:00:00',
             displayText: '11:00 PM'
         },
+        {
+            value: '23:30:00',
+            displayText: '11:30 PM'
+        }
+
+
+
     ];
 }

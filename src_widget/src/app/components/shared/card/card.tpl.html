@@ -1,10 +1,21 @@
-<div class="media bg-white border td-card__content h-100" ng-class="$ctrl.isActiveCard ? 'border-primary' : ''">
+<div class="media bg-white border td-card__content" ng-class="$ctrl.isActiveCard ? 'border-primary' : ''">
     <img class="d-flex mr-3 rounded-circle"
          ng-src="{{$ctrl.cardImage}}"
          alt="Image"
          style="height: 64px">
     <div class="media-body td-card__body">
-        <h5 class="mt-0" ng-class="$ctrl.isActiveCard ? 'text-primary' : ''">{{$ctrl.cardTitle}}</h5>
-        <a class="text-secondary">{{$ctrl.cardDesc | limitTo:120}}{{$ctrl.cardDesc.length > 120 ? ' ...' : ''}}</a>
+        <h5 class="mt-0"
+            ng-class="$ctrl.isActiveCard ? 'text-primary' : ''">
+            {{$ctrl.cardTitle}}</h5>
+
+        <!--<h5 class="mt-0"-->
+            <!--ng-class="$ctrl.isActiveCard ? 'text-primary' : ''"-->
+            <!--ng-text-truncate="$ctrl.cardTitle"-->
+            <!--ng-tt-chars-threshold="22"-->
+            <!--ng-tt-no-toggling></h5>-->
+
+        <a class="text-secondary"
+           ng-text-truncate="$ctrl.cardDesc"
+           ng-tt-chars-threshold="64"></a>
     </div>
 </div>

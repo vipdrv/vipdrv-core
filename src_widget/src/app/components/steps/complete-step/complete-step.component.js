@@ -14,11 +14,11 @@
 
     angular.module('myApp')
         .component('tdCompleteStep', {
-            controller: function ($timeout, $window, api, dealerData, userData) {
+            controller: function ($timeout, $window, api, dealerData, bookingData) {
 
                 var self = this;
                 self.dealerData = dealerData;
-                self.userData = userData;
+                self.bookingData = bookingData;
 
                 // =======================================================================//
                 // Calendar Event                                                         //
@@ -51,7 +51,7 @@
                 self.sendSms = function () {
                     self.isSmsLoading = true;
                     debugger;
-                    api.sendMeSms(self.userData, self.dealerData).then(function () {
+                    api.sendMeSms(self.bookingData, self.dealerData).then(function () {
                         self.isSmsSended = true;
                         self.isSmsLoading = false;
                     });
