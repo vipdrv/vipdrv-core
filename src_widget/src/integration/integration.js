@@ -1,6 +1,6 @@
-// =======================================================================//
-// Widget Integration logic                                               //
-// =======================================================================//
+//=======================================================================//
+// Widget Integration logic                                              //
+//=======================================================================//
 
 var TestDrive = TestDrive || (function () {
 
@@ -85,7 +85,7 @@ var TestDrive = TestDrive || (function () {
             var element = document.getElementById(id);
             element.content = "#f2f2f2";
             element.outerHTML = "";
-            delete element;
+            element.remove();
         }
     };
 
@@ -155,13 +155,30 @@ var TestDrive = TestDrive || (function () {
 
 }());
 
-// =======================================================================//
-// Mobile Responsive                                                      //
-// =======================================================================//
+//=======================================================================//
+// Mobile Responsive                                                     //
+//=======================================================================//
 
 (function () {
     window.addEventListener("resize", function () {
         var div = document.getElementsByClassName('test-drive__frame')[0];
         div.style.height = 'calc(100% - 50px)';
     });
+})();
+
+//=======================================================================//
+// Extensions                                                            //
+//=======================================================================//
+
+(function () {
+    Element.prototype.remove = function () {
+        this.parentElement.removeChild(this);
+    };
+    NodeList.prototype.remove = HTMLCollection.prototype.remove = function () {
+        for (var i = this.length - 1; i >= 0; i--) {
+            if (this[i] && this[i].parentElement) {
+                this[i].parentElement.removeChild(this[i]);
+            }
+        }
+    };
 })();
