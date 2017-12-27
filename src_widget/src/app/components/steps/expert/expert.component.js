@@ -80,7 +80,6 @@
 
                     return false;
                 }
-
             },
             templateUrl: 'src/app/components/steps/expert/expert.tpl.html',
             bindings: {
