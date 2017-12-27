@@ -28,7 +28,7 @@
   left: 50%;
   box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.2), 0 1px 1px 0 rgba(0, 0, 0, 0.14), 0 2px 1px -1px rgba(0, 0, 0, 0.12);
   border-radius: 4px;
-  overflow: hidden;
+  // overflow: hidden;
   transform: scale(0);
   transition: transform 300ms;
   will-change: transform;
@@ -97,7 +97,7 @@
 .test-drive__frame {
   width: 100%;
   height: calc(100% - 50px);
-  overflow: hidden;
+  // overflow: hidden;
 }
 
 #test-drive__frame-spinner {
