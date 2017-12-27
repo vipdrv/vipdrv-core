@@ -140,5 +140,4 @@
     var url = new FiltersFromUrl(window.location.search).get();
     var siteId = url.site_id || defaultSiteId;
     app.value('siteId', siteId);
-
 })();

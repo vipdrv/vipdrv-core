@@ -24,7 +24,7 @@ var TestDrive = TestDrive || (function () {
         document.getElementsByClassName('test-drive')[0].innerHTML = html;
     };
 
-    var _appendWidgetFrame = function() {
+    var _appendWidgetFrame = function () {
         var elemDiv = document.createElement('div');
         elemDiv.className = "test-drive";
 
@@ -54,15 +54,49 @@ var TestDrive = TestDrive || (function () {
         }, 200);
     };
 
+    var _changeMobileBrowserBarColor = function () {
+        var head = document.head;
+
+        var chromeMeta = document.createElement('meta');
+        chromeMeta.id = 'TestDriveChromeMeta';
+        chromeMeta.name = 'theme-color';
+        chromeMeta.content = "#007bff";
+        head.appendChild(chromeMeta);
+
+        var windowsPhoneMeta = document.createElement('meta');
+        windowsPhoneMeta.id = 'TestDriveWindowsPhoneMeta';
+        windowsPhoneMeta.name = 'msapplication-navbutton-color';
+        windowsPhoneMeta.content = "#007bff";
+        head.appendChild(windowsPhoneMeta);
+
+        var safariMeta = document.createElement('meta');
+        safariMeta.id = 'TestDriveSafariMeta';
+        safariMeta.name = 'apple-mobile-web-app-status-bar-style';
+        safariMeta.content = "#007bff";
+
+        head.appendChild(safariMeta);
+    };
+
+    var _restoreDefaultMobileBrowserBarColor = function () {
+        var colorHeaders = ['TestDriveChromeMeta', 'TestDriveWindowsPhoneMeta', 'TestDriveSafariMeta'];
+
+        for (var key in colorHeaders) {
+            var id = colorHeaders[key];
+            var element = document.getElementById(id);
+            element.content = "#f2f2f2";
+            element.outerHTML = "";
+            delete element;
+        }
+    };
+
     var _addCss = function () {
         var head = document.head;
-        var link = document.createElement('link');
 
+        var link = document.createElement('link');
         link.type = 'text/css';
         link.rel = 'stylesheet';
         link.href = _WidgetUrl + '/Integration/integration.css';
-
-        head.appendChild(link)
+        head.appendChild(link);
     };
 
     var _escapeListener = function () {
@@ -110,8 +144,24 @@ var TestDrive = TestDrive || (function () {
             var carFuel = Args.carFuel || "";
 
             _appendTestDriveFrame(carVin, carImageUrl, carTitle, carEngine, carYear, carColor, carTransmission, carFuel);
+            _changeMobileBrowserBarColor();
             _showTestDrive();
         },
-        closeTestDrive: _hideTestDrive
+        closeTestDrive: function () {
+            _restoreDefaultMobileBrowserBarColor();
+            _hideTestDrive();
+        }
     };
+
 }());
+
+// =======================================================================//
+// Mobile Responsive                                                      //
+// =======================================================================//
+
+(function () {
+    window.addEventListener("resize", function () {
+        var div = document.getElementsByClassName('test-drive__frame')[0];
+        div.style.height = 'calc(100% - 50px)';
+    });
+})();

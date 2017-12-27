@@ -79,12 +79,14 @@
                         var isDayAvalibale = self.widgetWorkingHours[selectedDayOfWeek].isActive;
 
                         var isTimeAvalibale = false;
-                        var selectedHour = date.hours();
+                        var selectedHour = date.hour();
+
                         var startTime = self.widgetWorkingHours[selectedDayOfWeek].startTime.split(':')[0];
                         var endTime = self.widgetWorkingHours[selectedDayOfWeek].endTime.split(':')[0];
 
                         if (startTime <= selectedHour && selectedHour <= endTime) {
-                            var isTimeAvalibale = true;
+                            // TODO: Dispel magic! (╯°□°）╯︵ ┻━┻)
+                            isTimeAvalibale = true;
                         }
 
                         return isDayAvalibale && isTimeAvalibale;
@@ -148,9 +150,11 @@
                     var date = arr[0];
                     var hours = arr[1].split(' ')[0].split(':')[0];
                     var amPm = arr[2];
+                    var dayOfWeek = arr[3];
 
                     self.bookingData.calendar.date = date;
                     self.bookingData.calendar.time = hours + ':' + '00 ' + amPm;
+                    self.bookingData.calendar.dayOfWeek = dayOfWeek;
                     self.bookingData.calendar.isSkipped = false;
                     self.validateStep();
                 };

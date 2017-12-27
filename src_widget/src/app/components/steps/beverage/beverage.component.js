@@ -1,7 +1,7 @@
 (function () {
     angular.module('myApp')
         .component('tdBeverage', {
-            controller: function ($scope, dealerData, bookingData) {
+            controller: function ($scope, $window, dealerData, bookingData) {
 
                 var self = this;
                 self.isStepValid = null;

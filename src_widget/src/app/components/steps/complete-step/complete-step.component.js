@@ -25,6 +25,16 @@
                 // =======================================================================//
 
                 self.$onInit = function () {
+                    _makeWidgetRootScrollable();
+                    _initCalendarButton();
+                };
+
+                var _makeWidgetRootScrollable = function () {
+                    var div = $window.document.getElementsByClassName('test-drive-widget__root')[0];
+                    div.style.display = 'table';
+                };
+
+                var _initCalendarButton = function () {
                     var my_awesome_script = $window.document.createElement('script');
                     my_awesome_script.setAttribute('src', 'https://addevent.com/libs/atc/1.6.1/atc.min.js');
 
@@ -50,7 +60,6 @@
 
                 self.sendSms = function () {
                     self.isSmsLoading = true;
-                    debugger;
                     api.sendMeSms(self.bookingData, self.dealerData).then(function () {
                         self.isSmsSended = true;
                         self.isSmsLoading = false;
