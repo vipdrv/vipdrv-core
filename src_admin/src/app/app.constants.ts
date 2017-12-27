@@ -4,6 +4,6 @@ export namespace ApplicationConstants {
         color: 'rgb(100, 189, 99)',
         switchColor: 'rgb(255, 255, 255)',
         defaultBgColor: 'rgb(225, 100, 99)',
-        defaultBoColor: 'rgb(255, 255, 255)'
+        defaultBoColor: 'rgb(255, 255, 255)',
     };
 }

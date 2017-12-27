@@ -24,6 +24,7 @@ a[href], input[type='submit'], input[type='image'], label[for], select, button, 
 .test-drive-widget__root {
   height: 100%;
   overflow: hidden;
+  display: table; // table
 }
 
 // =======================================================================//

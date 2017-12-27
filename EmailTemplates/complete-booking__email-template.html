@@ -262,13 +262,16 @@
                       <td>
                         <p>Hi {{customerFirstName}} {{customerLastName}}. <br>We've confirmed your test drive booking. Details below.</p>
 						<p style="text-align: center;">
-							<img src="{{vehicleImgUrl}}" style="border-radius: 5px;">
+							<a href="{{vdpUrl}}">
+								<img src="{{vehicleImgUrl}}" style="border-radius: 5px;">
+							</a>
 						</p>
-						<b>Vehicle:</b> <a href="{{vdpUrl}}">{{vehicleTitle}}</a><br>
+						<b>Vehicle:</b> {{vehicleTitle}}<br>
 						<b>Date & Time:</b> {{bookingDateTime}}<br>
 						<b>Expert:</b> {{expertName}}<br>
 						<b>Beverage:</b> {{beverageName}}<br>
 						<b>Road:</b> {{roadName}}<br><br>
+						<b>Comment:</b> {{customerComment}}<br>
 						The Dealership is looking forward to your visit on {{bookingDateTime}}
 						<hr>
 						<b>{{dealerName}}</b><br>
@@ -305,8 +308,9 @@
               <table border="0" cellpadding="0" cellspacing="0">
                 <tr>
                   <td class="content-block">
-                    <span class="apple-link">Joint Venture Digital, 78206 Varner Road, Suite D, Palm Desert, CA, 92211, United States 760-469-9296</span>
-                    <br>Visit us <a href="http://www.vipdrv.com">www.vipdrv.com</a>.
+				    VIPdrv | Joint Venture Digital<br>
+					78206 Varner Road, Suite D<br>
+					Palm Desert, CA 92211<br>
                   </td>
                 </tr>
               </table>

@@ -1,19 +1,19 @@
 <div class="row">
     <div class="col-12">
         <h2 ng-if="!$ctrl.isNoSalesPersonAvaliable" class="wizard-tab-content__title">Select Salesperson</h2>
-        <p ng-if="!$ctrl.isNoSalesPersonAvaliable">Select an expert from below to handle your test drive experience.</p>
+        <p ng-if="!$ctrl.isNoSalesPersonAvaliable" class="m-1">Select an expert from below to handle your test drive experience.</p>
         <h2 ng-if="$ctrl.isNoSalesPersonAvaliable">We are sorry, but there are no experts available for selected Time</h2>
     </div>
 </div>
 
-<div class="row pr-3 td-cards td-scrollbar mr-1">
+<div class="row pr-3 td-cards td-scrollbar">
     <td-card class="col-md-6 col-sm-12 p-0 pt-3 pl-3"
              ng-repeat="expert in $ctrl.dealerData.experts.items"
              card-image="expert.photoUrl"
              card-title="expert.name"
-             card-desc="expert.description"
-             is-active-card="expert.name == $ctrl.userData.expert.name"
-             ng-click="$ctrl.expertChanged(expert.id, expert.photoUrl, expert.name, expert.description)"
+             card-desc="expert.title"
+             is-active-card="expert.name == $ctrl.bookingData.expert.name"
+             ng-click="$ctrl.expertChanged($event, expert.id, expert.photoUrl, expert.name, expert.description)"
              ng-if="expert.isActive && $ctrl.isAvaliable(expert.workingHours)">
 
     </td-card>
@@ -24,10 +24,9 @@
     <div class="col-12">
         <a href="javascript:void(0)" class="card-link mr-3" ng-click="skipStep()">Skip this step</a>
         <button type="button" class="btn btn-lg btn-primary " ng-click="nextStep()" ng-disabled="!$ctrl.isStepValid">Next Step</button>
-
     </div>
 </div>
-<div class="row wizard-navigation-tab-next-button--mobile d-md-none d-lg-none d-sm-block">
+<div class="row wizard-navigation-tab-next-button--mobile d-md-none d-lg-none d-sm-block mt-2 mb-4">
     <div class="col-12">
         <button type="button" class="btn btn-primary btn-lg btn-block mb-3" ng-click="nextStep()" ng-disabled="!$ctrl.isStepValid">Next Step</button>
         <a href="javascript:void(0)" class="card-link d-block text-center" ng-click="skipStep()">Skip this step </a>

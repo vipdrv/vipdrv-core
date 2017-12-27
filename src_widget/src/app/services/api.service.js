@@ -87,8 +87,8 @@
                 return promise;
             };
 
-            this.completeBooking = function (userData) {
-                var data = JSON.stringify(mapToBookingRequestDto(userData));
+            this.completeBooking = function (bookingData) {
+                var data = JSON.stringify(mapToBookingRequestDto(bookingData));
 
                 var req = {
                     method: 'POST',
@@ -107,14 +107,14 @@
                 return promise;
             };
 
-            this.sendMeSms = function (userData, dealerData) {
+            this.sendMeSms = function (bookingData, dealerData) {
                 var req = {
                     method: 'POST',
                     url: apiBaseUrl + '/lead/' + siteId + '/send-sms',
                     headers: {
                         'content-type': 'application/json'
                     },
-                    data: JSON.stringify(mapToSmsDto(userData, dealerData))
+                    data: JSON.stringify(mapToSmsDto(bookingData, dealerData))
                 };
 
                 var promise = $http(req).then(function (responce) {
@@ -129,7 +129,7 @@
             // Get Widget Data                                                        //
             // =======================================================================//
 
-            var mapToSmsDto = function (userData, dealerData) {
+            var mapToSmsDto = function (bookingData, dealerData) {
 
                 var smsDto = {
                     phone: null,
@@ -142,22 +142,22 @@
                     dealerPhone: null
                 };
 
-                if (userData.calendar.date && userData.calendar.time) {
-                    var dateTime = userData.calendar.date + ' ' + userData.calendar.time;
-                    smsDto.bookingDateTime = moment(dateTime).format('YYYY-MM-DD HH:MM');
+                if (bookingData.calendar.date && bookingData.calendar.time) {
+                    var dateTime = bookingData.calendar.date + ' ' + bookingData.calendar.time;
+                    smsDto.bookingDateTime = moment(dateTime).format('YYYY-MM-DD HH:mm');
                 }
-                smsDto.phone = userData.user.phone || null;
-                smsDto.vehicleTitle = userData.car.title || "Not specified";
-                smsDto.expertName = userData.expert.name || "Skipped by customer";
-                smsDto.beverageName = userData.beverage.name || "Skipped by customer";
-                smsDto.roadName = userData.road.name || "Skipped by customer";
+                smsDto.phone = bookingData.user.phone || null;
+                smsDto.vehicleTitle = bookingData.car.title || "Not specified";
+                smsDto.expertName = bookingData.expert.name || "Skipped by customer";
+                smsDto.beverageName = bookingData.beverage.name || "Skipped by customer";
+                smsDto.roadName = bookingData.road.name || "Skipped by customer";
                 smsDto.dealerName = dealerData.name || "";
                 smsDto.dealerPhone = dealerData.name || "";
 
                 return smsDto;
             };
 
-            var mapToBookingRequestDto = function (userData) {
+            var mapToBookingRequestDto = function (bookingData) {
 
                 var bookingDto = {
                     bookingUser: {
@@ -178,25 +178,25 @@
                     roadId: null
                 };
 
-                bookingDto.bookingUser.firstName = userData.user.firstName || null;
-                bookingDto.bookingUser.lastName = userData.user.lastName || '';
-                bookingDto.bookingUser.phone = userData.user.phone || null;
-                bookingDto.bookingUser.email = userData.user.email || null;
-                bookingDto.bookingUser.comment = userData.user.comment || '';
+                bookingDto.bookingUser.firstName = bookingData.user.firstName || null;
+                bookingDto.bookingUser.lastName = bookingData.user.lastName || '';
+                bookingDto.bookingUser.phone = bookingData.user.phone || null;
+                bookingDto.bookingUser.email = bookingData.user.email || null;
+                bookingDto.bookingUser.comment = bookingData.user.comment || '';
 
-                if (userData.calendar.date && userData.calendar.time) {
-                    var dateTime = userData.calendar.date + ' ' + userData.calendar.time;
-                    bookingDto.bookingDateTime = moment(dateTime).format('YYYY-MM-DD HH:MM');
+                if (bookingData.calendar.date && bookingData.calendar.time) {
+                    var dateTime = bookingData.calendar.date + ' ' + bookingData.calendar.time;
+                    bookingDto.bookingDateTime = moment(dateTime).format('YYYY-MM-DD HH:mm');
                 }
 
-                bookingDto.bookingCar.title = userData.car.title || "Not specified";
-                bookingDto.bookingCar.VIN = userData.car.vin || "Not specified";
-                bookingDto.bookingCar.imageUrl = userData.car.imageUrl || 'http://widget.testdrive.pw/img/default-car.png';
-                bookingDto.bookingCar.vdpUrl = userData.car.vdpUrl || '#';
+                bookingDto.bookingCar.title = bookingData.car.title || "Not specified";
+                bookingDto.bookingCar.VIN = bookingData.car.vin || "Not specified";
+                bookingDto.bookingCar.imageUrl = bookingData.car.imageUrl || 'http://widget.testdrive.pw/img/default-car.png';
+                bookingDto.bookingCar.vdpUrl = bookingData.car.vdpUrl || '#';
 
-                bookingDto.expertId = userData.expert.id || null;
-                bookingDto.beverageId = userData.beverage.id || null;
-                bookingDto.roadId = userData.road.id || null;
+                bookingDto.expertId = bookingData.expert.id || null;
+                bookingDto.beverageId = bookingData.beverage.id || null;
+                bookingDto.roadId = bookingData.road.id || null;
 
                 return bookingDto;
             };

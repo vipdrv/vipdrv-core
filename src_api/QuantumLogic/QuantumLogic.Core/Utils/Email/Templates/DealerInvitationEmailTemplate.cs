@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Net.Http;
-using System.Runtime.CompilerServices;
-using System.Text;
-using OfficeOpenXml;
+﻿using System.Net.Http;
 
-namespace QuantumLogic.Core.Utils.Email.Templates.TestDrive
+namespace QuantumLogic.Core.Utils.Email.Templates
 {
     public class DealerInvitationEmailTemplate : IEmailTemplate
     {
@@ -20,7 +15,7 @@ namespace QuantumLogic.Core.Utils.Email.Templates.TestDrive
         public string AsHtml()
         {
             // TODO: use method as async
-            var html = new HttpClient().GetStringAsync(TemplateUrl).Result;
+            var html = new HttpClient().GetStringAsync((string) TemplateUrl).Result;
 
             html = html.Replace("{{invitationLink}}", _invitationLink);
 

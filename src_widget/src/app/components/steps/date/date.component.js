@@ -1,7 +1,7 @@
 (function () {
     angular.module('myApp')
         .component('tdDate', {
-            controller: function ($scope, $interval, dealerData, userData) {
+            controller: function ($scope, $interval, dealerData, bookingData) {
 
                 // =======================================================================//
                 // Variables                                                              //
@@ -9,7 +9,7 @@
 
                 var self = this;
                 self.dealerData = dealerData;
-                self.userData = userData;
+                self.bookingData = bookingData;
                 self.isStepValid = false;
                 self.isLoading = true;
                 self.minDateString = null;
@@ -28,8 +28,8 @@
 
                 self.$onInit = function () {
                     self.minDateString = moment().subtract(0, 'day').format('YYYY-MM-DD');
-                    self.dateImput = self.userData.calendar.date;
-                    self.mobileDateTimeInput = self.userData.calendar.date;
+                    self.dateImput = self.bookingData.calendar.date;
+                    self.mobileDateTimeInput = self.bookingData.calendar.date;
                     self.validateStep();
 
                     if (self.dealerData.siteId != null) {
@@ -46,7 +46,6 @@
                                 self.initStep();
                             }
                         }, 100);
-
                     }
                 };
 
@@ -68,7 +67,7 @@
                     var startTime = self.widgetWorkingHours[currentDayOfWeek].startTime;
                     var endTime = self.widgetWorkingHours[currentDayOfWeek].endTime;
 
-                    self.timeIntervals = self.stplitTimeToInvervals(startTime, endTime);
+                    self.timeIntervals = self.splitTimeToInvervals(startTime, endTime);
 
                     self.isSelectable = function (date, type) {
                         var dayOfWeek = date.format('d');
@@ -80,12 +79,14 @@
                         var isDayAvalibale = self.widgetWorkingHours[selectedDayOfWeek].isActive;
 
                         var isTimeAvalibale = false;
-                        var selectedHour = date.hours();
+                        var selectedHour = date.hour();
+
                         var startTime = self.widgetWorkingHours[selectedDayOfWeek].startTime.split(':')[0];
                         var endTime = self.widgetWorkingHours[selectedDayOfWeek].endTime.split(':')[0];
 
                         if (startTime <= selectedHour && selectedHour <= endTime) {
-                            var isTimeAvalibale = true;
+                            // TODO: Dispel magic! (╯°□°）╯︵ ┻━┻)
+                            isTimeAvalibale = true;
                         }
 
                         return isDayAvalibale && isTimeAvalibale;
@@ -117,18 +118,18 @@
                     var arr = newValue._i.split(' ');
                     var dayOfWeek = arr[1];
 
-                    self.userData.calendar.time = cleatTimeIfInvalid(self.userData.calendar.time, dayOfWeek);
-                    self.userData.calendar.date = arr[0];
-                    self.userData.calendar.dayOfWeek = dayOfWeek;
+                    self.bookingData.calendar.time = cleanTimeIfInvalid(self.bookingData.calendar.time, dayOfWeek);
+                    self.bookingData.calendar.date = arr[0];
+                    self.bookingData.calendar.dayOfWeek = dayOfWeek;
                     self.validateStep();
 
                     var startTime = self.widgetWorkingHours[dayOfWeek].startTime;
                     var endTime = self.widgetWorkingHours[dayOfWeek].endTime;
 
-                    self.timeIntervals = self.stplitTimeToInvervals(startTime, endTime);
+                    self.timeIntervals = self.splitTimeToInvervals(startTime, endTime);
                 };
 
-                function cleatTimeIfInvalid(selectedTime, dayOfWeek) {
+                function cleanTimeIfInvalid(selectedTime, dayOfWeek) {
                     if (!selectedTime) {
                         return selectedTime;
                     }
@@ -149,21 +150,23 @@
                     var date = arr[0];
                     var hours = arr[1].split(' ')[0].split(':')[0];
                     var amPm = arr[2];
+                    var dayOfWeek = arr[3];
 
-                    self.userData.calendar.date = date;
-                    self.userData.calendar.time = hours + ':' + '00 ' + amPm;
-                    self.userData.calendar.isSkipped = false;
+                    self.bookingData.calendar.date = date;
+                    self.bookingData.calendar.time = hours + ':' + '00 ' + amPm;
+                    self.bookingData.calendar.dayOfWeek = dayOfWeek;
+                    self.bookingData.calendar.isSkipped = false;
                     self.validateStep();
                 };
 
                 self.timeChanged = function (time) {
-                    self.userData.calendar.time = time;
-                    self.userData.calendar.isSkipped = false;
+                    self.bookingData.calendar.time = time;
+                    self.bookingData.calendar.isSkipped = false;
                     self.validateStep();
                 };
 
                 self.validateStep = function () {
-                    if (self.userData.calendar.date != null && self.userData.calendar.time != null) {
+                    if (self.bookingData.calendar.date != null && self.bookingData.calendar.time != null) {
                         self.isStepValid = true;
                     } else {
                         self.isStepValid = false;
@@ -181,7 +184,7 @@
                 };
 
                 $scope.skipStep = function () {
-                    self.userData.calendar.isSkipped = true;
+                    self.bookingData.calendar.isSkipped = true;
                     self.completeStep({tabId: self.tabId});
                 };
 
@@ -189,7 +192,7 @@
                 // Helpers                                                                //
                 // =======================================================================//
 
-                self.stplitTimeToInvervals = function (startTime, endTime) {
+                self.splitTimeToInvervals = function (startTime, endTime) {
                     var start = moment('2000-01-01 ' + startTime);
                     var end = moment('2000-01-01 ' + endTime);
                     var timeIntervalsArr = [];

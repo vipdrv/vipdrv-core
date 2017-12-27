@@ -1,29 +1,34 @@
 (function () {
     angular.module('myApp')
         .component('tdBeverage', {
-            controller: function ($scope, dealerData, userData) {
+            controller: function ($scope, $window, dealerData, bookingData) {
 
                 var self = this;
                 self.isStepValid = null;
                 self.dealerData = dealerData;
-                self.userData = userData;
+                self.bookingData = bookingData;
 
                 self.$onInit = function () {
-                    if (self.userData.beverage.name === null) {
+                    if (self.bookingData.beverage.name === null) {
                         self.isStepValid = false;
                     }
                 };
 
-                $scope.itemChanged = function (id, img, name, description) {
-                    self.userData.beverage.id = id;
-                    self.userData.beverage.img = img;
-                    self.userData.beverage.name = name;
-                    self.userData.beverage.description = description;
+                $scope.itemChanged = function ($event, id, img, name, description) {
+                    var clickOnEvent = $event.target.className.includes('ngTruncateToggleText');
+                    if (clickOnEvent) {
+                        return;
+                    }
+
+                    self.bookingData.beverage.id = id;
+                    self.bookingData.beverage.img = img;
+                    self.bookingData.beverage.name = name;
+                    self.bookingData.beverage.description = description;
                     self.validateStep();
                 };
 
                 this.validateStep = function () {
-                    if (self.userData.beverage.name === null) {
+                    if (self.bookingData.beverage.name === null) {
                         self.isStepValid = false;
                     } else {
                         self.isStepValid = true;
@@ -37,8 +42,8 @@
                     }
                 };
                 $scope.skipStep = function () {
-                    self.userData.beverage.id = 0;
-                    self.userData.beverage.name = "Skipped";
+                    self.bookingData.beverage.id = 0;
+                    self.bookingData.beverage.name = "Skipped";
                     self.completeStep({tabId: self.tabId});
                 };
             },

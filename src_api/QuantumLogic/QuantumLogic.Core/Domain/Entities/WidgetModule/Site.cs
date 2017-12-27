@@ -51,6 +51,23 @@ namespace QuantumLogic.Core.Domain.Entities.WidgetModule
             }
         }
 
+        public IList<string> AdfEmailAdresses
+        {
+            get
+            {
+                if (!String.IsNullOrEmpty(NotificationContacts))
+                {
+                    string[] contactsArr = NotificationContacts.Split(';');
+                    if (contactsArr.Any() && !String.IsNullOrEmpty(contactsArr[2]))
+                    {
+                        return contactsArr[2].Split(',');
+                    }
+                }
+
+                return new List<string>(0);
+            }
+        }
+
         public IList<string> PhoneNumbers
         {
             get
@@ -67,6 +84,7 @@ namespace QuantumLogic.Core.Domain.Entities.WidgetModule
                 return new List<string>(0);
             }
         }
+
 
         #region Ctors
 

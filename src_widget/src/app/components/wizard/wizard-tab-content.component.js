@@ -1,12 +1,12 @@
 (function () {
     angular.module('myApp')
         .component('tdWizardTabContent', {
-            controller: function (api, widgetTabs, userData, dealerData, globalState) {
+            controller: function (api, widgetTabs, bookingData, dealerData, globalState) {
 
                 var self = this;
                 self.dealerData = dealerData;
                 self.widgetTabs = widgetTabs;
-                self.userData = userData;
+                self.bookingData = bookingData;
 
                 // =======================================================================//
                 // Wizard                                                                 //
@@ -60,39 +60,7 @@
                     return null;
                 };
 
-                // =======================================================================//
-                // Init                                                                   //
-                // =======================================================================//
 
-                self.$onInit = function () {
-                    self.site = [];
-                    self.experts = [];
-                    self.beverages = [];
-                    self.roads = [];
-
-                    api.retrieveSite().then(function (data) {
-                        self.site = data;
-
-                        self.dealerData.siteId = data.id;
-                        self.dealerData.name = data.dealerName;
-                        self.dealerData.phone = data.dealerPhone;
-                        self.dealerData.address = data.dealerAddress;
-                        self.dealerData.siteUrl = data.url;
-                        self.dealerData.workingHours = data.workingHours;
-                    });
-                    api.retrieveExperts().then(function (data) {
-                        self.dealerData.experts.items = data.items;
-                        self.experts = data.items;
-                    });
-                    api.retrieveBeverages().then(function (data) {
-                        self.dealerData.beverages.items = data.items;
-                        self.beverages = data.items;
-                    });
-                    api.retrieveRoutes().then(function (data) {
-                        self.dealerData.roads.items = data.items;
-                        self.roads = data.items;
-                    });
-                };
 
             },
             templateUrl: 'src/app/components/wizard/wizard-tab-content.tpl.html',

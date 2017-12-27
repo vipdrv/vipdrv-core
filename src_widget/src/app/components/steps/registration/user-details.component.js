@@ -1,20 +1,20 @@
 (function () {
     angular.module('myApp')
         .component('tdUserDetails', {
-            controller: function ($scope, api, dealerData, userData) {
+            controller: function ($scope, api, dealerData, bookingData) {
 
                 var self = this;
                 self.dealerData = dealerData;
-                self.userData = userData;
+                self.bookingData = bookingData;
 
                 self.makeBooking = function () {
-                    self.userData.user.firstName = $scope.firstName;
-                    self.userData.user.lastName = $scope.secondName;
-                    self.userData.user.email = $scope.email;
-                    self.userData.user.phone = $scope.phone;
-                    self.userData.user.comment = $scope.comment;
+                    self.bookingData.user.firstName = $scope.firstName;
+                    self.bookingData.user.lastName = $scope.secondName;
+                    self.bookingData.user.email = $scope.email;
+                    self.bookingData.user.phone = $scope.phone;
+                    self.bookingData.user.comment = $scope.comment;
 
-                    api.completeBooking(self.userData).then(function () {
+                    api.completeBooking(self.bookingData).then(function () {
                     });
                     // TODO: add reaction on promise
                     self.completeForm();
