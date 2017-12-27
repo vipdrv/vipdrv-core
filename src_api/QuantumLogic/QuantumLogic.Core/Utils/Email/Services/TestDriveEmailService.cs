@@ -1,10 +1,9 @@
-﻿using System;
-using System.Collections;
+﻿using QuantumLogic.Core.Utils.Email.Templates;
+using SendGrid.Helpers.Mail;
+using System;
 using System.Collections.Generic;
 using System.Net;
-using QuantumLogic.Core.Utils.Email.Templates;
-using QuantumLogic.Core.Utils.Email.Templates.TestDrive;
-using SendGrid.Helpers.Mail;
+using QuantumLogic.Core.Utils.ADFGenerator;
 
 namespace QuantumLogic.Core.Utils.Email.Services
 {
@@ -13,6 +12,7 @@ namespace QuantumLogic.Core.Utils.Email.Services
         protected const string CompleteBookingSubject = "You Upcoming Test Drive";
         protected const string NewLeadNotificationSubject = "New Lead!";
         protected const string DealerInvitationSubject = "Welcome to TetsDrive";
+        protected const string AdfEmailSubject = "VIPdrv - ADF XML ";
         protected static EmailAddress EmailFrom = new EmailAddress("no-reply@vipdrv.com", "VIPdrv - VIP Test Drive");
         protected IEmailProvider EmailProvider { get; private set; }
 
@@ -48,6 +48,11 @@ namespace QuantumLogic.Core.Utils.Email.Services
         public HttpStatusCode SendNewLeadNotificationEmail(EmailAddress emailTo, IEmailTemplate emailTemplate)
         {
             return EmailProvider.SendEmail(emailTo, EmailFrom, NewLeadNotificationSubject, emailTemplate.AsPlainText(), emailTemplate.AsHtml());
+        }
+
+        public HttpStatusCode SendAdfEmail(EmailAddress emailTo, IAdfTemplate adfTemplate)
+        {
+            return EmailProvider.SendEmail(emailTo, EmailFrom, AdfEmailSubject, adfTemplate.AsString(), adfTemplate.AsString());
         }
     }
 }

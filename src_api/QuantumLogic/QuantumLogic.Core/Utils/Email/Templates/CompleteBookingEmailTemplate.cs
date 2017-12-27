@@ -1,101 +1,114 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Globalization;
 using System.Net.Http;
-using System.Text;
 using QuantumLogic.Core.Constants;
 using QuantumLogic.Core.Domain.Entities.WidgetModule;
 
-namespace QuantumLogic.Core.Utils.Email.Templates.TestDrive
+namespace QuantumLogic.Core.Utils.Email.Templates
 {
-    public class NewLeadNotificationEmailTemplate : IEmailTemplate
+    public class CompleteBookingEmailTemplate : IEmailTemplate
     {
-        protected const string TemplateUrl = "https://generalstandart256.blob.core.windows.net/testdrive-email-templates/new-lead__email-template.html";
-        private readonly string _vehicleImgUrl;
-        private readonly string _vdpUrl;
-        private readonly string _VIN;
+        protected const string TemplateUrl = "https://generalstandart256.blob.core.windows.net/testdrive-email-templates/complete-booking__email-template.html";
         private readonly string _customerFirstName;
         private readonly string _customerLastName;
-        private readonly string _customerPhone;
-        private readonly string _customerEmail;
         private readonly string _customerComment;
         private DateTime? _bookingDateTime;
+        private readonly string _vehicleImgUrl;
         private readonly string _vehicleTitle;
+        private readonly string _vdpUrl;
         private readonly string _expertName;
         private readonly string _beverageName;
         private readonly string _roadName;
+        private readonly string _dealerName;
+        private readonly string _dealerAddress;
+        private readonly string _dealerPhone;
+        private readonly string _dealerSiteUrl;
 
-        public NewLeadNotificationEmailTemplate(
-            string vehicleTitle,
-            string vehicleImgUrl,
-            string vdpUrl,
-            string VIN,
+        public CompleteBookingEmailTemplate(
             string customerFirstName,
             string customerLastName,
-            string customerPhone,
-            string customerEmail,
-            DateTime bookingDateTime, 
-            string expertName, 
+            DateTime? bookingDateTime,
+            string vehicleImgUrl,
+            string vehicleTitle,
+            string vdpUrl,
+            string expertName,
             string beverageName,
-            string roadName)
+            string roadName,
+            string dealerName,
+            string dealerAddress,
+            string dealerPhone,
+            string dealerSiteUrl
+            )
         {
-            _vehicleImgUrl = vehicleImgUrl;
+            _vehicleTitle = vehicleTitle;
             _vdpUrl = vdpUrl;
-            _VIN = VIN;
+            _vehicleImgUrl = vehicleImgUrl;
             _customerFirstName = customerFirstName;
             _customerLastName = customerLastName;
-            _customerPhone = customerPhone;
-            _customerEmail = customerEmail;
             _bookingDateTime = bookingDateTime;
-            _vehicleTitle = vehicleTitle;
             _expertName = expertName;
             _beverageName = beverageName;
             _roadName = roadName;
+            _dealerName = dealerName;
+            _dealerAddress = dealerAddress;
+            _dealerPhone = dealerPhone;
+            _dealerSiteUrl = dealerSiteUrl;
         }
 
-        public NewLeadNotificationEmailTemplate(Lead lead)
+        public CompleteBookingEmailTemplate(Lead lead)
         {
+            _vehicleTitle = lead.CarTitle;
             _vehicleImgUrl = lead.CarImageUrl;
             _vdpUrl = lead.VdpUrl;
-            _VIN = lead.CarVin;
             _customerFirstName = lead.FirstName;
             _customerLastName = lead.SecondName;
-            _customerPhone = lead.UserPhone;
-            _customerEmail = lead.UserEmail;
             _customerComment = lead.UserComment;
             _bookingDateTime = lead.BookingDateTimeUtc;
-            _vehicleTitle = lead.CarTitle;
             _expertName = (lead.Expert != null) ? lead.Expert.Name : "Skipped by customer";
             _beverageName = (lead.Beverage != null) ? lead.Beverage.Name : "Skipped by customer";
             _roadName = (lead.Route != null) ? lead.Route.Name : "Skipped by customer";
+            _dealerName = lead.Site.DealerName;
+            _dealerAddress = lead.Site.DealerAddress;
+            _dealerPhone = lead.Site.DealerPhone;
+            _dealerSiteUrl = lead.Site.Url;
         }
 
         public string AsHtml()
         {
-            // TODO: use method as async
-            var html = new HttpClient().GetStringAsync(TemplateUrl).Result;
+            var html = new HttpClient().GetStringAsync((string) TemplateUrl).Result;
 
+            #region Vehicle
             html = html.Replace("{{vehicleTitle}}", _vehicleTitle);
             html = html.Replace("{{vehicleImgUrl}}", _vehicleImgUrl);
-            html = html.Replace("{{VIN}}", _VIN);
             html = html.Replace("{{vdpUrl}}", _vdpUrl);
+            #endregion
 
+            #region Customer
             html = html.Replace("{{customerFirstName}}", _customerFirstName);
             html = html.Replace("{{customerLastName}}", _customerLastName);
-            html = html.Replace("{{customerPhone}}", _customerPhone);
-            html = html.Replace("{{customerEmail}}", _customerEmail);
             html = html.Replace("{{customerComment}}", _customerComment);
+            #endregion
 
+            #region Booking
             html = html.Replace("{{bookingDateTime}}", _bookingDateTime.GetValueOrDefault().ToString(QuantumLogicConstants.UsaTimeFormat, CultureInfo.InvariantCulture));
             html = html.Replace("{{expertName}}", _expertName);
             html = html.Replace("{{beverageName}}", _beverageName);
             html = html.Replace("{{roadName}}", _roadName);
+            #endregion
+
+            #region Dealer info
+            html = html.Replace("{{dealerName}}", _dealerName);
+            html = html.Replace("{{dealerAddress}}", _dealerAddress);
+            html = html.Replace("{{dealerPhone}}", _dealerPhone);
+            html = html.Replace("{{dealerSiteUrl}}", _dealerSiteUrl);
+            #endregion
 
             return html;
         }
 
         public string AsPlainText()
         {
+            // TODO: implement plain text email content
             return "";
         }
     }

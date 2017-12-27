@@ -8,7 +8,7 @@ using QuantumLogic.Core.Exceptions.Authorization;
 using QuantumLogic.Core.Exceptions.Validation;
 using QuantumLogic.Core.Utils.Email.Providers.SendGrid;
 using QuantumLogic.Core.Utils.Email.Services;
-using QuantumLogic.Core.Utils.Email.Templates.TestDrive;
+using QuantumLogic.Core.Utils.Email.Templates;
 using QuantumLogic.WebApi.DataModels.Dtos.Main.Invitations;
 using QuantumLogic.WebApi.DataModels.Dtos.Main.Users;
 using QuantumLogic.WebApi.DataModels.Requests.Main.Users;
