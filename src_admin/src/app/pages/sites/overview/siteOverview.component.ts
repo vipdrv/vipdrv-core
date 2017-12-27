@@ -26,8 +26,15 @@ export class SiteOverviewComponent implements OnInit, OnDestroy {
         return Variable.isNotNullOrUndefined(this.entity);
     }
     protected initWidget(): void {
-        (<any>window).TestDrive.init({ SiteId: this.entity.id });
-        this.logger.logTrase(`WidgetPreviewComponent: Widget has been initialized for the site (siteId = ${this.entity.id}).`);
+        const TestDrive = (<any>window).TestDrive;
+
+        if (Variable.isNotNullOrUndefined(TestDrive)) {
+            TestDrive.init({ SiteId: this.entity.id });
+            this.logger.logTrase(`WidgetPreviewComponent: Widget has been initialized for the site (siteId = ${this.entity.id}).`);
+        } else {
+            this.logger.logTrase(`Widget Failure (siteId = ${this.entity.id}).`);
+        }
+
     }
     // experts
     protected showNoExperts(): boolean {
