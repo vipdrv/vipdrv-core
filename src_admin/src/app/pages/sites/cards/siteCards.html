@@ -21,10 +21,8 @@
         </div>
     </div>
     <div class="test-drive-many-entities-template-body">
-        <div class="row"
-             [ngBusy]="firstLoadPromise">
-            <div class="card-group col-xs-12 col-sm-12 col-md-6 col-lg-4 col-xl-3"
-                 *ngFor="let entity of items">
+        <div class="row" [ngBusy]="firstLoadPromise">
+            <div class="card-group col-xs-12 col-sm-12 col-md-6 col-lg-4 col-xl-3" *ngFor="let entity of items">
                 <div class="card site-card">
                     <img class="card-img-top test-drive-card-site-image"
                          src="{{entity.imageUrl}}"

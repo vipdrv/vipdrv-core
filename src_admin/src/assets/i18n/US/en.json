@@ -128,7 +128,9 @@
       "noRoutes": "no routes",
       "activeRoutes_amount": "{{amount}} active",
       "noActiveRoutes": "no active",
-      "notActiveRoutes_amount": "{{amount}} not active"
+      "notActiveRoutes_amount": "{{amount}} not active",
+      "widget_preview": "Widget preview"
+
     },
     "details": {
       "title": "Sites",
@@ -142,8 +144,9 @@
         "widgetPreview": "Preview"
       },
       "notifications": {
-        "emails": "Emails",
-        "sms": "SMS"
+        "emails": "Email Notifications",
+        "sms": "SMS Notifications",
+        "adf": "ADF Emails"
       }
     }
   },

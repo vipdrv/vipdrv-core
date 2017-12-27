@@ -8,7 +8,7 @@ import { ISiteEntityPolicyService, SiteEntityPolicyService } from './../../../se
 import { ISiteValidationService, SiteValidationService } from './../../../services/index';
 import { SiteEntity } from './../../../entities/index';
 import { SitesConstants } from './../sites.constants';
-import {promise} from "selenium-webdriver";
+
 @Component({
     selector: 'site-cards',
     styleUrls: ['./siteCards.scss'],

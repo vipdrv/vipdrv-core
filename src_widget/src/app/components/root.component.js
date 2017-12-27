@@ -86,19 +86,6 @@
                     self.bookingData.car.transmission = transmission;
                     self.bookingData.car.fuel = fuel;
                 }
-
-                // =======================================================================//
-                // Resize                                                                 //
-                // =======================================================================//
-
-                $window.addEventListener("resize", function () {
-
-                    console.log('Widget = ', $window.document.documentElement.clientHeight);
-
-
-
-                });
-
             },
             templateUrl: 'src/app/components/root.tpl.html'
         });

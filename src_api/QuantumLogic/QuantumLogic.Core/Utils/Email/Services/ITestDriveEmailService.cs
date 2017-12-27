@@ -1,4 +1,6 @@
-﻿using System.Net;
+﻿using System.Collections.Generic;
+using System.Net;
+using QuantumLogic.Core.Utils.ADFGenerator;
 using QuantumLogic.Core.Utils.Email.Templates;
 using SendGrid.Helpers.Mail;
 
@@ -44,5 +46,13 @@ namespace QuantumLogic.Core.Utils.Email.Services
         /// Returns <see cref="HttpStatusCode"/> of added Email to queue to Send
         /// </returns>
         HttpStatusCode SendNewLeadNotificationEmail(EmailAddress emailTo, IEmailTemplate emailTemplate);
+
+        /// <summary>
+        /// Is used to send Auto-lead Data Format to Dealer CRM in Xml format
+        /// </summary>
+        /// <param name="emailTo">email address of CRM</param>
+        /// <param name="adfTemplate"></param>
+        /// <returns></returns>
+        HttpStatusCode SendAdfEmail(EmailAddress emailTo, IAdfTemplate adfTemplate);
     }
 }

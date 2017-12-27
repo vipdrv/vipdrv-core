@@ -8,7 +8,6 @@ using QuantumLogic.Core.Domain.UnitOfWorks;
 using QuantumLogic.Core.Extensions.DateTimeEx;
 using QuantumLogic.Core.Utils.ContentManager;
 using QuantumLogic.Core.Utils.Email.Services;
-using QuantumLogic.Core.Utils.Email.Templates.TestDrive;
 using QuantumLogic.Core.Utils.Export.Entity.Concrete.Excel;
 using QuantumLogic.Core.Utils.Export.Entity.Concrete.Excel.DataModels;
 using QuantumLogic.Core.Utils.Sms;
@@ -23,6 +22,8 @@ using SendGrid.Helpers.Mail;
 using System;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
+using QuantumLogic.Core.Utils.ADFGenerator;
+using QuantumLogic.Core.Utils.Email.Templates;
 
 namespace QuantumLogic.WebApi.Controllers.Widget
 {
@@ -171,12 +172,19 @@ namespace QuantumLogic.WebApi.Controllers.Widget
                 TestDriveEmailService.SendNewLeadNotificationEmail(new EmailAddress(email), newLeadNotificationEmailTemplate);
             }
 
+            IAdfTemplate adfTemplate = new EleadAdfTemplate(createdLead);
+            foreach (var email in createdLead.Site.AdfEmailAdresses)
+            {
+                TestDriveEmailService.SendAdfEmail(new EmailAddress(email), adfTemplate);
+                
+            }
+
             var newLeadNotificationSmsTemplate = new NewLeadNotificationSmsTemplate(createdLead);
             foreach (var number in createdLead.Site.PhoneNumbers)
             {
                 await SmsService.SendSms(number, newLeadNotificationSmsTemplate);
             }
-
+            
             return createLeadFullDto;
         }
 

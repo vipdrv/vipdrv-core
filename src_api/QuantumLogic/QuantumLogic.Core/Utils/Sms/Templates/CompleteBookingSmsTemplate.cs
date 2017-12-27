@@ -45,12 +45,13 @@ namespace QuantumLogic.Core.Utils.Sms.Templates
 
         public string AsPlainText()
         {
-            return $"Your Upcoming Test Drive \n \n" +
+            return $"Thank you! \n" +
+                   $"Your Upcoming VIPdrv Test Drive is Scheduled \n \n" +
                    $"Vehicle: {VehicleTitle} \n" +
                    $"Date & Time: {BookingDateTime.GetValueOrDefault().ToString(QuantumLogicConstants.OutputDateTimeFormat)} \n" +
                    $"Expert: {ExpertName} \n" +
                    $"Beverage: {BeverageName} \n" +
-                   $"Road: {RoadName} \n\n" +
+                   $"Route: {RoadName} \n\n" +
                    $"{DealerName} \n" +
                    $"{DealerPhone} \n";
         }
