@@ -4,7 +4,7 @@ using QuantumLogic.Data.EFContext;
 
 namespace QuantumLogic.Data.Repositories.Widget
 {
-    public class BeverageRepository : EFRepository<Beverage, int>, IBeverageRepository
+    public class BeverageRepository : EFRepositoryX<Beverage, int>, IBeverageRepository
     {
         #region Ctors
 

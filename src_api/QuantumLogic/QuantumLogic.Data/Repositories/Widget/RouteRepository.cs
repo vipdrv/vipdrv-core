@@ -4,7 +4,7 @@ using QuantumLogic.Data.EFContext;
 
 namespace QuantumLogic.Data.Repositories.Widget
 {
-    public class RouteRepository : EFRepository<Route, int>, IRouteRepository
+    public class RouteRepository : EFRepositoryX<Route, int>, IRouteRepository
     {
         #region Ctors
 
