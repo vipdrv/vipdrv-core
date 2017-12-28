@@ -9,13 +9,21 @@ namespace QuantumLogic.Core.Domain.Services
     public abstract class EntityExtendedDomainService<TEntity, TPrimaryKey> : EntityDomainService<TEntity, TPrimaryKey>, IEntityExtendedDomainService<TEntity, TPrimaryKey>
         where TEntity : class, IEntity<TPrimaryKey>, IUpdatableFrom<TEntity>, IPassivable, IOrderable
     {
+        public abstract int DefaultOrder { get; }
+
         #region Ctors
 
-        public EntityExtendedDomainService(IQLRepository<TEntity, TPrimaryKey> repository, IEntityExtendedPolicy<TEntity, TPrimaryKey> policy, IEntityExtendedValidationService<TEntity, TPrimaryKey> validationService) 
+        public EntityExtendedDomainService(IQLRepositoryX<TEntity, TPrimaryKey> repository, IEntityExtendedPolicy<TEntity, TPrimaryKey> policy, IEntityExtendedValidationService<TEntity, TPrimaryKey> validationService) 
             : base(repository, policy, validationService)
         { }
 
         #endregion
+
+        public override async Task<TEntity> CreateAsync(TEntity entity)
+        {
+            await SetOrderForEntityOnCreate(entity);
+            return await base.CreateAsync(entity);
+        }
 
         public virtual async Task ChangeActivityAsync(TPrimaryKey id, bool newValue)
         {
@@ -47,5 +55,7 @@ namespace QuantumLogic.Core.Domain.Services
             await Repository.UpdateAsync(entity1);
             await Repository.UpdateAsync(entity2);
         }
+
+        protected abstract Task SetOrderForEntityOnCreate(TEntity entity);
     }
 }

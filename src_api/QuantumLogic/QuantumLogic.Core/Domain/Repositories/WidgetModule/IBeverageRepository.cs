@@ -2,6 +2,6 @@
 
 namespace QuantumLogic.Core.Domain.Repositories.WidgetModule
 {
-    public interface IBeverageRepository : IQLRepository<Beverage, int>
+    public interface IBeverageRepository : IQLRepositoryX<Beverage, int>
     { }
 }

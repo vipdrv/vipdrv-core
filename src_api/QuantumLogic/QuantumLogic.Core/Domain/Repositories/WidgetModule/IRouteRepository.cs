@@ -2,6 +2,6 @@
 
 namespace QuantumLogic.Core.Domain.Repositories.WidgetModule
 {
-    public interface IRouteRepository : IQLRepository<Route, int>
+    public interface IRouteRepository : IQLRepositoryX<Route, int>
     { }
 }

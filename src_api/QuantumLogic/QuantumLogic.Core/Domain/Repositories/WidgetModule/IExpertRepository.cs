@@ -2,6 +2,6 @@
 
 namespace QuantumLogic.Core.Domain.Repositories.WidgetModule
 {
-    public interface IExpertRepository : IQLRepository<Expert, int>
+    public interface IExpertRepository : IQLRepositoryX<Expert, int>
     { }
 }
