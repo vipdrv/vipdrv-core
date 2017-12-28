@@ -1,4 +1,4 @@
-﻿namespace QuantumLogic.Core.Utils.Email
+﻿namespace QuantumLogic.Core.Utils.Email.Data
 {
     public interface IEmailTemplate
     {

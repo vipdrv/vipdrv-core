@@ -14,8 +14,6 @@ using QuantumLogic.Core.Utils.ContentManager.Providers;
 using QuantumLogic.Core.Utils.Modules;
 using System;
 using QuantumLogic.Core.Utils.Email;
-using QuantumLogic.Core.Utils.Email.Providers.SendGrid;
-using QuantumLogic.Core.Utils.Email.Services;
 
 namespace QuantumLogic.Core
 {
@@ -27,7 +25,6 @@ namespace QuantumLogic.Core
         protected override void ConfigureServices(IServiceCollection services)
         {
             services.AddScoped<IContentManager, BlobProvider>();
-            services.AddScoped<IEmailProvider, SendGridEmailProvider>();
             services.AddScoped<ITestDriveEmailService, TestDriveEmailService>();
 
             #region Domain services
