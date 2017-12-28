@@ -2,6 +2,7 @@
 using System.Net;
 using SendGrid;
 using SendGrid.Helpers.Mail;
+using QuantumLogic.Core.Utils.Email.Services.Data;
 
 namespace QuantumLogic.Core.Utils.Email.Providers.SendGrid
 {
@@ -17,6 +18,7 @@ namespace QuantumLogic.Core.Utils.Email.Providers.SendGrid
         public HttpStatusCode SendEmail(EmailAddress emailTo, EmailAddress emailFrom, string subject, string plainTextContent, string htmlContent)
         {
             var msg = MailHelper.CreateSingleEmail(emailFrom, emailTo, subject, plainTextContent, htmlContent);
+            
             return _client.SendEmailAsync(msg).Result.StatusCode;
         }
 

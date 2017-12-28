@@ -9,6 +9,7 @@ using QuantumLogic.Core.Domain.Entities.WidgetModule;
 using QuantumLogic.Core.Utils.Email;
 using QuantumLogic.Core.Utils.Email.Providers.SendGrid;
 using QuantumLogic.Core.Utils.Email.Services;
+using QuantumLogic.Core.Utils.Email.Templates;
 using QuantumLogic.Data.EFContext;
 using SendGrid;
 using SendGrid.Helpers.Mail;
@@ -19,28 +20,14 @@ namespace QuantumLogic.Tests.Core.Utils.Email
     public sealed class EmailManagerTests
     {
         [Test]
-        [Ignore("Real Email sending")]
-        public void CompleteBooking__ShouldSendEmail()
+        [Ignore("Real Email")]
+        public void AdfFormat__ShouldComposeXmlMessage()
         {
-            ITestDriveEmailService driveEmailService = new TestDriveEmailService(new SendGridEmailProvider());
+            IEmailTemplate adfTemplate = new EleadAdfTemplate(DateTime.Now, "Tilte", "Vin", "TEST-VALUE", "TEST-VALUE", "TEST-VALUE", "TEST-VALUE", "TEST-VALUE", "TEST-VALUE", "TEST-VALUE", "TEST-VALUE", "TEST-VALUE");
 
-            var emailTo = new EmailAddress("ultramarine256@gmail.com", "Evgeny Platonov");
-            // driveEmailService.SendDealerInvitationEmail(emailTo, );
-        }
-
-        [Test]
-        public void EmptyTest__ShouldParseFromTeamCity()
-        {
-
-            string dateTime = DateTime.Now.ToString(QuantumLogicConstants.UsaTimeFormat, CultureInfo.InvariantCulture);
-
-            DateTime? nullableDateTime = null;
-
-            string result = nullableDateTime.GetValueOrDefault()
-                .ToString(QuantumLogicConstants.UsaTimeFormat, CultureInfo.InvariantCulture);
-
-            Console.WriteLine(result);
-
+            string html = adfTemplate.AsHtml();
+            
+            new TestDriveEmailService(new SendGridEmailProvider()).SendAdfEmail(new EmailAddress("ultramarine256@gmail.com"), adfTemplate);
         }
     }
 }

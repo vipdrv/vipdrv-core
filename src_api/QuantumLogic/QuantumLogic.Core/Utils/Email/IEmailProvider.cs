@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Net;
 using System.Text;
+using QuantumLogic.Core.Utils.Email.Services.Data;
 using SendGrid.Helpers.Mail;
 
 namespace QuantumLogic.Core.Utils.Email
@@ -29,12 +30,7 @@ namespace QuantumLogic.Core.Utils.Email
         /// <param name="htmlContent"></param>
         /// <param name="attachment"></param>
         /// <returns></returns>
-        HttpStatusCode SendEmail(List<EmailAddress> emailTo,
-            EmailAddress emailFrom,
-            string subject,
-            string plainTextContent,
-            string htmlContent,
-            EmailAttachment attachment);
+        HttpStatusCode SendEmail(List<EmailAddress> emailTo, EmailAddress emailFrom, string subject, string plainTextContent, string htmlContent, EmailAttachment attachment);
     }
 }
 

@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Net;
-using QuantumLogic.Core.Utils.ADFGenerator;
 using QuantumLogic.Core.Utils.Email.Templates;
 using SendGrid.Helpers.Mail;
 
@@ -51,8 +50,8 @@ namespace QuantumLogic.Core.Utils.Email.Services
         /// Is used to send Auto-lead Data Format to Dealer CRM in Xml format
         /// </summary>
         /// <param name="emailTo">email address of CRM</param>
-        /// <param name="adfTemplate"></param>
+        /// <param name="emailTemplate"></param>
         /// <returns></returns>
-        HttpStatusCode SendAdfEmail(EmailAddress emailTo, IAdfTemplate adfTemplate);
+        HttpStatusCode SendAdfEmail(EmailAddress emailTo, IEmailTemplate emailTemplate);
     }
 }

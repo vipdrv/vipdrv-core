@@ -3,7 +3,6 @@ using SendGrid.Helpers.Mail;
 using System;
 using System.Collections.Generic;
 using System.Net;
-using QuantumLogic.Core.Utils.ADFGenerator;
 
 namespace QuantumLogic.Core.Utils.Email.Services
 {
@@ -50,9 +49,9 @@ namespace QuantumLogic.Core.Utils.Email.Services
             return EmailProvider.SendEmail(emailTo, EmailFrom, NewLeadNotificationSubject, emailTemplate.AsPlainText(), emailTemplate.AsHtml());
         }
 
-        public HttpStatusCode SendAdfEmail(EmailAddress emailTo, IAdfTemplate adfTemplate)
+        public HttpStatusCode SendAdfEmail(EmailAddress emailTo, IEmailTemplate adfTemplate)
         {
-            return EmailProvider.SendEmail(emailTo, EmailFrom, AdfEmailSubject, adfTemplate.AsString(), adfTemplate.AsString());
+            return EmailProvider.SendEmail(emailTo, EmailFrom, AdfEmailSubject, adfTemplate.AsPlainText(), adfTemplate.AsHtml());
         }
     }
 }

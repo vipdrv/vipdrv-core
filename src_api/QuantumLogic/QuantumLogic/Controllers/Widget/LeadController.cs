@@ -22,7 +22,7 @@ using SendGrid.Helpers.Mail;
 using System;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using QuantumLogic.Core.Utils.ADFGenerator;
+using QuantumLogic.Core.Utils.Email;
 using QuantumLogic.Core.Utils.Email.Templates;
 
 namespace QuantumLogic.WebApi.Controllers.Widget
@@ -172,11 +172,10 @@ namespace QuantumLogic.WebApi.Controllers.Widget
                 TestDriveEmailService.SendNewLeadNotificationEmail(new EmailAddress(email), newLeadNotificationEmailTemplate);
             }
 
-            IAdfTemplate adfTemplate = new EleadAdfTemplate(createdLead);
+            IEmailTemplate adfTemplate = new EleadAdfTemplate(createdLead);
             foreach (var email in createdLead.Site.AdfEmailAdresses)
             {
                 TestDriveEmailService.SendAdfEmail(new EmailAddress(email), adfTemplate);
-                
             }
 
             var newLeadNotificationSmsTemplate = new NewLeadNotificationSmsTemplate(createdLead);

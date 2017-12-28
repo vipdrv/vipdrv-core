@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace QuantumLogic.Core.Utils.Email
+﻿namespace QuantumLogic.Core.Utils.Email.Services.Data
 {
     public class EmailAttachment
     {

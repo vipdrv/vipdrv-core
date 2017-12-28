@@ -83,9 +83,10 @@ var TestDrive = TestDrive || (function () {
         for (var key in colorHeaders) {
             var id = colorHeaders[key];
             var element = document.getElementById(id);
-            element.content = "#f2f2f2";
-            element.outerHTML = "";
-            element.remove();
+            if (element) {
+                element.content = "#f2f2f2";
+                element.remove();
+            }
         }
     };
 
@@ -162,13 +163,16 @@ var TestDrive = TestDrive || (function () {
 (function () {
     window.addEventListener("resize", function () {
         var div = document.getElementsByClassName('test-drive__frame')[0];
-        div.style.height = 'calc(100% - 50px)';
+        if (div) {
+            div.style.height = 'calc(100% - 50px)';
+        }
     });
 })();
 
 //=======================================================================//
 // Extensions                                                            //
 //=======================================================================//
+
 
 (function () {
     Element.prototype.remove = function () {
