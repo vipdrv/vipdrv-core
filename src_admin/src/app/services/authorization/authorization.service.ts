@@ -6,6 +6,7 @@ import { Variable, ILogger, ConsoleLogger } from './../../utils/index';
 import { TokenResponse, UserIdentityInfo } from './../index';
 import { IAuthorizationService } from './i-authorization.service';
 import { UserEntity } from './../../entities/index';
+import {reject} from "q";
 @Injectable()
 export class AuthorizationService implements IAuthorizationService {
     /// service fields
@@ -120,16 +121,24 @@ export class AuthorizationService implements IAuthorizationService {
                     (res: any) => {
                         resolve(self.handleResponse(res));
                     },
-                    (error: any) => {
-                        return reject(error);
+                    (reason: any) => {
+                        return reject(reason);
                     });
             })
-            .then(function (response: UserEntity): void {
-                const entity: UserEntity = new UserEntity();
-                entity.initializeFromDto(response);
-                self._currentUser = entity;
-                self.logger.logTrase('AuthorizationService: Current user profile has been actualized.');
-            });
+            .then(
+                function (response: UserEntity): void {
+                    const entity: UserEntity = new UserEntity();
+                    entity.initializeFromDto(response);
+                    self._currentUser = entity;
+                    self.logger.logTrase('AuthorizationService: Current user profile has been actualized.');
+                },
+                function(reason: any) {
+                    if (self.isUnauthorizedError(reason)) {
+                        self.handleUnauthorizedResponse();
+                    } else {
+                        reject(reason);
+                    }
+                });
     }
     signOut(): Promise<any> {
         localStorage.removeItem(this.currentUserInfoInStorageKey);
@@ -147,7 +156,7 @@ export class AuthorizationService implements IAuthorizationService {
             });
     }
     isUnauthorizedError(reason: any): boolean {
-        return !!reason && reason.status === 401;
+        return Variable.isNotNullOrUndefined(reason) && reason.status === 401;
     }
     /// helpers
     private applyStoredUserInfo(): void {
