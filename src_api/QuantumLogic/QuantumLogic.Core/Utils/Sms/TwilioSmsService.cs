@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
@@ -29,7 +30,7 @@ namespace QuantumLogic.Core.Utils.Sms
 
             foreach (var phone in phoneNumbers)
             {
-                valueCollection["To"] = phone;
+                valueCollection["To"] = $"+{new String(phone.Where(Char.IsDigit).ToArray())}";
                 _httpClient.SendAsync(new HttpRequestMessage(HttpMethod.Post, _apiUrl) { Content = new FormUrlEncodedContent(valueCollection) });
             }
         }
