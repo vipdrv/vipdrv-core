@@ -11,26 +11,27 @@ namespace QuantumLogic.Core.Utils.Sms
     {
         private readonly HttpClient _httpClient;
         private readonly string _apiUrl;
-        private readonly string _authHeader;
 
         public TwilioSmsService()
         {
             _httpClient = new HttpClient();
+            _httpClient.DefaultRequestHeaders.Add("Authorization", "Basic QUM5NTRlNDM2MjY5ZjczYzMxMmY4YWUwZDg3ZWM4ODZiZTpiODIzNWM1ZGRjM2EwMWQwMmI2YzFmNjhlZGVjZWM4Ng==");
             _apiUrl = "https://api.twilio.com/2010-04-01/Accounts/AC954e436269f73c312f8ae0d87ec886be/Messages.json";
-            _authHeader = "Basic QUM5NTRlNDM2MjY5ZjczYzMxMmY4YWUwZDg3ZWM4ODZiZTpiODIzNWM1ZGRjM2EwMWQwMmI2YzFmNjhlZGVjZWM4Ng==";
         }
 
-        public Task<HttpResponseMessage> SendSms(string to, ISmsTemplate smsTemplate)
+        public void SendSms(IList<string> phoneNumbers, ISmsTemplate smsTemplate)
         {
-            var valueCollection = new Dictionary<string, string>();
-            valueCollection.Add("To", to);
+            Dictionary<string, string> valueCollection = new Dictionary<string, string>();
+
             valueCollection.Add("From", "+12244123577");
             valueCollection.Add("Body", smsTemplate.AsPlainText());
+            valueCollection.Add("To", "");
 
-            _httpClient.DefaultRequestHeaders.Add("Authorization", _authHeader);
-            var req = new HttpRequestMessage(HttpMethod.Post, _apiUrl) { Content = new FormUrlEncodedContent(valueCollection) };
-
-            return _httpClient.SendAsync(req);
+            foreach (var phone in phoneNumbers)
+            {
+                valueCollection["To"] = phone;
+                _httpClient.SendAsync(new HttpRequestMessage(HttpMethod.Post, _apiUrl) { Content = new FormUrlEncodedContent(valueCollection) });
+            }
         }
     }
 }

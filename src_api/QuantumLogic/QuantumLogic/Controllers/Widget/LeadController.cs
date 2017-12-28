@@ -7,7 +7,6 @@ using QuantumLogic.Core.Domain.Services.Widget.Sites;
 using QuantumLogic.Core.Domain.UnitOfWorks;
 using QuantumLogic.Core.Extensions.DateTimeEx;
 using QuantumLogic.Core.Utils.ContentManager;
-using QuantumLogic.Core.Utils.Email.Services;
 using QuantumLogic.Core.Utils.Export.Entity.Concrete.Excel;
 using QuantumLogic.Core.Utils.Export.Entity.Concrete.Excel.DataModels;
 using QuantumLogic.Core.Utils.Sms;
@@ -20,10 +19,13 @@ using QuantumLogic.WebApi.DataModels.Responses;
 using QuantumLogic.WebApi.Providers.Export.Excel.Leads;
 using SendGrid.Helpers.Mail;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 using QuantumLogic.Core.Utils.Email;
-using QuantumLogic.Core.Utils.Email.Templates;
+using QuantumLogic.Core.Utils.Email.Data;
+using QuantumLogic.Core.Utils.Email.Data.Templates;
 
 namespace QuantumLogic.WebApi.Controllers.Widget
 {
@@ -166,36 +168,28 @@ namespace QuantumLogic.WebApi.Controllers.Widget
                 new EmailAddress(createdLead.UserEmail, $"{createdLead.FirstName} {createdLead.SecondName}"),
                 new CompleteBookingEmailTemplate(createdLead));
 
-            var newLeadNotificationEmailTemplate = new NewLeadNotificationEmailTemplate(createdLead);
-            foreach (var email in createdLead.Site.EmailAdresses)
-            {
-                TestDriveEmailService.SendNewLeadNotificationEmail(new EmailAddress(email), newLeadNotificationEmailTemplate);
-            }
+            TestDriveEmailService.SendNewLeadNotificationEmail(
+                createdLead.Site.EmailAdresses.Select(r => new EmailAddress(r)).ToList(),
+                new NewLeadNotificationEmailTemplate(createdLead));
 
-            IEmailTemplate adfTemplate = new EleadAdfTemplate(createdLead);
-            foreach (var email in createdLead.Site.AdfEmailAdresses)
-            {
-                TestDriveEmailService.SendAdfEmail(new EmailAddress(email), adfTemplate);
-            }
+            TestDriveEmailService.SendAdfEmail(
+                createdLead.Site.AdfEmailAdresses.Select(r => new EmailAddress(r)).ToList(),
+                new EleadAdfTemplate(createdLead));
 
-            var newLeadNotificationSmsTemplate = new NewLeadNotificationSmsTemplate(createdLead);
-            foreach (var number in createdLead.Site.PhoneNumbers)
-            {
-                await SmsService.SendSms(number, newLeadNotificationSmsTemplate);
-            }
-            
+            SmsService.SendSms(createdLead.Site.PhoneNumbers, new NewLeadNotificationSmsTemplate(createdLead));
+
             return createLeadFullDto;
         }
 
         [HttpPost("{siteId}/send-sms")]
-        public async Task SendSmsAsync(int siteId, [FromBody] SmsNotificationRequest request)
+        public void SendSmsAsync(int siteId, [FromBody] SmsNotificationRequest request)
         {
             if (request == null)
             {
                 throw new ArgumentNullException(nameof(request));
             }
 
-            await SmsService.SendSms(request.Phone, new CompleteBookingSmsTemplate(
+            SmsService.SendSms(new List<string>() { request.Phone }, new CompleteBookingSmsTemplate(
                 request.VehicleTitle,
                 request.BookingDateTime,
                 request.ExpertName,

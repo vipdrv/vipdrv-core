@@ -12,8 +12,8 @@ namespace QuantumLogic.Core.Utils.Sms
         /// <summary>
         /// Is used to Send Sms
         /// </summary>
-        /// <param name="recipientPhone">Recipient phone number</param>
+        /// <param name="recipientPhone">Recipients phone numbers</param>
         /// <param name="smsTemplate">SMS message template</param>
-        Task<HttpResponseMessage> SendSms(string recipientPhone, ISmsTemplate smsTemplate);
+        void SendSms(IList<string> recipientPhone, ISmsTemplate smsTemplate);
     }
 }

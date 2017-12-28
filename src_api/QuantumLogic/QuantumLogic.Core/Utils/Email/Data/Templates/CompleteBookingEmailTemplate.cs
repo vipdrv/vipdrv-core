@@ -4,7 +4,7 @@ using System.Net.Http;
 using QuantumLogic.Core.Constants;
 using QuantumLogic.Core.Domain.Entities.WidgetModule;
 
-namespace QuantumLogic.Core.Utils.Email.Templates
+namespace QuantumLogic.Core.Utils.Email.Data.Templates
 {
     public class CompleteBookingEmailTemplate : IEmailTemplate
     {

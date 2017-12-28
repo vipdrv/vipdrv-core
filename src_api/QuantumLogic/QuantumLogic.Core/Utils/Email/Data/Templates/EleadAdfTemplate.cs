@@ -3,7 +3,7 @@ using System.Globalization;
 using QuantumLogic.Core.Constants;
 using QuantumLogic.Core.Domain.Entities.WidgetModule;
 
-namespace QuantumLogic.Core.Utils.Email.Templates
+namespace QuantumLogic.Core.Utils.Email.Data.Templates
 {
     public class EleadAdfTemplate : IEmailTemplate
     {
@@ -85,10 +85,10 @@ namespace QuantumLogic.Core.Utils.Email.Templates
                                       $"<phone>{UserPhone}</phone>" +
                                       $"<email>{UserEmail}</email>" +
                                       $"<comments>" +
-                                          $"Date & Time: {BookingDateTimeUtc.GetValueOrDefault().ToString(QuantumLogicConstants.UsaTimeFormat, CultureInfo.InvariantCulture)} \n" +
-                                          $"Expert: {ExpertName} \n" +
-                                          $"Beverage: {BeverageName} \n" +
-                                          $"Route: {RouteTitle} \n" +
+                                          $"Date & Time: {BookingDateTimeUtc.GetValueOrDefault().ToString(QuantumLogicConstants.UsaTimeFormat, CultureInfo.InvariantCulture)} " +
+                                          $"Expert: {ExpertName} " +
+                                          $"Beverage: {BeverageName} " +
+                                          $"Route: {RouteTitle} " +
                                       $"</comments>" +
                                   $"</contact>" +
                               $"</customer>" +
@@ -105,7 +105,7 @@ namespace QuantumLogic.Core.Utils.Email.Templates
 
         public string AsPlainText()
         {
-            return "";
+            return AsHtml();
         }
     }
 }
