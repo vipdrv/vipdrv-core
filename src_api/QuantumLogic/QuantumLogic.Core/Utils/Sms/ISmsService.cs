@@ -12,7 +12,7 @@ namespace QuantumLogic.Core.Utils.Sms
         /// <summary>
         /// Is used to Send Sms
         /// </summary>
-        /// <param name="recipientPhone">Recipients phone numbers</param>
+        /// <param name="recipientPhone">Recipients phone numbers with counry codes like 381112222222, +381112222222, +38 (111) 222-22-22</param>
         /// <param name="smsTemplate">SMS message template</param>
         void SendSms(IList<string> recipientPhone, ISmsTemplate smsTemplate);
     }
