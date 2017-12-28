@@ -84,8 +84,8 @@
 
 @media (max-width: 758px) {
   .td-cards {
-    max-height: calc(240px);
-    // max-height: calc(100% - 228px);
+    //max-height: calc(240px);
+    max-height: calc(100% - 228px);
   }
 }
 

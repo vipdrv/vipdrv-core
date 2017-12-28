@@ -31,7 +31,9 @@
 
                 var _makeWidgetRootScrollable = function () {
                     var div = $window.document.getElementsByClassName('test-drive-widget__root')[0];
-                    div.style.display = 'table';
+                    if (div) {
+                        div.style.display = 'table';
+                    }
                 };
 
                 var _initCalendarButton = function () {
