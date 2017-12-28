@@ -7,9 +7,8 @@ using NUnit.Framework;
 using QuantumLogic.Core.Constants;
 using QuantumLogic.Core.Domain.Entities.WidgetModule;
 using QuantumLogic.Core.Utils.Email;
-using QuantumLogic.Core.Utils.Email.Providers.SendGrid;
-using QuantumLogic.Core.Utils.Email.Services;
-using QuantumLogic.Core.Utils.Email.Templates;
+using QuantumLogic.Core.Utils.Email.Data;
+using QuantumLogic.Core.Utils.Email.Data.Templates;
 using QuantumLogic.Data.EFContext;
 using SendGrid;
 using SendGrid.Helpers.Mail;
@@ -20,14 +19,23 @@ namespace QuantumLogic.Tests.Core.Utils.Email
     public sealed class EmailManagerTests
     {
         [Test]
-        [Ignore("Real Email")]
+        // [Ignore("Real Email")]
         public void AdfFormat__ShouldComposeXmlMessage()
         {
             IEmailTemplate adfTemplate = new EleadAdfTemplate(DateTime.Now, "Tilte", "Vin", "TEST-VALUE", "TEST-VALUE", "TEST-VALUE", "TEST-VALUE", "TEST-VALUE", "TEST-VALUE", "TEST-VALUE", "TEST-VALUE", "TEST-VALUE");
+            SendGridClient _client = new SendGridClient("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");
 
-            string html = adfTemplate.AsHtml();
-            
-            new TestDriveEmailService(new SendGridEmailProvider()).SendAdfEmail(new EmailAddress("ultramarine256@gmail.com"), adfTemplate);
+            var msg = MailHelper.CreateSingleEmail(new EmailAddress("ultramarine256@gmail.com"), new EmailAddress("ultramarine256@gmail.com"), "Subject", "", "");
+            msg.AddContent("text/plain", adfTemplate.AsHtml());
+
+            Response result = _client.SendEmailAsync(msg).Result;
         }
+
+        [Test]
+        public void Test()
+        {
+            
+        }
+
     }
 }

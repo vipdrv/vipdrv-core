@@ -152,7 +152,7 @@
                 smsDto.beverageName = bookingData.beverage.name || "Skipped by customer";
                 smsDto.roadName = bookingData.road.name || "Skipped by customer";
                 smsDto.dealerName = dealerData.name || "";
-                smsDto.dealerPhone = dealerData.name || "";
+                smsDto.dealerPhone = dealerData.phone || "";
 
                 return smsDto;
             };

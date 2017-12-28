@@ -1,6 +1,6 @@
 ﻿using System.Net.Http;
 
-namespace QuantumLogic.Core.Utils.Email.Templates
+namespace QuantumLogic.Core.Utils.Email.Data.Templates
 {
     public class DealerInvitationEmailTemplate : IEmailTemplate
     {

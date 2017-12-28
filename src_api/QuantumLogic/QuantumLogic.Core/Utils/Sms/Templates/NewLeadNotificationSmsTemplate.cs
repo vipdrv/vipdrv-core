@@ -71,7 +71,7 @@ namespace QuantumLogic.Core.Utils.Sms.Templates
                    "Booking details \n" +
                    $"Date & Time: {BookingDateTime.GetValueOrDefault().ToString(QuantumLogicConstants.UsaTimeFormat, CultureInfo.InvariantCulture)} \n" +
                    $"Expert: {ExpertTitle} \n" +
-                   $"Beverage: {BeverageTitle} \n\n" +
+                   $"Beverage: {BeverageTitle} \n" +
                    $"Route: {RoadTitle} \n";
         }
     }
