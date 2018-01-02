@@ -19,14 +19,10 @@ export abstract class CRUDApiService<TEntity extends IEntity<TKey>, TKey, TLight
     }
     /// methods
     getAll(page: number, pageSize: number, sorting: string, filter: any): Promise<GetAllResponse<TEntity>> {
-        return this.innerGetMany<TEntity>(
-            'get-all', this.createEmptyEntity,
-            page, pageSize, sorting, filter);
+        return this.innerGetMany<TEntity>('get-all', this.createEmptyEntity, page, pageSize, sorting, filter);
     }
     getAllLight(page: number, pageSize: number, sorting: string, filter: any): Promise<GetAllResponse<TLightEntity>> {
-        return this.innerGetMany<TLightEntity>(
-            'get-all', this.createEmptyLightEntity,
-            page, pageSize, sorting, filter);
+        return this.innerGetMany<TLightEntity>('get-all', this.createEmptyLightEntity, page, pageSize, sorting, filter);
     }
     get(id: TKey): Promise<TEntity> {
         const self = this;

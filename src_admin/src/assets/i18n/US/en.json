@@ -8,7 +8,8 @@
       "sites": "Sites",
       "settings": "Settings",
       "invitations": "Invitations",
-      "test": "Test-page"
+      "test": "Test-page",
+      "users": "Users"
     },
     "actions": {
       "login": "Login",
