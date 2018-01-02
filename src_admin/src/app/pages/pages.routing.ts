@@ -56,6 +56,11 @@ export const routes: Routes = [
                 canActivate: [AuthorizationService]
             },
             {
+                path: 'settings/users',
+                loadChildren: './users/users.module#UsersModule',
+                canActivate: [AuthorizationService]
+            },
+            {
                 path: 'user-profile',
                 loadChildren: './userProfile/userProfile.module#UserProfileModule',
                 canActivate: [AuthorizationService]

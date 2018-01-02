@@ -1,0 +1,46 @@
+<h1>Users Table</h1>
+
+<div class="row">
+    <div class="col-12">
+        <button type="button"
+                class="btn btn-outline-success btn-sm pull-right test-drive-right-standalone-btn"
+                (click)="createModalOpen();">
+            <span translate>general.actions.text_create</span>
+        </button>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-12">
+        <div *ngFor="let item of items">
+            {{item.firstName}} <br>
+        </div>
+    </div>
+</div>
+
+<modal #infoModal size="lg" [backdrop]="'static'">
+    <modal-header>
+        <h5 class="modal-title">
+            <span class="test-drive-modal-header-text" translate>
+                experts.modal.titleInfo
+            </span>
+        </h5>
+        <button type="button"
+                class="close"
+                aria-label="Close"
+                (click)="infoModalDismiss(); $event.stopPropagation();">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </modal-header>
+    <modal-body>
+        <expert-details-info *ngIf="isSelectedEntityDefined()" [entity]="selectedEntity">
+        </expert-details-info>
+    </modal-body>
+    <modal-footer>
+        <button type="button"
+                class="btn btn-secondary test-drive-modal-close-btn pull-right test-drive-right-standalone-btn"
+                (click)="infoModalDismiss(); $event.stopPropagation();">
+            <span translate>general.actions.modalClose</span>
+        </button>
+    </modal-footer>
+</modal>

@@ -21,12 +21,9 @@ export class ExpertsTableComponent implements OnInit {
     @Output() onEntityChanged: EventEmitter<any> = new EventEmitter<any>();
     @Output() resetForceAcceptImage: EventEmitter<void> = new EventEmitter<void>();
     /// children
-    @ViewChild('confirmationDeleteModal')
-    protected confirmationDeleteModal: ModalComponent;
-    @ViewChild('editModal')
-    protected editModal: ModalComponent;
-    @ViewChild('infoModal')
-    protected infoModal: ModalComponent;
+    @ViewChild('confirmationDeleteModal') protected confirmationDeleteModal: ModalComponent;
+    @ViewChild('editModal') protected editModal: ModalComponent;
+    @ViewChild('infoModal') protected infoModal: ModalComponent;
     /// service fields
     private _defaultPageNumber: number = 0;
     private _defaultPageSize: number = 100;

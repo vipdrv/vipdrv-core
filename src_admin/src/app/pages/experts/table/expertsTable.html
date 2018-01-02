@@ -21,8 +21,7 @@
         </div>
     </div>
     <div class="test-drive-many-entities-template-body">
-        <div class="row"
-             [ngBusy]="firstLoadingPromise">
+        <div class="row" [ngBusy]="firstLoadingPromise">
             <div class="col-12">
                 <table class="experts-table-body table table-bordered table-hover">
                     <thead>
@@ -126,9 +125,7 @@
     </div>
 </div>
 
-<modal #infoModal
-       size="lg"
-       [backdrop]="'static'">
+<modal #infoModal size="lg" [backdrop]="'static'">
     <modal-header>
         <h5 class="modal-title">
             <span class="test-drive-modal-header-text" translate>
@@ -198,8 +195,7 @@
     </modal-footer>
 </modal>
 
-<modal #confirmationDeleteModal
-       [backdrop]="'static'">
+<modal #confirmationDeleteModal [backdrop]="'static'">
     <modal-header>
         <h5 class="modal-title">
             <span class="test-drive-modal-header-text" translate>
@@ -214,8 +210,7 @@
         </button>
     </modal-header>
     <modal-body>
-        <span [translateParams]="{ expertName: getDeleteCandidateDisplayText() }"
-              translate>
+        <span [translateParams]="{ expertName: getDeleteCandidateDisplayText() }" translate>
             confirmation.expertDeleteAnswer_expertName
         </span>
     </modal-body>
