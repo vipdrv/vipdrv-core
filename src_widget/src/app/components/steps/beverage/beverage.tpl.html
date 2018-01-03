@@ -12,7 +12,8 @@
              card-title="item.name"
              card-desc="item.description"
              is-active-card="item.name == $ctrl.bookingData.beverage.name"
-             ng-click="itemChanged($event, item.id, item.photoUrl, item.name, item.description)">
+             ng-click="itemChanged($event, item.id, item.photoUrl, item.name, item.description)"
+             ng-if="item.isActive">
     </td-card>
 </div>
 

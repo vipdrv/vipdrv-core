@@ -16,7 +16,7 @@
                     },
                     data: {
                         "siteId": siteId,
-                        "sorting": "name asc"
+                        "sorting": "order asc"
                     }
                 };
 
@@ -37,7 +37,7 @@
                     },
                     data: {
                         "siteId": siteId,
-                        "sorting": "name asc"
+                        "sorting": "order asc"
                     }
                 };
 
@@ -58,7 +58,7 @@
                     },
                     data: {
                         "siteId": siteId,
-                        "sorting": "name asc"
+                        "sorting": "order asc"
                     }
                 };
 

@@ -19,6 +19,7 @@
                 self.widgetWorkingHours = null;
                 self.isSelectable = null;
                 self.isSelectableMobile = null;
+                self.preveoursTime = null;
 
                 // =======================================================================//
                 // Init                                                                   //
@@ -49,7 +50,7 @@
                     }
                 };
 
-                self.stopInterval = function() {
+                self.stopInterval = function () {
                     if (angular.isDefined(self.stop)) {
                         $interval.cancel(self.stop);
                         self.stop = undefined;
@@ -80,12 +81,24 @@
 
                         var isTimeAvalibale = false;
                         var selectedHour = date.hour();
+                        var selectedDay = date.date();
+                        var selectedMonth = date.month();
+
+                        var currentDate = new Date();
+                        var currentDay = currentDate.getDate();
+                        var currentMonth = currentDate.getMonth();
 
                         var startTime = self.widgetWorkingHours[selectedDayOfWeek].startTime.split(':')[0];
                         var endTime = self.widgetWorkingHours[selectedDayOfWeek].endTime.split(':')[0];
 
+                        if (selectedDay == currentDay && selectedMonth == currentMonth) {
+                            if (selectedHour != 12 || (selectedHour == 12 && self.preveoursTime == 11)) {
+                                startTime = moment().hours() + 1;
+                            }
+                        }
+                        self.preveoursTime = selectedHour;
+
                         if (startTime <= selectedHour && selectedHour <= endTime) {
-                            // TODO: Dispel magic! (╯°□°）╯︵ ┻━┻)
                             isTimeAvalibale = true;
                         }
 
@@ -193,6 +206,10 @@
                 // =======================================================================//
 
                 self.splitTimeToInvervals = function (startTime, endTime) {
+                    if (self.bookingData.calendar.date == null || new Date(self.bookingData.calendar.date).getDate() == new Date().getDate()) {
+                        startTime = moment().hours() + 1;
+                    }
+
                     var start = moment('2000-01-01 ' + startTime);
                     var end = moment('2000-01-01 ' + endTime);
                     var timeIntervalsArr = [];
