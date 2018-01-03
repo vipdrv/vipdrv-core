@@ -55,8 +55,10 @@ namespace QuantumLogic.WebApi.DataModels.Requests.Widget.Booking
 
     public class BookingCar
     {
+        // Vehicle identification number
         public string Vin { get; set; }
         public string ImageUrl { get; set; }
+        // Vehicle details page URL
         public string VdpUrl { get; set; }
         public string Title { get; set; }
         public string Engine { get; set; }
@@ -64,5 +66,7 @@ namespace QuantumLogic.WebApi.DataModels.Requests.Widget.Booking
         public string Color { get; set; }
         public string Transmission { get; set; }
         public string Fuel { get; set; }
+        // Vehicle status: new | used
+        public string Status { get; set; }
     }
 }
