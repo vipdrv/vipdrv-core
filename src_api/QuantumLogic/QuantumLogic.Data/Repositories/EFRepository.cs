@@ -255,7 +255,7 @@ namespace QuantumLogic.Data.Repositories
             return Task.FromResult(query);
         }
 
-        private IQueryable<TEntity> ApplyIncludes(IQueryable<TEntity> query, Expression<Func<TEntity, object>>[] includes)
+        protected IQueryable<TEntity> ApplyIncludes(IQueryable<TEntity> query, Expression<Func<TEntity, object>>[] includes)
         {
             IQueryable<TEntity> result = query;
             foreach (var include in includes)

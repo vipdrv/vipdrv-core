@@ -4,7 +4,7 @@ using QuantumLogic.Data.EFContext;
 
 namespace QuantumLogic.Data.Repositories.Widget
 {
-    public class ExpertRepository : EFRepository<Expert, int>, IExpertRepository
+    public class ExpertRepository : EFRepositoryX<Expert, int>, IExpertRepository
     {
         #region Ctors
 

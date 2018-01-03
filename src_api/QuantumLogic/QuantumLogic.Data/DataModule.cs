@@ -40,12 +40,15 @@ namespace QuantumLogic.Data
             services.AddTransient<IUserRepository, UserRepository>();
 
             services.AddTransient<IQLRepository<Beverage, int>, BeverageRepository>();
+            services.AddTransient<IQLRepositoryX<Beverage, int>, BeverageRepository>();
             services.AddTransient<IBeverageRepository, BeverageRepository>();
             services.AddTransient<IQLRepository<Expert, int>, ExpertRepository>();
+            services.AddTransient<IQLRepositoryX<Expert, int>, ExpertRepository>();
             services.AddTransient<IExpertRepository, ExpertRepository>();
             services.AddTransient<IQLRepository<Lead, int>, LeadRepository>();
             services.AddTransient<ILeadRepository, LeadRepository>();
             services.AddTransient<IQLRepository<Route, int>, RouteRepository>();
+            services.AddTransient<IQLRepositoryX<Route, int>, RouteRepository>();
             services.AddTransient<IRouteRepository, RouteRepository>();
             services.AddTransient<IQLRepository<Site, int>, SiteRepository>();
             services.AddTransient<ISiteRepository, SiteRepository>();

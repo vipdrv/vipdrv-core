@@ -4,6 +4,7 @@ using QuantumLogic.Core.Domain.Repositories.WidgetModule;
 using QuantumLogic.Core.Domain.Validation.Widget;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 
@@ -11,6 +12,8 @@ namespace QuantumLogic.Core.Domain.Services.Widget.Experts
 {
     public class ExpertDomainService : EntityExtendedDomainService<Expert, int>, IExpertDomainService
     {
+        public override int DefaultOrder => 1;
+
         #region Ctors
 
         public ExpertDomainService(IExpertRepository repository, IExpertPolicy policy, IExpertValidationService validationService)
@@ -42,6 +45,12 @@ namespace QuantumLogic.Core.Domain.Services.Widget.Experts
                 entity => entity.Site
             }
             .ToArray();
+        }
+        protected override async Task SetOrderForEntityOnCreate(Expert entity)
+        {
+            entity.Order = (await ((IExpertRepository)Repository)
+                    .GetMaxExistedOrder((qb) => qb.Where(r => r.SiteId == entity.SiteId))) + 1 ??
+                DefaultOrder;
         }
     }
 }
