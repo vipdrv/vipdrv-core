@@ -65,15 +65,15 @@ namespace QuantumLogic.Core.Utils.Email.Data.Templates
         
         public string AsHtml()
         {
-            var xml = $"<?xml version=\"1.0\" encoding=\"UTF-8\"?>" +
+            var xml = $"<?xml version=\"1.0\">" +
                       $"<?adf version=\"1.0\"?>" +
                       $"<adf>" +
-                          $"<prospect>" +
-                              $" <id sequence=\"uniqueLeadId\" source=\"{SiteName}\"></id>" +
-                              $"<requestdate>{DateTime.Now.ToString(QuantumLogicConstants.UsaTimeFormat, CultureInfo.InvariantCulture)}</requestdate>" +
-                              $"<vehicle  interest=\"Test Drive\">" +
+                          $"<prospect status=\"new\">" +
+                              $"<id sequence=\"uniqueLeadId\" source=\"{SiteName}\"></id>" +
+                              $"<requestdate>{DateTime.Now.ToString(QuantumLogicConstants.OutputDateTimeFormat, CultureInfo.InvariantCulture)}</requestdate>" +
+                              $"<vehicle  interest=\"test-drive\">" +
                                   $"<vin>{CarVin}</vin>" +
-                                  $"<title>{CarTitle}</year>" +
+                                  $"<title>{CarTitle}</title>" +
                                // $"<year>2008</year>" +
                                // $"<make>Make</make>" +
                                // $"<model>Model</model>" +
