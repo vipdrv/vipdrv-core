@@ -13,7 +13,7 @@ namespace QuantumLogic.Core.Utils.Email
         protected const string CompleteBookingSubject = "You Upcoming Test Drive";
         protected const string NewLeadNotificationSubject = "New Lead!";
         protected const string DealerInvitationSubject = "Welcome to TetsDrive";
-        protected const string AdfEmailSubject = "VIPdrv - ADF XML ";
+        protected const string AdfEmailSubject = "VIPdrv - ADF XML";
         protected EmailAddress EmailFrom = new EmailAddress("no-reply@vipdrv.com", "VIPdrv - VIP Test Drive");
         protected readonly ISendGridClient SendGridClient;
 
@@ -42,8 +42,8 @@ namespace QuantumLogic.Core.Utils.Email
 
         public HttpStatusCode SendAdfEmail(IList<EmailAddress> emailTo, IEmailTemplate emailTemplate)
         {
-            SendGridMessage message = MailHelper.CreateSingleEmailToMultipleRecipients(EmailFrom, emailTo.ToList(), NewLeadNotificationSubject, null, null);
-            message.AddContent("text/plain", emailTemplate.AsPlainText());
+            SendGridMessage message = MailHelper.CreateSingleEmailToMultipleRecipients(EmailFrom, emailTo.ToList(), AdfEmailSubject, emailTemplate.AsPlainText(), emailTemplate.AsPlainText());
+            // message.AddContent("text/plain", );
             return SendGridClient.SendEmailAsync(message).Result.StatusCode;
         }
     }
