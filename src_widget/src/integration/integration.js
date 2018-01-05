@@ -62,16 +62,18 @@
             var btn = document.createElement("BUTTON");
             btn.classList.add("marin-vdp-button");
 
+            var carDetailsFromHtml = self.vehicleDetailsFromHtml();
+
             btn.onclick = function () {
                 window.TestDrive.openTestDrive({
                     carVin: self.vehicle.vin,
                     carImageUrl: self.vehicle.imageUrl,
                     vdpUrl: self.vehicle.vdpUrl,
                     carTitle: self.vehicle.title,
-                    carEngine: null,
+                    carEngine: carDetailsFromHtml.engine,
                     carYear: self.vehicle.year,
-                    carColor: null,
-                    carTransmission: null,
+                    carColor: carDetailsFromHtml.exterior,
+                    carTransmission: carDetailsFromHtml.trans,
                     carFuel: null
                 });
             };
@@ -109,24 +111,61 @@
 
         /// helpers
         vehicleDetailsFromUrl: function (vdpPageUrl) {
+            var result = {
+                year: null,
+                vin: null
+            };
+
             var vehicleUrl = vdpPageUrl.split('/')[2];
             var vehicleUrlParams;
             if (vehicleUrl) {
                 vehicleUrlParams = vehicleUrl.split('-');
             }
 
-            var queryParams = {
-                year: null,
-                vin: null
+            if (vehicleUrlParams[1]) {
+                result.year = vehicleUrlParams[1];
+            }
+            result.vin = vehicleUrlParams[vehicleUrlParams.length - 1];
+
+            return result;
+        },
+
+        vehicleDetailsFromHtml: function() {
+            var result = {
+                body: null,
+                exterior: null,
+                engine: null,
+                trans: null
             };
 
-            if (vehicleUrlParams[1]) {
-                queryParams.year = vehicleUrlParams[1];
-            }
-            queryParams.vin = vehicleUrlParams[vehicleUrlParams.length - 1];
+            var infoWrapper = document.querySelector(".details-page-row .basic-info-wrapper");
+            var infoWrapperText = null;
 
-            return queryParams;
+            if (infoWrapper) {
+                infoWrapperText = infoWrapper.innerText;
+            } else {
+                return result;
+            }
+
+            var bodyRegex = /Body: (.*)/g;
+            var bodyMatch = bodyRegex.exec(infoWrapperText);
+            result.body = bodyMatch ? bodyMatch[1] : null;
+
+            var exteriorRegex = /Exterior: (.*)/g;
+            var exteriorMatch = exteriorRegex.exec(infoWrapperText);
+            result.exterior = exteriorMatch ? exteriorMatch[1] : null;
+
+            var engineRegex = /Engine: (.*)/g;
+            var engineMatch = engineRegex.exec(infoWrapperText);
+            result.engine = engineMatch ? engineMatch[1] : null;
+
+            var transRegex = /Trans: (.*)/g;
+            var transMatch = transRegex.exec(infoWrapperText);
+            result.trans = transMatch ? transMatch[1] : null;
+
+            return result;
         }
+
     };
 
 //=======================================================================//
@@ -135,7 +174,7 @@
 
     window.TestDrive = window.TestDrive || (function () {
         var _SiteId = '%siteId%';
-        var _WidgetUrl = '%widgetUrl%'; // https://widget.testdrive.pw/
+        var _WidgetUrl = '%widgetUrl%'; // https://widget.testdrive.pw/ // %widgetUrl%
         var _IntegrateAutomatically = null;
 
         var _appendTestDriveFrame = function (vin, vdpUrl, img, title, engine, year, colour, transmission, fuel) {
@@ -232,7 +271,7 @@
             head.appendChild(link);
         };
 
-        var _addEscapeListener = function () {
+        var _addEventListeners = function () {
             document.onkeydown = function (evt) {
                 evt = evt || window.event;
                 var isEscape = false;
@@ -245,16 +284,14 @@
                     _hideTestDriveFrame();
                 }
             };
-        };
 
-        var _addOutOfModalClickListener = function () {
             window.onclick = function (event) {
                 var modal = document.getElementsByClassName('test-drive')[0];
 
                 if (event.target == modal) {
                     _hideTestDriveFrame();
                 }
-            }
+            };
 
             window.addEventListener("resize", function () {
                 var div = document.getElementsByClassName('test-drive__frame')[0];
@@ -290,8 +327,7 @@
 
                 _appendTestDriveFrameWrapper();
                 _appendTestDriveFrameWrapperStyles();
-                _addEscapeListener();
-                _addOutOfModalClickListener();
+                _addEventListeners();
                 _initExtensions();
                 _integrateWidgetButtons(_SiteId, _IntegrateAutomatically);
 

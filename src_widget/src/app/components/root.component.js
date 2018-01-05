@@ -89,5 +89,39 @@
             },
             templateUrl: 'src/app/components/root.tpl.html'
         });
+
+    angular.module('myApp')
+        .filter('usaDateFormat', function () {
+            return function (dateStr) {
+                dateStr = dateStr || '';
+                var chunks = dateStr.split("-");
+
+                var out = chunks[1] + '/' + chunks[2] + '/' + chunks[0].slice(-2);
+
+                return out;
+            };
+        });
+
+    angular.module('myApp')
+        .filter('vehicleTitleFormat', function () {
+            return function (vehicleTitleStr) {
+                if (!vehicleTitleStr) {
+                    return 'Vehicle Title';
+                }
+
+                var arr = vehicleTitleStr.split(' ');
+                if (arr.length < 3) {
+                    return vehicleTitleStr;
+                }
+
+                return vehicleTitleStr.split(' ').splice(2).join(' ');
+
+                // 'Pre-Owned 2011 Audi A5 2dr Cpe Auto quattro 2.0T Premium P AWD';
+                // 0 - new|used
+                // 1 - year
+                // 2 - make
+                // 3 - model ?
+            };
+        });
 })();
 
