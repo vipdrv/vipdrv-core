@@ -1,18 +1,6 @@
 (function () {
 
     angular.module('myApp')
-        .filter('usaDateFormat', function () {
-            return function (dateStr) {
-                dateStr = dateStr || '';
-                var chunks = dateStr.split("-");
-
-                var out = chunks[1] + '/' + chunks[2] + '/' + chunks[0].slice(-2);
-
-                return out;
-            };
-        });
-
-    angular.module('myApp')
         .component('tdCompleteStep', {
             controller: function ($timeout, $window, api, dealerData, bookingData) {
 

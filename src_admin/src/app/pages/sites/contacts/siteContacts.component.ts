@@ -143,7 +143,7 @@ export class SiteContactsComponent implements OnInit, OnChanges {
     protected deleteAdfEmailFromContacts(adfEmailEntity: any) {
         const index = this.adfEmailEntities.findIndex((r) => r === adfEmailEntity);
         if (index > -1) {
-            this.adfEmailEntities.slice(index, 1);
+            this.adfEmailEntities.splice(index, 1);
         }
     }
 

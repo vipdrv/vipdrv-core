@@ -4,12 +4,16 @@
     <img ng-if="$ctrl.bookingData.car.imageUrl == null" src="/img/default-car.png" class="td-sidebar__car-image">
 
     <div class="col-12">
-        <h4 class="text-primary text-overflow__ellipsis">{{$ctrl.bookingData.car.title ? $ctrl.bookingData.car.title : 'Car Title'}}</h4>
+        <h4 class="text-primary text-overflow__ellipsis">{{$ctrl.bookingData.car.title|vehicleTitleFormat}}</h4>
     </div>
 
     <div class="col-12">
         <p class="text-secondary m-0">Engine</p>
         <p class="mb-2 text-overflow__ellipsis">{{$ctrl.bookingData.car.engine ? $ctrl.bookingData.car.engine : '-'}}</p>
+    </div>
+    <div class="col-12">
+        <p class="text-secondary m-0">Transmission</p>
+        <p class="mb-2 text-overflow__ellipsis">{{$ctrl.bookingData.car.transmission ? $ctrl.bookingData.car.transmission : '-'}}</p>
     </div>
     <div class="col-6">
         <p class="text-secondary m-0">Year</p>
@@ -19,14 +23,11 @@
         <p class="text-secondary m-0">Color</p>
         <p class="mb-2 text-overflow__ellipsis">{{$ctrl.bookingData.car.colour ? $ctrl.bookingData.car.colour : '-'}}</p>
     </div>
-    <div class="col-6">
-        <p class="text-secondary m-0">Transmission</p>
-        <p class="mb-2 text-overflow__ellipsis">{{$ctrl.bookingData.car.transmission ? $ctrl.bookingData.car.transmission : '-'}}</p>
-    </div>
-    <div class="col-6">
-        <p class="text-secondary m-0">Fuel</p>
-        <p class="mb-3 text-overflow__ellipsis">{{$ctrl.bookingData.car.fuel ? $ctrl.bookingData.car.fuel : '-'}}</p>
-    </div>
+
+    <!--<div class="col-6">-->
+        <!--<p class="text-secondary m-0">Fuel</p>-->
+        <!--<p class="mb-3 text-overflow__ellipsis">{{$ctrl.bookingData.car.fuel ? $ctrl.bookingData.car.fuel : '-'}}</p>-->
+    <!--</div>-->
 
     <div class="col-12 mb-1" ng-if="$ctrl.bookingData.calendar.date">
         <div class="media">

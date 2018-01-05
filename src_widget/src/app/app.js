@@ -91,9 +91,13 @@
             isSkipped: null
         },
         car: {
-            vin: null,
-            imageUrl: null,
             vdpUrl: null,
+            imageUrl: null,
+            vin: null,
+            make: null,
+            model: null,
+            trim: null,
+            bodystyle: null,
             title: null,
             engine: null,
             year: null,
