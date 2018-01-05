@@ -210,6 +210,9 @@ gulp.task('bundle_integration', function () {
         .pipe(concat('integration.js'))
         .pipe(gulp.dest('./build/integration/'));
 
+    gulp.src('./src/integration/img/*')
+        .pipe(gulp.dest('./build/integration/img'));
+
     return gulp.src('./src/integration/*.scss')
         .pipe(plumber())
         .pipe(sass().on('error', sass.logError))
@@ -227,6 +230,9 @@ gulp.task('bundle_integration_dist', function () {
             console.log(e);
         }))
         .pipe(gulp.dest('./build/integration/'));
+
+    gulp.src('./src/integration/img/*')
+        .pipe(gulp.dest('./build/integration/img'));
 
     return gulp.src('./src/integration/*.scss')
         .pipe(plumber())

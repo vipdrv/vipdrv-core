@@ -69,7 +69,7 @@ namespace QuantumLogic.Core.Utils.Email.Data.Templates
                       $"<?adf version=\"1.0\"?>" +
                       $"<adf>" +
                           $"<prospect status=\"new\">" +
-                              $"<id sequence=\"uniqueLeadId\" source=\"{SiteName}\"></id>" +
+                              $"<id sequence=\"uniqueLeadId\" source=\"{SiteName}\"></id>" + //TODO: dealer name for Id
                               $"<requestdate>{DateTime.Now.ToString(QuantumLogicConstants.OutputDateTimeFormat, CultureInfo.InvariantCulture)}</requestdate>" +
                               $"<vehicle  interest=\"test-drive\">" +
                                   $"<vin>{CarVin}</vin>" +

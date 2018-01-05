@@ -206,9 +206,9 @@
                 // =======================================================================//
 
                 self.splitTimeToInvervals = function (startTime, endTime) {
-                    if (self.bookingData.calendar.date == null || new Date(self.bookingData.calendar.date).getDate() == new Date().getDate()) {
-                        startTime = moment().hours() + 1;
-                    }
+                    // if (self.bookingData.calendar.date == null || new Date(self.bookingData.calendar.date).getDate() == new Date().getDate()) {
+                    //     startTime = moment().hours() + 1;
+                    // }
 
                     var start = moment('2000-01-01 ' + startTime);
                     var end = moment('2000-01-01 ' + endTime);
