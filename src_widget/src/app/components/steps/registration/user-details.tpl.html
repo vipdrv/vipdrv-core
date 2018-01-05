@@ -5,105 +5,107 @@
     </div>
 </div>
 
-<form name="userForm" class="row">
-    <div class="col-12">
-        <div class="row">
-            <div class="form-group col-12 col-sm-12 col-md-6 col-lg-6">
-                <label for="input1" class="col-form-label d-none d-md-block">First Name</label>
-                <label for="input1" class="col-form-label d-sm-block d-md-none d-lg-none">Name</label>
-                <input name="firstName"
-                       class="form-control" id="input1"
-                       ng-model="firstName"
-                       ng-class="{ 'is-invalid' : !userForm.firstName.$valid && !userForm.firstName.$pristine, 'is-valid' : userForm.firstName.$valid && !userForm.firstName.$pristine }"
-                       required>
-            </div>
-            <div class="form-group col-md-6 d-none d-md-block">
-                <label for="input2" class="col-form-label">Last Name</label>
-                <input name="secondName"
-                       class="form-control" id="input2"
-                       ng-model="secondName"
-                       ng-class="{ 'is-invalid' : !userForm.secondName.$valid && !userForm.secondName.$pristine, 'is-valid' : userForm.secondName.$valid && !userForm.secondName.$pristine }">
-            </div>
+<form name="userForm">
+    <div class="row">
+        <div class="form-group col-12 col-sm-12 col-md-6 col-lg-6">
+            <label for="input1" class="col-form-label d-none d-md-block">First Name</label>
+            <label for="input1" class="col-form-label d-sm-block d-md-none d-lg-none">Name</label>
+            <input name="firstName"
+                   class="form-control" id="input1"
+                   ng-model="firstName"
+                   ng-class="{ 'is-invalid' : !userForm.firstName.$valid && !userForm.firstName.$pristine, 'is-valid' : userForm.firstName.$valid && !userForm.firstName.$pristine }"
+                   required>
         </div>
-        <div class="row">
-            <div class="form-group col-md-6">
-                <label for="input3" class="col-form-label">Email</label>
-                <input type="email"
-                       name="email"
-                       class="form-control" id="input3"
-                       ng-model="email"
-                       ng-class="{ 'is-invalid' : !userForm.email.$valid && !userForm.email.$pristine, 'is-valid' : userForm.email.$valid && !userForm.email.$pristine}"
-                       required>
-            </div>
-            <div class="form-group col-md-6">
-                <label for="input4" class="col-form-label">Phone</label>
-                <input type="tel"
+        <div class="form-group col-md-6 d-none d-md-block">
+            <label for="input2" class="col-form-label">Last Name</label>
+            <input name="secondName"
+                   class="form-control" id="input2"
+                   ng-model="secondName"
+                   ng-class="{ 'is-invalid' : !userForm.secondName.$valid && !userForm.secondName.$pristine, 'is-valid' : userForm.secondName.$valid && !userForm.secondName.$pristine }">
+        </div>
+    </div>
+    <div class="row">
+        <div class="form-group col-md-6">
+            <label for="input3" class="col-form-label">Email</label>
+            <input type="email"
+                   name="email"
+                   class="form-control" id="input3"
+                   ng-model="email"
+                   ng-class="{ 'is-invalid' : !userForm.email.$valid && !userForm.email.$pristine, 'is-valid' : userForm.email.$valid && !userForm.email.$pristine}"
+                   required>
+        </div>
+        <div class="form-group col-md-6">
+            <label for="input4" class="col-form-label">Phone</label>
+            <input type="tel"
 
-                       name="phone"
-                       class="form-control"
-                       id="input4"
-                       ng-model="phone"
-                       ng-class="{ 'is-invalid' : !userForm.phone.$valid && !userForm.phone.$pristine,'is-valid' : userForm.phone.$valid && !userForm.phone.$pristine }"
-                       required>
-            </div>
+                   name="phone"
+                   class="form-control"
+                   id="input4"
+                   ng-model="phone"
+                   ng-class="{ 'is-invalid' : !userForm.phone.$valid && !userForm.phone.$pristine,'is-valid' : userForm.phone.$valid && !userForm.phone.$pristine }"
+                   required>
         </div>
-        <div class="row">
-            <div class="form-group col-md-12">
-                <label for="input5" class="col-form-label">Comment</label>
-                <textarea name="comment"
-                          class="form-control"
-                          id="input5"
-                          ng-model="comment"
-                          ng-class="{ 'is-invalid' : !userForm.comment.$valid && !userForm.comment.$pristine,'is-valid' : userForm.comment.$valid && !userForm.comment.$pristine }">
+    </div>
+    <div class="row">
+        <div class="form-group col-md-12">
+            <label for="input5" class="col-form-label">Comment</label>
+            <textarea name="comment"
+                      class="form-control"
+                      id="input5"
+                      ng-model="comment"
+                      ng-class="{ 'is-invalid' : !userForm.comment.$valid && !userForm.comment.$pristine,'is-valid' : userForm.comment.$valid && !userForm.comment.$pristine }">
                 </textarea>
-            </div>
-        </div>
-        <p class="text-secondary">
-            By selecting SMS notification, you agree that Joint Venture Digital/VIPdrv and/or selected Dealer may
-            contact you at the wireless telephone number you provide and that this number entered belongs to you.
-            Message and data rates may apply. If you provide your wireless device to others, your consent also includes
-            consent by them to receive such text message.<br>
-            Once SMS is initiated you may Reply <b>STOP</b> to cancel or Reply <b>HELP</b> for help.
-        </p>
-        <div class="form-group p-0 m-0">
-            <div class="form-check form-check-inline">
-                <label class="form-check-label">
-                    <input ng-checked="true" class="form-check-input" type="checkbox" value="option1"> Phone
-                </label>
-            </div>
-            <div class="form-check form-check-inline">
-                <label class="form-check-label">
-                    <input ng-checked="true" class="form-check-input" type="checkbox" value="option2"> SMS
-                </label>
-            </div>
-            <div class="form-check form-check-inline">
-                <label class="form-check-label">
-                    <input ng-checked="true" class="form-check-input" type="checkbox" value="option3"> Email
-                </label>
-            </div>
-        </div>
-        <p class="text-secondary">
-            <!--You have the right to withdraw your consent at any time, to ask us for a copy of the information held by us-->
-            <!--on-->
-            <!--our records and/or to require us to correct any inaccuracies in your information. If you would like to-->
-            <!--exercise-->
-            <!--any of these rights please contact Nissan.-->
-        </p>
-    </div>
-    <div class="col-12">
-        <div class="row wizard-navigation-tab-next-button--mobile d-md-none d-lg-none d-sm-block mt-2 mb-4">
-            <div class="col-12">
-                <button ng-disabled="userForm.$invalid" type="button" class="btn btn-primary btn-lg btn-block"
-                        ng-click="$ctrl.makeBooking()">Make my booking
-                </button>
-            </div>
         </div>
     </div>
-    <div class="row wizard-navigation-tab-next-button--desktop d-none d-md-block">
+
+    <div class="row">
         <div class="col-12">
-            <button ng-disabled="userForm.$invalid" type="button" class="btn btn-lg btn-primary "
-                    ng-click="$ctrl.makeBooking()">Make My Booking
+            <button ng-disabled="userForm.$invalid" type="button"
+                    class="btn btn-primary btn-lg btn-block d-md-none d-lg-none d-sm-block mt-2 mb-4"
+                    ng-click="$ctrl.makeBooking()">Make my booking
             </button>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-12">
+
+            <div class="form-group p-0 m-0">
+                <div class="form-check form-check-inline">
+                    <label class="form-check-label">
+                        <input ng-checked="true" class="form-check-input" type="checkbox" value="option1"> Phone
+                    </label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <label class="form-check-label">
+                        <input ng-checked="true" class="form-check-input" type="checkbox" value="option2"> SMS
+                    </label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <label class="form-check-label">
+                        <input ng-checked="true" class="form-check-input" type="checkbox" value="option3"> Email
+                    </label>
+                </div>
+                <button ng-disabled="userForm.$invalid" type="button"
+                        class="btn btn-lg btn-primary d-none d-md-block float-right"
+                        ng-click="$ctrl.makeBooking()">Make My Booking
+                </button>
+            </div><br>
+            <p class="text-secondary disclaimer-text ">
+                By selecting SMS notification, you agree that Joint Venture Digital/VIPdrv and/or selected Dealer may
+                contact you at the wireless telephone number you provide and that this number entered belongs to you.
+                Message and data rates may apply. If you provide your wireless device to others, your consent also
+                includes
+                consent by them to receive such text message.<br>
+                Once SMS is initiated you may Reply <b>STOP</b> to cancel or Reply <b>HELP</b> for help.
+            </p>
+            <p class="text-secondary">
+                <!--You have the right to withdraw your consent at any time, to ask us for a copy of the information held by us-->
+                <!--on-->
+                <!--our records and/or to require us to correct any inaccuracies in your information. If you would like to-->
+                <!--exercise-->
+                <!--any of these rights please contact Nissan.-->
+            </p>
         </div>
     </div>
 
