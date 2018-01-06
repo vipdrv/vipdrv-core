@@ -24,9 +24,13 @@
         <div class="row" [ngBusy]="firstLoadPromise">
             <div class="card-group col-xs-12 col-sm-12 col-md-6 col-lg-4 col-xl-3" *ngFor="let entity of items">
                 <div class="card site-card">
-                    <img class="card-img-top test-drive-card-site-image"
-                         src="{{entity.imageUrl}}"
-                         alt="{{siteImageAlt}}">
+                    <image-view [imageUrl]="entity.imageUrl"
+                                [imageAlt]="siteImageAlt"
+                                [imageHeight]="siteImageHeight"
+                                [imageWidth]="siteImageWidth"
+                                [isRounded]="false"
+                                [externalImageClass]="'card-img-top'"
+                                [useHeightAsMainProperty]="true"></image-view>
                     <div class="card-block">
                         <h4 class="card-title">
                             {{entity.name}}

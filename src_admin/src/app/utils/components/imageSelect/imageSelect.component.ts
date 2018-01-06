@@ -71,11 +71,6 @@ export class ImageSelectComponent implements OnInit, OnChanges {
     getImageAlt(): string {
         return this.imageAlt;
     }
-    getImageClass(): any {
-        return {
-            'rounded-circle': this.isRounded
-        };
-    }
     getImageUrl(): string {
         let imageUrl: string;
         if (this.isModeView()) {

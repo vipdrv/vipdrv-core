@@ -3,5 +3,5 @@ export namespace SitesConstants {
     export const siteImageHeight: number = 200;
     export const isSiteImageRounded: boolean = false;
     export const siteImageAlt: string = 'site image';
-    export const siteImageDefault: string = 'http://www.pestworld.org/media/1030/300x200.gif';
+    export const siteImageDefault: string = 'http://via.placeholder.com/300x200';
 }
