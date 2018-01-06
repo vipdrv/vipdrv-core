@@ -2,9 +2,13 @@
     <div class="row"
          *ngIf="isComponentModeView()">
         <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 personal-info-avatar-container">
-            <img class="rounded-circle personal-info-avatar-img"
-                 alt=" "
-                 [src]="user.avatarUrl">
+            <image-view [imageUrl]="user.avatarUrl"
+                        [imageAlt]="user.firstName + ' ' + user.secondName"
+                        [imageHeight]=""
+                        [imageWidth]=""
+                        [isRounded]="true"
+                        [externalImageClass]="'personal-info-avatar-img'"
+                        [useHeightAsMainProperty]="true"></image-view>
         </div>
         <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
             <div class="row personal-info-row-title">

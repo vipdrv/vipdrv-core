@@ -22,3 +22,6 @@ export * from './components/working-hours/models/dayOfWeekSchedule';
 
 export { ImageSelectComponent } from './components/imageSelect/imageSelect.component';
 export * from './components/imageSelect/imageSelect.component';
+
+export { ImageViewComponent } from './components/imageView/imageView.component';
+export * from './components/imageView/imageView.component';

@@ -29,6 +29,8 @@ export class SiteCardsComponent implements OnInit {
     protected firstLoadPromise: Promise<void>;
     protected useValidationForSelectedEntity: boolean = false;
     protected siteImageAlt: string = SitesConstants.siteImageAlt;
+    protected siteImageHeight: number = SitesConstants.siteImageHeight;
+    protected siteImageWidth: number = SitesConstants.siteImageWidth;
     protected forceAcceptImage: boolean = false;
     /// data fields
     protected items: Array<SiteEntity>;

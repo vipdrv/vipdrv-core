@@ -16,6 +16,8 @@ import { WorkingHoursSimpleComponent } from './components/working-hours/simple/w
 
 import { ImageSelectComponent } from './components/imageSelect/imageSelect.component';
 
+import { ImageViewComponent } from './components/imageView/imageView.component';
+
 @NgModule({
     imports: [
         CommonModule,
@@ -27,13 +29,15 @@ import { ImageSelectComponent } from './components/imageSelect/imageSelect.compo
         WorkingHoursComponent,
         WorkingHoursSimpleComponent,
         ImageCropperComponent,
-        ImageSelectComponent
+        ImageSelectComponent,
+        ImageViewComponent
     ],
     exports: [
         WorkingHoursComponent,
         WorkingHoursSimpleComponent,
         ImageCropperComponent,
-        ImageSelectComponent
+        ImageSelectComponent,
+        ImageViewComponent
     ],
     providers: [
         ConsoleLogger,

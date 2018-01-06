@@ -3,11 +3,13 @@
     <div class="{{getColumnRules()}}">
         <div class="row">
             <div class="col-12">
-                <img alt="{{getImageAlt()}}"
-                     [ngClass]="getImageClass()"
-                     [src]="getImageUrl()"
-                     [width]="imageWidth"
-                     [height]="imageHeight">
+                <image-view [imageUrl]="getImageUrl()"
+                            [imageAlt]="getImageAlt()"
+                            [imageHeight]="imageHeight"
+                            [imageWidth]="imageWidth"
+                            [isRounded]="isRounded"
+                            [externalImageClass]=""
+                            [useHeightAsMainProperty]="true"></image-view>
             </div>
         </div>
         <div class="row image-select-container-row"
