@@ -2,7 +2,7 @@ import { Component, OnInit, Input, Output, ViewChild, EventEmitter } from '@angu
 import { ModalComponent } from 'ng2-bs3-modal/ng2-bs3-modal';
 import { ApplicationConstants } from './../../../app.constants';
 import { ExpertsConstants } from './../experts.constants';
-import { Variable, ILogger, ConsoleLogger } from './../../../utils/index';
+import { Variable, ILogger, ConsoleLogger, WorkingInterval } from './../../../utils/index';
 import { IExpertApiService, ExpertApiService, GetAllResponse } from './../../../services/serverApi/index';
 import { IExpertEntityPolicyService, ExpertEntityPolicyService } from './../../../services/index';
 import { IExpertValidationService, ExpertValidationService } from './../../../services/index';
@@ -16,6 +16,7 @@ export class ExpertsTableComponent implements OnInit {
     /// inputs
     @Input() siteId: number;
     @Input() filter: any;
+    @Input() defaultExpertSchedule: Array<WorkingInterval>
     /// outputs
     @Output() onEntityChanged: EventEmitter<any> = new EventEmitter<any>();
     @Output() resetForceAcceptImage: EventEmitter<void> = new EventEmitter<void>();
@@ -52,6 +53,7 @@ export class ExpertsTableComponent implements OnInit {
     protected totalCount: number;
     protected items: Array<ExpertEntity>;
     protected selectedEntity: ExpertEntity;
+    protected isWeekScheduleOpenedByDefault: boolean = false;
     /// injected dependencies
     protected logger: ILogger;
     protected entityApiService: IExpertApiService;
@@ -298,16 +300,19 @@ export class ExpertsTableComponent implements OnInit {
     protected createModalOpen(): Promise<void> {
         const self = this;
         self._useValidation = false;
+        self.isWeekScheduleOpenedByDefault = true;
         self.selectedEntity = new ExpertEntity();
         self.selectedEntity.siteId = self.siteId;
         self.selectedEntity.photoUrl = ExpertsConstants.expertImageDefault;
         self.selectedEntity.isActive = true;
+        self.selectedEntity.workingHours = self.defaultExpertSchedule;
         self.selectedEntity.order = self.getNewEntityOrder();
         return self.editModal.open();
     }
     protected editModalOpen(id: number): Promise<void> {
         const self = this;
         self._useValidation = false;
+        self.isWeekScheduleOpenedByDefault = false;
         self.isGetPromiseForEdit = true;
         return self
             .openModalWithDetalizedEntity(self.editModal, id)
@@ -331,6 +336,7 @@ export class ExpertsTableComponent implements OnInit {
         }
         if (this.entityValidationService.isValid(this.selectedEntity)) {
             const self = this;
+            self.isWeekScheduleOpenedByDefault = false;
             self._useValidation = false;
             self.forceAcceptImage = true;
             setTimeout(
@@ -371,6 +377,7 @@ export class ExpertsTableComponent implements OnInit {
     protected editModalDismiss(): Promise<void> {
         this.selectedEntity = null;
         this._useValidation = false;
+        this.isWeekScheduleOpenedByDefault = false;
         return this.editModal.dismiss();
     }
     protected infoModalDismiss(): Promise<void> {

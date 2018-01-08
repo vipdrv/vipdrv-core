@@ -14,6 +14,7 @@ export class SiteDetailsEditComponent {
     @Input() isReadOnly: boolean = false;
     @Input() useValidation: boolean = false;
     @Input() forceAcceptImage: boolean = false;
+    @Input() isWeekScheduleOpenedByDefault: boolean = false;
     /// outputs
     @Output() resetForceAcceptImage: EventEmitter<void> = new EventEmitter<void>();
     /// fields
@@ -74,5 +75,8 @@ export class SiteDetailsEditComponent {
     }
     protected getSiteUrlInvalidMessageKey(): string {
         return this.siteValidationService.getInvalidUrlMessageKey(this.entity);
+    }
+    protected getWeekScheduleDefaultClass() {
+        return this.isWeekScheduleOpenedByDefault ? 'show' : '';
     }
 }

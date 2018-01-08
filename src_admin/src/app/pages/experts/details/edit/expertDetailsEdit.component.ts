@@ -14,6 +14,7 @@ export class ExpertDetailsEditComponent {
     @Input() isReadOnly: boolean = false;
     @Input() useValidation: boolean = false;
     @Input() forceAcceptImage: boolean = false;
+    @Input() isWeekScheduleOpenedByDefault: boolean = false;
     /// outputs
     @Output() resetForceAcceptImage: EventEmitter<void> = new EventEmitter<void>();
     /// fields
@@ -57,5 +58,8 @@ export class ExpertDetailsEditComponent {
     }
     protected isComponentReadOnly(): boolean {
         return this.isReadOnly;
+    }
+    protected getWeekScheduleDefaultClass() {
+        return this.isWeekScheduleOpenedByDefault ? 'show' : '';
     }
 }

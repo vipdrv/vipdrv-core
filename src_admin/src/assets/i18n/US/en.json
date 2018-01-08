@@ -103,7 +103,7 @@
       "siteNameHelp": "Enter the name of the site.",
       "siteUrl": "Site url",
       "siteUrlHelp": "Enter the url of the site (like http://yoursite.url).",
-      "weekSchedule": "Week schedule"
+      "weekSchedule": "Working hours"
     },
     "table": {
       "headerText_siteName": "Site name",
@@ -170,7 +170,7 @@
       "facebookUrlHelp": "Enter direct link to the experts Facebook profile like https://www.facebook.com/... (is not required).",
       "expertActivity": "Is active",
       "expertOrder": "Order",
-      "weekSchedule": "Week schedule",
+      "weekSchedule": "Working hours",
       "expertTitle": "Title of the expert",
       "expertTitleHelp": "Enter the title of the expert.",
       "expertEmail": "Contact e-mail",
