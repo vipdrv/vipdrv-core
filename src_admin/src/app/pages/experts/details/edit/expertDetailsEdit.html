@@ -285,7 +285,7 @@
                 </div>
             </div>
             <div id="collapseWeekSchedule"
-                 class="collapse">
+                 class="collapse {{getWeekScheduleDefaultClass()}}">
                 <div class="card card-block">
                     <working-hours-simple [workingHours]="entity.workingHours"
                                           [isComponentReadonly]="isWeekScheduleComponentReadOnly(entity)"

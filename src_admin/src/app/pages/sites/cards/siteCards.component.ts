@@ -32,6 +32,7 @@ export class SiteCardsComponent implements OnInit {
     protected siteImageHeight: number = SitesConstants.siteImageHeight;
     protected siteImageWidth: number = SitesConstants.siteImageWidth;
     protected forceAcceptImage: boolean = false;
+    protected isWeekScheduleOpenedByDefault: boolean = false;
     /// data fields
     protected items: Array<SiteEntity>;
     protected selectedEntity: SiteEntity;
@@ -197,6 +198,7 @@ export class SiteCardsComponent implements OnInit {
             .selectEntity(entity)
             .then(function(selectedEntity: SiteEntity): Promise<void> {
                 self._siteDetailsModalMode = 'Update';
+                self.isWeekScheduleOpenedByDefault = false;
                 return self.siteDetailsModal.open();
             });
     }
@@ -205,6 +207,7 @@ export class SiteCardsComponent implements OnInit {
         this.selectedEntity.userId = this.authorizationManager.currentUserId;
         this.selectedEntity.imageUrl = SitesConstants.siteImageDefault;
         this._siteDetailsModalMode = 'Create';
+        this.isWeekScheduleOpenedByDefault = true;
         return this.siteDetailsModal.open();
     }
     protected siteDetailsModalApply(): void {
