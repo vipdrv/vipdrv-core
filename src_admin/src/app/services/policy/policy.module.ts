@@ -6,6 +6,8 @@ import { ExpertEntityPolicyService } from './concrete/widget/expert/expertEntity
 import { LeadEntityPolicyService } from './concrete/widget/lead/leadEntity.policy-service';
 import { RouteEntityPolicyService } from './concrete/widget/route/routeEntity.policy-service';
 import { SiteEntityPolicyService } from './concrete/widget/site/siteEntity.policy-service';
+import { UserEntityPolicyService } from './concrete/main/user/userEntity.policy-service';
+
 @NgModule({
     imports: [
         CommonModule
@@ -21,6 +23,7 @@ import { SiteEntityPolicyService } from './concrete/widget/site/siteEntity.polic
         LeadEntityPolicyService,
         RouteEntityPolicyService,
         SiteEntityPolicyService,
+        UserEntityPolicyService,
     ]
 })
 export class PolicyModule {}
