@@ -5,7 +5,7 @@
         <button type="button"
                 class="btn btn-outline-success btn-sm pull-right test-drive-right-standalone-btn"
                 (click)="createModalOpen();">
-            <span translate>general.actions.text_create</span>
+            <span translate>Create</span>
         </button>
     </div>
 </div>
@@ -18,29 +18,41 @@
     </div>
 </div>
 
-<modal #infoModal size="lg" [backdrop]="'static'">
+<modal #editModal size="lg" [backdrop]="'static'">
     <modal-header>
         <h5 class="modal-title">
             <span class="test-drive-modal-header-text" translate>
-                experts.modal.titleInfo
+                experts.modal.titleEdit
             </span>
         </h5>
         <button type="button"
                 class="close"
                 aria-label="Close"
-                (click)="infoModalDismiss(); $event.stopPropagation();">
+                (click)="editModalDismiss(); $event.stopPropagation();">
             <span aria-hidden="true">&times;</span>
         </button>
     </modal-header>
     <modal-body>
-        <expert-details-info *ngIf="isSelectedEntityDefined()" [entity]="selectedEntity">
-        </expert-details-info>
+        <!--<expert-details-edit *ngIf="isSelectedEntityDefined()"-->
+                             <!--[isReadOnly]="isEditModalReadOnly()"-->
+                             <!--[useValidation]="isValidationActivated()"-->
+                             <!--[entity]="selectedEntity"-->
+                             <!--[forceAcceptImage]="forceAcceptImage"-->
+                             <!--(resetForceAcceptImage)="onResetForceAcceptImage($event)"></expert-details-edit>-->
     </modal-body>
     <modal-footer>
-        <button type="button"
-                class="btn btn-secondary test-drive-modal-close-btn pull-right test-drive-right-standalone-btn"
-                (click)="infoModalDismiss(); $event.stopPropagation();">
-            <span translate>general.actions.modalClose</span>
-        </button>
+        <!--<button type="button"-->
+                <!--class="btn btn-secondary test-drive-modal-close-btn pull-right"-->
+                <!--(click)="editModalDismiss(); $event.stopPropagation();">-->
+            <!--<span translate>general.actions.modalClose</span>-->
+        <!--</button>-->
+        <!--<button type="button"-->
+                <!--class="btn btn-primary test-drive-modal-apply-btn pull-right"-->
+                <!--[disabled]="isEditModalReadOnly()"-->
+                <!--(click)="modalApply(); $event.stopPropagation();">-->
+            <!--<i class="fa fa-spinner fa-pulse" *ngIf="isOperationSaveProcessing(selectedEntity)"></i>-->
+            <!--<i class="fa fa-save" *ngIf="!isOperationSaveProcessing(selectedEntity)"></i>-->
+            <!--<span translate>general.actions.modalApply</span>-->
+        <!--</button>-->
     </modal-footer>
 </modal>

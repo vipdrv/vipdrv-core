@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, Input, OnInit, Output, ViewChild, EventEmitter } from '@angular/core';
 import { ExpertValidationService } from '../../../services/validation/concrete/entity/expert/expert.validation-service';
 import { ExpertEntityPolicyService } from '../../../services/policy/concrete/widget/expert/expertEntity.policy-service';
 import { ILogger, ConsoleLogger, Variable } from '../../../utils/index';
@@ -8,30 +8,42 @@ import { UserApiService, GetAllResponse, IUserApiService } from '../../../servic
 import { UserEntity } from '../../../entities/main/users/user.entity';
 import { promise } from 'selenium-webdriver';
 import { ModalComponent } from 'ng2-bs3-modal/ng2-bs3-modal';
+import { UserEntityPolicyService } from '../../../services/policy/concrete/main/user/userEntity.policy-service';
+import { IUserEntityPolicyService } from '../../../services/policy/concrete/main/user/i-userEntity.policy-service';
+import { IUserValidationService } from '../../../services/validation/concrete/entity/user/i-user.validation-service';
+import { UserValidationService } from '../../../services/validation/concrete/entity/user/user.validation-service';
 
 @Component({
     selector: 'users-table',
     styleUrls: ['./usersTable.scss'],
-    templateUrl: './usersTable.html'
+    templateUrl: './usersTable.html',
 })
 export class UsersTableComponent implements OnInit {
     /// inputs
     @Input() filter: any;
     /// outputs
-
+    @Output() onEntityChanged: EventEmitter<any> = new EventEmitter<any>();
     /// children
-    @ViewChild('editModal')
-    protected editModal: ModalComponent;
-
+    @ViewChild('confirmationDeleteModal') protected confirmationDeleteModal: ModalComponent;
+    @ViewChild('editModal') protected editModal: ModalComponent;
+    @ViewChild('infoModal') protected infoModal: ModalComponent;
     /// service fields
     private _defaultPageNumber: number = 0;
     private _defaultPageSize: number = 100;
-    private _defaultSorting: string = '';
+    private _defaultSorting: string = 'name asc';
     private _defaultFilter: any = null;
+    private _useValidation: boolean = false;
 
     /// promise fields
     protected firstLoadingPromise: Promise<void>;
     protected getAllPromise: Promise<void>;
+    protected getPromise: Promise<void>;
+    protected getEntityId: number;
+    protected isGetPromiseForEdit: boolean;
+    protected savePromise: Promise<void>;
+    protected saveEntityId: number;
+    protected deletePromise: Promise<void>;
+    protected deleteEntityId: number;
 
     /// fields
     protected totalCount: number;
@@ -41,14 +53,14 @@ export class UsersTableComponent implements OnInit {
     /// injected dependencies
     protected logger: ILogger;
     protected entityApiService: IUserApiService;
-    protected entityPolicyService: IExpertEntityPolicyService;
-    protected entityValidationService: IExpertValidationService;
+    protected entityPolicyService: IUserEntityPolicyService;
+    protected entityValidationService: IUserValidationService;
 
     /// ctor
     constructor(logger: ConsoleLogger,
                 entityApiService: UserApiService,
-                entityPolicyService: ExpertEntityPolicyService,
-                entityValidationService: ExpertValidationService) {
+                entityPolicyService: UserEntityPolicyService,
+                entityValidationService: UserValidationService) {
         this.logger = logger;
         this.entityApiService = entityApiService;
         this.entityPolicyService = entityPolicyService;
@@ -57,25 +69,147 @@ export class UsersTableComponent implements OnInit {
     }
 
     /// methods
+
     ngOnInit(): void {
         const self = this;
-        self.firstLoadingPromise = self.getAllEntities();
-        this.logger.logDebug('Init');
+        self.firstLoadingPromise = self.getAllEntities()
+            .then(
+                () => self.firstLoadingPromise = null,
+                () => self.firstLoadingPromise = null);
     }
 
     protected getAllEntities(): Promise<void> {
         const self = this;
-        self.getAllPromise = self.entityApiService.getAll(this.getPageNumber(), this.getPageSize(), this.buildSorting(), this.buildFilter())
+        self.getAllPromise = self.entityApiService
+            .getAll(this.getPageNumber(), this.getPageSize(), this.buildSorting(), this.buildFilter())
             .then((response: GetAllResponse<UserEntity>) => {
                 self.items = response.items;
-
-                console.log(self.items);
                 self.totalCount = response.totalCount;
                 return Promise.resolve();
-            });
-
+            }).then(
+                () => self.getAllPromise = null,
+                () => self.getAllPromise = null);
         return self.getAllPromise;
     }
+
+    protected deleteEntity(id: number): Promise<void> {
+        const self = this;
+        self.deleteEntityId = id;
+        self.deletePromise = self.entityApiService
+            .delete(id)
+            .then(function (): Promise<void> {
+                self.totalCount--;
+                const elementIndex = self.items.findIndex((item: UserEntity) => item.id === id);
+                if (elementIndex > -1) {
+                    // self.notifyOnChanges(false, self.items[elementIndex].isActive);
+                    self.items.splice(elementIndex, 1);
+                } else {
+                    // self.notifyOnChanges();
+                }
+                return Promise.resolve();
+            })
+            .then(
+                () => {
+                    self.deleteEntityId = null;
+                    self.deletePromise = null;
+                },
+                () => {
+                    self.deleteEntityId = null;
+                    self.deletePromise = null;
+                },
+            );
+        return self.deletePromise;
+    }
+
+    /// activity
+    /// order
+    /// modal
+    protected tryInfoModalOpen(entity: UserEntity): Promise<void> {
+        if (Variable.isNotNullOrUndefined(entity) && !this.isAnyOperationWithEntityProcessing()) {
+            return this.openModalWithDetalizedEntity(this.infoModal, entity.id);
+        } else {
+            return Promise.resolve();
+        }
+    }
+
+    /// predicates
+    protected isSelectedEntityDefined(): boolean {
+        return Variable.isNotNullOrUndefined(this.selectedEntity);
+    }
+
+    protected isEditModalReadOnly(): boolean {
+        return Variable.isNotNullOrUndefined(this.savePromise);
+    }
+
+    protected isValidationActivated(): boolean {
+        return this._useValidation;
+    }
+
+    protected isAnyOperationWithEntityProcessing(): boolean {
+        return Variable.isNotNullOrUndefined(this.getAllPromise) ||
+            Variable.isNotNullOrUndefined(this.getPromise) ||
+            Variable.isNotNullOrUndefined(this.savePromise) ||
+            Variable.isNotNullOrUndefined(this.deletePromise);
+    }
+
+    protected isOperationCreateProcessing(): boolean {
+        return Variable.isNotNullOrUndefined(this.savePromise) && !(this.saveEntityId > 0);
+    }
+
+    protected isOperationEditProcessing(entity: UserEntity): boolean {
+        return Variable.isNotNullOrUndefined(entity) &&
+            (
+                Variable.isNotNullOrUndefined(this.savePromise) &&
+                this.saveEntityId > 0 &&
+                this.saveEntityId === entity.id
+                ||
+                Variable.isNotNullOrUndefined(this.getPromise) &&
+                this.getEntityId === entity.id &&
+                this.isGetPromiseForEdit
+            );
+    }
+
+    protected isOperationDeleteProcessing(entity: UserEntity): boolean {
+        return Variable.isNotNullOrUndefined(this.deletePromise) &&
+            Variable.isNotNullOrUndefined(entity) &&
+            this.deleteEntityId > 0 &&
+            this.deleteEntityId === entity.id;
+    }
+
+    protected isOperationSaveProcessing(entity: UserEntity): boolean {
+        return this.isOperationCreateProcessing() || this.isOperationEditProcessing(entity);
+    }
+
+    protected isOperationGetProcessing(entity: UserEntity): boolean {
+        return Variable.isNotNullOrUndefined(this.getPromise) &&
+            Variable.isNotNullOrUndefined(entity) &&
+            this.getEntityId > 0 &&
+            this.getEntityId === entity.id;
+    }
+
+    /// helpers
+    private openModalWithDetalizedEntity(modal: ModalComponent, entityId: number): Promise<void> {
+        const self = this;
+        self.getEntityId = entityId;
+        self.getPromise = self.entityApiService
+            .get(entityId)
+            .then(function (response: UserEntity): Promise<void> {
+                self.selectedEntity = response;
+                return modal.open();
+            })
+            .then(
+                () => {
+                    self.getEntityId = null;
+                    self.getPromise = null;
+                },
+                () => {
+                    self.getEntityId = null;
+                    self.getPromise = null;
+                }
+            );
+        return self.getPromise;
+    }
+
 
     private getPageNumber(): number {
         return this._defaultPageNumber;
@@ -92,16 +226,8 @@ export class UsersTableComponent implements OnInit {
     private buildFilter(): any {
         return Variable.isNotNullOrUndefined(this.filter) ? this.filter : this._defaultFilter;
     }
-    /// modal
 
-    protected createModalOpen(): Promise<void> {
-        const self = this;
-        self.selectedEntity = new UserEntity();
-        self.selectedEntity.avatarUrl  = '';
-        self.selectedEntity.firstName = 'toto';
-
-        return self.editModal.open();
-    }
+    /// confirmation delete modal
 
 
 
