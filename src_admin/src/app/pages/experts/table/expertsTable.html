@@ -57,11 +57,13 @@
                         *ngFor="let item of items"
                         (click)="tryInfoModalOpen(item)">
                         <td class="experts-table-body-column">
-                            <img class="rounded-circle"
-                                 alt="no photo"
-                                 [src]="item.photoUrl"
-                                 [width]="imageInTableWidth"
-                                 [height]="imageInTableHeight">
+                            <image-view [imageUrl]="item.photoUrl"
+                                        [imageAlt]="item.name"
+                                        [imageHeight]="imageInTableHeight"
+                                        [imageWidth]="imageInTableWidth"
+                                        [isRounded]="true"
+                                        [externalImageClass]="''"
+                                        [useHeightAsMainProperty]="true"></image-view>
                         </td>
                         <td class="experts-table-body-column experts-table-body-column-body-full-name">
                             {{item.name}}
@@ -176,6 +178,7 @@
                              [useValidation]="isValidationActivated()"
                              [entity]="selectedEntity"
                              [forceAcceptImage]="forceAcceptImage"
+                             [isWeekScheduleOpenedByDefault]="isWeekScheduleOpenedByDefault"
                              (resetForceAcceptImage)="onResetForceAcceptImage($event)"></expert-details-edit>
     </modal-body>
     <modal-footer>

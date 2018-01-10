@@ -11,7 +11,6 @@
             <!--</span>-->
         <!--</div>-->
     <!--</div>-->
-
     <h4>Wizard</h4>
     <div class="row">
         <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
@@ -107,13 +106,35 @@
     <h4>Integration</h4>
     <div class="row">
         <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-            <span class="site-overview-template-info-label" translate>
-                sites.overview.siteId
+            <!--<span class="site-overview-template-info-label" translate>-->
+                <!--sites.overview.siteId-->
+            <!--</span>-->
+            <!--<span class="site-overview-template-info-value">-->
+                <!--{{entity.id}}-->
+            <!--</span>-->
+            <span class="integration-guide-text">
+                Copy-paste the &lt;script&gt; lines into your &lt;footer&gt; before all other scripts
             </span>
-            <span class="site-overview-template-info-value">
-                {{entity.id}}
+            <pre><code class="integration-guide-code">
+                &lt;script src="https://widget.testdrive.pw/integration/integration.js"&gt;&lt;/script&gt;
+                &lt;script&gt;TestDrive.init(&#123;SiteId: '{{entity.id}}'&#125;)&lt;/script&gt;
+            </code></pre>
+            <span class="integration-guide-text">
+                Copy-paste the button code &lt;button&gt; and pass appropriate arguments
             </span>
-            <p>Check out our <a href="http://www.testdrive.pw/" target="_blank">Integration guide</a></p>
+            <pre><code class="integration-guide-code">
+                &lt;button onclick&#61;"TestDrive.openTestDrive(&#123;
+                            carVin: 'JTJGA31U940015971',
+                            carImageUrl: 'https://www.testdrive.pw/bmw.jpg',
+                            carTitle: 'BMW M140i',
+                            carEngine: '3.8 litre twin-turbo V6',
+                            carYear: '2017',
+                            carColor: 'Blue',
+                            carTransmission: 'Manual',
+                            carFuel: 'Gasoline'&#125;)"&gt;
+                    Open Widget
+                &lt;/button&gt;
+            </code></pre>
         </div>
     </div>
     <hr>
@@ -121,14 +142,18 @@
     <div class="row">
         <div class="col-12">
             <p></p>
-            <button class="btn btn-primary" onclick="TestDrive.openTestDrive({carVin: 'JTJGA31U940015971',
-                                          carImageUrl: 'https://www.testdrive.pw/bmw.jpg',
-                                          carTitle: 'BMW M140i',
-                                          carEngine: '3.8 litre twin-turbo V6',
-                                          carYear: '2017',
-                                          carColor: 'Blue',
-                                          carTransmission: 'Manual',
-                                          carFuel: 'Gasoline'})">Open Widget</button>
+            <button class="btn btn-primary"
+                    onclick="TestDrive.openTestDrive({
+                        carVin: 'JTJGA31U940015971',
+                        carImageUrl: 'https://www.testdrive.pw/bmw.jpg',
+                        carTitle: 'BMW M140i',
+                        carEngine: '3.8 litre twin-turbo V6',
+                        carYear: '2017',
+                        carColor: 'Blue',
+                        carTransmission: 'Manual',
+                        carFuel: 'Gasoline'})">
+                Open Widget
+            </button>
         </div>
     </div>
 </div>

@@ -39,7 +39,8 @@ var vendorJs = [
     'node_modules/bootstrap/dist/js/bootstrap.min.js',
     'node_modules/ngcomponentrouter/angular_1_router.js',
     'node_modules/moment/min/moment-with-locales.min.js',
-    'node_modules/angular-moment-picker/dist/angular-moment-picker.min.js'
+    'node_modules/angular-moment-picker/dist/angular-moment-picker.min.js',
+    './src/vendor/js/fontawesome.js',
 ];
 
 var vendorCss = [

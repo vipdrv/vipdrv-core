@@ -98,6 +98,7 @@
                     <div class="site-relation-container">
                         <experts-table [siteId]="entity.id"
                                        [filter]="getExpertsFilter()"
+                                       [defaultExpertSchedule]="entity.workingHours"
                                        (onEntityChanged)="actualizeExpertsInfo($event)">
                         </experts-table>
                     </div>
