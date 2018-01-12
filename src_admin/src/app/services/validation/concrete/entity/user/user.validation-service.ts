@@ -24,6 +24,6 @@ export class UserValidationService
             Variable.isNotNullOrUndefinedOrEmptyString(entity.username);
     }
     getInvalidUserNameMessageKey(entity: UserEntity): string {
-        return 'Invalid User Name';
+        return 'validation.experts.name';
     }
 }

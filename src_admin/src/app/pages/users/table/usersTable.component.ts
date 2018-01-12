@@ -30,7 +30,7 @@ export class UsersTableComponent implements OnInit {
     /// service fields
     private _defaultPageNumber: number = 0;
     private _defaultPageSize: number = 100;
-    private _defaultSorting: string = 'name asc';
+    private _defaultSorting: string = 'id asc';
     private _defaultFilter: any = null;
     private _useValidation: boolean = false;
 
@@ -132,6 +132,39 @@ export class UsersTableComponent implements OnInit {
         }
     }
 
+    protected createModalOpen(): Promise<void> {
+        const self = this;
+        self._useValidation = false;
+
+        self.selectedEntity = new UserEntity();
+        // self.selectedEntity.siteId = self.siteId;
+
+        return self.editModal.open();
+    }
+
+    protected editModalOpen(id: number): Promise<void> {
+        const self = this;
+        self._useValidation = false;
+
+        self.isGetPromiseForEdit = true;
+        return self
+            .openModalWithDetalizedEntity(self.editModal, id)
+            .then(
+                () => {
+                    self.isGetPromiseForEdit = false;
+                },
+                () => {
+                    self.isGetPromiseForEdit = false
+                }
+            );
+    }
+
+    protected editModalDismiss(): Promise<void> {
+        this.selectedEntity = null;
+        this._useValidation = false;
+        return this.editModal.dismiss();
+    }
+
     /// predicates
     protected isSelectedEntityDefined(): boolean {
         return Variable.isNotNullOrUndefined(this.selectedEntity);
@@ -187,6 +220,10 @@ export class UsersTableComponent implements OnInit {
             this.getEntityId === entity.id;
     }
 
+    protected isOperationGetManyProcessing(): boolean {
+        return Variable.isNotNullOrUndefined(this.getAllPromise);
+    }
+
     /// helpers
     private openModalWithDetalizedEntity(modal: ModalComponent, entityId: number): Promise<void> {
         const self = this;
@@ -228,8 +265,6 @@ export class UsersTableComponent implements OnInit {
     }
 
     /// confirmation delete modal
-
-
 
 
 }

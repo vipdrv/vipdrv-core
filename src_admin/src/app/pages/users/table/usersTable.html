@@ -1,19 +1,75 @@
-<h1>Users Table</h1>
+<div class="many-entities-template">
+    <div class="row test-drive-many-entities-template-header mt-2">
+        <div class="col-12">
+            <button class="btn btn-secondary btn-sm pull-left test-drive-left-standalone-btn"
+                    type="button"
+                    *ngIf="entityPolicyService.canGet()"
+                    [disabled]="isAnyOperationWithEntityProcessing()"
+                    (click)="getAllEntities()">
+                <i class="fa fa-refresh fa-spin" *ngIf="isOperationGetManyProcessing()"></i>
+                <i class="fa fa-refresh" *ngIf="!isOperationGetManyProcessing()"></i>
+            </button>
 
-<div class="row">
-    <div class="col-12">
-        <button type="button"
-                class="btn btn-outline-success btn-sm pull-right test-drive-right-standalone-btn"
-                (click)="createModalOpen();">
-            <span translate>Create</span>
-        </button>
+            <button type="button"
+                    class="btn btn-outline-success btn-sm pull-right test-drive-right-standalone-btn"
+                    *ngIf="entityPolicyService.canCreate()"
+                    [disabled]="isAnyOperationWithEntityProcessing()"
+                    (click)="createModalOpen()">
+                <i class="fa fa-spinner fa-pulse" *ngIf="isOperationCreateProcessing()"></i>
+                <i class="fa fa-plus" *ngIf="!isOperationCreateProcessing()"></i>
+                <span translate>general.actions.text_create</span>
+            </button>
+        </div>
     </div>
-</div>
-
-<div class="row">
-    <div class="col-12">
-        <div *ngFor="let item of items">
-            {{item.firstName}} <br>
+    <div class="test-drive-many-entities-template-body">
+        <div class="row" [ngBusy]="firstLoadingPromise">
+            <div class="col-12">
+                <table class="experts-table-body table table-bordered table-hover">
+                    <thead>
+                    <tr>
+                        <th>
+                            Dealer Name
+                        </th>
+                        <th>
+                            Max sites count
+                        </th>
+                        <th>
+                            Actions
+                        </th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr *ngFor="let item of items" (click)="tryInfoModalOpen(item)">
+                        <td class="experts-table-body-column experts-table-body-column-body-full-name">
+                            {{item.username}}
+                        </td>
+                        <td class="experts-table-body-column experts-table-body-column-body-title">
+                            {{item.maxSitesCount}}
+                        </td>
+                        <td class="experts-table-body-column experts-table-body-column-actions">
+                            <button type="button"
+                                    class="btn btn-outline-primary btn-sm"
+                                    *ngIf="entityPolicyService.canUpdateEntity(item)"
+                                    [disabled]="isAnyOperationWithEntityProcessing()"
+                                    (click)="editModalOpen(item.id)">
+                                <i class="fa fa-spinner fa-pulse" *ngIf="isOperationEditProcessing(item)"></i>
+                                <i class="fa fa-edit" *ngIf="!isOperationEditProcessing(item)"></i>
+                                <span translate>general.actions.text_edit</span>
+                            </button>
+                            <!--<button type="button"-->
+                            <!--class="btn btn-outline-danger btn-sm test-drive-right-standalone-btn"-->
+                            <!--*ngIf="entityPolicyService.canDeleteEntity(item)"-->
+                            <!--[disabled]="isAnyOperationWithEntityProcessing()"-->
+                            <!--(click)="openConfirmationDeleteModal(item.id); $event.stopPropagation();">-->
+                            <!--<i class="fa fa-spinner fa-pulse" *ngIf="isOperationDeleteProcessing(item)"></i>-->
+                            <!--<i class="fa fa-times" *ngIf="!isOperationDeleteProcessing(item)"></i>-->
+                            <!--<span translate>general.actions.text_delete</span>-->
+                            <!--</button>-->
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 </div>
@@ -28,31 +84,29 @@
         <button type="button"
                 class="close"
                 aria-label="Close"
-                (click)="editModalDismiss(); $event.stopPropagation();">
+                (click)="editModalDismiss()">
             <span aria-hidden="true">&times;</span>
         </button>
     </modal-header>
     <modal-body>
-        <!--<expert-details-edit *ngIf="isSelectedEntityDefined()"-->
-                             <!--[isReadOnly]="isEditModalReadOnly()"-->
-                             <!--[useValidation]="isValidationActivated()"-->
-                             <!--[entity]="selectedEntity"-->
-                             <!--[forceAcceptImage]="forceAcceptImage"-->
-                             <!--(resetForceAcceptImage)="onResetForceAcceptImage($event)"></expert-details-edit>-->
+        <user-details-edit *ngIf="isSelectedEntityDefined()"
+                           [isReadOnly]="isEditModalReadOnly()"
+                           [useValidation]="isValidationActivated()"
+                           [entity]="selectedEntity"></user-details-edit>
     </modal-body>
     <modal-footer>
-        <!--<button type="button"-->
-                <!--class="btn btn-secondary test-drive-modal-close-btn pull-right"-->
-                <!--(click)="editModalDismiss(); $event.stopPropagation();">-->
-            <!--<span translate>general.actions.modalClose</span>-->
-        <!--</button>-->
-        <!--<button type="button"-->
-                <!--class="btn btn-primary test-drive-modal-apply-btn pull-right"-->
-                <!--[disabled]="isEditModalReadOnly()"-->
-                <!--(click)="modalApply(); $event.stopPropagation();">-->
-            <!--<i class="fa fa-spinner fa-pulse" *ngIf="isOperationSaveProcessing(selectedEntity)"></i>-->
-            <!--<i class="fa fa-save" *ngIf="!isOperationSaveProcessing(selectedEntity)"></i>-->
-            <!--<span translate>general.actions.modalApply</span>-->
-        <!--</button>-->
+        <button type="button"
+                class="btn btn-secondary test-drive-modal-close-btn pull-right"
+                (click)="editModalDismiss(); $event.stopPropagation();">
+            <span translate>general.actions.modalClose</span>
+        </button>
+        <button type="button"
+                class="btn btn-primary test-drive-modal-apply-btn pull-right"
+                [disabled]="isEditModalReadOnly()"
+                (click)="modalApply(); $event.stopPropagation();">
+            <i class="fa fa-spinner fa-pulse" *ngIf="isOperationSaveProcessing(selectedEntity)"></i>
+            <i class="fa fa-save" *ngIf="!isOperationSaveProcessing(selectedEntity)"></i>
+            <span translate>general.actions.modalApply</span>
+        </button>
     </modal-footer>
 </modal>
