@@ -1,13 +1,17 @@
 import { Component, Input, OnInit, OnDestroy } from '@angular/core';
 import { Variable, ILogger, ConsoleLogger, PromiseService } from '../../../utils/index';
 import { SiteEntity } from './../../../entities/index';
+import { ApplicationConstants } from './../../../app.constants';
 @Component({
     selector: 'site-overview',
     styleUrls: ['./siteOverview.scss'],
     templateUrl: './siteOverview.html',
 })
 export class SiteOverviewComponent implements OnInit, OnDestroy {
+    /// inputs
     @Input() entity: SiteEntity;
+    /// properties
+    protected switcherSettings = ApplicationConstants.switcherSettings;
     /// injected dependencies
     protected logger: ILogger;
     protected promiseService: PromiseService;
@@ -37,6 +41,10 @@ export class SiteOverviewComponent implements OnInit, OnDestroy {
 
     }
     // experts
+    protected onChangeEntityExpertStep(entity: SiteEntity): void {
+        entity.useExpertStep = !entity.useExpertStep;
+        // TODO: commit operation via api
+    }
     protected showNoExperts(): boolean {
         return Variable.isNullOrUndefined(this.entity.expertsAmount) ||
             Variable.isNullOrUndefined(this.entity.activeExpertsAmount) ||

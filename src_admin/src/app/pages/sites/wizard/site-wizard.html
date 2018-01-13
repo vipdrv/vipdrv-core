@@ -1,0 +1,158 @@
+<div class="row site-wizard-container"
+     *ngIf="isEntityDefined()">
+    <div class="col-12">
+        <div class="row site-wizard-table-expert-step-container">
+            <div class="col-12">
+                <table class="table table-bordered site-wizard-table">
+                    <tbody>
+                    <tr>
+                        <td class="site-wizard-table-column site-wizard-table-column-step-name"
+                            translate>
+                            sites.wizard.expertStep
+                        </td>
+                        <td class="site-wizard-table-column site-wizard-table-column-active-amount">
+                            <span class="badge badge-success"
+                                  *ngIf="showActiveExpertsAmount()"
+                                  [translateParams]="{ amount: entity.activeExpertsAmount }"
+                                  translate>
+                                sites.wizard.activeExperts_amount
+                            </span>
+                            <span class="badge badge-danger"
+                                  *ngIf="showNoActiveExperts()"
+                                  translate>
+                                sites.wizard.noActiveExperts
+                            </span>
+                        </td>
+                        <td class="site-wizard-table-column site-wizard-table-column-not-active-amount hidden-sm-down">
+                            <span class="badge badge-warning"
+                                  [translateParams]="{ amount: entity.expertsAmount - entity.activeExpertsAmount }"
+                                  translate>
+                                sites.wizard.notActiveExperts_amount
+                            </span>
+                        </td>
+                        <td class="site-wizard-table-column site-wizard-table-column-not-active-amount"
+                            *ngIf="isChangeUseExpertStepAllowed()">
+                            <ui-switch color="{{switcherSettings.color}}"
+                                       switchColor="{{switcherSettings.switchColor}}"
+                                       defaultBgColor="{{switcherSettings.defaultBgColor}}"
+                                       defaultBoColor="{{switcherSettings.defaultBoColor}}"
+                                       [disabled]="isChangeUseExpertStepDisabled()"
+                                       (click)="onChangeUseExpertStep(); $event.stopPropagation();"
+                                       [ngModel]="entity.useExpertStep">
+                            </ui-switch>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="site-wizard-table-column site-wizard-table-column-step-name"
+                            translate>
+                            sites.wizard.beverageStep
+                        </td>
+                        <td class="site-wizard-table-column site-wizard-table-column-active-amount">
+                            <span class="badge badge-success"
+                                  *ngIf="showActiveBeveragesAmount()"
+                                  [translateParams]="{ amount: entity.activeBeveragesAmount }"
+                                  translate>
+                                sites.wizard.activeBeverages_amount
+                            </span>
+                            <span class="badge badge-danger"
+                                  *ngIf="showNoActiveBeverages()"
+                                  translate>
+                                sites.wizard.noActiveBeverages
+                            </span>
+                        </td>
+                        <td class="site-wizard-table-column site-wizard-table-column-not-active-amount hidden-sm-down">
+                            <span class="badge badge-warning"
+                                  [translateParams]="{ amount: entity.beveragesAmount - entity.activeBeveragesAmount }"
+                                  translate>
+                                sites.wizard.notActiveBeverages_amount
+                            </span>
+                        </td>
+                        <td class="site-wizard-table-column site-wizard-table-column-not-active-amount"
+                            *ngIf="isChangeUseBeverageStepAllowed()">
+                            <ui-switch color="{{switcherSettings.color}}"
+                                       switchColor="{{switcherSettings.switchColor}}"
+                                       defaultBgColor="{{switcherSettings.defaultBgColor}}"
+                                       defaultBoColor="{{switcherSettings.defaultBoColor}}"
+                                       [disabled]="isChangeUseBeverageStepDisabled()"
+                                       (click)="onChangeUseBeverageStep(); $event.stopPropagation();"
+                                       [ngModel]="entity.useBeverageStep">
+                            </ui-switch>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="site-wizard-table-column site-wizard-table-column-step-name"
+                            translate>
+                            sites.wizard.routeStep
+                        </td>
+                        <td class="site-wizard-table-column site-wizard-table-column-active-amount">
+                            <span class="badge badge-success"
+                                  *ngIf="showActiveRoutesAmount()"
+                                  [translateParams]="{ amount: entity.activeRoutesAmount }"
+                                  translate>
+                                sites.wizard.activeRoutes_amount
+                            </span>
+                            <span class="badge badge-danger"
+                                  *ngIf="showNoActiveRoutes()"
+                                  translate>
+                                sites.wizard.noActiveRoutes
+                            </span>
+                        </td>
+                        <td class="site-wizard-table-column site-wizard-table-column-not-active-amount hidden-sm-down">
+                            <span class="badge badge-warning"
+                                  [translateParams]="{ amount: entity.routesAmount - entity.activeRoutesAmount }"
+                                  translate>
+                                sites.wizard.notActiveRoutes_amount
+                            </span>
+                        </td>
+                        <td class="site-wizard-table-column site-wizard-table-column-not-active-amount"
+                            *ngIf="isChangeUseRouteStepAllowed()">
+                            <ui-switch color="{{switcherSettings.color}}"
+                                       switchColor="{{switcherSettings.switchColor}}"
+                                       defaultBgColor="{{switcherSettings.defaultBgColor}}"
+                                       defaultBoColor="{{switcherSettings.defaultBoColor}}"
+                                       [disabled]="isChangeUseRouteStepDisabled()"
+                                       (click)="onChangeUseRouteStep(); $event.stopPropagation();"
+                                       [ngModel]="entity.useRouteStep">
+                            </ui-switch>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="row site-wizard-notifications-container">
+            <div class="col-12">
+                <div class="row site-wizard-notification-container">
+                    <div class="col-12">
+                        <small class="form-text test-drive-warning-message">
+                            <span *ngIf="showExpertStepWarning()" translate>
+                                <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+                                sites.wizard.expertStepWarning
+                            </span>
+                        </small>
+                    </div>
+                </div>
+                <div class="row site-wizard-notification-container">
+                    <div class="col-12">
+                        <small class="form-text test-drive-warning-message">
+                            <span *ngIf="showBeverageStepWarning()" translate>
+                                <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+                                sites.wizard.beverageStepWarning
+                            </span>
+                        </small>
+                    </div>
+                </div>
+                <div class="row site-wizard-notification-container">
+                    <div class="col-12">
+                        <small class="form-text test-drive-warning-message">
+                            <span *ngIf="showRouteStepWarning()" translate>
+                                <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+                                sites.wizard.routeStepWarning
+                            </span>
+                        </small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

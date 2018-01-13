@@ -129,13 +129,17 @@
       "activeRoutes_amount": "{{amount}} active",
       "noActiveRoutes": "no active",
       "notActiveRoutes_amount": "{{amount}} not active",
-      "widget_preview": "Widget preview"
+      "widget_preview": "Widget preview",
+      "openWidget": "Open widget",
+      "integrationTitle": "Integration",
+      "wizardTitle": "Wizard"
 
     },
     "details": {
       "title": "Sites",
       "tabs":{
         "overview": "Overview",
+        "wizard": "Step wizard",
         "experts": "Experts",
         "beverages": "Beverages",
         "routes": "Routes",
@@ -148,6 +152,23 @@
         "sms": "SMS Notifications",
         "adf": "ADF Emails"
       }
+    },
+    "wizard": {
+      "expertStep": "Experts step",
+      "noActiveExperts": "no active",
+      "activeExperts_amount": "{{amount}} active",
+      "notActiveExperts_amount": "{{amount}} not active",
+      "expertStepWarning": "There are no active experts for step 'choose expert'!",
+      "beverageStep": "Beverages step",
+      "noActiveBeverages": "no active",
+      "activeBeverages_amount": "{{amount}} active",
+      "notActiveBeverages_amount": "{{amount}} not active",
+      "beverageStepWarning": "There are no active beverages for step 'choose beverage'!",
+      "routeStep": "Routes step",
+      "noActiveRoutes": "no active",
+      "activeRoutes_amount": "{{amount}} active",
+      "notActiveRoutes_amount": "{{amount}} not active",
+      "routeStepWarning": "There are no active routes for step 'choose route'!"
     }
   },
   "experts": {
