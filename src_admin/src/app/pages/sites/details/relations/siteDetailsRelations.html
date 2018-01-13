@@ -36,6 +36,17 @@
                     </a>
                 </li>
                 <li class="nav-item">
+                    <a id="wizard-tab"
+                       class="nav-link"
+                       href="#wizard"
+                       data-toggle="tab"
+                       role="tab"
+                       aria-controls="wizard-tab"
+                       translate>
+                        sites.details.tabs.wizard
+                    </a>
+                </li>
+                <li class="nav-item">
                     <a id="experts-tab"
                        class="nav-link"
                        href="#experts"
@@ -89,6 +100,15 @@
                      aria-labelledby="overview-tab">
                     <div class="site-relation-container">
                         <site-overview [entity]="entity"></site-overview>
+                    </div>
+                </div>
+                <div id="wizard"
+                     class="tab-pane fade show"
+                     role="tabpanel"
+                     aria-labelledby="wizard-tab">
+                    <div class="site-relation-container">
+                        <site-wizard [entity]="entity">
+                        </site-wizard>
                     </div>
                 </div>
                 <div id="experts"

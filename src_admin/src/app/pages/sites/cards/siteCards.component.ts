@@ -8,7 +8,6 @@ import { ISiteEntityPolicyService, SiteEntityPolicyService } from './../../../se
 import { ISiteValidationService, SiteValidationService } from './../../../services/index';
 import { SiteEntity } from './../../../entities/index';
 import { SitesConstants } from './../sites.constants';
-
 @Component({
     selector: 'site-cards',
     styleUrls: ['./siteCards.scss'],

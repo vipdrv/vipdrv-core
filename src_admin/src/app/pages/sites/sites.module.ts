@@ -7,6 +7,7 @@ import { Ng2Bs3ModalModule } from 'ng2-bs3-modal/ng2-bs3-modal';
 import { PaginationModule } from 'ng2-bootstrap';
 import { BusyModule } from 'angular2-busy';
 import { TextMaskModule } from 'angular2-text-mask';
+import { UiSwitchModule } from 'ngx-ui-switch';
 import { UtilsModule } from './../../utils/index';
 import { SitesTableComponent } from './table/sitesTable.component';
 import { BeveragesModule } from './../beverages/index';
@@ -16,6 +17,7 @@ import { SiteDetailsEditComponent } from './details/edit/siteDetailsEdit.compone
 import { SiteDetailsRelationsComponent } from './details/relations/siteDetailsRelations.component';
 import { SiteOverviewComponent } from './overview/siteOverview.component';
 import { SiteContactsComponent } from './contacts/siteContacts.component';
+import { SiteWizardComponent } from './wizard/site-wizard.component';
 import { SitesComponent } from './sites.component';
 import { routing } from './sites.routing';
 
@@ -33,6 +35,7 @@ import { SiteCardComponent } from './cards/siteCard.component';
         Ng2Bs3ModalModule,
         PaginationModule,
         BusyModule,
+        UiSwitchModule,
         BeveragesModule,
         ExpertsModule,
         RoutesModule,
@@ -46,7 +49,8 @@ import { SiteCardComponent } from './cards/siteCard.component';
         SiteDetailsEditComponent,
         SiteDetailsRelationsComponent,
         SiteOverviewComponent,
-        SiteContactsComponent
+        SiteContactsComponent,
+        SiteWizardComponent,
     ],
     declarations: [
         SitesComponent,
@@ -56,7 +60,8 @@ import { SiteCardComponent } from './cards/siteCard.component';
         SiteDetailsEditComponent,
         SiteDetailsRelationsComponent,
         SiteOverviewComponent,
-        SiteContactsComponent
+        SiteContactsComponent,
+        SiteWizardComponent,
     ],
     providers: []
 })
