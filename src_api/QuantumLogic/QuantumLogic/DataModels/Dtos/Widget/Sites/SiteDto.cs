@@ -16,6 +16,9 @@ namespace QuantumLogic.WebApi.DataModels.Dtos.Widget.Sites
         public string DealerName { get; set; }
         public string DealerAddress { get; set; }
         public string DealerPhone { get; set; }
+        public bool UseExpertStep { get; set; }
+        public bool UseBeverageStep { get; set; }
+        public bool UseRouteStep { get; set; }
 
         #region Mapping
 
@@ -33,6 +36,9 @@ namespace QuantumLogic.WebApi.DataModels.Dtos.Widget.Sites
             DealerName = entity.DealerName;
             DealerAddress = entity.DealerAddress;
             DealerPhone = entity.DealerPhone;
+            UseExpertStep = entity.UseExpertStep;
+            UseBeverageStep = entity.UseBeverageStep;
+            UseRouteStep = entity.UseRouteStep;
         }
         public override Site MapToEntity()
         {
@@ -46,6 +52,9 @@ namespace QuantumLogic.WebApi.DataModels.Dtos.Widget.Sites
             entity.DealerName = DealerName;
             entity.DealerAddress = DealerAddress;
             entity.DealerPhone = DealerPhone;
+            entity.UseExpertStep = UseExpertStep;
+            entity.UseBeverageStep = UseBeverageStep;
+            entity.UseRouteStep = UseRouteStep;
             return entity;
         }
 

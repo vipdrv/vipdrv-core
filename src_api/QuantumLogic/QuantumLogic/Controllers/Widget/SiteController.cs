@@ -4,6 +4,7 @@ using QuantumLogic.Core.Domain.Entities.WidgetModule;
 using QuantumLogic.Core.Domain.Services.Widget.Sites;
 using QuantumLogic.Core.Domain.UnitOfWorks;
 using QuantumLogic.WebApi.DataModels.Dtos.Widget.Sites;
+using QuantumLogic.WebApi.DataModels.Requests;
 using QuantumLogic.WebApi.DataModels.Requests.Widget.Sites;
 using QuantumLogic.WebApi.DataModels.Responses;
 using QuantumLogic.WebApi.DataModels.Responses.Widget.Site;
@@ -65,6 +66,16 @@ namespace QuantumLogic.WebApi.Controllers.Widget
 
         #region Special methods
 
+        [HttpGet("{id}/week-schedule")]
+        public async Task<SiteWeekSchedule> GetWeekScheduleAsync(int id)
+        {
+            SiteWeekSchedule schedule;
+            using (var uow = UowManager.CurrentOrCreateNew(true))
+            {
+                schedule = new SiteWeekSchedule(id, await ((ISiteDomainService)DomainService).RetrieveWeekSchedule(id));
+            }
+            return schedule;
+        }
         [Authorize]
         [HttpPatch("change-contacts/{id}")]
         public async Task ChangeContactsAsync(int id, [FromBody]ChangeContactsRequest request)
@@ -75,15 +86,35 @@ namespace QuantumLogic.WebApi.Controllers.Widget
                 await uow.CompleteAsync();
             }
         }
-        [HttpGet("{id}/week-schedule")]
-        public async Task<SiteWeekSchedule> GetWeekScheduleAsync(int id)
+        [Authorize]
+        [HttpPatch("change-use-expert-step/{id}")]
+        public async Task ChangeUseExpertStepAsync(int id, [FromBody]ChangeActivityRequest request)
         {
-            SiteWeekSchedule schedule;
             using (var uow = UowManager.CurrentOrCreateNew(true))
             {
-                schedule = new SiteWeekSchedule(id, await ((ISiteDomainService)DomainService).RetrieveWeekSchedule(id));
+                await ((ISiteDomainService)DomainService).ChangeUseExpertStepAsync(id, request.Value);
+                await uow.CompleteAsync();
             }
-            return schedule;
+        }
+        [Authorize]
+        [HttpPatch("change-use-beverage-step/{id}")]
+        public async Task ChangeUseBeverageStepAsync(int id, [FromBody]ChangeActivityRequest request)
+        {
+            using (var uow = UowManager.CurrentOrCreateNew(true))
+            {
+                await ((ISiteDomainService)DomainService).ChangeUseBeverageStepAsync(id, request.Value);
+                await uow.CompleteAsync();
+            }
+        }
+        [Authorize]
+        [HttpPatch("change-use-route-step/{id}")]
+        public async Task ChangeUseRouteStepAsync(int id, [FromBody]ChangeActivityRequest request)
+        {
+            using (var uow = UowManager.CurrentOrCreateNew(true))
+            {
+                await ((ISiteDomainService)DomainService).ChangeUseRouteStepAsync(id, request.Value);
+                await uow.CompleteAsync();
+            }
         }
 
         #endregion
