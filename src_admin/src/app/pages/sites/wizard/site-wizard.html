@@ -42,20 +42,6 @@
                             </ui-switch>
                         </td>
                     </tr>
-                    </tbody>
-                </table>
-                <small class="form-text step-warning-notification test-drive-warning-message">
-                    <span *ngIf="showExpertStepWarning()" translate>
-                        <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
-                        sites.wizard.expertStepWarning
-                    </span>
-                </small>
-            </div>
-        </div>
-        <div class="row site-wizard-table-beverage-step-container">
-            <div class="col-12">
-                <table class="table table-bordered site-wizard-table">
-                    <tbody>
                     <tr>
                         <td class="site-wizard-table-column site-wizard-table-column-step-name"
                             translate>
@@ -93,20 +79,6 @@
                             </ui-switch>
                         </td>
                     </tr>
-                    </tbody>
-                </table>
-                <small class="form-text step-warning-notification test-drive-warning-message">
-                    <span *ngIf="showBeverageStepWarning()" translate>
-                        <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
-                        sites.wizard.beverageStepWarning
-                    </span>
-                </small>
-            </div>
-        </div>
-        <div class="row site-wizard-table-route-step-container">
-            <div class="col-12">
-                <table class="table table-bordered site-wizard-table">
-                    <tbody>
                     <tr>
                         <td class="site-wizard-table-column site-wizard-table-column-step-name"
                             translate>
@@ -146,12 +118,40 @@
                     </tr>
                     </tbody>
                 </table>
-                <small class="form-text step-warning-notification test-drive-warning-message">
-                    <span *ngIf="showRouteStepWarning()" translate>
-                        <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
-                        sites.wizard.routeStepWarning
-                    </span>
-                </small>
+            </div>
+        </div>
+        <div class="row site-wizard-notifications-container">
+            <div class="col-12">
+                <div class="row site-wizard-notification-container">
+                    <div class="col-12">
+                        <small class="form-text test-drive-warning-message">
+                            <span *ngIf="showExpertStepWarning()" translate>
+                                <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+                                sites.wizard.expertStepWarning
+                            </span>
+                        </small>
+                    </div>
+                </div>
+                <div class="row site-wizard-notification-container">
+                    <div class="col-12">
+                        <small class="form-text test-drive-warning-message">
+                            <span *ngIf="showBeverageStepWarning()" translate>
+                                <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+                                sites.wizard.beverageStepWarning
+                            </span>
+                        </small>
+                    </div>
+                </div>
+                <div class="row site-wizard-notification-container">
+                    <div class="col-12">
+                        <small class="form-text test-drive-warning-message">
+                            <span *ngIf="showRouteStepWarning()" translate>
+                                <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+                                sites.wizard.routeStepWarning
+                            </span>
+                        </small>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
