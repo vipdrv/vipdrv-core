@@ -23,6 +23,9 @@ export class SiteEntityPolicyService
     canUseWizard(entity: SiteEntity): boolean {
         return this.canUpdateEntity(entity);
     }
+    canManageOtherOwnerSites(): boolean {
+        return this.isGrantedPermission(permissionNames.canAllSite);
+    }
 
     canGet(): boolean {
         return true;

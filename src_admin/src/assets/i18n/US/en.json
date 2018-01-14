@@ -99,15 +99,20 @@
     },
     "modal": {
       "title": "Site details",
-      "siteName": "Site Name",
+      "siteOwner": "Site owner",
+      "siteOwnerHelp": "Select the name of the site owner.",
+      "siteName": "Site name",
       "siteNameHelp": "Enter the name of the site.",
       "siteUrl": "Site url",
       "siteUrlHelp": "Enter the url of the site (like http://yoursite.url).",
       "weekSchedule": "Working hours"
     },
     "table": {
+      "headerText_siteImage": "Image",
       "headerText_siteName": "Site name",
+      "headerText_ownerName": "Owner",
       "headerText_leads": "Leads amount",
+      "headerText_dealerName": "Dealer",
       "headerText_actions": "Actions"
     },
     "overview":{
@@ -338,7 +343,8 @@
   "validation": {
     "sites": {
       "invalidNameMessage": "Site name is not valid!",
-      "invalidUrlMessage": "Site url is not valid!"
+      "invalidUrlMessage": "Site url is not valid!",
+      "invalidOwnerMessage": "Site owner is not valid (this field is required)!"
     },
     "registrationModel": {
       "invalidEmailMessage": "Email address is not valid!",

@@ -32,6 +32,7 @@ export class SiteCardsComponent implements OnInit {
     protected siteImageWidth: number = SitesConstants.siteImageWidth;
     protected forceAcceptImage: boolean = false;
     protected isWeekScheduleOpenedByDefault: boolean = false;
+    protected defaultSorting: string = 'name asc';
     /// data fields
     protected items: Array<SiteEntity>;
     protected selectedEntity: SiteEntity;
@@ -75,7 +76,7 @@ export class SiteCardsComponent implements OnInit {
     protected onResetForceAcceptImage(): void {
         this.forceAcceptImage = false;
     }
-    protected getNewLeadsForSuteUrl(siteId: number) {
+    protected getNewLeadsForSiteUrl(siteId: number) {
         return '/#/pages/leads';
     }
     protected getManyEntities(): Promise<void> {
@@ -84,12 +85,10 @@ export class SiteCardsComponent implements OnInit {
             userId: this.authorizationManager.currentUserId
         };
         self._getManyPromise = self.siteApiService
-            .getAll(0, 25, null, filter)
-            .then(function (response: GetAllResponse<SiteEntity>): Promise<void> {
+            .getAll(0, 25, self.defaultSorting, filter)
+            .then(function (response: GetAllResponse<SiteEntity>): void {
                 self.items = response.items;
                 self.totalCount = response.totalCount;
-                self._getManyPromise = null;
-                return Promise.resolve();
             })
             .then(
                 () => {
