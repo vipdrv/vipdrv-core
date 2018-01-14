@@ -116,34 +116,15 @@
       "headerText_actions": "Actions"
     },
     "overview":{
-      "name": "Name:",
-      "siteId": "SiteId:",
-      "beautyId": "Beauty id:",
-      "experts": "Experts:",
-      "noExperts": "no experts",
-      "activeExperts_amount": "{{amount}} active",
-      "noActiveExperts": "no active",
-      "notActiveExperts_amount": "{{amount}} not active",
-      "beverages": "Beverages:",
-      "noBeverages": "no beverages",
-      "activeBeverages_amount": "{{amount}} active",
-      "noActiveBeverages": "no active",
-      "notActiveBeverages_amount": "{{amount}} not active",
-      "routes": "Routes:",
-      "noRoutes": "no routes",
-      "activeRoutes_amount": "{{amount}} active",
-      "noActiveRoutes": "no active",
-      "notActiveRoutes_amount": "{{amount}} not active",
       "widget_preview": "Widget preview",
       "openWidget": "Open widget",
       "integrationTitle": "Integration",
       "wizardTitle": "Wizard"
-
     },
     "details": {
       "title": "Sites",
       "tabs":{
-        "overview": "Overview",
+        "overview": "Widget",
         "wizard": "Step wizard",
         "experts": "Experts",
         "beverages": "Beverages",
