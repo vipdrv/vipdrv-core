@@ -106,8 +106,11 @@
       "weekSchedule": "Working hours"
     },
     "table": {
+      "headerText_siteImage": "Image",
       "headerText_siteName": "Site name",
+      "headerText_ownerName": "Owner",
       "headerText_leads": "Leads amount",
+      "headerText_dealerName": "Dealer",
       "headerText_actions": "Actions"
     },
     "overview":{

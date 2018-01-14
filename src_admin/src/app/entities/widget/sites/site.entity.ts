@@ -18,6 +18,7 @@ export class SiteEntity extends Entity {
     routesAmount: number;
     activeRoutesAmount: number;
     dealerName: string;
+    ownerName: string;
     dealerAddress: string;
     dealerPhone: string;
     workingHours: Array<WorkingInterval>;
@@ -41,6 +42,7 @@ export class SiteEntity extends Entity {
         this.userId = mock.userId;
         this.beautyId = mock.beautyId;
         this.name = mock.name;
+        this.ownerName = mock.ownerName;
         this.url = mock.url;
         this.contacts = mock.contacts;
         this.leadsAmount = mock.leadsAmount;

@@ -9,14 +9,14 @@ import { IExpertValidationService, ExpertValidationService } from './../../../se
 import { ExpertEntity } from './../../../entities/index';
 @Component({
     selector: 'experts-table',
+    templateUrl: './expertsTable.html',
     styleUrls: ['./expertsTable.scss'],
-    templateUrl: './expertsTable.html'
 })
 export class ExpertsTableComponent implements OnInit {
     /// inputs
     @Input() siteId: number;
     @Input() filter: any;
-    @Input() defaultExpertSchedule: Array<WorkingInterval>
+    @Input() defaultExpertSchedule: Array<WorkingInterval>;
     /// outputs
     @Output() onEntityChanged: EventEmitter<any> = new EventEmitter<any>();
     @Output() resetForceAcceptImage: EventEmitter<void> = new EventEmitter<void>();
@@ -336,7 +336,6 @@ export class ExpertsTableComponent implements OnInit {
         }
         if (this.entityValidationService.isValid(this.selectedEntity)) {
             const self = this;
-            self.isWeekScheduleOpenedByDefault = false;
             self._useValidation = false;
             self.forceAcceptImage = true;
             setTimeout(
