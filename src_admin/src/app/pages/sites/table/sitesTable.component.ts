@@ -5,7 +5,8 @@ import { ApplicationConstants } from './../../../app.constants';
 import { SitesConstants } from './../sites.constants';
 import { Variable, ILogger, ConsoleLogger } from './../../../utils/index';
 import { IAuthorizationService, AuthorizationService } from './../../../services/index';
-import { ISiteApiService, SiteApiService, GetAllResponse } from './../../../services/serverApi/index';
+import { ISiteApiService, SiteApiService, GetAllResponse } from './../../../services/serverApi/index'
+import { IUserApiService, UserApiService } from './../../../services/serverApi/index';
 import { ISiteEntityPolicyService, SiteEntityPolicyService } from './../../../services/index';
 import { ISiteValidationService, SiteValidationService } from './../../../services/index';
 import { SiteEntity } from './../../../entities/index';
@@ -16,6 +17,8 @@ import { SiteEntity } from './../../../entities/index';
 })
 export class SitesTableComponent implements OnInit {
     /// inputs
+    @Input() pageNumber: number;
+    @Input() pageSize: number;
     @Input() filter: any;
     /// outputs
     @Output() onEntityChanged: EventEmitter<any> = new EventEmitter<any>();
@@ -26,9 +29,17 @@ export class SitesTableComponent implements OnInit {
     @ViewChild('editModal')
     protected editModal: ModalComponent;
     /// service fields
-    private _defaultPageNumber: number = 0;
-    private _defaultPageSize: number = 10;
-    private _defaultSorting: string = 'name asc';
+    protected maxPaginationSize: number = 3;
+    protected pageSizeValues: Array<number> = [5, 10, 25, 50, 100];
+    /// data fields
+    protected ownerOptions: Array<any> = [
+        {
+            value: null,
+            displayText: 'filters.all'
+        },
+    ];
+    private _defaultPageNumber: number = 1;
+    private _defaultPageSize: number = 5;
     private _defaultFilter: any = null;
     private _useValidation: boolean = false;
     protected forceAcceptImage: boolean = false;
@@ -57,6 +68,7 @@ export class SitesTableComponent implements OnInit {
     protected entityApiService: ISiteApiService;
     protected entityPolicyService: ISiteEntityPolicyService;
     protected entityValidationService: ISiteValidationService;
+    protected userApiService: IUserApiService;
     /// ctor
     constructor(
         logger: ConsoleLogger,
@@ -64,23 +76,54 @@ export class SitesTableComponent implements OnInit {
         authorizationManager: AuthorizationService,
         entityApiService: SiteApiService,
         entityPolicyService: SiteEntityPolicyService,
-        entityValidationService: SiteValidationService) {
+        entityValidationService: SiteValidationService,
+        userApiService: UserApiService) {
         this.logger = logger;
         this.router = router;
         this.authorizationManager = authorizationManager;
         this.entityApiService = entityApiService;
         this.entityPolicyService = entityPolicyService;
         this.entityValidationService = entityValidationService;
+        this.userApiService = userApiService;
         this.logger.logDebug('SitesTableComponent: Component has been constructed.');
     }
     /// methods
     ngOnInit(): void {
         const self = this;
+        this.pageNumber = Variable.isNotNullOrUndefined(this.pageNumber) ? this.pageNumber : this._defaultPageNumber;
+        this.pageSize = Variable.isNotNullOrUndefined(this.pageSize) ? this.pageSize : this._defaultPageSize;
+        this.filter = Variable.isNotNullOrUndefined(this.filter) ? this.filter : this._defaultFilter;
         self.firstLoadingPromise = self
             .getAllEntities()
             .then(
                 () => self.firstLoadingPromise = null,
                 () => self.firstLoadingPromise = null);
+        self.fillFilters();
+        this.logger.logDebug('SitesTableComponent: Component has been initialized.');
+    }
+    protected fillFilters(): Promise<any> {
+        return this.fillOwnersFilter();
+    }
+    protected fillOwnersFilter(): Promise<void> {
+        const self = this;
+        self.logger.logTrase('SitesTableComponent: Get relations (all owners) called.');
+        return self.userApiService
+            .getAll(0, 50, 'firstName asc', null)
+            .then(function (response: GetAllResponse<any>): void {
+                for (const item of response.items) {
+                    self.ownerOptions.push({
+                        value: item.id,
+                        displayText: `${item.firstName} ${item.secondName}`,
+                    });
+                }
+            })
+            .then(
+                () => {
+
+                },
+                () => {
+
+                });
     }
     protected onResetForceAcceptImage(): void {
         this.forceAcceptImage = false;
@@ -105,7 +148,7 @@ export class SitesTableComponent implements OnInit {
     protected getAllEntities(): Promise<void> {
         const self = this;
         self.getAllPromise = self.entityApiService
-            .getAll(self.getPageNumber(), self.getPageSize(), self.buildSorting(), self.buildFilter())
+            .getAll(self.pageNumber - 1, self.pageSize, self.buildSorting(), self.buildFilter())
             .then(function (response: GetAllResponse<SiteEntity>): Promise<void> {
                 self.totalCount = response.totalCount;
                 self.items = response.items;
@@ -270,6 +313,18 @@ export class SitesTableComponent implements OnInit {
         return Variable.isNotNullOrUndefined(this.getAllPromise);
     }
     /// helpers
+    protected onPageNumberChanged(): void {
+        // js hack to start this operation after binding finished
+        setTimeout(() => this.getAllEntities(), 0);
+    }
+    protected onPageSizeChanged(): void {
+        if (this.pageNumber === this._defaultPageNumber) {
+            this.onPageNumberChanged();
+        } else {
+            // js hack to start this operation after binding finished; also auto initiate change page event
+            setTimeout(() => this.pageNumber = this._defaultPageNumber, 0);
+        }
+    }
     private openModalWithDetalizedEntity(modal: ModalComponent, entityId: number): Promise<void> {
         const self = this;
         self.getEntityId = entityId;
@@ -291,17 +346,148 @@ export class SitesTableComponent implements OnInit {
             );
         return self.getPromise;
     }
-    private getPageNumber(): number {
-        return this._defaultPageNumber;
+    // pagination
+    isPageSizeChangeAllowed(): boolean {
+        return true;
     }
-    private getPageSize(): number {
-        return this._defaultPageSize;
+    isPageSizeChangeDisabled(): boolean {
+        return this.isAnyOperationWithEntityProcessing();
     }
-    private buildSorting(): string {
-        return this._defaultSorting;
+    isPaginationAllowed(): boolean {
+        return this.pageSize < this.totalCount;
     }
-    private buildFilter(): any {
-        return Variable.isNotNullOrUndefined(this.filter) ? this.filter : this._defaultFilter;
+    isPaginationDisabled(): boolean {
+        return this.isAnyOperationWithEntityProcessing();
+    }
+    // filters
+    protected applyFilters(): Promise<void> {
+        const filtersWereNotChanged: boolean =
+            this.tableFilters.name === this.oldTableFilters.name &&
+            this.tableFilters.dealer === this.oldTableFilters.dealer &&
+            this.tableFilters.userId === this.oldTableFilters.userId;
+        if (!filtersWereNotChanged) {
+            this.oldTableFilters = {};
+            this.oldTableFilters.name = this.tableFilters.name;
+            this.oldTableFilters.dealer = this.tableFilters.dealer;
+            this.oldTableFilters.userId = this.tableFilters.userId;
+            if (this.pageNumber === this._defaultPageNumber) {
+                return this.getAllEntities();
+            } else {
+                // js hack to start this operation after binding finished; also auto initiate change page event
+                setTimeout(() => this.pageNumber = this._defaultPageNumber, 0);
+                return Promise.resolve();
+            }
+        } else {
+            return Promise.resolve();
+        }
+    }
+    isFilteringAllowed(): boolean {
+        return true;
+    }
+    isFilteringDisabled(): boolean {
+        return this.isAnyOperationWithEntityProcessing();
+    }
+    /// table filters
+    protected tableFilters: any = {
+        name: null,
+        userId: null,
+        dealer: null,
+    }
+    protected oldTableFilters: any = {
+        name: null,
+        userId: null,
+        dealer: null,
+    }
+    protected buildFilter(): any {
+        const filter = Object.assign({}, this.filter);
+        this.extendFilter(filter);
+        return filter;
+    }
+    protected extendFilter(filter: any): void {
+        if (Variable.isNullOrUndefined(filter)) {
+            throw new Error('Argument exception! (extendFilter requires defined argument filter)');
+        }
+        if (Variable.isNotNullOrUndefined(this.tableFilters.name) && this.tableFilters.name !== '') {
+            filter.name = this.tableFilters.name;
+        }
+        if (Variable.isNotNullOrUndefined(this.tableFilters.dealer) && this.tableFilters.dealer !== '') {
+            filter.dealer = this.tableFilters.dealer;
+        }
+        if (Variable.isNotNullOrUndefined(this.tableFilters.userId)) {
+            filter.userId = this.tableFilters.userId;
+        }
+    }
+    /// sorting
+    protected sortingRules: Array<any> = [
+        {
+            field: 'name',
+            isAsc: true,
+        },
+    ];
+    protected isSortingAsc(targetField: string): boolean {
+        const rule = this.getSortingRule(targetField);
+        return Variable.isNotNullOrUndefined(rule) && rule.isAsc;
+    }
+    protected isSortingDesc(targetField: string): boolean {
+        const rule = this.getSortingRule(targetField);
+        return Variable.isNotNullOrUndefined(rule) && !rule.isAsc;
+    }
+    protected getSortingRule(targetField: string): any {
+        const elems = this.sortingRules.filter(r => r.field === targetField);
+        return elems.length === 1 ? elems[0] : null;
+    }
+    protected getSortingIndex(targetField: string): number {
+        let result: number;
+        if (this.sortingRules.length > 1) {
+            const index = this.sortingRules.findIndex(r => r.field === targetField);
+            if (index > -1) {
+                result = index + 1;
+            }
+        } else {
+            result = null;
+        }
+        return result;
+    }
+    protected changeSorting(targetField: string): Promise<void> {
+        let actionPromise: Promise<void>;
+        if (this.isChangeSortingDisabled()) {
+            actionPromise = Promise.resolve();
+        } else {
+            const rule = this.getSortingRule(targetField);
+            if (Variable.isNotNullOrUndefined(rule)) {
+                if (rule.isAsc) {
+                    rule.isAsc = false;
+                } else {
+                    const index = this.sortingRules.findIndex(r => r.field === targetField);
+                    if (index > -1) {
+                        this.sortingRules.splice(index, 1);
+                    }
+                }
+            } else {
+                this.sortingRules.push({
+                    field: targetField,
+                    isAsc: true,
+                });
+            }
+            actionPromise = this.getAllEntities();
+        }
+        return actionPromise;
+    }
+    protected isChangeSortingDisabled(): boolean {
+        return this.isAnyOperationWithEntityProcessing();
+    }
+    protected buildSorting(): string {
+        let sorting: string = null;
+        if (this.sortingRules.length > 0) {
+            sorting = '';
+            for (let i = 0; i < this.sortingRules.length; i++) {
+                sorting += `${this.sortingRules[i].field} ${this.sortingRules[i].isAsc ? 'asc' : 'desc'}`;
+                if (i < this.sortingRules.length - 1) {
+                    sorting += ', '
+                }
+            }
+        }
+        return sorting;
     }
     /// confirmation delete modal
     protected deleteCandidateId: number;

@@ -10,12 +10,14 @@
             </nav>
         </div>
     </div>
-    <!--<div class="row test-drive-page-content">-->
-        <!--<div class="col-12">-->
-            <!--<site-cards></site-cards>-->
-        <!--</div>-->
-    <!--</div>-->
-    <div class="row test-drive-page-content">
+    <div class="row test-drive-page-content"
+         *ngIf="!entityPolicyService.canManageOtherOwnerSites()">
+        <div class="col-12">
+            <site-cards></site-cards>
+        </div>
+    </div>
+    <div class="row test-drive-page-content"
+         *ngIf="entityPolicyService.canManageOtherOwnerSites()">
         <div class="col-12">
             <sites-table></sites-table>
         </div>

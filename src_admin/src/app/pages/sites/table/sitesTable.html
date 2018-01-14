@@ -1,23 +1,51 @@
 <div class="many-entities-template">
     <div class="row test-drive-many-entities-template-header mt-2">
         <div class="col-12">
-            <button class="btn btn-secondary btn-sm pull-left test-drive-left-standalone-btn"
-                    type="button"
-                    *ngIf="entityPolicyService.canGet()"
-                    [disabled]="isAnyOperationWithEntityProcessing()"
-                    (click)="getAllEntities(); $event.stopPropagation();">
-                <i class="fa fa-refresh fa-spin" *ngIf="isOperationGetManyProcessing()"></i>
-                <i class="fa fa-refresh" *ngIf="!isOperationGetManyProcessing()"></i>
-            </button>
-            <button type="button"
-                    class="btn btn-outline-success btn-sm pull-right test-drive-right-standalone-btn"
-                    *ngIf="entityPolicyService.canCreate()"
-                    [disabled]="isAnyOperationWithEntityProcessing()"
-                    (click)="createModalOpen(); $event.stopPropagation();">
-                <i class="fa fa-spinner fa-pulse" *ngIf="isOperationCreateProcessing()"></i>
-                <i class="fa fa-plus" *ngIf="!isOperationCreateProcessing()"></i>
-                <span translate>general.actions.text_create</span>
-            </button>
+            <div class="pull-left">
+                <button class="btn btn-secondary btn-sm pull-left test-drive-left-standalone-btn sites-refresh-btn"
+                        type="button"
+                        *ngIf="entityPolicyService.canGet()"
+                        [disabled]="isAnyOperationWithEntityProcessing()"
+                        (click)="getAllEntities(); $event.stopPropagation();">
+                    <i class="fa fa-refresh fa-spin" *ngIf="isOperationGetManyProcessing()"></i>
+                    <i class="fa fa-refresh" *ngIf="!isOperationGetManyProcessing()"></i>
+                </button>
+                <select class="form-control-sm sites-page-size-control"
+                        *ngIf="isPageSizeChangeAllowed()"
+                        [disabled]="isPageSizeChangeDisabled()"
+                        [(ngModel)]="pageSize"
+                        (change)="onPageSizeChanged($event)">
+                    <option *ngFor="let item of pageSizeValues"
+                            [ngValue]="item">
+                        {{item}}
+                    </option>
+                </select>
+            </div>
+            <div class="pull-left"
+                 *ngIf="isPaginationAllowed()">
+                <pagination class="pagination-sm"
+                            [disabled]="isPaginationDisabled()"
+                            [(ngModel)]="pageNumber"
+                            [totalItems]="totalCount"
+                            [itemsPerPage]="pageSize"
+                            [maxSize]="maxPaginationSize"
+                            [boundaryLinks]="true"
+                            [rotate]="false"
+                            (pageChanged)="onPageNumberChanged($event)"
+                            (numPages)="numPages = $event">
+                </pagination>
+            </div>
+            <div class="pull-right">
+                <button type="button"
+                        class="btn btn-outline-success btn-sm pull-right test-drive-right-standalone-btn"
+                        *ngIf="entityPolicyService.canCreate()"
+                        [disabled]="isAnyOperationWithEntityProcessing()"
+                        (click)="createModalOpen(); $event.stopPropagation();">
+                    <i class="fa fa-spinner fa-pulse" *ngIf="isOperationCreateProcessing()"></i>
+                    <i class="fa fa-plus" *ngIf="!isOperationCreateProcessing()"></i>
+                    <span translate>general.actions.text_create</span>
+                </button>
+            </div>
         </div>
     </div>
     <div class="test-drive-many-entities-template-body">
@@ -32,8 +60,18 @@
                             sites.table.headerText_siteImage
                         </th>
                         <th class="sites-table-body-column sites-table-body-column-header-full-name"
+                            (click)="changeSorting('name')"
                             translate>
                             sites.table.headerText_siteName
+                            <span class="soring-index pull-right">
+                                &nbsp;{{getSortingIndex('name')}}
+                            </span>
+                            <i class="fa fa-sort-amount-asc pull-right"
+                               aria-hidden="true"
+                               *ngIf="isSortingAsc('name')"></i>
+                            <i class="fa fa-sort-amount-desc pull-right"
+                               aria-hidden="true"
+                               *ngIf="isSortingDesc('name')"></i>
                         </th>
                         <th class="sites-table-body-column sites-table-body-column-header-owner-name"
                             translate>
@@ -43,13 +81,44 @@
                             translate>
                             sites.table.headerText_dealerName
                         </th>
-                        <th class="sites-table-body-column sites-table-body-column-header-leads"
+                        <th class="sites-table-body-column sites-table-body-column-header-leads hidden-md-down"
                             translate>
                             sites.table.headerText_leads
                         </th>
                         <th class="sites-table-body-column sites-table-body-column-actions"></th>
                     </tr>
                     </thead>
+                    <tr class="sites-table-body-row-filters"
+                        *ngIf="isFilteringAllowed()">
+                        <td></td>
+                        <td>
+                            <input type="text"
+                                   class="form-control form-control-sm"
+                                   [disabled]="isFilteringDisabled()"
+                                   [(ngModel)]="tableFilters.name"
+                                   (blur)="applyFilters()"/>
+                        </td>
+                        <td>
+                            <select class="form-control form-control-sm"
+                                    [disabled]="isFilteringDisabled()"
+                                    (change)="applyFilters()"
+                                    [(ngModel)]="tableFilters.userId">
+                                <option *ngFor="let option of ownerOptions"
+                                        [ngValue]="option.value">
+                                    <span translate>{{option.displayText}}</span>
+                                </option>
+                            </select>
+                        </td>
+                        <td>
+                            <input type="text"
+                                   class="form-control form-control-sm"
+                                   [disabled]="isFilteringDisabled()"
+                                   [(ngModel)]="tableFilters.dealer"
+                                   (blur)="applyFilters()"/>
+                        </td>
+                        <td class="hidden-md-down"></td>
+                        <td></td>
+                    </tr>
                     <tbody>
                     <tr class="sites-table-body-row"
                         [ngClass]="getClassesForTableRow(item)"
@@ -69,7 +138,7 @@
                         <td class="sites-table-body-column sites-table-body-column-body-dealer-name">
                             {{item.dealerName}}
                         </td>
-                        <td class="sites-table-body-column sites-table-body-column-body-leads">
+                        <td class="sites-table-body-column sites-table-body-column-body-leads hidden-md-down">
                             {{item.leadsAmount}}&nbsp;
                             <span class="badge badge-danger"
                                   style="font-size: 100%"
@@ -130,6 +199,7 @@
                            [useValidation]="isValidationActivated()"
                            [entity]="selectedEntity"
                            [forceAcceptImage]="forceAcceptImage"
+                           [ownerOptions]="ownerOptions"
                            [isWeekScheduleOpenedByDefault]="isWeekScheduleOpenedByDefault"
                            (resetForceAcceptImage)="onResetForceAcceptImage($event)"></site-details-edit>
     </modal-body>

@@ -4,4 +4,5 @@ import { IEntityPolicyService } from './../../../i-entity.policy-service';
 export interface ISiteEntityPolicyService extends IEntityPolicyService<SiteEntity> {
     canUpdateContacts(): boolean;
     canUseWizard(entity: SiteEntity): boolean;
+    canManageOtherOwnerSites(): boolean;
 }

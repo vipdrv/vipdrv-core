@@ -39,7 +39,7 @@ namespace QuantumLogic.Core.Constants
         #endregion
 
         #region WidgetModule QuantumLogic permission names
-
+        
         public const string CanAllSite = "CanAllSite";
         public const string CanRetrieveSite = "CanRetrieveSite";
         public const string CanCreateSite = "CanCreateSite";

@@ -6,6 +6,8 @@ using QuantumLogic.Core.Domain.Services.Main.Users;
 using QuantumLogic.Core.Domain.UnitOfWorks;
 using QuantumLogic.Core.Exceptions.Authorization;
 using QuantumLogic.Core.Exceptions.Validation;
+using QuantumLogic.Core.Utils.Email;
+using QuantumLogic.Core.Utils.Email.Data.Templates;
 using QuantumLogic.WebApi.DataModels.Dtos.Main.Invitations;
 using QuantumLogic.WebApi.DataModels.Dtos.Main.Users;
 using QuantumLogic.WebApi.DataModels.Requests.Main.Users;
@@ -16,10 +18,6 @@ using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Net;
 using System.Threading.Tasks;
-using QuantumLogic.Core.Utils.Email;
-using QuantumLogic.Core.Utils.Email.Data;
-using QuantumLogic.Core.Utils.Email.Data.Templates;
-using SendGrid;
 
 namespace QuantumLogic.WebApi.Controllers.Main
 {
