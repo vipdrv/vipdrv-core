@@ -54,7 +54,7 @@ export abstract class BaseLogger implements ILogger {
     }
 
     disable(...logLevels: Array<LogLevel>): void {
-        let self: BaseLogger = this;
+        const self: BaseLogger = this;
         logLevels.forEach(
             function (
                 value: LogLevel,
@@ -109,8 +109,8 @@ export abstract class BaseLogger implements ILogger {
         this._logLevelStateDictionary
             .addOrUpdate(
                 LogLevel.getName(logLevel),
-                true,
-                function (key: string, value: boolean): boolean { return true; }
+                newState,
+                function (key: string, value: boolean): boolean { return newState; }
             );
     }
 }
