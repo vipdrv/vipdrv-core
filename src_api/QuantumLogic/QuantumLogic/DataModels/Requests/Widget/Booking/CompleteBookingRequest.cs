@@ -11,7 +11,7 @@ namespace QuantumLogic.WebApi.DataModels.Requests.Widget.Booking
     {
         public BookingUser BookingUser { get; set; }
         public DateTime? BookingDateTime { get; set; }
-        public BookingCar BookingCar { get; set; }
+        public BookingVehicle BookingVehicle { get; set; }
         public int? ExpertId { get; set; }
         public int? BeverageId { get; set; }
         public int? RoadId { get; set; }
@@ -19,7 +19,7 @@ namespace QuantumLogic.WebApi.DataModels.Requests.Widget.Booking
         public CompleteBookingRequest()
         {
             BookingUser = new BookingUser();
-            BookingCar = new BookingCar();
+            BookingVehicle = new BookingVehicle();
         }
 
         public virtual LeadFullDto MapToLeadFullDto(int siteId)
@@ -35,10 +35,10 @@ namespace QuantumLogic.WebApi.DataModels.Requests.Widget.Booking
                 userPhone: BookingUser.Phone,
                 userEmail: BookingUser.Email,
                 userComment: BookingUser.Comment,
-                carImageUrl: BookingCar.ImageUrl,
-                carTitle: BookingCar.Title,
-                carVin: BookingCar.Vin,
-                vdpUrl: BookingCar.VdpUrl,
+                carImageUrl: BookingVehicle.ImageUrl,
+                carTitle: BookingVehicle.Title,
+                carVin: BookingVehicle.Vin,
+                vdpUrl: BookingVehicle.VdpUrl,
                 bookingDateTimeUtc: BookingDateTime,
                 isNew: true);
         }
@@ -53,20 +53,22 @@ namespace QuantumLogic.WebApi.DataModels.Requests.Widget.Booking
         public string Comment { get; set; }
     }
 
-    public class BookingCar
+    public class BookingVehicle
     {
-        // Vehicle identification number
         public string Vin { get; set; }
-        public string ImageUrl { get; set; }
-        // Vehicle details page URL
-        public string VdpUrl { get; set; }
+        public string Stock { get; set; }
+        public string Year { get; set; }
+        public string Make { get; set; }
+        public string Model { get; set; }
+        public string Body { get; set; }
         public string Title { get; set; }
         public string Engine { get; set; }
-        public string Year { get; set; }
-        public string Color { get; set; }
+        public string Exterior { get; set; }
+        public string Interior { get; set; }
+        public string Drivetrain { get; set; }
         public string Transmission { get; set; }
-        public string Fuel { get; set; }
-        // Vehicle status: new | used
-        public string Status { get; set; }
+        public string Msrp { get; set; }
+        public string ImageUrl { get; set; }
+        public string VdpUrl { get; set; }
     }
 }

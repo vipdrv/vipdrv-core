@@ -147,7 +147,7 @@
                     smsDto.bookingDateTime = moment(dateTime).format('YYYY-MM-DD HH:mm');
                 }
                 smsDto.phone = bookingData.user.phone || null;
-                smsDto.vehicleTitle = bookingData.car.title || "Not specified";
+                smsDto.vehicleTitle = bookingData.vehicle.title || "Not specified";
                 smsDto.expertName = bookingData.expert.name || "Skipped by customer";
                 smsDto.beverageName = bookingData.beverage.name || "Skipped by customer";
                 smsDto.roadName = bookingData.road.name || "Skipped by customer";
@@ -168,10 +168,23 @@
                         comment: null
                     },
                     bookingDateTime: null,
-                    bookingCar: {
-                        VIN: null,
+                    bookingVehicle: {
+                        vin: null,
+                        stock: null,
+                        year: null,
+                        make: null,
+                        model: null,
+                        body: null,
+                        title: null,
+                        engine: null,
+                        exterior: null,
+                        interior: null,
+                        drivetrain: null,
+                        transmission: null,
+                        msrp: null,
                         imageUrl: null,
-                        title: null
+                        vdpUrl: null
+
                     },
                     expertId: null,
                     beverageId: null,
@@ -179,20 +192,31 @@
                 };
 
                 bookingDto.bookingUser.firstName = bookingData.user.firstName || null;
-                bookingDto.bookingUser.lastName = bookingData.user.lastName || '';
+                bookingDto.bookingUser.lastName = bookingData.user.lastName || null;
                 bookingDto.bookingUser.phone = bookingData.user.phone || null;
                 bookingDto.bookingUser.email = bookingData.user.email || null;
-                bookingDto.bookingUser.comment = bookingData.user.comment || '';
+                bookingDto.bookingUser.comment = bookingData.user.comment || null;
 
                 if (bookingData.calendar.date && bookingData.calendar.time) {
                     var dateTime = bookingData.calendar.date + ' ' + bookingData.calendar.time;
                     bookingDto.bookingDateTime = moment(dateTime).format('YYYY-MM-DD HH:mm');
                 }
 
-                bookingDto.bookingCar.title = bookingData.car.title || "Not specified";
-                bookingDto.bookingCar.VIN = bookingData.car.vin || "Not specified";
-                bookingDto.bookingCar.imageUrl = bookingData.car.imageUrl || 'http://widget.testdrive.pw/img/default-car.png';
-                bookingDto.bookingCar.vdpUrl = bookingData.car.vdpUrl || '#';
+                bookingDto.bookingVehicle.vin = bookingData.vehicle.vin || null;
+                bookingDto.bookingVehicle.stock = bookingData.vehicle.stock || null;
+                bookingDto.bookingVehicle.year = bookingData.vehicle.year || null;
+                bookingDto.bookingVehicle.make = bookingData.vehicle.make || null;
+                bookingDto.bookingVehicle.model = bookingData.vehicle.model || null;
+                bookingDto.bookingVehicle.body = bookingData.vehicle.body || null;
+                bookingDto.bookingVehicle.title = bookingData.vehicle.title || null;
+                bookingDto.bookingVehicle.engine = bookingData.vehicle.engine || null;
+                bookingDto.bookingVehicle.exterior = bookingData.vehicle.exterior || null;
+                bookingDto.bookingVehicle.interior = bookingData.vehicle.interior || null;
+                bookingDto.bookingVehicle.drivetrain = bookingData.vehicle.drivetrain || null;
+                bookingDto.bookingVehicle.transmission = bookingData.vehicle.transmission || null;
+                bookingDto.bookingVehicle.msrp = bookingData.vehicle.msrp || null;
+                bookingDto.bookingVehicle.imageUrl = bookingData.vehicle.imageUrl || 'http://widget.testdrive.pw/img/default-car.png';
+                bookingDto.bookingVehicle.vdpUrl = bookingData.vehicle.vdpUrl || '#';
 
                 bookingDto.expertId = bookingData.expert.id || null;
                 bookingDto.beverageId = bookingData.beverage.id || null;
