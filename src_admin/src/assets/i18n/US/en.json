@@ -8,7 +8,8 @@
       "sites": "Sites",
       "settings": "Settings",
       "invitations": "Invitations",
-      "test": "Test-page"
+      "test": "Test-page",
+      "users": "Users"
     },
     "actions": {
       "login": "Login",
@@ -26,7 +27,7 @@
       "modalClose": "Close",
       "modalApply": "Save"
     },
-    "table":{
+    "table": {
       "headerText": {
         "activity": "Is active",
         "order": "Order"
@@ -43,19 +44,17 @@
     }
   },
   "utils": {
-    "components":{
-     "workingHours": {
-       "noWorkingIntervals": "There are no working hours yet",
-       "cancel": "Undo changes",
-       "apply": "Save"
-     }
+    "components": {
+      "workingHours": {
+        "noWorkingIntervals": "There are no working hours yet",
+        "cancel": "Undo changes",
+        "apply": "Save"
+      }
     }
   },
   "home": {
-
   },
   "integration": {
-
   },
   "leads": {
     "title": "Leads",
@@ -115,7 +114,7 @@
       "headerText_dealerName": "Dealer",
       "headerText_actions": "Actions"
     },
-    "overview":{
+    "overview": {
       "widget_preview": "Widget preview",
       "openWidget": "Open widget",
       "integrationTitle": "Integration",
@@ -123,7 +122,7 @@
     },
     "details": {
       "title": "Sites",
-      "tabs":{
+      "tabs": {
         "overview": "Widget",
         "wizard": "Step wizard",
         "experts": "Experts",
@@ -184,6 +183,20 @@
       "expertEmailHelp": "Enter the contact e-mail of the expert (is not required).",
       "expertPhoneNumber": "Contact phone number",
       "expertPhoneNumberHelp": "Enter the contact phone number of the expert (is not required)."
+    }
+  },
+  "users": {
+    "modal": {
+      "userName": "Login",
+      "userNameHelp": "Enter the Login name of the User.",
+      "titleInfo": "User details",
+      "titleCreate": "Creating user",
+      "cancel": "Cancel",
+      "apply": "Apply",
+      "email": "Email",
+      "emailHelp": "Enter email to send invitation.",
+      "phoneNumber": "Phone number",
+      "role": "Expected role"
     }
   },
   "beverages": {
@@ -279,6 +292,7 @@
       "invitator": "Creator"
     }
   },
+
   "userProfile": {
     "userProfileMainTitle": "Personal data",
     "tabs": {

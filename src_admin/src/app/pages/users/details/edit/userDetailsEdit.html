@@ -1,0 +1,128 @@
+<div class="test-drive-modal-body-edit-entity-container">
+    <div class="row">
+        <div class="col-12">
+            <!--<image-select [isReadOnly]="isImageComponentReadOnly()"-->
+            <!--[imageUrl]="entity.photoUrl"-->
+            <!--[defaultImageUrl]="defaultImageUrl"-->
+            <!--[imageWidth]="imageWidth"-->
+            <!--[imageHeight]="imageHeight"-->
+            <!--[isRounded]="isImageRounded"-->
+            <!--[imageAlt]="imageAlt"-->
+            <!--[columnRules]="columnRules"-->
+            <!--[forceAcceptImage]="forceAcceptImage"-->
+            <!--(imageUrlSelected)="onNewImageSelected($event)"-->
+            <!--(resetForceAcceptImage)="onResetForceAcceptImage($event)"></image-select>-->
+            <h1>Avatar</h1>
+        </div>
+    </div>
+    <hr>
+    <div class="row">
+        <div class="col-12">
+            <div class="form-group">
+                <label for="userName" translate>
+                    experts.modal.userName
+                </label>
+                <input id="userName"
+                       name="userName"
+                       class="form-control"
+                       [ngClass]="extensions.getInputValidationClass(isValidationActive(), validationService.isValidUserName(entity))"
+                       [disabled]="isComponentReadOnly()"
+                       [(ngModel)]="entity.username">
+                <small class="form-text text-muted"
+                       *ngIf="!isValidationActive() || validationService.isValidUserName(entity)"
+                       translate>
+                    experts.modal.expertNameHelp
+                </small>
+                <small class="form-text test-drive-validation-message"
+                       *ngIf="isValidationActive() && !validationService.isValidUserName(entity)"
+                       translate>
+                    {{ validationService.getInvalidUserNameMessageKey(entity) }}
+                </small>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <div class="form-group">
+                <label for="expertTitle"
+                       class="test-drive-input-label"
+                       translate>
+                    experts.modal.expertTitle
+                </label>
+                <input id="expertTitle"
+                       name="expertTitle"
+                       type="text"
+                       class="form-control"
+                       [ngClass]="extensions.getInputValidationClass(isValidationActive(), validationService.isValidUserName(entity))"
+                       [disabled]="isComponentReadOnly()"
+                       [(ngModel)]="entity.username">
+                <small class="form-text text-muted"
+                       *ngIf="!isValidationActive() || validationService.isValidUserName(entity)"
+                       translate>
+                    experts.modal.expertTitleHelp
+                </small>
+                <small class="form-text test-drive-validation-message"
+                       *ngIf="isValidationActive() && !validationService.isValidUserName(entity)"
+                       translate>
+                    {{ validationService.getInvalidUserNameMessageKey(entity) }}
+                </small>
+            </div>
+        </div>
+    </div>
+
+    <div class="row hidden-md-down test-drive-modal-body-edit-entity-container-row-input">
+        <div class="col-6">
+            <div class="form-group">
+                <label for="expertEmailCol6"
+                       class="test-drive-input-label"
+                       translate>
+                    experts.modal.expertEmail
+                </label>
+                <input id="expertEmailCol6"
+                       name="expertEmail"
+                       type="email"
+                       class="form-control"
+                       [ngClass]="extensions.getInputValidationClass(isValidationActive(), validationService.isValidUserName(entity))"
+                       [disabled]="isComponentReadOnly()"
+                       [(ngModel)]="entity.email">
+                <small class="form-text text-muted"
+                       *ngIf="!isValidationActive() || validationService.isValidUserName(entity)"
+                       translate>
+                    experts.modal.expertEmailHelp
+                </small>
+                <small class="form-text test-drive-validation-message"
+                       *ngIf="isValidationActive() && !validationService.isValidUserName(entity)"
+                       translate>
+                    {{ validationService.getInvalidUserNameMessageKey(entity) }}
+                </small>
+            </div>
+        </div>
+        <div class="col-6">
+            <div class="form-group">
+                <label for="expertPhoneNumberCol6"
+                       class="test-drive-input-label"
+                       translate>
+                    experts.modal.expertPhoneNumber
+                </label>
+                <input id="expertPhoneNumberCol6"
+                       name="expertPhoneNumber"
+                       type="tel"
+                       class="form-control"
+                       [ngClass]="extensions.getInputValidationClass(isValidationActive(), validationService.isValidUserName(entity))"
+                       [disabled]="isComponentReadOnly()"
+                       [textMask]="{mask: usaPhoneMask}"
+                       [(ngModel)]="entity.phoneNumber">
+                <small class="form-text text-muted"
+                       *ngIf="!isValidationActive() || validationService.isValidUserName(entity)"
+                       translate>
+                    experts.modal.expertPhoneNumberHelp
+                </small>
+                <small class="form-text test-drive-validation-message"
+                       *ngIf="isValidationActive() && !validationService.isValidUserName(entity)"
+                       translate>
+                    {{ validationService.getInvalidUserNameMessageKey(entity) }}
+                </small>
+            </div>
+        </div>
+    </div>
+</div>

@@ -46,23 +46,24 @@ namespace QuantumLogic.WebApi.Controllers.Main
         [HttpGet("{id}")]
         public Task<UserFullDto> GetAsync(int id)
         {
+
             return InnerGetAsync(id);
         }
-        //[HttpPost]
-        //public Task<UserFullDto> CreateAsync([FromBody]UserFullDto request)
-        //{
-        //    return InnerCreateAsync(request);
-        //}
-        //[HttpPut]
-        //public Task<UserFullDto> UpdateAsync([FromBody]UserFullDto request)
-        //{
-        //    return InnerUpdateAsync(request);
-        //}
-        //[HttpDelete("{id}")]
-        //public Task DeleteAsync(int id)
-        //{
-        //    return InnerDeleteAsync(id);
-        //}
+        [HttpPost]
+        public Task<UserFullDto> CreateAsync([FromBody]UserFullDto request)
+        {
+            return InnerCreateAsync(request);
+        }
+        [HttpPut]
+        public Task<UserFullDto> UpdateAsync([FromBody]UserFullDto request)
+        {
+            return InnerUpdateAsync(request);
+        }
+        [HttpDelete("{id}")]
+        public Task DeleteAsync(int id)
+        {
+            return InnerDeleteAsync(id);
+        }
 
         #endregion
 
