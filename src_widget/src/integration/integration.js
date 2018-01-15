@@ -161,15 +161,21 @@
 
         parseVehicleDetailsFromNode: function (node) {
             var vehicle = {
-                carVin: null,
-                carImageUrl: null,
-                vdpUrl: null,
-                carTitle: null,
-                carEngine: null,
-                carYear: null,
-                carColor: null,
-                carTransmission: null,
-                carFuel: null
+                vin: null,
+                stock: null,
+                year: null,
+                make: null,
+                model: null,
+                body: null,
+                title: null,
+                engine: null,
+                exterior: null,
+                interior: null,
+                drivetrain: null,
+                transmission: null,
+                msrp: null,
+                imageUrl: null,
+                vdpUrl: null
             };
 
             var vehicleImageNode = node.querySelector('.vehicle-image img');
@@ -182,9 +188,8 @@
                     var imageFileName = imageUrl.split('/').slice(-1)[0];
 
                     if (imageFileName == 'loading.gif') {
-
-                        console.log(node);
-                        console.log(imageFileName);
+                        imageUrl = 'https://widget.testdrive.pw/img/default-car.png';
+                        // TODO: wait for image loaded
                     } else {
                         clearInterval(interval);
                     }
@@ -194,20 +199,20 @@
                         clearInterval(interval);
                     }
                 }, 200);
-                vehicle.carImageUrl = imageUrl;
+                vehicle.imageUrl = imageUrl;
             }
 
             var vehicleTitleNode = node.querySelector('.vehicle-title h2 a');
             if (vehicleTitleNode) {
                 vehicle.vdpUrl = vehicleTitleNode.getAttribute('href');
-                vehicle.carTitle = vehicleTitleNode.textContent;
+                vehicle.title = vehicleTitleNode.textContent;
             }
 
             var vinNode = node.querySelector('.vinstock');
             if (vinNode) {
                 var vinRegex = /VIN: (.*)/g;
                 var vinMatch = vinRegex.exec(vinNode.textContent);
-                vehicle.carVin = vinMatch ? vinMatch[1] : null;
+                vehicle.vin = vinMatch ? vinMatch[1] : null;
             }
 
             // TODO: add year
@@ -218,19 +223,19 @@
 
                 var bodyRegex = /Body: (.*)/g;
                 var bodyMatch = bodyRegex.exec(textContent);
-                // vehicle.body = bodyMatch ? bodyMatch[1] : null; // TODO: add body parameter
+                vehicle.body = bodyMatch ? bodyMatch[1] : null; // TODO: add body parameter
 
                 var exteriorRegex = /Exterior: (.*)/g;
                 var exteriorMatch = exteriorRegex.exec(textContent);
-                vehicle.carColor = exteriorMatch ? exteriorMatch[1] : null;
+                vehicle.exterior = exteriorMatch ? exteriorMatch[1] : null;
 
                 var engineRegex = /Engine: (.*)/g;
                 var engineMatch = engineRegex.exec(textContent);
-                vehicle.carEngine = engineMatch ? engineMatch[1] : null;
+                vehicle.engine = engineMatch ? engineMatch[1] : null;
 
                 var transRegex = /Trans: (.*)/g;
                 var transMatch = transRegex.exec(textContent);
-                vehicle.carTransmission = transMatch ? transMatch[1] : null;
+                vehicle.transmission = transMatch ? transMatch[1] : null;
             }
 
             return vehicle;
@@ -250,11 +255,21 @@
             var self = this;
 
             var vdpVehicle = {
-                title: null,
-                imageUrl: null,
-                vdpUrl: null,
-                vin: null,
-                year: null
+                vin:null,
+                stock:null,
+                year:null,
+                make:null,
+                model:null,
+                body:null,
+                title:null,
+                engine:null,
+                exterior:null,
+                interior:null,
+                drivetrain:null,
+                transmission:null,
+                msrp:null,
+                imageUrl:null,
+                vdpUrl:null
             };
 
             var title = document.getElementsByClassName("vehicle-title")[0];
@@ -287,18 +302,12 @@
             }
             var carDetailsFromHtml = self.vehicleDetailsFromVdpHtml(infoWrapperText);
 
+            vdpVehicle.engine = carDetailsFromHtml.engine;
+            vdpVehicle.exterior = carDetailsFromHtml.exterior;
+            vdpVehicle.transmission = carDetailsFromHtml.trans;
+
             btn.onclick = function () {
-                window.TestDrive.openTestDrive({
-                    carVin: vdpVehicle.vin,
-                    carImageUrl: vdpVehicle.imageUrl,
-                    vdpUrl: vdpVehicle.vdpUrl,
-                    carTitle: vdpVehicle.title,
-                    carEngine: carDetailsFromHtml.engine,
-                    carYear: vdpVehicle.year,
-                    carColor: carDetailsFromHtml.exterior,
-                    carTransmission: carDetailsFromHtml.trans,
-                    carFuel: null
-                });
+                window.TestDrive.openTestDrive(vdpVehicle);
             };
             detailsPageCtabox.appendChild(btn);
         },
@@ -408,14 +417,16 @@
 //=======================================================================//
 
     window.TestDrive = window.TestDrive || (function () {
+        // variables
         var _SiteId = '%siteId%';
         var _WidgetUrl = '%widgetUrl%'; // https://widget.testdrive.pw/ // %widgetUrl%
         var _InjectWidgetToVlp = null;
         var _InjectWidgetToVdp = null;
+        // methods
 
-        var _appendTestDriveFrame = function (vin, vdpUrl, img, title, engine, year, colour, transmission, fuel) {
-            var hash = Math.random().toString(36).substring(7);
-            var url = `${_WidgetUrl}?site_id=${_SiteId}&vin=${vin}&vdpUrl=${vdpUrl}&imageUrl=${img}&title=${title}&engine=${engine}&year=${year}&colour=${colour}&transmission=${transmission}&fuel=${fuel}&hash=${hash}`;
+        var _appendTestDriveFrame = function (ulrParams) {
+            ulrParams.hash = Math.random().toString(36).substring(7);
+            var widgetUrl = _buildUrl(_WidgetUrl, ulrParams);
 
             var html =
                 `<div class="test-drive__content">
@@ -424,7 +435,7 @@
                     <div class="frame-header__cross" onclick="TestDrive.closeTestDrive()">&#10006;</div>
                  </div>
                  <img id="test-drive__frame-spinner" src="http://www.testdrive.pw/spinner.gif">
-                 <iframe class="test-drive__frame" src="${encodeURI(url)}" frameBorder="0" onload="document.getElementById('test-drive__frame-spinner').style.display='none';"></iframe>
+                 <iframe class="test-drive__frame" src="${widgetUrl}" frameBorder="0" onload="document.getElementById('test-drive__frame-spinner').style.display='none';"></iframe>
              </div>`;
 
             document.getElementsByClassName('test-drive')[0].innerHTML = html;
@@ -552,6 +563,45 @@
             }
         };
 
+        // helpers
+
+        var _getUrlParamsFromArguments = function (Args) {
+            var ulrParams = {};
+
+            ulrParams.vin = Args.vin || null;
+            ulrParams.stock = Args.stock || null;
+            ulrParams.year = Args.year || null;
+            ulrParams.make = Args.make || null;
+            ulrParams.model = Args.model || null;
+            ulrParams.body = Args.body || null;
+            ulrParams.title = Args.title || null;
+            ulrParams.engine = Args.engine || null;
+            ulrParams.exterior = Args.exterior || null;
+            ulrParams.interior = Args.interior || null;
+            ulrParams.drivetrain = Args.drivetrain || null;
+            ulrParams.transmission = Args.transmission || null;
+            ulrParams.msrp = Args.msrp || null;
+            ulrParams.imageUrl = Args.imageUrl || null;
+            ulrParams.vdpUrl = Args.vdpUrl || null;
+
+            return ulrParams;
+        };
+
+        var _buildUrl = function (url, parameters) {
+            var qs = "";
+            for (var key in parameters) {
+                var value = parameters[key];
+                if (value) {
+                    qs += encodeURIComponent(key) + "=" + encodeURIComponent(value) + "&";
+                }
+            }
+            if (qs.length > 0) {
+                qs = qs.substring(0, qs.length - 1); //chop off last "&"
+                url = url + "?" + qs;
+            }
+            return url;
+        };
+
         var _initExtensions = function () {
             Element.prototype.remove = function () {
                 this.parentElement.removeChild(this);
@@ -565,6 +615,8 @@
             };
         };
 
+
+        // output
         return {
             init: function (Args) {
                 _SiteId = Args.SiteId || _SiteId;
@@ -579,17 +631,7 @@
 
             },
             openTestDrive: function (Args) {
-                var carVin = Args.carVin || "";
-                var vdpUrl = Args.vdpUrl || "";
-                var carImageUrl = Args.carImageUrl || "";
-                var carTitle = Args.carTitle || "";
-                var carEngine = Args.carEngine || "";
-                var carYear = Args.carYear || "";
-                var carColor = Args.carColor || "";
-                var carTransmission = Args.carTransmission || "";
-                var carFuel = Args.carFuel || "";
-
-                _appendTestDriveFrame(carVin, vdpUrl, carImageUrl, carTitle, carEngine, carYear, carColor, carTransmission, carFuel);
+                _appendTestDriveFrame(_getUrlParamsFromArguments(Args));
                 _changeMobileBrowserBarColor();
                 _showTestDriveFrame();
             },
@@ -610,6 +652,5 @@
 //=======================================================================//
 //
 // https://widget.testdrive.pw
-//
 //
 // window.TestDrive.init({SiteId: '28'});

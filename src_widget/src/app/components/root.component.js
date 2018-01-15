@@ -66,25 +66,20 @@
                 function parseWidgetParams() {
                     var url = new FiltersFromUrl($window.location.search).get();
 
-                    var vin = url.vin || null;
-                    var imageUrl = url.imageUrl || null;
-                    var vdpUrl = url.vdpUrl || null;
-                    var title = url.title || null;
-                    var engine = url.engine || null;
-                    var year = url.year || null;
-                    var colour = url.colour || null;
-                    var transmission = url.transmission || null;
-                    var fuel = url.fuel || null;
-
-                    self.bookingData.car.vin = vin;
-                    self.bookingData.car.imageUrl = imageUrl;
-                    self.bookingData.car.vdpUrl = vdpUrl;
-                    self.bookingData.car.title = title;
-                    self.bookingData.car.engine = engine;
-                    self.bookingData.car.year = year;
-                    self.bookingData.car.colour = colour;
-                    self.bookingData.car.transmission = transmission;
-                    self.bookingData.car.fuel = fuel;
+                    self.bookingData.vehicle.vin = url.vin || null;
+                    self.bookingData.vehicle.stock = url.stock || null;
+                    self.bookingData.vehicle.year = url.year || null;
+                    self.bookingData.vehicle.make = url.make || null;
+                    self.bookingData.vehicle.model = url.model || null;
+                    self.bookingData.vehicle.body = url.body || null;
+                    self.bookingData.vehicle.title = url.title || null;
+                    self.bookingData.vehicle.engine = url.engine || null;
+                    self.bookingData.vehicle.exterior = url.exterior || null;
+                    self.bookingData.vehicle.drivetrain = url.drivetrain || null;
+                    self.bookingData.vehicle.transmission = url.transmission || null;
+                    self.bookingData.vehicle.msrp = url.msrp || null;
+                    self.bookingData.vehicle.imageUrl = url.imageUrl || null;
+                    self.bookingData.vehicle.vdpUrl = url.vdpUrl || null;
                 }
             },
             templateUrl: 'src/app/components/root.tpl.html'
