@@ -2,14 +2,53 @@
   margin-top: 25px;
 }
 .sites-table-body {
-
+  //font-size: 85%;
 }
 .sites-table-header {
 
 }
-.sites-table-body-column-actions {
-  width: 160px;
+.sites-table-body-column {
+  text-align: center;
+  vertical-align: middle;
 }
+.sites-table-body-row {
+  min-height: 75px;
+}
+.sites-table-body-row:hover {
+  cursor: pointer;
+}
+.sites-table-body-row-disabled {
+
+}
+.sites-table-body-row-disabled:hover {
+
+}
+.sites-table-body-row-processing {
+  background-color: #e8eaf6;
+}
+.sites-table-body-row-processing:hover {
+  background-color: #c5cae9;
+}
+.sites-table-body-column-actions {
+  width: 170px;
+}
+.sites-table-body-column-image {
+  width: 80px;
+}
+.sites-table-body-column-header-full-name {
+
+}
+.sites-table-body-column-body-full-name {
+  text-align: left !important;
+}
+.sites-table-body-column-header-leads {
+  width: 150px;
+}
+.test-drive-card-site-image {
+  width: 75px;
+  height: auto;
+}
+
 .sites-refresh-btn {
   margin-right: 5px;
   margin-bottom: 16px;
@@ -18,12 +57,13 @@
   margin-right: 5px;
   margin-bottom: 16px;
 }
-.site-modal-header-text {
-
+.sites-table-body-row-filters {
+  background-color: #fafafa;
 }
-.sites-table-body-row {
-
+.sites-table-body-row-filters:hover {
+  background-color: #fafafa;
 }
-.sites-table-body-row:hover {
+
+.sites-table-body-column-with-sorting {
   cursor: pointer;
 }

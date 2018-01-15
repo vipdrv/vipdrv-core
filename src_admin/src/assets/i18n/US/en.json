@@ -8,7 +8,8 @@
       "sites": "Sites",
       "settings": "Settings",
       "invitations": "Invitations",
-      "test": "Test-page"
+      "test": "Test-page",
+      "users": "Users"
     },
     "actions": {
       "login": "Login",
@@ -26,7 +27,7 @@
       "modalClose": "Close",
       "modalApply": "Save"
     },
-    "table":{
+    "table": {
       "headerText": {
         "activity": "Is active",
         "order": "Order"
@@ -43,19 +44,17 @@
     }
   },
   "utils": {
-    "components":{
-     "workingHours": {
-       "noWorkingIntervals": "There are no working hours yet",
-       "cancel": "Undo changes",
-       "apply": "Save"
-     }
+    "components": {
+      "workingHours": {
+        "noWorkingIntervals": "There are no working hours yet",
+        "cancel": "Undo changes",
+        "apply": "Save"
+      }
     }
   },
   "home": {
-
   },
   "integration": {
-
   },
   "leads": {
     "title": "Leads",
@@ -99,43 +98,33 @@
     },
     "modal": {
       "title": "Site details",
-      "siteName": "Site Name",
+      "siteOwner": "Site owner",
+      "siteOwnerHelp": "Select the name of the site owner.",
+      "siteName": "Site name",
       "siteNameHelp": "Enter the name of the site.",
       "siteUrl": "Site url",
       "siteUrlHelp": "Enter the url of the site (like http://yoursite.url).",
       "weekSchedule": "Working hours"
     },
     "table": {
+      "headerText_siteImage": "Image",
       "headerText_siteName": "Site name",
+      "headerText_ownerName": "Owner",
       "headerText_leads": "Leads amount",
+      "headerText_dealerName": "Dealer",
       "headerText_actions": "Actions"
     },
-    "overview":{
-      "name": "Name:",
-      "siteId": "SiteId:",
-      "beautyId": "Beauty id:",
-      "experts": "Experts:",
-      "noExperts": "no experts",
-      "activeExperts_amount": "{{amount}} active",
-      "noActiveExperts": "no active",
-      "notActiveExperts_amount": "{{amount}} not active",
-      "beverages": "Beverages:",
-      "noBeverages": "no beverages",
-      "activeBeverages_amount": "{{amount}} active",
-      "noActiveBeverages": "no active",
-      "notActiveBeverages_amount": "{{amount}} not active",
-      "routes": "Routes:",
-      "noRoutes": "no routes",
-      "activeRoutes_amount": "{{amount}} active",
-      "noActiveRoutes": "no active",
-      "notActiveRoutes_amount": "{{amount}} not active",
-      "widget_preview": "Widget preview"
-
+    "overview": {
+      "widget_preview": "Widget preview",
+      "openWidget": "Open widget",
+      "integrationTitle": "Integration",
+      "wizardTitle": "Wizard"
     },
     "details": {
       "title": "Sites",
-      "tabs":{
-        "overview": "Overview",
+      "tabs": {
+        "overview": "Widget",
+        "wizard": "Step wizard",
         "experts": "Experts",
         "beverages": "Beverages",
         "routes": "Routes",
@@ -148,6 +137,23 @@
         "sms": "SMS Notifications",
         "adf": "ADF Emails"
       }
+    },
+    "wizard": {
+      "expertStep": "Experts step",
+      "noActiveExperts": "no active",
+      "activeExperts_amount": "{{amount}} active",
+      "notActiveExperts_amount": "{{amount}} not active",
+      "expertStepWarning": "There are no active experts for step 'choose expert'!",
+      "beverageStep": "Beverages step",
+      "noActiveBeverages": "no active",
+      "activeBeverages_amount": "{{amount}} active",
+      "notActiveBeverages_amount": "{{amount}} not active",
+      "beverageStepWarning": "There are no active beverages for step 'choose beverage'!",
+      "routeStep": "Routes step",
+      "noActiveRoutes": "no active",
+      "activeRoutes_amount": "{{amount}} active",
+      "notActiveRoutes_amount": "{{amount}} not active",
+      "routeStepWarning": "There are no active routes for step 'choose route'!"
     }
   },
   "experts": {
@@ -177,6 +183,20 @@
       "expertEmailHelp": "Enter the contact e-mail of the expert (is not required).",
       "expertPhoneNumber": "Contact phone number",
       "expertPhoneNumberHelp": "Enter the contact phone number of the expert (is not required)."
+    }
+  },
+  "users": {
+    "modal": {
+      "userName": "Login",
+      "userNameHelp": "Enter the Login name of the User.",
+      "titleInfo": "User details",
+      "titleCreate": "Creating user",
+      "cancel": "Cancel",
+      "apply": "Apply",
+      "email": "Email",
+      "emailHelp": "Enter email to send invitation.",
+      "phoneNumber": "Phone number",
+      "role": "Expected role"
     }
   },
   "beverages": {
@@ -272,6 +292,7 @@
       "invitator": "Creator"
     }
   },
+
   "userProfile": {
     "userProfileMainTitle": "Personal data",
     "tabs": {
@@ -317,7 +338,8 @@
   "validation": {
     "sites": {
       "invalidNameMessage": "Site name is not valid!",
-      "invalidUrlMessage": "Site url is not valid!"
+      "invalidUrlMessage": "Site url is not valid!",
+      "invalidOwnerMessage": "Site owner is not valid (this field is required)!"
     },
     "registrationModel": {
       "invalidEmailMessage": "Email address is not valid!",

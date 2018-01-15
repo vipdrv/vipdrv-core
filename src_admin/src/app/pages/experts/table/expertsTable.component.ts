@@ -9,24 +9,21 @@ import { IExpertValidationService, ExpertValidationService } from './../../../se
 import { ExpertEntity } from './../../../entities/index';
 @Component({
     selector: 'experts-table',
+    templateUrl: './expertsTable.html',
     styleUrls: ['./expertsTable.scss'],
-    templateUrl: './expertsTable.html'
 })
 export class ExpertsTableComponent implements OnInit {
     /// inputs
     @Input() siteId: number;
     @Input() filter: any;
-    @Input() defaultExpertSchedule: Array<WorkingInterval>
+    @Input() defaultExpertSchedule: Array<WorkingInterval>;
     /// outputs
     @Output() onEntityChanged: EventEmitter<any> = new EventEmitter<any>();
     @Output() resetForceAcceptImage: EventEmitter<void> = new EventEmitter<void>();
     /// children
-    @ViewChild('confirmationDeleteModal')
-    protected confirmationDeleteModal: ModalComponent;
-    @ViewChild('editModal')
-    protected editModal: ModalComponent;
-    @ViewChild('infoModal')
-    protected infoModal: ModalComponent;
+    @ViewChild('confirmationDeleteModal') protected confirmationDeleteModal: ModalComponent;
+    @ViewChild('editModal') protected editModal: ModalComponent;
+    @ViewChild('infoModal') protected infoModal: ModalComponent;
     /// service fields
     private _defaultPageNumber: number = 0;
     private _defaultPageSize: number = 100;
@@ -336,7 +333,6 @@ export class ExpertsTableComponent implements OnInit {
         }
         if (this.entityValidationService.isValid(this.selectedEntity)) {
             const self = this;
-            self.isWeekScheduleOpenedByDefault = false;
             self._useValidation = false;
             self.forceAcceptImage = true;
             setTimeout(

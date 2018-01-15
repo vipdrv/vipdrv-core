@@ -71,3 +71,17 @@ export const PAGES_MENU = [{
         }
     ]
 }];
+
+// {
+//     path: 'users',
+//         data: {
+//     menu: {
+//         title: 'general.menu.users',
+//             icon: 'ion-android-folder-open',
+//             selected: false,
+//             expanded: false,
+//             order: 0,
+//             requiredPermission: 'CanViewMenuUsers'
+//     }
+// }
+// }

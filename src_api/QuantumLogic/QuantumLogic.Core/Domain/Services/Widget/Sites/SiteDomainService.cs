@@ -33,6 +33,30 @@ namespace QuantumLogic.Core.Domain.Services.Widget.Sites
         {
             return DayOfWeekInterval.Purify((await RetrieveAsync(id)).Experts.Where(r => r.IsActive).SelectMany(r => DayOfWeekInterval.Parse(r.WorkingHours)).ToList());
         }
+        public async Task ChangeUseExpertStepAsync(int id, bool newValue)
+        {
+            Site entity = await RetrieveAsync(id);
+            ((ISitePolicy)Policy).CanUpdate(entity);
+            entity.UseExpertStep = newValue;
+            ((ISiteValidationService)ValidationService).ValidateEntity(entity);
+            await Repository.UpdateAsync(entity);
+        }
+        public async Task ChangeUseBeverageStepAsync(int id, bool newValue)
+        {
+            Site entity = await RetrieveAsync(id);
+            ((ISitePolicy)Policy).CanUpdate(entity);
+            entity.UseBeverageStep = newValue;
+            ((ISiteValidationService)ValidationService).ValidateEntity(entity);
+            await Repository.UpdateAsync(entity);
+        }
+        public async Task ChangeUseRouteStepAsync(int id, bool newValue)
+        {
+            Site entity = await RetrieveAsync(id);
+            ((ISitePolicy)Policy).CanUpdate(entity);
+            entity.UseRouteStep = newValue;
+            ((ISiteValidationService)ValidationService).ValidateEntity(entity);
+            await Repository.UpdateAsync(entity);
+        }
 
         protected override Task CascadeDeleteActionAsync(Site entity)
         {

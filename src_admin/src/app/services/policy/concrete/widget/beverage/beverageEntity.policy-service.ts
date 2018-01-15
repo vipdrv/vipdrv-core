@@ -74,10 +74,10 @@ export class BeverageEntityPolicyService
         return true;
     }
     canUpdateOrderForEntity(entity: BeverageEntity): boolean {
-        return true && this.canUpdateOrder();
+        return this.canUpdateOrder();
     }
     canUpdateActivityForEntity(entity: BeverageEntity): boolean {
-        return true && this.canUpdateActivity();
+        return this.canUpdateActivity();
     }
 
 }

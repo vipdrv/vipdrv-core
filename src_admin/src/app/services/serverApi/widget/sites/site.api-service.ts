@@ -17,8 +17,29 @@ export class SiteApiService extends CRUDApiService<SiteEntity, number, LightEnti
     patchContacts(id: number, value: any): Promise<void> {
         const self = this;
         const methodName: string = 'change-contacts';
-        return this.httpService
-            .patch(this.createUrlWithMethodNameAndParams(methodName, String(id)), { 'value': value })
+        return self.httpService
+            .patch(self.createUrlWithMethodNameAndParams(methodName, String(id)), { 'value': value })
+            .then(function (response: any): void { });
+    }
+    patchUseExpertStep(id: number, value: boolean): Promise<void> {
+        const self = this;
+        const methodName: string = 'change-use-expert-step';
+        return self.httpService
+            .patch(self.createUrlWithMethodNameAndParams(methodName, String(id)), { 'value': value })
+            .then(function (response: any): void { });
+    }
+    patchUseBeverageStep(id: number, value: boolean): Promise<void> {
+        const self = this;
+        const methodName: string = 'change-use-beverage-step';
+        return self.httpService
+            .patch(self.createUrlWithMethodNameAndParams(methodName, String(id)), { 'value': value })
+            .then(function (response: any): void { });
+    }
+    patchUseRouteStep(id: number, value: boolean): Promise<void> {
+        const self = this;
+        const methodName: string = 'change-use-route-step';
+        return self.httpService
+            .patch(self.createUrlWithMethodNameAndParams(methodName, String(id)), { 'value': value })
             .then(function (response: any): void { });
     }
     /// helpers

@@ -1,8 +1,7 @@
-﻿using System;
-using QuantumLogic.Core.Domain.Entities.MainModule;
+﻿using QuantumLogic.Core.Domain.Entities.MainModule;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using QuantumLogic.Core.Extensions.StringEx;
 
 namespace QuantumLogic.Core.Domain.Entities.WidgetModule
 {
@@ -20,6 +19,10 @@ namespace QuantumLogic.Core.Domain.Entities.WidgetModule
         public string DealerAddress { get; set; }
         public string DealerPhone { get; set; }
         public string WorkingHours { get; set; }
+
+        public bool UseExpertStep { get; set; }
+        public bool UseBeverageStep { get; set; }
+        public bool UseRouteStep { get; set; }
 
         #endregion
 
@@ -85,7 +88,6 @@ namespace QuantumLogic.Core.Domain.Entities.WidgetModule
             }
         }
 
-
         #region Ctors
 
         public Site()
@@ -97,13 +99,13 @@ namespace QuantumLogic.Core.Domain.Entities.WidgetModule
             Leads = new HashSet<Lead>();
         }
 
-        public Site(int id,
+        public Site(
+            int id,
             int userId,
             string beautyId,
             string name,
             string url,
-            string notificationContacts
-            )
+            string notificationContacts)
             : this()
         {
             Id = id;

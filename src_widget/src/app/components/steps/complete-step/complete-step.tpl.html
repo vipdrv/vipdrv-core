@@ -104,25 +104,25 @@
     <div class="col-4 d-none d-lg-block">
 
         <div class="card">
-            <img ng-if="$ctrl.bookingData.car.imageUrl != null" ng-src="{{$ctrl.bookingData.car.imageUrl}}"
+            <img ng-if="$ctrl.bookingData.vehicle.imageUrl != null" ng-src="{{$ctrl.bookingData.vehicle.imageUrl}}"
                  class="card-img-top">
-            <img ng-if="$ctrl.bookingData.car.imageUrl == null" src="/img/default-car.png" class="card-img-top">
+            <img ng-if="$ctrl.bookingData.vehicle.imageUrl == null" src="/img/default-car.png" class="card-img-top">
 
             <div class="card-body" style="padding: 0.25rem 1.25rem 0.25rem 1.25rem;">
                 <div class="row">
                     <div class="col-12">
-                        <h5 class="text-overflow__ellipsis ng-binding">{{$ctrl.bookingData.car.title ?
-                            $ctrl.bookingData.car.title : 'Vehicle Title'}}</h5>
+                        <h5 class="text-overflow__ellipsis ng-binding">{{$ctrl.bookingData.vehicle.title ?
+                            $ctrl.bookingData.vehicle.title : 'Vehicle Title'}}</h5>
                     </div>
                     <div class="col-8">
                         <p class="text-secondary m-0">Engine</p>
-                        <p class="mb-2 text-overflow__ellipsis ng-binding">{{$ctrl.bookingData.car.engine ?
-                            $ctrl.bookingData.car.engine : '-'}}</p>
+                        <p class="mb-2 text-overflow__ellipsis ng-binding">{{$ctrl.bookingData.vehicle.engine ?
+                            $ctrl.bookingData.vehicle.engine : '-'}}</p>
                     </div>
                     <div class="col-4">
                         <p class="text-secondary m-0">Year</p>
-                        <p class="mb-2 text-overflow__ellipsis ng-binding">{{$ctrl.bookingData.car.year ?
-                            $ctrl.bookingData.car.year : '-'}}</p>
+                        <p class="mb-2 text-overflow__ellipsis ng-binding">{{$ctrl.bookingData.vehicle.year ?
+                            $ctrl.bookingData.vehicle.year : '-'}}</p>
                     </div>
                 </div>
             </div>
@@ -158,7 +158,7 @@
                 Hi {{$ctrl.bookingData.user.firstName}} {{$ctrl.bookingData.user.lastName}}.<br>
                 We've confirmed your test drive booking. Details below.<br>
                 <br>
-                Vehicle: {{$ctrl.bookingData.car.title ? $ctrl.bookingData.car.title : 'Not specified'}}<br>
+                Vehicle: {{$ctrl.bookingData.vehicle.title ? $ctrl.bookingData.vehicle.title : 'Not specified'}}<br>
                 Date & Time: {{$ctrl.bookingData.calendar.date}} {{$ctrl.bookingData.calendar.time}}<br>
                 Expert: {{$ctrl.bookingData.expert.name}}<br>
                 Beverage: {{$ctrl.bookingData.beverage.name}}<br>

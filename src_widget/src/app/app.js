@@ -8,9 +8,9 @@
     var apiBaseUrl = '%apiBaseUrl%';
     var defaultSiteId = '%siteId%';
 
-    // =======================================================================//
-    // Global Variables                                                       //
-    // =======================================================================//
+    //=======================================================================//
+    // Global Variables                                                      //
+    //=======================================================================//
 
     var widgetTabs = {
         time: {
@@ -90,20 +90,22 @@
             description: null,
             isSkipped: null
         },
-        car: {
-            vdpUrl: null,
-            imageUrl: null,
+        vehicle: {
             vin: null,
+            stock: null,
+            year: null,
             make: null,
             model: null,
-            trim: null,
-            bodystyle: null,
+            body: null,
             title: null,
             engine: null,
-            year: null,
-            colour: null,
+            exterior: null,
+            interior: null,
+            drivetrain: null,
             transmission: null,
-            fuel: null
+            msrp: null,
+            imageUrl: null,
+            vdpUrl: null
         }
     };
 
@@ -142,6 +144,6 @@
     app.value('apiBaseUrl', apiBaseUrl);
 
     var url = new FiltersFromUrl(window.location.search).get();
-    var siteId = url.site_id || defaultSiteId;
+    var siteId = url.siteId || defaultSiteId;
     app.value('siteId', siteId);
 })();

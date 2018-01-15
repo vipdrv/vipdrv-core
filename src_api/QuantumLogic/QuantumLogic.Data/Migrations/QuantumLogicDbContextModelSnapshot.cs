@@ -314,6 +314,12 @@ namespace QuantumLogic.Data.Migrations
 
                     b.Property<string>("Url");
 
+                    b.Property<bool>("UseBeverageStep");
+
+                    b.Property<bool>("UseExpertStep");
+
+                    b.Property<bool>("UseRouteStep");
+
                     b.Property<int>("UserId");
 
                     b.Property<string>("WorkingHours");

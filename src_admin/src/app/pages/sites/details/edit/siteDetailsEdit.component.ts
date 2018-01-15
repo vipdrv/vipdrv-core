@@ -1,7 +1,8 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
-import { Extensions, ILogger, ConsoleLogger, WorkingInterval } from './../../../../utils/index';
+import { Variable, Extensions, ILogger, ConsoleLogger, WorkingInterval } from './../../../../utils/index';
 import { SiteEntity } from './../../../../entities/index';
 import { ISiteValidationService, SiteValidationService } from './../../../../services/index';
+import { ISiteEntityPolicyService, SiteEntityPolicyService } from './../../../../services/index';
 import { SitesConstants } from './../../sites.constants';
 @Component({
     selector: 'site-details-edit',
@@ -15,6 +16,7 @@ export class SiteDetailsEditComponent {
     @Input() useValidation: boolean = false;
     @Input() forceAcceptImage: boolean = false;
     @Input() isWeekScheduleOpenedByDefault: boolean = false;
+    @Input() ownerOptions: Array<any>;
     /// outputs
     @Output() resetForceAcceptImage: EventEmitter<void> = new EventEmitter<void>();
     /// fields
@@ -28,10 +30,15 @@ export class SiteDetailsEditComponent {
     protected extensions = Extensions;
     protected logger: ILogger;
     protected siteValidationService: ISiteValidationService;
+    protected entityPolicyService: ISiteEntityPolicyService;
     /// ctor
-    constructor(logger: ConsoleLogger, siteValidationService: SiteValidationService) {
+    constructor(
+        logger: ConsoleLogger,
+        siteValidationService: SiteValidationService,
+        entityPolicyService: SiteEntityPolicyService) {
         this.logger = logger;
         this.siteValidationService = siteValidationService;
+        this.entityPolicyService = entityPolicyService;
         this.logger.logDebug('SiteDetailsEditComponent: Component has been constructed.');
     }
     /// methods
@@ -45,6 +52,9 @@ export class SiteDetailsEditComponent {
     protected onActualizeWorkingHours(newWorkingHours: Array<WorkingInterval>): void {
         this.entity.workingHours = newWorkingHours;
     }
+    protected getOwnerOptions(): Array<any> {
+        return this.ownerOptions.filter(r => Variable.isNotNullOrUndefined(r.value));
+    }
     /// predicates
     protected isImageComponentReadOnly(): boolean {
         return this.isReadOnly;
@@ -56,6 +66,16 @@ export class SiteDetailsEditComponent {
         return this.isReadOnly;
     }
     /// methods for properties
+    // site name
+    protected isSiteOwnerInputDisabled(): boolean {
+        return this.isReadOnly;
+    }
+    protected isSiteOwnerValid(): boolean {
+        return this.siteValidationService.isOwnerValid(this.entity);
+    }
+    protected getSiteOwnerInvalidMessageKey(): string {
+        return this.siteValidationService.getInvalidOwnerMessageKey(this.entity);
+    }
     // site name
     protected isSiteNameInputDisabled(): boolean {
         return this.isReadOnly;

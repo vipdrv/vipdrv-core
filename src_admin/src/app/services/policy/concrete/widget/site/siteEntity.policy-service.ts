@@ -11,6 +11,21 @@ import { Variable } from '../../../../../utils/variable';
 export class SiteEntityPolicyService
     extends AbstractEntityPolicyService<SiteEntity>
     implements ISiteEntityPolicyService {
+    /// ctor
+    constructor(logger: ConsoleLogger, authService: AuthorizationService) {
+        super(logger, authService);
+        this.logger.logDebug('SiteEntityPolicyService: Service has been constructed.');
+    }
+    /// methods
+    canUpdateContacts(): boolean {
+        return true;
+    }
+    canUseWizard(entity: SiteEntity): boolean {
+        return this.canUpdateEntity(entity);
+    }
+    canManageOtherOwnerSites(): boolean {
+        return this.isGrantedPermission(permissionNames.canAllSite);
+    }
 
     canGet(): boolean {
         return true;
@@ -58,15 +73,5 @@ export class SiteEntityPolicyService
             this.isGrantedPermission(permissionNames.canDeleteOwnSite) &&
             Variable.isNotNullOrUndefined(this.authService.currentUserId) &&
             isOwnSite;
-    }
-    /// injected dependencies
-    /// ctor
-    constructor(logger: ConsoleLogger, authService: AuthorizationService) {
-        super(logger, authService);
-        this.logger.logDebug('SiteEntityPolicyService: Service has been constructed.');
-    }
-    /// methods
-    canUpdateContacts(): boolean {
-        return true;
     }
 }

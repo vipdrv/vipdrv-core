@@ -15,12 +15,17 @@ export class SiteValidationService
     /// methods
     isValid(entity: SiteEntity): boolean {
         return this.isNameValid(entity) &&
+            this.isOwnerValid(entity) &&
             this.isUrlValid(entity) &&
             this.isImageUrlValid(entity);
     }
     isNameValid(entity: SiteEntity): boolean {
         return Variable.isNotNullOrUndefined(entity) &&
             Variable.isNotNullOrUndefinedOrEmptyString(entity.name);
+    }
+    isOwnerValid(entity: SiteEntity): boolean {
+        return Variable.isNotNullOrUndefined(entity) &&
+            Variable.isNotNullOrUndefined(entity.userId);
     }
     isUrlValid(entity: SiteEntity): boolean {
         return Variable.isNotNullOrUndefined(entity) &&
@@ -32,6 +37,9 @@ export class SiteValidationService
     }
     getInvalidNameMessageKey(entity: SiteEntity): string {
         return 'validation.sites.invalidNameMessage';
+    }
+    getInvalidOwnerMessageKey(entity: SiteEntity): string {
+        return 'validation.sites.invalidOwnerMessage';
     }
     getInvalidUrlMessageKey(entity: SiteEntity): string {
         return 'validation.sites.invalidUrlMessage';

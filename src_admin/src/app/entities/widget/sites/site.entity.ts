@@ -18,9 +18,15 @@ export class SiteEntity extends Entity {
     routesAmount: number;
     activeRoutesAmount: number;
     dealerName: string;
+    ownerName: string;
     dealerAddress: string;
     dealerPhone: string;
     workingHours: Array<WorkingInterval>;
+
+    /// wizard steps
+    useExpertStep: boolean;
+    useBeverageStep: boolean;
+    useRouteStep: boolean;
 
     /// ctor
     constructor() {
@@ -36,6 +42,7 @@ export class SiteEntity extends Entity {
         this.userId = mock.userId;
         this.beautyId = mock.beautyId;
         this.name = mock.name;
+        this.ownerName = mock.ownerName;
         this.url = mock.url;
         this.contacts = mock.contacts;
         this.leadsAmount = mock.leadsAmount;
@@ -51,5 +58,9 @@ export class SiteEntity extends Entity {
         this.dealerAddress = mock.dealerAddress;
         this.dealerPhone = mock.dealerPhone;
         this.workingHours = WorkingInterval.initializeManyFromDto(dto.workingHours);
+
+        this.useExpertStep = mock.useExpertStep;
+        this.useBeverageStep = mock.useBeverageStep;
+        this.useRouteStep = mock.useRouteStep;
     }
 }
