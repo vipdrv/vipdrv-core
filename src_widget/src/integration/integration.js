@@ -70,12 +70,17 @@
         },
 
         /// vlp injector
+        domChangesCounter: 0,
         initVlpListener: function () {
             var self = this;
 
             var resultsTable = document.getElementsByClassName("results_table")[0];
             self.observeDOM(resultsTable, function () {
                 console.log('dom changed');
+                self.domChangesCounter++;
+                if (self.domChangesCounter > 50) {
+                    return;
+                }
                 self.initTestDriveVlpButtons();
             });
         },
@@ -115,10 +120,38 @@
                     !node.classList.contains("vipdrv-added")) {
 
                     node.classList.add('vipdrv-added');
-                    console.log('button added');
-                    var vehicle = self.parseVehicleDetailsFromNode(node);
-                    self.addTestDriveButtonToVehicleNode(node, vehicle);
+                    self.addTestDriveButtonToVehicleNode(node, self.parseVehicleDetailsFromNode(node));
+
+                    // if (self.isVehicleNodeLoaded(node)) {
+                    //     if (node.classList.contains('vipdrv-fakebutton-added')) {
+                    //         node.classList.remove('vipdrv-fakebutton-added');
+                    //         self.removeTestDriveButtonFromVehicleNode(node);
+                    //         self.addTestDriveButtonToVehicleNode(node, self.parseVehicleDetailsFromNode(node));
+                    //     } else {
+                    //         node.classList.add('vipdrv-added');
+                    //         self.addTestDriveButtonToVehicleNode(node, self.parseVehicleDetailsFromNode(node));
+                    //     }
+                    // } else {
+                    //     if (!node.classList.contains('vipdrv-fakebutton-added')) {
+                    //         node.classList.add('vipdrv-fakebutton-added');
+                    //         self.addTestDriveButtonToVehicleNode(node, self.parseVehicleDetailsFromNode(node));
+                    //     }
+                    // }
+
                 }
+            }
+        },
+
+        isVehicleNodeLoaded: function (node) {
+            var vehicleImageNode = node.querySelector('.vehicle-image img');
+            if (vehicleImageNode) {
+                var imageUrl = vehicleImageNode.getAttribute('src');
+                var imageFileName = imageUrl.split('/').slice(-1)[0];
+
+                if (imageFileName == 'loading.gif') {
+                    return false;
+                }
+                return true;
             }
         },
 
@@ -142,6 +175,17 @@
             }
 
             head.appendChild(style);
+        },
+
+        removeTestDriveButtonFromVehicleNode: function (node) {
+            var priceBlock = node.querySelector('.vehicle-content .vehicle-price .vipdrv-marin-vlp-button');
+            if (priceBlock) {
+                // priceBlock.parentNode.removeChild(priceBlock);
+                priceBlock.remove();
+
+                var priceBlock = node.querySelector('.vehicle-content .vehicle-price .vipdrv-marin-vlp-button');
+
+            }
         },
 
         addTestDriveButtonToVehicleNode: function (node, vehicleObject) {
@@ -180,25 +224,12 @@
 
             var vehicleImageNode = node.querySelector('.vehicle-image img');
             if (vehicleImageNode) {
-                var imageUrl = null;
-                var counter = 0;
+                var imageUrl = vehicleImageNode.getAttribute('src');
+                var imageFileName = imageUrl.split('/').slice(-1)[0];
 
-                var interval = setInterval(function () {
-                    imageUrl = vehicleImageNode.getAttribute('src');
-                    var imageFileName = imageUrl.split('/').slice(-1)[0];
-
-                    if (imageFileName == 'loading.gif') {
-                        imageUrl = 'https://widget.testdrive.pw/img/default-car.png';
-                        // TODO: wait for image loaded
-                    } else {
-                        clearInterval(interval);
-                    }
-
-                    counter++;
-                    if (counter > 15) { // wait 3 seconds for vehicle image loaded
-                        clearInterval(interval);
-                    }
-                }, 200);
+                if (imageFileName == 'loading.gif') {
+                    imageUrl = 'https://widget.testdrive.pw/img/default-car.png';
+                }
                 vehicle.imageUrl = imageUrl;
             }
 
@@ -255,21 +286,21 @@
             var self = this;
 
             var vdpVehicle = {
-                vin:null,
-                stock:null,
-                year:null,
-                make:null,
-                model:null,
-                body:null,
-                title:null,
-                engine:null,
-                exterior:null,
-                interior:null,
-                drivetrain:null,
-                transmission:null,
-                msrp:null,
-                imageUrl:null,
-                vdpUrl:null
+                vin: null,
+                stock: null,
+                year: null,
+                make: null,
+                model: null,
+                body: null,
+                title: null,
+                engine: null,
+                exterior: null,
+                interior: null,
+                drivetrain: null,
+                transmission: null,
+                msrp: null,
+                imageUrl: null,
+                vdpUrl: null
             };
 
             var title = document.getElementsByClassName("vehicle-title")[0];
@@ -615,7 +646,6 @@
             };
         };
 
-
         // output
         return {
             init: function (Args) {
@@ -638,13 +668,9 @@
             closeTestDrive: function () {
                 _restoreDefaultMobileBrowserBarColor();
                 _hideTestDriveFrame();
-            },
-            getSiteId: function () {
-                return _SiteId;
             }
         };
     }());
-
 })();
 
 //=======================================================================//
@@ -653,4 +679,4 @@
 //
 // https://widget.testdrive.pw
 //
-// window.TestDrive.init({SiteId: '28'});
+// window.TestDrive.init({SiteId: '32', injectWidgetToVlp: true, injectWidgetToVdp: true});

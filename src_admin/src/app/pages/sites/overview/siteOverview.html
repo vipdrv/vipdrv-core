@@ -6,14 +6,13 @@
             <p></p>
             <button class="btn btn-primary"
                     onclick="TestDrive.openTestDrive({
-                        carVin: 'JTJGA31U940015971',
-                        carImageUrl: 'https://www.testdrive.pw/bmw.jpg',
-                        carTitle: 'BMW M140i',
-                        carEngine: '3.8 litre twin-turbo V6',
-                        carYear: '2017',
-                        carColor: 'Blue',
-                        carTransmission: 'Manual',
-                        carFuel: 'Gasoline'})">
+                        vin: 'JTJGA31U940015971',
+                        imageUrl: 'https://www.testdrive.pw/bmw.jpg',
+                        title: 'BMW M140i',
+                        engine: '3.8 litre twin-turbo V6',
+                        year: '2017',
+                        color: 'Blue',
+                        transmission: 'Manual'})">
                 <span translate>sites.overview.openWidget</span>
             </button>
         </div>
@@ -21,30 +20,10 @@
     <hr>
     <h4 translate>sites.overview.integrationTitle</h4>
     <div class="row">
-        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-            <span class="integration-guide-text">
-                Copy-paste the &lt;script&gt; lines into your &lt;footer&gt; before all other scripts
-            </span>
-            <pre><code class="integration-guide-code">
-                &lt;script src="https://widget.testdrive.pw/integration/integration.js"&gt;&lt;/script&gt;
-                &lt;script&gt;TestDrive.init(&#123;SiteId: '{{entity.id}}'&#125;)&lt;/script&gt;
-            </code></pre>
-            <span class="integration-guide-text">
-                Copy-paste the button code &lt;button&gt; and pass appropriate arguments
-            </span>
-            <pre><code class="integration-guide-code">
-                &lt;button onclick&#61;"TestDrive.openTestDrive(&#123;
-                            carVin: 'JTJGA31U940015971',
-                            carImageUrl: 'https://www.testdrive.pw/bmw.jpg',
-                            carTitle: 'BMW M140i',
-                            carEngine: '3.8 litre twin-turbo V6',
-                            carYear: '2017',
-                            carColor: 'Blue',
-                            carTransmission: 'Manual',
-                            carFuel: 'Gasoline'&#125;)"&gt;
-                    Open widget
-                &lt;/button&gt;
-            </code></pre>
+        <div class="col-12">
+            <p></p>
+            <p>Site id: <b>{{entity.id}}</b></p>
+            <p>Follow our integration <a target="_blank" href="https://www.testdrive.pw">guide</a></p>
         </div>
     </div>
 </div>
