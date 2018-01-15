@@ -1,11 +1,9 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using QuantumLogic.Core.Authorization;
+﻿using QuantumLogic.Core.Authorization;
 using QuantumLogic.Core.Constants;
 using QuantumLogic.Core.Domain.Entities.WidgetModule;
 using QuantumLogic.Core.Domain.Policy.WidgetModule;
 using QuantumLogic.Core.Exceptions.Policy;
+using System.Linq;
 
 namespace QuantumLogic.WebApi.Policy.Widget
 {
