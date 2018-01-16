@@ -450,7 +450,7 @@
     window.TestDrive = window.TestDrive || (function () {
         // variables
         var _SiteId = '%siteId%';
-        var _WidgetUrl = 'https://widget.testdrive.pw'; // https://widget.testdrive.pw/ // %widgetUrl%
+        var _WidgetUrl = '%widgetUrl%'; // https://widget.testdrive.pw/ // %widgetUrl%
         var _InjectWidgetToVlp = null;
         var _InjectWidgetToVdp = null;
         // methods
@@ -679,4 +679,4 @@
 //
 // https://widget.testdrive.pw
 //
-window.TestDrive.init({SiteId: '32', injectWidgetToVlp: true, injectWidgetToVdp: true});
+// window.TestDrive.init({SiteId: '32', injectWidgetToVlp: true, injectWidgetToVdp: true});
