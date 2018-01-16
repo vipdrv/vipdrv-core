@@ -67,6 +67,7 @@ export const PAGES_MENU = [{
                         }
                     }
                 }
+
             ]
         }
     ]
@@ -81,7 +82,7 @@ export const PAGES_MENU = [{
 //             selected: false,
 //             expanded: false,
 //             order: 0,
-//             requiredPermission: 'CanViewMenuUsers'
+//             requiredPermission: 'CanViewMenuInvitations'
 //     }
 // }
 // }

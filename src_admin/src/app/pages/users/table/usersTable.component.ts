@@ -135,10 +135,7 @@ export class UsersTableComponent implements OnInit {
     protected createModalOpen(): Promise<void> {
         const self = this;
         self._useValidation = false;
-
         self.selectedEntity = new UserEntity();
-        // self.selectedEntity.siteId = self.siteId;
-
         return self.editModal.open();
     }
 
