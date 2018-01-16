@@ -44,6 +44,13 @@ export namespace Extensions {
             return null;
         }
     }
+    export function formatNullableUtcDateTime(dateTime: string): string {
+        if (Variable.isNotNullOrUndefined(dateTime)) {
+            return formatDateTime(new Date(dateTime).toString());
+        } else {
+            return null;
+        }
+    }
     export function todayValue(): string {
         const date = new Date();
         const dateWithoutTimezone = new Date(

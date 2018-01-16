@@ -13,10 +13,11 @@ export class UserEntity extends Entity {
     avatarUrl: string;
     currentSitesCount: number;
 
-/// ctor
+    /// ctor
     constructor() {
         super();
     }
+
     /// methods
     initializeFromDto(dto: any): void {
         if (Variable.isNullOrUndefined(dto)) {
@@ -27,7 +28,6 @@ export class UserEntity extends Entity {
         this.email = mock.email;
         this.password = mock.password;
         this.maxSitesCount = mock.maxSitesCount;
-
         this.username = mock.username;
         this.phoneNumber = mock.phoneNumber;
         this.firstName = mock.firstName;

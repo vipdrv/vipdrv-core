@@ -6,7 +6,8 @@ import { Variable, ILogger, ConsoleLogger } from './../../utils/index';
 import { TokenResponse, UserIdentityInfo } from './../index';
 import { IAuthorizationService } from './i-authorization.service';
 import { UserEntity } from './../../entities/index';
-import {reject} from "q";
+import { promise } from 'selenium-webdriver';
+
 @Injectable()
 export class AuthorizationService implements IAuthorizationService {
     /// service fields
@@ -136,7 +137,7 @@ export class AuthorizationService implements IAuthorizationService {
                     if (self.isUnauthorizedError(reason)) {
                         self.handleUnauthorizedResponse();
                     } else {
-                        reject(reason);
+                        Promise.reject(reason);
                     }
                 });
     }
