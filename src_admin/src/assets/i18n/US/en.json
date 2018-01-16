@@ -186,13 +186,20 @@
     }
   },
   "users": {
+    "title": "Users",
     "modal": {
-      "userName": "Login",
-      "userNameHelp": "Enter the Login name of the User.",
       "titleInfo": "User details",
       "titleCreate": "Creating user",
+      "titleEdit": "User details",
       "cancel": "Cancel",
       "apply": "Apply",
+
+      "userName": "Login",
+      "userNameHelp": "Enter the Login name of the User.",
+      "userPassword": "Password",
+      "userPasswordHelp": "Enter the Password for the User.",
+      "userPasswordConfirm": "Confirm password",
+      "userPasswordConfirmHelp": "Confirm password",
       "email": "Email",
       "emailHelp": "Enter email to send invitation.",
       "phoneNumber": "Phone number",
@@ -372,6 +379,13 @@
     "routes": {
       "name": "Route's name is not valid (this field is required)!",
       "description": "Info about the route is not valid (this field is required)!"
+    },
+    "users": {
+      "invalidUsernameMessage": "",
+      "name": "",
+      "name": "",
+      "name": "",
+      "name": ""
     }
   },
   "filters": {

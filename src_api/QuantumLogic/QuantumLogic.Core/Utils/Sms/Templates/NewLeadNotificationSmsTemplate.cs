@@ -13,6 +13,7 @@ namespace QuantumLogic.Core.Utils.Sms.Templates
         public string CustomerPhone { get; }
         public string CustomerEmail { get; }
         public string VehicleTitle { get; }
+        public string VehicleVin { get; }
         public DateTime? BookingDateTime { get; }
         public string ExpertTitle { get; }
         public string BeverageTitle { get; }
@@ -25,6 +26,7 @@ namespace QuantumLogic.Core.Utils.Sms.Templates
             string customerPhone,
             string customerEmail,
             string vehicleTitle,
+            string vehicleVin,
             DateTime bookingDateTime,
             string expertTitle,
             string beverageTitle,
@@ -36,6 +38,7 @@ namespace QuantumLogic.Core.Utils.Sms.Templates
             CustomerPhone = customerPhone;
             CustomerEmail = customerEmail;
             VehicleTitle = vehicleTitle;
+            VehicleVin = vehicleVin;
             BookingDateTime = bookingDateTime;
             ExpertTitle = expertTitle;
             BeverageTitle = beverageTitle;
@@ -50,6 +53,7 @@ namespace QuantumLogic.Core.Utils.Sms.Templates
             CustomerPhone = lead.UserPhone;
             CustomerEmail = lead.UserEmail;
             VehicleTitle = lead.CarTitle;
+            VehicleVin = lead.CarVin;
             BookingDateTime = lead.BookingDateTimeUtc;
             ExpertTitle = (lead.Expert != null) ? lead.Expert.Name : "Skipped by customer";
             BeverageTitle = (lead.Beverage != null) ? lead.Beverage.Name : "Skipped by customer";
@@ -60,8 +64,8 @@ namespace QuantumLogic.Core.Utils.Sms.Templates
         {
             return $"New Lead for {DealerName}! \n\n" +
                    
-                   "Vehicle \n" +
-                   $"Vehicle: {VehicleTitle} \n\n" +
+                   $"Vehicle: {VehicleTitle} \n" +
+                   $"Vin: {VehicleVin} \n\n" +
 
                    "Customer \n" +
                    $"Name: {CustomerFirstName} {CustomerLastName} \n" +

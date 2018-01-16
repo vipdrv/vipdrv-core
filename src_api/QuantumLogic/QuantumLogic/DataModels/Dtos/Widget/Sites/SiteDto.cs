@@ -19,6 +19,7 @@ namespace QuantumLogic.WebApi.DataModels.Dtos.Widget.Sites
         public bool UseExpertStep { get; set; }
         public bool UseBeverageStep { get; set; }
         public bool UseRouteStep { get; set; }
+        public string OwnerName { get; set; }
 
         #region Mapping
 
@@ -39,6 +40,7 @@ namespace QuantumLogic.WebApi.DataModels.Dtos.Widget.Sites
             UseExpertStep = entity.UseExpertStep;
             UseBeverageStep = entity.UseBeverageStep;
             UseRouteStep = entity.UseRouteStep;
+            OwnerName = entity.User.FullName;
         }
         public override Site MapToEntity()
         {

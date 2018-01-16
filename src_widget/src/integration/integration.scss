@@ -108,13 +108,48 @@
 }
 
 /* ======================================================================= */
-/* Dirty hack overflow chat window on https://www.vipdrv.com/                                                             */
+/* Dirty hack overflow chat window on https://www.vipdrv.com/
 /* Will expand that list later with another page Add's
-/* - Hubspot
 /* ======================================================================= */
+
+/* Hubspot */
 
 #hubspot-messages-iframe-container {
   z-index: 2147483646 !important;
+}
+
+/* ======================================================================= */
+/* Autoinjection styles of TestDrive buttons for Dealer sites
+/* ======================================================================= */
+
+/* Marin */
+
+.vipdrv-marin-vlp-button {
+  width: 100% !important;
+  display: table;
+}
+
+.vipdrv-marin-vlp-button-mobile {
+  width: 100% !important;
+  display: table;
+  margin: 5px auto 0px;
+}
+
+.vipdrv-marin-vdp-button {
+  width: 100%;
+  display: table;
+  max-width: 650px;
+  margin: 0 auto;
+  border: 0px;
+  height: 54px;
+  background-color: #176db7;
+  background-image: url(https://widget.testdrive.pw/integration/img/marin-vdp-button.png);
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.vipdrv-marin-vdp-button:hover {
+  background-color: #11528a;
 }
 
 
