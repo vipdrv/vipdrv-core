@@ -59,6 +59,7 @@ namespace QuantumLogic.WebApi.Controllers.Widget
         public Task<GetAllResponse<SiteDto>> GetAllAsync([FromBody]SiteGetAllRequest request, uint page = 0, uint pageSize = 0)
         {
             Expression<Func<Site, bool>> filter = (entity) =>
+                (!request.Id.HasValue || request.Id.Value == entity.Id) &&
                 (!request.UserId.HasValue || request.UserId.Value == entity.UserId) &&
                 (String.IsNullOrEmpty(request.Dealer) || !String.IsNullOrEmpty(entity.DealerName) && entity.DealerName.ToUpper().Contains(request.Dealer.ToUpper())) &&
                 (String.IsNullOrEmpty(request.Name) || !String.IsNullOrEmpty(entity.Name) && entity.Name.ToUpper().Contains(request.Name.ToUpper()));
