@@ -107,6 +107,7 @@
       "weekSchedule": "Working hours"
     },
     "table": {
+      "headerText_siteId": "Site id",
       "headerText_siteImage": "Image",
       "headerText_siteName": "Site name",
       "headerText_ownerName": "Owner",

@@ -55,6 +55,20 @@
                 <table class="sites-table-body table table-bordered table-hover">
                     <thead>
                     <tr>
+                        <th class="sites-table-body-column sites-table-body-column-id sites-table-body-column-with-sorting"
+                            (click)="changeSorting('id')"
+                            translate>
+                            sites.table.headerText_siteId
+                            <span class="soring-index pull-right">
+                                &nbsp;{{getSortingIndex('id')}}
+                            </span>
+                            <i class="fa fa-sort-amount-asc pull-right"
+                               aria-hidden="true"
+                               *ngIf="isSortingAsc('id')"></i>
+                            <i class="fa fa-sort-amount-desc pull-right"
+                               aria-hidden="true"
+                               *ngIf="isSortingDesc('id')"></i>
+                        </th>
                         <th class="sites-table-body-column sites-table-body-column-image"
                             translate>
                             sites.table.headerText_siteImage
@@ -90,6 +104,14 @@
                     </thead>
                     <tr class="sites-table-body-row-filters"
                         *ngIf="isFilteringAllowed()">
+                        <td>
+                            <input class="form-control form-control-sm"
+                                   type="number"
+                                   min="1"
+                                   [disabled]="isFilteringDisabled()"
+                                   [(ngModel)]="tableFilters.id"
+                                   (blur)="applyFilters()"/>
+                        </td>
                         <td></td>
                         <td>
                             <input type="text"
@@ -124,6 +146,9 @@
                         [ngClass]="getClassesForTableRow(item)"
                         *ngFor="let item of items"
                         (click)="redirectToEntityDetails(item)">
+                        <td class="sites-table-body-column sites-table-body-column-body-id">
+                            {{item.id}}
+                        </td>
                         <td class="sites-table-body-column">
                             <img class="card-img-top test-drive-card-site-image"
                                  src="{{item.imageUrl}}"
