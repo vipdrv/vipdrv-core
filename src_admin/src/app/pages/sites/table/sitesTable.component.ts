@@ -362,11 +362,13 @@ export class SitesTableComponent implements OnInit {
     // filters
     protected applyFilters(): Promise<void> {
         const filtersWereNotChanged: boolean =
+            this.tableFilters.id === this.oldTableFilters.id &&
             this.tableFilters.name === this.oldTableFilters.name &&
             this.tableFilters.dealer === this.oldTableFilters.dealer &&
             this.tableFilters.userId === this.oldTableFilters.userId;
         if (!filtersWereNotChanged) {
             this.oldTableFilters = {};
+            this.oldTableFilters.id = this.tableFilters.id;
             this.oldTableFilters.name = this.tableFilters.name;
             this.oldTableFilters.dealer = this.tableFilters.dealer;
             this.oldTableFilters.userId = this.tableFilters.userId;
@@ -389,11 +391,13 @@ export class SitesTableComponent implements OnInit {
     }
     /// table filters
     protected tableFilters: any = {
+        id: null,
         name: null,
         userId: null,
         dealer: null,
     }
     protected oldTableFilters: any = {
+        id: null,
         name: null,
         userId: null,
         dealer: null,
@@ -406,6 +410,9 @@ export class SitesTableComponent implements OnInit {
     protected extendFilter(filter: any): void {
         if (Variable.isNullOrUndefined(filter)) {
             throw new Error('Argument exception! (extendFilter requires defined argument filter)');
+        }
+        if (Variable.isNotNullOrUndefined(this.tableFilters.id) && this.tableFilters.id !== '') {
+            filter.id = this.tableFilters.id;
         }
         if (Variable.isNotNullOrUndefined(this.tableFilters.name) && this.tableFilters.name !== '') {
             filter.name = this.tableFilters.name;
@@ -422,7 +429,7 @@ export class SitesTableComponent implements OnInit {
         {
             field: 'name',
             isAsc: true,
-        },
+        }
     ];
     protected isSortingAsc(targetField: string): boolean {
         const rule = this.getSortingRule(targetField);

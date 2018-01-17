@@ -11,6 +11,7 @@ export interface IUserValidationService extends IValidationService<UserEntity> {
     isValidUserSitesCount(entity: UserEntity): boolean;
     getInvalidUserNameMessageKey(entity: UserEntity): string;
     getInvalidUserPasswordMessageKey(entity: UserEntity): string;
+    getInvalidUserRepeatPasswordMessageKey(entity: UserEntity): string;
     getInvalidUserEmailMessageKey(entity: UserEntity): string;
     getInvalidUserFirstNameMessageKey(entity: UserEntity): string;
     getInvalidUserSecondNameMessageKey(entity: UserEntity): string;

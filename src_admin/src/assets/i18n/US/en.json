@@ -107,6 +107,7 @@
       "weekSchedule": "Working hours"
     },
     "table": {
+      "headerText_siteId": "Site id",
       "headerText_siteImage": "Image",
       "headerText_siteName": "Site name",
       "headerText_ownerName": "Owner",
@@ -193,17 +194,14 @@
       "titleEdit": "User details",
       "cancel": "Cancel",
       "apply": "Apply",
-
       "userName": "Login",
       "userNameHelp": "Enter the Login name of the User.",
       "userPassword": "Password",
-      "userPasswordHelp": "Enter the Password for the User.",
+      "userPasswordHelp": "Enter Password",
       "userPasswordConfirm": "Confirm password",
       "userPasswordConfirmHelp": "Confirm password",
-      "email": "Email",
-      "emailHelp": "Enter email to send invitation.",
-      "phoneNumber": "Phone number",
-      "role": "Expected role"
+      "userEmail": "User Email",
+      "userEmailHelp": "Enter the Email address"
     }
   },
   "beverages": {
@@ -299,7 +297,6 @@
       "invitator": "Creator"
     }
   },
-
   "userProfile": {
     "userProfileMainTitle": "Personal data",
     "tabs": {
@@ -381,11 +378,7 @@
       "description": "Info about the route is not valid (this field is required)!"
     },
     "users": {
-      "invalidUsernameMessage": "",
-      "name": "",
-      "name": "",
-      "name": "",
-      "name": ""
+      "invalidSitesCountMessage": "Maximum allowed count of sites is not valid (should be number higher then 0)!"
     }
   },
   "filters": {

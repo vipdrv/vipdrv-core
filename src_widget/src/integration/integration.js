@@ -87,7 +87,6 @@
                 if (self.domScrollCounter > 15) {
                     self.domScrollCounter = 0;
                     self.initTestDriveVlpButtons();
-                    console.log('scroll');
                 }
             };
         },
@@ -266,6 +265,7 @@
             if (vehicleTitleNode) {
                 vehicle.vdpUrl = vehicleTitleNode.getAttribute('href');
                 vehicle.title = vehicleTitleNode.textContent;
+                vehicle.year = vehicle.title.split(' ')[1];
             }
 
             var vinNode = node.querySelector('.vinstock');
@@ -345,7 +345,6 @@
             vdpVehicle.vdpUrl = window.location.href;
 
             var urlParams = self.vehicleDetailsFromUrl(window.location.pathname);
-
             vdpVehicle.vin = urlParams.vin;
             vdpVehicle.year = urlParams.year;
 
@@ -646,19 +645,35 @@
             };
         };
 
+        var _detectSiteIdAutomatically = function () {
+            var hostName = window.location.hostname;
+            var sitesDictionary = {
+                'www.mbofmarin.com': 32,
+                'inventory.testdrive.pw': 28,
+                'www.testdrive.pw': 28,
+                'localhost': 28,
+            };
+
+            return sitesDictionary[hostName] || null;
+        };
+
         // output
         return {
             init: function (Args) {
-                _SiteId = Args.SiteId || _SiteId;
+                _SiteId = Args.SiteId || _detectSiteIdAutomatically();
                 _InjectWidgetToVlp = Args.injectWidgetToVlp || false;
                 _InjectWidgetToVdp = Args.injectWidgetToVdp || false;
+
+                if (!_SiteId) {
+                    console.log('Automatic initialization for ' + window.location.hostname + ' is missing');
+                    return;
+                }
 
                 _appendTestDriveFrameWrapper();
                 _appendTestDriveFrameWrapperStyles();
                 _addTestDriveFrameEventListeners();
                 _initExtensions();
                 _injectWidgetButtons(_SiteId, _InjectWidgetToVlp, _InjectWidgetToVdp);
-
             },
             openTestDrive: function (Args) {
                 _appendTestDriveFrame(_getUrlParamsFromArguments(Args));
@@ -679,4 +694,4 @@
 //
 // https://widget.testdrive.pw
 //
-// window.TestDrive.init({SiteId: '32', injectWidgetToVlp: true, injectWidgetToVdp: true});
+//window.TestDrive.init({injectWidgetToVlp: true, injectWidgetToVdp: true});
