@@ -66,7 +66,7 @@ export const PAGES_MENU = [{
                             requiredPermission: 'CanViewMenuInvitations'
                         }
                     }
-                }
+                },
 
             ]
         }
@@ -86,3 +86,4 @@ export const PAGES_MENU = [{
 //     }
 // }
 // }
+

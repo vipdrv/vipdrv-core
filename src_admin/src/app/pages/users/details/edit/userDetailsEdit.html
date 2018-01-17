@@ -39,17 +39,59 @@
     </div>
 
     <div class="row">
-        <div class="col-6">
+        <div class="col-sm-12 col-md-6 col-lg-6">
             <div class="form-group">
-                <label for="expertTitle" class="test-drive-input-label" translate>
-                    experts.modal.userPassword
-                </label>
-                <input id="expertTitle"
-                       name="expertTitle"
+                <label for="password" translate>users.modal.userPassword</label>
+                <input id="password"
+                       type="password"
                        class="form-control"
                        [ngClass]="extensions.getInputValidationClass(isValidationActive(), validationService.isValidUserName(entity))"
                        [disabled]="isComponentReadOnly()"
-                       [(ngModel)]="entity.username">
+                       [(ngModel)]="entity.password">
+                <small class="form-text text-muted"
+                       *ngIf="!isValidationActive() || validationService.isValidUserName(entity)"
+                       translate>
+                    users.modal.userPasswordHelp
+                </small>
+                <small class="form-text test-drive-validation-message"
+                       *ngIf="isValidationActive() && !validationService.isValidUserName(entity)"
+                       translate>
+                    {{ validationService.getInvalidUserNameMessageKey(entity) }}
+                </small>
+            </div>
+        </div>
+        <div class="col-sm-12 col-md-6 col-lg-6">
+            <div class="form-group">
+                <label for="confirmPassword" translate>users.modal.userPasswordConfirm</label>
+                <input id="confirmPassword"
+                       type="password"
+                       class="form-control"
+                       [ngClass]="extensions.getInputValidationClass(isValidationActive(), validationService.isValidUserName(entity))"
+                       [disabled]="isComponentReadOnly()"
+                       [(ngModel)]="confirmPassword">
+                <small class="form-text text-muted"
+                       *ngIf="!isValidationActive() || validationService.isValidUserName(entity)"
+                       translate>
+                    users.modal.userPasswordConfirmHelp
+                </small>
+                <small class="form-text test-drive-validation-message"
+                       *ngIf="isValidationActive() && !validationService.isValidUserName(entity)"
+                       translate>
+                    {{ validationService.getInvalidUserNameMessageKey(entity) }}
+                </small>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <div class="form-group">
+                <label for="userEmail" translate>users.modal.userEmail</label>
+                <input id="userEmail"
+                       type="email"
+                       class="form-control"
+                       [ngClass]="extensions.getInputValidationClass(isValidationActive(), validationService.isValidUserName(entity))"
+                       [disabled]="isComponentReadOnly()"
+                       [(ngModel)]="confirmPassword">
                 <small class="form-text text-muted"
                        *ngIf="!isValidationActive() || validationService.isValidUserName(entity)"
                        translate>
@@ -63,6 +105,4 @@
             </div>
         </div>
     </div>
-
-
 </div>

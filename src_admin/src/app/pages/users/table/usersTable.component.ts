@@ -139,6 +139,48 @@ export class UsersTableComponent implements OnInit {
         return self.editModal.open();
     }
 
+    protected modalApply(): void {
+        const a = this.selectedEntity;
+        debugger;
+        if (this.entityValidationService.isValid(this.selectedEntity)) {
+            const self = this;
+            self._useValidation = false;
+            // self.forceAcceptImage = true;
+            setTimeout(
+                function () {
+                    const operationPromise: Promise<UserEntity> = self.selectedEntity.id ?
+                        self.entityApiService.update(self.selectedEntity) :
+                        self.entityApiService.create(self.selectedEntity);
+
+                    self.saveEntityId = self.selectedEntity.id;
+                    self.savePromise = operationPromise
+                        .then(function (entity: UserEntity): Promise<void> {
+                            const elementIndex = self.items.findIndex((item: UserEntity) => item.id === entity.id);
+                            if (elementIndex !== -1) {
+                                self.items.splice(elementIndex, 1, entity);
+                            } else {
+                                self.items.push(entity);
+                                self.totalCount++;
+                            }
+                            return self.editModalDismiss();
+                        })
+                        .then(
+                            () => {
+                                self.saveEntityId = null;
+                                self.savePromise = null;
+                            },
+                            () => {
+                                self.saveEntityId = null;
+                                self.savePromise = null;
+                            }
+                        );
+                },
+                0);
+        } else {
+            this._useValidation = true;
+        }
+    }
+
     protected editModalOpen(id: number): Promise<void> {
         const self = this;
         self._useValidation = false;

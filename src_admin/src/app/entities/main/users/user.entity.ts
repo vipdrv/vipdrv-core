@@ -5,7 +5,6 @@ export class UserEntity extends Entity {
     email: string;
     password: string;
     maxSitesCount: number;
-
     username: string;
     phoneNumber: string;
     firstName: string;
