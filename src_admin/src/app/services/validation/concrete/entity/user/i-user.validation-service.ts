@@ -3,7 +3,9 @@ import { UserEntity } from '../../../../../entities/main/users/user.entity';
 
 export interface IUserValidationService extends IValidationService<UserEntity> {
     isValidUserName(entity: UserEntity): boolean;
-    isValidUserPassword(entity: UserEntity, passwordConfirmation: string): boolean;
+    isValidUserPassword(entity: UserEntity): boolean;
+    isValidUserPasswordRepeat(entity: UserEntity, passwordRepear: string): boolean;
+    isValidUserPasswordReset(password: string): boolean;
     isValidUserEmail(entity: UserEntity): boolean;
     isValidUserFirstName(entity: UserEntity): boolean;
     isValidUserSecondName(entity: UserEntity): boolean;

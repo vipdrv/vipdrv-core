@@ -56,15 +56,15 @@
                                 <i class="fa fa-edit" *ngIf="!isOperationEditProcessing(item)"></i>
                                 <span translate>general.actions.text_edit</span>
                             </button>
-                            <!--<button type="button"-->
-                            <!--class="btn btn-outline-danger btn-sm test-drive-right-standalone-btn"-->
-                            <!--*ngIf="entityPolicyService.canDeleteEntity(item)"-->
-                            <!--[disabled]="isAnyOperationWithEntityProcessing()"-->
-                            <!--(click)="openConfirmationDeleteModal(item.id); $event.stopPropagation();">-->
-                            <!--<i class="fa fa-spinner fa-pulse" *ngIf="isOperationDeleteProcessing(item)"></i>-->
-                            <!--<i class="fa fa-times" *ngIf="!isOperationDeleteProcessing(item)"></i>-->
-                            <!--<span translate>general.actions.text_delete</span>-->
-                            <!--</button>-->
+                            <button type="button"
+                                    class="btn btn-outline-danger btn-sm test-drive-right-standalone-btn"
+                                    *ngIf="entityPolicyService.canDeleteEntity(item)"
+                                    [disabled]="isAnyOperationWithEntityProcessing()"
+                                    (click)="openConfirmationDeleteModal(item.id); $event.stopPropagation();">
+                                <i class="fa fa-spinner fa-pulse" *ngIf="isOperationDeleteProcessing(item)"></i>
+                                <i class="fa fa-times" *ngIf="!isOperationDeleteProcessing(item)"></i>
+                                <span translate>general.actions.text_delete</span>
+                            </button>
                         </td>
                     </tr>
                     </tbody>
@@ -74,7 +74,7 @@
     </div>
 </div>
 
-<modal #editModal size="lg" [backdrop]="'static'">
+<modal #editModal size="md" [backdrop]="'static'">
     <modal-header>
         <h5 class="modal-title">
             <span class="test-drive-modal-header-text" translate>
@@ -92,7 +92,8 @@
         <user-details-edit *ngIf="isSelectedEntityDefined()"
                            [isReadOnly]="isEditModalReadOnly()"
                            [useValidation]="isValidationActivated()"
-                           [entity]="selectedEntity"></user-details-edit>
+                           [entity]="selectedEntity"
+                           [isModalInEditMode]="isModalInEditMode"></user-details-edit>
     </modal-body>
     <modal-footer>
         <button type="button"
