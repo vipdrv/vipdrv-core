@@ -40,13 +40,15 @@ var vendorJs = [
     'node_modules/ngcomponentrouter/angular_1_router.js',
     'node_modules/moment/min/moment-with-locales.min.js',
     'node_modules/angular-moment-picker/dist/angular-moment-picker.min.js',
-    './src/vendor/js/fontawesome.js',
+    './src/vendor/fontawesome/fontawesome.js',
+    './src/vendor/intl-tel-input/intlTelInput.min.js',
+    './src/vendor/intl-tel-input/utils.js'
 ];
 
 var vendorCss = [
     'node_modules/bootstrap/dist/css/bootstrap.min.css',
-    'node_modules/angular-moment-picker/dist/angular-moment-picker.min.css'
-    // 'node_modules/font-awesome/css/font-awesome.min.css'
+    'node_modules/angular-moment-picker/dist/angular-moment-picker.min.css',
+    './src/vendor/intl-tel-input/intlTelInput.css'
 ];
 
 var vendorFonts = [
@@ -58,7 +60,10 @@ var appScss = [
 ];
 
 var appImages = [
-    './src/img/*'
+    './src/img/*',
+    './src/vendor/intl-tel-input/flags@2x.png',
+    './src/vendor/intl-tel-input/flags.png',
+
 ];
 
 var appScssWatch = [

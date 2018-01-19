@@ -34,9 +34,19 @@ export class UserValidationService
             Variable.isNotNullOrUndefinedOrEmptyString(entity.username);
     }
 
-    isValidUserPassword(entity: UserEntity, passwordConfirmation: string): boolean {
+    isValidUserPassword(entity: UserEntity): boolean {
         return Variable.isNotNullOrUndefined(entity) &&
             Variable.isNotNullOrUndefinedOrEmptyString(entity.password);
+    }
+
+    isValidUserPasswordRepeat(entity: UserEntity, repeatPassword: string) {
+        return Variable.isNotNullOrUndefined(entity) &&
+            Variable.isNotNullOrUndefinedOrEmptyString(entity.password) &&
+            entity.password === repeatPassword;
+    }
+
+    isValidUserPasswordReset(password: string) {
+        return true;
     }
 
     isValidUserEmail(entity: UserEntity): boolean {
@@ -63,7 +73,8 @@ export class UserValidationService
 
     isValidUserSitesCount(entity: UserEntity): boolean {
         return Variable.isNotNullOrUndefined(entity) &&
-            Variable.isNotNullOrUndefinedOrEmptyString(entity.maxSitesCount);
+            Variable.isNotNullOrUndefinedOrEmptyString(entity.maxSitesCount) &&
+            Number.isInteger(entity.maxSitesCount);
     }
 
     getInvalidUserNameMessageKey(entity: UserEntity): string {

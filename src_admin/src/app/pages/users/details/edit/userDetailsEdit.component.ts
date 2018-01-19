@@ -15,9 +15,11 @@ export class UserDetailsEditComponent {
     @Input() entity: UserEntity;
     @Input() isReadOnly: boolean = false;
     @Input() useValidation: boolean = false;
+    @Input() isModalInEditMode: boolean = false;
     /// outputs
     /// fields
     protected usaPhoneMask = Extensions.masks.usaPhoneMask;
+    protected isPasswordGeneratorVisible: boolean = false;
     /// injected dependencies
     protected extensions = Extensions;
     protected logger: ILogger;
@@ -31,6 +33,23 @@ export class UserDetailsEditComponent {
     }
 
     /// methods
+
+    protected showPasswordGenerator(): void {
+        this.entity.password = this.generatePassword();
+        this.isPasswordGeneratorVisible = true;
+    }
+
+
+    protected hidePasswordGenerator(): void {
+        this.entity.password = null;
+        this.isPasswordGeneratorVisible = false;
+    }
+
+    protected generatePassword(): string {
+        return Math.random().toString(12).slice(2);
+    }
+
+
     /// predicates
     protected isValidationActive(): boolean {
         return this.useValidation;
@@ -40,3 +59,4 @@ export class UserDetailsEditComponent {
         return this.isReadOnly;
     }
 }
+

@@ -104,7 +104,11 @@
       "siteNameHelp": "Enter the name of the site.",
       "siteUrl": "Site url",
       "siteUrlHelp": "Enter the url of the site (like http://yoursite.url).",
-      "weekSchedule": "Working hours"
+      "weekSchedule": "Working hours",
+      "dealerName": "Dealer Name",
+      "dealerPhone": "Dealer Phone",
+      "dealerAddress": "Dealer Address"
+
     },
     "table": {
       "headerText_siteId": "Site id",
@@ -201,7 +205,17 @@
       "userPasswordConfirm": "Confirm password",
       "userPasswordConfirmHelp": "Confirm password",
       "userEmail": "User Email",
-      "userEmailHelp": "Enter the Email address"
+      "userEmailHelp": "Enter the Email address",
+      "firstName": "First name",
+      "firstNameHelp": "Enter your first name.",
+      "secondName": "Last name",
+      "secondNameHelp": "Enter your last name.",
+      "email": "Email",
+      "emailHelp": "Enter your e-mail.",
+      "phoneNumber": "Phone number",
+      "phoneNumberHelp": "Enter your contact phone number (not required).",
+      "sitesCount": "Allowed count of sites",
+      "sitesCountHelp": "Enter maximum allowed count of sites for invited user."
     }
   },
   "beverages": {
