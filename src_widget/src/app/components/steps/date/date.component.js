@@ -8,40 +8,34 @@
                 // =======================================================================//
 
                 var self = this;
+                self.isLoading = true;
+                self.isStepValid = false;
                 self.dealerData = dealerData;
                 self.bookingData = bookingData;
-                self.isStepValid = false;
-                self.isLoading = true;
-                self.minDateString = null;
+                self.minimumSelectableDate = null;
                 self.timeIntervals = [];
                 self.dateImput = null;
                 self.mobileDateTimeInput = null;
-                self.widgetWorkingHours = null;
-                self.isSelectable = null;
-                self.isSelectableMobile = null;
+                self.workingHoursByDayOfWeek = null;
+                self.isDateSelectableDesctop = null;
+                self.isDateSelectableMobile = null;
                 self.preveoursTime = null;
+                self.loadingCheckerInterval = null;
+                self.minimumAvaliableDate = null;
+                self.firstInit = true;
 
                 // =======================================================================//
                 // Init                                                                   //
                 // =======================================================================//
 
-                self.stop;
-
                 self.$onInit = function () {
-                    self.minDateString = moment().subtract(0, 'day').format('YYYY-MM-DD');
-                    self.dateImput = self.bookingData.calendar.date;
-                    self.mobileDateTimeInput = self.bookingData.calendar.date;
-                    self.validateStep();
-
                     if (self.dealerData.siteId != null) {
                         self.isLoading = false;
                         self.initStep();
                     } else {
                         self.isLoading = true;
-                        self.stop = $interval(function () {
-                            if (self.dealerData.siteId == null) {
-                                // console.log('loading');
-                            } else {
+                        self.loadingCheckerInterval = $interval(function () {
+                            if (self.dealerData.siteId != null) {
                                 self.isLoading = false;
                                 self.stopInterval();
                                 self.initStep();
@@ -51,9 +45,9 @@
                 };
 
                 self.stopInterval = function () {
-                    if (angular.isDefined(self.stop)) {
-                        $interval.cancel(self.stop);
-                        self.stop = undefined;
+                    if (angular.isDefined(self.loadingCheckerInterval)) {
+                        $interval.cancel(self.loadingCheckerInterval);
+                        self.loadingCheckerInterval = undefined;
                     }
                 };
 
@@ -61,23 +55,67 @@
                 // Step Logic                                                             //
                 // =======================================================================//
 
+                self.getMinimumAvaliableDate = function (workingHoursByDayOfWeek, dayOfWeek, counter) {
+                    if (dayOfWeek > 6) {
+                        dayOfWeek = 0;
+                    }
+
+                    if (counter > 6) {
+                        return null;
+                    }
+
+                    var dayOfWeekData = workingHoursByDayOfWeek[dayOfWeek];
+                    var startTime = dayOfWeekData.startTime.split(':')[0];
+                    var endTime = dayOfWeekData.endTime.split(':')[0];
+                    var currentDate = moment();
+                    var currentHour = currentDate.hour();
+
+                    if (dayOfWeekData.isActive && counter > 0) {
+                        currentDate.startOf('day');
+                        currentDate.add(counter, 'days');
+                        return currentDate;
+                    }
+
+                    if (dayOfWeekData.isActive && currentHour > startTime && currentHour < endTime - 1 && counter == 0) {
+                        currentDate.startOf('day');
+                        currentDate.add(counter, 'days');
+                        return currentDate;
+                    }
+
+                    return self.getMinimumAvaliableDate(workingHoursByDayOfWeek, ++dayOfWeek, ++counter);
+                };
+
                 self.initStep = function () {
-                    self.widgetWorkingHours = self.mapToWidgetWorkingHours(self.dealerData.workingHours);
+                    self.workingHoursByDayOfWeek = self.groupWorkingHoursByDayOfWeek(self.dealerData.workingHours);
+                    self.minimumAvaliableDate = self.getMinimumAvaliableDate(self.workingHoursByDayOfWeek, new Date().getDay(), 0);
 
-                    var currentDayOfWeek = new Date().getDay();
-                    var startTime = self.widgetWorkingHours[currentDayOfWeek].startTime;
-                    var endTime = self.widgetWorkingHours[currentDayOfWeek].endTime;
+                    if (self.bookingData.calendar.date) {
+                        self.dateImput = self.bookingData.calendar.date;
+                        self.mobileDateTimeInput = self.bookingData.calendar.date;
+                    } else {
+                        self.dateImput = self.minimumAvaliableDate;
+                        // self.mobileDateTimeInput = self.minimumAvaliableDate;
+                    }
+                    self.validateStep();
 
-                    self.timeIntervals = self.splitTimeToInvervals(startTime, endTime);
+                    var startTime = self.workingHoursByDayOfWeek[self.minimumAvaliableDate.day()].startTime;
+                    var endTime = self.workingHoursByDayOfWeek[self.minimumAvaliableDate.day()].endTime;
 
-                    self.isSelectable = function (date, type) {
+                    var isToday = false;
+                    if (self.minimumAvaliableDate.day() == new Date().getDay()) {
+                        isToday = true;
+                    }
+
+                    self.timeIntervals = self.splitTimeToInvervals(startTime, endTime, isToday);
+
+                    self.isDateSelectableDesctop = function (date, type) {
                         var dayOfWeek = date.format('d');
-                        return self.widgetWorkingHours[dayOfWeek].isActive;
+                        return self.workingHoursByDayOfWeek[dayOfWeek].isActive;
                     };
 
-                    self.isSelectableMobile = function (date, type) {
+                    self.isDateSelectableMobile = function (date, type) {
                         var selectedDayOfWeek = date.format('d');
-                        var isDayAvalibale = self.widgetWorkingHours[selectedDayOfWeek].isActive;
+                        var isDayAvalibale = self.workingHoursByDayOfWeek[selectedDayOfWeek].isActive;
 
                         var isTimeAvalibale = false;
                         var selectedHour = date.hour();
@@ -88,8 +126,8 @@
                         var currentDay = currentDate.getDate();
                         var currentMonth = currentDate.getMonth();
 
-                        var startTime = self.widgetWorkingHours[selectedDayOfWeek].startTime.split(':')[0];
-                        var endTime = self.widgetWorkingHours[selectedDayOfWeek].endTime.split(':')[0];
+                        var startTime = self.workingHoursByDayOfWeek[selectedDayOfWeek].startTime.split(':')[0];
+                        var endTime = self.workingHoursByDayOfWeek[selectedDayOfWeek].endTime.split(':')[0];
 
                         if (selectedDay == currentDay && selectedMonth == currentMonth) {
                             if (selectedHour != 12 || (selectedHour == 12 && self.preveoursTime == 11)) {
@@ -106,7 +144,7 @@
                     };
                 };
 
-                self.mapToWidgetWorkingHours = function (siteWorkingHours) {
+                self.groupWorkingHoursByDayOfWeek = function (siteWorkingHours) {
                     var defaultWorkingHours = {
                         0: {startTime: '09:00:00', endTime: '18:00:00', isActive: false},
                         1: {startTime: '09:00:00', endTime: '18:00:00', isActive: false},
@@ -127,7 +165,7 @@
                     return defaultWorkingHours;
                 };
 
-                self.dateChanged = function (oldValue, newValue) {
+                self.desctopDateChanged = function (oldValue, newValue) {
                     var arr = newValue._i.split(' ');
                     var dayOfWeek = arr[1];
 
@@ -136,26 +174,15 @@
                     self.bookingData.calendar.dayOfWeek = dayOfWeek;
                     self.validateStep();
 
-                    var startTime = self.widgetWorkingHours[dayOfWeek].startTime;
-                    var endTime = self.widgetWorkingHours[dayOfWeek].endTime;
+                    var startTime = self.workingHoursByDayOfWeek[dayOfWeek].startTime;
+                    var endTime = self.workingHoursByDayOfWeek[dayOfWeek].endTime;
 
-                    self.timeIntervals = self.splitTimeToInvervals(startTime, endTime);
+                    var isToday = false;
+                    if (new Date().getDate() == newValue.date()) {
+                        isToday = true;
+                    }
+                    self.timeIntervals = self.splitTimeToInvervals(startTime, endTime, isToday);
                 };
-
-                function cleanTimeIfInvalid(selectedTime, dayOfWeek) {
-                    if (!selectedTime) {
-                        return selectedTime;
-                    }
-
-                    var selectedHour = moment(selectedTime, 'HH:mm A').get('hour');
-                    var startTime = parseInt(self.widgetWorkingHours[dayOfWeek].startTime.split(':')[0]);
-                    var endTime = parseInt(self.widgetWorkingHours[dayOfWeek].endTime.split(':')[0]);
-
-                    if (!(startTime <= selectedHour && selectedHour <= endTime)) {
-                        return null;
-                    }
-                    return selectedTime;
-                }
 
                 self.mobileDateChanged = function (oldValue, newValue) {
                     var arr = newValue._i.split(' ');
@@ -172,7 +199,10 @@
                     self.validateStep();
                 };
 
-                self.timeChanged = function (time) {
+                self.timeChanged = function (time, isActive) {
+                    if (!isActive) {
+                        return;
+                    }
                     self.bookingData.calendar.time = time;
                     self.bookingData.calendar.isSkipped = false;
                     self.validateStep();
@@ -185,6 +215,21 @@
                         self.isStepValid = false;
                     }
                 };
+
+                function cleanTimeIfInvalid(selectedTime, dayOfWeek) {
+                    if (!selectedTime) {
+                        return selectedTime;
+                    }
+
+                    var selectedHour = moment(selectedTime, 'HH:mm A').get('hour');
+                    var startTime = parseInt(self.workingHoursByDayOfWeek[dayOfWeek].startTime.split(':')[0]);
+                    var endTime = parseInt(self.workingHoursByDayOfWeek[dayOfWeek].endTime.split(':')[0]);
+
+                    if (!(startTime <= selectedHour && selectedHour <= endTime)) {
+                        return null;
+                    }
+                    return selectedTime;
+                }
 
                 // =======================================================================//
                 // Navigation                                                             //
@@ -205,17 +250,25 @@
                 // Helpers                                                                //
                 // =======================================================================//
 
-                self.splitTimeToInvervals = function (startTime, endTime) {
-                    // if (self.bookingData.calendar.date == null || new Date(self.bookingData.calendar.date).getDate() == new Date().getDate()) {
-                    //     startTime = moment().hours() + 1;
-                    // }
-
+                self.splitTimeToInvervals = function (startTime, endTime, isToday) {
+                    var currentHours = moment().hours() + 1;
                     var start = moment('2000-01-01 ' + startTime);
                     var end = moment('2000-01-01 ' + endTime);
                     var timeIntervalsArr = [];
 
                     while (start <= end) {
-                        timeIntervalsArr.push(start.format('LT'));
+                        var startHours = start.hours();
+
+                        var item = {
+                            time: start.format('LT'),
+                            isActive: true
+                        };
+
+                        if (currentHours > startHours && isToday) {
+                            item.isActive = false;
+                        }
+
+                        timeIntervalsArr.push(item);
                         start.add(1, 'hours');
                     }
 

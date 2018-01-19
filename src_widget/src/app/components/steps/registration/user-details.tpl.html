@@ -4,13 +4,13 @@
         <p>Please add your details below to confirm your test drive appointment</p>
     </div>
 </div>
-
 <form name="userForm">
     <div class="row">
         <div class="form-group col-12 col-sm-12 col-md-6 col-lg-6">
             <label for="input1" class="col-form-label d-none d-md-block">First Name</label>
             <label for="input1" class="col-form-label d-sm-block d-md-none d-lg-none">Name</label>
             <input name="firstName"
+                   maxlength="20"
                    class="form-control" id="input1"
                    ng-model="firstName"
                    ng-class="{ 'is-invalid' : !userForm.firstName.$valid && !userForm.firstName.$pristine, 'is-valid' : userForm.firstName.$valid && !userForm.firstName.$pristine }"
@@ -19,6 +19,7 @@
         <div class="form-group col-md-6 d-none d-md-block">
             <label for="input2" class="col-form-label">Last Name</label>
             <input name="secondName"
+                   maxlength="20"
                    class="form-control" id="input2"
                    ng-model="secondName"
                    ng-class="{ 'is-invalid' : !userForm.secondName.$valid && !userForm.secondName.$pristine, 'is-valid' : userForm.secondName.$valid && !userForm.secondName.$pristine }">
@@ -29,20 +30,18 @@
             <label for="input3" class="col-form-label">Email</label>
             <input type="email"
                    name="email"
+                   maxlength="20"
                    class="form-control" id="input3"
                    ng-model="email"
                    ng-class="{ 'is-invalid' : !userForm.email.$valid && !userForm.email.$pristine, 'is-valid' : userForm.email.$valid && !userForm.email.$pristine}"
                    required>
         </div>
         <div class="form-group col-md-6">
-            <label for="input4" class="col-form-label">Phone</label>
-            <input type="tel"
+            <label class="col-form-label">Phone</label>
 
-                   name="phone"
+            <input id="userPhone"
                    class="form-control"
-                   id="input4"
-                   ng-model="phone"
-                   ng-class="{ 'is-invalid' : !userForm.phone.$valid && !userForm.phone.$pristine,'is-valid' : userForm.phone.$valid && !userForm.phone.$pristine }"
+                   placeholder="(555) 555-5555"
                    required>
         </div>
     </div>
@@ -57,7 +56,6 @@
                 </textarea>
         </div>
     </div>
-
     <div class="row">
         <div class="col-12">
             <button ng-disabled="userForm.$invalid" type="button"
@@ -66,35 +64,14 @@
             </button>
         </div>
     </div>
-
     <div class="row">
         <div class="col-12">
-            <!--<div class="form-group p-0 m-0">-->
-                <!--<div class="form-check form-check-inline">-->
-                    <!--<label class="form-check-label">-->
-                        <!--<input ng-checked="true" class="form-check-input" type="checkbox" value="option1"> Phone-->
-                    <!--</label>-->
-                <!--</div>-->
-                <!--<div class="form-check form-check-inline">-->
-                    <!--<label class="form-check-label">-->
-                        <!--<input ng-checked="true" class="form-check-input" type="checkbox" value="option2"> SMS-->
-                    <!--</label>-->
-                <!--</div>-->
-                <!--<div class="form-check form-check-inline">-->
-                    <!--<label class="form-check-label">-->
-                        <!--<input ng-checked="true" class="form-check-input" type="checkbox" value="option3"> Email-->
-                    <!--</label>-->
-                <!--</div>-->
-            <!--</div>-->
-
-
             <button ng-disabled="userForm.$invalid" type="button"
                     class="btn btn-lg btn-primary d-none d-md-block float-right"
                     ng-click="$ctrl.makeBooking()">Make My Booking
             </button>
         </div>
     </div>
-
     <div class="d-md-none d-lg-none d-sm-block mt-2 mb-4">
         <br>
         <br>
@@ -110,7 +87,6 @@
         <br>
         <br>
     </div>
-
 </form>
 
 
