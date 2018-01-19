@@ -660,7 +660,7 @@
         // output
         return {
             init: function (Args) {
-                _SiteId = Args.SiteId || _detectSiteIdAutomatically();
+                _SiteId = Args.siteId || _detectSiteIdAutomatically();
                 _InjectWidgetToVlp = Args.injectWidgetToVlp || false;
                 _InjectWidgetToVdp = Args.injectWidgetToVdp || false;
 

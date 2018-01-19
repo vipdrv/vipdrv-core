@@ -1,14 +1,13 @@
 <img class="td-spinner" src="/img/spinner.gif" ng-if="$ctrl.isLoading">
-
 <div class="row" ng-if="!$ctrl.isLoading">
     <div class="col-md-6 col-sm-12 d-none d-sm-none d-md-none d-lg-block d-xl-block">
         <h2 class="wizard-tab-content__title text-center text-md-left">Select Date</h2>
         <p></p>
         <div ng-if="!$ctrl.isLoading"
              moment-picker="$ctrl.dateImput"
-             change="$ctrl.dateChanged(oldValue, newValue)"
-             min-date="$ctrl.minDateString"
-             selectable="$ctrl.isSelectable(date, type)"
+             change="$ctrl.desctopDateChanged(oldValue, newValue)"
+             min-date="$ctrl.minimumAvaliableDate"
+             selectable="$ctrl.isDateSelectableDesctop(date, type)"
              format="YYYY-MM-DD d"
              min-view="month"
              max-view="month"
@@ -24,11 +23,11 @@
         <p></p>
         <div class="row td-time pr-3">
             <div class="col-3 pb-2 p-0 pl-2"
-                 ng-repeat="time in $ctrl.timeIntervals"
-                 ng-click="$ctrl.timeChanged(time)">
+                 ng-repeat="item in $ctrl.timeIntervals"
+                 ng-click="$ctrl.timeChanged(item.time, item.isActive)">
                 <div class="td-time__item"
-                     ng-class="time == $ctrl.bookingData.calendar.time ? 'td-time__item--active' : ''">
-                    {{time}}
+                     ng-class="{'td-time__item--active' : item.time == $ctrl.bookingData.calendar.time, 'td-time__item--disabled' : item.isActive == false }">
+                    {{item.time}}
                 </div>
             </div>
         </div>
@@ -38,13 +37,13 @@
         <h2 class="wizard-tab-content__title text-center">Select Date & Time</h2>
         <p></p>
         <div ng-if="!$ctrl.isLoading"
-             moment-picker="$ctrl.dateTimeInput"
+             moment-picker="$ctrl.mobileDateTimeInput"
              change="$ctrl.mobileDateChanged(oldValue, newValue)"
-             selectable="$ctrl.isSelectableMobile(date, type)"
+             selectable="$ctrl.isDateSelectableMobile(date, type)"
              format="YYYY-MM-DD LT d"
              min-view="month"
              max-view="day"
-             min-date="$ctrl.minDateString"
+             min-date="$ctrl.minimumAvaliableDate"
              today="true"
              inline="true"
              class="test-drive__date-picker">
@@ -55,12 +54,17 @@
 <div class="row wizard-navigation-tab-next-button--desktop d-none d-md-block" ng-if="!$ctrl.isLoading">
     <div class="col-12">
         <a href="javascript:void(0)" class="card-link mr-3" ng-click="skipStep()">Skip this step</a>
-        <button type="button" class="btn btn-lg btn-primary " ng-click="nextStep()" ng-disabled="!$ctrl.isStepValid">Next Step</button>
+        <button type="button" class="btn btn-lg btn-primary " ng-click="nextStep()" ng-disabled="!$ctrl.isStepValid">
+            Next Step
+        </button>
     </div>
 </div>
-<div class="row wizard-navigation-tab-next-button--mobile d-md-none d-lg-none d-sm-block mt-3 mb-4" ng-if="!$ctrl.isLoading">
+<div class="row wizard-navigation-tab-next-button--mobile d-md-none d-lg-none d-sm-block mt-3 mb-4"
+     ng-if="!$ctrl.isLoading">
     <div class="col-12">
-        <button type="button" class="btn btn-primary btn-lg btn-block mb-3" ng-click="nextStep()" ng-disabled="!$ctrl.isStepValid">Next Step</button>
+        <button type="button" class="btn btn-primary btn-lg btn-block mb-3" ng-click="nextStep()"
+                ng-disabled="!$ctrl.isStepValid">Next Step
+        </button>
         <a href="javascript:void(0)" class="card-link d-block text-center" ng-click="skipStep()">Skip this step </a>
     </div>
 </div>

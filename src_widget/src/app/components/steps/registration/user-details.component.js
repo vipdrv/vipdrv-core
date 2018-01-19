@@ -40,10 +40,7 @@
                     self.bookingData.user.email = $scope.email;
                     self.bookingData.user.phone = $window.$("#userPhone").intlTelInput("getNumber");
                     self.bookingData.user.comment = $scope.comment;
-
-                    api.completeBooking(self.bookingData).then(function () {
-                    });
-
+                    api.completeBooking(self.bookingData).then();
                     self.completeForm();
                 };
 
