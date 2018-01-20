@@ -98,6 +98,7 @@
     },
     "modal": {
       "title": "Site details",
+      "titleEdit": "Site details",
       "siteOwner": "Site owner",
       "siteOwnerHelp": "Select the name of the site owner.",
       "siteName": "Site name",
