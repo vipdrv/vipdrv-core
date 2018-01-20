@@ -52,14 +52,14 @@ namespace QuantumLogic.Core.Domain.Services
 
         public virtual Task<int> GetTotalCountAsync(Expression<Func<TEntity, bool>> filter = null)
         {
-            return Repository.GetTotalCountAsync((entitySet) => ApplyPolisyAndFilterToQuery(entitySet, filter));
+            return Repository.GetTotalCountAsync((entitySet) => ApplyPolicyAndFilterToQuery(entitySet, filter));
         }
         public virtual async Task<IList<TEntity>> RetrieveAllAsync(Expression<Func<TEntity, bool>> filter = null, string sorting = null, int skip = 0, int take = 0)
         {
             return await Repository.GetAllAsync(
                 (entitySet) => 
                 {
-                    entitySet = ApplySortingToQuery(ApplyPolisyAndFilterToQuery(entitySet, filter), sorting);
+                    entitySet = ApplySortingToQuery(ApplyPolicyAndFilterToQuery(entitySet, filter), sorting);
                     if (take > 0 || skip > 0)
                     {
                         entitySet = entitySet
@@ -147,7 +147,7 @@ namespace QuantumLogic.Core.Domain.Services
         {
             return !String.IsNullOrEmpty(sorting) ? query.OrderBy(sorting) : query.OrderBy(r => r.Id);
         }
-        protected virtual IQueryable<TEntity> ApplyPolisyAndFilterToQuery(IQueryable<TEntity> entitySet, Expression<Func<TEntity, bool>> filter)
+        protected virtual IQueryable<TEntity> ApplyPolicyAndFilterToQuery(IQueryable<TEntity> entitySet, Expression<Func<TEntity, bool>> filter)
         {
             // using policy filter
             IQueryable<TEntity> query = Policy.RetrieveAllFilter(entitySet);

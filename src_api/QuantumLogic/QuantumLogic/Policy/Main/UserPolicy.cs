@@ -21,27 +21,15 @@ namespace QuantumLogic.WebApi.Policy.Main
         protected override IQueryable<User> InnerRetrieveAllFilter(IQueryable<User> query)
         {
             bool result = PermissionChecker.IsGranted(QuantumLogicPermissionNames.CanAllAll) ||
-                          PermissionChecker.IsGranted(QuantumLogicPermissionNames.CanAllUser) ||
-                          PermissionChecker.IsGranted(QuantumLogicPermissionNames.CanRetrieveUser);
-
-            if (result)
+                PermissionChecker.IsGranted(QuantumLogicPermissionNames.CanAllUser) ||
+                PermissionChecker.IsGranted(QuantumLogicPermissionNames.CanRetrieveUser);
+            if (!result)
             {
-                return query;
+                bool resultOwn = Session.UserId.HasValue &&
+                    (PermissionChecker.IsGranted(QuantumLogicPermissionNames.CanAllOwn) ||
+                     PermissionChecker.IsGranted(QuantumLogicPermissionNames.CanRetrieveOwnUser));
+                query = resultOwn ? query.Where(r => r.Id == Session.UserId.Value) : query.Where(r => false);
             }
-
-            var resultOwn = Session.UserId.HasValue &&
-                            (PermissionChecker.IsGranted(QuantumLogicPermissionNames.CanAllOwn) ||
-                             PermissionChecker.IsGranted(QuantumLogicPermissionNames.CanRetrieveOwnUser));
-
-            if (resultOwn)
-            {
-                query = query.Where(r => r.Id == Session.UserId.Value);
-            }
-            else
-            {
-                query = query.DefaultIfEmpty();
-            }
-
             return query;
         }
 
