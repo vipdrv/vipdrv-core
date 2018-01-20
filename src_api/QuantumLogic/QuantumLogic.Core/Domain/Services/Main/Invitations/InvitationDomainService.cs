@@ -1,4 +1,5 @@
-﻿using QuantumLogic.Core.Domain.Entities.MainModule;
+﻿using QuantumLogic.Core.Authorization;
+using QuantumLogic.Core.Domain.Entities.MainModule;
 using QuantumLogic.Core.Domain.Policy.Main;
 using QuantumLogic.Core.Domain.Repositories.Main;
 using QuantumLogic.Core.Domain.Validation.Main;
@@ -13,11 +14,19 @@ namespace QuantumLogic.Core.Domain.Services.Main.Invitations
 {
     public class InvitationDomainService : EntityDomainService<Invitation, int>, IInvitationDomainService
     {
+        #region Injected dependencies
+
+        protected readonly IQLSession Session;
+
+        #endregion
+
         #region Ctors
 
-        public InvitationDomainService(IInvitationRepository repository, IInvitationPolicy policy, IInvitationValidationService validationService)
+        public InvitationDomainService(IInvitationRepository repository, IInvitationPolicy policy, IInvitationValidationService validationService, IQLSession session)
             : base(repository, policy, validationService)
-        { }
+        {
+            Session = session;
+        }
 
         #endregion
 
@@ -37,6 +46,7 @@ namespace QuantumLogic.Core.Domain.Services.Main.Invitations
         public override Task<Invitation> CreateAsync(Invitation entity)
         {
             entity.InvitationCode = Guid.NewGuid().ToString();
+            entity.InvitatorId = Session.UserId;
             entity.Used = false;
             entity.CreatedTimeUtc = DateTime.UtcNow;
             return base.CreateAsync(entity);

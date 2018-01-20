@@ -14,7 +14,7 @@ namespace QuantumLogic.WebApi.Authorization
     /// </summary>
     public class HttpContextSession : IQLSession
     {
-        public long? UserId { get; set; }
+        public int? UserId { get; set; }
 
         public string Username { get; private set; }
 

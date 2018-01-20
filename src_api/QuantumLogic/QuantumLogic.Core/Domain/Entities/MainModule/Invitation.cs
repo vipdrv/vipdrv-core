@@ -13,7 +13,7 @@ namespace QuantumLogic.Core.Domain.Entities.MainModule
         public DateTime? UsedTimeUtc { get; set; }
         public int AvailableSitesCount { get; set; }
 
-        public int InvitatorId { get; set; }
+        public int? InvitatorId { get; set; }
         public User Invitator { get; set; }
         public int RoleId { get; set; }
         public Role Role { get; set; }

@@ -35,7 +35,7 @@ namespace QuantumLogic.WebApi.Policy.Main
 
             if (resultOwn)
             {
-                query = query.Where(r => r.Id == Session.UserId);
+                query = query.Where(r => r.Id == Session.UserId.Value);
             }
             else
             {

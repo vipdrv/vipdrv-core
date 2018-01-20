@@ -5,7 +5,7 @@ import { GetAllResponse } from './../../dataModels/getAll.response';
 export interface IUserApiService extends ICRUDApiService<UserEntity, number, LightEntity> {
     register(entity: any, invitationCode: string): Promise<void>;
     isUsernameValid(value: string): Promise<boolean>;
-    createInvitation(userId: number, entity: InvitationEntity): Promise<InvitationEntity>;
+    createInvitation(entity: InvitationEntity): Promise<InvitationEntity>;
     getInvitations(userId: number, page: number, pageSize: number, sorting: string): Promise<GetAllResponse<InvitationEntity>>;
     patchPassword(userId: number, oldPassword: string, newPassword: string): Promise<void>;
     patchAvatar(userId: number, newAvatarUrl: string): Promise<void>;

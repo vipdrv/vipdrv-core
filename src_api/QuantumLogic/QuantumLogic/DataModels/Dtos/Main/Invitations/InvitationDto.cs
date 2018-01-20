@@ -14,7 +14,7 @@ namespace QuantumLogic.WebApi.DataModels.Dtos.Main.Invitations
         public DateTime? UsedTimeUtc { get; set; }
         public int AvailableSitesCount { get; set; }
 
-        public int InvitatorId { get; set; }
+        public long? InvitatorId { get; set; }
         public string Invitator { get; set; }
         public int RoleId { get; set; }
         public string Role { get; set; }
@@ -31,7 +31,7 @@ namespace QuantumLogic.WebApi.DataModels.Dtos.Main.Invitations
             AvailableSitesCount = entity.AvailableSitesCount;
             UsedTimeUtc = entity.UsedTimeUtc;
             InvitatorId = entity.InvitatorId;
-            Invitator = entity.Invitator.ToString();
+            Invitator = entity.Invitator != null ? entity.Invitator.ToString() : String.Empty;
             RoleId = entity.RoleId;
             Role = entity.Role.ToString();
         }

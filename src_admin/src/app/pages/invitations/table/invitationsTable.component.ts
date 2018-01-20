@@ -237,7 +237,7 @@ export class InvitationsTableComponent implements OnInit {
             const self = this;
             self.useValidationForSelectedEntity = false;
             self.sendInvitationPromise = self.userApiService
-                .createInvitation(self.authorizationManager.currentUserId, this.entity)
+                .createInvitation(this.entity)
                 .then(function (response: InvitationEntity): void {
                     self.items.splice(0, 0, response);
                     self.modalDismiss();
@@ -264,8 +264,8 @@ export class InvitationsTableComponent implements OnInit {
         this.entity = new InvitationEntity();
         this.entity.email = null;
         this.entity.phoneNumber = null;
-        this.entity.availableSitesCount = 0;
-        this.entity.roleId = 1;
+        this.entity.availableSitesCount = 1;
+        this.entity.roleId = 2;
     }
     /// promise manager
     protected firstLoadingPromise: Promise<void>;
