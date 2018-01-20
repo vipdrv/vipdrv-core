@@ -217,6 +217,11 @@
       "phoneNumberHelp": "Enter your contact phone number (not required).",
       "sitesCount": "Allowed count of sites",
       "sitesCountHelp": "Enter maximum allowed count of sites for invited user."
+    },
+    "table": {
+      "headerText_dealerName": "Dealer Name",
+      "headerText_maxSitesCount": "Max sites count",
+      "headerText_actions": "Actions"
     }
   },
   "beverages": {

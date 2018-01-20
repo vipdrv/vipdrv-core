@@ -251,6 +251,14 @@
                 // =======================================================================//
 
                 self.splitTimeToInvervals = function (startTime, endTime, isToday) {
+                    // round minutes
+                    var hours = startTime.split(':')[0];
+                    var minutes = startTime.split(':')[1];
+                    if (parseInt(minutes) > 0) {
+                        hours++;
+                        startTime = hours + ':00:00';
+                    }
+
                     var currentHours = moment().hours() + 1;
                     var start = moment('2000-01-01 ' + startTime);
                     var end = moment('2000-01-01 ' + endTime);

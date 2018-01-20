@@ -15,7 +15,6 @@ import { UserValidationService } from '../../../services/validation/concrete/ent
 
 @Component({
     selector: 'users-table',
-    styleUrls: ['./usersTable.scss'],
     templateUrl: './usersTable.html',
 })
 export class UsersTableComponent implements OnInit {
@@ -273,7 +272,6 @@ export class UsersTableComponent implements OnInit {
             .get(entityId)
             .then(function (response: UserEntity): Promise<void> {
                 self.selectedEntity = response;
-                self.selectedEntity.password = null;
                 return modal.open();
             })
             .then(
@@ -330,9 +328,6 @@ export class UsersTableComponent implements OnInit {
                 self.deleteEntity(self.deleteCandidateId);
                 self.deleteCandidateId = null;
             });
+        // Promise
     }
-
-
-
-
 }
