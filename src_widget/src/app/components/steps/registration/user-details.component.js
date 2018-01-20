@@ -16,15 +16,15 @@
                         // dropdownContainer: "body",
                         // excludeCountries: ["us"],
                         // formatOnDisplay: false,
-                        geoIpLookup: function (callback) {
-                            $window.$.get("http://ipinfo.io", function () {
-                            }, "jsonp").always(function (resp) {
-                                var countryCode = (resp && resp.country) ? resp.country : "";
-                                callback(countryCode);
-                            });
-                        },
+                        // geoIpLookup: function (callback) {
+                        //     $window.$.get("http://ipinfo.io", function () {
+                        //     }, "jsonp").always(function (resp) {
+                        //         var countryCode = (resp && resp.country) ? resp.country : "";
+                        //         callback(countryCode);
+                        //     });
+                        // },
                         // hiddenInput: "full_number",
-                        initialCountry: "auto",
+                        initialCountry: "us",
                         // nationalMode: false,
                         // onlyCountries: ['us', 'gb', 'ch', 'ca', 'do'],
                         // placeholderNumberType: "MOBILE",
@@ -34,14 +34,28 @@
                     });
                 };
 
+                self.isStepValid = function () {
+                    if (self.userPhone.val().length == 14) {
+                        self.userPhoneSelector.style.border = '1px solid #28a745';
+                        return true;
+                    } else {
+                        self.userPhoneSelector.style.border = '1px solid #dc3545';
+                        return false;
+                    }
+                };
+
                 self.makeBooking = function () {
                     self.bookingData.user.firstName = $scope.firstName;
                     self.bookingData.user.lastName = $scope.secondName;
                     self.bookingData.user.email = $scope.email;
                     self.bookingData.user.phone = $window.$("#userPhone").intlTelInput("getNumber");
                     self.bookingData.user.comment = $scope.comment;
-                    api.completeBooking(self.bookingData).then();
-                    self.completeForm();
+
+                    if (self.isStepValid()) {
+                        api.completeBooking(self.bookingData).then();
+                        self.completeForm();
+                    }
+
                 };
 
                 var _makeWidgetRootScrollable = function () {
@@ -58,11 +72,11 @@
                     phoneNumberImputMask(element);
                 });
 
-                var userPhone = $window.$("#userPhone");
-                var userPhoneSelector = $window.document.getElementById('userPhone');
-                userPhone.on("keyup change", function () {
-                    if (userPhone.val().length == 14) {
-                        userPhoneSelector.style.border = '1px solid #28a745';
+                self.userPhone = $window.$("#userPhone");
+                self.userPhoneSelector = $window.document.getElementById('userPhone');
+                self.userPhone.on("keyup change", function () {
+                    if (self.userPhone.val().length == 14) {
+                        self.userPhoneSelector.style.border = '1px solid #28a745';
                     } else {
                         // userPhoneSelector.style.border = '1px solid #dc3545';
                     }

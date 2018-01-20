@@ -25,7 +25,7 @@ export class LeadsTableComponent implements OnInit {
     protected modalInfo: ModalComponent;
     /// settings
     private _defaultPageNumber: number = 1;
-    private _defaultPageSize: number = 10;
+    private _defaultPageSize: number = 50;
     // private _defaultSorting: string = 'recievedUtc desc';
     private _defaultFilter: any = null;
     protected maxPaginationSize: number = 3;

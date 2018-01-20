@@ -39,7 +39,7 @@ export class SitesTableComponent implements OnInit {
         },
     ];
     private _defaultPageNumber: number = 1;
-    private _defaultPageSize: number = 5;
+    private _defaultPageSize: number = 50;
     private _defaultFilter: any = null;
     private _useValidation: boolean = false;
     protected forceAcceptImage: boolean = false;
