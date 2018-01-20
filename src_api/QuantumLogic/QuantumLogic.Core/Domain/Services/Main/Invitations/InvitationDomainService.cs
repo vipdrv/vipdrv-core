@@ -3,6 +3,7 @@ using QuantumLogic.Core.Domain.Entities.MainModule;
 using QuantumLogic.Core.Domain.Policy.Main;
 using QuantumLogic.Core.Domain.Repositories.Main;
 using QuantumLogic.Core.Domain.Validation.Main;
+using QuantumLogic.Core.Enums;
 using QuantumLogic.Core.Exceptions.NotFound;
 using QuantumLogic.Core.Exceptions.NotSupported;
 using System;
@@ -17,15 +18,17 @@ namespace QuantumLogic.Core.Domain.Services.Main.Invitations
         #region Injected dependencies
 
         protected readonly IQLSession Session;
+        protected readonly IRoleRepository RoleRepository;
 
         #endregion
 
         #region Ctors
 
-        public InvitationDomainService(IInvitationRepository repository, IInvitationPolicy policy, IInvitationValidationService validationService, IQLSession session)
+        public InvitationDomainService(IInvitationRepository repository, IInvitationPolicy policy, IInvitationValidationService validationService, IQLSession session, IRoleRepository roleRepository)
             : base(repository, policy, validationService)
         {
             Session = session;
+            RoleRepository = roleRepository;
         }
 
         #endregion
@@ -62,7 +65,25 @@ namespace QuantumLogic.Core.Domain.Services.Main.Invitations
         }
         internal override IEnumerable<LoadEntityRelationAction<Invitation>> GetLoadEntityRelationActions()
         {
-            return new List<LoadEntityRelationAction<Invitation>>();
+            #region Load related role action
+
+            Action<Invitation> loadRelatedRoleActionExpression = async (entity) =>
+            {
+                entity.Role = await RoleRepository.SingleAsync(r => r.Id == entity.RoleId);
+            };
+            ISet<DomainMethodNames> loadRelatedRoleMethodsToUse = new HashSet<DomainMethodNames>()
+            {
+                DomainMethodNames.Create,
+                DomainMethodNames.Update
+            };
+            LoadEntityRelationAction<Invitation> loadRelatedRole = new LoadEntityRelationAction<Invitation>(loadRelatedRoleActionExpression, loadRelatedRoleMethodsToUse);
+
+            #endregion
+
+            return new List<LoadEntityRelationAction<Invitation>>()
+            {
+                loadRelatedRole
+            };
         }
         protected override Expression<Func<Invitation, object>>[] GetRetrieveAllEntityIncludes()
         {

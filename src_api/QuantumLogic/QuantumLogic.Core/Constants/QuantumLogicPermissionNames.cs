@@ -30,6 +30,12 @@ namespace QuantumLogic.Core.Constants
         public const string CanRetrieveOwnUser = "CanRetrieveOwnUser";
         public const string CanUpdateOwnUser = "CanUpdateOwnUser";
 
+        public const string CanAllRole = "CanAllRole";
+        public const string CanRetrieveRole = "CanRetrieveRole";
+        public const string CanCreateRole = "CanCreateRole";
+        public const string CanUpdateRole = "CanUpdateRole";
+        public const string CanDeleteRole = "CanDeleteRole";
+
         public const string CanAllInvitation = "CanAllInvitation";
         public const string CanRetrieveInvitation = "CanRetrieveInvitation";
         public const string CanCreateInvitation = "CanCreateInvitation";

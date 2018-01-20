@@ -51,6 +51,8 @@ namespace QuantumLogic.WebApi
             services.AddScoped<IInvitationPolicy, InvitationPolicy>();
             services.AddScoped<IEntityPolicy<User, int>, UserPolicy>();
             services.AddScoped<IUserPolicy, UserPolicy>();
+            services.AddScoped<IEntityPolicy<Role, int>, RolePolicy>();
+            services.AddScoped<IRolePolicy, RolePolicy>();
 
             services.AddScoped<IEntityPolicy<Beverage, int>, BeveragePolicy>();
             services.AddScoped<IEntityExtendedPolicy<Beverage, int>, BeveragePolicy>();
@@ -76,6 +78,8 @@ namespace QuantumLogic.WebApi
             services.AddScoped<IInvitationValidationService, InvitationValidationService>();
             services.AddScoped<IEntityValidationService<User, int>, UserValidationService>();
             services.AddScoped<IUserValidationService, UserValidationService>();
+            services.AddScoped<IEntityValidationService<Role, int>, RoleValidationService>();
+            services.AddScoped<IRoleValidationService, RoleValidationService>();
 
             services.AddScoped<IEntityValidationService<Beverage, int>, BeverageValidationService>();
             services.AddScoped<IEntityExtendedValidationService<Beverage, int>, BeverageValidationService>();
