@@ -23,7 +23,8 @@ namespace QuantumLogic.WebApi.Policy.Main
             bool canGetAccessToManyEntities = PermissionChecker.IsGranted(QuantumLogicPermissionNames.CanAllAll) ||
                           PermissionChecker.IsGranted(QuantumLogicPermissionNames.CanAllRole) ||
                           PermissionChecker.IsGranted(QuantumLogicPermissionNames.CanRetrieveRole);
-            return canGetAccessToManyEntities ? query : Enumerable.Empty<Role>().AsQueryable();
+            query = canGetAccessToManyEntities ? query : query.Where(r => false);
+            return query;
         }
 
         protected override bool CanRetrieve(Role entity, bool throwEntityPolicyException)
