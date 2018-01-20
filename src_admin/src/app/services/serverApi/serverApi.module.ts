@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ContentApiService } from './content/content.api-service';
 import { UserApiService } from './main/users/user.api-service';
+import { RoleApiService } from './main/roles/role.api-service';
 import { BeverageApiService } from './widget/beverages/beverage.api-service';
 import { ExpertApiService } from './widget/experts/expert.api-service';
 import { LeadApiService } from './widget/leads/lead.api-service';
@@ -16,6 +17,7 @@ import { WidgetThemeApiService } from './widget/themes/widgetTheme.api-service';
     providers: [
         ContentApiService,
         UserApiService,
+        RoleApiService,
         BeverageApiService,
         ExpertApiService,
         LeadApiService,

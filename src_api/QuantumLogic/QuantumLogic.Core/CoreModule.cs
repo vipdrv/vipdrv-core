@@ -14,6 +14,7 @@ using QuantumLogic.Core.Utils.ContentManager.Providers;
 using QuantumLogic.Core.Utils.Modules;
 using System;
 using QuantumLogic.Core.Utils.Email;
+using QuantumLogic.Core.Domain.Services.Main.Roles;
 
 namespace QuantumLogic.Core
 {
@@ -35,7 +36,9 @@ namespace QuantumLogic.Core
             services.AddScoped<IInvitationDomainService, InvitationDomainService>();
             services.AddScoped<IEntityDomainService<User, int>, UserDomainService>();
             services.AddScoped<IUserDomainService, UserDomainService>();
-            
+            services.AddScoped<IEntityDomainService<Role, int>, RoleDomainService>();
+            services.AddScoped<IRoleDomainService, RoleDomainService>();
+
             #endregion
 
             #region Widget
