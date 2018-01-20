@@ -31,6 +31,39 @@
     <div class="row test-drive-modal-body-edit-entity-container-row-input">
         <div class="col-12">
             <div class="form-group">
+                <label for="email"
+                       class="test-drive-input-label"
+                       translate>
+                    invitations.modal.role
+                </label>
+                <select id="email"
+                        name="email"
+                        class="form-control"
+                        [ngClass]="extensions.getInputValidationClass(isValidationActive(), validationService.isValidRole(entity))"
+                        [disabled]="isFormProcessing()"
+                        (change)="onChangeRole()"
+                        [(ngModel)]="entity.roleId">
+                    <option *ngFor="let option of rolesCanBeUsedForInvitation"
+                            [ngValue]="option.id">
+                        <span translate>{{option.name}}</span>
+                    </option>
+                </select>
+                <small class="form-text text-muted"
+                       *ngIf="!isValidationActive() || validationService.isValidRole(entity)"
+                       translate>
+                    invitations.modal.roleHelp
+                </small>
+                <small class="form-text test-drive-validation-message"
+                       *ngIf="isValidationActive() && !validationService.isValidRole(entity)"
+                       translate>
+                    {{ validationService.getInvalidRoleMessageKey(entity) }}
+                </small>
+            </div>
+        </div>
+    </div>
+    <div class="row test-drive-modal-body-edit-entity-container-row-input">
+        <div class="col-12">
+            <div class="form-group">
                 <label for="availableSitesCount"
                        class="test-drive-input-label"
                        translate>

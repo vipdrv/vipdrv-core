@@ -25,6 +25,7 @@ namespace QuantumLogic.WebApi.Controllers.Main
 
         #region CRUD
 
+        [Authorize]
         [HttpGet("{id}")]
         public Task<RoleFullDto> GetAsync(int id)
         {
@@ -53,6 +54,7 @@ namespace QuantumLogic.WebApi.Controllers.Main
 
         #region Methods to operate with many entities
 
+        [Authorize]
         [HttpPost("get-all/{page?}/{pageSize?}")]
         public Task<GetAllResponse<RoleDto>> GetAllAsync([FromBody]RoleGetAllRequest request, uint page = 0, uint pageSize = 0)
         {

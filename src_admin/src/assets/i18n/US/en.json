@@ -290,7 +290,7 @@
       "used": "Status",
       "usedTime": "Accepted time",
       "availableSitesCount": "Sites max count",
-      "role": "Expected role",
+      "role": "Supposed role",
       "invitator": "Creator"
     },
     "modal": {
@@ -307,7 +307,8 @@
       "usedTime": "Accepted time",
       "availableSitesCount": "Allowed count of sites",
       "availableSitesCountHelp": "Enter maximum allowed count of sites for invited user.",
-      "role": "Expected role",
+      "role": "Supposed role",
+      "roleHelp": "Select supposed role for invited user.",
       "invitator": "Creator"
     }
   },
@@ -372,6 +373,7 @@
     },
     "invitations": {
       "invalidEmailMessage": "Email address is not valid!",
+      "invalidRoleMessage": "Selected supposed role for invited user is not valid (this field is required)!",
       "invalidAvailableSitesCount": "Maximum allowed count of sites is not valid (should be number higher then 0)!"
     },
     "experts": {

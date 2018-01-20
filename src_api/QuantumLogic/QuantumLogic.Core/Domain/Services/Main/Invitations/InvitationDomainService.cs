@@ -67,9 +67,9 @@ namespace QuantumLogic.Core.Domain.Services.Main.Invitations
         {
             #region Load related role action
 
-            Action<Invitation> loadRelatedRoleActionExpression = async (entity) =>
+            Action<Invitation> loadRelatedRoleActionExpression = (entity) =>
             {
-                entity.Role = await RoleRepository.SingleAsync(r => r.Id == entity.RoleId);
+                entity.Role = RoleRepository.SingleAsync(r => r.Id == entity.RoleId).Result;
             };
             ISet<DomainMethodNames> loadRelatedRoleMethodsToUse = new HashSet<DomainMethodNames>()
             {

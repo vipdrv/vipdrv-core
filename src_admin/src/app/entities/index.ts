@@ -8,6 +8,7 @@ export * from './lightEntity';
 export * from './main/invitations/invitation.entity';
 export * from './main/users/user.entity';
 export * from './main/users/registrationModel.entity';
+export * from './main/roles/role.entity';
 
 export * from './widget/beverages/beverage.entity';
 export * from './widget/experts/expert.entity';
