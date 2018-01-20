@@ -5,6 +5,7 @@ namespace QuantumLogic.Core.Domain.Entities.MainModule
     public class Role : Entity<int>
     {
         public string Name { get; set; }
+        public bool CanBeUsedForInvitation { get; set; }
         public virtual ICollection<RoleClaim> RoleClaims { get; set; }
         public virtual ICollection<UserRole> UserRoles { get; set; }
 

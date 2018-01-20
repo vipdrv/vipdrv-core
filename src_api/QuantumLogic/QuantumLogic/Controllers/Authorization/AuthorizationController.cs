@@ -126,7 +126,7 @@ namespace QuantumLogic.WebApi.Controllers.Authorization
                 grantedPermissionsValue = null;
             }
             IdentityInfo result = new IdentityInfo(
-                Int64.Parse(identityClaims[UserIdClaimKey]),
+                Int32.Parse(identityClaims[UserIdClaimKey]),
                 identityClaims[UsernameClaimKey],
                 String.IsNullOrEmpty(grantedRolesValue) ? new string[0] : grantedRolesValue.Split(','),
                 String.IsNullOrEmpty(grantedPermissionsValue) ? new string[0] : grantedPermissionsValue.Split(','));

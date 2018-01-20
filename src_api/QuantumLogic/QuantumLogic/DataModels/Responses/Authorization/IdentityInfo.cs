@@ -5,14 +5,14 @@ namespace QuantumLogic.WebApi.DataModels.Responses.Authorization
 {
     public class IdentityInfo
     {
-        public long UserId { get; private set; } 
+        public int UserId { get; private set; } 
         public string Username { get; private set; }
         public IList<string> GrantedRoles { get; private set; }
         public IList<string> GrantedPermissions { get; private set; }
 
         #region Ctors
 
-        public IdentityInfo(long userId, string username, IList<string> grantedRoles, IList<string> grantedPermissions)
+        public IdentityInfo(int userId, string username, IList<string> grantedRoles, IList<string> grantedPermissions)
         {
             UserId = userId;
             Username = username;
