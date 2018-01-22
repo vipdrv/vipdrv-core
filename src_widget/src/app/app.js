@@ -137,13 +137,13 @@
         isFormCompleted: false
     };
 
+    var url = new FiltersFromUrl(window.location.search).get();
+    var siteId = url.siteId || defaultSiteId;
+
+    app.value('siteId', siteId);
     app.value('widgetTabs', widgetTabs);
     app.value('globalState', globalState);
     app.value('bookingData', bookingData);
     app.value('dealerData', dealerData);
     app.value('apiBaseUrl', apiBaseUrl);
-
-    var url = new FiltersFromUrl(window.location.search).get();
-    var siteId = url.siteId || defaultSiteId;
-    app.value('siteId', siteId);
 })();
