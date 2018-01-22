@@ -97,7 +97,8 @@ namespace QuantumLogic.Core.Domain.Services.Main.Users
         {
             return new List<Expression<Func<User, object>>>()
             {
-                entity => entity.Sites
+                entity => entity.Sites,
+                entity => entity.UserRoles
             }
             .ToArray();
         }
