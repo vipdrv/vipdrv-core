@@ -3,9 +3,10 @@ import { ModalComponent } from 'ng2-bs3-modal/ng2-bs3-modal';
 import { Variable, ILogger, ConsoleLogger } from './../../../utils/index';
 import { IAuthorizationService, AuthorizationService } from './../../../services/index';
 import { IUserApiService, UserApiService, GetAllResponse } from './../../../services/index';
+import { IRoleApiService, RoleApiService } from './../../../services/index';
 import { IInvitationEntityPolicyService, InvitationEntityPolicyService } from './../../../services/index';
 import { IInvitationValidationService, InvitationValidationService } from './../../../services/index';
-import { InvitationEntity } from './../../../entities/index';
+import { InvitationEntity, RoleEntity } from './../../../entities/index';
 @Component({
     selector: 'invitations-table',
     styleUrls: ['./invitationsTable.scss'],
@@ -36,24 +37,28 @@ export class InvitationsTableComponent implements OnInit {
     protected totalCount: number;
     protected items: Array<InvitationEntity>;
     protected entity: InvitationEntity;
+    protected rolesCanBeUsedForInvitation: Array<RoleEntity> = [];
     /// injected dependencies
     protected logger: ILogger;
     protected authorizationManager: IAuthorizationService;
     protected userApiService: IUserApiService;
     protected policyService: IInvitationEntityPolicyService;
     protected validationService: IInvitationValidationService;
+    protected roleApiService: IRoleApiService;
     /// ctor
     constructor(
         logger: ConsoleLogger,
         authorizationManager: AuthorizationService,
         userApiService: UserApiService,
         policyService: InvitationEntityPolicyService,
-        validationService: InvitationValidationService) {
+        validationService: InvitationValidationService,
+        roleApiService: RoleApiService) {
         this.logger = logger;
         this.authorizationManager = authorizationManager;
         this.userApiService = userApiService;
         this.policyService = policyService;
         this.validationService = validationService;
+        this.roleApiService = roleApiService;
         this.logger.logDebug('InvitationsTableComponent: Component has been constructed.');
     }
     /// methods
@@ -68,6 +73,23 @@ export class InvitationsTableComponent implements OnInit {
             .then(
                 () => self.firstLoadingPromise = null,
                 () => self.firstLoadingPromise = null);
+        self.loadRelations();
+    }
+    protected loadRelations(): Promise<void> {
+        return this.loadRolesCanBeUsedForInvitation();
+    }
+    protected loadRolesCanBeUsedForInvitation(): Promise<void> {
+        const self = this;
+        let actionPromise = self.roleApiService
+            .getAllCanBeUsedForInvitation()
+            .then(function (response: GetAllResponse<RoleEntity>): void {
+                self.rolesCanBeUsedForInvitation = response.items;
+            })
+            .then(
+                () => actionPromise = null,
+                () => actionPromise = null
+            );
+        return actionPromise;
     }
     protected getAllEntities(): Promise<void> {
         const self = this;
@@ -237,7 +259,7 @@ export class InvitationsTableComponent implements OnInit {
             const self = this;
             self.useValidationForSelectedEntity = false;
             self.sendInvitationPromise = self.userApiService
-                .createInvitation(self.authorizationManager.currentUserId, this.entity)
+                .createInvitation(this.entity)
                 .then(function (response: InvitationEntity): void {
                     self.items.splice(0, 0, response);
                     self.modalDismiss();
@@ -264,8 +286,10 @@ export class InvitationsTableComponent implements OnInit {
         this.entity = new InvitationEntity();
         this.entity.email = null;
         this.entity.phoneNumber = null;
-        this.entity.availableSitesCount = 0;
-        this.entity.roleId = 1;
+        this.entity.availableSitesCount = 1;
+        if (this.rolesCanBeUsedForInvitation.length > 0) {
+            this.entity.roleId = this.rolesCanBeUsedForInvitation[0].id;
+        }
     }
     /// promise manager
     protected firstLoadingPromise: Promise<void>;

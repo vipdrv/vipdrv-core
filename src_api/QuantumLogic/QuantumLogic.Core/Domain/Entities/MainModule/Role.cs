@@ -2,9 +2,10 @@
 
 namespace QuantumLogic.Core.Domain.Entities.MainModule
 {
-    public class Role : Entity<int>
+    public class Role : Entity<int>, IUpdatableFrom<Role>, IValidable
     {
         public string Name { get; set; }
+        public bool CanBeUsedForInvitation { get; set; }
         public virtual ICollection<RoleClaim> RoleClaims { get; set; }
         public virtual ICollection<UserRole> UserRoles { get; set; }
 
@@ -35,5 +36,32 @@ namespace QuantumLogic.Core.Domain.Entities.MainModule
         {
             return $"{Name}";
         }
+
+        #region IUpdatableFrom implementation
+
+        public void UpdateFrom(Role actualEntity)
+        {
+            Name = actualEntity.Name;
+            CanBeUsedForInvitation = actualEntity.CanBeUsedForInvitation;
+        }
+
+        #endregion
+
+        #region IValidable implementation
+
+        public bool IsValid()
+        {
+            return InnerValidate(false);
+        }
+        public void Validate()
+        {
+            InnerValidate(true);
+        }
+        protected virtual bool InnerValidate(bool throwException)
+        {
+            return true;
+        }
+
+        #endregion
     }
 }

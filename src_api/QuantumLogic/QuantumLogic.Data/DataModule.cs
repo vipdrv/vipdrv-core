@@ -38,6 +38,8 @@ namespace QuantumLogic.Data
             services.AddTransient<IInvitationRepository, InvitationRepository>();
             services.AddTransient<IQLRepository<User, int>, UserRepository>();
             services.AddTransient<IUserRepository, UserRepository>();
+            services.AddTransient<IQLRepository<Role, int>, RoleRepository>();
+            services.AddTransient<IRoleRepository, RoleRepository>();
 
             services.AddTransient<IQLRepository<Beverage, int>, BeverageRepository>();
             services.AddTransient<IQLRepositoryX<Beverage, int>, BeverageRepository>();

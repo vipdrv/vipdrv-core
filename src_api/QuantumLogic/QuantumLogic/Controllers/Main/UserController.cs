@@ -26,16 +26,18 @@ namespace QuantumLogic.WebApi.Controllers.Main
     {
         #region Injected dependencies
 
-        protected IInvitationDomainService InvitationDomainService { get; private set; }
+        protected readonly IInvitationDomainService InvitationDomainService;
+        protected readonly ITestDriveEmailService TestDriveEmailService;
 
         #endregion
 
         #region Ctors
 
-        public UserController(IQLUnitOfWorkManager uowManager, IUserDomainService domainService, IInvitationDomainService invitationDomainService)
+        public UserController(IQLUnitOfWorkManager uowManager, IUserDomainService domainService, IInvitationDomainService invitationDomainService, ITestDriveEmailService testDriveEmailService)
             : base(uowManager, domainService)
         {
             InvitationDomainService = invitationDomainService;
+            TestDriveEmailService = testDriveEmailService;
         }
 
         #endregion
@@ -109,8 +111,8 @@ namespace QuantumLogic.WebApi.Controllers.Main
         }
 
         [Authorize]
-        [HttpPost("{id}/invitation")]
-        public async Task<InvitationDto> CreateInvitationAsync([FromBody]InvitationDto request, int id)
+        [HttpPost("invitation")]
+        public async Task<InvitationDto> CreateInvitationAsync([FromBody]InvitationDto request)
         {
             string origin;
             try
@@ -124,27 +126,19 @@ namespace QuantumLogic.WebApi.Controllers.Main
                 Response.StatusCode = (int)HttpStatusCode.ServiceUnavailable;
                 throw new ArgumentException("Origin");
             }
-
-            Invitation entity = request.MapToEntity();
-            entity.InvitatorId = id;
+            Invitation entity;
             using (var uow = UowManager.CurrentOrCreateNew(true))
             {
-                entity = await InvitationDomainService.CreateAsync(entity);
+                entity = await InvitationDomainService.CreateAsync(request.MapToEntity());
                 await uow.CompleteAsync();
             }
             using (var uow = UowManager.CurrentOrCreateNew(true))
             {
                 entity = await InvitationDomainService.RetrieveAsync(entity.Id);
             }
-            
-            string registrationUrl = $"{origin}/#/registration/{entity.InvitationCode}";
-
-#warning TODO: Register and Inject TestDriveEmailService
-            new TestDriveEmailService()
-                .SendDealerInvitationEmail(
-                    new EmailAddress(entity.Email, string.Empty), 
-                    new DealerInvitationEmailTemplate(registrationUrl));
-            
+            TestDriveEmailService.SendDealerInvitationEmail(
+                new EmailAddress(entity.Email, string.Empty), 
+                new DealerInvitationEmailTemplate($"{origin}/#/registration/{entity.InvitationCode}"));
             InvitationDto dto = new InvitationDto();
             dto.MapFromEntity(entity);
             return dto;
@@ -176,8 +170,10 @@ namespace QuantumLogic.WebApi.Controllers.Main
                     throw new ValidateEntityPropertiesException(nameof(request.Username));
                 }
                 Invitation invitation = await InvitationDomainService.UseInvitationAsync(invitationCode);
-                request.MaxSitesCount = invitation.AvailableSitesCount;
-                await DomainService.CreateAsync(request.MapToEntity());
+                User newUser = request.MapToEntity();
+                newUser.MaxSitesCount = invitation.AvailableSitesCount;
+                newUser.UserRoles = new List<UserRole>() { new UserRole() { User = newUser, RoleId = invitation.RoleId } };
+                await DomainService.CreateAsync(newUser);
                 await uow.CompleteAsync();
             }
         }

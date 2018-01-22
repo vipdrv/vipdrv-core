@@ -14,13 +14,21 @@ export class InvitationValidationService
     }
     /// methods
     isValid(entity: InvitationEntity): boolean {
-        return this.isValidEmail(entity) && this.isValidAvailableSitesCount(entity);
+        return this.isValidEmail(entity) &&
+            this.isValidRole(entity) &&
+            this.isValidAvailableSitesCount(entity);
     }
     isValidEmail(entity: InvitationEntity): boolean {
         return Variable.isNotNullOrUndefined(entity) && Extensions.regExp.email.test(entity.email);
     }
+    isValidRole(entity: InvitationEntity): boolean {
+        return Variable.isNotNullOrUndefined(entity) && Variable.isNotNullOrUndefined(entity.roleId);
+    }
     isValidAvailableSitesCount(entity: InvitationEntity): boolean {
         return Variable.isNotNullOrUndefined(entity) && entity.availableSitesCount > 0;
+    }
+    getInvalidRoleMessageKey(entity: InvitationEntity): string {
+        return 'validation.invitations.invalidRoleMessage';
     }
     getInvalidEmailMessageKey(entity: InvitationEntity): string {
         return 'validation.invitations.invalidEmailMessage';

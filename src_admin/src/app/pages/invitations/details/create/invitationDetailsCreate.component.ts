@@ -1,5 +1,5 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
-import { InvitationEntity } from './../../../../entities/index';
+import { InvitationEntity, RoleEntity } from './../../../../entities/index';
 import { Extensions, ILogger, ConsoleLogger } from './../../../../utils/index';
 import { IInvitationValidationService, InvitationValidationService } from './../../../../services/index';
 @Component({
@@ -10,6 +10,7 @@ import { IInvitationValidationService, InvitationValidationService } from './../
 export class InvitationDetailsCreateComponent {
     /// inputs
     @Input() entity: InvitationEntity;
+    @Input() rolesCanBeUsedForInvitation: Array<RoleEntity> = [];
     @Input() useValidation: boolean = false;
     @Input() isProcessing: boolean = false;
     /// outputs
@@ -32,6 +33,9 @@ export class InvitationDetailsCreateComponent {
             this.entity.email = newValue;
             this.notifyOnEntityChange();
         }
+    }
+    protected onChangeRole(): void {
+        this.notifyOnEntityChange();
     }
     protected onChangeSiteCount(newValue: number): void {
         if (this.entity.availableSitesCount !== newValue) {

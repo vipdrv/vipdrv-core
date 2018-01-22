@@ -35,14 +35,9 @@ namespace QuantumLogic.WebApi.Policy.Main
         protected override IQueryable<Invitation> InnerRetrieveAllFilter(IQueryable<Invitation> query)
         {
             bool result = PermissionChecker.IsGranted(QuantumLogicPermissionNames.CanAllAll) ||
-                          PermissionChecker.IsGranted(QuantumLogicPermissionNames.CanAllInvitation) ||
-                          PermissionChecker.IsGranted(QuantumLogicPermissionNames.CanRetrieveInvitation);
-
-            if (!result)
-            {
-                query = query.DefaultIfEmpty();
-            } 
-
+                PermissionChecker.IsGranted(QuantumLogicPermissionNames.CanAllInvitation) ||
+                PermissionChecker.IsGranted(QuantumLogicPermissionNames.CanRetrieveInvitation);
+            query = result ? query : query.Where(r => false);
             return query;
         }
 

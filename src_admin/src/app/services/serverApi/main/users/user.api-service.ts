@@ -73,9 +73,9 @@ export class UserApiService extends CRUDApiService<UserEntity, number, LightEnti
                 return Promise.resolve(response);
             });
     }
-    createInvitation(userId: number, entity: InvitationEntity): Promise<InvitationEntity> {
+    createInvitation(entity: InvitationEntity): Promise<InvitationEntity> {
         return this.httpService
-            .post(this.createUrlWithMethodName(`${userId}/invitation`), entity)
+            .post(this.createUrlWithMethodName('invitation'), entity)
             .then(function (response: InvitationEntity): InvitationEntity {
                 const responseEntity: InvitationEntity = new InvitationEntity();
                 responseEntity.initializeFromDto(response);

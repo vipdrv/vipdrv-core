@@ -141,6 +141,7 @@
         <div *ngIf="isSelectedEntityDefined() && isOperationModeCreate"
              [ngBusy]="getEntityPromise">
             <invitation-details-create [entity]="entity"
+                                       [rolesCanBeUsedForInvitation]="rolesCanBeUsedForInvitation"
                                        [useValidation]="isValidationUsedForSelectedEntity()"
                                        [isProcessing]="isSendInvitationInProgress()"
                                        (onEntityChange)="onEntityChange($event)">

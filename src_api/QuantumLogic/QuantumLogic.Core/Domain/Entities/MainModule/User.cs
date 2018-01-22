@@ -79,8 +79,12 @@ namespace QuantumLogic.Core.Domain.Entities.MainModule
 
         public void UpdateFrom(User actualEntity)
         {
+            FirstName = actualEntity.FirstName;
+            SecondName = actualEntity.SecondName;
             Email = actualEntity.Email;
+            PhoneNumber = actualEntity.PhoneNumber;
             MaxSitesCount = actualEntity.MaxSitesCount;
+            AvatarUrl = actualEntity.AvatarUrl;
         }
 
         #endregion

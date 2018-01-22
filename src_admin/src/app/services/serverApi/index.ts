@@ -11,6 +11,9 @@ export * from './content/content.api-service';
 export * from './main/users/i-user.api-service';
 export * from './main/users/user.api-service';
 
+export * from './main/roles/i-role.api-service';
+export * from './main/roles/role.api-service';
+
 export * from './widget/beverages/i-beverage.api-service';
 export * from './widget/beverages/beverage.api-service';
 export * from './widget/experts/i-expert.api-service';

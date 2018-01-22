@@ -1,5 +1,5 @@
 <div class="many-entities-template">
-    <div class="row test-drive-many-entities-template-header mt-2">
+    <div class="row mt-2">
         <div class="col-12">
             <button class="btn btn-secondary btn-sm pull-left test-drive-left-standalone-btn"
                     type="button"
@@ -24,29 +24,29 @@
     <div class="test-drive-many-entities-template-body">
         <div class="row" [ngBusy]="firstLoadingPromise">
             <div class="col-12">
-                <table class="experts-table-body table table-bordered table-hover">
+                <table class="table table-bordered table-hover">
                     <thead>
                     <tr>
-                        <th>
-                            Dealer Name
+                        <th translate>
+                            users.table.headerText_dealerName
                         </th>
-                        <th>
-                            Max sites count
+                        <th translate>
+                            users.table.headerText_maxSitesCount
                         </th>
-                        <th>
-                            Actions
+                        <th translate>
+                            users.table.headerText_actions
                         </th>
                     </tr>
                     </thead>
                     <tbody>
                     <tr *ngFor="let item of items" (click)="tryInfoModalOpen(item)">
-                        <td class="experts-table-body-column experts-table-body-column-body-full-name">
+                        <td translate>
                             {{item.username}}
                         </td>
-                        <td class="experts-table-body-column experts-table-body-column-body-title">
+                        <td>
                             {{item.maxSitesCount}}
                         </td>
-                        <td class="experts-table-body-column experts-table-body-column-actions">
+                        <td>
                             <button type="button"
                                     class="btn btn-outline-primary btn-sm"
                                     *ngIf="entityPolicyService.canUpdateEntity(item)"
@@ -108,6 +108,39 @@
             <i class="fa fa-spinner fa-pulse" *ngIf="isOperationSaveProcessing(selectedEntity)"></i>
             <i class="fa fa-save" *ngIf="!isOperationSaveProcessing(selectedEntity)"></i>
             <span translate>general.actions.modalApply</span>
+        </button>
+    </modal-footer>
+</modal>
+
+<modal #confirmationDeleteModal [backdrop]="'static'">
+    <modal-header>
+        <h5 class="modal-title">
+            <span translate>
+                confirmation.title
+            </span>
+        </h5>
+        <button type="button"
+                class="close"
+                aria-label="Close"
+                (click)="closeConfirmationDeleteModal(); $event.stopPropagation();">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </modal-header>
+    <modal-body>
+        <!--<span [translateParams]="{ expertName: getDeleteCandidateDisplayText() }" translate>-->
+            <!--confirmation.expertDeleteAnswer_expertName-->
+        <!--</span>-->
+    </modal-body>
+    <modal-footer>
+        <button type="button"
+                class="btn btn-secondary test-drive-modal-close-btn"
+                (click)="closeConfirmationDeleteModal(); $event.stopPropagation();">
+            <span translate>confirmation.cancel</span>
+        </button>
+        <button type="button"
+                class="btn btn-primary test-drive-modal-apply-btn"
+                (click)="acceptConfirmationDeleteModal(); $event.stopPropagation();">
+            <span translate>confirmation.confirm</span>
         </button>
     </modal-footer>
 </modal>

@@ -448,14 +448,16 @@
 
     window.TestDrive = window.TestDrive || (function () {
         // variables
-        var _SiteId = '%siteId%';
+        var _siteId = '%siteId%'; // default siteId
         var _WidgetUrl = '%widgetUrl%'; // https://widget.testdrive.pw/ // %widgetUrl%
-        var _InjectWidgetToVlp = null;
-        var _InjectWidgetToVdp = null;
-        // methods
+        var _useAutoIntegration = null;
+        var _injectWidgetToVlp = null;
+        var _injectWidgetToVdp = null;
 
-        var _appendTestDriveFrame = function (ulrParams) {
+        // methods
+        var _appendTestDriveFrame = function (ulrParams, siteId) {
             ulrParams.hash = Math.random().toString(36).substring(7);
+            ulrParams.siteId = siteId;
             var widgetUrl = _buildUrl(_WidgetUrl, ulrParams);
 
             var html =
@@ -595,7 +597,7 @@
 
         // helpers
 
-        var _getUrlParamsFromArguments = function (Args) {
+        var _parseArgumentsForOpenButtonEvent = function (Args) {
             var ulrParams = {};
 
             ulrParams.vin = Args.vin || null;
@@ -613,6 +615,7 @@
             ulrParams.msrp = Args.msrp || null;
             ulrParams.imageUrl = Args.imageUrl || null;
             ulrParams.vdpUrl = Args.vdpUrl || null;
+            ulrParams.siteId = Args.siteId || null;
 
             return ulrParams;
         };
@@ -660,11 +663,12 @@
         // output
         return {
             init: function (Args) {
-                _SiteId = Args.siteId || _detectSiteIdAutomatically();
-                _InjectWidgetToVlp = Args.injectWidgetToVlp || false;
-                _InjectWidgetToVdp = Args.injectWidgetToVdp || false;
+                _siteId = Args.siteId || _detectSiteIdAutomatically();
+                _useAutoIntegration = Args.useAutoIntegration || true;
+                _injectWidgetToVlp = Args.injectWidgetToVlp || true;
+                _injectWidgetToVdp = Args.injectWidgetToVdp || true;
 
-                if (!_SiteId) {
+                if (!_siteId) {
                     console.log('Automatic initialization for ' + window.location.hostname + ' is missing');
                     return;
                 }
@@ -673,10 +677,10 @@
                 _appendTestDriveFrameWrapperStyles();
                 _addTestDriveFrameEventListeners();
                 _initExtensions();
-                _injectWidgetButtons(_SiteId, _InjectWidgetToVlp, _InjectWidgetToVdp);
+                _injectWidgetButtons(_siteId, _injectWidgetToVlp, _injectWidgetToVdp);
             },
             openTestDrive: function (Args) {
-                _appendTestDriveFrame(_getUrlParamsFromArguments(Args));
+                _appendTestDriveFrame(_parseArgumentsForOpenButtonEvent(Args), _siteId);
                 _changeMobileBrowserBarColor();
                 _showTestDriveFrame();
             },

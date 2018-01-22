@@ -15,7 +15,7 @@
         <!--</div>-->
     <!--</div>-->
     <!--<hr>-->
-    <div class="row">
+    <div class="row" *ngIf="!isModalInEditMode">
         <div class="col-12">
             <div class="form-group">
                 <label for="userName" translate>users.modal.userName</label>
@@ -83,39 +83,39 @@
         </div>
     </div>
 
-    <div class="row" *ngIf="isModalInEditMode">
-        <div class="col-12">
-            <div class="form-group">
-                <label for="password" translate *ngIf="!isPasswordGeneratorVisible">Reset password</label>
-                <label for="password" translate *ngIf="isPasswordGeneratorVisible">New password</label>
-                <br>
-                <button class="btn btn-primary"
-                        type="button"
-                        *ngIf="!isPasswordGeneratorVisible"
-                        (click)="showPasswordGenerator()">Reset Password</button>
-                <div class="input-group" *ngIf="isPasswordGeneratorVisible">
-                    <input class="form-control"
-                           [ngClass]="extensions.getInputValidationClass(isValidationActive(), validationService.isValidUserPassword(entity))"
-                           [(ngModel)]="entity.password">
-                    <div class="input-group-append">
-                        <button class="btn btn-outline-secondary"
-                                type="button"
-                                (click)="hidePasswordGenerator()">Cancel</button>
-                    </div>
-                </div>
-                <small class="form-text text-muted"
-                       *ngIf="isPasswordGeneratorVisible && (!isValidationActive() || validationService.isValidUserPassword(entity))"
-                       translate>
-                    users.modal.userPasswordHelp
-                </small>
-                <small class="form-text test-drive-validation-message"
-                       *ngIf="isPasswordGeneratorVisible && (isValidationActive() && !validationService.isValidUserPassword(entity))"
-                       translate>
-                    {{ validationService.getInvalidUserPasswordMessageKey(entity) }}
-                </small>
-            </div>
-        </div>
-    </div>
+    <!--<div class="row" *ngIf="isModalInEditMode">-->
+        <!--<div class="col-12">-->
+            <!--<div class="form-group">-->
+                <!--<label for="password" translate *ngIf="!isPasswordGeneratorVisible">Reset password</label>-->
+                <!--<label for="password" translate *ngIf="isPasswordGeneratorVisible">New password</label>-->
+                <!--<br>-->
+                <!--<button class="btn btn-primary"-->
+                        <!--type="button"-->
+                        <!--*ngIf="!isPasswordGeneratorVisible"-->
+                        <!--(click)="showPasswordGenerator()">Reset Password</button>-->
+                <!--<div class="input-group" *ngIf="isPasswordGeneratorVisible">-->
+                    <!--<input class="form-control"-->
+                           <!--[ngClass]="extensions.getInputValidationClass(isValidationActive(), validationService.isValidUserPassword(entity))"-->
+                           <!--[(ngModel)]="entity.password">-->
+                    <!--<div class="input-group-append">-->
+                        <!--<button class="btn btn-outline-secondary"-->
+                                <!--type="button"-->
+                                <!--(click)="hidePasswordGenerator()">Cancel</button>-->
+                    <!--</div>-->
+                <!--</div>-->
+                <!--<small class="form-text text-muted"-->
+                       <!--*ngIf="isPasswordGeneratorVisible && (!isValidationActive() || validationService.isValidUserPassword(entity))"-->
+                       <!--translate>-->
+                    <!--users.modal.userPasswordHelp-->
+                <!--</small>-->
+                <!--<small class="form-text test-drive-validation-message"-->
+                       <!--*ngIf="isPasswordGeneratorVisible && (isValidationActive() && !validationService.isValidUserPassword(entity))"-->
+                       <!--translate>-->
+                    <!--{{ validationService.getInvalidUserPasswordMessageKey(entity) }}-->
+                <!--</small>-->
+            <!--</div>-->
+        <!--</div>-->
+    <!--</div>-->
 
     <div class="row">
         <div class="col-12">

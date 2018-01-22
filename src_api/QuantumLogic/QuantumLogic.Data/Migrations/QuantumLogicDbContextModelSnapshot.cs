@@ -61,7 +61,7 @@ namespace QuantumLogic.Data.Migrations
 
                     b.Property<string>("InvitationCode");
 
-                    b.Property<int>("InvitatorId");
+                    b.Property<int?>("InvitatorId");
 
                     b.Property<string>("PhoneNumber");
 
@@ -84,6 +84,8 @@ namespace QuantumLogic.Data.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
+
+                    b.Property<bool>("CanBeUsedForInvitation");
 
                     b.Property<string>("Name");
 

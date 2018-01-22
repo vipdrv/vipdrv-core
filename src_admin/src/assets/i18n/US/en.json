@@ -98,6 +98,7 @@
     },
     "modal": {
       "title": "Site details",
+      "titleEdit": "Site details",
       "siteOwner": "Site owner",
       "siteOwnerHelp": "Select the name of the site owner.",
       "siteName": "Site name",
@@ -216,6 +217,11 @@
       "phoneNumberHelp": "Enter your contact phone number (not required).",
       "sitesCount": "Allowed count of sites",
       "sitesCountHelp": "Enter maximum allowed count of sites for invited user."
+    },
+    "table": {
+      "headerText_dealerName": "Dealer Name",
+      "headerText_maxSitesCount": "Max sites count",
+      "headerText_actions": "Actions"
     }
   },
   "beverages": {
@@ -290,7 +296,7 @@
       "used": "Status",
       "usedTime": "Accepted time",
       "availableSitesCount": "Sites max count",
-      "role": "Expected role",
+      "role": "Supposed role",
       "invitator": "Creator"
     },
     "modal": {
@@ -307,7 +313,8 @@
       "usedTime": "Accepted time",
       "availableSitesCount": "Allowed count of sites",
       "availableSitesCountHelp": "Enter maximum allowed count of sites for invited user.",
-      "role": "Expected role",
+      "role": "Supposed role",
+      "roleHelp": "Select supposed role for invited user.",
       "invitator": "Creator"
     }
   },
@@ -372,6 +379,7 @@
     },
     "invitations": {
       "invalidEmailMessage": "Email address is not valid!",
+      "invalidRoleMessage": "Selected supposed role for invited user is not valid (this field is required)!",
       "invalidAvailableSitesCount": "Maximum allowed count of sites is not valid (should be number higher then 0)!"
     },
     "experts": {

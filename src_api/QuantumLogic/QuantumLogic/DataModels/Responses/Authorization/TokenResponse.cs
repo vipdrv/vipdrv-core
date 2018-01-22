@@ -22,7 +22,7 @@ namespace QuantumLogic.WebApi.DataModels.Responses.Authorization
 
         public TokenResponse(
             string issuer, IList<string> audiences, string token, string tokenType, string sub, DateTime expireDateTimeUtc, 
-            long userId, string username, IList<string> grantedRoles, IList<string> grantedPermissions)
+            int userId, string username, IList<string> grantedRoles, IList<string> grantedPermissions)
             : base(userId, username, grantedRoles, grantedPermissions)
         {
             Issuer = issuer;
