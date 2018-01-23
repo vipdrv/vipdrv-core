@@ -56,9 +56,7 @@
         },
 
         initTestDriveVlpButtons: function () {
-            console.log('init vlp buttons');
             var self = this;
-            debugger;
 
             var resultsTable = document.getElementsByClassName("results_table")[0];
             var resultsTableNodes = resultsTable.childNodes;
@@ -115,32 +113,30 @@
         },
 
         addTestDriveButtonToDesktopVehicleNode: function (node, vehicleObject) {
-            var a = document.createElement('a');
-            a.onclick = window.TestDrive.openTestDrive(vehicleObject);
-            a.innerHTML = "VIPdrv - Test Drive"
-            a.className = 'fancy button-form button cta-button';
-            var div = document.createElement("div");
-            div.className = 'button-bar-item primary-cta';
-            div.appendChild(a);
+            var btn = document.createElement("button");
+            btn.onclick = function() {
+                window.TestDrive.openTestDrive(vehicleObject);
+            };
+            btn.innerHTML = "VIPdrv - Test Drive";
+            btn.className = 'vipdrv-mbrvc-vlp-button';
 
-            var buttonBar = node.querySelector('.button-bar');
-            if (buttonBar) {
-                buttonBar.appendChild(div);
+            var vehiclePrice = node.querySelector('.vehicle-price');
+            if (vehiclePrice) {
+                vehiclePrice.appendChild(btn);
             }
         },
 
         addTestDriveButtonToMobileVehicleNode: function (node, vehicleObject) {
-            var btn = document.createElement("BUTTON");
-            btn.classList.add("vipdrv-marin-vlp-button-mobile", "button-bar-item", "primary-button", "button");
-            var textNode = document.createTextNode("VIPdrv - Test Drive");
-            btn.appendChild(textNode);
-            btn.onclick = function () {
+            var btn = document.createElement("button");
+            btn.onclick = function() {
                 window.TestDrive.openTestDrive(vehicleObject);
             };
+            btn.innerHTML = "VIPdrv - Test Drive";
+            btn.className = 'vipdrv-mbrvc-vlp-button-mobile';
 
-            var buttonBar = node.querySelector('.button-bar');
-            if (buttonBar) {
-                buttonBar.appendChild(div);
+            var vehiclePrice = node.querySelector('.vehicle-card-actions');
+            if (vehiclePrice) {
+                vehiclePrice.appendChild(btn);
             }
         },
 
@@ -305,11 +301,6 @@
             vdpVehicle.vin = urlParams.vin;
             vdpVehicle.year = urlParams.year;
 
-            var detailsPageCtabox = document.getElementById('details-page-ctabox');
-
-            var btn = document.createElement("BUTTON");
-            btn.classList.add("vipdrv-marin-vdp-button");
-
             var infoWrapper = document.querySelector(".details-page-row .basic-info-wrapper");
             var infoWrapperText = null;
 
@@ -322,10 +313,17 @@
             vdpVehicle.exterior = carDetailsFromHtml.exterior;
             vdpVehicle.transmission = carDetailsFromHtml.trans;
 
+            var col = document.getElementsByClassName("test-col")[0];
+            if (col) {
+                col.removeChild(col.firstChild);
+            }
+            var btn = document.createElement("button");
+            btn.classList.add("vipdrv-mbrvc-vdp-button");
+            // btn.innerHTML = "VIPdrv - Test Drive";
             btn.onclick = function () {
                 window.TestDrive.openTestDrive(vdpVehicle);
             };
-            detailsPageCtabox.appendChild(btn);
+            col.appendChild(btn);
         },
 
         /// helpers
@@ -991,8 +989,7 @@
             }
 
             if (siteId == 36) {
-                return;
-                // mbrvcInjector.init(injectWidgetToVlp, injectWidgetToVdp);
+                mbrvcInjector.init(injectWidgetToVlp, injectWidgetToVdp);
             }
         };
 
@@ -1098,4 +1095,4 @@
 //
 // https://widget.testdrive.pw
 //
-// window.TestDrive.init({siteId: 28, injectWidgetToVlp: true, injectWidgetToVdp: true});
+// window.TestDrive.init({siteId: 36, useAutoIntegration:true, injectWidgetToVlp: true, injectWidgetToVdp: true});
