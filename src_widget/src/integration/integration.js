@@ -4,6 +4,401 @@
 // Widget buttons injector                                               //
 //=======================================================================//
 
+    var mbrvcInjector = {
+        /// variables
+        domChangesCounter: 0,
+        domScrollCounter: 0,
+
+        /// initialization
+        init: function (injectWidgetToVlp, injectWidgetToVdp) {
+            var self = this;
+
+            if (self.isCurrentPageVdp() && injectWidgetToVdp) {
+                self.appendTestdriveVdpButton();
+            }
+
+            if (self.isCurrentPageVlp() && injectWidgetToVlp) {
+                self.initTestDriveVlpButtons();
+                self.initVlpListener();
+            }
+        },
+
+        initVlpListener: function () {
+            var self = this;
+
+            // var resultsTable = document.getElementsByClassName("results_table")[0];
+            // self.observeDOM(resultsTable, function () {
+            //     console.log('dom changed');
+            //     self.domChangesCounter++;
+            //     if (self.domChangesCounter > 50) {
+            //         return;
+            //     }
+            //     self.initTestDriveVlpButtons();
+            // });
+
+            window.onscroll = function () {
+                self.domScrollCounter++;
+                if (self.domScrollCounter > 15) {
+                    self.domScrollCounter = 0;
+                    self.initTestDriveVlpButtons();
+                    console.log('scroll');
+                }
+            };
+        },
+
+        isCurrentPageVlp: function () {
+            var resultsPage = document.getElementById("results-page");
+            var resultsTable = document.getElementsByClassName("results_table")[0];
+            if (!resultsTable || !resultsPage) {
+                return false;
+            }
+            return true;
+        },
+
+        initTestDriveVlpButtons: function () {
+            console.log('init vlp buttons');
+            var self = this;
+            debugger;
+
+            var resultsTable = document.getElementsByClassName("results_table")[0];
+            var resultsTableNodes = resultsTable.childNodes;
+            var tableBodyNode = null;
+            for (var i = 0; i < resultsTableNodes.length; i++) {
+                var node = resultsTableNodes[i];
+                if (node.nodeName.toLowerCase() == "tbody") {
+                    tableBodyNode = node;
+                }
+            }
+
+            if (!tableBodyNode) {
+                console.log('Could not find tableBodyNode');
+                return false;
+            }
+
+            var tableBodyChildNodes = tableBodyNode.childNodes;
+            for (var i = 0; i < tableBodyChildNodes.length; i++) {
+                var node = tableBodyChildNodes[i];
+
+                // desktop-buttons
+                if (node.nodeName.toLowerCase() == "tr" &&
+                    node.classList.contains("hidden-xs") &&
+                    !node.classList.contains("vipdrv-added")) {
+                    if (self.isVehicleNodeLoaded(node)) {
+                        node.classList.add('vipdrv-added');
+                        self.addTestDriveButtonToDesktopVehicleNode(node, self.parseVehicleDetailsFromDesktopNode(node));
+                    }
+                }
+
+                // mobile-buttons
+                if (node.nodeName.toLowerCase() == "tr" &&
+                    node.classList.contains("visible-xs") &&
+                    !node.classList.contains("vipdrv-added")) {
+                    if (self.isVehicleNodeLoaded(node)) {
+                        node.classList.add('vipdrv-added');
+                        self.addTestDriveButtonToMobileVehicleNode(node, self.parseVehicleDetailsFromMobileNode(node));
+                    }
+                }
+            }
+        },
+
+        isVehicleNodeLoaded: function (node) {
+            var vehicleImageNode = node.querySelector('.vehicle-image img');
+            if (vehicleImageNode) {
+                var imageUrl = vehicleImageNode.getAttribute('src');
+                var imageFileName = imageUrl.split('/').slice(-1)[0];
+
+                if (imageFileName == 'loading.gif') {
+                    return false;
+                }
+                return true;
+            }
+        },
+
+        addTestDriveButtonToDesktopVehicleNode: function (node, vehicleObject) {
+            var a = document.createElement('a');
+            a.onclick = window.TestDrive.openTestDrive(vehicleObject);
+            a.innerHTML = "VIPdrv - Test Drive"
+            a.className = 'fancy button-form button cta-button';
+            var div = document.createElement("div");
+            div.className = 'button-bar-item primary-cta';
+            div.appendChild(a);
+
+            var buttonBar = node.querySelector('.button-bar');
+            if (buttonBar) {
+                buttonBar.appendChild(div);
+            }
+        },
+
+        addTestDriveButtonToMobileVehicleNode: function (node, vehicleObject) {
+            var btn = document.createElement("BUTTON");
+            btn.classList.add("vipdrv-marin-vlp-button-mobile", "button-bar-item", "primary-button", "button");
+            var textNode = document.createTextNode("VIPdrv - Test Drive");
+            btn.appendChild(textNode);
+            btn.onclick = function () {
+                window.TestDrive.openTestDrive(vehicleObject);
+            };
+
+            var buttonBar = node.querySelector('.button-bar');
+            if (buttonBar) {
+                buttonBar.appendChild(div);
+            }
+        },
+
+        parseVehicleDetailsFromMobileNode: function (node) {
+            var vehicle = {
+                vin: null,
+                stock: null,
+                year: null,
+                make: null,
+                model: null,
+                body: null,
+                title: null,
+                engine: null,
+                exterior: null,
+                interior: null,
+                drivetrain: null,
+                transmission: null,
+                msrp: null,
+                imageUrl: null,
+                vdpUrl: null
+            };
+
+            var vehicleImageNode = node.querySelector('.vehicle-image img');
+            if (vehicleImageNode) {
+                var imageUrl = vehicleImageNode.getAttribute('src');
+                var imageFileName = imageUrl.split('/').slice(-1)[0];
+
+                if (imageFileName == 'loading.gif') {
+                    imageUrl = 'https://widget.testdrive.pw/img/default-car.png';
+                }
+                vehicle.imageUrl = imageUrl;
+            }
+
+            var vehicleTitleNode = node.querySelector('.vehicle-title h2 a');
+            if (vehicleTitleNode) {
+                vehicle.vdpUrl = vehicleTitleNode.getAttribute('href');
+                vehicle.title = vehicleTitleNode.textContent;
+            }
+
+            if (vehicle.imageUrl) {
+                var vehicleUrlData = vehicle.imageUrl.split('/').slice(-1)[0];
+                vehicle.vin = vehicleUrlData.split('-').slice(-1)[0];
+            }
+
+            return vehicle;
+        },
+
+        parseVehicleDetailsFromDesktopNode: function (node) {
+            var vehicle = {
+                vin: null,
+                stock: null,
+                year: null,
+                make: null,
+                model: null,
+                body: null,
+                title: null,
+                engine: null,
+                exterior: null,
+                interior: null,
+                drivetrain: null,
+                transmission: null,
+                msrp: null,
+                imageUrl: null,
+                vdpUrl: null
+            };
+
+            var vehicleImageNode = node.querySelector('.vehicle-image img');
+            if (vehicleImageNode) {
+                var imageUrl = vehicleImageNode.getAttribute('src');
+                var imageFileName = imageUrl.split('/').slice(-1)[0];
+
+                if (imageFileName == 'loading.gif') {
+                    imageUrl = 'https://widget.testdrive.pw/img/default-car.png';
+                }
+                vehicle.imageUrl = imageUrl;
+            }
+
+            var vehicleTitleNode = node.querySelector('.vehicle-title h2 a');
+            if (vehicleTitleNode) {
+                vehicle.vdpUrl = vehicleTitleNode.getAttribute('href');
+                vehicle.title = vehicleTitleNode.textContent;
+                vehicle.year = vehicle.title.split(' ')[1];
+            }
+
+            var vinNode = node.querySelector('.vinstock');
+            if (vinNode) {
+                var vinRegex = /VIN: (.*)/g;
+                var vinMatch = vinRegex.exec(vinNode.textContent);
+                vehicle.vin = vinMatch ? vinMatch[1] : null;
+            }
+
+            // TODO: add year
+
+            var vehicleContent = node.querySelector(".vehicle-content");
+            if (vehicleContent) {
+                var textContent = vehicleContent.innerText;
+
+                var bodyRegex = /Body: (.*)/g;
+                var bodyMatch = bodyRegex.exec(textContent);
+                vehicle.body = bodyMatch ? bodyMatch[1] : null; // TODO: add body parameter
+
+                var exteriorRegex = /Exterior: (.*)/g;
+                var exteriorMatch = exteriorRegex.exec(textContent);
+                vehicle.exterior = exteriorMatch ? exteriorMatch[1] : null;
+
+                var engineRegex = /Engine: (.*)/g;
+                var engineMatch = engineRegex.exec(textContent);
+                vehicle.engine = engineMatch ? engineMatch[1] : null;
+
+                var transRegex = /Trans: (.*)/g;
+                var transMatch = transRegex.exec(textContent);
+                vehicle.transmission = transMatch ? transMatch[1] : null;
+            }
+
+            return vehicle;
+        },
+
+        /// vdp injector
+        isCurrentPageVdp: function () {
+            var element = document.getElementById('details-page-ctabox');
+
+            if (element) {
+                return true;
+            }
+            return false;
+        },
+
+        appendTestdriveVdpButton: function () {
+            var self = this;
+
+            var vdpVehicle = {
+                vin: null,
+                stock: null,
+                year: null,
+                make: null,
+                model: null,
+                body: null,
+                title: null,
+                engine: null,
+                exterior: null,
+                interior: null,
+                drivetrain: null,
+                transmission: null,
+                msrp: null,
+                imageUrl: null,
+                vdpUrl: null
+            };
+
+            var title = document.getElementsByClassName("vehicle-title")[0];
+            if (title) {
+                vdpVehicle.title = title.innerHTML;
+            }
+
+            var image = document.querySelector(".owl-carousel .owl-item img");
+            if (image) {
+                vdpVehicle.imageUrl = image.getAttribute('src');
+            }
+
+            vdpVehicle.vdpUrl = window.location.href;
+
+            var urlParams = self.vehicleDetailsFromUrl(window.location.pathname);
+            vdpVehicle.vin = urlParams.vin;
+            vdpVehicle.year = urlParams.year;
+
+            var detailsPageCtabox = document.getElementById('details-page-ctabox');
+
+            var btn = document.createElement("BUTTON");
+            btn.classList.add("vipdrv-marin-vdp-button");
+
+            var infoWrapper = document.querySelector(".details-page-row .basic-info-wrapper");
+            var infoWrapperText = null;
+
+            if (infoWrapper) {
+                infoWrapperText = infoWrapper.innerText;
+            }
+            var carDetailsFromHtml = self.vehicleDetailsFromVdpHtml(infoWrapperText);
+
+            vdpVehicle.engine = carDetailsFromHtml.engine;
+            vdpVehicle.exterior = carDetailsFromHtml.exterior;
+            vdpVehicle.transmission = carDetailsFromHtml.trans;
+
+            btn.onclick = function () {
+                window.TestDrive.openTestDrive(vdpVehicle);
+            };
+            detailsPageCtabox.appendChild(btn);
+        },
+
+        /// helpers
+        vehicleDetailsFromUrl: function (vdpPageUrl) {
+            var result = {
+                year: null,
+                vin: null
+            };
+
+            var vehicleUrl = vdpPageUrl.split('/')[2];
+            var vehicleUrlParams;
+            if (vehicleUrl) {
+                vehicleUrlParams = vehicleUrl.split('-');
+            }
+
+            if (vehicleUrlParams[1]) {
+                result.year = vehicleUrlParams[1];
+            }
+            result.vin = vehicleUrlParams[vehicleUrlParams.length - 1];
+
+            return result;
+        },
+
+        vehicleDetailsFromVdpHtml: function (plainText) {
+            var result = {
+                body: null,
+                exterior: null,
+                engine: null,
+                trans: null
+            };
+
+            var bodyRegex = /Body: (.*)/g;
+            var bodyMatch = bodyRegex.exec(plainText);
+            result.body = bodyMatch ? bodyMatch[1] : null;
+
+            var exteriorRegex = /Exterior: (.*)/g;
+            var exteriorMatch = exteriorRegex.exec(plainText);
+            result.exterior = exteriorMatch ? exteriorMatch[1] : null;
+
+            var engineRegex = /Engine: (.*)/g;
+            var engineMatch = engineRegex.exec(plainText);
+            result.engine = engineMatch ? engineMatch[1] : null;
+
+            var transRegex = /Trans: (.*)/g;
+            var transMatch = transRegex.exec(plainText);
+            result.trans = transMatch ? transMatch[1] : null;
+
+            return result;
+        },
+
+        /// extensions
+        observeDOM: (function () {
+            var MutationObserver = window.MutationObserver || window.WebKitMutationObserver,
+                eventListenerSupported = window.addEventListener;
+
+            return function (obj, callback) {
+                if (MutationObserver) {
+                    // define a new observer
+                    var obs = new MutationObserver(function (mutations, observer) {
+                        if (mutations[0].addedNodes.length || mutations[0].removedNodes.length)
+                            callback();
+                    });
+                    // have the observer observe foo for changes in children
+                    obs.observe(obj, {childList: true, subtree: true});
+                }
+                else if (eventListenerSupported) {
+                    obj.addEventListener('DOMNodeInserted', callback, false);
+                    obj.addEventListener('DOMNodeRemoved', callback, false);
+                }
+            };
+        })()
+    };
+
     var TruckworldButtonsInjector = {
         /// initialization
         init: function (injectWidgetToVlp, injectWidgetToVdp) {
@@ -52,6 +447,9 @@
     };
 
     var MarinButtonsInjector = {
+        /// variables
+        domChangesCounter: 0,
+        domScrollCounter: 0,
 
         /// initialization
         init: function (injectWidgetToVlp, injectWidgetToVdp) {
@@ -67,8 +465,7 @@
             }
         },
 
-        domChangesCounter: 0,
-        domScrollCounter: 0,
+
         initVlpListener: function () {
             var self = this;
 
@@ -449,7 +846,7 @@
     window.TestDrive = window.TestDrive || (function () {
         // variables
         var _siteId = '%siteId%'; // default siteId
-        var _WidgetUrl = '%widgetUrl%'; // https://widget.testdrive.pw/ // %widgetUrl%
+        var _WidgetUrl = 'https://widget.testdrive.pw/'; // https://widget.testdrive.pw/ // %widgetUrl%
         var _useAutoIntegration = null;
         var _injectWidgetToVlp = null;
         var _injectWidgetToVdp = null;
@@ -467,15 +864,15 @@
                     <div class="frame-header__cross" onclick="TestDrive.closeTestDrive()">&#10006;</div>
                  </div>
                  <img id="test-drive__frame-spinner" src="http://www.testdrive.pw/spinner.gif">
-                 <iframe class="test-drive__frame" src="${widgetUrl}" frameBorder="0" onload="document.getElementById('test-drive__frame-spinner').style.display='none';"></iframe>
+                 <iframe name="test-drive__frame" class="test-drive__frame" src="${widgetUrl}" frameBorder="0" onload="document.getElementById('test-drive__frame-spinner').style.display='none';"></iframe>
              </div>`;
 
-            document.getElementsByClassName('test-drive')[0].innerHTML = html;
+            document.getElementsByClassName('test-drive__frame-wrapper')[0].innerHTML = html;
         };
 
         var _appendTestDriveFrameWrapper = function () {
             var elemDiv = document.createElement('div');
-            elemDiv.className = "test-drive";
+            elemDiv.className = "test-drive__frame-wrapper";
 
             if (!document.body) {
                 document.body = document.createElement("body");
@@ -486,7 +883,7 @@
         };
 
         var _showTestDriveFrame = function () {
-            document.getElementsByClassName('test-drive')[0].classList.add('test-drive-visible');
+            document.getElementsByClassName('test-drive__frame-wrapper')[0].classList.add('test-drive-visible');
             document.documentElement.classList.add('vipdrv--disable-scroll');
             window.scrollTo(0, 0);
 
@@ -500,7 +897,7 @@
             document.documentElement.classList.remove('vipdrv--disable-scroll');
 
             setTimeout(function () {
-                document.getElementsByClassName('test-drive')[0].classList.remove('test-drive-visible');
+                document.getElementsByClassName('test-drive__frame-wrapper')[0].classList.remove('test-drive-visible');
             }, 200);
         };
 
@@ -523,7 +920,6 @@
             safariMeta.id = 'TestDriveSafariMeta';
             safariMeta.name = 'apple-mobile-web-app-status-bar-style';
             safariMeta.content = "#007bff";
-
             head.appendChild(safariMeta);
         };
 
@@ -565,7 +961,7 @@
             };
 
             window.onclick = function (event) {
-                var modal = document.getElementsByClassName('test-drive')[0];
+                var modal = document.getElementsByClassName('test-drive__frame-wrapper')[0];
 
                 if (event.target == modal) {
                     _hideTestDriveFrame();
@@ -580,9 +976,9 @@
             });
         };
 
-        var _injectWidgetButtons = function (siteId, injectWidgetToVlp, injectWidgetToVdp) {
-            if (!injectWidgetToVlp && !injectWidgetToVdp) {
-                return false;
+        var _injectWidgetButtons = function (siteId, useAutoIntegration, injectWidgetToVlp, injectWidgetToVdp) {
+            if (!useAutoIntegration) {
+                return;
             }
 
             // TODO: hardcoded site id's
@@ -592,6 +988,11 @@
 
             if (siteId == 32) {
                 MarinButtonsInjector.init(injectWidgetToVlp, injectWidgetToVdp);
+            }
+
+            if (siteId == 36) {
+                return;
+                // mbrvcInjector.init(injectWidgetToVlp, injectWidgetToVdp);
             }
         };
 
@@ -652,9 +1053,7 @@
             var hostName = window.location.hostname;
             var sitesDictionary = {
                 'www.mbofmarin.com': 32,
-                'inventory.testdrive.pw': 28,
-                'www.testdrive.pw': 28,
-                'localhost': 28,
+                'www.mbrvc.com': 28
             };
 
             return sitesDictionary[hostName] || null;
@@ -677,7 +1076,8 @@
                 _appendTestDriveFrameWrapperStyles();
                 _addTestDriveFrameEventListeners();
                 _initExtensions();
-                _injectWidgetButtons(_siteId, _injectWidgetToVlp, _injectWidgetToVdp);
+                _injectWidgetButtons(_siteId, _useAutoIntegration, _injectWidgetToVlp, _injectWidgetToVdp);
+                // _appendTestDriveFrame({}, _siteId);
             },
             openTestDrive: function (Args) {
                 _appendTestDriveFrame(_parseArgumentsForOpenButtonEvent(Args), _siteId);
@@ -685,8 +1085,8 @@
                 _showTestDriveFrame();
             },
             closeTestDrive: function () {
-                _restoreDefaultMobileBrowserBarColor();
                 _hideTestDriveFrame();
+                _restoreDefaultMobileBrowserBarColor();
             }
         };
     }());
@@ -698,4 +1098,4 @@
 //
 // https://widget.testdrive.pw
 //
-//window.TestDrive.init({injectWidgetToVlp: true, injectWidgetToVdp: true});
+// window.TestDrive.init({siteId: 28, injectWidgetToVlp: true, injectWidgetToVdp: true});

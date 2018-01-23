@@ -77,6 +77,13 @@ export class UserValidationService
             Number.isInteger(entity.maxSitesCount);
     }
 
+    isValidRole(entity: UserEntity): boolean {
+
+        const lengt = entity.roleIds.length;
+
+        return Variable.isNotNullOrUndefined(entity) && entity.roleIds.length > 0;
+    }
+
     getInvalidUserNameMessageKey(entity: UserEntity): string {
         return 'validation.registrationModel.invalidUsernameMessage';
     }

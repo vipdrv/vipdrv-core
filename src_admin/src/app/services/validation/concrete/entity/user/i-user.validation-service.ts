@@ -11,6 +11,7 @@ export interface IUserValidationService extends IValidationService<UserEntity> {
     isValidUserSecondName(entity: UserEntity): boolean;
     isValidUserPhone(entity: UserEntity): boolean;
     isValidUserSitesCount(entity: UserEntity): boolean;
+    isValidRole(entity: UserEntity);
     getInvalidUserNameMessageKey(entity: UserEntity): string;
     getInvalidUserPasswordMessageKey(entity: UserEntity): string;
     getInvalidUserRepeatPasswordMessageKey(entity: UserEntity): string;
@@ -19,4 +20,5 @@ export interface IUserValidationService extends IValidationService<UserEntity> {
     getInvalidUserSecondNameMessageKey(entity: UserEntity): string;
     getInvalidUserPhoneMessageKey(entity: UserEntity): string;
     getInvalidUserSitesCountMessageKey(entity: UserEntity): string;
+
 }

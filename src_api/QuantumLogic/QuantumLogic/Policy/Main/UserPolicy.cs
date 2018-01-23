@@ -43,8 +43,11 @@ namespace QuantumLogic.WebApi.Policy.Main
             return result;
         }
 
+
         protected override bool CanCreate(User entity, bool throwEntityPolicyException)
         {
+#warning split to two methods: create viaInvitation and create
+            return true;
             bool result = PermissionChecker.IsGranted(QuantumLogicPermissionNames.CanAllAll) ||
                           PermissionChecker.IsGranted(QuantumLogicPermissionNames.CanAllUser) ||
                           PermissionChecker.IsGranted(QuantumLogicPermissionNames.CanCreateUser) ||

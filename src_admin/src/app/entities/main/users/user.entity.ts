@@ -11,6 +11,7 @@ export class UserEntity extends Entity {
     secondName: string;
     avatarUrl: string;
     currentSitesCount: number;
+    roleIds: number[];
 
     /// ctor
     constructor() {
@@ -33,5 +34,6 @@ export class UserEntity extends Entity {
         this.secondName = mock.secondName;
         this.avatarUrl = mock.avatarUrl;
         this.currentSitesCount = mock.currentSitesCount;
+        this.roleIds = Variable.isNotNullOrUndefined(mock.roleIds) ? mock.roleIds : [];
     }
 }

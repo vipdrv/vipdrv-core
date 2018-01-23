@@ -1,18 +1,18 @@
 <div class="test-drive-modal-body-edit-entity-container">
     <!--<div class="row">-->
-        <!--<div class="col-12">-->
-            <!--<image-select [isReadOnly]="isImageComponentReadOnly()"-->
-                          <!--[imageUrl]="entity.photoUrl"-->
-                          <!--[defaultImageUrl]="defaultImageUrl"-->
-                          <!--[imageWidth]="imageWidth"-->
-                          <!--[imageHeight]="imageHeight"-->
-                          <!--[isRounded]="isImageRounded"-->
-                          <!--[imageAlt]="imageAlt"-->
-                          <!--[columnRules]="columnRules"-->
-                          <!--[forceAcceptImage]="forceAcceptImage"-->
-                          <!--(imageUrlSelected)="onNewImageSelected($event)"-->
-                          <!--(resetForceAcceptImage)="onResetForceAcceptImage($event)"></image-select>-->
-        <!--</div>-->
+    <!--<div class="col-12">-->
+    <!--<image-select [isReadOnly]="isImageComponentReadOnly()"-->
+    <!--[imageUrl]="entity.photoUrl"-->
+    <!--[defaultImageUrl]="defaultImageUrl"-->
+    <!--[imageWidth]="imageWidth"-->
+    <!--[imageHeight]="imageHeight"-->
+    <!--[isRounded]="isImageRounded"-->
+    <!--[imageAlt]="imageAlt"-->
+    <!--[columnRules]="columnRules"-->
+    <!--[forceAcceptImage]="forceAcceptImage"-->
+    <!--(imageUrlSelected)="onNewImageSelected($event)"-->
+    <!--(resetForceAcceptImage)="onResetForceAcceptImage($event)"></image-select>-->
+    <!--</div>-->
     <!--</div>-->
     <!--<hr>-->
     <div class="row" *ngIf="!isModalInEditMode">
@@ -84,37 +84,37 @@
     </div>
 
     <!--<div class="row" *ngIf="isModalInEditMode">-->
-        <!--<div class="col-12">-->
-            <!--<div class="form-group">-->
-                <!--<label for="password" translate *ngIf="!isPasswordGeneratorVisible">Reset password</label>-->
-                <!--<label for="password" translate *ngIf="isPasswordGeneratorVisible">New password</label>-->
-                <!--<br>-->
-                <!--<button class="btn btn-primary"-->
-                        <!--type="button"-->
-                        <!--*ngIf="!isPasswordGeneratorVisible"-->
-                        <!--(click)="showPasswordGenerator()">Reset Password</button>-->
-                <!--<div class="input-group" *ngIf="isPasswordGeneratorVisible">-->
-                    <!--<input class="form-control"-->
-                           <!--[ngClass]="extensions.getInputValidationClass(isValidationActive(), validationService.isValidUserPassword(entity))"-->
-                           <!--[(ngModel)]="entity.password">-->
-                    <!--<div class="input-group-append">-->
-                        <!--<button class="btn btn-outline-secondary"-->
-                                <!--type="button"-->
-                                <!--(click)="hidePasswordGenerator()">Cancel</button>-->
-                    <!--</div>-->
-                <!--</div>-->
-                <!--<small class="form-text text-muted"-->
-                       <!--*ngIf="isPasswordGeneratorVisible && (!isValidationActive() || validationService.isValidUserPassword(entity))"-->
-                       <!--translate>-->
-                    <!--users.modal.userPasswordHelp-->
-                <!--</small>-->
-                <!--<small class="form-text test-drive-validation-message"-->
-                       <!--*ngIf="isPasswordGeneratorVisible && (isValidationActive() && !validationService.isValidUserPassword(entity))"-->
-                       <!--translate>-->
-                    <!--{{ validationService.getInvalidUserPasswordMessageKey(entity) }}-->
-                <!--</small>-->
-            <!--</div>-->
-        <!--</div>-->
+    <!--<div class="col-12">-->
+    <!--<div class="form-group">-->
+    <!--<label for="password" translate *ngIf="!isPasswordGeneratorVisible">Reset password</label>-->
+    <!--<label for="password" translate *ngIf="isPasswordGeneratorVisible">New password</label>-->
+    <!--<br>-->
+    <!--<button class="btn btn-primary"-->
+    <!--type="button"-->
+    <!--*ngIf="!isPasswordGeneratorVisible"-->
+    <!--(click)="showPasswordGenerator()">Reset Password</button>-->
+    <!--<div class="input-group" *ngIf="isPasswordGeneratorVisible">-->
+    <!--<input class="form-control"-->
+    <!--[ngClass]="extensions.getInputValidationClass(isValidationActive(), validationService.isValidUserPassword(entity))"-->
+    <!--[(ngModel)]="entity.password">-->
+    <!--<div class="input-group-append">-->
+    <!--<button class="btn btn-outline-secondary"-->
+    <!--type="button"-->
+    <!--(click)="hidePasswordGenerator()">Cancel</button>-->
+    <!--</div>-->
+    <!--</div>-->
+    <!--<small class="form-text text-muted"-->
+    <!--*ngIf="isPasswordGeneratorVisible && (!isValidationActive() || validationService.isValidUserPassword(entity))"-->
+    <!--translate>-->
+    <!--users.modal.userPasswordHelp-->
+    <!--</small>-->
+    <!--<small class="form-text test-drive-validation-message"-->
+    <!--*ngIf="isPasswordGeneratorVisible && (isValidationActive() && !validationService.isValidUserPassword(entity))"-->
+    <!--translate>-->
+    <!--{{ validationService.getInvalidUserPasswordMessageKey(entity) }}-->
+    <!--</small>-->
+    <!--</div>-->
+    <!--</div>-->
     <!--</div>-->
 
     <div class="row">
@@ -226,6 +226,28 @@
                        *ngIf="isValidationActive() && !validationService.isValidUserSitesCount(entity)"
                        translate>
                     {{ validationService.getInvalidUserSitesCountMessageKey(entity)}}
+                </small>
+            </div>
+        </div>
+        <div class="col-sm-12 col-md-6 col-lg-6">
+            <div class="form-group">
+                <label translate>users.modal.role</label>
+                <select class="form-control"
+                        [ngClass]="extensions.getInputValidationClass(isValidationActive(), validationService.isValidRole(entity))"
+                        (change)="onChangeRole()"
+                        [(ngModel)]="entity.roleIds[0]">
+                    <option *ngFor="let option of rolesCanBeUsedForInvitation"
+                            [ngValue]="option.id">
+                        <span translate>{{option.name}}</span>
+                    </option>
+                </select>
+                <small class="form-text text-muted"
+                       *ngIf="!isValidationActive() || validationService.isValidRole(entity)"
+                       translate>
+                    users.modal.roleHelp
+                </small>
+                <small *ngIf="isValidationActive() && !validationService.isValidRole(entity)" translate>
+                    validation.invitations.invalidRoleMessage
                 </small>
             </div>
         </div>

@@ -85,6 +85,8 @@ namespace QuantumLogic.Core.Domain.Entities.MainModule
             PhoneNumber = actualEntity.PhoneNumber;
             MaxSitesCount = actualEntity.MaxSitesCount;
             AvatarUrl = actualEntity.AvatarUrl;
+            UserRoles = actualEntity.UserRoles;
+            // UserClaims = actualEntity.UserClaims;
         }
 
         #endregion
