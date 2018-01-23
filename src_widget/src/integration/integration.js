@@ -846,7 +846,7 @@
     window.TestDrive = window.TestDrive || (function () {
         // variables
         var _siteId = '%siteId%'; // default siteId
-        var _WidgetUrl = 'https://widget.testdrive.pw/'; // https://widget.testdrive.pw/ // %widgetUrl%
+        var _WidgetUrl = '%widgetUrl%'; // https://widget.testdrive.pw/ // %widgetUrl%
         var _useAutoIntegration = null;
         var _injectWidgetToVlp = null;
         var _injectWidgetToVdp = null;
@@ -1053,7 +1053,7 @@
             var hostName = window.location.hostname;
             var sitesDictionary = {
                 'www.mbofmarin.com': 32,
-                'www.mbrvc.com': 28
+                'www.mbrvc.com': 36
             };
 
             return sitesDictionary[hostName] || null;
@@ -1062,7 +1062,7 @@
         // output
         return {
             init: function (Args) {
-                _siteId = Args.siteId || _detectSiteIdAutomatically();
+                _siteId = Args.siteId || Args.SiteId || _detectSiteIdAutomatically();
                 _useAutoIntegration = Args.useAutoIntegration || true;
                 _injectWidgetToVlp = Args.injectWidgetToVlp || true;
                 _injectWidgetToVdp = Args.injectWidgetToVdp || true;
