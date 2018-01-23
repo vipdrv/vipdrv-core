@@ -12,6 +12,9 @@ import { UserEntityPolicyService } from '../../../services/policy/concrete/main/
 import { IUserEntityPolicyService } from '../../../services/policy/concrete/main/user/i-userEntity.policy-service';
 import { IUserValidationService } from '../../../services/validation/concrete/entity/user/i-user.validation-service';
 import { UserValidationService } from '../../../services/validation/concrete/entity/user/user.validation-service';
+import { RoleEntity } from '../../../entities/main/roles/role.entity';
+import { IRoleApiService } from '../../../services/serverApi/main/roles/i-role.api-service';
+import { RoleApiService } from '../../../services/serverApi/main/roles/role.api-service';
 
 @Component({
     selector: 'users-table',
@@ -50,33 +53,55 @@ export class UsersTableComponent implements OnInit {
     protected selectedEntity: UserEntity;
     protected passwordRepeat: string;
     protected isModalInEditMode: boolean;
+    protected rolesCanBeUsedForInvitation: Array<RoleEntity> = [];
 
     /// injected dependencies
     protected logger: ILogger;
     protected entityApiService: IUserApiService;
     protected entityPolicyService: IUserEntityPolicyService;
     protected entityValidationService: IUserValidationService;
+    protected roleApiService: IRoleApiService;
 
     /// ctor
     constructor(logger: ConsoleLogger,
                 entityApiService: UserApiService,
                 entityPolicyService: UserEntityPolicyService,
-                entityValidationService: UserValidationService) {
+                entityValidationService: UserValidationService,
+                roleApiService: RoleApiService) {
         this.logger = logger;
         this.entityApiService = entityApiService;
         this.entityPolicyService = entityPolicyService;
         this.entityValidationService = entityValidationService;
+        this.roleApiService = roleApiService;
         this.logger.logDebug('UsersTableComponent: Component has been constructed.');
     }
 
     /// methods
-
     ngOnInit(): void {
         const self = this;
         self.firstLoadingPromise = self.getAllEntities()
             .then(
                 () => self.firstLoadingPromise = null,
                 () => self.firstLoadingPromise = null);
+        self.loadRelations();
+    }
+
+    protected loadRelations(): Promise<void> {
+        return this.loadRolesCanBeUsedForInvitation();
+    }
+    protected loadRolesCanBeUsedForInvitation(): Promise<void> {
+        const self = this;
+        let actionPromise = self.roleApiService
+            .getAllCanBeUsedForInvitation()
+            .then(function (response: GetAllResponse<RoleEntity>): void {
+
+                self.rolesCanBeUsedForInvitation = response.items;
+            })
+            .then(
+                () => actionPromise = null,
+                () => actionPromise = null
+            );
+        return actionPromise;
     }
 
     protected getAllEntities(): Promise<void> {
@@ -137,6 +162,7 @@ export class UsersTableComponent implements OnInit {
         const self = this;
         self._useValidation = false;
         self.selectedEntity = new UserEntity();
+        self.selectedEntity.roleIds = [];
         return self.editModal.open();
     }
 
