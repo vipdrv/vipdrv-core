@@ -48,7 +48,6 @@ namespace QuantumLogic.WebApi.Controllers.Main
         [HttpGet("{id}")]
         public Task<UserFullDto> GetAsync(int id)
         {
-
             return InnerGetAsync(id);
         }
         [HttpPost]

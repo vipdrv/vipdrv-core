@@ -146,4 +146,11 @@
     app.value('bookingData', bookingData);
     app.value('dealerData', dealerData);
     app.value('apiBaseUrl', apiBaseUrl);
+
+    //=======================================================================//
+    // Watch Hash change                                                     //
+    //=======================================================================//
+
+
+
 })();
