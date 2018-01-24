@@ -3,14 +3,9 @@
      ng-click="switchTabInner()">
 
     <div class="wizard-navigation-tab__content">
-        <div class="wizard-navigation-tab__text text-light d-none d-md-block"
-             ng-class="{'font-weight-bold': $ctrl.tabData.isActive}">{{$ctrl.title}}</div>
+        <div class="wizard-navigation-tab__text text-light d-none d-md-block" ng-class="{'font-weight-bold': $ctrl.tabData.isActive}">{{$ctrl.title}}</div>
         <div class="wizard-navigation-tab__icon text-light d-sm-block d-md-none d-lg-none">
-            <i class="{{$ctrl.tabData.icon}}" aria-hidden="true"></i>
+            <img ng-src="/img/{{$ctrl.tabData.icon}}" aria-hidden="true"></img>
         </div>
     </div>
 </div>
-
-<!--{{$ctrl.tabData.isActive}}<br>-->
-<!--{{$ctrl.tabData.isLocked}}<br>-->
-<!--{{$ctrl.tabData.isCompleted}}<br>-->
