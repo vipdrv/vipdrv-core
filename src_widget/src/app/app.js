@@ -16,14 +16,14 @@
         time: {
             id: 'time',
             title: 'Select Date & Time',
-            icon: 'fa fa-clock-o fa-2x',
+            icon: 'svg-white-clock-o.svg',
             isActive: true,
             isLocked: false,
             isCompleted: false
         },
         expert: {
             id: 'expert',
-            icon: 'fa fa-users fa-2x',
+            icon: 'svg-white-users.svg',
             title: 'Select Expert',
             isActive: false,
             isLocked: true,
@@ -31,7 +31,7 @@
         },
         beverage: {
             id: 'beverage',
-            icon: 'fa fa-coffee fa-2x',
+            icon: 'svg-white-coffee.svg',
             title: 'Select Beverage',
             isActive: false,
             isLocked: true,
@@ -39,7 +39,7 @@
         },
         road: {
             id: 'road',
-            icon: 'fa fa-road fa-2x',
+            icon: 'svg-white-road.svg',
             title: 'Select Preferred Route',
             isActive: false,
             isLocked: true,
@@ -47,7 +47,7 @@
         },
         details: {
             id: 'details',
-            icon: 'fa fa-handshake-o fa-2x',
+            icon: 'svg-white-handshake-o.svg',
             title: 'Your Details',
             isActive: false,
             isLocked: true,
@@ -137,8 +137,8 @@
         isFormCompleted: false
     };
 
-    var url = new FiltersFromUrl(window.location.search).get();
-    var siteId = url.siteId || defaultSiteId;
+    var urlFilters = new FiltersFromUrl(window.location.search).get();
+    var siteId = urlFilters.siteId || defaultSiteId;
 
     app.value('siteId', siteId);
     app.value('widgetTabs', widgetTabs);
@@ -146,11 +146,5 @@
     app.value('bookingData', bookingData);
     app.value('dealerData', dealerData);
     app.value('apiBaseUrl', apiBaseUrl);
-
-    //=======================================================================//
-    // Watch Hash change                                                     //
-    //=======================================================================//
-
-
 
 })();

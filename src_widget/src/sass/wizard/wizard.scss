@@ -30,7 +30,11 @@
 
 .wizard-navigation-tab__icon {
   text-align: center;
-  line-height: 58px; // govnocode TODO: fix later
+  line-height: 45px; // govnocode TODO: fix later
+}
+
+.wizard-navigation-tab__icon img {
+  height: 36px;
 }
 
 .wizard-navigation-tab--active {

@@ -114,7 +114,7 @@
 
         addTestDriveButtonToDesktopVehicleNode: function (node, vehicleObject) {
             var btn = document.createElement("button");
-            btn.onclick = function() {
+            btn.onclick = function () {
                 window.TestDrive.openTestDrive(vehicleObject);
             };
             btn.innerHTML = "VIPdrv - Test Drive";
@@ -128,7 +128,7 @@
 
         addTestDriveButtonToMobileVehicleNode: function (node, vehicleObject) {
             var btn = document.createElement("button");
-            btn.onclick = function() {
+            btn.onclick = function () {
                 window.TestDrive.openTestDrive(vehicleObject);
             };
             btn.innerHTML = "VIPdrv - Test Drive";
@@ -848,11 +848,11 @@
         var _useAutoIntegration = null;
         var _injectWidgetToVlp = null;
         var _injectWidgetToVdp = null;
+        // adjust
+        var _scrollTop = null;
 
         // methods
-        var _appendTestDriveFrame = function (ulrParams, siteId) {
-            ulrParams.hash = Math.random().toString(36).substring(7);
-            ulrParams.siteId = siteId;
+        var _appendTestDriveFrame = function (ulrParams) {
             var widgetUrl = _buildUrl(_WidgetUrl, ulrParams);
 
             var html =
@@ -867,6 +867,19 @@
 
             document.getElementsByClassName('test-drive__frame-wrapper')[0].innerHTML = html;
         };
+
+        var _updateTestDriveFrame = function (ulrParams) {
+            var frame = document.getElementsByClassName('test-drive__frame')[0];
+            var frameHash = _buildUrl('#', ulrParams);
+            frame.src = removeHashFromUrl(frame.src) + frameHash;
+        };
+
+        function removeHashFromUrl(uri) {
+            if (uri.indexOf("#") > 0) {
+                return uri.substring(0, uri.indexOf("#"));
+            }
+            return uri;
+        }
 
         var _appendTestDriveFrameWrapper = function () {
             var elemDiv = document.createElement('div');
@@ -993,6 +1006,10 @@
             }
         };
 
+        var _rememberScrollPosition = function () {
+            _scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+        };
+
         // helpers
 
         var _parseArgumentsForOpenButtonEvent = function (Args) {
@@ -1014,6 +1031,7 @@
             ulrParams.imageUrl = Args.imageUrl || null;
             ulrParams.vdpUrl = Args.vdpUrl || null;
             ulrParams.siteId = Args.siteId || null;
+            ulrParams.clearBookingData = Args.clearBookingData || null;
 
             return ulrParams;
         };
@@ -1074,16 +1092,30 @@
                 _addTestDriveFrameEventListeners();
                 _initExtensions();
                 _injectWidgetButtons(_siteId, _useAutoIntegration, _injectWidgetToVlp, _injectWidgetToVdp);
-                // _appendTestDriveFrame({}, _siteId);
+
+                var ulrParams = {};
+                ulrParams.siteId = _siteId;
+                ulrParams.hash = Math.random().toString(36).substring(7);
+                _appendTestDriveFrame(ulrParams);
             },
             openTestDrive: function (Args) {
-                _appendTestDriveFrame(_parseArgumentsForOpenButtonEvent(Args), _siteId);
+                // _appendTestDriveFrame(_parseArgumentsForOpenButtonEvent(Args), _siteId);
+                _updateTestDriveFrame(_parseArgumentsForOpenButtonEvent(Args));
                 _changeMobileBrowserBarColor();
+                _rememberScrollPosition();
                 _showTestDriveFrame();
             },
             closeTestDrive: function () {
                 _hideTestDriveFrame();
+                _updateTestDriveFrame(_parseArgumentsForOpenButtonEvent({clearBookingData: true}));
                 _restoreDefaultMobileBrowserBarColor();
+                setTimeout(function () {
+                    window.scroll({
+                        top: _scrollTop,
+                        left: 0,
+                        behavior: 'smooth'
+                    });
+                }, 250);
             }
         };
     }());
