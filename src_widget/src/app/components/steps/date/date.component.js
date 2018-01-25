@@ -1,7 +1,7 @@
 (function () {
     angular.module('myApp')
         .component('tdDate', {
-            controller: function ($scope, $interval, dealerData, bookingData) {
+            controller: function ($scope, $window, $interval, dealerData, bookingData) {
 
                 // =======================================================================//
                 // Variables                                                              //
@@ -29,6 +29,12 @@
                 // =======================================================================//
 
                 self.$onInit = function () {
+                    // #warning: CSS hack
+                    var div = $window.document.getElementsByClassName('test-drive-widget__root')[0];
+                    if (div) {
+                        div.style.display = 'table';
+                    }
+
                     if (self.dealerData.siteId != null) {
                         self.isLoading = false;
                         self.initStep();

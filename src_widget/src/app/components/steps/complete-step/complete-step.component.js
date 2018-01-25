@@ -13,11 +13,8 @@
                 // =======================================================================//
 
                 self.$onInit = function () {
-                    _makeWidgetRootScrollable();
                     _initCalendarButton();
-                };
-
-                var _makeWidgetRootScrollable = function () {
+                    // #warning: CSS hack
                     var div = $window.document.getElementsByClassName('test-drive-widget__root')[0];
                     if (div) {
                         div.style.display = 'table';

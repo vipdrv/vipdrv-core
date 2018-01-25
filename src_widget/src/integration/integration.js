@@ -414,7 +414,7 @@
         },
 
         appendTestDriveVdpButtonStyles: function () {
-            var css = '.btn-testdrive-large { display: table !important; }';
+            var css = '.vipdrv-truckworld-vdp-button { display: table !important; }';
             var head = document.head || document.getElementsByTagName('head')[0];
             var style = document.createElement('style');
 
@@ -429,7 +429,7 @@
         },
 
         appendTestDriveVlpButtonStyles: function () {
-            var css = '.btn-testdrive { display: table !important; }';
+            var css = '.vipdrv-truckworld-vlp-button { display: table !important; }';
             var head = document.head || document.getElementsByTagName('head')[0];
             var style = document.createElement('style');
 
@@ -1110,11 +1110,11 @@
                 _updateTestDriveFrame(_parseArgumentsForOpenButtonEvent({clearBookingData: true}));
                 _restoreDefaultMobileBrowserBarColor();
                 setTimeout(function () {
-                    window.scroll({
-                        top: _scrollTop,
-                        left: 0,
-                        behavior: 'smooth'
-                    });
+                    // window.scroll({
+                    //     top: _scrollTop,
+                    //     left: 0,
+                    //     behavior: 'smooth'
+                    // });
                 }, 250);
             }
         };
