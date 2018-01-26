@@ -134,7 +134,7 @@
     };
 
     var globalState = {
-        isFormCompleted: false
+        isBookingCompleted: false
     };
 
     var urlFilters = new FiltersFromUrl(window.location.search).get();
@@ -146,5 +146,4 @@
     app.value('bookingData', bookingData);
     app.value('dealerData', dealerData);
     app.value('apiBaseUrl', apiBaseUrl);
-
 })();

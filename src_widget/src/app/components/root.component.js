@@ -1,7 +1,7 @@
 (function () {
     angular.module('myApp')
         .component('root', {
-            controller: function ($scope, $window, $location, globalState, bookingData, dealerData, widgetTabs, siteId, api) {
+            controller: function ($scope, $window, $location, $timeout, globalState, bookingData, dealerData, widgetTabs, siteId, api) {
 
                 var self = this;
                 self.siteId = siteId;
@@ -43,16 +43,77 @@
 
                     var clearBookingData = self.bookingData.vehicle.clearBookingData;
                     if (clearBookingData) {
-                        for (var key in self.widgetTabs) {
-                            self.widgetTabs[key].isActive = false;
-                            self.widgetTabs[key].isLocked = true;
-                            self.widgetTabs[key].isCompleted = false;
-                        }
-                        self.widgetTabs.time.isActive = true;
-                        self.widgetTabs.time.isLocked = false;
-                        self.widgetTabs.time.isCompleted = false;
+                        $timeout(function() {
+                            self.restWidgetProgress(clearBookingData);
+                        }, 1000);
                     }
                 });
+
+                self.restWidgetProgress = function () {
+                    for (var key in self.widgetTabs) {
+                        self.widgetTabs[key].isActive = false;
+                        self.widgetTabs[key].isLocked = true;
+                        self.widgetTabs[key].isCompleted = false;
+                    }
+                    self.widgetTabs.time.isActive = true;
+                    self.widgetTabs.time.isLocked = false;
+                    self.widgetTabs.time.isCompleted = false;
+
+                    self.globalState.isBookingCompleted = false;
+                    self.bookingData.bookingData = {
+                        user: {
+                            firstName: null,
+                            lastName: null,
+                            phone: null,
+                            email: null,
+                            comment: null
+                        },
+                        calendar: {
+                            date: null,
+                            time: null,
+                            dayOfWeek: null,
+                            isSkipped: null
+                        },
+                        expert: {
+                            id: null,
+                            img: null,
+                            name: null,
+                            description: null,
+                            isSkipped: null
+                        },
+                        beverage: {
+                            id: null,
+                            img: null,
+                            name: null,
+                            description: null,
+                            isSkipped: null
+                        },
+                        road: {
+                            id: null,
+                            img: null,
+                            name: null,
+                            description: null,
+                            isSkipped: null
+                        },
+                        vehicle: {
+                            vin: null,
+                            stock: null,
+                            year: null,
+                            make: null,
+                            model: null,
+                            body: null,
+                            title: null,
+                            engine: null,
+                            exterior: null,
+                            interior: null,
+                            drivetrain: null,
+                            transmission: null,
+                            msrp: null,
+                            imageUrl: null,
+                            vdpUrl: null
+                        }
+                    };
+                };
 
                 self.$onInit = function () {
                     api.retrieveSite().then(function (data) {

@@ -62,6 +62,7 @@
                 // =======================================================================//
 
                 self.getMinimumAvaliableDate = function (workingHoursByDayOfWeek, dayOfWeek, counter) {
+                    debugger;
                     if (dayOfWeek > 6) {
                         dayOfWeek = 0;
                     }
@@ -82,7 +83,7 @@
                         return currentDate;
                     }
 
-                    if (dayOfWeekData.isActive && currentHour > startTime && currentHour < endTime - 1 && counter == 0) {
+                    if (dayOfWeekData.isActive && currentHour < endTime - 1 && counter == 0) {
                         currentDate.startOf('day');
                         currentDate.add(counter, 'days');
                         return currentDate;
