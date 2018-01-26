@@ -29,11 +29,7 @@
                 // =======================================================================//
 
                 self.$onInit = function () {
-                    // #warning: CSS hack
-                    var div = $window.document.getElementsByClassName('test-drive-widget__root')[0];
-                    if (div) {
-                        div.style.display = 'table';
-                    }
+                    self.cssHack();
 
                     if (self.dealerData.siteId != null) {
                         self.isLoading = false;
@@ -43,17 +39,13 @@
                         self.loadingCheckerInterval = $interval(function () {
                             if (self.dealerData.siteId != null) {
                                 self.isLoading = false;
-                                self.stopInterval();
+                                if (angular.isDefined(self.loadingCheckerInterval)) {
+                                    $interval.cancel(self.loadingCheckerInterval);
+                                    self.loadingCheckerInterval = undefined;
+                                }
                                 self.initStep();
                             }
                         }, 100);
-                    }
-                };
-
-                self.stopInterval = function () {
-                    if (angular.isDefined(self.loadingCheckerInterval)) {
-                        $interval.cancel(self.loadingCheckerInterval);
-                        self.loadingCheckerInterval = undefined;
                     }
                 };
 
@@ -62,7 +54,6 @@
                 // =======================================================================//
 
                 self.getMinimumAvaliableDate = function (workingHoursByDayOfWeek, dayOfWeek, counter) {
-                    debugger;
                     if (dayOfWeek > 6) {
                         dayOfWeek = 0;
                     }
@@ -257,6 +248,14 @@
                 // Helpers                                                                //
                 // =======================================================================//
 
+                self.cssHack = function () {
+                    // #warning: CSS hack
+                    var div = $window.document.getElementsByClassName('test-drive-widget__root')[0];
+                    if (div) {
+                        div.style.display = 'table';
+                    }
+                };
+
                 self.splitTimeToInvervals = function (startTime, endTime, isToday) {
                     // round minutes
                     var hours = startTime.split(':')[0];
@@ -267,15 +266,19 @@
                     }
 
                     var currentHours = moment().hours() + 1;
-                    var start = moment('2000-01-01 ' + startTime);
-                    var end = moment('2000-01-01 ' + endTime);
+                    var startTimeInterval = new Date();
+                    var endTimeInterval = new Date();
                     var timeIntervalsArr = [];
+                    startTimeInterval.setHours(startTime.split(':')[0]);
+                    startTimeInterval.setMinutes(0);
+                    endTimeInterval.setHours(endTime.split(':')[0]);
+                    endTimeInterval.setMinutes(0);
 
-                    while (start <= end) {
-                        var startHours = start.hours();
+                    while (startTimeInterval.getTime() <= endTimeInterval.getTime()) {
+                        var startHours = startTimeInterval.getHours();
 
                         var item = {
-                            time: start.format('LT'),
+                            time: startTimeInterval.toLocaleString('en-US', {hour: 'numeric', minute: 'numeric', hour12: true}),
                             isActive: true
                         };
 
@@ -284,12 +287,10 @@
                         }
 
                         timeIntervalsArr.push(item);
-                        start.add(1, 'hours');
+                        startTimeInterval.setHours(startTimeInterval.getHours()+1);
                     }
-
                     return timeIntervalsArr;
                 };
-
             },
             templateUrl: 'src/app/components/steps/date/date.tpl.html',
             bindings: {

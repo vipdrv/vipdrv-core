@@ -862,7 +862,7 @@
                     <div class="frame-header__title">Test Drive Booking</div>
                     <div class="frame-header__cross" onclick="TestDrive.closeTestDrive()">&#10006;</div>
                  </div>
-                 <img id="test-drive__frame-spinner" src="http://www.testdrive.pw/spinner.gif">
+                 <img id="test-drive__frame-spinner" src="https://www.testdrive.pw/spinner.gif">
                  <iframe name="test-drive__frame" class="test-drive__frame" src="${widgetUrl}" frameBorder="0" onload="document.getElementById('test-drive__frame-spinner').style.display='none';"></iframe>
              </div>`;
 
