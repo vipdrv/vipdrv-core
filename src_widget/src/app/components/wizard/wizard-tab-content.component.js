@@ -13,7 +13,7 @@
                 // =======================================================================//
 
                 this.completeForm = function () {
-                    globalState.isFormCompleted = true;
+                    globalState.isBookingCompleted = true;
                 };
 
                 this.completeStep = function (tabId) {

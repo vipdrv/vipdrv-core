@@ -149,7 +149,7 @@
             <span ng-show="$ctrl.isSmsSended">SMS Sent</span>
         </button>
 
-        <button title="Add to Calendar" class="addeventatc">
+        <button title="Add to Calendar" class="addeventatc" data-dropdown-y="up" ng-class="$ctrl.isPageLoaded ? '' : 'd-none'">
             Add to Calendar
             <span class="start">{{$ctrl.bookingData.calendar.date}} {{$ctrl.bookingData.calendar.time}}</span>
             <span class="timezone">Europe/Kiev</span>
@@ -183,6 +183,4 @@
     consent by them to receive such text message.
     Once SMS is initiated you may Reply <b>STOP</b> to cancel or Reply <b>HELP</b> for help.
 </p>
-<!--<div class="d-md-none d-lg-none d-sm-block mt-2 mb-4"></div>-->
-
 

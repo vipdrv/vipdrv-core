@@ -5,8 +5,10 @@
             controller: function ($timeout, $window, api, dealerData, bookingData) {
 
                 var self = this;
+
                 self.dealerData = dealerData;
                 self.bookingData = bookingData;
+                self.isPageLoaded = false;
 
                 // =======================================================================//
                 // Calendar Event                                                         //
@@ -36,6 +38,10 @@
                             yahoo: {show: false, text: "Yahoo <em>(online)</em>"}
                         });
                     };
+
+                    $timeout(function() {
+                        self.isPageLoaded = true;
+                    },100);
                 };
 
                 // =======================================================================//

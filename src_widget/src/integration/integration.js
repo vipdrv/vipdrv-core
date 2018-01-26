@@ -850,6 +850,7 @@
         var _injectWidgetToVdp = null;
         // adjust
         var _scrollTop = null;
+        var _isWidgetAlreadyInitialized = false;
 
         // methods
         var _appendTestDriveFrame = function (ulrParams) {
@@ -870,6 +871,13 @@
 
         var _updateTestDriveFrame = function (ulrParams) {
             var frame = document.getElementsByClassName('test-drive__frame')[0];
+            if (!frame) {
+                var ulrParams = {};
+                ulrParams.siteId = _siteId;
+                ulrParams.hash = Math.random().toString(36).substring(7);
+                _appendTestDriveFrame(ulrParams);
+            }
+
             var frameHash = _buildUrl('#', ulrParams);
             frame.src = removeHashFromUrl(frame.src) + frameHash;
         };
@@ -1077,6 +1085,10 @@
         // output
         return {
             init: function (Args) {
+                if (_isWidgetAlreadyInitialized) {
+                    return;
+                }
+                _isWidgetAlreadyInitialized = true;
                 _siteId = Args.siteId || Args.SiteId || _detectSiteIdAutomatically();
                 _useAutoIntegration = Args.useAutoIntegration || true;
                 _injectWidgetToVlp = Args.injectWidgetToVlp || true;
