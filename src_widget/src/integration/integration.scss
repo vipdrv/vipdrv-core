@@ -83,16 +83,21 @@
   line-height: 50px;
   text-align: center;
   cursor: pointer;
+  background-image: url(https://widget.testdrive.pw/img/svg-white-times.svg);
+  background-size: auto 25px;
+  background-position: center;
+  background-repeat: no-repeat;
+  height: 50px;
+}
+
+.frame-header__cross:hover {
+  background-size: auto 27px;
 }
 
 @media (max-width: 1022px) {
   .frame-header__cross {
     width: 15%;
   }
-}
-
-.frame-header__cross:hover {
-  font-weight: bold;
 }
 
 .test-drive__frame {

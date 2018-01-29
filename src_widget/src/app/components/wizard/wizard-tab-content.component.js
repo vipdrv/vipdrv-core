@@ -59,9 +59,6 @@
                     }
                     return null;
                 };
-
-
-
             },
             templateUrl: 'src/app/components/wizard/wizard-tab-content.tpl.html',
             bindings: {}

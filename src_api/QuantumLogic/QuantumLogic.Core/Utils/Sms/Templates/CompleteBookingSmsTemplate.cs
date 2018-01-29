@@ -18,7 +18,7 @@ namespace QuantumLogic.Core.Utils.Sms.Templates
 
         public CompleteBookingSmsTemplate(
             string vehicleTitle,
-            DateTime bookingDateTime,
+            DateTime? bookingDateTime,
             string expertName,
             string beverageName,
             string roadName,

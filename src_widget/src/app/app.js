@@ -19,7 +19,8 @@
             icon: 'svg-white-clock-o.svg',
             isActive: true,
             isLocked: false,
-            isCompleted: false
+            isCompleted: false,
+            isUsed: true
         },
         expert: {
             id: 'expert',
@@ -27,7 +28,8 @@
             title: 'Select Expert',
             isActive: false,
             isLocked: true,
-            isCompleted: false
+            isCompleted: false,
+            isUsed: true
         },
         beverage: {
             id: 'beverage',
@@ -35,7 +37,8 @@
             title: 'Select Beverage',
             isActive: false,
             isLocked: true,
-            isCompleted: false
+            isCompleted: false,
+            isUsed: true
         },
         road: {
             id: 'road',
@@ -43,7 +46,8 @@
             title: 'Select Preferred Route',
             isActive: false,
             isLocked: true,
-            isCompleted: false
+            isCompleted: false,
+            isUsed: true
         },
         details: {
             id: 'details',
@@ -137,13 +141,25 @@
         isBookingCompleted: false
     };
 
-    var urlFilters = new FiltersFromUrl(window.location.search).get();
-    var siteId = urlFilters.siteId || defaultSiteId;
-
-    app.value('siteId', siteId);
+    app.value('siteId', getParameterByName('siteId') || defaultSiteId);
     app.value('widgetTabs', widgetTabs);
     app.value('globalState', globalState);
     app.value('bookingData', bookingData);
     app.value('dealerData', dealerData);
     app.value('apiBaseUrl', apiBaseUrl);
+
+    //=======================================================================//
+    // Helpers                                                               //
+    //=======================================================================//
+
+    function getParameterByName(name, url) {
+        if (!url) url = window.location.href;
+        name = name.replace(/[\[\]]/g, "\\$&");
+        var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+            results = regex.exec(url);
+        if (!results) return null;
+        if (!results[2]) return '';
+        return decodeURIComponent(results[2].replace(/\+/g, " "));
+    }
+
 })();

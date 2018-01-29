@@ -32,16 +32,13 @@ var config = {
 
 var vendorJs = [
     'node_modules/angular/angular.min.js',
-    'node_modules/jquery/dist/jquery.min.js',
     'node_modules/moment/min/moment-with-locales.min.js',
-    'node_modules/angular-moment-picker/dist/angular-moment-picker.min.js',
-    './src/vendor/intl-tel-input/intlTelInput.min.js'
+    'node_modules/angular-moment-picker/dist/angular-moment-picker.min.js'
 ];
 
 var vendorCss = [
     'node_modules/bootstrap/dist/css/bootstrap.min.css',
     'node_modules/angular-moment-picker/dist/angular-moment-picker.min.css',
-    './src/vendor/intl-tel-input/intlTelInput.css'
 ];
 
 var vendorFonts = [
@@ -53,9 +50,7 @@ var appScss = [
 ];
 
 var appImages = [
-    './src/img/*',
-    './src/vendor/intl-tel-input/flags@2x.png',
-    './src/vendor/intl-tel-input/flags.png',
+    './src/img/*'
 ];
 
 var appScssWatch = [
