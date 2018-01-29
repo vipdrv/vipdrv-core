@@ -1,10 +1,10 @@
 (function () {
     angular.module('myApp')
         .component('tdWizardNavigationTab', {
-            controller: function ($scope) {
+            controller: function () {
                 var self = this;
 
-                $scope.switchTabInner = function () {
+                self.switchTabInner = function () {
                     self.switchTab({tabId: this.tabId});
                 };
             },

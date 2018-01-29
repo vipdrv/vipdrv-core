@@ -1,38 +1,40 @@
 <div class="row td-sidebar">
-
-    <img ng-if="$ctrl.bookingData.vehicle.imageUrl != null" ng-src="{{$ctrl.bookingData.vehicle.imageUrl}}" class="td-sidebar__car-image">
-    <img ng-if="$ctrl.bookingData.vehicle.imageUrl == null" src="/img/default-car.png" class="td-sidebar__car-image">
+    <img class="td-sidebar__car-image"
+         ng-src="{{$ctrl.bookingData.vehicle.imageUrl ? $ctrl.bookingData.vehicle.imageUrl : '/img/default-car.png'}}">
 
     <div class="col-12">
-        <h4 class="text-primary text-overflow__ellipsis">{{$ctrl.bookingData.vehicle.title|vehicleTitleFormat}}</h4>
+        <h4 class="text-primary text-overflow__ellipsis">
+            {{$ctrl.bookingData.vehicle.title|vehicleTitleFormat}}
+        </h4>
     </div>
 
     <div class="col-12">
         <p class="text-secondary m-0">Engine</p>
-        <p class="mb-2 text-overflow__ellipsis">{{$ctrl.bookingData.vehicle.engine ? $ctrl.bookingData.vehicle.engine : '-'}}</p>
+        <p class="mb-2 text-overflow__ellipsis">
+            {{$ctrl.bookingData.vehicle.engine ? $ctrl.bookingData.vehicle.engine : '-'}}
+        </p>
     </div>
     <div class="col-12">
         <p class="text-secondary m-0">Transmission</p>
-        <p class="mb-2 text-overflow__ellipsis">{{$ctrl.bookingData.vehicle.transmission ? $ctrl.bookingData.vehicle.transmission : '-'}}</p>
+        <p class="mb-2 text-overflow__ellipsis">
+            {{$ctrl.bookingData.vehicle.transmission ? $ctrl.bookingData.vehicle.transmission : '-'}}
+        </p>
     </div>
     <div class="col-6">
         <p class="text-secondary m-0">Year</p>
-        <p class="mb-2 text-overflow__ellipsis">{{$ctrl.bookingData.vehicle.year ? $ctrl.bookingData.vehicle.year : '-'}}</p>
+        <p class="mb-2 text-overflow__ellipsis">
+            {{$ctrl.bookingData.vehicle.year ? $ctrl.bookingData.vehicle.year : '-'}}
+        </p>
     </div>
     <div class="col-6">
         <p class="text-secondary m-0">Exterior</p>
-        <p class="mb-2 text-overflow__ellipsis">{{$ctrl.bookingData.vehicle.exterior ? $ctrl.bookingData.vehicle.exterior : '-'}}</p>
+        <p class="mb-2 text-overflow__ellipsis">
+            {{$ctrl.bookingData.vehicle.exterior ? $ctrl.bookingData.vehicle.exterior : '-'}}
+        </p>
     </div>
-
-    <!--<div class="col-6">-->
-        <!--<p class="text-secondary m-0">Fuel</p>-->
-        <!--<p class="mb-3 text-overflow__ellipsis">{{$ctrl.bookingData.vehicle.fuel ? $ctrl.bookingData.vehicle.fuel : '-'}}</p>-->
-    <!--</div>-->
-
     <div class="col-12 mb-1" ng-if="$ctrl.bookingData.calendar.date">
         <div class="media">
             <img class="d-flex mr-3" src="/img/icon-date.jpg">
-            <!--<i class="d-flex mr-3 fa fa-calendar fa text-secondary" aria-hidden="true"></i>-->
             <div class="media-body sidebar-media-item__body text-overflow__ellipsis">
                 <span>{{$ctrl.bookingData.calendar.date}} {{$ctrl.bookingData.calendar.time}}</span>
             </div>
@@ -42,7 +44,6 @@
     <div class="col-12 mb-1" ng-if="$ctrl.bookingData.expert.name">
         <div class="media">
             <img class="d-flex mr-3" src="/img/icon-expert.jpg">
-            <!--<i class="d-flex mr-3 fa fa-user-o fa-2x text-secondary" aria-hidden="true"></i>-->
             <div class="media-body sidebar-media-item__body text-overflow__ellipsis">
                 <span>{{$ctrl.bookingData.expert.name}}</span>
             </div>
@@ -52,7 +53,6 @@
     <div class="col-12 mb-1" ng-if="$ctrl.bookingData.beverage.name">
         <div class="media">
             <img class="d-flex mr-3" src="/img/icon-beverage-2.jpg">
-            <!--<i class="d-flex mr-3 fa fa-coffee fa-2x text-secondary" aria-hidden="true"></i>-->
             <div class="media-body sidebar-media-item__body text-overflow__ellipsis">
                 <span>{{$ctrl.bookingData.beverage.name}}</span>
             </div>

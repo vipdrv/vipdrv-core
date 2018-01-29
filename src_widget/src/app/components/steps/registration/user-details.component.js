@@ -6,56 +6,23 @@
 
                 self.dealerData = dealerData;
                 self.bookingData = bookingData;
+                self.isLoading = false;
 
                 self.$onInit = function () {
                     _makeWidgetRootScrollable();
-                    $window.$("#userPhone").intlTelInput({
-                        // allowDropdown: false,
-                        // autoHideDialCode: false,
-                        // autoPlaceholder: "off",
-                        // dropdownContainer: "body",
-                        // excludeCountries: ["us"],
-                        // formatOnDisplay: false,
-                        // geoIpLookup: function (callback) {
-                        //     $window.$.get("http://ipinfo.io", function () {
-                        //     }, "jsonp").always(function (resp) {
-                        //         var countryCode = (resp && resp.country) ? resp.country : "";
-                        //         callback(countryCode);
-                        //     });
-                        // },
-                        // hiddenInput: "full_number",
-                        initialCountry: "us",
-                        // nationalMode: false,
-                        // onlyCountries: ['us', 'gb', 'ch', 'ca', 'do'],
-                        // placeholderNumberType: "MOBILE",
-                        // preferredCountries: ['cn', 'jp'],
-                        // separateDialCode: true,
-                        // utilsScript: "build/js/utils.js"
-                    });
-                };
-
-                self.isStepValid = function () {
-                    if (self.userPhone.val().length == 14) {
-                        self.userPhoneSelector.style.border = '1px solid #28a745';
-                        return true;
-                    } else {
-                        self.userPhoneSelector.style.border = '1px solid #dc3545';
-                        return false;
-                    }
                 };
 
                 self.makeBooking = function () {
                     self.bookingData.user.firstName = $scope.firstName;
                     self.bookingData.user.lastName = $scope.secondName;
                     self.bookingData.user.email = $scope.email;
-                    self.bookingData.user.phone = $window.$("#userPhone").intlTelInput("getNumber");
+                    self.bookingData.user.phone = self.filterPhoneNumber($scope.phone);
                     self.bookingData.user.comment = $scope.comment;
-
-                    if (self.isStepValid()) {
-                        api.completeBooking(self.bookingData).then();
+                    self.isLoading = true;
+                    api.completeBooking(self.bookingData).then(function () {
+                        self.isLoading = false;
                         self.completeForm();
-                    }
-
+                    });
                 };
 
                 var _makeWidgetRootScrollable = function () {
@@ -65,23 +32,17 @@
                     }
                 };
 
-                /* Methods */
-
-                /* Validation */
+                /* Helpers */
                 document.getElementById('userPhone').addEventListener('input', function (element) {
-                    phoneNumberImputMask(element);
+                    var x = element.target.value.replace(/\D/g, '').match(/(\d{0,3})(\d{0,3})(\d{0,4})/);
+                    element.target.value = !x[2] ? x[1] : '(' + x[1] + ') ' + x[2] + (x[3] ? '-' + x[3] : '');
                 });
 
-                self.userPhone = $window.$("#userPhone");
-                self.userPhoneSelector = $window.document.getElementById('userPhone');
-                self.userPhone.on("keyup change", function () {
-                    if (self.userPhone.val().length == 14) {
-                        self.userPhoneSelector.style.border = '1px solid #28a745';
-                    } else {
-                        // userPhoneSelector.style.border = '1px solid #dc3545';
-                    }
-                });
-
+                self.filterPhoneNumber = function (phoneNumber) {
+                    // WARNING: default country code is USA
+                    var defaultCuntryCode = '+1';
+                    return defaultCuntryCode + phoneNumber.replace(/\D+/g, "");
+                }
             },
             templateUrl: 'src/app/components/steps/registration/user-details.tpl.html',
             bindings: {
