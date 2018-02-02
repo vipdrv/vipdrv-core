@@ -1,14 +1,21 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using QuantumLogic.Core.Domain.Entities.WidgetModule;
+using QuantumLogic.Core.Domain.Services.Widget.Beverages;
+using QuantumLogic.Core.Domain.Services.Widget.Experts;
+using QuantumLogic.Core.Domain.Services.Widget.Routes;
 using QuantumLogic.Core.Domain.Services.Widget.Sites;
 using QuantumLogic.Core.Domain.UnitOfWorks;
+using QuantumLogic.WebApi.DataModels.Dtos.Widget.Beverages;
+using QuantumLogic.WebApi.DataModels.Dtos.Widget.Experts;
+using QuantumLogic.WebApi.DataModels.Dtos.Widget.Routes;
 using QuantumLogic.WebApi.DataModels.Dtos.Widget.Sites;
 using QuantumLogic.WebApi.DataModels.Requests;
 using QuantumLogic.WebApi.DataModels.Requests.Widget.Sites;
 using QuantumLogic.WebApi.DataModels.Responses;
 using QuantumLogic.WebApi.DataModels.Responses.Widget.Site;
 using System;
+using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 
@@ -17,11 +24,23 @@ namespace QuantumLogic.WebApi.Controllers.Widget
     [Route("api/site")]
     public class SiteController : EntityController<Site, int, SiteDto, SiteFullDto>
     {
+        #region Injected dependencies
+
+        protected readonly IBeverageDomainService BeverageDomainService;
+        protected readonly IExpertDomainService ExpertDomainService;
+        protected readonly IRouteDomainService RouteDomainService;
+
+        #endregion
+
         #region Ctors
 
-        public SiteController(IQLUnitOfWorkManager uowManager, ISiteDomainService domainService)
+        public SiteController(IQLUnitOfWorkManager uowManager, ISiteDomainService domainService, IBeverageDomainService beverageDomainService, IExpertDomainService expertDomainService, IRouteDomainService routeDomainService)
             : base(uowManager, domainService)
-        { }
+        {
+            BeverageDomainService = beverageDomainService;
+            ExpertDomainService = expertDomainService;
+            RouteDomainService = routeDomainService;
+        }
 
         #endregion
 
@@ -79,6 +98,38 @@ namespace QuantumLogic.WebApi.Controllers.Widget
                 schedule = new SiteWeekSchedule(id, await ((ISiteDomainService)DomainService).RetrieveWeekSchedule(id));
             }
             return schedule;
+        }
+        /// <summary>
+        /// Is used to get all agregated info related to site (can be retrieved via other endpoints but used to improve performance)
+        /// </summary>
+        /// <param name="id">site id</param>
+        /// <returns>agregated site info</returns>
+        [HttpGet("{id}/agregated-info")]
+        public async Task<SiteAgregatedInfoDto> GetSiteAregatedInfoAsync(int id)
+        {
+            int defaultSkip = 0;
+            int defaultTake = 100;
+            string defaultSorting = "order asc";
+            Site siteEntity;
+            IList<Beverage> beverageEntities;
+            IList<Expert> expertEntities;
+            IList<Route> routeEntities;
+            using (var uow = UowManager.CurrentOrCreateNew(true))
+            {
+                siteEntity = await DomainService.RetrieveAsync(id);
+                beverageEntities = await BeverageDomainService.RetrieveAllAsync((entity) => entity.IsActive && entity.SiteId == id, defaultSorting, defaultSkip, defaultTake);
+                expertEntities = await ExpertDomainService.RetrieveAllAsync((entity) => entity.IsActive && entity.SiteId == id, defaultSorting, defaultSkip, defaultTake);
+                routeEntities = await RouteDomainService.RetrieveAllAsync((entity) => entity.IsActive && entity.SiteId == id, defaultSorting, defaultSkip, defaultTake);
+                // TODO: good to agregate all tasks to Task.WhenAll and then get result
+            }
+            SiteFullDto siteDto = new SiteFullDto();
+            siteDto.MapFromEntity(siteEntity);
+            siteDto.NormalizeAsResponse();
+            return new SiteAgregatedInfoDto(
+                siteDto,
+                MapEntitiesToDtos<Beverage, BeverageDto>(beverageEntities),
+                MapEntitiesToDtos<Expert, ExpertDto>(expertEntities),
+                MapEntitiesToDtos<Route, RouteDto>(routeEntities));
         }
         [Authorize]
         [HttpPatch("change-contacts/{id}")]
