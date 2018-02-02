@@ -141,7 +141,7 @@
       "notifications": {
         "emails": "Email Notifications",
         "sms": "SMS Notifications",
-        "adf": "ADF Emails"
+        "adf": "ADF XML Email for CRM (eLead, Momentum)"
       }
     },
     "wizard": {

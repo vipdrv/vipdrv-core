@@ -5,19 +5,18 @@
             controller: function ($timeout, $window, api, dealerData, bookingData) {
 
                 var self = this;
+
                 self.dealerData = dealerData;
                 self.bookingData = bookingData;
+                self.isPageLoaded = false;
 
                 // =======================================================================//
                 // Calendar Event                                                         //
                 // =======================================================================//
 
                 self.$onInit = function () {
-                    _makeWidgetRootScrollable();
                     _initCalendarButton();
-                };
-
-                var _makeWidgetRootScrollable = function () {
+                    // #warning: CSS hack
                     var div = $window.document.getElementsByClassName('test-drive-widget__root')[0];
                     if (div) {
                         div.style.display = 'table';
@@ -39,6 +38,10 @@
                             yahoo: {show: false, text: "Yahoo <em>(online)</em>"}
                         });
                     };
+
+                    $timeout(function() {
+                        self.isPageLoaded = true;
+                    },100);
                 };
 
                 // =======================================================================//

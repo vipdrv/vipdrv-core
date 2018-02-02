@@ -13,7 +13,7 @@
                 // =======================================================================//
 
                 this.completeForm = function () {
-                    globalState.isFormCompleted = true;
+                    globalState.isBookingCompleted = true;
                 };
 
                 this.completeStep = function (tabId) {
@@ -59,9 +59,6 @@
                     }
                     return null;
                 };
-
-
-
             },
             templateUrl: 'src/app/components/wizard/wizard-tab-content.tpl.html',
             bindings: {}

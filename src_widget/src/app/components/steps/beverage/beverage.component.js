@@ -2,7 +2,6 @@
     angular.module('myApp')
         .component('tdBeverage', {
             controller: function ($scope, $window, dealerData, bookingData) {
-
                 var self = this;
                 self.isStepValid = null;
                 self.dealerData = dealerData;
@@ -14,9 +13,9 @@
                     }
                 };
 
-                $scope.itemChanged = function ($event, id, img, name, description) {
-                    var clickOnEvent = $event.target.className.includes('ngTruncateToggleText');
-                    if (clickOnEvent) {
+                self.itemChanged = function ($event, id, img, name, description) {
+                    var index = $event.target.className.indexOf('ngTruncateToggleText');
+                    if (index > -1) {
                         return;
                     }
 
@@ -27,7 +26,7 @@
                     self.validateStep();
                 };
 
-                this.validateStep = function () {
+                self.validateStep = function () {
                     if (self.bookingData.beverage.name === null) {
                         self.isStepValid = false;
                     } else {
@@ -35,13 +34,14 @@
                     }
                 };
 
-                $scope.nextStep = function () {
+                self.nextStep = function () {
                     self.validateStep();
                     if (self.isStepValid) {
                         self.completeStep({tabId: self.tabId});
                     }
                 };
-                $scope.skipStep = function () {
+
+                self.skipStep = function () {
                     self.bookingData.beverage.id = 0;
                     self.bookingData.beverage.name = "Skipped";
                     self.completeStep({tabId: self.tabId});

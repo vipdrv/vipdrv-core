@@ -19,6 +19,7 @@ var clean = require('gulp-clean');
 var urlAdjuster = require('gulp-css-url-adjuster');
 var replace = require('gulp-replace');
 var babel = require('gulp-babel');
+var inlinesource = require('gulp-inline-source');
 
 var env = require('./src/environments/environment.dev');
 
@@ -30,25 +31,14 @@ var config = {
 };
 
 var vendorJs = [
-    'node_modules/jquery/dist/jquery.min.js',
-    'node_modules/popper.js/dist/umd/popper.min.js',
     'node_modules/angular/angular.min.js',
-    'node_modules/angular-animate/angular-animate.min.js',
-    'node_modules/angular-aria/angular-aria.min.js',
-    'node_modules/angular-messages/angular-messages.min.js',
-    'node_modules/bootstrap/dist/js/bootstrap.min.js',
-    'node_modules/ngcomponentrouter/angular_1_router.js',
     'node_modules/moment/min/moment-with-locales.min.js',
-    'node_modules/angular-moment-picker/dist/angular-moment-picker.min.js',
-    './src/vendor/fontawesome/fontawesome.js',
-    './src/vendor/intl-tel-input/intlTelInput.min.js',
-    './src/vendor/intl-tel-input/utils.js'
+    'node_modules/angular-moment-picker/dist/angular-moment-picker.min.js'
 ];
 
 var vendorCss = [
     'node_modules/bootstrap/dist/css/bootstrap.min.css',
     'node_modules/angular-moment-picker/dist/angular-moment-picker.min.css',
-    './src/vendor/intl-tel-input/intlTelInput.css'
 ];
 
 var vendorFonts = [
@@ -60,16 +50,19 @@ var appScss = [
 ];
 
 var appImages = [
-    './src/img/*',
-    './src/vendor/intl-tel-input/flags@2x.png',
-    './src/vendor/intl-tel-input/flags.png',
-
+    './src/img/*'
 ];
 
 var appScssWatch = [
     './src/sass/**/*.scss'
 ];
 
+
+gulp.task('inlinesource', function () {
+    return gulp.src('./build/index.html')
+        .pipe(inlinesource())
+        .pipe(gulp.dest('./build/out'));
+});
 
 // =======================================================================//
 // Build Tasks                                                            //

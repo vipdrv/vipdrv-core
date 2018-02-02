@@ -56,9 +56,7 @@
         },
 
         initTestDriveVlpButtons: function () {
-            console.log('init vlp buttons');
             var self = this;
-            debugger;
 
             var resultsTable = document.getElementsByClassName("results_table")[0];
             var resultsTableNodes = resultsTable.childNodes;
@@ -115,32 +113,30 @@
         },
 
         addTestDriveButtonToDesktopVehicleNode: function (node, vehicleObject) {
-            var a = document.createElement('a');
-            a.onclick = window.TestDrive.openTestDrive(vehicleObject);
-            a.innerHTML = "VIPdrv - Test Drive"
-            a.className = 'fancy button-form button cta-button';
-            var div = document.createElement("div");
-            div.className = 'button-bar-item primary-cta';
-            div.appendChild(a);
+            var btn = document.createElement("button");
+            btn.onclick = function () {
+                window.TestDrive.openTestDrive(vehicleObject);
+            };
+            btn.innerHTML = "VIPdrv - Test Drive";
+            btn.className = 'vipdrv-mbrvc-vlp-button';
 
-            var buttonBar = node.querySelector('.button-bar');
-            if (buttonBar) {
-                buttonBar.appendChild(div);
+            var vehiclePrice = node.querySelector('.vehicle-price');
+            if (vehiclePrice) {
+                vehiclePrice.appendChild(btn);
             }
         },
 
         addTestDriveButtonToMobileVehicleNode: function (node, vehicleObject) {
-            var btn = document.createElement("BUTTON");
-            btn.classList.add("vipdrv-marin-vlp-button-mobile", "button-bar-item", "primary-button", "button");
-            var textNode = document.createTextNode("VIPdrv - Test Drive");
-            btn.appendChild(textNode);
+            var btn = document.createElement("button");
             btn.onclick = function () {
                 window.TestDrive.openTestDrive(vehicleObject);
             };
+            btn.innerHTML = "VIPdrv - Test Drive";
+            btn.className = 'vipdrv-mbrvc-vlp-button-mobile';
 
-            var buttonBar = node.querySelector('.button-bar');
-            if (buttonBar) {
-                buttonBar.appendChild(div);
+            var vehiclePrice = node.querySelector('.vehicle-card-actions');
+            if (vehiclePrice) {
+                vehiclePrice.appendChild(btn);
             }
         },
 
@@ -305,11 +301,6 @@
             vdpVehicle.vin = urlParams.vin;
             vdpVehicle.year = urlParams.year;
 
-            var detailsPageCtabox = document.getElementById('details-page-ctabox');
-
-            var btn = document.createElement("BUTTON");
-            btn.classList.add("vipdrv-marin-vdp-button");
-
             var infoWrapper = document.querySelector(".details-page-row .basic-info-wrapper");
             var infoWrapperText = null;
 
@@ -322,10 +313,17 @@
             vdpVehicle.exterior = carDetailsFromHtml.exterior;
             vdpVehicle.transmission = carDetailsFromHtml.trans;
 
+            var col = document.getElementsByClassName("test-col")[0];
+            if (col) {
+                col.removeChild(col.firstChild);
+            }
+            var btn = document.createElement("button");
+            btn.classList.add("vipdrv-mbrvc-vdp-button");
+            // btn.innerHTML = "VIPdrv - Test Drive";
             btn.onclick = function () {
                 window.TestDrive.openTestDrive(vdpVehicle);
             };
-            detailsPageCtabox.appendChild(btn);
+            col.appendChild(btn);
         },
 
         /// helpers
@@ -416,7 +414,7 @@
         },
 
         appendTestDriveVdpButtonStyles: function () {
-            var css = '.btn-testdrive-large { display: table !important; }';
+            var css = '.vipdrv-truckworld-vdp-button { display: table !important; }';
             var head = document.head || document.getElementsByTagName('head')[0];
             var style = document.createElement('style');
 
@@ -431,7 +429,7 @@
         },
 
         appendTestDriveVlpButtonStyles: function () {
-            var css = '.btn-testdrive { display: table !important; }';
+            var css = '.vipdrv-truckworld-vlp-button { display: table !important; }';
             var head = document.head || document.getElementsByTagName('head')[0];
             var style = document.createElement('style');
 
@@ -850,25 +848,46 @@
         var _useAutoIntegration = null;
         var _injectWidgetToVlp = null;
         var _injectWidgetToVdp = null;
+        // adjust
+        var _scrollTop = null;
+        var _isWidgetAlreadyInitialized = false;
 
         // methods
-        var _appendTestDriveFrame = function (ulrParams, siteId) {
-            ulrParams.hash = Math.random().toString(36).substring(7);
-            ulrParams.siteId = siteId;
+        var _appendTestDriveFrame = function (ulrParams) {
             var widgetUrl = _buildUrl(_WidgetUrl, ulrParams);
 
             var html =
                 `<div class="test-drive__content">
                  <div class="frame-header">
                     <div class="frame-header__title">Test Drive Booking</div>
-                    <div class="frame-header__cross" onclick="TestDrive.closeTestDrive()">&#10006;</div>
+                    <div class="frame-header__cross" onclick="TestDrive.closeTestDrive()"></div>
                  </div>
-                 <img id="test-drive__frame-spinner" src="http://www.testdrive.pw/spinner.gif">
+                 <img id="test-drive__frame-spinner" src="https://www.testdrive.pw/spinner.gif">
                  <iframe name="test-drive__frame" class="test-drive__frame" src="${widgetUrl}" frameBorder="0" onload="document.getElementById('test-drive__frame-spinner').style.display='none';"></iframe>
              </div>`;
 
             document.getElementsByClassName('test-drive__frame-wrapper')[0].innerHTML = html;
         };
+
+        var _updateTestDriveFrame = function (ulrParams) {
+            var frame = document.getElementsByClassName('test-drive__frame')[0];
+            if (!frame) {
+                var ulrParams = {};
+                ulrParams.siteId = _siteId;
+                ulrParams.hash = Math.random().toString(36).substring(7);
+                _appendTestDriveFrame(ulrParams);
+            }
+
+            var frameHash = _buildUrl('#', ulrParams);
+            frame.src = removeHashFromUrl(frame.src) + frameHash;
+        };
+
+        function removeHashFromUrl(uri) {
+            if (uri.indexOf("#") > 0) {
+                return uri.substring(0, uri.indexOf("#"));
+            }
+            return uri;
+        }
 
         var _appendTestDriveFrameWrapper = function () {
             var elemDiv = document.createElement('div');
@@ -991,9 +1010,12 @@
             }
 
             if (siteId == 36) {
-                return;
-                // mbrvcInjector.init(injectWidgetToVlp, injectWidgetToVdp);
+                mbrvcInjector.init(injectWidgetToVlp, injectWidgetToVdp);
             }
+        };
+
+        var _rememberScrollPosition = function () {
+            _scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
         };
 
         // helpers
@@ -1017,6 +1039,7 @@
             ulrParams.imageUrl = Args.imageUrl || null;
             ulrParams.vdpUrl = Args.vdpUrl || null;
             ulrParams.siteId = Args.siteId || null;
+            ulrParams.clearBookingData = Args.clearBookingData || null;
 
             return ulrParams;
         };
@@ -1062,10 +1085,15 @@
         // output
         return {
             init: function (Args) {
+                if (_isWidgetAlreadyInitialized) {
+                    return;
+                }
+                _isWidgetAlreadyInitialized = true;
                 _siteId = Args.siteId || Args.SiteId || _detectSiteIdAutomatically();
                 _useAutoIntegration = Args.useAutoIntegration || true;
                 _injectWidgetToVlp = Args.injectWidgetToVlp || true;
-                _injectWidgetToVdp = Args.injectWidgetToVdp || true;
+                _injectWidgetToVdp = Args.injectWidgetToVdp || Args.injectWidgetToVdpWW || true;
+                // injectWidgetToVdpWW - misspell in command name that used in plugin, can be deleted later
 
                 if (!_siteId) {
                     console.log('Automatic initialization for ' + window.location.hostname + ' is missing');
@@ -1077,15 +1105,22 @@
                 _addTestDriveFrameEventListeners();
                 _initExtensions();
                 _injectWidgetButtons(_siteId, _useAutoIntegration, _injectWidgetToVlp, _injectWidgetToVdp);
-                // _appendTestDriveFrame({}, _siteId);
+
+                var ulrParams = {};
+                ulrParams.siteId = _siteId;
+                ulrParams.hash = Math.random().toString(36).substring(7);
+                _appendTestDriveFrame(ulrParams);
             },
             openTestDrive: function (Args) {
-                _appendTestDriveFrame(_parseArgumentsForOpenButtonEvent(Args), _siteId);
+                // _appendTestDriveFrame(_parseArgumentsForOpenButtonEvent(Args), _siteId);
+                _updateTestDriveFrame(_parseArgumentsForOpenButtonEvent(Args));
                 _changeMobileBrowserBarColor();
+                _rememberScrollPosition();
                 _showTestDriveFrame();
             },
             closeTestDrive: function () {
                 _hideTestDriveFrame();
+                _updateTestDriveFrame(_parseArgumentsForOpenButtonEvent({clearBookingData: true}));
                 _restoreDefaultMobileBrowserBarColor();
             }
         };
@@ -1098,4 +1133,4 @@
 //
 // https://widget.testdrive.pw
 //
-// window.TestDrive.init({siteId: 28, injectWidgetToVlp: true, injectWidgetToVdp: true});
+// window.TestDrive.init({siteId: 36, useAutoIntegration:true, injectWidgetToVlp: true, injectWidgetToVdp: true});

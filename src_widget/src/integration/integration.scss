@@ -50,7 +50,6 @@
   // min-height: 50px;
   width: 100%;
   background-color: #007bff;
-  display: block;
   color: #fff;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -59,6 +58,8 @@
   font-size: 20px;
   text-shadow: 0px 1px 1px #868686;
   overflow: hidden;
+  // display: none;
+  display: block;
 }
 
 .frame-header__title {
@@ -82,16 +83,21 @@
   line-height: 50px;
   text-align: center;
   cursor: pointer;
+  background-image: url(https://widget.testdrive.pw/img/svg-white-times.svg);
+  background-size: auto 25px;
+  background-position: center;
+  background-repeat: no-repeat;
+  height: 50px;
+}
+
+.frame-header__cross:hover {
+  background-size: auto 27px;
 }
 
 @media (max-width: 1022px) {
   .frame-header__cross {
     width: 15%;
   }
-}
-
-.frame-header__cross:hover {
-  font-weight: bold;
 }
 
 .test-drive__frame {
@@ -119,19 +125,20 @@
 }
 
 /* ======================================================================= */
-/* Autoinjection styles of TestDrive buttons for Dealer sites
+/* Autoinjection styles for Marin
+/* URL: https://www.mbofmarin.com
 /* ======================================================================= */
-
-/* Marin */
 
 .vipdrv-marin-vlp-button {
   width: 100% !important;
+  text-transform: none;
   display: table;
 }
 
 .vipdrv-marin-vlp-button-mobile {
   width: 100% !important;
   display: table;
+  text-transform: none;
   margin: 5px auto 0px;
 }
 
@@ -143,13 +150,113 @@
   border: 0px;
   height: 54px;
   background-color: #176db7;
-  background-image: url(https://widget.testdrive.pw/integration/img/marin-vdp-button.png);
+  background-image: url(https://widget.testdrive.pw/integration/img/marin-vlp-button-orange-2.jpg);
   background-repeat: no-repeat;
-  background-position: center;
+  background-position: left;
 }
 
 .vipdrv-marin-vdp-button:hover {
+  //background-color: #11528a;
+  opacity: 0.9;
+}
+
+/* ======================================================================= */
+/* Autoinjection styles for MBRVC
+/* URL: http://www.mbrvc.com
+/* ======================================================================= */
+
+
+.vipdrv-mbrvc-vlp-button {
+  background-color: #176EB7;
+  border: none;
+  color: #fff;
+  width: 100%;
+  height: 30px;
+  font-size: 14px;
+}
+
+.vipdrv-mbrvc-vlp-button:hover {
   background-color: #11528a;
 }
 
-/* Marin */
+.vipdrv-mbrvc-vlp-button-mobile {
+  display: inline;
+  float: right;
+  height: 32px;
+  margin: 10px 0px 0px 0px;
+  background-color: #176db7;
+  border: none;
+  color: #fff;
+  padding: 0px 10px;
+  font-size: 13px;
+}
+
+.vipdrv-mbrvc-vlp-button-mobile:hover {
+  background-color: #11528a;
+}
+
+.vipdrv-mbrvc-vdp-button {
+  width: 100%;
+  border: none;
+  height: 50px;
+  background-color: #176db7;
+  background-image: url(https://widget.testdrive.pw/integration/img/mbrvc-vdp-button-orange.jpg);
+  background-repeat: no-repeat;
+  background-position: left;
+}
+
+.vipdrv-mbrvc-vdp-button:hover {
+  background-color: #11528a;
+}
+
+.ctabox-inner .check-col {
+  display: table;
+  height: 50px;
+  width: 45%;
+}
+
+.ctabox-inner .check-col #buy-vehicle {
+  display: table-cell;
+  vertical-align: middle;
+  padding: 0px;
+}
+
+.ctabox-inner .test-col {
+  width: 55%;
+}
+
+/* ======================================================================= */
+/* Autoinjection styles for TruckWorld
+/* URL: http://inventory.testdrive.pw
+/* ======================================================================= */
+
+//.vipdrv-truckworld-vlp-button {
+//  background-color: #000000 !important;
+//  background-image: url(https://widget.testdrive.pw/integration/img/truckworld-vlp-button.png);
+//  background-repeat: no-repeat;
+//  background-position: center;
+//  height: 42px;
+//  width: 100%;
+//  display: table;
+//}
+//.vipdrv-truckworld-vlp-button:hover {
+//  background-color: #0064cf !important;
+//}
+
+//.vipdrv-truckworld-vdp-button {
+//  /*background-image: url(/wp-content/themes/truckworld/img/test-drive/Schedule_VIPdrv_button_blue.png);*/
+//  /*background-size: auto 83px;*/
+//  background-image: url(https://widget.testdrive.pw/integration/img/truckworld-vlp-button.png);
+//  background-color: #000000;
+//  background-repeat: no-repeat;
+//  background-position: center;
+//  height: 82px;
+//  width: 100%;
+//  display: table;
+//  margin: 10px auto 0px;
+//  border: none;
+//}
+//
+//.vipdrv-truckworld-vdp-button:hover {
+//  background-color: #0064cf !important;
+//}

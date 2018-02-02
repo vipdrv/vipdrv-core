@@ -7,41 +7,46 @@
 <form name="userForm">
     <div class="row">
         <div class="form-group col-12 col-sm-12 col-md-6 col-lg-6">
-            <label for="input1" class="col-form-label d-none d-md-block">First Name</label>
-            <label for="input1" class="col-form-label d-sm-block d-md-none d-lg-none">Name</label>
+            <label class="col-form-label d-none d-md-block">First Name</label>
+            <label class="col-form-label d-sm-block d-md-none d-lg-none">Name</label>
             <input name="firstName"
                    maxlength="20"
-                   class="form-control" id="input1"
+                   class="form-control"
                    ng-model="firstName"
                    ng-class="{ 'is-invalid' : !userForm.firstName.$valid && !userForm.firstName.$pristine, 'is-valid' : userForm.firstName.$valid && !userForm.firstName.$pristine }"
                    required>
         </div>
         <div class="form-group col-md-6 d-none d-md-block">
-            <label for="input2" class="col-form-label">Last Name</label>
+            <label class="col-form-label">Last Name</label>
             <input name="secondName"
                    maxlength="20"
-                   class="form-control" id="input2"
+                   class="form-control"
                    ng-model="secondName"
                    ng-class="{ 'is-invalid' : !userForm.secondName.$valid && !userForm.secondName.$pristine, 'is-valid' : userForm.secondName.$valid && !userForm.secondName.$pristine }">
         </div>
     </div>
     <div class="row">
         <div class="form-group col-md-6">
-            <label for="input3" class="col-form-label">Email</label>
+            <label class="col-form-label">Email</label>
             <input type="email"
                    name="email"
-                   maxlength="20"
-                   class="form-control" id="input3"
+                   maxlength="60"
+                   class="form-control"
                    ng-model="email"
                    ng-class="{ 'is-invalid' : !userForm.email.$valid && !userForm.email.$pristine, 'is-valid' : userForm.email.$valid && !userForm.email.$pristine}"
                    required>
         </div>
         <div class="form-group col-md-6">
             <label class="col-form-label">Phone</label>
-
             <input id="userPhone"
+                   name="phone"
+                   minlength="14"
+                   maxlength="60"
                    class="form-control"
                    placeholder="(555) 555-5555"
+                   ng-model="phone"
+                   ng-class="{ 'is-invalid' : !userForm.phone.$valid && !userForm.phone.$pristine,
+                               'is-valid' : userForm.phone.$valid && !userForm.phone.$pristine}"
                    required>
         </div>
     </div>
@@ -60,7 +65,9 @@
         <div class="col-12">
             <button ng-disabled="userForm.$invalid" type="button"
                     class="btn btn-primary btn-lg btn-block d-md-none d-lg-none d-sm-block mt-2 mb-4"
-                    ng-click="$ctrl.makeBooking()">Make my booking
+                    ng-click="$ctrl.makeBooking()">
+                Make my booking
+                <img ng-if="$ctrl.isLoading" ng-src="/img/spinner-complete-booking.svg" style="height: 1.25rem">
             </button>
         </div>
     </div>
@@ -68,7 +75,9 @@
         <div class="col-12">
             <button ng-disabled="userForm.$invalid" type="button"
                     class="btn btn-lg btn-primary d-none d-md-block float-right"
-                    ng-click="$ctrl.makeBooking()">Make My Booking
+                    ng-click="$ctrl.makeBooking()">
+                Make My Booking
+                <img ng-if="$ctrl.isLoading" ng-src="/img/spinner-complete-booking.svg" style="height: 1.25rem">
             </button>
         </div>
     </div>
@@ -88,5 +97,10 @@
         <br>
     </div>
 </form>
-
+<style>
+    /* TODO: dirty CSS hack to allow scroll for current step */
+    .test-drive-widget__root {
+        display: table !important;
+    }
+</style>
 

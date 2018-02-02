@@ -1,7 +1,7 @@
 (function () {
     angular.module('myApp')
         .component('root', {
-            controller: function ($scope, $window, globalState, bookingData, dealerData, widgetTabs, siteId, api) {
+            controller: function ($scope, $window, $location, $timeout, globalState, bookingData, dealerData, widgetTabs, siteId, api) {
 
                 var self = this;
                 self.siteId = siteId;
@@ -34,12 +34,88 @@
                 };
 
                 // =======================================================================//
-                // Init                                                                   //
+                // Widget Initialization
                 // =======================================================================//
 
-                self.$onInit = function () {
-                    parseWidgetParams();
+                $scope.$on('$locationChangeSuccess', function (event, newUrl, oldUrl) {
+                    var hash = $location.hash();
+                    self.bookingData.vehicle = self.parseVehicleDataFromHash(hash);
 
+                    var clearBookingData = self.bookingData.vehicle.clearBookingData;
+                    if (clearBookingData) {
+                        $timeout(function() {
+                            self.restWidgetProgress(clearBookingData);
+                        }, 1000);
+                    }
+                });
+
+                self.restWidgetProgress = function () {
+                    for (var key in self.widgetTabs) {
+                        self.widgetTabs[key].isActive = false;
+                        self.widgetTabs[key].isLocked = true;
+                        self.widgetTabs[key].isCompleted = false;
+                    }
+                    self.widgetTabs.time.isActive = true;
+                    self.widgetTabs.time.isLocked = false;
+                    self.widgetTabs.time.isCompleted = false;
+
+                    self.globalState.isBookingCompleted = false;
+                    self.bookingData.bookingData = {
+                        user: {
+                            firstName: null,
+                            lastName: null,
+                            phone: null,
+                            email: null,
+                            comment: null
+                        },
+                        calendar: {
+                            date: null,
+                            time: null,
+                            dayOfWeek: null,
+                            isSkipped: null
+                        },
+                        expert: {
+                            id: null,
+                            img: null,
+                            name: null,
+                            description: null,
+                            isSkipped: null
+                        },
+                        beverage: {
+                            id: null,
+                            img: null,
+                            name: null,
+                            description: null,
+                            isSkipped: null
+                        },
+                        road: {
+                            id: null,
+                            img: null,
+                            name: null,
+                            description: null,
+                            isSkipped: null
+                        },
+                        vehicle: {
+                            vin: null,
+                            stock: null,
+                            year: null,
+                            make: null,
+                            model: null,
+                            body: null,
+                            title: null,
+                            engine: null,
+                            exterior: null,
+                            interior: null,
+                            drivetrain: null,
+                            transmission: null,
+                            msrp: null,
+                            imageUrl: null,
+                            vdpUrl: null
+                        }
+                    };
+                };
+
+                self.$onInit = function () {
                     api.retrieveSite().then(function (data) {
                         self.dealerData.siteId = data.id;
                         self.dealerData.name = data.dealerName;
@@ -63,27 +139,62 @@
                 // Helpers                                                                //
                 // =======================================================================//
 
-                function parseWidgetParams() {
-                    var url = new FiltersFromUrl($window.location.search).get();
+                self.parseVehicleDataFromHash = function (hash) {
+                    var query = self.parseQuery(hash);
 
-                    self.bookingData.vehicle.vin = url.vin || null;
-                    self.bookingData.vehicle.stock = url.stock || null;
-                    self.bookingData.vehicle.year = url.year || null;
-                    self.bookingData.vehicle.make = url.make || null;
-                    self.bookingData.vehicle.model = url.model || null;
-                    self.bookingData.vehicle.body = url.body || null;
-                    self.bookingData.vehicle.title = url.title || null;
-                    self.bookingData.vehicle.engine = url.engine || null;
-                    self.bookingData.vehicle.exterior = url.exterior || null;
-                    self.bookingData.vehicle.drivetrain = url.drivetrain || null;
-                    self.bookingData.vehicle.transmission = url.transmission || null;
-                    self.bookingData.vehicle.msrp = url.msrp || null;
-                    self.bookingData.vehicle.imageUrl = url.imageUrl || null;
-                    self.bookingData.vehicle.vdpUrl = url.vdpUrl || null;
+                    var vehicle = {
+                        vin: null,
+                        stock: null,
+                        year: null,
+                        make: null,
+                        model: null,
+                        body: null,
+                        title: null,
+                        engine: null,
+                        exterior: null,
+                        drivetrain: null,
+                        transmission: null,
+                        msrp: null,
+                        imageUrl: null,
+                        vdpUrl: null
+                    };
+
+                    vehicle.vin = query.vin || null;
+                    vehicle.stock = query.stock || null;
+                    vehicle.year = query.year || null;
+                    vehicle.make = query.make || null;
+                    vehicle.model = query.model || null;
+                    vehicle.body = query.body || null;
+                    vehicle.title = query.title || null;
+                    vehicle.engine = query.engine || null;
+                    vehicle.exterior = query.exterior || null;
+                    vehicle.drivetrain = query.drivetrain || null;
+                    vehicle.transmission = query.transmission || null;
+                    vehicle.msrp = query.msrp || null;
+                    vehicle.imageUrl = query.imageUrl || null;
+                    vehicle.vdpUrl = query.vdpUrl || null;
+                    vehicle.clearBookingData = query.clearBookingData || null;
+
+                    return vehicle;
+                };
+
+
+                self.parseQuery = function (queryString) {
+                    var query = {};
+                    var pairs = (queryString[0] === '?' ? queryString.substr(1) : queryString).split('&');
+                    for (var i = 0; i < pairs.length; i++) {
+                        var pair = pairs[i].split('=');
+                        query[decodeURIComponent(pair[0])] = decodeURIComponent(pair[1] || '');
+                    }
+                    return query;
                 }
             },
             templateUrl: 'src/app/components/root.tpl.html'
         });
+
+    // =======================================================================//
+    // Filters                                                                //
+    // =======================================================================//
 
     angular.module('myApp')
         .filter('usaDateFormat', function () {

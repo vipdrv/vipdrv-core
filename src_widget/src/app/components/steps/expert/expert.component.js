@@ -14,8 +14,8 @@
                 };
 
                 self.expertChanged = function ($event, id, img, name, description) {
-                    var clickOnEvent = $event.target.className.includes('ngTruncateToggleText');
-                    if (clickOnEvent) {
+                    var index = $event.target.className.indexOf('ngTruncateToggleText');
+                    if (index > -1) {
                         return;
                     }
 
