@@ -100,12 +100,12 @@ namespace QuantumLogic.WebApi.Controllers.Widget
             return schedule;
         }
         /// <summary>
-        /// Is used to get all agregated info related to site (can be retrieved via other endpoints but used to improve performance)
+        /// Is used to get all aggregated info related to site (can be retrieved via other endpoints but used to improve performance)
         /// </summary>
         /// <param name="id">site id</param>
         /// <returns>agregated site info</returns>
-        [HttpGet("{id}/agregated-info")]
-        public async Task<SiteAgregatedInfoDto> GetSiteAregatedInfoAsync(int id)
+        [HttpGet("{id}/aggregated-info")]
+        public async Task<SiteAggregatedInfoDto> GetSiteAggregatedInfoAsync(int id)
         {
             int defaultSkip = 0;
             int defaultTake = 100;
@@ -129,7 +129,7 @@ namespace QuantumLogic.WebApi.Controllers.Widget
             SiteFullDto siteDto = new SiteFullDto();
             siteDto.MapFromEntity(siteEntity);
             siteDto.NormalizeAsResponse();
-            return new SiteAgregatedInfoDto(
+            return new SiteAggregatedInfoDto(
                 siteDto,
                 MapEntitiesToDtos<Beverage, BeverageDto>(beverageEntities),
                 MapEntitiesToDtos<Expert, ExpertDto>(expertEntities),

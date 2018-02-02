@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace QuantumLogic.WebApi.DataModels.Dtos.Widget.Sites
 {
-    public class SiteAgregatedInfoDto
+    public class SiteAggregatedInfoDto
     {
         public SiteFullDto Site { get; set; }
         public IEnumerable<BeverageDto> Beverages { get; set; }
@@ -14,10 +14,10 @@ namespace QuantumLogic.WebApi.DataModels.Dtos.Widget.Sites
 
         #region Ctors
 
-        public SiteAgregatedInfoDto()
+        public SiteAggregatedInfoDto()
         { }
 
-        public SiteAgregatedInfoDto(SiteFullDto siteDto, IEnumerable<BeverageDto> beverageDtos, IEnumerable<ExpertDto> expertDtos, IEnumerable<RouteDto> routeDtos)
+        public SiteAggregatedInfoDto(SiteFullDto siteDto, IEnumerable<BeverageDto> beverageDtos, IEnumerable<ExpertDto> expertDtos, IEnumerable<RouteDto> routeDtos)
         {
             Site = siteDto;
             Beverages = beverageDtos;
