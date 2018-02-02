@@ -125,19 +125,20 @@
 }
 
 /* ======================================================================= */
-/* Autoinjection styles of TestDrive buttons for Dealer sites
+/* Autoinjection styles for Marin
+/* URL: https://www.mbofmarin.com
 /* ======================================================================= */
-
-/* Marin */
 
 .vipdrv-marin-vlp-button {
   width: 100% !important;
+  text-transform: none;
   display: table;
 }
 
 .vipdrv-marin-vlp-button-mobile {
   width: 100% !important;
   display: table;
+  text-transform: none;
   margin: 5px auto 0px;
 }
 
@@ -149,16 +150,21 @@
   border: 0px;
   height: 54px;
   background-color: #176db7;
-  background-image: url(https://widget.testdrive.pw/integration/img/marin-vdp-button.png);
+  background-image: url(https://widget.testdrive.pw/integration/img/marin-vlp-button-orange-2.jpg);
   background-repeat: no-repeat;
-  background-position: center;
+  background-position: left;
 }
 
 .vipdrv-marin-vdp-button:hover {
-  background-color: #11528a;
+  //background-color: #11528a;
+  opacity: 0.9;
 }
 
-/* http://www.mbrvc.com  */
+/* ======================================================================= */
+/* Autoinjection styles for MBRVC
+/* URL: http://www.mbrvc.com
+/* ======================================================================= */
+
 
 .vipdrv-mbrvc-vlp-button {
   background-color: #176EB7;
@@ -219,7 +225,10 @@
   width: 55%;
 }
 
-/* http://inventory.testdrive.pw  */
+/* ======================================================================= */
+/* Autoinjection styles for TruckWorld
+/* URL: http://inventory.testdrive.pw
+/* ======================================================================= */
 
 //.vipdrv-truckworld-vlp-button {
 //  background-color: #000000 !important;

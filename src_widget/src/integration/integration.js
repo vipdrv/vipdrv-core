@@ -1092,7 +1092,8 @@
                 _siteId = Args.siteId || Args.SiteId || _detectSiteIdAutomatically();
                 _useAutoIntegration = Args.useAutoIntegration || true;
                 _injectWidgetToVlp = Args.injectWidgetToVlp || true;
-                _injectWidgetToVdp = Args.injectWidgetToVdp || true;
+                _injectWidgetToVdp = Args.injectWidgetToVdp || Args.injectWidgetToVdpWW || true;
+                // injectWidgetToVdpWW - misspell in command name that used in plugin, can be deleted later
 
                 if (!_siteId) {
                     console.log('Automatic initialization for ' + window.location.hostname + ' is missing');
@@ -1121,13 +1122,6 @@
                 _hideTestDriveFrame();
                 _updateTestDriveFrame(_parseArgumentsForOpenButtonEvent({clearBookingData: true}));
                 _restoreDefaultMobileBrowserBarColor();
-                setTimeout(function () {
-                    // window.scroll({
-                    //     top: _scrollTop,
-                    //     left: 0,
-                    //     behavior: 'smooth'
-                    // });
-                }, 250);
             }
         };
     }());

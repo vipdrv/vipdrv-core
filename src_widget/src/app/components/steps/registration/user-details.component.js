@@ -9,7 +9,7 @@
                 self.isLoading = false;
 
                 self.$onInit = function () {
-                    _makeWidgetRootScrollable();
+
                 };
 
                 self.makeBooking = function () {
@@ -23,13 +23,6 @@
                         self.isLoading = false;
                         self.completeForm();
                     });
-                };
-
-                var _makeWidgetRootScrollable = function () {
-                    var div = $window.document.getElementsByClassName('test-drive-widget__root')[0];
-                    if (div) {
-                        div.style.display = 'table';
-                    }
                 };
 
                 /* Helpers */

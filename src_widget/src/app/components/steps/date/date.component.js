@@ -29,8 +29,6 @@
                 // =======================================================================//
 
                 self.$onInit = function () {
-                    self.cssHack();
-
                     if (self.dealerData.siteId != null) {
                         self.isLoading = false;
                         self.initStep();
@@ -247,14 +245,6 @@
                 // =======================================================================//
                 // Helpers                                                                //
                 // =======================================================================//
-
-                self.cssHack = function () {
-                    // #warning: CSS hack
-                    var div = $window.document.getElementsByClassName('test-drive-widget__root')[0];
-                    if (div) {
-                        div.style.display = 'table';
-                    }
-                };
 
                 self.splitTimeToInvervals = function (startTime, endTime, isToday) {
                     // round minutes
