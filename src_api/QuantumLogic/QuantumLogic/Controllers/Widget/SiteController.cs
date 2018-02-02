@@ -116,11 +116,15 @@ namespace QuantumLogic.WebApi.Controllers.Widget
             IList<Route> routeEntities;
             using (var uow = UowManager.CurrentOrCreateNew(true))
             {
-                siteEntity = await DomainService.RetrieveAsync(id);
-                beverageEntities = await BeverageDomainService.RetrieveAllAsync((entity) => entity.IsActive && entity.SiteId == id, defaultSorting, defaultSkip, defaultTake);
-                expertEntities = await ExpertDomainService.RetrieveAllAsync((entity) => entity.IsActive && entity.SiteId == id, defaultSorting, defaultSkip, defaultTake);
-                routeEntities = await RouteDomainService.RetrieveAllAsync((entity) => entity.IsActive && entity.SiteId == id, defaultSorting, defaultSkip, defaultTake);
-                // TODO: good to agregate all tasks to Task.WhenAll and then get result
+                Task<Site> getSiteEntityTask = DomainService.RetrieveAsync(id);
+                Task<IList<Beverage>> getBeverageEntitiesTask = BeverageDomainService.RetrieveAllAsync((entity) => entity.IsActive && entity.SiteId == id, defaultSorting, defaultSkip, defaultTake);
+                Task<IList<Expert>> getExpertEntitiesTask = ExpertDomainService.RetrieveAllAsync((entity) => entity.IsActive && entity.SiteId == id, defaultSorting, defaultSkip, defaultTake);
+                Task<IList<Route>> getRouteEntitiesTask = RouteDomainService.RetrieveAllAsync((entity) => entity.IsActive && entity.SiteId == id, defaultSorting, defaultSkip, defaultTake);
+                await Task.WhenAll(getSiteEntityTask, getBeverageEntitiesTask, getExpertEntitiesTask, getRouteEntitiesTask);
+                siteEntity = await getSiteEntityTask;
+                beverageEntities = await getBeverageEntitiesTask;
+                expertEntities = await getExpertEntitiesTask;
+                routeEntities = await getRouteEntitiesTask;
             }
             SiteFullDto siteDto = new SiteFullDto();
             siteDto.MapFromEntity(siteEntity);
