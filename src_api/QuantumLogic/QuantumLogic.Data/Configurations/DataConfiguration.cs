@@ -7,6 +7,6 @@ namespace QuantumLogic.Data.Configurations
     /// </summary>
     public class DataConfiguration
     {
-        public ConnectionConfiguration DefaultConnection { get; set; }
+        public ConnectionConfiguration Connection { get; set; }
     }
 }

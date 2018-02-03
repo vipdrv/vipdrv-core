@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
 using QuantumLogic.Core;
 using QuantumLogic.Core.Domain.Entities.MainModule;
 using QuantumLogic.Core.Domain.Entities.WidgetModule;
@@ -9,6 +10,8 @@ using QuantumLogic.Core.Domain.Repositories.WidgetModule;
 using QuantumLogic.Core.Domain.UnitOfWorks;
 using QuantumLogic.Core.Utils.Modules;
 using QuantumLogic.Core.Utils.Modules.Attributes;
+using QuantumLogic.Data.Configurations;
+using QuantumLogic.Data.Configurations.Connection;
 using QuantumLogic.Data.EFContext;
 using QuantumLogic.Data.EFUnitOfWork;
 using QuantumLogic.Data.Repositories.Main;
@@ -26,9 +29,21 @@ namespace QuantumLogic.Data
         protected override void ConfigureServices(IServiceCollection services)
         {
             services.AddScoped<DbContextManager>();
-            services.AddTransient<DbContext, QuantumLogicDbContext>();
             services.AddTransient<IQLUnitOfWork, QuantumLogicUnitOfWork>();
             services.AddTransient<IQLUnitOfWorkManager, QuantumLogicUnitOfWorkManager>();
+
+            #region DBContext registration
+
+            services.AddTransient<DbContext, QuantumLogicDbContext>();
+            services.AddDbContext<QuantumLogicDbContext>(
+                (sp, options) =>
+                {
+                    ConnectionConfiguration connectionOptions = sp.GetService<IOptionsMonitor<ConnectionConfiguration>>().CurrentValue;
+                    options.UseSqlServer(connectionOptions.ConnectionString);
+                }, 
+                ServiceLifetime.Transient);
+
+            #endregion
 
             #region Repositories
 

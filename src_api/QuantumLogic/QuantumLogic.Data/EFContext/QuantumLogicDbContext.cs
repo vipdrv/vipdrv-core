@@ -1,9 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.Extensions.Options;
 using QuantumLogic.Core.Domain.Entities.MainModule;
 using QuantumLogic.Core.Domain.Entities.WidgetModule;
-using QuantumLogic.Data.Configurations;
 
 namespace QuantumLogic.Data.EFContext
 {
@@ -12,23 +10,15 @@ namespace QuantumLogic.Data.EFContext
     /// </summary>
     public class QuantumLogicDbContext : DbContext
     {
-        #region Injected dependencies
-
-        protected DataConfiguration DataConfiguration { get; set; }
-
-        #endregion
-
         #region Ctors
 
         public QuantumLogicDbContext()
             : base()
         { }
 
-        public QuantumLogicDbContext(IOptions<DataConfiguration> dataConfiguration)
-            : base()
-        {
-            DataConfiguration = dataConfiguration.Value;
-        }
+        public QuantumLogicDbContext(DbContextOptions options)
+            : base(options)
+        { }
 
         #endregion
 
@@ -46,15 +36,6 @@ namespace QuantumLogic.Data.EFContext
         public virtual DbSet<WidgetTheme> WidgetThemes { get; set; }
 
         #endregion
-
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            // optionsBuilder.UseSqlServer(DataConfiguration.DefaultConnection.ConnectionString);
-
-            // TODO: hardcoded connection string
-            optionsBuilder.UseSqlServer("Server=mssql-ukr.elrondsoft.com;Database=dev_testdrive;User Id=sa-testdrive; Password=nUqhXX9CpXVbbxdE;");
-            //Database.SetCommandTimeout(DBCommandTimeout);
-        }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
