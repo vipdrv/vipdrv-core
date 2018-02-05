@@ -16,14 +16,14 @@
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
     },
-    "QuantumLogic": {
+    "Console": {
       "commandName": "Project",
       "launchBrowser": false,
       "launchUrl": "",
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
-      },
-      "applicationUrl": "http://localhost:5000"
+        "ASPNETCORE_ENVIRONMENT": "-environment-varible-from-teamcity-"
+      }
     }
   }
 }
+// #WARNING: -environment-varible-from-teamcity- : Development, Production
