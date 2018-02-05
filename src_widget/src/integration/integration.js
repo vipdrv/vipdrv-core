@@ -863,10 +863,17 @@
                     <div class="frame-header__cross" onclick="TestDrive.closeTestDrive()"></div>
                  </div>
                  <img id="test-drive__frame-spinner" src="https://www.testdrive.pw/spinner.gif">
-                 <iframe name="test-drive__frame" class="test-drive__frame" src="${widgetUrl}" frameBorder="0" onload="document.getElementById('test-drive__frame-spinner').style.display='none';"></iframe>
+                 <iframe name="test-drive__frame" class="test-drive__frame" src="${widgetUrl}" frameBorder="0" onload="TestDrive.widgetFrameDidLoaded()"></iframe>
              </div>`;
 
             document.getElementsByClassName('test-drive__frame-wrapper')[0].innerHTML = html;
+        };
+
+        var _widgetFrameDidLoaded = function () {
+            var spinnerDiv = document.getElementById('test-drive__frame-spinner');
+            if (spinnerDiv) {
+                spinnerDiv.style.display = 'none';
+            }
         };
 
         var _updateTestDriveFrame = function (ulrParams) {
@@ -1085,6 +1092,7 @@
         // output
         return {
             init: function (Args) {
+
                 if (_isWidgetAlreadyInitialized) {
                     return;
                 }
@@ -1122,6 +1130,9 @@
                 _hideTestDriveFrame();
                 _updateTestDriveFrame(_parseArgumentsForOpenButtonEvent({clearBookingData: true}));
                 _restoreDefaultMobileBrowserBarColor();
+            },
+            widgetFrameDidLoaded: function () {
+                _widgetFrameDidLoaded();
             }
         };
     }());
