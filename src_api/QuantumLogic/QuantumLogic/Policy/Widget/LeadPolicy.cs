@@ -21,7 +21,9 @@ namespace QuantumLogic.WebApi.Policy.Widget
 
         protected override IQueryable<Lead> InnerRetrieveAllFilter(IQueryable<Lead> query)
         {
-            return query;
+#warning What the shit? I have commented this cuz it looks like stub - should be commited.
+            //return query;
+
             bool result = PermissionChecker.IsGranted(QuantumLogicPermissionNames.CanAllAll) ||
                           PermissionChecker.IsGranted(QuantumLogicPermissionNames.CanAllLead) ||
                           PermissionChecker.IsGranted(QuantumLogicPermissionNames.CanRetrieveLead);
