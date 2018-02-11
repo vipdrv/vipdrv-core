@@ -21,7 +21,7 @@
       "launchBrowser": false,
       "launchUrl": "",
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "-environment-varible-from-teamcity-"
+        "ASPNETCORE_ENVIRONMENT": "Development"
       }
     }
   }

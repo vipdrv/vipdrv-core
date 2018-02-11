@@ -13,16 +13,19 @@ namespace QuantumLogic.WebApi.DataModels.Dtos.Main.ApiStatus
         public string Version { get; private set; }
         public string Build { get; private set; }
         public string Configuration { get; private set; }
+        public string Environment { get; }
 
         public ApplicationStatusDto(string configuration, 
             string build, 
             string name,
-            string version)
+            string version, 
+            string environment)
         {
             Configuration = configuration;
             Build = build;
             Name = name;
             Version = version;
+            Environment = environment;
         }
     }
 }
