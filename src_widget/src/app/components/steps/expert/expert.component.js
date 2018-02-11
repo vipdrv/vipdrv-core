@@ -7,7 +7,8 @@
                 self.dealerData = dealerData;
                 self.bookingData = bookingData;
                 self.isStepValid = false;
-                self.isNoSalesPersonAvaliable = true;
+                self.isNoSalesPersonAvaliable = false;
+                // TODO: hack for experts
 
                 self.$onInit = function () {
                     self.validateStep();
@@ -49,6 +50,9 @@
                 };
 
                 self.isAvaliable = function(expertWorkingHours) {
+                    // TODO: hack for experts
+                    return true;
+
                     if (self.bookingData.calendar.isSkipped) {
                         self.isNoSalesPersonAvaliable = false;
                         return true;
