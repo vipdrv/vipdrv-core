@@ -13,6 +13,7 @@ using Serilog;
 using Serilog.Events;
 using System;
 using System.IO;
+using QuantumLogic.WebApi.Middleware;
 
 namespace QuantumLogic.WebApi
 {
@@ -55,7 +56,9 @@ namespace QuantumLogic.WebApi
                         .AllowAnyHeader()
                         .AllowCredentials());
             });
-            services//.AddMvc()
+            services
+                .AddExceptionHandlerMiddlewareDependencies()
+                //.AddMvc()
                 .AddMvcCore()
                 .AddJsonFormatters()
                 .AddAuthorization();
@@ -78,6 +81,7 @@ namespace QuantumLogic.WebApi
                 {
                     TokenValidationParameters = QLAuthenticationOptions.GetTokenValidationParameters()
                 });
+            app.UseExceptionHandlerMiddleware();
             app.UseMvc();
         }
 
