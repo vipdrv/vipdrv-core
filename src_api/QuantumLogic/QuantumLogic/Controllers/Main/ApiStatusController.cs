@@ -45,6 +45,7 @@ namespace QuantumLogic.WebApi.Controllers.Main
             return configuration;
         }
 
+#warning OMG! What the hell is this?!
         protected string RetrieveSingleBeverage()
         {
             return BeverageDomainService.RetrieveAllAsync(null, null, 0, 1).Result.FirstOrDefault().Name;

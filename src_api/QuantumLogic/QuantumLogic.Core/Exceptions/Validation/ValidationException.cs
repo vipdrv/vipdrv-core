@@ -7,6 +7,14 @@ namespace QuantumLogic.Core.Exceptions.Validation
     /// </summary>
     public class ValidationException : Exception
     {
+        public string UserfriendlyMessage
+        {
+            get
+            {
+                return "Operation denied by validation.";
+            }
+        }
+
         #region Ctors
 
         public ValidationException()
