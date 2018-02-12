@@ -2,6 +2,7 @@
 using QuantumLogic.Core.Domain.Entities;
 using QuantumLogic.Core.Domain.Services;
 using QuantumLogic.Core.Domain.UnitOfWorks;
+using QuantumLogic.WebApi.DataModels;
 using QuantumLogic.WebApi.DataModels.Dtos;
 using QuantumLogic.WebApi.DataModels.Responses;
 using System;
@@ -139,15 +140,25 @@ namespace QuantumLogic.WebApi.Controllers
                 entities = await DomainService.RetrieveAllAsync(filter, sorting, skip, take);
                 totalCount = take > 0 || skip > 0 && (entities.Count == take || skip != 0) ? await DomainService.GetTotalCountAsync(filter) : entities.Count;
             }
-            List<TEntityDto> entityDtos = new List<TEntityDto>(entities.Count);
-            foreach (TEntity entity in entities)
+            return new GetAllResponse<TEntityDto>(MapEntitiesToDtos<TEntity, TEntityDto>(entities), totalCount);
+        }
+
+        #endregion
+
+        #region Helpers
+
+        protected virtual List<TTo> MapEntitiesToDtos<TFrom, TTo>(IList<TFrom> entities)
+            where TTo : class, IMapable<TFrom>, IShouldNormalize, new()
+        {
+            List<TTo> entityDtos = new List<TTo>(entities.Count);
+            foreach (TFrom entity in entities)
             {
-                TEntityDto entityDto = new TEntityDto();
+                TTo entityDto = new TTo();
                 entityDto.MapFromEntity(entity);
                 entityDto.NormalizeAsResponse();
                 entityDtos.Add(entityDto);
             }
-            return new GetAllResponse<TEntityDto>(entityDtos, totalCount);
+            return entityDtos;
         }
 
         #endregion

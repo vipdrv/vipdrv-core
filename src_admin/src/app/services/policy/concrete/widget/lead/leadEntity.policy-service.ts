@@ -5,6 +5,7 @@ import { AuthorizationService } from './../../../../index';
 import { ILeadEntityPolicyService } from './i-leadEntity.policy-service';
 import { Variable } from '../../../../../utils/variable';
 import { AbstractEntityPolicyService } from '../../../abstractEntity.policy-service';
+import { permissionNames } from '../../../../../constants/index';
 
 @Injectable()
 export class LeadEntityPolicyService
@@ -28,7 +29,11 @@ export class LeadEntityPolicyService
         return false;
     }
     canDelete(): boolean {
-        return false;
+        return this.isGrantedPermission(permissionNames.canAllAll) ||
+            this.isGrantedPermission(permissionNames.canAllLead) ||
+            this.isGrantedPermission(permissionNames.canDeleteLead) ||
+            this.isGrantedPermission(permissionNames.canAllOwn) ||
+            this.isGrantedPermission(permissionNames.canDeleteOwnLead);
     }
     canGet(): boolean {
         return true;
@@ -47,6 +52,6 @@ export class LeadEntityPolicyService
     }
 
     protected innerCanDeleteEntity(entity: LeadEntity): boolean {
-        return false;
+        return this.canDelete();
     }
 }

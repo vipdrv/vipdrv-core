@@ -110,7 +110,7 @@ namespace QuantumLogic.Data.EFContext
 
         private DbContext CreateContext()
         {
-            return (DbContext)ServiceProvider.GetService(typeof(DbContext));
+            return (DbContext)ServiceProvider.GetService(typeof(QuantumLogicDbContext));
         }
     }
 }

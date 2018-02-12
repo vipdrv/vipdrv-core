@@ -5,19 +5,15 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using QuantumLogic.Core.Authorization;
 using QuantumLogic.Core.Utils.RegisterConfigurationsServices;
-using QuantumLogic.WebApi.Authorization;
 using QuantumLogic.WebApi.Authorization.Options;
 using QuantumLogic.WebApi.Configurations;
 using QuantumLogic.WebApi.Configurations.Logging;
-using QuantumLogic.WebApi.Controllers.Authorization;
-using QuantumLogic.WebApi.DataModels.Responses.Authorization;
 using Serilog;
 using Serilog.Events;
 using System;
-using System.Collections.Generic;
 using System.IO;
+using QuantumLogic.WebApi.Middleware;
 
 namespace QuantumLogic.WebApi
 {
@@ -34,10 +30,11 @@ namespace QuantumLogic.WebApi
 
         public Startup(IHostingEnvironment env)
         {
+#warning appsettings.Development.json replaces to appsettings.Production.json during deploy on production 
             IConfigurationBuilder builder = new ConfigurationBuilder()
                 .SetBasePath(env.ContentRootPath)
                 .AddJsonFile("appsettings.json")
-                .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true);
+                .AddJsonFile($"appsettings.Development.json", optional: true);
             builder.AddEnvironmentVariables();
             Configuration = builder.Build();
             mainModule = new WebApiModule();
@@ -60,7 +57,9 @@ namespace QuantumLogic.WebApi
                         .AllowAnyHeader()
                         .AllowCredentials());
             });
-            services//.AddMvc()
+            services
+                .AddExceptionHandlerMiddlewareDependencies()
+                //.AddMvc()
                 .AddMvcCore()
                 .AddJsonFormatters()
                 .AddAuthorization();
@@ -69,7 +68,7 @@ namespace QuantumLogic.WebApi
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory, IOptions<LoggingConfiguration> loggingConfiguration)
         {
             mainModule.Run(app.ApplicationServices);
-            // RegisterLogger(env, loggerFactory, loggingConfiguration.Value); // TODO: logs are disabled for now
+            RegisterLogger(env, loggerFactory, loggingConfiguration.Value);
             //app.Use(async (context, next) =>
             //    {
             //        // here all requests can be monitored 
@@ -83,6 +82,7 @@ namespace QuantumLogic.WebApi
                 {
                     TokenValidationParameters = QLAuthenticationOptions.GetTokenValidationParameters()
                 });
+            app.UseExceptionHandlerMiddleware();
             app.UseMvc();
         }
 

@@ -197,9 +197,30 @@
                 bookingDto.bookingUser.email = bookingData.user.email || null;
                 bookingDto.bookingUser.comment = bookingData.user.comment || null;
 
+                debugger;
+
                 if (bookingData.calendar.date && bookingData.calendar.time) {
-                    var dateTime = bookingData.calendar.date + ' ' + bookingData.calendar.time;
-                    bookingDto.bookingDateTime = moment(dateTime).format('YYYY-MM-DD HH:mm');
+
+                    var date = new Date(bookingData.calendar.date);
+
+                    var time = bookingData.calendar.time;
+
+                    var hours = Number(time.match(/^(\d+)/)[1]);
+                    var minutes = Number(time.match(/:(\d+)/)[1]);
+                    var AMPM = time.match(/\s(.*)$/)[1];
+
+                    if(AMPM == "PM" && hours<12) hours = hours+12;
+                    if(AMPM == "AM" && hours==12) hours = hours-12;
+
+                    var sHours = hours.toString();
+                    var sMinutes = minutes.toString();
+                    if(hours<10) sHours = "0" + sHours;
+                    if(minutes<10) sMinutes = "0" + sMinutes;
+
+                    date.setHours(sHours);
+                    date.setMinutes(sMinutes);
+
+                    bookingDto.bookingDateTime = date;
                 }
 
                 bookingDto.bookingVehicle.vin = bookingData.vehicle.vin || null;

@@ -91,20 +91,20 @@
                             translate>
                             leads.table.headerText_secondName
                         </th>-->
-                        <th class="leads-table-body-column leads-table-body-column-with-sorting leads-table-body-column-reached"
-                            (click)="changeSorting('isReachedByManager')"
-                            translate>
-                            leads.table.headerText_isReachedByManager
-                            <span class="soring-index pull-right">
-                                &nbsp;{{getSortingIndex('isReachedByManager')}}
-                            </span>
-                            <i class="fa fa-sort-amount-asc pull-right"
-                               aria-hidden="true"
-                               *ngIf="isSortingAsc('isReachedByManager')"></i>
-                            <i class="fa fa-sort-amount-desc pull-right"
-                               aria-hidden="true"
-                               *ngIf="isSortingDesc('isReachedByManager')"></i>
-                        </th>
+                        <!--<th class="leads-table-body-column leads-table-body-column-with-sorting leads-table-body-column-reached"-->
+                            <!--(click)="changeSorting('isReachedByManager')"-->
+                            <!--translate>-->
+                            <!--leads.table.headerText_isReachedByManager-->
+                            <!--<span class="soring-index pull-right">-->
+                                <!--&nbsp;{{getSortingIndex('isReachedByManager')}}-->
+                            <!--</span>-->
+                            <!--<i class="fa fa-sort-amount-asc pull-right"-->
+                               <!--aria-hidden="true"-->
+                               <!--*ngIf="isSortingAsc('isReachedByManager')"></i>-->
+                            <!--<i class="fa fa-sort-amount-desc pull-right"-->
+                               <!--aria-hidden="true"-->
+                               <!--*ngIf="isSortingDesc('isReachedByManager')"></i>-->
+                        <!--</th>-->
                         <th class="leads-table-body-column leads-table-body-column-with-sorting leads-table-body-column-date"
                             (click)="changeSorting('bookingDateTimeUtc')"
                             translate>
@@ -123,7 +123,7 @@
                             translate>
                             leads.table.headerText_siteName
                         </th>
-                        <th class="leads-table-body-column"
+                        <th class="leads-table-body-column leads-table-body-column-email"
                             translate>
                             leads.table.headerText_userEmail
                         </th>
@@ -143,6 +143,8 @@
                             translate>
                             leads.table.headerText_beverageName
                         </th>
+                        <th class="leads-table-body-column leads-table-body-column-actions"
+                            *ngIf="canUseActions()"></th>
                     </tr>
                     </thead>
                     <tr class="leads-table-body-row-filters"
@@ -165,17 +167,17 @@
                                    [(ngModel)]="tableFilters.fullName"
                                    (blur)="applyFilters()"/>
                         </td>
-                        <td>
-                            <select class="form-control form-control-sm"
-                                    [disabled]="isFilteringDisabled()"
-                                    (change)="applyFilters()"
-                                    [(ngModel)]="tableFilters.isReachedByManager">
-                                <option *ngFor="let option of isReachedByManagerFilterOptions"
-                                        [ngValue]="option.value">
-                                    <span translate>{{option.displayText}}</span>
-                                </option>
-                            </select>
-                        </td>
+                        <!--<td>-->
+                            <!--<select class="form-control form-control-sm"-->
+                                    <!--[disabled]="isFilteringDisabled()"-->
+                                    <!--(change)="applyFilters()"-->
+                                    <!--[(ngModel)]="tableFilters.isReachedByManager">-->
+                                <!--<option *ngFor="let option of isReachedByManagerFilterOptions"-->
+                                        <!--[ngValue]="option.value">-->
+                                    <!--<span translate>{{option.displayText}}</span>-->
+                                <!--</option>-->
+                            <!--</select>-->
+                        <!--</td>-->
                         <td>
                             <select class="form-control form-control-sm"
                                     [disabled]="isFilteringDisabled()"
@@ -274,6 +276,7 @@
                                    <!--[(ngModel)]="tableFilters.beverage"-->
                                    <!--(blur)="applyFilters()"/>-->
                         </td>
+                        <td *ngIf="canUseActions()"></td>
                     </tr>
                     <tbody>
                     <tr *ngFor="let item of items"
@@ -284,21 +287,21 @@
                         <td class="leads-table-body-column">{{item.firstName + ' ' + item.secondName}}</td>
                         <!--<td class="leads-table-body-column">{{item.firstName}}</td>-->
                         <!--<td class="leads-table-body-column">{{item.secondName}}</td>-->
-                        <td class="leads-table-body-column">
-                            <label class="custom-control custom-checkbox mb-2 mr-sm-2 mb-sm-0"
-                                   style="cursor: default"
-                                   (click)="changeIsReachedByManager(item); $event.stopPropagation();">
-                                <input type="checkbox"
-                                       class="custom-control-input"
-                                       [disabled]="isReachedByManagerDisabled(item)"
-                                       [ngModel]="item.isReachedByManager">
-                                <span class="custom-control-indicator"></span>
-                                <span class="custom-control-description"></span>
-                            </label>
-                        </td>
+                        <!--<td class="leads-table-body-column">-->
+                            <!--<label class="custom-control custom-checkbox mb-2 mr-sm-2 mb-sm-0"-->
+                                   <!--style="cursor: default"-->
+                                   <!--(click)="changeIsReachedByManager(item); $event.stopPropagation();">-->
+                                <!--<input type="checkbox"-->
+                                       <!--class="custom-control-input"-->
+                                       <!--[disabled]="isReachedByManagerDisabled(item)"-->
+                                       <!--[ngModel]="item.isReachedByManager">-->
+                                <!--<span class="custom-control-indicator"></span>-->
+                                <!--<span class="custom-control-description"></span>-->
+                            <!--</label>-->
+                        <!--</td>-->
                         <td class="leads-table-body-column">{{item.bookingDateTimeUtc}}</td>
                         <td class="leads-table-body-column">{{item.siteName}}</td>
-                        <td class="leads-table-body-column">{{item.userEmail}}</td>
+                        <td class="leads-table-body-column leads-table-body-column-email">{{item.userEmail}}</td>
                         <td class="leads-table-body-column">{{item.userPhone}}</td>
                         <td class="leads-table-body-column">
                             <span class="badge badge-info leads-table-badge-class"
@@ -317,6 +320,18 @@
                                   *ngIf="item.beverageName">
                                 {{item.beverageName}}
                             </span>
+                        </td>
+                        <td class="leads-table-body-column leads-table-body-column-actions"
+                            *ngIf="canUseActions()">
+                            <button type="button"
+                                    class="btn btn-outline-danger btn-sm test-drive-standalone-btn"
+                                    *ngIf="leadEntityPolicy.canDeleteEntity(item)"
+                                    [disabled]="isDeleteOperationDisabled()"
+                                    (click)="openConfirmationDeleteModal(item.id); $event.stopPropagation();">
+                                <i class="fa fa-spinner fa-pulse" *ngIf="isOperationDeleteProcessing(item)"></i>
+                                <i class="fa fa-times" *ngIf="!isOperationDeleteProcessing(item)"></i>
+                                <span translate>general.actions.text_delete</span>
+                            </button>
                         </td>
                     </tr>
                     </tbody>
@@ -350,6 +365,39 @@
                 class="btn btn-secondary test-drive-modal-close-btn"
                 (click)="modalDismiss(); $event.stopPropagation();">
             <span translate>general.actions.modalClose</span>
+        </button>
+    </modal-footer>
+</modal>
+
+<modal #confirmationDeleteModal [backdrop]="'static'">
+    <modal-header>
+        <h5 class="modal-title">
+            <span class="test-drive-modal-header-text" translate>
+                confirmation.title
+            </span>
+        </h5>
+        <button type="button"
+                class="close"
+                aria-label="Close"
+                (click)="closeConfirmationDeleteModal(); $event.stopPropagation();">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </modal-header>
+    <modal-body>
+        <span [translateParams]="{ leadName: getDeleteCandidateDisplayText() }" translate>
+            confirmation.leadDeleteAnswer_leadName
+        </span>
+    </modal-body>
+    <modal-footer>
+        <button type="button"
+                class="btn btn-secondary test-drive-modal-close-btn"
+                (click)="closeConfirmationDeleteModal(); $event.stopPropagation();">
+            <span translate>confirmation.cancel</span>
+        </button>
+        <button type="button"
+                class="btn btn-primary test-drive-modal-apply-btn"
+                (click)="acceptConfirmationDeleteModal(); $event.stopPropagation();">
+            <span translate>confirmation.confirm</span>
         </button>
     </modal-footer>
 </modal>

@@ -428,6 +428,7 @@
     "expertDeleteAnswer_expertName": "Do you want to delete expert {{expertName}}?",
     "routeDeleteAnswer_routeName": "Do you want to delete route {{routeName}}?",
     "beverageDeleteAnswer_beverageName": "Do you want to delete beverage {{beverageName}}?",
-    "invitationDeleteAnswer_invitationEmail": "Do you want to delete invitation for email {{invitationEmail}}?"
+    "invitationDeleteAnswer_invitationEmail": "Do you want to delete invitation for email {{invitationEmail}}?",
+    "leadDeleteAnswer_leadName": "Do you want to delete lead {{leadName}}?"
   }
 }
