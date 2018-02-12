@@ -30,10 +30,11 @@ namespace QuantumLogic.WebApi
 
         public Startup(IHostingEnvironment env)
         {
+#warning appsettings.Development.json replaces to appsettings.Production.json during deploy on production 
             IConfigurationBuilder builder = new ConfigurationBuilder()
                 .SetBasePath(env.ContentRootPath)
                 .AddJsonFile("appsettings.json")
-                .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true);
+                .AddJsonFile($"appsettings.Development.json", optional: true);
             builder.AddEnvironmentVariables();
             Configuration = builder.Build();
             mainModule = new WebApiModule();
