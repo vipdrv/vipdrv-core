@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using QuantumLogic.Core.Utils.Email.Data;
+﻿using QuantumLogic.Core.Utils.Email.Data;
 using SendGrid;
 using SendGrid.Helpers.Mail;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace QuantumLogic.Core.Utils.Email
 {
@@ -22,30 +20,28 @@ namespace QuantumLogic.Core.Utils.Email
             SendGridClient = new SendGridClient("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");
         }
 
-        public HttpStatusCode SendDealerInvitationEmail(EmailAddress emailTo, IEmailTemplate emailTemplate)
+        public Task<Response> SendDealerInvitationEmail(EmailAddress emailTo, IEmailTemplate emailTemplate)
         {
             SendGridMessage message = MailHelper.CreateSingleEmail(EmailFrom, emailTo, DealerInvitationSubject, emailTemplate.AsPlainText(), emailTemplate.AsHtml());
-            return SendGridClient.SendEmailAsync(message).Result.StatusCode;
+            return SendGridClient.SendEmailAsync(message);
         }
 
-        public HttpStatusCode SendCompleteBookingEmail(EmailAddress emailTo, IEmailTemplate emailTemplate)
+        public Task<Response> SendCompleteBookingEmail(EmailAddress emailTo, IEmailTemplate emailTemplate)
         {
-#warning rewrite to async 
             SendGridMessage message = MailHelper.CreateSingleEmail(EmailFrom, emailTo, CompleteBookingSubject, emailTemplate.AsPlainText(), emailTemplate.AsHtml());
-            return SendGridClient.SendEmailAsync(message).Result.StatusCode;
+            return SendGridClient.SendEmailAsync(message);
         }
 
-        public HttpStatusCode SendNewLeadNotificationEmail(IList<EmailAddress> emailTo, IEmailTemplate emailTemplate)
+        public Task<Response> SendNewLeadNotificationEmail(List<EmailAddress> emailTo, IEmailTemplate emailTemplate)
         {
-            SendGridMessage message = MailHelper.CreateSingleEmailToMultipleRecipients(EmailFrom, emailTo.ToList(), NewLeadNotificationSubject, emailTemplate.AsPlainText(), emailTemplate.AsHtml());
-            return SendGridClient.SendEmailAsync(message).Result.StatusCode;
+            SendGridMessage message = MailHelper.CreateSingleEmailToMultipleRecipients(EmailFrom, emailTo, NewLeadNotificationSubject, emailTemplate.AsPlainText(), emailTemplate.AsHtml());
+            return SendGridClient.SendEmailAsync(message);
         }
 
-        public HttpStatusCode SendAdfEmail(IList<EmailAddress> emailTo, IEmailTemplate emailTemplate)
+        public Task<Response> SendAdfEmail(List<EmailAddress> emailTo, IEmailTemplate emailTemplate)
         {
-            SendGridMessage message = MailHelper.CreateSingleEmailToMultipleRecipients(EmailFrom, emailTo.ToList(), AdfEmailSubject, emailTemplate.AsPlainText(), emailTemplate.AsPlainText());
-            // message.AddContent("text/plain", );
-            return SendGridClient.SendEmailAsync(message).Result.StatusCode;
+            SendGridMessage message = MailHelper.CreateSingleEmailToMultipleRecipients(EmailFrom, emailTo, AdfEmailSubject, emailTemplate.AsPlainText(), emailTemplate.AsPlainText());
+            return SendGridClient.SendEmailAsync(message);
         }
     }
 }

@@ -7,6 +7,8 @@ using QuantumLogic.Core.Domain.Services.Widget.Sites;
 using QuantumLogic.Core.Domain.UnitOfWorks;
 using QuantumLogic.Core.Extensions.DateTimeEx;
 using QuantumLogic.Core.Utils.ContentManager;
+using QuantumLogic.Core.Utils.Email;
+using QuantumLogic.Core.Utils.Email.Data.Templates;
 using QuantumLogic.Core.Utils.Export.Entity.Concrete.Excel;
 using QuantumLogic.Core.Utils.Export.Entity.Concrete.Excel.DataModels;
 using QuantumLogic.Core.Utils.Sms;
@@ -23,9 +25,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using QuantumLogic.Core.Utils.Email;
-using QuantumLogic.Core.Utils.Email.Data;
-using QuantumLogic.Core.Utils.Email.Data.Templates;
 
 namespace QuantumLogic.WebApi.Controllers.Widget
 {
@@ -152,7 +151,6 @@ namespace QuantumLogic.WebApi.Controllers.Widget
 
             LeadFullDto leadFullDto = request.MapToLeadFullDto(siteId);
             leadFullDto.NormalizeAsRequest();
-
             Lead createdLead;
             using (var uow = UowManager.CurrentOrCreateNew())
             {
@@ -164,39 +162,58 @@ namespace QuantumLogic.WebApi.Controllers.Widget
             LeadFullDto createLeadFullDto = new LeadFullDto();
             createLeadFullDto.MapFromEntity(createdLead);
 
-            TestDriveEmailService.SendCompleteBookingEmail(
-                new EmailAddress(createdLead.UserEmail, $"{createdLead.FirstName} {createdLead.SecondName}"),
-                new CompleteBookingEmailTemplate(createdLead));
+            #region Send EMAIL notifications
 
-            TestDriveEmailService.SendNewLeadNotificationEmail(
-                createdLead.Site.EmailAdresses.Select(r => new EmailAddress(r)).ToList(),
-                new NewLeadNotificationEmailTemplate(createdLead));
+            Task<SendGrid.Response> sendCompleteBookingEmailTask = TestDriveEmailService
+                .SendCompleteBookingEmail(
+                    new EmailAddress(createdLead.UserEmail, $"{createdLead.FirstName} {createdLead.SecondName}"),
+                    new CompleteBookingEmailTemplate(createdLead));
 
-            TestDriveEmailService.SendAdfEmail(
-                createdLead.Site.AdfEmailAdresses.Select(r => new EmailAddress(r)).ToList(),
-                new EleadAdfTemplate(createdLead));
+            Task<SendGrid.Response> sendNewLeadNotificationEmailTask = TestDriveEmailService
+                .SendNewLeadNotificationEmail(
+                    createdLead.Site.EmailAdresses.Select(r => new EmailAddress(r)).ToList(),
+                    new NewLeadNotificationEmailTemplate(createdLead));
 
-            SmsService.SendSms(createdLead.Site.PhoneNumbers, new NewLeadNotificationSmsTemplate(createdLead));
+            Task<SendGrid.Response> sendAdfEmailTask = TestDriveEmailService
+                .SendAdfEmail(
+                    createdLead.Site.AdfEmailAdresses.Select(r => new EmailAddress(r)).ToList(),
+                    new EleadAdfTemplate(createdLead));
+
+            await Task.WhenAll(sendCompleteBookingEmailTask, sendNewLeadNotificationEmailTask, sendAdfEmailTask);
+            // responses can be analyzed below via send...EmailTask.Result
+
+            #endregion
+
+            #region Send SMS notifications
+
+            await SmsService.SendSms(createdLead.Site.PhoneNumbers, new NewLeadNotificationSmsTemplate(createdLead));
+
+            #endregion
 
             return createLeadFullDto;
         }
 
         [HttpPost("{siteId}/send-sms")]
-        public void SendSmsAsync(int siteId, [FromBody] SmsNotificationRequest request)
+        public Task SendSmsAsync(int siteId, [FromBody]SmsNotificationRequest request)
         {
             if (request == null)
             {
                 throw new ArgumentNullException(nameof(request));
             }
 
-            SmsService.SendSms(new List<string>() { request.Phone }, new CompleteBookingSmsTemplate(
-                request.VehicleTitle,
-                request.BookingDateTime,
-                request.ExpertName,
-                request.BeverageName,
-                request.RoadName,
-                request.DealerName,
-                request.DealerPhone));
+            return SmsService.SendSms(
+                new List<string>()
+                {
+                    request.Phone
+                }, 
+                new CompleteBookingSmsTemplate(
+                    request.VehicleTitle,
+                    request.BookingDateTime,
+                    request.ExpertName,
+                    request.BeverageName,
+                    request.RoadName,
+                    request.DealerName,
+                    request.DealerPhone));
         }
 
         #endregion
