@@ -117,21 +117,19 @@
 
                 self.$onInit = function () {
                     api.retrieveSite().then(function (data) {
-                        self.dealerData.siteId = data.id;
-                        self.dealerData.name = data.dealerName;
-                        self.dealerData.phone = data.dealerPhone;
-                        self.dealerData.address = data.dealerAddress;
-                        self.dealerData.siteUrl = data.url;
-                        self.dealerData.workingHours = data.workingHours;
-                    });
-                    api.retrieveExperts().then(function (data) {
-                        self.dealerData.experts.items = data.items;
-                    });
-                    api.retrieveBeverages().then(function (data) {
-                        self.dealerData.beverages.items = data.items;
-                    });
-                    api.retrieveRoutes().then(function (data) {
-                        self.dealerData.roads.items = data.items;
+                        self.dealerData.siteId = data.site.id;
+                        self.dealerData.name = data.site.dealerName;
+                        self.dealerData.phone = data.site.dealerPhone;
+                        self.dealerData.address = data.site.dealerAddress;
+                        self.dealerData.siteUrl = data.site.url;
+                        self.dealerData.workingHours = data.site.workingHours;
+
+                        self.dealerData.experts.items = data.experts;
+                        self.dealerData.experts.isStepEnabled = data.site.useExpertStep;
+                        self.dealerData.beverages.items = data.beverages;
+                        self.dealerData.beverages.isStepEnabled = data.site.useBeverageStep;
+                        self.dealerData.roads.items = data.routes;
+                        self.dealerData.roads.isStepEnabled = data.site.useRouteStep;
                     });
                 };
 

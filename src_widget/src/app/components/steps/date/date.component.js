@@ -8,6 +8,7 @@
                 // =======================================================================//
 
                 var self = this;
+
                 self.isLoading = true;
                 self.isStepValid = false;
                 self.dealerData = dealerData;
@@ -37,13 +38,11 @@
                         self.loadingCheckerInterval = $interval(function () {
                             if (self.dealerData.siteId != null) {
                                 self.isLoading = false;
-                                if (angular.isDefined(self.loadingCheckerInterval)) {
-                                    $interval.cancel(self.loadingCheckerInterval);
-                                    self.loadingCheckerInterval = undefined;
-                                }
+                                $interval.cancel(self.loadingCheckerInterval);
                                 self.initStep();
+
                             }
-                        }, 100);
+                        }, 200);
                     }
                 };
 
@@ -268,7 +267,11 @@
                         var startHours = startTimeInterval.getHours();
 
                         var item = {
-                            time: startTimeInterval.toLocaleString('en-US', {hour: 'numeric', minute: 'numeric', hour12: true}),
+                            time: startTimeInterval.toLocaleString('en-US', {
+                                hour: 'numeric',
+                                minute: 'numeric',
+                                hour12: true
+                            }),
                             isActive: true
                         };
 
@@ -277,7 +280,7 @@
                         }
 
                         timeIntervalsArr.push(item);
-                        startTimeInterval.setHours(startTimeInterval.getHours()+1);
+                        startTimeInterval.setHours(startTimeInterval.getHours() + 1);
                     }
                     return timeIntervalsArr;
                 };
