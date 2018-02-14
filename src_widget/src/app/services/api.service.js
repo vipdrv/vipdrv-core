@@ -7,73 +7,10 @@
             // Get Widget Data                                                        //
             // =======================================================================//
 
-            this.retrieveExperts = function () {
-                var req = {
-                    method: 'POST',
-                    url: apiBaseUrl + "/expert/get-all",
-                    headers: {
-                        'content-type': 'application/json'
-                    },
-                    data: {
-                        "siteId": siteId,
-                        "sorting": "order asc"
-                    }
-                };
-
-                var promise = $http(req).then(function (responce) {
-                    return responce.data;
-                }, function () {
-                });
-
-                return promise;
-            };
-
-            this.retrieveBeverages = function () {
-                var req = {
-                    method: 'POST',
-                    url: apiBaseUrl + "/beverage/get-all",
-                    headers: {
-                        'content-type': 'application/json'
-                    },
-                    data: {
-                        "siteId": siteId,
-                        "sorting": "order asc"
-                    }
-                };
-
-                var promise = $http(req).then(function (responce) {
-                    return responce.data;
-                }, function () {
-                });
-
-                return promise;
-            };
-
-            this.retrieveRoutes = function () {
-                var req = {
-                    method: 'POST',
-                    url: apiBaseUrl + '/route/get-all',
-                    headers: {
-                        'content-type': 'application/json'
-                    },
-                    data: {
-                        "siteId": siteId,
-                        "sorting": "order asc"
-                    }
-                };
-
-                var promise = $http(req).then(function (responce) {
-                    return responce.data;
-                }, function () {
-                });
-
-                return promise;
-            };
-
             this.retrieveSite = function () {
                 var req = {
                     method: 'GET',
-                    url: apiBaseUrl + '/site/' + siteId,
+                    url: apiBaseUrl + '/site/' + siteId + '/aggregated-info',
                     headers: {
                         'content-type': 'application/json'
                     }
@@ -196,8 +133,6 @@
                 bookingDto.bookingUser.phone = bookingData.user.phone || null;
                 bookingDto.bookingUser.email = bookingData.user.email || null;
                 bookingDto.bookingUser.comment = bookingData.user.comment || null;
-
-                debugger;
 
                 if (bookingData.calendar.date && bookingData.calendar.time) {
 
