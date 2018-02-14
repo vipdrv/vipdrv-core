@@ -27,14 +27,13 @@ namespace QuantumLogic.Core.Utils.Sms
                 Dictionary<string, string> valueCollection = new Dictionary<string, string>();
                 valueCollection.Add("From", "+12244123577");
                 valueCollection.Add("Body", smsTemplate.AsPlainText());
-                valueCollection.Add("To", "");
-                HttpRequestMessage message = new HttpRequestMessage(HttpMethod.Post, _apiUrl)
-                {
-                    Content = new FormUrlEncodedContent(valueCollection)
-                };
                 foreach (var phone in phoneNumbers)
                 {
                     valueCollection["To"] = $"+{new String(phone.Where(Char.IsDigit).ToArray())}";
+                    HttpRequestMessage message = new HttpRequestMessage(HttpMethod.Post, _apiUrl)
+                    {
+                        Content = new FormUrlEncodedContent(valueCollection)
+                    };
                     sendSMSTasks.Add(_httpClient.SendAsync(message));
                 }
                 return Task.WhenAll(sendSMSTasks);
