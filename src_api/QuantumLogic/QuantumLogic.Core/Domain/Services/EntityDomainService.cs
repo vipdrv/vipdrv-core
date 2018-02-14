@@ -57,7 +57,7 @@ namespace QuantumLogic.Core.Domain.Services
         public virtual async Task<IList<TEntity>> RetrieveAllAsync(Expression<Func<TEntity, bool>> filter = null, string sorting = null, int skip = 0, int take = 0)
         {
             return await Repository.GetAllAsync(
-                (entitySet) => 
+                (entitySet) =>
                 {
                     entitySet = ApplySortingToQuery(ApplyPolicyAndFilterToQuery(entitySet, filter), sorting);
                     if (take > 0 || skip > 0)
@@ -67,14 +67,17 @@ namespace QuantumLogic.Core.Domain.Services
                             .Take(take);
                     }
                     return entitySet;
-                }, 
+                },
                 RetrieveAllEntityIncludes);
         }
-        public virtual async Task<TEntity> RetrieveAsync(TPrimaryKey id)
+        public virtual async Task<TEntity> RetrieveAsync(TPrimaryKey id, bool usePolicy = true)
         {
             TEntity entity;
             entity = await Repository.GetAsync(id, RetrieveEntityIncludes);
-            Policy.PolicyRetrieve(entity);
+            if (usePolicy)
+            {
+                Policy.PolicyRetrieve(entity);
+            }
             return entity;
         }
         public virtual async Task<TEntity> CreateAsync(TEntity entity)
