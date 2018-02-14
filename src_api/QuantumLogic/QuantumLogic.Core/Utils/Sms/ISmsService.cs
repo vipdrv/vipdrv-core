@@ -1,9 +1,6 @@
-﻿using System;
+﻿using QuantumLogic.Core.Utils.Sms.Templates;
 using System.Collections.Generic;
-using System.Net.Http;
-using System.Text;
 using System.Threading.Tasks;
-using QuantumLogic.Core.Utils.Sms.Templates;
 
 namespace QuantumLogic.Core.Utils.Sms
 {
@@ -14,6 +11,6 @@ namespace QuantumLogic.Core.Utils.Sms
         /// </summary>
         /// <param name="recipientPhone">Recipients phone numbers with counry codes like 381112222222, +381112222222, +38 (111) 222-22-22</param>
         /// <param name="smsTemplate">SMS message template</param>
-        void SendSms(IList<string> recipientPhone, ISmsTemplate smsTemplate);
+        Task SendSms(IList<string> recipientPhone, ISmsTemplate smsTemplate);
     }
 }
