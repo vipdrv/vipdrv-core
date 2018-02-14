@@ -108,12 +108,12 @@ export class SitesTableComponent implements OnInit {
         const self = this;
         self.logger.logTrase('SitesTableComponent: Get relations (all owners) called.');
         return self.userApiService
-            .getAll(0, 50, 'firstName asc', null)
+            .getAll(0, 50, 'username asc', null)
             .then(function (response: GetAllResponse<any>): void {
                 for (const item of response.items) {
                     self.ownerOptions.push({
                         value: item.id,
-                        displayText: `${item.firstName} ${item.secondName}`,
+                        displayText: `${item.username} (${item.firstName} ${item.secondName})`,
                     });
                 }
             })
@@ -427,7 +427,7 @@ export class SitesTableComponent implements OnInit {
     /// sorting
     protected sortingRules: Array<any> = [
         {
-            field: 'name',
+            field: 'id',
             isAsc: true,
         }
     ];

@@ -145,7 +145,7 @@ namespace QuantumLogic.WebApi.Controllers.Main
 
         [Authorize]
         [HttpDelete("invitation/{id}")]
-        public async Task DeleteInvitationAsync(int invitatorId, int id)
+        public async Task DeleteInvitationAsync(int id)
         {
             using (var uow = UowManager.CurrentOrCreateNew(true))
             {

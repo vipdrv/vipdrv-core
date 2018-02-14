@@ -122,9 +122,11 @@ export class LeadsTableComponent implements OnInit {
         const self = this;
         self.logger.logTrase('LeadsTableComponent: Get relations (all sites) called.');
         const filter: any = {};
-        filter.userId = this.authorizationManager.currentUserId;
+        if (!self.leadEntityPolicy.canSeeAllSitesInLeadsTableFilter()) {
+            filter.userId = this.authorizationManager.currentUserId;
+        }
         return self.siteApiService
-            .getAll(0, 50, 'name asc', filter)
+            .getAll(0, 100, 'name asc', filter)
             .then(function (response: GetAllResponse<any>): void {
                 for (const site of response.items) {
                     self.siteOptions.push({
