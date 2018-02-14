@@ -159,7 +159,7 @@ namespace QuantumLogic.WebApi.Controllers.Widget
                 Session.UserId = (await SiteDomainService.RetrieveAsync(siteId)).UserId;
                 Lead stubEntity = await DomainService.CreateAsync(leadFullDto.MapToEntity());
                 await uow.CompleteAsync();
-                createdLead = await DomainService.RetrieveAsync(stubEntity.Id);
+                createdLead = await DomainService.RetrieveAsync(stubEntity.Id, false);
             }
             LeadFullDto createLeadFullDto = new LeadFullDto();
             createLeadFullDto.MapFromEntity(createdLead);

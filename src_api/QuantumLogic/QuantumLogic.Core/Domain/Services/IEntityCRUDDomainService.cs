@@ -14,10 +14,11 @@ namespace QuantumLogic.Core.Domain.Services
         /// Is used to retrieve entity via domain rules
         /// </summary>
         /// <param name="id">entity id</param>
+        /// <param name="usePolicy">use policy for this operation</param>
         /// <returns>task of retrieving entity with retrieved entity as result</returns>
         /// <exception cref="Exceptions.NotSupported.OperationIsNotSupportedException">Thrown when this operation is not supported for current entity</exception>
         /// <exception cref="Exceptions.Policy.EntityPolicyException">Thrown when this operation access is denied</exception>
-        Task<TEntity> RetrieveAsync(TPrimaryKey id);
+        Task<TEntity> RetrieveAsync(TPrimaryKey id, bool usePolicy = true);
         /// <summary>
         /// Is used to create entity via domain rules
         /// </summary>

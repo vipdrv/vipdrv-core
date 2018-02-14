@@ -30,6 +30,7 @@ namespace QuantumLogic.Core.Utils.Email
 
         public HttpStatusCode SendCompleteBookingEmail(EmailAddress emailTo, IEmailTemplate emailTemplate)
         {
+#warning rewrite to async 
             SendGridMessage message = MailHelper.CreateSingleEmail(EmailFrom, emailTo, CompleteBookingSubject, emailTemplate.AsPlainText(), emailTemplate.AsHtml());
             return SendGridClient.SendEmailAsync(message).Result.StatusCode;
         }
