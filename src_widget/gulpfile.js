@@ -20,6 +20,8 @@ var urlAdjuster = require('gulp-css-url-adjuster');
 var replace = require('gulp-replace');
 var babel = require('gulp-babel');
 var inlinesource = require('gulp-inline-source');
+var postcss = require('gulp-postcss');
+var autoprefixer = require('autoprefixer');
 
 var env = require('./src/environments/environment.dev');
 
@@ -178,20 +180,28 @@ gulp.task('bundle_vendor_css', function () {
 });
 
 gulp.task('copy_app_scss_dist', function () {
+    var plugins = [
+        autoprefixer({browsers: ['last 1 version']})
+    ];
+
     return gulp.src(appScss)
         .pipe(plumber())
-        .pipe(sourcemaps.init())
         .pipe(sass({outputStyle: 'compressed'}).on('error', sass.logError))
+        .pipe(postcss(plugins))
         .pipe(cssnano())
-        .pipe(sourcemaps.write('./maps'))
         .pipe(gulp.dest('./build'));
 });
 
 gulp.task('copy_app_scss_debug', function () {
+    var plugins = [
+        autoprefixer({browsers: ['last 1 version']})
+    ];
+
     return gulp.src(appScss)
         .pipe(plumber())
         .pipe(sourcemaps.init())
         .pipe(sass())
+        .pipe(postcss(plugins))
         .pipe(sourcemaps.write('./maps'))
         .pipe(gulp.dest('./build'));
 });
