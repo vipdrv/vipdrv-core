@@ -154,6 +154,7 @@
 
                     date.setHours(sHours);
                     date.setMinutes(sMinutes);
+                    date.setHours(date.getHours() - date.getTimezoneOffset() / 60);
 
                     bookingDto.bookingDateTime = date;
                 }
