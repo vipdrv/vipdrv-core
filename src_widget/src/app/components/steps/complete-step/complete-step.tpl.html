@@ -144,7 +144,7 @@
 <div class="container text-center">
     <p>
         <button class="btn btn-primary" ng-click="$ctrl.sendSms()" ng-disabled="$ctrl.isSmsSended">
-            <span ng-show="!$ctrl.isSmsSended">Send me SMS</span>
+            <span ng-show="!$ctrl.isSmsSended">Send Me Text</span>
             <i class="fa fa-spinner fa-spin fa-1x fa-fw" ng-show="$ctrl.isSmsLoading"></i>
             <span ng-show="$ctrl.isSmsSended">SMS Sent</span>
         </button>
@@ -152,7 +152,7 @@
         <button title="Add to Calendar" class="addeventatc" data-dropdown-y="up" ng-class="$ctrl.isPageLoaded ? '' : 'd-none'">
             Add to Calendar
             <span class="start">{{$ctrl.bookingData.calendar.date}} {{$ctrl.bookingData.calendar.time}}</span>
-            <span class="timezone">Europe/Kiev</span>
+            <!--<span class="timezone">Europe/Kiev</span>-->
             <span class="title">VIPdrv - VIP Test Drive</span>
             <span class="description">
                 Hi {{$ctrl.bookingData.user.firstName}} {{$ctrl.bookingData.user.lastName}}.<br>

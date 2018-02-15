@@ -125,6 +125,7 @@ namespace QuantumLogic.WebApi.Controllers.Main
                 Response.StatusCode = (int)HttpStatusCode.ServiceUnavailable;
                 throw new ArgumentException("Origin");
             }
+
             Invitation entity;
             using (var uow = UowManager.CurrentOrCreateNew(true))
             {
@@ -135,9 +136,12 @@ namespace QuantumLogic.WebApi.Controllers.Main
             {
                 entity = await InvitationDomainService.RetrieveAsync(entity.Id);
             }
-            TestDriveEmailService.SendDealerInvitationEmail(
-                new EmailAddress(entity.Email, string.Empty), 
-                new DealerInvitationEmailTemplate($"{origin}/#/registration/{entity.InvitationCode}"));
+
+            SendGrid.Response sendDealerInvitationEmailResponse = await TestDriveEmailService
+                .SendDealerInvitationEmail(
+                    new EmailAddress(entity.Email, string.Empty), 
+                    new DealerInvitationEmailTemplate($"{origin}/#/registration/{entity.InvitationCode}"));
+
             InvitationDto dto = new InvitationDto();
             dto.MapFromEntity(entity);
             return dto;
@@ -145,7 +149,7 @@ namespace QuantumLogic.WebApi.Controllers.Main
 
         [Authorize]
         [HttpDelete("invitation/{id}")]
-        public async Task DeleteInvitationAsync(int invitatorId, int id)
+        public async Task DeleteInvitationAsync(int id)
         {
             using (var uow = UowManager.CurrentOrCreateNew(true))
             {

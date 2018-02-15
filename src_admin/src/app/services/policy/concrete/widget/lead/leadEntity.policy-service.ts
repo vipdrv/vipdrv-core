@@ -38,6 +38,11 @@ export class LeadEntityPolicyService
     canGet(): boolean {
         return true;
     }
+    canSeeAllSitesInLeadsTableFilter(): boolean {
+        return this.isGrantedPermission(permissionNames.canAllAll) ||
+            this.isGrantedPermission(permissionNames.canAllLead) ||
+            this.isGrantedPermission(permissionNames.canRetrieveLead);
+    }
 
     protected innerCanGetEntity(entity: LeadEntity): boolean {
         return true;
