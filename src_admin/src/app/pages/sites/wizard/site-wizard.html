@@ -5,114 +5,55 @@
             <div class="col-12">
                 <table class="table table-bordered site-wizard-table">
                     <tbody>
-                    <tr>
+                    <tr *ngFor="let step of entity.steps">
                         <td class="site-wizard-table-column site-wizard-table-column-step-name"
                             translate>
-                            sites.wizard.expertStep
+                            {{step.localizationKey}}
                         </td>
                         <td class="site-wizard-table-column site-wizard-table-column-active-amount">
                             <span class="badge badge-success"
-                                  *ngIf="showActiveExpertsAmount()"
-                                  [translateParams]="{ amount: entity.activeExpertsAmount }"
+                                  *ngIf="showActiveEntitiesAmount(step)"
+                                  [translateParams]="{ amount: step.activeEntitiesCount }"
                                   translate>
-                                sites.wizard.activeExperts_amount
+                                {{step.activeEntitiesLocalizationKey}}
                             </span>
                             <span class="badge badge-danger"
-                                  *ngIf="showNoActiveExperts()"
+                                  *ngIf="showNoActiveEntities(step)"
                                   translate>
-                                sites.wizard.noActiveExperts
+                                {{step.noActiveEntitiesLocalizationKey}}
                             </span>
                         </td>
                         <td class="site-wizard-table-column site-wizard-table-column-not-active-amount hidden-sm-down">
                             <span class="badge badge-warning"
-                                  [translateParams]="{ amount: entity.expertsAmount - entity.activeExpertsAmount }"
+                                  [translateParams]="{ amount: step.entitiesCount - step.activeEntitiesCount }"
                                   translate>
-                                sites.wizard.notActiveExperts_amount
+                                {{step.notActiveEntitiesLocalizationKey}}
                             </span>
                         </td>
+                        <td class="site-wizard-table-column site-wizard-table-column-order"
+                            *ngIf="isChangeOrderStepAllowed(step)">
+                            <button type="button"
+                                    class="btn btn-sm btn-secondary"
+                                    [disabled]="!isDownOrderStepAllowed(step) || isPatchOrderProcessing(step)"
+                                    (click)="downOrderStep(step); $event.stopPropagation();">
+                                <i class="fa fa-chevron-up"></i>
+                            </button>
+                            <button type="button"
+                                    class="btn btn-sm btn-secondary"
+                                    [disabled]="!isUpOrderStepAllowed(step) || isPatchOrderProcessing(step)"
+                                    (click)="upOrderStep(step); $event.stopPropagation();">
+                                <i class="fa fa-chevron-down"></i>
+                            </button>
+                        </td>
                         <td class="site-wizard-table-column site-wizard-table-column-not-active-amount"
-                            *ngIf="isChangeUseExpertStepAllowed()">
+                            *ngIf="isChangeIsActiveStepAllowed(step)">
                             <ui-switch color="{{switcherSettings.color}}"
                                        switchColor="{{switcherSettings.switchColor}}"
                                        defaultBgColor="{{switcherSettings.defaultBgColor}}"
                                        defaultBoColor="{{switcherSettings.defaultBoColor}}"
-                                       [disabled]="isChangeUseExpertStepDisabled()"
-                                       (click)="onChangeUseExpertStep(); $event.stopPropagation();"
-                                       [ngModel]="entity.useExpertStep">
-                            </ui-switch>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="site-wizard-table-column site-wizard-table-column-step-name"
-                            translate>
-                            sites.wizard.beverageStep
-                        </td>
-                        <td class="site-wizard-table-column site-wizard-table-column-active-amount">
-                            <span class="badge badge-success"
-                                  *ngIf="showActiveBeveragesAmount()"
-                                  [translateParams]="{ amount: entity.activeBeveragesAmount }"
-                                  translate>
-                                sites.wizard.activeBeverages_amount
-                            </span>
-                            <span class="badge badge-danger"
-                                  *ngIf="showNoActiveBeverages()"
-                                  translate>
-                                sites.wizard.noActiveBeverages
-                            </span>
-                        </td>
-                        <td class="site-wizard-table-column site-wizard-table-column-not-active-amount hidden-sm-down">
-                            <span class="badge badge-warning"
-                                  [translateParams]="{ amount: entity.beveragesAmount - entity.activeBeveragesAmount }"
-                                  translate>
-                                sites.wizard.notActiveBeverages_amount
-                            </span>
-                        </td>
-                        <td class="site-wizard-table-column site-wizard-table-column-not-active-amount"
-                            *ngIf="isChangeUseBeverageStepAllowed()">
-                            <ui-switch color="{{switcherSettings.color}}"
-                                       switchColor="{{switcherSettings.switchColor}}"
-                                       defaultBgColor="{{switcherSettings.defaultBgColor}}"
-                                       defaultBoColor="{{switcherSettings.defaultBoColor}}"
-                                       [disabled]="isChangeUseBeverageStepDisabled()"
-                                       (click)="onChangeUseBeverageStep(); $event.stopPropagation();"
-                                       [ngModel]="entity.useBeverageStep">
-                            </ui-switch>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="site-wizard-table-column site-wizard-table-column-step-name"
-                            translate>
-                            sites.wizard.routeStep
-                        </td>
-                        <td class="site-wizard-table-column site-wizard-table-column-active-amount">
-                            <span class="badge badge-success"
-                                  *ngIf="showActiveRoutesAmount()"
-                                  [translateParams]="{ amount: entity.activeRoutesAmount }"
-                                  translate>
-                                sites.wizard.activeRoutes_amount
-                            </span>
-                            <span class="badge badge-danger"
-                                  *ngIf="showNoActiveRoutes()"
-                                  translate>
-                                sites.wizard.noActiveRoutes
-                            </span>
-                        </td>
-                        <td class="site-wizard-table-column site-wizard-table-column-not-active-amount hidden-sm-down">
-                            <span class="badge badge-warning"
-                                  [translateParams]="{ amount: entity.routesAmount - entity.activeRoutesAmount }"
-                                  translate>
-                                sites.wizard.notActiveRoutes_amount
-                            </span>
-                        </td>
-                        <td class="site-wizard-table-column site-wizard-table-column-not-active-amount"
-                            *ngIf="isChangeUseRouteStepAllowed()">
-                            <ui-switch color="{{switcherSettings.color}}"
-                                       switchColor="{{switcherSettings.switchColor}}"
-                                       defaultBgColor="{{switcherSettings.defaultBgColor}}"
-                                       defaultBoColor="{{switcherSettings.defaultBoColor}}"
-                                       [disabled]="isChangeUseRouteStepDisabled()"
-                                       (click)="onChangeUseRouteStep(); $event.stopPropagation();"
-                                       [ngModel]="entity.useRouteStep">
+                                       [disabled]="isChangeIsActiveStepDisabled(step)"
+                                       (click)="onChangeIsActiveStep(step); $event.stopPropagation();"
+                                       [ngModel]="step.isActive">
                             </ui-switch>
                         </td>
                     </tr>
