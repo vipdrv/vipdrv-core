@@ -6,4 +6,7 @@ export interface ISiteApiService extends ICRUDApiService<SiteEntity, number, Lig
     patchUseExpertStep(id: number, value: boolean): Promise<void>;
     patchUseBeverageStep(id: number, value: boolean): Promise<void>;
     patchUseRouteStep(id: number, value: boolean): Promise<void>;
+    swapBeverageExpertStepOrder(siteId: number): Promise<void>;
+    swapBeverageRouteStepOrder(siteId: number): Promise<void>;
+    swapExpertRouteStepOrder(siteId: number): Promise<void>;
 }

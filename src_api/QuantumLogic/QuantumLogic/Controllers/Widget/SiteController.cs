@@ -176,6 +176,41 @@ namespace QuantumLogic.WebApi.Controllers.Widget
             }
         }
 
+        #region Step ordering
+
+        [Authorize]
+        [HttpPatch("swap-step-order-beverage-expert/{id}")]
+        public async Task SwapStepOrderExpertsBeverages(int id)
+        {
+            using (var uow = UowManager.CurrentOrCreateNew(true))
+            {
+                await((ISiteDomainService)DomainService).SwapBeverageExpertStepOrder(id);
+                await uow.CompleteAsync();
+            }
+        }
+        [Authorize]
+        [HttpPatch("swap-step-order-expert-route/{id}")]
+        public async Task SwapStepOrderExpertsRoutes(int id)
+        {
+            using (var uow = UowManager.CurrentOrCreateNew(true))
+            {
+                await((ISiteDomainService)DomainService).SwapExpertRouteStepOrder(id);
+                await uow.CompleteAsync();
+            }
+        }
+        [Authorize]
+        [HttpPatch("swap-step-order-beverage-route/{id}")]
+        public async Task SwapStepOrderBeveragesRoutes(int id)
+        {
+            using (var uow = UowManager.CurrentOrCreateNew(true))
+            {
+                await((ISiteDomainService)DomainService).SwapBeverageRouteStepOrder(id);
+                await uow.CompleteAsync();
+            }
+        }
+
+        #endregion
+
         #endregion
     }
 }

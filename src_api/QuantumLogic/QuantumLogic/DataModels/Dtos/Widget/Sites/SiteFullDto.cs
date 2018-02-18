@@ -16,6 +16,10 @@ namespace QuantumLogic.WebApi.DataModels.Dtos.Widget.Sites
         public int ActiveBeveragesAmount { get; set; }
         public int ActiveRoutesAmount { get; set; }
 
+        public int BeverageStepOrder { get; set; }
+        public int ExpertStepOrder { get; set; }
+        public int RouteStepOrder { get; set; }
+
         public IList<DayOfWeekInterval> WorkingHours { get; set; }
 
         public override void MapFromEntity(Site entity)
@@ -28,6 +32,9 @@ namespace QuantumLogic.WebApi.DataModels.Dtos.Widget.Sites
             ActiveBeveragesAmount = entity.Beverages.Where(r => r.IsActive).Count();
             ActiveRoutesAmount = entity.Routes.Where(r => r.IsActive).Count();
             WorkingHours = DayOfWeekInterval.Parse(entity.WorkingHours);
+            BeverageStepOrder = entity.BeverageStepOrder;
+            ExpertStepOrder = entity.ExpertStepOrder;
+            RouteStepOrder = entity.RouteStepOrder;
         }
 
         public override Site MapToEntity()
