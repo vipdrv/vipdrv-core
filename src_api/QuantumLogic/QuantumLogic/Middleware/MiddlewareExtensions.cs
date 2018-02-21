@@ -4,6 +4,7 @@ using QuantumLogic.WebApi.Middleware.ExceptionHandling;
 using QuantumLogic.WebApi.Middleware.ExceptionHandling.Factories;
 using QuantumLogic.WebApi.Middleware.ExceptionHandling.Factories.Concrete;
 using QuantumLogic.WebApi.Middleware.ExceptionHandling.Factories.Concrete.Authorization;
+using QuantumLogic.WebApi.Middleware.ExceptionHandling.Factories.Concrete.NotFound;
 using QuantumLogic.WebApi.Middleware.ExceptionHandling.Factories.Concrete.Policy;
 using QuantumLogic.WebApi.Middleware.ExceptionHandling.Factories.Concrete.Request;
 using QuantumLogic.WebApi.Middleware.ExceptionHandling.Factories.Concrete.Validation;
@@ -39,6 +40,12 @@ namespace QuantumLogic.WebApi.Middleware
             #region Authorization
 
             serviceCollection.AddTransient<AuthorizationExceptionHandlingTreeFactory>();
+
+            #endregion
+
+            #region Not found
+
+            serviceCollection.AddTransient<EntityNotFoundExceptionHandlingTreeFactory>();
 
             #endregion
 

@@ -63,6 +63,7 @@ namespace QuantumLogic.WebApi.Controllers.Widget
 
         #region CRUD
 
+        [Authorize]
         [HttpGet("{id}")]
         public Task<LeadFullDto> GetAsync(int id)
         {

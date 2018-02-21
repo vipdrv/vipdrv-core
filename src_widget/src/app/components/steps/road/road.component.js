@@ -9,9 +9,7 @@
                 self.bookingData = bookingData;
 
                 self.$onInit = function () {
-                    if (self.bookingData.road.name === null) {
-                        this.isStepValid = false;
-                    }
+                    self.validateStep();
                 };
 
                 $scope.itemChanged = function ($event, id, img, name, description) {

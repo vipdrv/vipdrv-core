@@ -60,5 +60,9 @@ namespace QuantumLogic.Core.Domain.Services.Widget.Sites
         /// <exception cref="Exceptions.Validation.ValidateEntityPropertiesException">Thrown when this entity properties are not valid</exception>
         /// <exception cref="Exceptions.Validation.ValidateEntityRelationsException">Thrown when this entity relations are not valid</exception>
         Task ChangeUseRouteStepAsync(int id, bool newValue);
+
+        Task SwapBeverageExpertStepOrder(int id);
+        Task SwapBeverageRouteStepOrder(int id);
+        Task SwapExpertRouteStepOrder(int id);
     }
 }

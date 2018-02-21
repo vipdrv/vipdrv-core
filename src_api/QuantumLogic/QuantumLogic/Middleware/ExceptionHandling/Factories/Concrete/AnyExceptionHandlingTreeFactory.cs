@@ -1,4 +1,5 @@
 ﻿using QuantumLogic.WebApi.Middleware.ExceptionHandling.Factories.Concrete.Authorization;
+using QuantumLogic.WebApi.Middleware.ExceptionHandling.Factories.Concrete.NotFound;
 using QuantumLogic.WebApi.Middleware.ExceptionHandling.Factories.Concrete.Policy;
 using QuantumLogic.WebApi.Middleware.ExceptionHandling.Factories.Concrete.Request;
 using QuantumLogic.WebApi.Middleware.ExceptionHandling.Factories.Concrete.Validation;
@@ -15,6 +16,7 @@ namespace QuantumLogic.WebApi.Middleware.ExceptionHandling.Factories.Concrete
         protected readonly IExceptionHandlingTreeFactory AuthorizationExceptionHandlingTreeFactory;
         protected readonly IExceptionHandlingTreeFactory PolicyExceptionHandlingTreeFactory;
         protected readonly IExceptionHandlingTreeFactory ValidationExceptionHandlingTreeFactory;
+        protected readonly IExceptionHandlingTreeFactory EntityNotFoundExceptionHandlingTreeFactory;
 
         #endregion
 
@@ -25,19 +27,22 @@ namespace QuantumLogic.WebApi.Middleware.ExceptionHandling.Factories.Concrete
                   new BadRequestExceptionHandlingTreeFactory(),
                   new AuthorizationExceptionHandlingTreeFactory(),
                   new PolicyExceptionHandlingTreeFactory(),
-                  new ValidationExceptionHandlingTreeFactory())
+                  new ValidationExceptionHandlingTreeFactory(),
+                  new EntityNotFoundExceptionHandlingTreeFactory())
         { }
 
         public AnyExceptionHandlingTreeFactory(
             BadRequestExceptionHandlingTreeFactory badRequestExceptionHandlingTreeFactory,
             AuthorizationExceptionHandlingTreeFactory authorizationExceptionHandlingTreeFactory,
             PolicyExceptionHandlingTreeFactory policyExceptionHandlingTreeFactory,
-            ValidationExceptionHandlingTreeFactory validationExceptionHandlingTreeFactory)
+            ValidationExceptionHandlingTreeFactory validationExceptionHandlingTreeFactory,
+            EntityNotFoundExceptionHandlingTreeFactory entityNotFoundExceptionHandlingTreeFactory)
         {
             BadRequestExceptionHandlingTreeFactory = badRequestExceptionHandlingTreeFactory;
             AuthorizationExceptionHandlingTreeFactory = authorizationExceptionHandlingTreeFactory;
             PolicyExceptionHandlingTreeFactory = policyExceptionHandlingTreeFactory;
             ValidationExceptionHandlingTreeFactory = validationExceptionHandlingTreeFactory;
+            EntityNotFoundExceptionHandlingTreeFactory = entityNotFoundExceptionHandlingTreeFactory;
         }
 
         #endregion
@@ -50,6 +55,7 @@ namespace QuantumLogic.WebApi.Middleware.ExceptionHandling.Factories.Concrete
             exceptionHandlingTree.AddChild(AuthorizationExceptionHandlingTreeFactory.CreateExceptionHandlingTree());
             exceptionHandlingTree.AddChild(PolicyExceptionHandlingTreeFactory.CreateExceptionHandlingTree());
             exceptionHandlingTree.AddChild(ValidationExceptionHandlingTreeFactory.CreateExceptionHandlingTree());
+            exceptionHandlingTree.AddChild(EntityNotFoundExceptionHandlingTreeFactory.CreateExceptionHandlingTree());
 
             return exceptionHandlingTree;
         }

@@ -25,11 +25,13 @@
                 self.minimumAvaliableDate = null;
                 self.firstInit = true;
 
+
                 // =======================================================================//
                 // Init                                                                   //
                 // =======================================================================//
 
                 self.$onInit = function () {
+                    console.log('init');
                     if (self.dealerData.siteId != null) {
                         self.isLoading = false;
                         self.initStep();
@@ -40,7 +42,6 @@
                                 self.isLoading = false;
                                 $interval.cancel(self.loadingCheckerInterval);
                                 self.initStep();
-
                             }
                         }, 200);
                     }
@@ -49,36 +50,6 @@
                 // =======================================================================//
                 // Step Logic                                                             //
                 // =======================================================================//
-
-                self.getMinimumAvaliableDate = function (workingHoursByDayOfWeek, dayOfWeek, counter) {
-                    if (dayOfWeek > 6) {
-                        dayOfWeek = 0;
-                    }
-
-                    if (counter > 6) {
-                        return null;
-                    }
-
-                    var dayOfWeekData = workingHoursByDayOfWeek[dayOfWeek];
-                    var startTime = dayOfWeekData.startTime.split(':')[0];
-                    var endTime = dayOfWeekData.endTime.split(':')[0];
-                    var currentDate = moment();
-                    var currentHour = currentDate.hour();
-
-                    if (dayOfWeekData.isActive && counter > 0) {
-                        currentDate.startOf('day');
-                        currentDate.add(counter, 'days');
-                        return currentDate;
-                    }
-
-                    if (dayOfWeekData.isActive && currentHour < endTime - 1 && counter == 0) {
-                        currentDate.startOf('day');
-                        currentDate.add(counter, 'days');
-                        return currentDate;
-                    }
-
-                    return self.getMinimumAvaliableDate(workingHoursByDayOfWeek, ++dayOfWeek, ++counter);
-                };
 
                 self.initStep = function () {
                     self.workingHoursByDayOfWeek = self.groupWorkingHoursByDayOfWeek(self.dealerData.workingHours);
@@ -91,6 +62,11 @@
                         self.dateImput = self.minimumAvaliableDate;
                         // self.mobileDateTimeInput = self.minimumAvaliableDate;
                     }
+
+                    if (self.bookingData.calendar.time) {
+
+                    }
+
                     self.validateStep();
 
                     var startTime = self.workingHoursByDayOfWeek[self.minimumAvaliableDate.day()].startTime;
@@ -139,6 +115,36 @@
                     };
                 };
 
+                self.getMinimumAvaliableDate = function (workingHoursByDayOfWeek, dayOfWeek, counter) {
+                    if (dayOfWeek > 6) {
+                        dayOfWeek = 0;
+                    }
+
+                    if (counter > 6) {
+                        return null;
+                    }
+
+                    var dayOfWeekData = workingHoursByDayOfWeek[dayOfWeek];
+                    var startTime = dayOfWeekData.startTime.split(':')[0];
+                    var endTime = dayOfWeekData.endTime.split(':')[0];
+                    var currentDate = moment();
+                    var currentHour = currentDate.hour();
+
+                    if (dayOfWeekData.isActive && counter > 0) {
+                        currentDate.startOf('day');
+                        currentDate.add(counter, 'days');
+                        return currentDate;
+                    }
+
+                    if (dayOfWeekData.isActive && currentHour < endTime - 1 && counter == 0) {
+                        currentDate.startOf('day');
+                        currentDate.add(counter, 'days');
+                        return currentDate;
+                    }
+
+                    return self.getMinimumAvaliableDate(workingHoursByDayOfWeek, ++dayOfWeek, ++counter);
+                };
+
                 self.groupWorkingHoursByDayOfWeek = function (siteWorkingHours) {
                     var defaultWorkingHours = {
                         0: {startTime: '09:00:00', endTime: '18:00:00', isActive: false},
@@ -164,7 +170,6 @@
                     var arr = newValue._i.split(' ');
                     var dayOfWeek = arr[1];
 
-                    self.bookingData.calendar.time = cleanTimeIfInvalid(self.bookingData.calendar.time, dayOfWeek);
                     self.bookingData.calendar.date = arr[0];
                     self.bookingData.calendar.dayOfWeek = dayOfWeek;
                     self.validateStep();
@@ -188,7 +193,10 @@
                     var dayOfWeek = arr[3];
 
                     self.bookingData.calendar.date = date;
-                    self.bookingData.calendar.time = hours + ':' + '00 ' + amPm;
+                    if (!self.firstInit) {
+                        self.bookingData.calendar.time = hours + ':' + '00 ' + amPm;
+                    }
+                    self.firstInit = false;
                     self.bookingData.calendar.dayOfWeek = dayOfWeek;
                     self.bookingData.calendar.isSkipped = false;
                     self.validateStep();
@@ -210,21 +218,6 @@
                         self.isStepValid = false;
                     }
                 };
-
-                function cleanTimeIfInvalid(selectedTime, dayOfWeek) {
-                    if (!selectedTime) {
-                        return selectedTime;
-                    }
-
-                    var selectedHour = moment(selectedTime, 'HH:mm A').get('hour');
-                    var startTime = parseInt(self.workingHoursByDayOfWeek[dayOfWeek].startTime.split(':')[0]);
-                    var endTime = parseInt(self.workingHoursByDayOfWeek[dayOfWeek].endTime.split(':')[0]);
-
-                    if (!(startTime <= selectedHour && selectedHour <= endTime)) {
-                        return null;
-                    }
-                    return selectedTime;
-                }
 
                 // =======================================================================//
                 // Navigation                                                             //

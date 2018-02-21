@@ -21,6 +21,38 @@ namespace QuantumLogic.Core.Domain.Services.Widget.Sites
 
         #endregion
 
+
+        public async Task SwapBeverageExpertStepOrder(int id)
+        {
+            Site entity = await RetrieveAsync(id);
+            ((ISitePolicy)Policy).CanUpdate(entity);
+            int stub = entity.BeverageStepOrder;
+            entity.BeverageStepOrder = entity.ExpertStepOrder;
+            entity.ExpertStepOrder = stub;
+            ((ISiteValidationService)ValidationService).ValidateEntity(entity);
+            await Repository.UpdateAsync(entity);
+        }
+        public async Task SwapBeverageRouteStepOrder(int id)
+        {
+            Site entity = await RetrieveAsync(id);
+            ((ISitePolicy)Policy).CanUpdate(entity);
+            int stub = entity.BeverageStepOrder;
+            entity.BeverageStepOrder = entity.RouteStepOrder;
+            entity.RouteStepOrder = stub;
+            ((ISiteValidationService)ValidationService).ValidateEntity(entity);
+            await Repository.UpdateAsync(entity);
+        }
+        public async Task SwapExpertRouteStepOrder(int id)
+        {
+            Site entity = await RetrieveAsync(id);
+            ((ISitePolicy)Policy).CanUpdate(entity);
+            int stub = entity.RouteStepOrder;
+            entity.RouteStepOrder = entity.ExpertStepOrder;
+            entity.ExpertStepOrder = stub;
+            ((ISiteValidationService)ValidationService).ValidateEntity(entity);
+            await Repository.UpdateAsync(entity);
+        }
+
         public async Task ChangeContactsAsync(int id, string newValue)
         {
             Site entity = await RetrieveAsync(id);

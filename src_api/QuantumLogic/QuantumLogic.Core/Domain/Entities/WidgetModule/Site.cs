@@ -24,6 +24,10 @@ namespace QuantumLogic.Core.Domain.Entities.WidgetModule
         public bool UseBeverageStep { get; set; }
         public bool UseRouteStep { get; set; }
 
+        public int BeverageStepOrder { get; set; }
+        public int ExpertStepOrder { get; set; }
+        public int RouteStepOrder { get; set; }
+
         #endregion
 
         #region Relation
