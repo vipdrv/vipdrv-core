@@ -1,4 +1,7 @@
-<div class="container-fluid test-drive-widget__root">
+<div class="container-fluid">
+    <div class="row frame-header">
+        <div class="frame-header__title">Test Drive Booking</div>
+    </div>
     <div class="row" ng-if="!$ctrl.globalState.isBookingCompleted">
         <td-wizard-navigation-tab
                 class="col p-0 bg-light"
@@ -9,9 +12,12 @@
                 switch-tab="$ctrl.switchTab(tab.id)">
         </td-wizard-navigation-tab>
     </div>
+</div>
+<div class="container-fluid test-drive-widget__root">
     <div class="row td-wizard__root" ng-if="!$ctrl.globalState.isBookingCompleted">
         <td-wizard-tab-content class="col td-wizard"></td-wizard-tab-content>
-        <td-sidebar class="col-3 td-car-details d-none d-md-block bg-white" booking-data="$ctrl.bookingData"></td-sidebar>
+        <td-sidebar class="col-3 td-car-details d-none d-md-block bg-white"
+                    booking-data="$ctrl.bookingData"></td-sidebar>
     </div>
     <td-complete-step ng-if="$ctrl.globalState.isBookingCompleted" class="h-100"></td-complete-step>
 </div>

@@ -1,13 +1,26 @@
 (function () {
     angular.module('myApp')
         .component('root', {
-            controller: function ($scope, $window, $location, $timeout, globalState, bookingData, dealerData, widgetTabs, siteId, api) {
+            controller: function ($scope,
+                                  $window,
+                                  $location,
+                                  $timeout,
+                                  globalState,
+                                  bookingData,
+                                  defaultBookingData,
+                                  dealerData,
+                                  widgetTabs,
+                                  defaultWidgetTabs,
+                                  siteId,
+                                  api) {
 
                 var self = this;
                 self.siteId = siteId;
                 self.bookingData = bookingData;
+                self.defaultBookingData = defaultBookingData;
                 self.dealerData = dealerData;
                 self.widgetTabs = widgetTabs;
+                self.defaultWidgetTabs = defaultWidgetTabs;
                 self.globalState = globalState;
 
                 // =======================================================================//
@@ -40,16 +53,17 @@
                 $scope.$on('$locationChangeSuccess', function (event, newUrl, oldUrl) {
                     var hash = $location.hash();
                     self.bookingData.vehicle = self.parseVehicleDataFromHash(hash);
+                    var closeWidgetFrame = self.parseQuery(hash).closeWidgetFrame;
 
-                    var clearBookingData = self.bookingData.vehicle.clearBookingData;
-                    if (clearBookingData) {
-                        $timeout(function() {
-                            self.restWidgetProgress(clearBookingData);
+                    if (closeWidgetFrame) {
+                        $timeout(function () {
+                            self.clearWidgetProgress();
                         }, 1000);
                     }
                 });
 
-                self.restWidgetProgress = function () {
+                self.clearWidgetProgress = function () {
+                    // reset widget tabs
                     for (var key in self.widgetTabs) {
                         self.widgetTabs[key].isActive = false;
                         self.widgetTabs[key].isLocked = true;
@@ -59,60 +73,19 @@
                     self.widgetTabs.time.isLocked = false;
                     self.widgetTabs.time.isCompleted = false;
 
+                    // reset booking data
+                    self.bookingData.user = Object.assign({}, self.defaultBookingData.user);
+                    self.bookingData.calendar.time = null;
+                    self.bookingData.calendar.dayOfWeek = null;
+                    self.bookingData.calendar.isSkipped = null;
+                    self.bookingData.expert = Object.assign({}, self.defaultBookingData.expert);
+                    self.bookingData.beverage = Object.assign({}, self.defaultBookingData.beverage);
+                    self.bookingData.road = Object.assign({}, self.defaultBookingData.road);
+                    self.bookingData.vehicle = Object.assign({}, self.defaultBookingData.vehicle);
+                    self.bookingData.closeWidgetFrame = self.defaultBookingData.closeWidgetFrame;
+
+                    // reset global state
                     self.globalState.isBookingCompleted = false;
-                    self.bookingData.bookingData = {
-                        user: {
-                            firstName: null,
-                            lastName: null,
-                            phone: null,
-                            email: null,
-                            comment: null
-                        },
-                        calendar: {
-                            date: null,
-                            time: null,
-                            dayOfWeek: null,
-                            isSkipped: null
-                        },
-                        expert: {
-                            id: null,
-                            img: null,
-                            name: null,
-                            description: null,
-                            isSkipped: null
-                        },
-                        beverage: {
-                            id: null,
-                            img: null,
-                            name: null,
-                            description: null,
-                            isSkipped: null
-                        },
-                        road: {
-                            id: null,
-                            img: null,
-                            name: null,
-                            description: null,
-                            isSkipped: null
-                        },
-                        vehicle: {
-                            vin: null,
-                            stock: null,
-                            year: null,
-                            make: null,
-                            model: null,
-                            body: null,
-                            title: null,
-                            engine: null,
-                            exterior: null,
-                            interior: null,
-                            drivetrain: null,
-                            transmission: null,
-                            msrp: null,
-                            imageUrl: null,
-                            vdpUrl: null
-                        }
-                    };
                 };
 
                 self.$onInit = function () {
