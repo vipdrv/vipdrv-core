@@ -58,6 +58,7 @@
             isCompleted: false
         }
     };
+    var defaultWidgetTabs = JSON.parse(JSON.stringify(widgetTabs)); // hardcore way to copy an object
 
     var bookingData = {
         user: {
@@ -110,8 +111,10 @@
             msrp: null,
             imageUrl: null,
             vdpUrl: null
-        }
+        },
+        closeWidgetFrame: null
     };
+    let defaultBookingData = JSON.parse(JSON.stringify(bookingData)); // hardcore way to copy an object
 
     var dealerData = {
         siteId: null,
@@ -136,15 +139,16 @@
             items: []
         }
     };
-
     var globalState = {
         isBookingCompleted: false
     };
 
     app.value('siteId', getParameterByName('siteId') || defaultSiteId);
     app.value('widgetTabs', widgetTabs);
+    app.value('defaultWidgetTabs', defaultWidgetTabs);
     app.value('globalState', globalState);
     app.value('bookingData', bookingData);
+    app.value('defaultBookingData', defaultBookingData);
     app.value('dealerData', dealerData);
     app.value('apiBaseUrl', apiBaseUrl);
 

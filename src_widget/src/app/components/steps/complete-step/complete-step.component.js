@@ -16,11 +16,6 @@
 
                 self.$onInit = function () {
                     _initCalendarButton();
-                    // #warning: CSS hack
-                    var div = $window.document.getElementsByClassName('test-drive-widget__root')[0];
-                    if (div) {
-                        div.style.display = 'table';
-                    }
                 };
 
                 var _initCalendarButton = function () {
@@ -39,9 +34,9 @@
                         });
                     };
 
-                    $timeout(function() {
+                    $timeout(function () {
                         self.isPageLoaded = true;
-                    },100);
+                    }, 100);
                 };
 
                 // =======================================================================//

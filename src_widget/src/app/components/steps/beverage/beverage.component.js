@@ -8,9 +8,7 @@
                 self.bookingData = bookingData;
 
                 self.$onInit = function () {
-                    if (self.bookingData.beverage.name === null) {
-                        self.isStepValid = false;
-                    }
+                    self.validateStep();
                 };
 
                 self.itemChanged = function ($event, id, img, name, description) {
