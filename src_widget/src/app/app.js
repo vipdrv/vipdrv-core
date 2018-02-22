@@ -17,17 +17,17 @@
             id: 'time',
             title: 'Select Date & Time',
             icon: 'svg-white-clock-o.svg',
-            isActive: true,
+            isActive: false,
             isLocked: false,
-            isCompleted: false,
+            isCompleted: true,
             isUsed: true
         },
         expert: {
             id: 'expert',
             icon: 'svg-white-users.svg',
             title: 'Select Expert',
-            isActive: false,
-            isLocked: true,
+            isActive: true,
+            isLocked: false,
             isCompleted: false,
             isUsed: true
         },
@@ -114,7 +114,7 @@
         },
         closeWidgetFrame: null
     };
-    let defaultBookingData = JSON.parse(JSON.stringify(bookingData)); // hardcore way to copy an object
+    var defaultBookingData = JSON.parse(JSON.stringify(bookingData)); // hardcore way to copy an object
 
     var dealerData = {
         siteId: null,
@@ -165,5 +165,33 @@
         if (!results[2]) return '';
         return decodeURIComponent(results[2].replace(/\+/g, " "));
     }
+
+})();
+
+(function () {
+
+
+    if (typeof Object.assign != 'function') {
+        Object.assign = function (target) {
+            'use strict';
+            if (target == null) {
+                throw new TypeError('Cannot convert undefined or null to object');
+            }
+
+            target = Object(target);
+            for (var index = 1; index < arguments.length; index++) {
+                var source = arguments[index];
+                if (source != null) {
+                    for (var key in source) {
+                        if (Object.prototype.hasOwnProperty.call(source, key)) {
+                            target[key] = source[key];
+                        }
+                    }
+                }
+            }
+            return target;
+        };
+    }
+
 
 })();

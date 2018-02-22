@@ -1,6 +1,6 @@
 (function () {
     angular.module('myApp')
-        .component('tdWizardTabContent', {
+        .component('tdWizardTabsContainer', {
             controller: function (api, widgetTabs, bookingData, dealerData, globalState) {
 
                 var self = this;
@@ -60,7 +60,7 @@
                     return null;
                 };
             },
-            templateUrl: 'src/app/components/wizard/wizard-tab-content.tpl.html',
+            templateUrl: 'src/app/components/wizard/wizard-tabs-container.tpl.html',
             bindings: {}
         });
 })();

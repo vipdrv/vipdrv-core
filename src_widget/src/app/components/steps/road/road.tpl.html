@@ -1,30 +1,38 @@
-<div class="row">
-    <div class="col-12">
-        <h2 class="wizard-tab-content__title">Select Route</h2>
-        <p class="m-1">What type of test drive would you like to take ? Let's choose one that best fits your lifestyle</p>
+<div class="vipdrv-scrollable__wrapper">
+    <div class="row">
+        <div class="col-12">
+            <h2 class="wizard-tab-content__title">Select Route</h2>
+            <p class="m-1">What type of test drive would you like to take ? Let's choose one that best fits your
+                lifestyle</p>
+        </div>
     </div>
-</div>
-<div class="row pr-3 td-cards td-scrollbar">
-    <td-card class="col-md-6 col-sm-12 p-0 pt-3 pl-3"
-             ng-repeat="item in $ctrl.dealerData.roads.items"
-             card-image="item.photoUrl"
-             card-title="item.name"
-             card-desc="item.description"
-             is-active-card="item.name == $ctrl.bookingData.road.name"
-             ng-click="itemChanged($event, item.id, item.photoUrl, item.name, item.description)"
-             ng-if="item.isActive">
-    </td-card>
-</div>
-
-<div class="row wizard-navigation-tab-next-button--desktop d-none d-md-block">
-    <div class="col-12">
-        <a href="javascript:void(0)" class="card-link mr-3" ng-click="skipStep()">Skip this step</a>
-        <button type="button" class="btn btn-lg btn-primary " ng-click="nextStep()" ng-disabled="!$ctrl.isStepValid">Next Step</button>
+    <div class="vipdrv-scrollable__content">
+        <div class="row pr-3 td-cards td-scrollbar">
+            <td-card class="col-md-6 col-sm-12 p-0 pt-3 pl-3"
+                     ng-repeat="item in $ctrl.dealerData.roads.items"
+                     card-image="item.photoUrl"
+                     card-title="item.name"
+                     card-desc="item.description"
+                     is-active-card="item.name == $ctrl.bookingData.road.name"
+                     ng-click="itemChanged($event, item.id, item.photoUrl, item.name, item.description)"
+                     ng-if="item.isActive">
+            </td-card>
+        </div>
     </div>
-</div>
-<div class="row d-md-none d-lg-none d-sm-block mt-2 mb-4">
-    <div class="col-12">
-        <button type="button" class="btn btn-primary btn-lg btn-block mb-3" ng-disabled="!$ctrl.isStepValid" ng-click="nextStep()">Next Step</button>
-        <a href="javascript:void(0)" class="card-link d-block text-center" ng-click="skipStep()">Skip this step </a>
+    <div class="row wizard-navigation-tab-next-button--desktop d-none d-md-block">
+        <div class="col-12">
+            <a href="javascript:void(0)" class="card-link mr-3" ng-click="skipStep()">Skip this step</a>
+            <button type="button" class="btn btn-lg btn-primary " ng-click="nextStep()"
+                    ng-disabled="!$ctrl.isStepValid">Next Step
+            </button>
+        </div>
+    </div>
+    <div class="row d-md-none d-lg-none d-sm-block mt-2 mb-4">
+        <div class="col-12">
+            <button type="button" class="btn btn-primary btn-lg btn-block mb-3" ng-disabled="!$ctrl.isStepValid"
+                    ng-click="nextStep()">Next Step
+            </button>
+            <a href="javascript:void(0)" class="card-link d-block text-center" ng-click="skipStep()">Skip this step </a>
+        </div>
     </div>
 </div>

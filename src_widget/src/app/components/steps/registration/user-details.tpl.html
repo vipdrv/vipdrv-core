@@ -1,106 +1,88 @@
-<div class="row d-none d-md-block">
-    <div class="col-12">
-        <h2 class="wizard-tab-content__title">Book Test Drive!</h2>
-        <p>Please add your details below to confirm your test drive appointment</p>
+<div class="vipdrv-scrollable__content">
+    <div class="row d-none d-md-block">
+        <div class="col-12">
+            <h2 class="wizard-tab-content__title">Book Test Drive!</h2>
+            <p>Please add your details below to confirm your test drive appointment</p>
+        </div>
+    </div>
+    <div class="vipdrv-scrollable__content">
+        <form name="userForm">
+            <div class="row">
+                <div class="form-group col-12 col-sm-12 col-md-6 col-lg-6">
+                    <label class="col-form-label d-none d-md-block">First Name</label>
+                    <label class="col-form-label d-sm-block d-md-none d-lg-none">Name</label>
+                    <input name="firstName"
+                           maxlength="20"
+                           class="form-control"
+                           ng-model="firstName"
+                           ng-class="{ 'is-invalid' : !userForm.firstName.$valid && !userForm.firstName.$pristine, 'is-valid' : userForm.firstName.$valid && !userForm.firstName.$pristine }"
+                           required>
+                </div>
+                <div class="form-group col-md-6 d-none d-md-block">
+                    <label class="col-form-label">Last Name</label>
+                    <input name="secondName"
+                           maxlength="20"
+                           class="form-control"
+                           ng-model="secondName"
+                           ng-class="{ 'is-invalid' : !userForm.secondName.$valid && !userForm.secondName.$pristine, 'is-valid' : userForm.secondName.$valid && !userForm.secondName.$pristine }">
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-md-6">
+                    <label class="col-form-label">Email</label>
+                    <input type="email"
+                           name="email"
+                           maxlength="60"
+                           class="form-control"
+                           ng-model="email"
+                           ng-class="{ 'is-invalid' : !userForm.email.$valid && !userForm.email.$pristine, 'is-valid' : userForm.email.$valid && !userForm.email.$pristine}"
+                           required>
+                </div>
+                <div class="form-group col-md-6">
+                    <label class="col-form-label">Phone</label>
+                    <input id="userPhone"
+                           name="phone"
+                           minlength="14"
+                           maxlength="60"
+                           class="form-control"
+                           placeholder="(555) 555-5555"
+                           ng-model="phone"
+                           ng-class="{ 'is-invalid' : !userForm.phone.$valid && !userForm.phone.$pristine,
+                               'is-valid' : userForm.phone.$valid && !userForm.phone.$pristine}"
+                           required>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-md-12">
+                    <label for="input5" class="col-form-label">Comment</label>
+                    <textarea name="comment"
+                              class="form-control"
+                              id="input5"
+                              ng-model="comment"
+                              ng-class="{ 'is-invalid' : !userForm.comment.$valid && !userForm.comment.$pristine,'is-valid' : userForm.comment.$valid && !userForm.comment.$pristine }">
+                </textarea>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <button ng-disabled="userForm.$invalid" type="button"
+                            class="btn btn-primary btn-lg btn-block d-md-none d-lg-none d-sm-block mt-2 mb-4"
+                            ng-click="$ctrl.makeBooking()">
+                        Make my booking
+                        <img ng-if="$ctrl.isLoading" ng-src="/img/spinner-complete-booking.svg" style="height: 1.25rem">
+                    </button>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <button ng-disabled="userForm.$invalid" type="button"
+                            class="btn btn-lg btn-primary d-none d-md-block float-right"
+                            ng-click="$ctrl.makeBooking()">
+                        Make My Booking
+                        <img ng-if="$ctrl.isLoading" ng-src="/img/spinner-complete-booking.svg" style="height: 1.25rem">
+                    </button>
+                </div>
+            </div>
+        </form>
     </div>
 </div>
-<form name="userForm">
-    <div class="row">
-        <div class="form-group col-12 col-sm-12 col-md-6 col-lg-6">
-            <label class="col-form-label d-none d-md-block">First Name</label>
-            <label class="col-form-label d-sm-block d-md-none d-lg-none">Name</label>
-            <input name="firstName"
-                   maxlength="20"
-                   class="form-control"
-                   ng-model="firstName"
-                   ng-class="{ 'is-invalid' : !userForm.firstName.$valid && !userForm.firstName.$pristine, 'is-valid' : userForm.firstName.$valid && !userForm.firstName.$pristine }"
-                   required>
-        </div>
-        <div class="form-group col-md-6 d-none d-md-block">
-            <label class="col-form-label">Last Name</label>
-            <input name="secondName"
-                   maxlength="20"
-                   class="form-control"
-                   ng-model="secondName"
-                   ng-class="{ 'is-invalid' : !userForm.secondName.$valid && !userForm.secondName.$pristine, 'is-valid' : userForm.secondName.$valid && !userForm.secondName.$pristine }">
-        </div>
-    </div>
-    <div class="row">
-        <div class="form-group col-md-6">
-            <label class="col-form-label">Email</label>
-            <input type="email"
-                   name="email"
-                   maxlength="60"
-                   class="form-control"
-                   ng-model="email"
-                   ng-class="{ 'is-invalid' : !userForm.email.$valid && !userForm.email.$pristine, 'is-valid' : userForm.email.$valid && !userForm.email.$pristine}"
-                   required>
-        </div>
-        <div class="form-group col-md-6">
-            <label class="col-form-label">Phone</label>
-            <input id="userPhone"
-                   name="phone"
-                   minlength="14"
-                   maxlength="60"
-                   class="form-control"
-                   placeholder="(555) 555-5555"
-                   ng-model="phone"
-                   ng-class="{ 'is-invalid' : !userForm.phone.$valid && !userForm.phone.$pristine,
-                               'is-valid' : userForm.phone.$valid && !userForm.phone.$pristine}"
-                   required>
-        </div>
-    </div>
-    <div class="row">
-        <div class="form-group col-md-12">
-            <label for="input5" class="col-form-label">Comment</label>
-            <textarea name="comment"
-                      class="form-control"
-                      id="input5"
-                      ng-model="comment"
-                      ng-class="{ 'is-invalid' : !userForm.comment.$valid && !userForm.comment.$pristine,'is-valid' : userForm.comment.$valid && !userForm.comment.$pristine }">
-                </textarea>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-12">
-            <button ng-disabled="userForm.$invalid" type="button"
-                    class="btn btn-primary btn-lg btn-block d-md-none d-lg-none d-sm-block mt-2 mb-4"
-                    ng-click="$ctrl.makeBooking()">
-                Make my booking
-                <img ng-if="$ctrl.isLoading" ng-src="/img/spinner-complete-booking.svg" style="height: 1.25rem">
-            </button>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-12">
-            <button ng-disabled="userForm.$invalid" type="button"
-                    class="btn btn-lg btn-primary d-none d-md-block float-right"
-                    ng-click="$ctrl.makeBooking()">
-                Make My Booking
-                <img ng-if="$ctrl.isLoading" ng-src="/img/spinner-complete-booking.svg" style="height: 1.25rem">
-            </button>
-        </div>
-    </div>
-    <div class="d-md-none d-lg-none d-sm-block mt-2 mb-4">
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-    </div>
-</form>
-<style>
-    /* TODO: dirty CSS hack to allow scroll for current step */
-    /*.test-drive-widget__root {*/
-        /*display: table !important;*/
-    /*}*/
-</style>
-
