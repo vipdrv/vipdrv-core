@@ -20,6 +20,10 @@ namespace QuantumLogic.WebApi.DataModels.Dtos.Widget.Experts
         public int Order { get; set; }
         public bool IsActive { get; set; }
 
+        public bool IsPartOfTeamNewCars { get; set; }
+        public bool IsPartOfTeamUsedCars { get; set; }
+        public bool IsPartOfTeamCPO { get; set; }
+
         #region Mapping
 
         public override void MapFromEntity(Expert entity)
@@ -37,6 +41,9 @@ namespace QuantumLogic.WebApi.DataModels.Dtos.Widget.Experts
             WorkingHours = DayOfWeekInterval.Parse(entity.WorkingHours);
             Order = entity.Order;
             IsActive = entity.IsActive;
+            IsPartOfTeamNewCars = entity.IsPartOfTeamNewCars;
+            IsPartOfTeamUsedCars = entity.IsPartOfTeamUsedCars;
+            IsPartOfTeamCPO = entity.IsPartOfTeamCPO;
         }
         public override Expert MapToEntity()
         {
@@ -52,6 +59,9 @@ namespace QuantumLogic.WebApi.DataModels.Dtos.Widget.Experts
             entity.LinkedinUrl = LinkedinUrl;
             entity.Order = Order;
             entity.IsActive = IsActive;
+            entity.IsPartOfTeamNewCars = IsPartOfTeamNewCars;
+            entity.IsPartOfTeamUsedCars = IsPartOfTeamUsedCars;
+            entity.IsPartOfTeamCPO = IsPartOfTeamCPO;
             return entity;
         }
 

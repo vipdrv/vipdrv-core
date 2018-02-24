@@ -17,6 +17,10 @@
         public int Order { get; set; }
         public bool IsActive { get; set; }
 
+        public bool IsPartOfTeamNewCars { get; set; }
+        public bool IsPartOfTeamUsedCars { get; set; }
+        public bool IsPartOfTeamCPO { get; set; }
+
         #endregion
 
         #region Relations
@@ -81,6 +85,9 @@
             FacebookUrl = actualEntity.FacebookUrl;
             LinkedinUrl = actualEntity.LinkedinUrl;
             WorkingHours = actualEntity.WorkingHours;
+            IsPartOfTeamNewCars = actualEntity.IsPartOfTeamNewCars;
+            IsPartOfTeamUsedCars = actualEntity.IsPartOfTeamUsedCars;
+            IsPartOfTeamCPO = actualEntity.IsPartOfTeamCPO;
         }
 
         #endregion
