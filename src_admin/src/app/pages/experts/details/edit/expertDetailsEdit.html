@@ -269,6 +269,55 @@
         </div>
     </div>
     <hr>
+    <div class="row">
+        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+            <label class="custom-control custom-checkbox">
+                <input type="checkbox"
+                       name="isPartOfTeamNewCars"
+                       class="custom-control-input"
+                       [disabled]="isComponentReadOnly()"
+                       [(ngModel)]="entity.isPartOfTeamNewCars">
+                <span class="custom-control-indicator"></span>
+                <span class="custom-control-description"
+                      translate>
+                    experts.modal.isPartOfTeamNewCars
+                </span>
+            </label>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+            <label class="custom-control custom-checkbox">
+                <input type="checkbox"
+                       name="isPartOfTeamUsedCars"
+                       class="custom-control-input"
+                       [disabled]="isComponentReadOnly()"
+                       [(ngModel)]="entity.isPartOfTeamUsedCars">
+                <span class="custom-control-indicator"></span>
+                <span class="custom-control-description"
+                      translate>
+                    experts.modal.isPartOfTeamUsedCars
+                </span>
+            </label>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+            <label class="custom-control custom-checkbox">
+                <input type="checkbox"
+                       name="isPartOfTeamCPO"
+                       class="custom-control-input"
+                       [disabled]="isComponentReadOnly()"
+                       [(ngModel)]="entity.isPartOfTeamCPO">
+                <span class="custom-control-indicator"></span>
+                <span class="custom-control-description"
+                      translate>
+                    experts.modal.isPartOfTeamCPO
+                </span>
+            </label>
+        </div>
+    </div>
+    <hr>
     <div class="row test-drive-modal-body-edit-entity-container-row-input">
         <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
             <div class="row">

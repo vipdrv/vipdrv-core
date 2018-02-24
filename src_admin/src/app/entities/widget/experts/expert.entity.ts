@@ -13,6 +13,9 @@ export class ExpertEntity extends Entity implements IPassivable, IOrderable {
     workingHours: Array<WorkingInterval>;
     order: number;
     isActive: boolean;
+    isPartOfTeamNewCars: boolean;
+    isPartOfTeamUsedCars: boolean;
+    isPartOfTeamCPO: boolean;
     /// ctoe
     constructor() {
         super();
@@ -36,5 +39,8 @@ export class ExpertEntity extends Entity implements IPassivable, IOrderable {
         this.workingHours = WorkingInterval.initializeManyFromDto(dto.workingHours);
         this.order = mock.order;
         this.isActive = mock.isActive;
+        this.isPartOfTeamNewCars = mock.isPartOfTeamNewCars;
+        this.isPartOfTeamUsedCars = mock.isPartOfTeamUsedCars;
+        this.isPartOfTeamCPO = mock.isPartOfTeamCPO;
     }
 }
