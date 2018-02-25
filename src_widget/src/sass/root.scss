@@ -24,6 +24,10 @@ html, body {
   margin: 0;
 }
 
+.position-fixed {
+  position: fixed !important;
+}
+
 /**
 * ------------------------------------------------------------------------
 * Root
@@ -32,6 +36,7 @@ html, body {
 
 .vipdrv-root {
   height: 100%;
+  overflow: auto;
 }
 
 /**
@@ -43,7 +48,7 @@ html, body {
 .vipdrv-header {
   height: 105px;
   margin: -105px 0px 0px 0px;
-  padding: 105px 15px 0px 15px;
+  padding: 105px 0px 0px 0px;
 }
 
 .vipdrv-title {
@@ -71,7 +76,6 @@ html, body {
   }
 }
 
-
 /**
 * ------------------------------------------------------------------------
 * Content
@@ -80,10 +84,10 @@ html, body {
 
 .vipdrv-content {
 
-  overflow: auto;
+  // overflow: auto;
   padding: 105px 0px 0px 0px;
   height: 100%;
-  background-color: red;
+  //background-color: red;
 }
 
 /**
@@ -100,7 +104,10 @@ html, body {
 
 .vipdrv-scrollable__content {
   flex: 1;
-  overflow: auto;
+  overflow-x: hidden;
+  overflow-y: auto;
+  //box-sizing: inherit;
+
 }
 
 /**
@@ -170,18 +177,6 @@ html, body {
 // =======================================================================//
 // wizard-card                                                            //
 // =======================================================================//
-
-.td-cards {
-  max-height: calc(100% - 170px);
-  overflow: auto;
-}
-
-@media (max-width: 758px) {
-  .td-cards {
-    //max-height: calc(240px);
-    max-height: calc(100% - 228px);
-  }
-}
 
 .td-card__content {
   padding: 1em;

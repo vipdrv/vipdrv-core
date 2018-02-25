@@ -8,30 +8,39 @@
         </h4>
     </div>
 
-    <div class="col-12">
+    <div class="col-12" ng-show="$ctrl.bookingData.vehicle.engine">
         <p class="text-secondary m-0">Engine</p>
         <p class="mb-2 text-overflow__ellipsis">
             {{$ctrl.bookingData.vehicle.engine ? $ctrl.bookingData.vehicle.engine : '-'}}
         </p>
     </div>
-    <div class="col-12">
+
+    <div class="col-12" ng-show="$ctrl.bookingData.vehicle.transmission">
         <p class="text-secondary m-0">Transmission</p>
         <p class="mb-2 text-overflow__ellipsis">
             {{$ctrl.bookingData.vehicle.transmission ? $ctrl.bookingData.vehicle.transmission : '-'}}
         </p>
     </div>
-    <div class="col-6">
-        <p class="text-secondary m-0">Year</p>
+    <div class="col-6" ng-show="$ctrl.bookingData.vehicle.year">
+        <p class="text-secondary m-0" >Year</p>
         <p class="mb-2 text-overflow__ellipsis">
             {{$ctrl.bookingData.vehicle.year ? $ctrl.bookingData.vehicle.year : '-'}}
         </p>
     </div>
-    <div class="col-6">
-        <p class="text-secondary m-0">Exterior</p>
+    <div class="col-6" ng-show="$ctrl.bookingData.vehicle.exterior">
+        <p class="text-secondary m-0" >Exterior</p>
         <p class="mb-2 text-overflow__ellipsis">
             {{$ctrl.bookingData.vehicle.exterior ? $ctrl.bookingData.vehicle.exterior : '-'}}
         </p>
     </div>
+    <div class="col-6" ng-show="$ctrl.bookingData.vehicle.msrp && !$ctrl.bookingData.vehicle.exterior">
+        <p class="text-secondary m-0" >MSRP</p>
+        <p class="mb-2 text-overflow__ellipsis">
+            {{$ctrl.bookingData.vehicle.msrp ? $ctrl.bookingData.vehicle.msrp : '-'}}
+        </p>
+    </div>
+
+    <!-- Booking Details -->
     <div class="col-12 mb-1" ng-if="$ctrl.bookingData.calendar.date">
         <div class="media">
             <img class="d-flex mr-3" src="/img/icon-date.jpg">

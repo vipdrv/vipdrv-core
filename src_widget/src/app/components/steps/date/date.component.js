@@ -31,7 +31,6 @@
                 // =======================================================================//
 
                 self.$onInit = function () {
-                    console.log('init');
                     if (self.dealerData.siteId != null) {
                         self.isLoading = false;
                         self.initStep();
@@ -193,10 +192,7 @@
                     var dayOfWeek = arr[3];
 
                     self.bookingData.calendar.date = date;
-                    if (!self.firstInit) {
-                        self.bookingData.calendar.time = hours + ':' + '00 ' + amPm;
-                    }
-                    self.firstInit = false;
+                    self.bookingData.calendar.time = hours + ':' + '00 ' + amPm;
                     self.bookingData.calendar.dayOfWeek = dayOfWeek;
                     self.bookingData.calendar.isSkipped = false;
                     self.validateStep();
@@ -223,13 +219,13 @@
                 // Navigation                                                             //
                 // =======================================================================//
 
-                $scope.nextStep = function () {
+                self.nextStep = function () {
                     if (self.isStepValid) {
                         self.completeStep({tabId: self.tabId});
                     }
                 };
 
-                $scope.skipStep = function () {
+                self.skipStep = function () {
                     self.bookingData.calendar.isSkipped = true;
                     self.completeStep({tabId: self.tabId});
                 };
@@ -247,7 +243,7 @@
                         startTime = hours + ':00:00';
                     }
 
-                    var currentHours = moment().hours() + 1;
+                    var currentHours = moment().hours() + 1; // Date().getHours();
                     var startTimeInterval = new Date();
                     var endTimeInterval = new Date();
                     var timeIntervalsArr = [];
@@ -260,11 +256,7 @@
                         var startHours = startTimeInterval.getHours();
 
                         var item = {
-                            time: startTimeInterval.toLocaleString('en-US', {
-                                hour: 'numeric',
-                                minute: 'numeric',
-                                hour12: true
-                            }),
+                            time: self.formatAMPM(startTimeInterval),
                             isActive: true
                         };
 
@@ -275,8 +267,21 @@
                         timeIntervalsArr.push(item);
                         startTimeInterval.setHours(startTimeInterval.getHours() + 1);
                     }
+
                     return timeIntervalsArr;
                 };
+
+                // Hack for: Mac EL Capitan
+                self.formatAMPM = function formatAMPM(date) {
+                    var hours = date.getHours();
+                    var minutes = date.getMinutes();
+                    var ampm = hours >= 12 ? 'pm' : 'am';
+                    hours = hours % 12;
+                    hours = hours ? hours : 12; // the hour '0' should be '12'
+                    minutes = minutes < 10 ? '0'+minutes : minutes;
+                    var strTime = hours + ':' + minutes + ' ' + ampm;
+                    return strTime;
+                }
             },
             templateUrl: 'src/app/components/steps/date/date.tpl.html',
             bindings: {

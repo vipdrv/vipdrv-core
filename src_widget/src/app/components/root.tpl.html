@@ -1,44 +1,30 @@
-
-
-
-
 <div class="vipdrv-root">
-    <div class="container-fluid vipdrv-header">
-        <div class="row vipdrv-title">
-            <div class="vipdrv-title__text">Test Drive Booking</div>
-        </div>
-        <div class="row" ng-if="!$ctrl.globalState.isBookingCompleted">
-            <td-wizard-navigation-tab
-                    class="col p-0 bg-light"
-                    ng-repeat="tab in $ctrl.widgetTabs"
-                    tab-id="tab.id"
-                    title="tab.title"
-                    tab-data="$ctrl.widgetTabs[tab.id]"
-                    switch-tab="$ctrl.switchTab(tab.id)">
-            </td-wizard-navigation-tab>
+    <div class="vipdrv-header">
+        <div class="container-fluid">
+            <div class="row vipdrv-title">
+                <div class="vipdrv-title__text">Test Drive Booking</div>
+            </div>
+            <div class="row" ng-if="!$ctrl.globalState.isBookingCompleted">
+                <td-wizard-navigation-tab
+                        class="col p-0 bg-light"
+                        ng-repeat="tab in $ctrl.widgetTabs"
+                        tab-id="tab.id"
+                        title="tab.title"
+                        tab-data="$ctrl.widgetTabs[tab.id]"
+                        switch-tab="$ctrl.switchTab(tab.id)">
+                </td-wizard-navigation-tab>
+            </div>
         </div>
     </div>
     <div class="vipdrv-content">
-
-
-
-
-
         <div class="container-fluid h-100">
-            <div class="row h-100">
-                <td-wizard-tabs-container class="col h-100 vipdrv-tabs-container"
-                                          ng-if="!$ctrl.globalState.isBookingCompleted">
-                </td-wizard-tabs-container>
-                <td-sidebar class="col-3 d-none d-md-block bg-white"
-                            ng-if="!$ctrl.globalState.isBookingCompleted"
-                            booking-data="$ctrl.bookingData"></td-sidebar>
-
+            <div class="row h-100" ng-if="!$ctrl.globalState.isBookingCompleted">
+                <td-wizard-tabs-container class="col h-100 vipdrv-tabs-container"></td-wizard-tabs-container>
+                <td-sidebar class="col-3 d-none d-md-block bg-white" booking-data="$ctrl.bookingData"></td-sidebar>
+            </div>
+            <div class="row h-100" ng-if="$ctrl.globalState.isBookingCompleted">
+                <td-complete-step class="col h-100"></td-complete-step>
             </div>
         </div>
-
-
-
-        <!--<td-complete-step ng-if="$ctrl.globalState.isBookingCompleted" class="h-100"></td-complete-step>-->
-
     </div>
 </div>

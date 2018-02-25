@@ -55,7 +55,7 @@
         </div>
     </div>
     <div class="vipdrv-scrollable__content">
-        <div class="row">
+        <div class="row pr-3">
             <td-card class="col-md-6 col-sm-12 p-0 pt-3 pl-3"
                      ng-repeat="expert in $ctrl.dealerData.experts.items"
                      card-image="expert.photoUrl"
@@ -64,7 +64,6 @@
                      is-active-card="expert.name == $ctrl.bookingData.expert.name"
                      ng-click="$ctrl.expertChanged($event, expert.id, expert.photoUrl, expert.name, expert.description)"
                      ng-if="expert.isActive && $ctrl.isAvaliable(expert.workingHours)">
-
             </td-card>
         </div>
     </div>

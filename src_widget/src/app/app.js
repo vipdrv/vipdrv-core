@@ -17,17 +17,17 @@
             id: 'time',
             title: 'Select Date & Time',
             icon: 'svg-white-clock-o.svg',
-            isActive: false,
+            isActive: true,
             isLocked: false,
-            isCompleted: true,
+            isCompleted: false,
             isUsed: true
         },
         expert: {
             id: 'expert',
             icon: 'svg-white-users.svg',
             title: 'Select Expert',
-            isActive: true,
-            isLocked: false,
+            isActive: false,
+            isLocked: true,
             isCompleted: false,
             isUsed: true
         },
@@ -152,9 +152,24 @@
     app.value('dealerData', dealerData);
     app.value('apiBaseUrl', apiBaseUrl);
 
-    //=======================================================================//
-    // Helpers                                                               //
-    //=======================================================================//
+    /**
+     * ------------------------------------------------------------------------
+     * Init widget theme
+     * ------------------------------------------------------------------------
+     */
+
+    var widgetTheme = getParameterByName('widgetTheme') || 'theme-blue';
+    var link = document.createElement('link');
+    link.href = window.location.origin + '/' + widgetTheme + '.css';
+    link.type = 'text/css';
+    link.rel = 'stylesheet';
+    document.getElementsByTagName('head')[0].appendChild(link);
+
+    /**
+     * ------------------------------------------------------------------------
+     * Helpers
+     * ------------------------------------------------------------------------
+     */
 
     function getParameterByName(name, url) {
         if (!url) url = window.location.href;
