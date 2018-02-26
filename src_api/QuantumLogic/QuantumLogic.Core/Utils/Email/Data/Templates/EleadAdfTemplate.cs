@@ -65,11 +65,11 @@ namespace QuantumLogic.Core.Utils.Email.Data.Templates
         
         public string AsHtml()
         {
-            var xml = $"<?xml version=\"1.0\">" +
+            var xml = $"<?xml version=\"1.0\" encoding=\"UTF-8\"?>" +
                       $"<?adf version=\"1.0\"?>" +
                       $"<adf>" +
-                          $"<prospect status=\"new\">" +
-                              $"<id sequence=\"uniqueLeadId\" source=\"{SiteName}\"></id>" + //TODO: dealer name for Id
+                          $"<prospect>" + // status=\"new\"
+                              $"<id sequence=\"{DealerName}\" source=\"{SiteName}\"></id>" +
                               $"<requestdate>{DateTime.Now.ToString(QuantumLogicConstants.OutputDateTimeFormat, CultureInfo.InvariantCulture)}</requestdate>" +
                               $"<vehicle  interest=\"test-drive\">" +
                                   $"<vin>{CarVin}</vin>" +
@@ -78,6 +78,9 @@ namespace QuantumLogic.Core.Utils.Email.Data.Templates
                                // $"<make>Make</make>" +
                                // $"<model>Model</model>" +
                               $"</vehicle>" +
+                              $"<salesperson>" +
+                                $"<id source=\"DealerPeak\">{ExpertName}</id>" +
+                              $"</salesperson>" +
                               $"<customer>" +
                                   $"<contact>" +
                                       $"<name part=\"first\">{FirstName}</name>" +
@@ -85,8 +88,8 @@ namespace QuantumLogic.Core.Utils.Email.Data.Templates
                                       $"<phone>{UserPhone}</phone>" +
                                       $"<email>{UserEmail}</email>" +
                                       $"<comments>" +
-                                          $"Date & Time: {BookingDateTimeUtc.GetValueOrDefault().ToString(QuantumLogicConstants.UsaTimeFormat, CultureInfo.InvariantCulture)} " +
-                                          $"Expert: {ExpertName} " +
+                                          $"Date and Time: {BookingDateTimeUtc.GetValueOrDefault().ToString(QuantumLogicConstants.UsaTimeFormat, CultureInfo.InvariantCulture)} " +
+                                          $"Sales Person: {ExpertName} " +
                                           $"Beverage: {BeverageName} " +
                                           $"Route: {RouteTitle} " +
                                       $"</comments>" +

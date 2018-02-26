@@ -1,38 +1,96 @@
-<div class="row">
-    <div class="col-12">
-        <h2 ng-if="!$ctrl.isNoSalesPersonAvaliable" class="wizard-tab-content__title">Select Salesperson</h2>
-        <p ng-if="!$ctrl.isNoSalesPersonAvaliable" class="m-1">Select an expert from below to handle your test drive experience.</p>
-        <h2 ng-if="$ctrl.isNoSalesPersonAvaliable">We are sorry, but there are no experts available for selected Time</h2>
+<!--<div class="vipdrv-scrollable__wrapper">-->
+<!--<div class="header">-->
+<!--<p>Header1</p>-->
+<!--<p>Header2</p>-->
+<!--<p>Header3</p>-->
+
+<!--</div>-->
+<!--<div class="vipdrv-scrollable__content">-->
+<!--<div>-->
+<!--<p>Content 1</p>-->
+<!--<p>Content 2</p>-->
+<!--<p>Content 3</p>-->
+<!--<p>Content 4</p>-->
+<!--<p>Content 5</p>-->
+<!--<p>Content 6</p>-->
+<!--<p>Content 7</p>-->
+<!--<p>Content 8</p>-->
+<!--<p>Content 9</p>-->
+<!--<p>Content 10</p>-->
+<!--<p>Content 11</p>-->
+<!--<p>Content 12</p>-->
+<!--<p>Content 13</p>-->
+<!--<p>Content 14</p>-->
+<!--<p>Content 15</p>-->
+<!--<p>Content 16</p>-->
+<!--<p>Content 17</p>-->
+<!--<p>Content 18</p>-->
+<!--<p>Content 19</p>-->
+<!--<p>Content 20</p>-->
+<!--<p>Content 21</p>-->
+<!--<p>Content 22</p>-->
+<!--</div>-->
+<!--</div>-->
+<!--<div class="footer">-->
+<!--<p>Footer1</p>-->
+<!--<p>Footer2</p>-->
+<!--<p>Footer3</p>-->
+<!--<p>Footer4</p>-->
+<!--</div>-->
+<!--</div>-->
+
+
+<div class="vipdrv-scrollable__wrapper">
+    <div class="row">
+        <div class="col-12">
+            <h2 ng-if="!$ctrl.isNoSalesPersonAvaliable" class="wizard-tab-content__title">
+                Select Salesperson
+            </h2>
+            <p ng-if="!$ctrl.isNoSalesPersonAvaliable" class="m-1">
+                Select an expert from below to handle your test drive experience.
+            </p>
+            <h2 ng-if="$ctrl.isNoSalesPersonAvaliable">
+                We are sorry, but there are no experts available for selected Time
+            </h2>
+        </div>
+    </div>
+    <div class="vipdrv-scrollable__content">
+        <div class="row pr-3">
+            <td-card class="col-md-6 col-sm-12 p-0 pt-3 pl-3 heap-select-expert"
+                     ng-repeat="expert in $ctrl.dealerData.experts.items"
+                     card-image="expert.photoUrl"
+                     card-title="expert.name"
+                     card-desc="expert.title"
+                     is-active-card="expert.name == $ctrl.bookingData.expert.name"
+                     ng-click="$ctrl.expertChanged($event, expert.id, expert.photoUrl, expert.name, expert.description)"
+                     ng-if="expert.isActive && $ctrl.isAvaliable(expert.workingHours)">
+            </td-card>
+        </div>
+    </div>
+    <div class="row d-none d-md-block">
+        <div class="col-12">
+            <button type="button"
+                    class="btn btn-lg vipdrv-button float-right mt-3 mb-3 heap-complete-expert"
+                    ng-click="nextStep()"
+                    ng-disabled="!$ctrl.isStepValid">Next Step
+            </button>
+            <button type="button"
+                    class="btn btn-lg btn-link float-right text-secondary mt-3 mb-3 heap-skip-expert"
+                    ng-click="skipStep()">Skip Step
+            </button>
+        </div>
+    </div>
+    <div class="row d-md-none d-lg-none d-sm-block">
+        <div class="col-12">
+            <button type="button" class="btn vipdrv-button btn-lg btn-block mt-3 heap-complete-expert"
+                    ng-click="nextStep()"
+                    ng-disabled="!$ctrl.isStepValid">Next Step
+            </button>
+            <button type="button"
+                    class="btn btn-lg btn-link btn-block text-secondary mt-2 mb-2 heap-skip-expert"
+                    ng-click="skipStep()">Skip Step
+            </button>
+        </div>
     </div>
 </div>
-
-<div class="row pr-3 td-cards td-scrollbar">
-    <td-card class="col-md-6 col-sm-12 p-0 pt-3 pl-3"
-             ng-repeat="expert in $ctrl.dealerData.experts.items"
-             card-image="expert.photoUrl"
-             card-title="expert.name"
-             card-desc="expert.title"
-             is-active-card="expert.name == $ctrl.bookingData.expert.name"
-             ng-click="$ctrl.expertChanged($event, expert.id, expert.photoUrl, expert.name, expert.description)"
-             ng-if="expert.isActive && $ctrl.isAvaliable(expert.workingHours)">
-
-    </td-card>
-    <!-- ng-if=(expert.isActive && isAvaliable(expert.workingHours)) -->
-</div>
-
-<div class="row wizard-navigation-tab-next-button--desktop d-none d-md-block">
-    <div class="col-12">
-        <a href="javascript:void(0)" class="card-link mr-3" ng-click="skipStep()">Skip this step</a>
-        <button type="button" class="btn btn-lg btn-primary " ng-click="nextStep()" ng-disabled="!$ctrl.isStepValid">Next Step</button>
-    </div>
-</div>
-<div class="row d-md-none d-lg-none d-sm-block mt-2 mb-4">
-    <div class="col-12">
-        <button type="button" class="btn btn-primary btn-lg btn-block mb-3" ng-click="nextStep()" ng-disabled="!$ctrl.isStepValid">Next Step</button>
-        <a href="javascript:void(0)" class="card-link d-block text-center" ng-click="skipStep()">Skip this step</a>
-    </div>
-</div>
-
-
-
 

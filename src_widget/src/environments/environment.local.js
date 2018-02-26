@@ -1,6 +1,6 @@
 module.exports = {
     production: false,
-    apiBaseUrl: 'http://dev.api.testdrive.pw/api',
+    apiBaseUrl: 'http://api.testdrive.pw/api',
     defaultSiteId: 28
 };
 

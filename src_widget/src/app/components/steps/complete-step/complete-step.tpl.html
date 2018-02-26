@@ -1,186 +1,215 @@
-<div class="row">
-    <div class="col-12 pt-2 pb-2">
-        <h4 class="text-center text-primary">Booking Completed</h4>
-    </div>
-</div>
+<div class="vipdrv-scrollable__wrapper">
+    <!--<div class="row">-->
+        <!--<div class="col">-->
+            <!--<p class="sidebar__vehicle-title text-center text-primary pt-2 pb-2">Booking Completed</p>-->
+        <!--</div>-->
+    <!--</div>-->
+    <div class="vipdrv-scrollable__content">
+        <div class="row">
+            <div class="col-sm-12 col-md-12 col-lg-8">
+                <table class="table complete-booking-table">
+                    <tbody>
+                    <tr>
+                        <td class="complete-booking-table__header d-none d-md-block d-lg-block">Date</td>
+                        <td>
+                            <div class="media" ng-show="!$ctrl.bookingData.calendar.date">
+                                <img class="mr-3 rounded complete-booking-table__image"
+                                     ng-src="/img/missing-image-2.jpg"
+                                     alt="Date & Time image">
+                                <div class="media-body">
+                                    <h5 class="mt-0 mb-1">Skipped</h5>
+                                </div>
+                            </div>
+                            <div class="media" ng-show="$ctrl.bookingData.calendar.date">
+                                <img class="mr-3 rounded complete-booking-table__image"
+                                     src="/img/date-icon-2.png"
+                                     alt="Date & Time image">
+                                <div class="media-body">
+                                    <h5 class="mt-0 mb-1">{{$ctrl.bookingData.calendar.date|usaDateFormat}}</h5>
+                                    {{$ctrl.bookingData.calendar.time}}
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="complete-booking-table__header d-none d-md-block d-lg-block">Salesperson</td>
+                        <td>
+                            <div class="media" ng-show="$ctrl.bookingData.expert.name == 'Skipped'">
+                                <img class="mr-3 rounded complete-booking-table__image"
+                                     ng-src="/img/missing-image-2.jpg"
+                                     alt="Salesperson image">
+                                <div class="media-body">
+                                    <h5 class="mt-0 mb-1">Skipped</h5>
+                                </div>
+                            </div>
+                            <div class="media" ng-show="$ctrl.bookingData.expert.name != 'Skipped'">
+                                <img class="mr-3 rounded complete-booking-table__image"
+                                     ng-src="{{$ctrl.bookingData.expert.img}}"
+                                     alt="Salesperson image">
+                                <div class="media-body">
+                                    <h5 class="mt-0 mb-1" ng-if="$ctrl.bookingData.expert.name">
+                                        {{$ctrl.bookingData.expert.name}}</h5>
+                                    {{$ctrl.bookingData.expert.description}}
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="complete-booking-table__header d-none d-md-block d-lg-block">Beverage</td>
+                        <td>
+                            <div class="media" ng-show="$ctrl.bookingData.beverage.name == 'Skipped'">
+                                <img class="mr-3 rounded complete-booking-table__image"
+                                     ng-src="/img/missing-image-2.jpg"
+                                     alt="Beverage image">
+                                <div class="media-body">
+                                    <h5 class="mt-0 mb-1">Skipped</h5>
+                                </div>
+                            </div>
+                            <div class="media" ng-show="$ctrl.bookingData.beverage.name != 'Skipped'">
+                                <img class="mr-3 rounded complete-booking-table__image"
+                                     ng-src="{{$ctrl.bookingData.beverage.img}}"
+                                     alt="Beverage image">
+                                <div class="media-body">
+                                    <h5 class="mt-0 mb-1">{{$ctrl.bookingData.beverage.name}}</h5>
+                                    {{$ctrl.bookingData.beverage.description}}
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="complete-booking-table__header d-none d-md-block d-lg-block">Route</td>
+                        <td>
+                            <div class="media" ng-show="$ctrl.bookingData.road.name == 'Skipped'">
+                                <img class="mr-3 rounded complete-booking-table__image"
+                                     ng-src="/img/missing-image-2.jpg"
+                                     alt="Route image">
+                                <div class="media-body">
+                                    <h5 class="mt-0 mb-1">Skipped</h5>
+                                </div>
+                            </div>
+                            <div class="media" ng-show="$ctrl.bookingData.road.name != 'Skipped'">
+                                <img class="mr-3 rounded complete-booking-table__image"
+                                     ng-src="{{$ctrl.bookingData.road.img}}"
+                                     alt="Route image">
+                                <div class="media-body">
+                                    <h5 class="mt-0 mb-1">{{$ctrl.bookingData.road.name}}</h5>
+                                    {{$ctrl.bookingData.road.description}}
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
 
-<div class="row">
-    <div class="col-sm-12 col-md-12 col-lg-8">
-        <table class="table complete-booking-table">
-            <tbody>
-            <tr>
-                <td class="complete-booking-table__header d-none d-md-block d-lg-block">Date</td>
-                <td>
-                    <div class="media" ng-show="!$ctrl.bookingData.calendar.date">
-                        <img class="mr-3 rounded complete-booking-table__image"
-                             ng-src="/img/missing-image-2.jpg"
-                             alt="Date & Time image">
-                        <div class="media-body">
-                            <h5 class="mt-0 mb-1">Skipped</h5>
-                        </div>
-                    </div>
-                    <div class="media" ng-show="$ctrl.bookingData.calendar.date">
-                        <img class="mr-3 rounded complete-booking-table__image"
-                             src="/img/date-icon-2.png"
-                             alt="Date & Time image">
-                        <div class="media-body">
-                            <h5 class="mt-0 mb-1">{{$ctrl.bookingData.calendar.date|usaDateFormat}}</h5>
-                            {{$ctrl.bookingData.calendar.time}}
-                        </div>
-                    </div>
-                </td>
-            </tr>
-            <tr>
-                <td class="complete-booking-table__header d-none d-md-block d-lg-block">Salesperson</td>
-                <td>
-                    <div class="media" ng-show="$ctrl.bookingData.expert.name == 'Skipped'">
-                        <img class="mr-3 rounded complete-booking-table__image"
-                             ng-src="/img/missing-image-2.jpg"
-                             alt="Salesperson image">
-                        <div class="media-body">
-                            <h5 class="mt-0 mb-1">Skipped</h5>
-                        </div>
-                    </div>
-                    <div class="media" ng-show="$ctrl.bookingData.expert.name != 'Skipped'">
-                        <img class="mr-3 rounded complete-booking-table__image"
-                             ng-src="{{$ctrl.bookingData.expert.img}}"
-                             alt="Salesperson image">
-                        <div class="media-body">
-                            <h5 class="mt-0 mb-1" ng-if="$ctrl.bookingData.expert.name">
-                                {{$ctrl.bookingData.expert.name}}</h5>
-                            {{$ctrl.bookingData.expert.description}}
-                        </div>
-                    </div>
-                </td>
-            </tr>
-            <tr>
-                <td class="complete-booking-table__header d-none d-md-block d-lg-block">Beverage</td>
-                <td>
-                    <div class="media" ng-show="$ctrl.bookingData.beverage.name == 'Skipped'">
-                        <img class="mr-3 rounded complete-booking-table__image"
-                             ng-src="/img/missing-image-2.jpg"
-                             alt="Beverage image">
-                        <div class="media-body">
-                            <h5 class="mt-0 mb-1">Skipped</h5>
-                        </div>
-                    </div>
-                    <div class="media" ng-show="$ctrl.bookingData.beverage.name != 'Skipped'">
-                        <img class="mr-3 rounded complete-booking-table__image"
-                             ng-src="{{$ctrl.bookingData.beverage.img}}"
-                             alt="Beverage image">
-                        <div class="media-body">
-                            <h5 class="mt-0 mb-1">{{$ctrl.bookingData.beverage.name}}</h5>
-                            {{$ctrl.bookingData.beverage.description}}
-                        </div>
-                    </div>
-                </td>
-            </tr>
-            <tr>
-                <td class="complete-booking-table__header d-none d-md-block d-lg-block">Route</td>
-                <td>
-                    <div class="media" ng-show="$ctrl.bookingData.road.name == 'Skipped'">
-                        <img class="mr-3 rounded complete-booking-table__image"
-                             ng-src="/img/missing-image-2.jpg"
-                             alt="Route image">
-                        <div class="media-body">
-                            <h5 class="mt-0 mb-1">Skipped</h5>
-                        </div>
-                    </div>
-                    <div class="media" ng-show="$ctrl.bookingData.road.name != 'Skipped'">
-                        <img class="mr-3 rounded complete-booking-table__image"
-                             ng-src="{{$ctrl.bookingData.road.img}}"
-                             alt="Route image">
-                        <div class="media-body">
-                            <h5 class="mt-0 mb-1">{{$ctrl.bookingData.road.name}}</h5>
-                            {{$ctrl.bookingData.road.description}}
-                        </div>
-                    </div>
-                </td>
-            </tr>
-            </tbody>
-        </table>
-    </div>
+            <div class="col-4 d-none d-lg-block">
+                <div class="card">
+                    <img ng-if="$ctrl.bookingData.vehicle.imageUrl != null"
+                         ng-src="{{$ctrl.bookingData.vehicle.imageUrl}}"
+                         class="card-img-top">
+                    <img ng-if="$ctrl.bookingData.vehicle.imageUrl == null" src="/img/default-car.png"
+                         class="card-img-top">
 
-    <div class="col-4 d-none d-lg-block">
-
-        <div class="card">
-            <img ng-if="$ctrl.bookingData.vehicle.imageUrl != null" ng-src="{{$ctrl.bookingData.vehicle.imageUrl}}"
-                 class="card-img-top">
-            <img ng-if="$ctrl.bookingData.vehicle.imageUrl == null" src="/img/default-car.png" class="card-img-top">
-
-            <div class="card-body" style="padding: 0.25rem 1.25rem 0.25rem 1.25rem;">
-                <div class="row">
-                    <div class="col-12">
-                        <h5 class="text-overflow__ellipsis ng-binding">{{$ctrl.bookingData.vehicle.title ?
-                            $ctrl.bookingData.vehicle.title : 'Vehicle Title'}}</h5>
+                    <div class="card-body" style="padding: 0.25rem 1.25rem 0.25rem 1.25rem;">
+                        <div class="row">
+                            <div class="col-12">
+                                <h5 class="text-overflow__ellipsis ng-binding">{{$ctrl.bookingData.vehicle.title ?
+                                    $ctrl.bookingData.vehicle.title : 'Vehicle Title'}}</h5>
+                            </div>
+                            <div class="col-8">
+                                <p class="text-secondary m-0">Engine</p>
+                                <p class="mb-2 text-overflow__ellipsis ng-binding">
+                                    {{$ctrl.bookingData.vehicle.engine ?
+                                    $ctrl.bookingData.vehicle.engine : '-'}}</p>
+                            </div>
+                            <div class="col-4">
+                                <p class="text-secondary m-0">Year</p>
+                                <p class="mb-2 text-overflow__ellipsis ng-binding">{{$ctrl.bookingData.vehicle.year
+                                    ?
+                                    $ctrl.bookingData.vehicle.year : '-'}}</p>
+                            </div>
+                        </div>
                     </div>
-                    <div class="col-8">
-                        <p class="text-secondary m-0">Engine</p>
-                        <p class="mb-2 text-overflow__ellipsis ng-binding">{{$ctrl.bookingData.vehicle.engine ?
-                            $ctrl.bookingData.vehicle.engine : '-'}}</p>
-                    </div>
-                    <div class="col-4">
-                        <p class="text-secondary m-0">Year</p>
-                        <p class="mb-2 text-overflow__ellipsis ng-binding">{{$ctrl.bookingData.vehicle.year ?
-                            $ctrl.bookingData.vehicle.year : '-'}}</p>
+                </div>
+                <div class="card mt-2" style="max-height: 310px; overflow: auto;">
+                    <div class="card-body" style="padding: 0.5rem 1.25rem 0.5rem 1.25rem;">
+                        <h5 class="text-overflow__ellipsis">{{$ctrl.dealerData.name ? $ctrl.dealerData.name : 'Not
+                            specified'}}</h5>
+                        {{$ctrl.dealerData.address ? $ctrl.dealerData.address : 'Dealer Address'}}<br>
+                        {{$ctrl.dealerData.phone ? $ctrl.dealerData.phone : 'Dealer Phone'}}<br>
+                        <a href="{{$ctrl.dealerData.url}}" target="_blank">{{$ctrl.dealerData.siteUrl}}</a>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
+    <p></p>
+    <div class="row text-center">
+        <div class="col-12">
+            <p>
+                <button class="btn vipdrv-button heap-send-sms" ng-click="$ctrl.sendSms()"
+                        ng-disabled="$ctrl.isSmsSended">
+                    <span ng-show="!$ctrl.isSmsSended">Send Me Text</span>
+                    <i class="fa fa-spinner fa-spin fa-1x fa-fw" ng-show="$ctrl.isSmsLoading"></i>
+                    <span ng-show="$ctrl.isSmsSended">Done</span>
+                </button>
 
-        <div class="card mt-2" style="max-height: 310px; overflow: auto;">
-            <div class="card-body" style="padding: 0.5rem 1.25rem 0.5rem 1.25rem;">
-                <h5 class="text-overflow__ellipsis">{{$ctrl.dealerData.name ? $ctrl.dealerData.name : 'Not
-                    specified'}}</h5>
-                {{$ctrl.dealerData.address ? $ctrl.dealerData.address : 'Dealer Address'}}<br>
-                {{$ctrl.dealerData.phone ? $ctrl.dealerData.phone : 'Dealer Phone'}}<br>
-                <a href="{{$ctrl.dealerData.url}}" target="_blank">{{$ctrl.dealerData.siteUrl}}</a>
-            </div>
+                <button title="Add to Calendar" class="addeventatc heap-add-to-calendar" data-dropdown-y="up"
+                        ng-class="$ctrl.isPageLoaded ? '' : 'd-none'">
+                    Add to Calendar
+                    <span class="start">{{$ctrl.bookingData.calendar.date}} {{$ctrl.bookingData.calendar.time}}</span>
+                    <!--<span class="timezone">Europe/Kiev</span>-->
+                    <span class="title">VIPdrv - VIP Test Drive</span>
+                    <span class="description">
+                        Hi {{$ctrl.bookingData.user.firstName}} {{$ctrl.bookingData.user.lastName}}.<br>
+                        We've confirmed your test drive booking. Details below.<br>
+                        <br>
+                        Vehicle: {{$ctrl.bookingData.vehicle.title ? $ctrl.bookingData.vehicle.title : 'Not specified'}}<br>
+                        Date & Time: {{$ctrl.bookingData.calendar.date}} {{$ctrl.bookingData.calendar.time}}<br>
+                        Expert: {{$ctrl.bookingData.expert.name}}<br>
+                        Beverage: {{$ctrl.bookingData.beverage.name}}<br>
+                        Road: {{$ctrl.bookingData.road.name}}<br>
+                        <br>
+                        The Dealership is looking forward to your visit.<br>
+                        {{$ctrl.dealerData.name}}<br>
+                        {{$ctrl.dealerData.address}}<br>
+                        {{$ctrl.dealerData.phone}}<br>
+                        {{$ctrl.dealerData.siteUrl}}<br>
+                    </span>
+                    <span class="location">{{$ctrl.dealerData.address ? $ctrl.dealerData.address : 'Dealer Address'}}</span>
+                </button>
+            </p>
+        </div>
+        <div class="col-12">
+            <p class="text-secondary disclaimer-text">
+                By selecting SMS notification, you agree that Joint Venture Digital/VIPdrv and/or selected Dealer
+                may
+                contact you at the wireless telephone number you provide and that this number entered belongs to
+                you.
+                Message and data rates may apply. If you provide your wireless device to others, your consent also
+                includes
+                consent by them to receive such text message.
+                Once SMS is initiated you may Reply <b>STOP</b> to cancel or Reply <b>HELP</b> for help.
+            </p>
         </div>
     </div>
+
 </div>
-<p></p>
 
-<div class="container text-center">
-    <p>
-        <button class="btn btn-primary" ng-click="$ctrl.sendSms()" ng-disabled="$ctrl.isSmsSended">
-            <span ng-show="!$ctrl.isSmsSended">Send Me Text</span>
-            <i class="fa fa-spinner fa-spin fa-1x fa-fw" ng-show="$ctrl.isSmsLoading"></i>
-            <span ng-show="$ctrl.isSmsSended">SMS Sent</span>
-        </button>
+<style>
+    /**
+    * ------------------------------------------------------------------------
+    * Dirty Hack
+    * ------------------------------------------------------------------------
+    */
 
-        <button title="Add to Calendar" class="addeventatc" data-dropdown-y="up" ng-class="$ctrl.isPageLoaded ? '' : 'd-none'">
-            Add to Calendar
-            <span class="start">{{$ctrl.bookingData.calendar.date}} {{$ctrl.bookingData.calendar.time}}</span>
-            <!--<span class="timezone">Europe/Kiev</span>-->
-            <span class="title">VIPdrv - VIP Test Drive</span>
-            <span class="description">
-                Hi {{$ctrl.bookingData.user.firstName}} {{$ctrl.bookingData.user.lastName}}.<br>
-                We've confirmed your test drive booking. Details below.<br>
-                <br>
-                Vehicle: {{$ctrl.bookingData.vehicle.title ? $ctrl.bookingData.vehicle.title : 'Not specified'}}<br>
-                Date & Time: {{$ctrl.bookingData.calendar.date}} {{$ctrl.bookingData.calendar.time}}<br>
-                Expert: {{$ctrl.bookingData.expert.name}}<br>
-                Beverage: {{$ctrl.bookingData.beverage.name}}<br>
-                Road: {{$ctrl.bookingData.road.name}}<br>
-                <br>
-                The Dealership is looking forward to your visit.<br>
-                {{$ctrl.dealerData.name}}<br>
-                {{$ctrl.dealerData.address}}<br>
-                {{$ctrl.dealerData.phone}}<br>
-                <!-- 8:30am-7pm<br> -->
-                {{$ctrl.dealerData.siteUrl}}<br>
-            </span>
-            <span class="location">{{$ctrl.dealerData.address ? $ctrl.dealerData.address : 'Dealer Address'}}</span>
-        </button>
-    </p>
-</div>
-<p class="text-secondary disclaimer-text">
-    By selecting SMS notification, you agree that Joint Venture Digital/VIPdrv and/or selected Dealer may
-    contact you at the wireless telephone number you provide and that this number entered belongs to you.
-    Message and data rates may apply. If you provide your wireless device to others, your consent also
-    includes
-    consent by them to receive such text message.
-    Once SMS is initiated you may Reply <b>STOP</b> to cancel or Reply <b>HELP</b> for help.
-</p>
+    .vipdrv-header {
+        height: 55px !important;
+        margin: -55px 0px 0px 0px !important;
+        padding: 55px 0px 0px 0px !important;
+    }
 
+    .vipdrv-content {
+        padding: 55px 0px 0px 0px !important;
+    }
+</style>

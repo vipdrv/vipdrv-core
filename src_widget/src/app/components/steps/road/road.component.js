@@ -26,20 +26,20 @@
                 };
 
                 this.validateStep = function () {
-                    if (self.bookingData.road.title === null) {
-                        self.isStepValid = false;
-                    } else {
+                    if (self.bookingData.road.name) {
                         self.isStepValid = true;
+                    } else  {
+                        self.isStepValid = false;
                     }
                 };
 
-                $scope.nextStep = function () {
+                self.nextStep = function () {
                     self.validateStep();
                     if (self.isStepValid) {
                         self.completeStep({tabId: self.tabId});
                     }
                 };
-                $scope.skipStep = function () {
+                self.skipStep = function () {
                     self.bookingData.road.id = 0;
                     self.bookingData.road.name = "Skipped";
                     self.completeStep({tabId: self.tabId});

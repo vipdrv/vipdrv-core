@@ -26,9 +26,9 @@
 
                     $window.addeventasync = function () {
                         addeventatc.settings({
-                            appleical: {show: false, text: "Apple Calendar"},
+                            appleical: {show: true, text: "Apple Calendar"},
                             google: {show: true, text: "Google <em>(online)</em>"},
-                            outlook: {show: true, text: "Outlook"},
+                            outlook: {show: false, text: "Outlook"},
                             outlookcom: {show: true, text: "Outlook.com <em>(online)</em>"},
                             yahoo: {show: false, text: "Yahoo <em>(online)</em>"}
                         });
