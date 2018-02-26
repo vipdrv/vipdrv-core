@@ -158,9 +158,9 @@
      * ------------------------------------------------------------------------
      */
 
-    var widgetTheme = getParameterByName('widgetTheme') || 'theme-blue';
+    var widgetTheme = getParameterByName('widgetTheme') || 'blue';
     var link = document.createElement('link');
-    link.href = window.location.origin + '/' + widgetTheme + '.css';
+    link.href = window.location.origin + '/theme-' + widgetTheme + '.css';
     link.type = 'text/css';
     link.rel = 'stylesheet';
     document.getElementsByTagName('head')[0].appendChild(link);

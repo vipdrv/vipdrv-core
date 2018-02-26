@@ -1,9 +1,9 @@
 <div class="vipdrv-scrollable__wrapper">
-    <div class="row">
-    <div class="col">
-    <p class="text-center text-primary pt-2 pb-2">Booking Completed</p>
-    </div>
-    </div>
+    <!--<div class="row">-->
+        <!--<div class="col">-->
+            <!--<p class="sidebar__vehicle-title text-center text-primary pt-2 pb-2">Booking Completed</p>-->
+        <!--</div>-->
+    <!--</div>-->
     <div class="vipdrv-scrollable__content">
         <div class="row">
             <div class="col-sm-12 col-md-12 col-lg-8">
@@ -147,13 +147,15 @@
     <div class="row text-center">
         <div class="col-12">
             <p>
-                <button class="btn btn-primary" ng-click="$ctrl.sendSms()" ng-disabled="$ctrl.isSmsSended">
+                <button class="btn vipdrv-button heap-send-sms" ng-click="$ctrl.sendSms()"
+                        ng-disabled="$ctrl.isSmsSended">
                     <span ng-show="!$ctrl.isSmsSended">Send Me Text</span>
                     <i class="fa fa-spinner fa-spin fa-1x fa-fw" ng-show="$ctrl.isSmsLoading"></i>
                     <span ng-show="$ctrl.isSmsSended">Done</span>
                 </button>
 
-                <button title="Add to Calendar" class="addeventatc" data-dropdown-y="up" ng-class="$ctrl.isPageLoaded ? '' : 'd-none'">
+                <button title="Add to Calendar" class="addeventatc heap-add-to-calendar" data-dropdown-y="up"
+                        ng-class="$ctrl.isPageLoaded ? '' : 'd-none'">
                     Add to Calendar
                     <span class="start">{{$ctrl.bookingData.calendar.date}} {{$ctrl.bookingData.calendar.time}}</span>
                     <!--<span class="timezone">Europe/Kiev</span>-->

@@ -56,7 +56,7 @@
     </div>
     <div class="vipdrv-scrollable__content">
         <div class="row pr-3">
-            <td-card class="col-md-6 col-sm-12 p-0 pt-3 pl-3"
+            <td-card class="col-md-6 col-sm-12 p-0 pt-3 pl-3 heap-select-expert"
                      ng-repeat="expert in $ctrl.dealerData.experts.items"
                      card-image="expert.photoUrl"
                      card-title="expert.name"
@@ -70,24 +70,24 @@
     <div class="row d-none d-md-block">
         <div class="col-12">
             <button type="button"
-                    class="btn btn-lg btn-primary float-right mt-3 mb-3"
+                    class="btn btn-lg vipdrv-button float-right mt-3 mb-3 heap-complete-expert"
                     ng-click="nextStep()"
                     ng-disabled="!$ctrl.isStepValid">Next Step
             </button>
             <button type="button"
-                    class="btn btn-lg btn-link float-right text-secondary mt-3 mb-3"
+                    class="btn btn-lg btn-link float-right text-secondary mt-3 mb-3 heap-skip-expert"
                     ng-click="skipStep()">Skip Step
             </button>
         </div>
     </div>
     <div class="row d-md-none d-lg-none d-sm-block">
         <div class="col-12">
-            <button type="button" class="btn btn-primary btn-lg btn-block mt-3"
+            <button type="button" class="btn vipdrv-button btn-lg btn-block mt-3 heap-complete-expert"
                     ng-click="nextStep()"
                     ng-disabled="!$ctrl.isStepValid">Next Step
             </button>
             <button type="button"
-                    class="btn btn-lg btn-link btn-block text-secondary mt-2 mb-2"
+                    class="btn btn-lg btn-link btn-block text-secondary mt-2 mb-2 heap-skip-expert"
                     ng-click="skipStep()">Skip Step
             </button>
         </div>
