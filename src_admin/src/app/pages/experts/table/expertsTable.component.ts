@@ -299,6 +299,9 @@ export class ExpertsTableComponent implements OnInit {
         self._useValidation = false;
         self.isWeekScheduleOpenedByDefault = true;
         self.selectedEntity = new ExpertEntity();
+        self.selectedEntity.isPartOfTeamNewCars = true;
+        self.selectedEntity.isPartOfTeamUsedCars = true;
+        self.selectedEntity.isPartOfTeamCPO = true;
         self.selectedEntity.siteId = self.siteId;
         self.selectedEntity.photoUrl = ExpertsConstants.expertImageDefault;
         self.selectedEntity.isActive = true;

@@ -114,7 +114,7 @@
         },
         closeWidgetFrame: null
     };
-    let defaultBookingData = JSON.parse(JSON.stringify(bookingData)); // hardcore way to copy an object
+    var defaultBookingData = JSON.parse(JSON.stringify(bookingData)); // hardcore way to copy an object
 
     var dealerData = {
         siteId: null,
@@ -152,9 +152,24 @@
     app.value('dealerData', dealerData);
     app.value('apiBaseUrl', apiBaseUrl);
 
-    //=======================================================================//
-    // Helpers                                                               //
-    //=======================================================================//
+    /**
+     * ------------------------------------------------------------------------
+     * Init widget theme
+     * ------------------------------------------------------------------------
+     */
+
+    var widgetTheme = getParameterByName('widgetTheme') || 'blue';
+    var link = document.createElement('link');
+    link.href = window.location.origin + '/theme-' + widgetTheme + '.css';
+    link.type = 'text/css';
+    link.rel = 'stylesheet';
+    document.getElementsByTagName('head')[0].appendChild(link);
+
+    /**
+     * ------------------------------------------------------------------------
+     * Helpers
+     * ------------------------------------------------------------------------
+     */
 
     function getParameterByName(name, url) {
         if (!url) url = window.location.href;
@@ -165,5 +180,33 @@
         if (!results[2]) return '';
         return decodeURIComponent(results[2].replace(/\+/g, " "));
     }
+
+})();
+
+(function () {
+
+
+    if (typeof Object.assign != 'function') {
+        Object.assign = function (target) {
+            'use strict';
+            if (target == null) {
+                throw new TypeError('Cannot convert undefined or null to object');
+            }
+
+            target = Object(target);
+            for (var index = 1; index < arguments.length; index++) {
+                var source = arguments[index];
+                if (source != null) {
+                    for (var key in source) {
+                        if (Object.prototype.hasOwnProperty.call(source, key)) {
+                            target[key] = source[key];
+                        }
+                    }
+                }
+            }
+            return target;
+        };
+    }
+
 
 })();

@@ -46,10 +46,6 @@ var vendorFonts = [
     'node_modules/font-awesome/fonts/*'
 ];
 
-var appScss = [
-    './src/sass/app.scss'
-];
-
 var appImages = [
     './src/img/*'
 ];
@@ -173,7 +169,7 @@ gulp.task('copy_app_scss_dist', function () {
         autoprefixer({browsers: ['last 4 version']})
     ];
 
-    return gulp.src(appScss)
+    return gulp.src('./src/sass/app.scss')
         .pipe(plumber())
         .pipe(sass({outputStyle: 'compressed'}).on('error', sass.logError))
         .pipe(postcss(plugins))
@@ -183,10 +179,10 @@ gulp.task('copy_app_scss_dist', function () {
 
 gulp.task('copy_app_scss_debug', function () {
     var plugins = [
-        autoprefixer({browsers: ['last 1 version']})
+        autoprefixer({browsers: ['last 4 version']})
     ];
 
-    return gulp.src(appScss)
+    return gulp.src('./src/sass/themes/*')
         .pipe(plumber())
         .pipe(sourcemaps.init())
         .pipe(sass())
@@ -280,7 +276,7 @@ gulp.task('build_debug', function (callback) {
 
 gulp.task('serve', function () {
     browserSync.init({
-        port: 8081,
+        port: 81,
         ui: {
             port: 8083
         },

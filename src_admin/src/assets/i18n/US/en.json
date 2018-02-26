@@ -188,7 +188,10 @@
       "expertEmail": "Contact e-mail",
       "expertEmailHelp": "Enter the contact e-mail of the expert (is not required).",
       "expertPhoneNumber": "Contact phone number",
-      "expertPhoneNumberHelp": "Enter the contact phone number of the expert (is not required)."
+      "expertPhoneNumberHelp": "Enter the contact phone number of the expert (is not required).",
+      "isPartOfTeamNewCars": "Can work with new cars",
+      "isPartOfTeamUsedCars": "Can work with used cars",
+      "isPartOfTeamCPO": "Can work with CPO"
     }
   },
   "users": {

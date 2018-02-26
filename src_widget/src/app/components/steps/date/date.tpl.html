@@ -1,69 +1,85 @@
-<img class="td-spinner" src="/img/spinner.gif" ng-if="$ctrl.isLoading">
-<div class="row" ng-if="!$ctrl.isLoading">
-    <div class="col-md-6 col-sm-12 d-none d-sm-none d-md-none d-lg-block d-xl-block">
-        <h2 class="wizard-tab-content__title text-center text-md-left">Select Date</h2>
-        <p></p>
-        <div ng-if="!$ctrl.isLoading"
-             moment-picker="$ctrl.dateImput"
-             change="$ctrl.desctopDateChanged(oldValue, newValue)"
-             min-date="$ctrl.minimumAvaliableDate"
-             selectable="$ctrl.isDateSelectableDesctop(date, type)"
-             format="YYYY-MM-DD d"
-             min-view="month"
-             max-view="month"
-             today="true"
-             keyboard="true"
-             inline="true"
-             set-on-select="true">
+<div class="vipdrv-scrollable__wrapper">
+    <div class="vipdrv-scrollable__content">
+        <div class="row">
+            <div class="col-12">
+                <img class="td-spinner" src="/img/spinner.gif" ng-if="$ctrl.isLoading">
+            </div>
         </div>
-    </div>
-    <div class="col-md-6 col-sm-12 d-none d-sm-none d-md-none d-lg-block d-xl-block">
-        <h2 class="wizard-tab-content__title text-center text-md-left">Select Time</h2>
-        <p></p>
-        <div class="row td-time pr-3">
-            <div class="col-3 pb-2 p-0 pl-2"
-                 ng-repeat="item in $ctrl.timeIntervals"
-                 ng-click="$ctrl.timeChanged(item.time, item.isActive)">
-                <div class="td-time__item"
-                     ng-class="{'td-time__item--active' : item.time == $ctrl.bookingData.calendar.time, 'td-time__item--disabled' : item.isActive == false }">
-                    {{item.time}}
+        <div class="row" ng-if="!$ctrl.isLoading">
+            <div class="col-md-6 col-sm-12 d-none d-sm-none d-md-none d-lg-block d-xl-block">
+                <h2 class="wizard-tab-content__title text-center text-md-left">Select Date</h2>
+                <p></p>
+                <div ng-if="!$ctrl.isLoading"
+                     moment-picker="$ctrl.dateImput"
+                     change="$ctrl.desctopDateChanged(oldValue, newValue)"
+                     min-date="$ctrl.minimumAvaliableDate"
+                     selectable="$ctrl.isDateSelectableDesctop(date, type)"
+                     format="YYYY-MM-DD d"
+                     min-view="month"
+                     max-view="month"
+                     today="true"
+                     keyboard="true"
+                     inline="true"
+                     set-on-select="true"
+                     class="heap-select-date">
+                </div>
+            </div>
+            <div class="col-md-6 col-sm-12 d-none d-sm-none d-md-none d-lg-block d-xl-block">
+                <h2 class="wizard-tab-content__title text-center text-md-left">Select Time</h2>
+                <p></p>
+                <div class="row td-time pr-3">
+                    <div class="col-3 pb-2 p-0 pl-2"
+                         ng-repeat="item in $ctrl.timeIntervals"
+                         ng-click="$ctrl.timeChanged(item.time, item.isActive)">
+                        <div class="td-time__item heap-select-time"
+                             ng-class="{'td-time__item--active' : item.time == $ctrl.bookingData.calendar.time, 'td-time__item--disabled' : item.isActive == false }">
+                            {{item.time}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-sm-12 d-sm-block d-md-block d-lg-none d-xl-none">
+                <h2 class="wizard-tab-content__title text-center">Select Date & Time</h2>
+                <p></p>
+                <div ng-if="!$ctrl.isLoading"
+                     moment-picker="$ctrl.mobileDateTimeInput"
+                     change="$ctrl.mobileDateChanged(oldValue, newValue)"
+                     selectable="$ctrl.isDateSelectableMobile(date, type)"
+                     format="YYYY-MM-DD LT d"
+                     min-view="month"
+                     max-view="day"
+                     min-date="$ctrl.minimumAvaliableDate"
+                     today="false"
+                     inline="true"
+                     class="test-drive__date-picker heap-select-date-time-mobile">
                 </div>
             </div>
         </div>
     </div>
-
-    <div class="col-sm-12 d-sm-block d-md-block d-lg-none d-xl-none">
-        <h2 class="wizard-tab-content__title text-center">Select Date & Time</h2>
-        <p></p>
-        <div ng-if="!$ctrl.isLoading"
-             moment-picker="$ctrl.mobileDateTimeInput"
-             change="$ctrl.mobileDateChanged(oldValue, newValue)"
-             selectable="$ctrl.isDateSelectableMobile(date, type)"
-             format="YYYY-MM-DD LT d"
-             min-view="month"
-             max-view="day"
-             min-date="$ctrl.minimumAvaliableDate"
-             today="false"
-             inline="true"
-             class="test-drive__date-picker">
+    <div class="row d-none d-md-block">
+        <div class="col-12">
+            <button type="button"
+                    class="btn btn-lg vipdrv-button float-right mt-3 mb-3 heap-complete-time"
+                    ng-click="$ctrl.nextStep()"
+                    ng-disabled="!$ctrl.isStepValid">Next Step
+            </button>
+            <button type="button"
+                    class="btn btn-lg btn-link float-right text-secondary mt-3 mb-3 heap-skip-time"
+                    ng-click="$ctrl.skipStep()">Skip Step
+            </button>
         </div>
     </div>
-</div>
-
-<div class="row wizard-navigation-tab-next-button--desktop d-none d-md-block" ng-if="!$ctrl.isLoading">
-    <div class="col-12">
-        <a href="javascript:void(0)" class="card-link mr-3" ng-click="skipStep()">Skip this step</a>
-        <button type="button" class="btn btn-lg btn-primary " ng-click="nextStep()" ng-disabled="!$ctrl.isStepValid">
-            Next Step
-        </button>
-    </div>
-</div>
-<div class="row d-md-none d-lg-none d-sm-block mt-3 mb-4" ng-if="!$ctrl.isLoading">
-    <div class="col-12">
-        <button type="button"
-                class="btn btn-primary btn-lg btn-block mb-3" ng-click="nextStep()"
-                ng-disabled="!$ctrl.isStepValid">Next Step
-        </button>
-        <a href="javascript:void(0)" class="card-link d-block text-center" ng-click="skipStep()">Skip this step </a>
+    <div class="row d-md-none d-lg-none d-sm-block">
+        <div class="col-12">
+            <button type="button" class="btn vipdrv-button btn-lg btn-block mt-3 heap-complete-time"
+                    ng-click="$ctrl.nextStep()"
+                    ng-disabled="!$ctrl.isStepValid">Next Step
+            </button>
+            <button type="button"
+                    class="btn btn-lg btn-link btn-block text-secondary mt-2 mb-2 heap-skip-time"
+                    ng-click="$ctrl.skipStep()">Skip Step
+            </button>
+        </div>
     </div>
 </div>
