@@ -9,6 +9,7 @@ export interface IExpertValidationService extends IValidationService<ExpertEntit
     isValidPhoneNumber(entity: ExpertEntity): boolean;
     isValidLinkedInUrl(entity: ExpertEntity): boolean;
     isValidFacebookUrl(entity: ExpertEntity): boolean;
+    isValidEmployeeId(entity: ExpertEntity): boolean;
     getInvalidNameMessageKey(entity: ExpertEntity): string;
     getInvalidTitleMessageKey(entity: ExpertEntity): string;
     getInvalidDescriptionMessageKey(entity: ExpertEntity): string;
@@ -16,4 +17,5 @@ export interface IExpertValidationService extends IValidationService<ExpertEntit
     getInvalidPhoneNumberMessageKey(entity: ExpertEntity): string;
     getInvalidLinkedInUrlMessageKey(entity: ExpertEntity): string;
     getInvalidFacebookUrlMessageKey(entity: ExpertEntity): string;
+    getInvalidEmployeeIdMessageKey(entity: ExpertEntity): string;
 }
