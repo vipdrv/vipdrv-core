@@ -268,6 +268,34 @@
             </div>
         </div>
     </div>
+    <div class="row test-drive-modal-body-edit-entity-container-row-input">
+        <div class="col-12">
+            <div class="form-group">
+                <label for="employeeId"
+                       class="test-drive-input-label"
+                       translate>
+                    experts.modal.employeeId
+                </label>
+                <input id="employeeId"
+                       name="employeeId"
+                       type="text"
+                       class="form-control"
+                       [ngClass]="extensions.getInputValidationClass(isValidationActive(), validationService.isValidEmployeeId(entity))"
+                       [disabled]="isComponentReadOnly()"
+                       [(ngModel)]="entity.employeeId">
+                <small class="form-text text-muted"
+                       *ngIf="!isValidationActive() || validationService.isValidEmployeeId(entity)"
+                       translate>
+                    experts.modal.employeeIdHelp
+                </small>
+                <small class="form-text test-drive-validation-message"
+                       *ngIf="isValidationActive() && !validationService.isValidEmployeeId(entity)"
+                       translate>
+                    {{ validationService.getInvalidEmployeeIdMessageKey(entity) }}
+                </small>
+            </div>
+        </div>
+    </div>
     <hr>
     <div class="row">
         <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">

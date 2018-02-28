@@ -21,6 +21,8 @@
         public bool IsPartOfTeamUsedCars { get; set; }
         public bool IsPartOfTeamCPO { get; set; }
 
+        public string EmployeeId { get; set; }
+
         #endregion
 
         #region Relations
@@ -88,6 +90,7 @@
             IsPartOfTeamNewCars = actualEntity.IsPartOfTeamNewCars;
             IsPartOfTeamUsedCars = actualEntity.IsPartOfTeamUsedCars;
             IsPartOfTeamCPO = actualEntity.IsPartOfTeamCPO;
+            EmployeeId = actualEntity.EmployeeId;
         }
 
         #endregion

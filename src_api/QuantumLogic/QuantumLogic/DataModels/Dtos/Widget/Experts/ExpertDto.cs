@@ -24,6 +24,8 @@ namespace QuantumLogic.WebApi.DataModels.Dtos.Widget.Experts
         public bool IsPartOfTeamUsedCars { get; set; }
         public bool IsPartOfTeamCPO { get; set; }
 
+        public string EmployeeId { get; set; }
+
         #region Mapping
 
         public override void MapFromEntity(Expert entity)
@@ -44,6 +46,7 @@ namespace QuantumLogic.WebApi.DataModels.Dtos.Widget.Experts
             IsPartOfTeamNewCars = entity.IsPartOfTeamNewCars;
             IsPartOfTeamUsedCars = entity.IsPartOfTeamUsedCars;
             IsPartOfTeamCPO = entity.IsPartOfTeamCPO;
+            EmployeeId = entity.EmployeeId;
         }
         public override Expert MapToEntity()
         {
@@ -62,6 +65,7 @@ namespace QuantumLogic.WebApi.DataModels.Dtos.Widget.Experts
             entity.IsPartOfTeamNewCars = IsPartOfTeamNewCars;
             entity.IsPartOfTeamUsedCars = IsPartOfTeamUsedCars;
             entity.IsPartOfTeamCPO = IsPartOfTeamCPO;
+            entity.EmployeeId = EmployeeId;
             return entity;
         }
 

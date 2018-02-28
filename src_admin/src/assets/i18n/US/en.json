@@ -180,6 +180,8 @@
       "linkedinUrlHelp": "Enter direct link to the experts LinkedIn profile like https://www.linkedin.com/... (is not required).",
       "facebookUrl": "Facebook profile",
       "facebookUrlHelp": "Enter direct link to the experts Facebook profile like https://www.facebook.com/... (is not required).",
+      "employeeId": "Employee identifier",
+      "employeeIdHelp": "Enter employee identifier from your CRM (is not required).",
       "expertActivity": "Is active",
       "expertOrder": "Order",
       "weekSchedule": "Working hours",
@@ -393,6 +395,7 @@
       "description": "Info about the expert is not valid!",
       "linkedInUrl": "LinkedIn profile's direct link is not valid! (should be like https://www.linkedin.com/...)",
       "facebookUrl": "Facebook profile's direct link is not valid! (should be like https://www.facebook.com/...)",
+      "employeeId": "Employee identifier is not valid!",
       "email": "E-mail is not valid!",
       "phoneNumber": "Phone number is not valid!"
     },
