@@ -28,10 +28,10 @@ export class SiteOverviewComponent implements OnInit, OnDestroy {
         return Variable.isNotNullOrUndefined(this.entity);
     }
     protected initWidget(): void {
-        const TestDrive = (<any>window).TestDrive;
+        const VipDrive = (<any>window).VipDrive;
 
-        if (Variable.isNotNullOrUndefined(TestDrive)) {
-            TestDrive.init({ siteId: this.entity.id });
+        if (Variable.isNotNullOrUndefined(VipDrive)) {
+            VipDrive.init({ siteId: this.entity.id, useAutoIntegration: false });
             this.logger.logTrase(`WidgetPreviewComponent: Widget has been initialized for the site (siteId = ${this.entity.id}).`);
         } else {
             this.logger.logTrase(`Widget Failure (siteId = ${this.entity.id}).`);
