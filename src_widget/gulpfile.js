@@ -169,7 +169,7 @@ gulp.task('copy_app_scss_dist', function () {
         autoprefixer({browsers: ['last 4 version']})
     ];
 
-    return gulp.src('./src/sass/app.scss')
+    return gulp.src('./src/sass/themes/*')
         .pipe(plumber())
         .pipe(sass({outputStyle: 'compressed'}).on('error', sass.logError))
         .pipe(postcss(plugins))

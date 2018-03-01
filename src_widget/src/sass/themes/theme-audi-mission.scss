@@ -4,11 +4,17 @@
 * ------------------------------------------------------------------------
 */
 
-$theme-main-color: #343a40;
-$theme-sub-color: #28a745;
+$theme-main-color: #000000;
+$theme-select-color: #c80037;
 
-$button-hover-background: #23272b;
-$button-hover-border: #1d2124;
+$button-border: #dc3545;
+$button-background: #dc3545;
+
+$button-border--hover: #bd2130;
+$button-background--hover: #c82333;
+
+$button-border--disabled: #dc3545;
+$button-background--disabled: #dc3545;
 
 /**
 * ------------------------------------------------------------------------

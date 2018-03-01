@@ -62,6 +62,9 @@ export class ExpertValidationService
                 entity.facebookUrl.startsWith('https://www.facebook.com')
             );
     }
+    isValidEmployeeId(entity: ExpertEntity): boolean {
+        return Variable.isNotNullOrUndefined(entity);
+    }
     getInvalidNameMessageKey(entity: ExpertEntity): string {
         return 'validation.experts.name';
     }
@@ -82,5 +85,8 @@ export class ExpertValidationService
     }
     getInvalidFacebookUrlMessageKey(entity: ExpertEntity): string {
         return 'validation.experts.facebookUrl';
+    }
+    getInvalidEmployeeIdMessageKey(entity: ExpertEntity): string {
+        return 'validation.experts.employeeId';
     }
 }

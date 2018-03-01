@@ -19,6 +19,7 @@ namespace QuantumLogic.Core.Utils.Email.Data.Templates
         public string ExpertName { get; }
         public string BeverageName { get; }
         public string RouteTitle { get; }
+        public string DealerPeakSalesId { get; }
 
         public EleadAdfTemplate(DateTime bookingDateTimeUtc, 
             string carTitle, 
@@ -61,6 +62,7 @@ namespace QuantumLogic.Core.Utils.Email.Data.Templates
             ExpertName = (lead.Expert != null) ? lead.Expert.Name : "Skipped by customer";
             BeverageName = (lead.Beverage != null) ? lead.Beverage.Name : "Skipped by customer";
             RouteTitle = (lead.Route != null) ? lead.Route.Name : "Skipped by customer";
+            DealerPeakSalesId = (lead.Expert != null) ? lead.Expert.EmployeeId : String.Empty;
         }
         
         public string AsHtml()
@@ -79,7 +81,7 @@ namespace QuantumLogic.Core.Utils.Email.Data.Templates
                                // $"<model>Model</model>" +
                               $"</vehicle>" +
                               $"<salesperson>" +
-                                $"<id source=\"DealerPeak\">{ExpertName}</id>" +
+                                $"<id source=\"DealerPeak\">{DealerPeakSalesId}</id>" + //TODO: make XML Node optional
                               $"</salesperson>" +
                               $"<customer>" +
                                   $"<contact>" +
