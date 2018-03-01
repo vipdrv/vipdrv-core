@@ -5,10 +5,16 @@
 */
 
 $theme-main-color: #007bff;
-$theme-sub-color: #6badfc;
+$theme-select-color: #28a745;
 
-$button-hover-background: #0069d9;
-$button-hover-border: #0062cc;
+$button-border: #007bff;
+$button-background: #007bff;
+
+$button-border--hover: #0062cc;
+$button-background--hover: #0069d9;
+
+$button-border--disabled: #007bff;
+$button-background--disabled: #007bff;
 
 /**
 * ------------------------------------------------------------------------
