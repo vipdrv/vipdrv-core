@@ -18,6 +18,7 @@ namespace QuantumLogic.Core.Utils.Email.Data.Templates
         private readonly string _customerEmail;
         private readonly string _customerComment;
         private DateTime? _bookingDateTime;
+        private int _timeZoneOffset;
         private readonly string _vehicleTitle;
         private readonly string _expertName;
         private readonly string _beverageName;
@@ -32,8 +33,8 @@ namespace QuantumLogic.Core.Utils.Email.Data.Templates
             string customerLastName,
             string customerPhone,
             string customerEmail,
-            DateTime bookingDateTime, 
-            string expertName, 
+            DateTime bookingDateTime,
+            string expertName,
             string beverageName,
             string roadName)
         {
@@ -51,7 +52,7 @@ namespace QuantumLogic.Core.Utils.Email.Data.Templates
             _roadName = roadName;
         }
 
-        public NewLeadNotificationEmailTemplate(Lead lead)
+        public NewLeadNotificationEmailTemplate(Lead lead, int timeZoneOffset = 0) //TODO: move optional parameter to lead entity
         {
             _vehicleImgUrl = lead.CarImageUrl;
             _vdpUrl = lead.VdpUrl;
@@ -62,6 +63,7 @@ namespace QuantumLogic.Core.Utils.Email.Data.Templates
             _customerEmail = lead.UserEmail;
             _customerComment = lead.UserComment;
             _bookingDateTime = lead.BookingDateTimeUtc;
+            _timeZoneOffset = timeZoneOffset;
             _vehicleTitle = lead.CarTitle;
             _expertName = (lead.Expert != null) ? lead.Expert.Name : "Skipped by customer";
             _beverageName = (lead.Beverage != null) ? lead.Beverage.Name : "Skipped by customer";
@@ -71,7 +73,7 @@ namespace QuantumLogic.Core.Utils.Email.Data.Templates
         public string AsHtml()
         {
             // TODO: use method as async
-            var html = new HttpClient().GetStringAsync((string) TemplateUrl).Result;
+            var html = new HttpClient().GetStringAsync((string)TemplateUrl).Result;
 
             html = html.Replace("{{vehicleTitle}}", _vehicleTitle);
             html = html.Replace("{{vehicleImgUrl}}", _vehicleImgUrl);
@@ -84,7 +86,9 @@ namespace QuantumLogic.Core.Utils.Email.Data.Templates
             html = html.Replace("{{customerEmail}}", _customerEmail);
             html = html.Replace("{{customerComment}}", _customerComment);
 
-            html = html.Replace("{{bookingDateTime}}", _bookingDateTime.GetValueOrDefault().ToString(QuantumLogicConstants.UsaTimeFormat, CultureInfo.InvariantCulture));
+            html = html.Replace("{{bookingDateTime}}", _bookingDateTime.GetValueOrDefault()
+                .Add(new TimeSpan(0, -_timeZoneOffset, 0))
+                .ToString(QuantumLogicConstants.UsaTimeFormat, CultureInfo.InvariantCulture));
             html = html.Replace("{{expertName}}", _expertName);
             html = html.Replace("{{beverageName}}", _beverageName);
             html = html.Replace("{{roadName}}", _roadName);

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using QuantumLogic.WebApi.DataModels.Dtos.Widget.Leads;
+using System.Globalization;
 
 namespace QuantumLogic.WebApi.DataModels.Requests.Widget.Booking
 {
@@ -15,6 +16,7 @@ namespace QuantumLogic.WebApi.DataModels.Requests.Widget.Booking
         public int? ExpertId { get; set; }
         public int? BeverageId { get; set; }
         public int? RoadId { get; set; }
+        public int TimeZoneOffset { get; set; }
 
         public CompleteBookingRequest()
         {
