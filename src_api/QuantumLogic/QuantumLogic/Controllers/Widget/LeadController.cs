@@ -168,17 +168,17 @@ namespace QuantumLogic.WebApi.Controllers.Widget
             Task<SendGrid.Response> sendCompleteBookingEmailTask = TestDriveEmailService
                 .SendCompleteBookingEmail(
                     new EmailAddress(createdLead.UserEmail, $"{createdLead.FirstName} {createdLead.SecondName}"),
-                    new CompleteBookingEmailTemplate(createdLead));
+                    new CompleteBookingEmailTemplate(createdLead, request.TimeZoneOffset));
 
             Task<SendGrid.Response> sendNewLeadNotificationEmailTask = TestDriveEmailService
                 .SendNewLeadNotificationEmail(
                     createdLead.Site.EmailAdresses.Select(r => new EmailAddress(r)).ToList(),
-                    new NewLeadNotificationEmailTemplate(createdLead));
+                    new NewLeadNotificationEmailTemplate(createdLead, request.TimeZoneOffset));
 
             Task<SendGrid.Response> sendAdfEmailTask = TestDriveEmailService
                 .SendAdfEmail(
                     createdLead.Site.AdfEmailAdresses.Select(r => new EmailAddress(r)).ToList(),
-                    new EleadAdfTemplate(createdLead));
+                    new EleadAdfTemplate(createdLead, request.TimeZoneOffset));
 
             await Task.WhenAll(sendCompleteBookingEmailTask, sendNewLeadNotificationEmailTask, sendAdfEmailTask);
             // responses can be analyzed below via send...EmailTask.Result
@@ -209,7 +209,8 @@ namespace QuantumLogic.WebApi.Controllers.Widget
                 }, 
                 new CompleteBookingSmsTemplate(
                     request.VehicleTitle,
-                    request.BookingDateTime,
+                    request.BookingDateTimeUtc,
+                    request.TimeZoneOffset,
                     request.ExpertName,
                     request.BeverageName,
                     request.RoadName,

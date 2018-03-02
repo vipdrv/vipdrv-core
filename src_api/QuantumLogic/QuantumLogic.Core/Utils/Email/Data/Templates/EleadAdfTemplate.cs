@@ -8,6 +8,7 @@ namespace QuantumLogic.Core.Utils.Email.Data.Templates
     public class EleadAdfTemplate : IEmailTemplate
     {
         public DateTime? BookingDateTimeUtc { get; }
+        public int TimeZoneOffset { get; }
         public string CarTitle { get; }
         public string FirstName { get; }
         public string SecondName { get; }
@@ -21,20 +22,22 @@ namespace QuantumLogic.Core.Utils.Email.Data.Templates
         public string RouteTitle { get; }
         public string DealerPeakSalesId { get; }
 
-        public EleadAdfTemplate(DateTime bookingDateTimeUtc, 
-            string carTitle, 
-            string firstName, 
-            string secondName, 
-            string userPhone, 
-            string userEmail, 
+        public EleadAdfTemplate(DateTime bookingDateTimeUtc,
+            int timeZoneOffset,
+            string carTitle,
+            string firstName,
+            string secondName,
+            string userPhone,
+            string userEmail,
             string siteName,
             string carVin,
             string dealerName,
-            string expertName, 
-            string beverageName, 
+            string expertName,
+            string beverageName,
             string routeTitle)
         {
             BookingDateTimeUtc = bookingDateTimeUtc;
+            TimeZoneOffset = timeZoneOffset;
             CarTitle = carTitle;
             FirstName = firstName;
             SecondName = secondName;
@@ -48,9 +51,10 @@ namespace QuantumLogic.Core.Utils.Email.Data.Templates
             RouteTitle = routeTitle;
         }
 
-        public EleadAdfTemplate(Lead lead)
+        public EleadAdfTemplate(Lead lead, int timeZoneOffset= 0) //TODO: move optional parameter to lead entity
         {
             BookingDateTimeUtc = lead.BookingDateTimeUtc;
+            TimeZoneOffset = timeZoneOffset;
             CarVin = lead.CarVin;
             CarTitle = lead.CarTitle;
             FirstName = lead.FirstName;
@@ -64,21 +68,29 @@ namespace QuantumLogic.Core.Utils.Email.Data.Templates
             RouteTitle = (lead.Route != null) ? lead.Route.Name : "Skipped by customer";
             DealerPeakSalesId = (lead.Expert != null) ? lead.Expert.EmployeeId : String.Empty;
         }
-        
+
         public string AsHtml()
         {
+            string recieveDateTime = DateTime.UtcNow
+                .Add(new TimeSpan(0, -TimeZoneOffset, 0))
+                .ToString(QuantumLogicConstants.OutputDateTimeFormat, CultureInfo.InvariantCulture);
+
+            string bookingDateTime = BookingDateTimeUtc.GetValueOrDefault()
+                .Add(new TimeSpan(0, -TimeZoneOffset, 0))
+                .ToString(QuantumLogicConstants.UsaTimeFormat, CultureInfo.InvariantCulture);
+
             var xml = $"<?xml version=\"1.0\" encoding=\"UTF-8\"?>" +
                       $"<?adf version=\"1.0\"?>" +
                       $"<adf>" +
                           $"<prospect>" + // status=\"new\"
                               $"<id sequence=\"{DealerName}\" source=\"{SiteName}\"></id>" +
-                              $"<requestdate>{DateTime.Now.ToString(QuantumLogicConstants.OutputDateTimeFormat, CultureInfo.InvariantCulture)}</requestdate>" +
+                              $"<requestdate>{recieveDateTime}</requestdate>" +
                               $"<vehicle  interest=\"test-drive\">" +
                                   $"<vin>{CarVin}</vin>" +
                                   $"<title>{CarTitle}</title>" +
-                               // $"<year>2008</year>" +
-                               // $"<make>Make</make>" +
-                               // $"<model>Model</model>" +
+                              // $"<year>2008</year>" +
+                              // $"<make>Make</make>" +
+                              // $"<model>Model</model>" +
                               $"</vehicle>" +
                               $"<salesperson>" +
                                 $"<id source=\"DealerPeak\">{DealerPeakSalesId}</id>" + //TODO: make XML Node optional
@@ -90,7 +102,7 @@ namespace QuantumLogic.Core.Utils.Email.Data.Templates
                                       $"<phone>{UserPhone}</phone>" +
                                       $"<email>{UserEmail}</email>" +
                                       $"<comments>" +
-                                          $"Date and Time: {BookingDateTimeUtc.GetValueOrDefault().ToString(QuantumLogicConstants.UsaTimeFormat, CultureInfo.InvariantCulture)} " +
+                                          $"Date and Time: {bookingDateTime} " +
                                           $"Sales Person: {ExpertName} " +
                                           $"Beverage: {BeverageName} " +
                                           $"Route: {RouteTitle} " +

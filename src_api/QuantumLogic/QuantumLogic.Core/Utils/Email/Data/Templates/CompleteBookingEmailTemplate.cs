@@ -13,6 +13,7 @@ namespace QuantumLogic.Core.Utils.Email.Data.Templates
         private readonly string _customerLastName;
         private readonly string _customerComment;
         private DateTime? _bookingDateTime;
+        private int _timeZoneOffset;
         private readonly string _vehicleImgUrl;
         private readonly string _vehicleTitle;
         private readonly string _vdpUrl;
@@ -55,7 +56,7 @@ namespace QuantumLogic.Core.Utils.Email.Data.Templates
             _dealerSiteUrl = dealerSiteUrl;
         }
 
-        public CompleteBookingEmailTemplate(Lead lead)
+        public CompleteBookingEmailTemplate(Lead lead, int timeZoneOffset = 0) //TODO: move optional parameter to lead entity
         {
             _vehicleTitle = lead.CarTitle;
             _vehicleImgUrl = lead.CarImageUrl;
@@ -64,6 +65,7 @@ namespace QuantumLogic.Core.Utils.Email.Data.Templates
             _customerLastName = lead.SecondName;
             _customerComment = lead.UserComment;
             _bookingDateTime = lead.BookingDateTimeUtc;
+            _timeZoneOffset = timeZoneOffset;
             _expertName = (lead.Expert != null) ? lead.Expert.Name : "Skipped by customer";
             _beverageName = (lead.Beverage != null) ? lead.Beverage.Name : "Skipped by customer";
             _roadName = (lead.Route != null) ? lead.Route.Name : "Skipped by customer";
@@ -90,7 +92,9 @@ namespace QuantumLogic.Core.Utils.Email.Data.Templates
             #endregion
 
             #region Booking
-            html = html.Replace("{{bookingDateTime}}", _bookingDateTime.GetValueOrDefault().ToString(QuantumLogicConstants.UsaTimeFormat, CultureInfo.InvariantCulture));
+            html = html.Replace("{{bookingDateTime}}", _bookingDateTime.GetValueOrDefault()
+                .Add(new TimeSpan(0, -_timeZoneOffset, 0))
+                .ToString(QuantumLogicConstants.UsaTimeFormat, CultureInfo.InvariantCulture));
             html = html.Replace("{{expertName}}", _expertName);
             html = html.Replace("{{beverageName}}", _beverageName);
             html = html.Replace("{{roadName}}", _roadName);

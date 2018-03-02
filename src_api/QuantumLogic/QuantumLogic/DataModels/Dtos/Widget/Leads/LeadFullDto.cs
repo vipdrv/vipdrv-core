@@ -6,6 +6,7 @@ namespace QuantumLogic.WebApi.DataModels.Dtos.Widget.Leads
     public class LeadFullDto : LeadDto
     {
         public string CarImageUrl { get; set; }
+        public int TimeZoneOffset { get; set; }
 
         #region Ctors
 
