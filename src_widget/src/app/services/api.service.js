@@ -70,7 +70,8 @@
 
                 var smsDto = {
                     phone: null,
-                    bookingDateTime: null,
+                    bookingDateTimeUtc: null,
+                    timeZoneOffset: null,
                     vehicleTitle: null,
                     expertName: null,
                     beverageName: null,
@@ -97,9 +98,9 @@
 
                     date.setHours(sHours);
                     date.setMinutes(sMinutes);
-                    date.setHours(date.getHours() - date.getTimezoneOffset() / 60);
 
-                    smsDto.bookingDateTime = date;
+                    smsDto.bookingDateTimeUtc = date;
+                    smsDto.timeZoneOffset = date.getTimezoneOffset();
                 }
 
                 smsDto.phone = bookingData.user.phone || null;
@@ -116,6 +117,7 @@
             var mapToBookingRequestDto = function (bookingData) {
 
                 var bookingDto = {
+                    timeZoneOffset: null,
                     bookingUser: {
                         firstName: null,
                         lastName: null,
@@ -173,9 +175,9 @@
 
                     date.setHours(sHours);
                     date.setMinutes(sMinutes);
-                    date.setHours(date.getHours() - date.getTimezoneOffset() / 60);
 
                     bookingDto.bookingDateTime = date;
+                    bookingDto.timeZoneOffset = date.getTimezoneOffset();
                 }
 
                 bookingDto.bookingVehicle.vin = bookingData.vehicle.vin || null;

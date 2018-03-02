@@ -14,7 +14,8 @@ namespace QuantumLogic.Core.Utils.Sms.Templates
         public string CustomerEmail { get; }
         public string VehicleTitle { get; }
         public string VehicleVin { get; }
-        public DateTime? BookingDateTime { get; }
+        public DateTime? BookingDateTimeUtc { get; }
+        public int TimeZoneOffset { get; }
         public string ExpertTitle { get; }
         public string BeverageTitle { get; }
         public string RoadTitle { get; }
@@ -27,7 +28,7 @@ namespace QuantumLogic.Core.Utils.Sms.Templates
             string customerEmail,
             string vehicleTitle,
             string vehicleVin,
-            DateTime bookingDateTime,
+            DateTime bookingDateTimeUtc,
             string expertTitle,
             string beverageTitle,
             string roadTitle)
@@ -39,13 +40,13 @@ namespace QuantumLogic.Core.Utils.Sms.Templates
             CustomerEmail = customerEmail;
             VehicleTitle = vehicleTitle;
             VehicleVin = vehicleVin;
-            BookingDateTime = bookingDateTime;
+            BookingDateTimeUtc = bookingDateTimeUtc;
             ExpertTitle = expertTitle;
             BeverageTitle = beverageTitle;
             RoadTitle = roadTitle;
         }
 
-        public NewLeadNotificationSmsTemplate(Lead lead)
+        public NewLeadNotificationSmsTemplate(Lead lead, int timeZoneOffset = 0)
         {
             DealerName = lead.Site.DealerName;
             CustomerFirstName = lead.FirstName;
@@ -54,7 +55,8 @@ namespace QuantumLogic.Core.Utils.Sms.Templates
             CustomerEmail = lead.UserEmail;
             VehicleTitle = lead.CarTitle;
             VehicleVin = lead.CarVin;
-            BookingDateTime = lead.BookingDateTimeUtc;
+            BookingDateTimeUtc = lead.BookingDateTimeUtc;
+            TimeZoneOffset = timeZoneOffset;
             ExpertTitle = (lead.Expert != null) ? lead.Expert.Name : "Skipped by customer";
             BeverageTitle = (lead.Beverage != null) ? lead.Beverage.Name : "Skipped by customer";
             RoadTitle = (lead.Route != null) ? lead.Route.Name : "Skipped by customer";
@@ -62,6 +64,10 @@ namespace QuantumLogic.Core.Utils.Sms.Templates
 
         public string AsPlainText()
         {
+            string bookingDateTime = BookingDateTimeUtc.GetValueOrDefault()
+                .Add(new TimeSpan(0, -TimeZoneOffset, 0))
+                .ToString(QuantumLogicConstants.UsaTimeFormat, CultureInfo.InvariantCulture);
+
             return $"New Lead for {DealerName}! \n\n" +
                    
                    $"Vehicle: {VehicleTitle} \n" +
@@ -73,7 +79,7 @@ namespace QuantumLogic.Core.Utils.Sms.Templates
                    $"Email: {CustomerEmail} \n\n" +
                    
                    "Booking details \n" +
-                   $"Date & Time: {BookingDateTime.GetValueOrDefault().ToString(QuantumLogicConstants.UsaTimeFormat, CultureInfo.InvariantCulture)} \n" +
+                   $"Date & Time: {bookingDateTime} \n" +
                    $"Expert: {ExpertTitle} \n" +
                    $"Beverage: {BeverageTitle} \n" +
                    $"Route: {RoadTitle} \n";

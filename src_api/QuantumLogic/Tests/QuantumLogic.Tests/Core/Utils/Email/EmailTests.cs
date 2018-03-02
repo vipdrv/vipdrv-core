@@ -20,7 +20,7 @@ namespace QuantumLogic.Tests.Core.Utils.Email
             {
                 new EmailAddress("ultramarine256@gmail.com")
             };
-            IEmailTemplate AdfEmailTemplate = new EleadAdfTemplate(DateTime.Now, "CAR TITLE", "Evgeny", "Platonov", "+380666159567", "ultramarine256@gmail.com", "Truck World", "VIN-111", "DealerEmpire", "EXPERT - NAME", "BEVERAGE - NAME", "ROUTE - NAME");
+            IEmailTemplate AdfEmailTemplate = new EleadAdfTemplate(DateTime.Now, 0, "CAR TITLE", "Evgeny", "Platonov", "+380666159567", "ultramarine256@gmail.com", "Truck World", "VIN-111", "DealerEmpire", "EXPERT - NAME", "BEVERAGE - NAME", "ROUTE - NAME");
             return testDriveEmailService.SendAdfEmail(recipientsList, AdfEmailTemplate);
         }
     }

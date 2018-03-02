@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Text;
 using QuantumLogic.Core.Constants;
 using QuantumLogic.Core.Domain.Entities.WidgetModule;
@@ -9,7 +10,8 @@ namespace QuantumLogic.Core.Utils.Sms.Templates
     public class CompleteBookingSmsTemplate : ISmsTemplate
     {
         public string VehicleTitle { get; }
-        public DateTime? BookingDateTime { get; }
+        public DateTime? BookingDateTimeUtc { get; }
+        public int TimeZoneOffset { get; }
         public string ExpertName { get; }
         public string BeverageName { get; }
         public string RoadName { get; }
@@ -18,7 +20,8 @@ namespace QuantumLogic.Core.Utils.Sms.Templates
 
         public CompleteBookingSmsTemplate(
             string vehicleTitle,
-            DateTime? bookingDateTime,
+            DateTime? bookingDateTimeUtc,
+            int timeZoneOffset,
             string expertName,
             string beverageName,
             string roadName,
@@ -26,7 +29,8 @@ namespace QuantumLogic.Core.Utils.Sms.Templates
             string dealerPhone)
         {
             VehicleTitle = vehicleTitle;
-            BookingDateTime = bookingDateTime;
+            BookingDateTimeUtc = bookingDateTimeUtc;
+            TimeZoneOffset = timeZoneOffset;
             ExpertName = expertName;
             BeverageName = beverageName;
             RoadName = roadName;
@@ -37,7 +41,7 @@ namespace QuantumLogic.Core.Utils.Sms.Templates
         public CompleteBookingSmsTemplate(Lead lead)
         {
             VehicleTitle = lead.CarTitle;
-            BookingDateTime = lead.BookingDateTimeUtc;
+            BookingDateTimeUtc = lead.BookingDateTimeUtc;
             ExpertName = lead.Expert.Name;
             BeverageName = lead.Beverage.Name;
             RoadName = lead.Route.Name;
@@ -45,10 +49,14 @@ namespace QuantumLogic.Core.Utils.Sms.Templates
 
         public string AsPlainText()
         {
+            string bookingDateTime = BookingDateTimeUtc.GetValueOrDefault()
+                .Add(new TimeSpan(0, -TimeZoneOffset, 0))
+                .ToString(QuantumLogicConstants.UsaTimeFormat, CultureInfo.InvariantCulture);
+
             return $"Thank you! \n" +
                    $"Your Upcoming VIPdrv Test Drive is Scheduled \n \n" +
                    $"Vehicle: {VehicleTitle} \n" +
-                   $"Date & Time: {BookingDateTime.GetValueOrDefault().ToString(QuantumLogicConstants.OutputDateTimeFormat)} \n" +
+                   $"Date & Time: {bookingDateTime} \n" +
                    $"Expert: {ExpertName} \n" +
                    $"Beverage: {BeverageName} \n" +
                    $"Route: {RoadName} \n\n" +
