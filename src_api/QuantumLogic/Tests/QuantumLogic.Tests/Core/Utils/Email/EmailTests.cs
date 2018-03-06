@@ -43,6 +43,12 @@ namespace QuantumLogic.Tests.Core.Utils.Email
         [Test]
         public void EmailWithADFContent__ShouldGenerateValidXML()
         {
+            ITestDriveEmailService testDriveEmailService = new TestDriveEmailService();
+            List<EmailAddress> recipientsList = new List<EmailAddress>()
+            {
+                new EmailAddress("ultramarine256@gmail.com")
+            };
+
             IVehicle vehicle = new BookingVehicle();
             vehicle.Title = "BMW X5";
             vehicle.Make = "BMW";
@@ -53,6 +59,8 @@ namespace QuantumLogic.Tests.Core.Utils.Email
 
             IEmailTemplate eleadAdfTemplate = new EleadAdfTemplate(lead, vehicle, -120);
             string html = eleadAdfTemplate.AsHtml();
+
+            testDriveEmailService.SendAdfEmail(recipientsList, eleadAdfTemplate);
             Console.WriteLine(html);
         }
     }
