@@ -107,12 +107,12 @@ namespace QuantumLogic.Core.Utils.Email.Data.Templates
             return xml;
         }
 
-        protected string BookingDataTxt(string bookingDateTime,string expertName, string beverageName,string routeName)
+        protected string BookingDataTxt(string bookingDateTime, string expertName, string beverageName, string routeName)
         {
-            string bookingDateTimeNode = !String.IsNullOrEmpty(bookingDateTime)  ? $"Test Drive DateTime: {bookingDateTime}" : "";
-            string expertNameNode = !String.IsNullOrEmpty(expertName)  ? $"Sales Person: {expertName}" : "";
-            string beverageNameNode = !String.IsNullOrEmpty(beverageName)  ? $"Beverage: {beverageName}" : "";
-            string routeNameNode = !String.IsNullOrEmpty(routeName)  ? $"Route: {routeName}" : "";
+            string bookingDateTimeNode = !String.IsNullOrEmpty(bookingDateTime) ? $"Test Drive DateTime: {bookingDateTime}; " : "";
+            string expertNameNode = !String.IsNullOrEmpty(expertName) ? $"Sales Person: {expertName}; " : "";
+            string beverageNameNode = !String.IsNullOrEmpty(beverageName) ? $"Beverage: {beverageName}; " : "";
+            string routeNameNode = !String.IsNullOrEmpty(routeName) ? $"Route: {routeName}; " : "";
 
             string result = bookingDateTimeNode +
                             expertNameNode +
@@ -133,7 +133,7 @@ namespace QuantumLogic.Core.Utils.Email.Data.Templates
                 .ToString(QuantumLogicConstants.UsaTimeFormat, CultureInfo.InvariantCulture);
 
             string vehicleXmlNode = VehicleXmlNode(Vehicle);
-            string bookingDataTxt = BookingDataTxt(bookingDateTime, ExpertName, BeverageName, DealerName);
+            string bookingDataTxt = BookingDataTxt(bookingDateTime, ExpertName, BeverageName, RouteTitle);
 
             var xml = $"<?xml version=\"1.0\" encoding=\"UTF-8\"?>" +
                       $"<?adf version=\"1.0\"?>" +
@@ -164,6 +164,7 @@ namespace QuantumLogic.Core.Utils.Email.Data.Templates
                           $"</prospect>" +
                       $"</adf>";
 
+            
             return xml;
         }
 
