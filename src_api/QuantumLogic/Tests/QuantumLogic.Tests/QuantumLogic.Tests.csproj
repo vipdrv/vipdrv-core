@@ -11,6 +11,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\QuantumLogic.Core\QuantumLogic.Core.csproj" />
     <ProjectReference Include="..\..\QuantumLogic.Data\QuantumLogic.Data.csproj" />
+    <ProjectReference Include="..\..\QuantumLogic\QuantumLogic.WebApi.csproj" />
   </ItemGroup>
 
 </Project>
