@@ -88,8 +88,12 @@
                     var minutes = Number(time.match(/:(\d+)/)[1]);
                     var AMPM = time.match(/\s(.*)$/)[1];
 
-                    if(AMPM == "PM" && hours<12) hours = hours+12;
-                    if(AMPM == "AM" && hours==12) hours = hours-12;
+                    if(AMPM.toLowerCase() == "pm" && hours<12) {
+                        hours = hours+12;
+                    }
+                    if(AMPM.toLowerCase() == "am" && hours==12) {
+                        hours = hours-12;
+                    }
 
                     var sHours = hours.toString();
                     var sMinutes = minutes.toString();
@@ -100,8 +104,9 @@
                     date.setMinutes(sMinutes);
 
                     smsDto.bookingDateTimeUtc = date;
-                    smsDto.timeZoneOffset = date.getTimezoneOffset();
                 }
+                var date = new Date();
+                smsDto.timeZoneOffset = date.getTimezoneOffset();
 
                 smsDto.phone = bookingData.user.phone || null;
                 smsDto.vehicleTitle = bookingData.vehicle.title || "Not specified";
@@ -156,17 +161,18 @@
                 bookingDto.bookingUser.comment = bookingData.user.comment || null;
 
                 if (bookingData.calendar.date && bookingData.calendar.time) {
-
                     var date = new Date(bookingData.calendar.date);
-
                     var time = bookingData.calendar.time;
 
                     var hours = Number(time.match(/^(\d+)/)[1]);
                     var minutes = Number(time.match(/:(\d+)/)[1]);
                     var AMPM = time.match(/\s(.*)$/)[1];
-
-                    if(AMPM == "PM" && hours<12) hours = hours+12;
-                    if(AMPM == "AM" && hours==12) hours = hours-12;
+                    if(AMPM.toLowerCase() == "pm" && hours<12) {
+                        hours = hours+12;
+                    }
+                    if(AMPM.toLowerCase() == "am" && hours==12) {
+                        hours = hours-12;
+                    }
 
                     var sHours = hours.toString();
                     var sMinutes = minutes.toString();
@@ -177,8 +183,9 @@
                     date.setMinutes(sMinutes);
 
                     bookingDto.bookingDateTime = date;
-                    bookingDto.timeZoneOffset = date.getTimezoneOffset();
                 }
+                var date = new Date();
+                bookingDto.timeZoneOffset = date.getTimezoneOffset();
 
                 bookingDto.bookingVehicle.vin = bookingData.vehicle.vin || null;
                 bookingDto.bookingVehicle.stock = bookingData.vehicle.stock || null;
