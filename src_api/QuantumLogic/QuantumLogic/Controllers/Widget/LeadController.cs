@@ -178,7 +178,7 @@ namespace QuantumLogic.WebApi.Controllers.Widget
             Task<SendGrid.Response> sendAdfEmailTask = TestDriveEmailService
                 .SendAdfEmail(
                     createdLead.Site.AdfEmailAdresses.Select(r => new EmailAddress(r)).ToList(),
-                    new EleadAdfTemplate(createdLead, request.TimeZoneOffset));
+                    new EleadAdfTemplate(createdLead, request.BookingVehicle, request.TimeZoneOffset));
 
             await Task.WhenAll(sendCompleteBookingEmailTask, sendNewLeadNotificationEmailTask, sendAdfEmailTask);
             // responses can be analyzed below via send...EmailTask.Result
@@ -187,7 +187,7 @@ namespace QuantumLogic.WebApi.Controllers.Widget
 
             #region Send SMS notifications
 
-            await SmsService.SendSms(createdLead.Site.PhoneNumbers, new NewLeadNotificationSmsTemplate(createdLead));
+            await SmsService.SendSms(createdLead.Site.PhoneNumbers, new NewLeadNotificationSmsTemplate(createdLead, request.TimeZoneOffset));
 
             #endregion
 

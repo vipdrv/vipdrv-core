@@ -90,6 +90,11 @@
 
                 self.$onInit = function () {
                     api.retrieveSite().then(function (data) {
+                        if (!data) {
+                            console.error('VipDrive: https://api.testdrive.pw is unreachable');
+                            return;
+                        }
+
                         self.dealerData.siteId = data.site.id;
                         self.dealerData.name = data.site.dealerName;
                         self.dealerData.phone = data.site.dealerPhone;
@@ -187,7 +192,7 @@
                 }
 
                 var arr = vehicleTitleStr.split(' ');
-                if (arr.length < 3) {
+                if (arr.length <= 3) {
                     return vehicleTitleStr;
                 }
 

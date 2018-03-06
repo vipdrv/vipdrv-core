@@ -7,8 +7,6 @@
                 self.dealerData = dealerData;
                 self.bookingData = bookingData;
                 self.isStepValid = false;
-                self.isNoSalesPersonAvaliable = false;
-                // TODO: hack for experts
 
                 self.$onInit = function () {
                     self.validateStep();
@@ -50,11 +48,7 @@
                 };
 
                 self.isAvaliable = function(expertWorkingHours) {
-                    // TODO: hack for experts
-                    return true;
-
                     if (self.bookingData.calendar.isSkipped) {
-                        self.isNoSalesPersonAvaliable = false;
                         return true;
                     }
 
@@ -72,18 +66,28 @@
                     var selectedTime = self.bookingData.calendar.time;
 
                     if (selectedDay != null) {
-                        var selectedHour = moment(selectedTime, 'HH:mm A').get('hour');
+                        var hours = Number(selectedTime.match(/^(\d+)/)[1]);
+                        var AMPM = selectedTime.match(/\s(.*)$/)[1];
+
+                        if(AMPM.toLowerCase() == "pm" && hours<12) {
+                            hours = hours+12;
+                        }
+                        if(AMPM.toLowerCase() == "am" && hours==12) {
+                            hours = hours-12;
+                        }
+
+                        var selectedHour = hours.toString();
+
                         var startTime = parseInt(selectedDay.startTime.split(':')[0]);
                         var endTime = parseInt(selectedDay.endTime.split(':')[0]);
 
                         if (startTime <= selectedHour && selectedHour <= endTime) {
-                            self.isNoSalesPersonAvaliable = false;
                             return true;
                         }
                     }
 
                     return false;
-                }
+                };
             },
             templateUrl: 'src/app/components/steps/expert/expert.tpl.html',
             bindings: {
