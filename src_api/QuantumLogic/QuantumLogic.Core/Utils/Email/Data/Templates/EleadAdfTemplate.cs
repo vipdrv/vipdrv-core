@@ -109,10 +109,10 @@ namespace QuantumLogic.Core.Utils.Email.Data.Templates
 
         protected string BookingDataTxt(string bookingDateTime, string expertName, string beverageName, string routeName)
         {
-            string bookingDateTimeNode = !String.IsNullOrEmpty(bookingDateTime) ? $"Test Drive DateTime: {bookingDateTime}; " : "";
-            string expertNameNode = !String.IsNullOrEmpty(expertName) ? $"Sales Person: {expertName}; " : "";
-            string beverageNameNode = !String.IsNullOrEmpty(beverageName) ? $"Beverage: {beverageName}; " : "";
-            string routeNameNode = !String.IsNullOrEmpty(routeName) ? $"Route: {routeName}; " : "";
+            string bookingDateTimeNode = !String.IsNullOrEmpty(bookingDateTime) ? $"Test Drive DateTime: {bookingDateTime};  " : "";
+            string expertNameNode = !String.IsNullOrEmpty(expertName) ? $"Sales Person: {expertName};  " : "";
+            string beverageNameNode = !String.IsNullOrEmpty(beverageName) ? $"Beverage: {beverageName};  " : "";
+            string routeNameNode = !String.IsNullOrEmpty(routeName) ? $"Route: {routeName};  " : "";
 
             string result = bookingDateTimeNode +
                             expertNameNode +
@@ -142,25 +142,29 @@ namespace QuantumLogic.Core.Utils.Email.Data.Templates
                               $"<id sequence=\"{DealerName}\" source=\"{SiteName}\"></id>" +
                               $"<requestdate>{recieveDateTime}</requestdate>" +
                                 vehicleXmlNode +
-                              $"<salesperson>" +
-                                  $"<id source=\"DealerPeak\">{DealerPeakSalesId}</id>" +
-                              $"</salesperson>" +
                               $"<customer>" +
                                   $"<contact>" +
                                       $"<name part=\"first\">{FirstName}</name>" +
                                       $"<name part=\"last\">{SecondName}</name>" +
-                                      $"<phone>{UserPhone}</phone>" +
+                                      $"<phone type=\"cellphone\">{UserPhone}</phone>" +
                                       $"<email>{UserEmail}</email>" +
-                                      $"<comments>" +
-                                            bookingDataTxt +
-                                      $"</comments>" +
                                   $"</contact>" +
+                                  $"<comments>" +
+                                    bookingDataTxt +
+                                  $"</comments>" +
                               $"</customer>" +
                               $"<vendor>" +
                                   $"<contact>" +
                                       $"<name part=\"full\">{DealerName}</name>" +
                                   $"</contact>" +
                               $"</vendor>" +
+                              $"<provider>" +
+                                $"<name>VIPdrv - VIP Test Drive</name>" +
+                                $"<url>https://www.vipdrv.com</url>" +
+                              $"</provider>" +
+                              $"<salesperson>" +
+                                $"<id source=\"DealerPeak\">{DealerPeakSalesId}</id>" +
+                              $"</salesperson>" +
                           $"</prospect>" +
                       $"</adf>";
 
