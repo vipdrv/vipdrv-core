@@ -30,6 +30,7 @@ namespace QuantumLogic.Tests.Core.Utils.Email
                 secondName: "Evgeny",
                 userPhone: "Platonov",
                 userEmail: "+380666159567",
+                userComments: "Test user comments",
                 siteName: "ultramarine256@gmail.com",
                 dealerName: "Truck World",
                 expertName: "VIN-111",
