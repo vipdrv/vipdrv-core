@@ -12,7 +12,7 @@ namespace QuantumLogic.WebApi.DataModels.Requests.Widget.Booking
     public class CompleteBookingRequest
     {
         public BookingUser BookingUser { get; set; }
-        public DateTime? BookingDateTime { get; set; }
+        public DateTime? BookingDateTimeUtc { get; set; }
         public BookingVehicle BookingVehicle { get; set; }
         public int? ExpertId { get; set; }
         public int? BeverageId { get; set; }
@@ -42,7 +42,7 @@ namespace QuantumLogic.WebApi.DataModels.Requests.Widget.Booking
                 carTitle: BookingVehicle.Title,
                 carVin: BookingVehicle.Vin,
                 vdpUrl: BookingVehicle.VdpUrl,
-                bookingDateTimeUtc: BookingDateTime,
+                bookingDateTimeUtc: BookingDateTimeUtc,
                 isNew: true);
         }
     }
@@ -116,5 +116,3 @@ namespace QuantumLogic.WebApi.DataModels.Requests.Widget.Booking
         }
     }
 }
-
-

@@ -52,7 +52,7 @@ namespace QuantumLogic.Core.Utils.Email.Data.Templates
             _roadName = roadName;
         }
 
-        public NewLeadNotificationEmailTemplate(Lead lead, int timeZoneOffset = 0) //TODO: move optional parameter to lead entity
+        public NewLeadNotificationEmailTemplate(Lead lead, int timeZoneOffset = 0)
         {
             _vehicleImgUrl = lead.CarImageUrl;
             _vdpUrl = lead.VdpUrl;

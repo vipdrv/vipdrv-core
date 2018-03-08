@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Globalization;
+using System.Text.RegularExpressions;
 using QuantumLogic.Core.Constants;
 using QuantumLogic.Core.Domain.Entities.WidgetModule;
 using QuantumLogic.Core.Utils.Email.Data.Templates.Arguments;
@@ -14,6 +15,7 @@ namespace QuantumLogic.Core.Utils.Email.Data.Templates
         public string SecondName { get; }
         public string UserPhone { get; }
         public string UserEmail { get; }
+        public string UserComments { get; }
         public string SiteName { get; }
         public string DealerName { get; }
         public string ExpertName { get; }
@@ -29,6 +31,7 @@ namespace QuantumLogic.Core.Utils.Email.Data.Templates
             string secondName,
             string userPhone,
             string userEmail,
+            string userComments,
             string siteName,
             string dealerName,
             string expertName,
@@ -43,6 +46,7 @@ namespace QuantumLogic.Core.Utils.Email.Data.Templates
             SecondName = secondName;
             UserPhone = userPhone;
             UserEmail = userEmail;
+            UserComments = userComments;
             SiteName = siteName;
             DealerName = dealerName;
             ExpertName = expertName;
@@ -60,6 +64,7 @@ namespace QuantumLogic.Core.Utils.Email.Data.Templates
             SecondName = lead.SecondName;
             UserPhone = lead.UserPhone;
             UserEmail = lead.UserEmail;
+            UserComments = lead.UserComment;
             SiteName = lead.Site?.Name;
             DealerName = lead.Site?.DealerName;
             ExpertName = (lead.Expert != null) ? lead.Expert.Name : "Skipped by customer";
@@ -79,7 +84,7 @@ namespace QuantumLogic.Core.Utils.Email.Data.Templates
             if (!String.IsNullOrWhiteSpace(vehicle.Msrp))
             {
                 type = "msrp";
-                price = vehicle.Msrp;
+                price = Regex.Replace(vehicle.Msrp, "[^0-9]", "");
             }
 
             return $"<price type=\"{type}\" currency=\"{currency}\" delta=\"\" relativeto=\"\" source=\"\">{price}</price>";
@@ -107,17 +112,19 @@ namespace QuantumLogic.Core.Utils.Email.Data.Templates
             return xml;
         }
 
-        protected string BookingDataTxt(string bookingDateTime, string expertName, string beverageName, string routeName)
+        protected string BookingDataTxt(string bookingDateTime, string expertName, string beverageName, string routeName, string userComments)
         {
             string bookingDateTimeNode = !String.IsNullOrEmpty(bookingDateTime) ? $"Test Drive DateTime: {bookingDateTime};  " : "";
             string expertNameNode = !String.IsNullOrEmpty(expertName) ? $"Sales Person: {expertName};  " : "";
             string beverageNameNode = !String.IsNullOrEmpty(beverageName) ? $"Beverage: {beverageName};  " : "";
             string routeNameNode = !String.IsNullOrEmpty(routeName) ? $"Route: {routeName};  " : "";
+            string userCommentsNode = !String.IsNullOrEmpty(userComments) ? $"User Comments: {userComments};  " : "";
 
             string result = bookingDateTimeNode +
                             expertNameNode +
                             beverageNameNode +
-                            routeNameNode;
+                            routeNameNode +
+                            userCommentsNode;
 
             return result;
         }
@@ -133,14 +140,14 @@ namespace QuantumLogic.Core.Utils.Email.Data.Templates
                 .ToString(QuantumLogicConstants.UsaTimeFormat, CultureInfo.InvariantCulture);
 
             string vehicleXmlNode = VehicleXmlNode(Vehicle);
-            string bookingDataTxt = BookingDataTxt(bookingDateTime, ExpertName, BeverageName, RouteTitle);
+            string bookingDataTxt = BookingDataTxt(bookingDateTime, ExpertName, BeverageName, RouteTitle, UserComments);
 
             var xml = $"<?xml version=\"1.0\" encoding=\"UTF-8\"?>" +
                       $"<?adf version=\"1.0\"?>" +
                       $"<adf>" +
                           $"<prospect status=\"new\">" +
                               $"<id sequence=\"{DealerName}\" source=\"{SiteName}\"></id>" +
-                              $"<requestdate>{recieveDateTime}</requestdate>" +
+                            //$"<requestdate>{recieveDateTime}</requestdate>" +
                                 vehicleXmlNode +
                               $"<customer>" +
                                   $"<contact>" +
@@ -160,7 +167,7 @@ namespace QuantumLogic.Core.Utils.Email.Data.Templates
                               $"</vendor>" +
                               $"<provider>" +
                                 $"<name>VIPdrv - VIP Test Drive</name>" +
-                                $"<url>https://www.vipdrv.com</url>" +
+                              //$"<url>https://www.vipdrv.com</url>" +
                               $"</provider>" +
                               $"<salesperson>" +
                                 $"<id source=\"DealerPeak\">{DealerPeakSalesId}</id>" +
@@ -168,7 +175,7 @@ namespace QuantumLogic.Core.Utils.Email.Data.Templates
                           $"</prospect>" +
                       $"</adf>";
 
-            
+
             return xml;
         }
 
