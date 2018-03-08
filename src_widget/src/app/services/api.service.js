@@ -130,7 +130,7 @@
                         email: null,
                         comment: null
                     },
-                    bookingDateTime: null,
+                    bookingDateTimeUtc: null,
                     bookingVehicle: {
                         vin: null,
                         stock: null,
@@ -161,9 +161,15 @@
                 bookingDto.bookingUser.comment = bookingData.user.comment || null;
 
                 if (bookingData.calendar.date && bookingData.calendar.time) {
-                    var date = new Date(bookingData.calendar.date);
-                    var time = bookingData.calendar.time;
+                    var date = new Date();
 
+                    var dateChunks = bookingData.calendar.date.split("-");
+                    var mounth = dateChunks[1] - 1;
+                    var day = dateChunks[2];
+                    date.setMonth(mounth);
+                    date.setDate(day);
+
+                    var time = bookingData.calendar.time;
                     var hours = Number(time.match(/^(\d+)/)[1]);
                     var minutes = Number(time.match(/:(\d+)/)[1]);
                     var AMPM = time.match(/\s(.*)$/)[1];
@@ -182,7 +188,7 @@
                     date.setHours(sHours);
                     date.setMinutes(sMinutes);
 
-                    bookingDto.bookingDateTime = date;
+                    bookingDto.bookingDateTimeUtc = date;
                 }
                 var date = new Date();
                 bookingDto.timeZoneOffset = date.getTimezoneOffset();

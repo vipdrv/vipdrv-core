@@ -56,7 +56,7 @@ namespace QuantumLogic.Core.Utils.Email.Data.Templates
             _dealerSiteUrl = dealerSiteUrl;
         }
 
-        public CompleteBookingEmailTemplate(Lead lead, int timeZoneOffset = 0) //TODO: move optional parameter to lead entity
+        public CompleteBookingEmailTemplate(Lead lead, int timeZoneOffset = 0)
         {
             _vehicleTitle = lead.CarTitle;
             _vehicleImgUrl = lead.CarImageUrl;

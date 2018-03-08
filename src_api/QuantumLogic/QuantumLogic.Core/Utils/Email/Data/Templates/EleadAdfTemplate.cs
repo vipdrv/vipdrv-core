@@ -147,7 +147,7 @@ namespace QuantumLogic.Core.Utils.Email.Data.Templates
                       $"<adf>" +
                           $"<prospect status=\"new\">" +
                               $"<id sequence=\"{DealerName}\" source=\"{SiteName}\"></id>" +
-                              $"<requestdate>{recieveDateTime}</requestdate>" +
+                            //$"<requestdate>{recieveDateTime}</requestdate>" +
                                 vehicleXmlNode +
                               $"<customer>" +
                                   $"<contact>" +
