@@ -122,20 +122,16 @@
         phone: null,
         address: null,
         siteUrl: null,
+
+
         workingHours: [],
         experts: {
-            isStepEnabled: true,
-            stepOrder: 0,
             items: []
         },
         beverages: {
-            isStepEnabled: true,
-            stepOrder: 1,
             items: []
         },
         roads: {
-            isStepEnabled: true,
-            stepOrder: 2,
             items: []
         }
     };
