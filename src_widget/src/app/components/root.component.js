@@ -58,7 +58,7 @@
                     if (closeWidgetFrame) {
                         $timeout(function () {
                             self.clearWidgetProgress();
-                        }, 1000);
+                        }, 300);
                     }
                 });
 

@@ -147,7 +147,7 @@ namespace QuantumLogic.Core.Utils.Email.Data.Templates
                       $"<adf>" +
                           $"<prospect status=\"new\">" +
                               $"<id sequence=\"{DealerName}\" source=\"{SiteName}\"></id>" +
-                            //$"<requestdate>{recieveDateTime}</requestdate>" +
+                                //$"<requestdate>{recieveDateTime}</requestdate>" +
                                 vehicleXmlNode +
                               $"<customer>" +
                                   $"<contact>" +
@@ -166,8 +166,8 @@ namespace QuantumLogic.Core.Utils.Email.Data.Templates
                                   $"</contact>" +
                               $"</vendor>" +
                               $"<provider>" +
-                                $"<name>VIPdrv - VIP Test Drive</name>" +
-                              //$"<url>https://www.vipdrv.com</url>" +
+                                $"<name>VIP Test Drive - {SiteName}</name>" + // TODO: special request from Boardwalk NissanBoardwalk Nissan Boardwalk Nissan
+                                                                              // $"<url>https://www.vipdrv.com</url>" +
                               $"</provider>" +
                               $"<salesperson>" +
                                 $"<id source=\"DealerPeak\">{DealerPeakSalesId}</id>" +
