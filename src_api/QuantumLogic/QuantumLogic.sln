@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26430.6
+VisualStudioVersion = 15.0.26730.10
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "QuantumLogic.WebApi", "QuantumLogic\QuantumLogic.WebApi.csproj", "{59B8914A-305B-4A57-AF4D-CC5827787AB7}"
 EndProject
@@ -9,7 +9,12 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "QuantumLogic.Data", "Quantu
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "QuantumLogic.Core", "QuantumLogic.Core\QuantumLogic.Core.csproj", "{01A174A0-B971-4109-8BBD-FF175ED11257}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QuantumLogic.Tests", "Tests\QuantumLogic.Tests\QuantumLogic.Tests.csproj", "{5F1CE583-734B-4CA4-85AE-53896CA60640}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "QuantumLogic.Tests", "Tests\QuantumLogic.Tests\QuantumLogic.Tests.csproj", "{5F1CE583-734B-4CA4-85AE-53896CA60640}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "scripts", "scripts", "{291FBE4D-45EC-4A6C-8B02-5CC3C42DEBB4}"
+	ProjectSection(SolutionItems) = preProject
+		Scripts\AddStepsDataMigration.sql = Scripts\AddStepsDataMigration.sql
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -36,5 +41,8 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {5DCD40B6-60A5-4C33-B2EF-A51369C2E737}
 	EndGlobalSection
 EndGlobal

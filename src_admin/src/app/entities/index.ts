@@ -16,3 +16,4 @@ export * from './widget/leads/lead.entity';
 export * from './widget/routes/route.entity';
 export * from './widget/sites/site.entity';
 export * from './widget/themes/widgetTheme.entity';
+export * from './widget/steps/step.entity';

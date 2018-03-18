@@ -20,3 +20,5 @@ export * from './concrete/entity/site/i-site.validation-service';
 export * from './concrete/entity/site/site.validation-service';
 export * from './concrete/entity/user/i-user.validation-service';
 export * from './concrete/entity/user/user.validation-service';
+export * from './concrete/entity/step/i-step.validation-service';
+export * from './concrete/entity/step/step.validation-service';

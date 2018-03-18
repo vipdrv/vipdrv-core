@@ -21,6 +21,53 @@ namespace QuantumLogic.Core.Domain.Services.Widget.Sites
 
         #endregion
 
+        public override Task<Site> CreateAsync(Site entity)
+        {
+            entity.Steps = CreateSteps(entity);
+            return base.CreateAsync(entity);
+        }
+
+        protected virtual List<Step> CreateSteps(Site entity)
+        {
+            return new List<Step>()
+            {
+                new Step()
+                {
+                    Descriptor = Step.DescriptorStepSchedule,
+                    Name = Step.DescriptorStepSchedule,
+                    Order = 1,
+                    IsActive = true
+                },
+                new Step()
+                {
+                    Descriptor = Step.DescriptorStepExpert,
+                    Name = Step.DescriptorStepExpert,
+                    Order = 2,
+                    IsActive = true
+                },
+                new Step()
+                {
+                    Descriptor = Step.DescriptorStepBeverage,
+                    Name = Step.DescriptorStepBeverage,
+                    Order = 3,
+                    IsActive = true
+                },
+                new Step()
+                {
+                    Descriptor = Step.DescriptorStepRoute,
+                    Name = Step.DescriptorStepRoute,
+                    Order = 4,
+                    IsActive = true
+                },
+                new Step()
+                {
+                    Descriptor = Step.DescriptorStepMusic,
+                    Name = Step.DescriptorStepMusic,
+                    Order = 5,
+                    IsActive = false
+                }
+            };
+        }
 
         public async Task SwapBeverageExpertStepOrder(int id)
         {
@@ -107,6 +154,7 @@ namespace QuantumLogic.Core.Domain.Services.Widget.Sites
                 entity => entity.Leads,
                 //entity => entity.Routes,
                 entity => entity.User,
+                entity => entity.Steps,
                 //entity => entity.WidgetTheme
             }
             .ToArray();
@@ -120,6 +168,7 @@ namespace QuantumLogic.Core.Domain.Services.Widget.Sites
                 entity => entity.Leads,
                 entity => entity.Routes,
                 entity => entity.User,
+                entity => entity.Steps,
                 entity => entity.WidgetTheme
             }
             .ToArray();
