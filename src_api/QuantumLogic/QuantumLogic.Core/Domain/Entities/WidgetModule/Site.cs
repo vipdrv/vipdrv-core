@@ -37,6 +37,7 @@ namespace QuantumLogic.Core.Domain.Entities.WidgetModule
         public virtual ICollection<Expert> Experts { get; set; }
         public virtual ICollection<Route> Routes { get; set; }
         public virtual ICollection<Lead> Leads { get; set; }
+        public virtual ICollection<Step> Steps { get; set; }
         public virtual WidgetTheme WidgetTheme { get; set; }
 
         #endregion
@@ -101,6 +102,7 @@ namespace QuantumLogic.Core.Domain.Entities.WidgetModule
             Experts = new HashSet<Expert>();
             Routes = new HashSet<Route>();
             Leads = new HashSet<Lead>();
+            Steps = new HashSet<Step>();
         }
 
         public Site(

@@ -87,6 +87,14 @@ namespace QuantumLogic.Core.Constants
         public const string CanUpdateOwnLead = "CanUpdateOwnLead";
         public const string CanDeleteOwnLead = "CanDeleteOwnLead";
 
+        public const string CanAllStep = "CanAllStep";
+        public const string CanRetrieveStep = "CanRetrieveStep";
+        public const string CanCreateStep = "CanCreateStep";
+        public const string CanUpdateStep = "CanUpdateStep";
+        public const string CanDeleteStep = "CanDeleteStep";
+        public const string CanUpdateOwnStep = "CanUpdateOwnStep";
+        public const string CanDeleteOwnStep = "CanDeleteOwnStep";
+
         #endregion
 
         #region QuantumLogic menu visibility permissions
