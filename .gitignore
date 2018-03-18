@@ -259,6 +259,7 @@ ModelManifest.xml
 
 # package control
 node_modules
+package-lock.json
 src_node/client/src/vendor
 
 # logs
@@ -273,9 +274,6 @@ src_node/client/test/screenshots/*
 !src_node/client/test/screenshots/README.md
 src_node/client/test/unit-results/*
 !src_node/client/test/unit-results/README.md
-
-# package control
-node_modules
 
 # src_widget
 rc_widget/build
