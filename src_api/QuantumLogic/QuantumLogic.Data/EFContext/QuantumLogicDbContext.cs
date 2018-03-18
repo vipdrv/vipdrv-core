@@ -220,6 +220,17 @@ namespace QuantumLogic.Data.EFContext
                     .HasForeignKey(r => r.RouteId)
                     .OnDelete(DeleteBehavior.Restrict);
             });
+            
+            modelBuilder.Entity<Step>(entity =>
+            {
+                entity.ToTable("Step");
+                entity.HasKey(c => c.Id);
+                entity
+                    .HasOne(e => e.Site)
+                    .WithMany(b => b.Steps)
+                    .HasForeignKey(r => r.SiteId)
+                    .OnDelete(DeleteBehavior.Cascade);
+            });
         }
     }
 }
