@@ -48,7 +48,7 @@ namespace QuantumLogic.Core.Domain.Services.Widget.Steps
         }
         protected override async Task SetOrderForEntityOnCreate(Step entity)
         {
-            entity.Order = (await ((IExpertRepository)Repository)
+            entity.Order = (await ((IStepRepository)Repository)
                     .GetMaxExistedOrder((qb) => qb.Where(r => r.SiteId == entity.SiteId))) + 1 ??
                 DefaultOrder;
         }
