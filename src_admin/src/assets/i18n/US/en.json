@@ -231,6 +231,39 @@
       "headerText_actions": "Actions"
     }
   },
+  "steps": {
+    "title": "Test drive steps",
+    "table": {
+      "headerText_name": "Name",
+      "headerText_descriptor": "Description"
+    },
+    "modal": {
+      "titleInfo": "Test drive step details",
+      "titleEdit": "Test drive step details",
+      "stepName": "Name",
+      "stepNameHelp": "Enter the name of the test drive step.",
+      "stepDescription": "Description",
+      "stepDescriptionHelp": "Type few words about the test drive step.",
+      "stepActivity": "Is active",
+      "stepOrder": "Order"
+    },
+    "concrete": {
+      "name": {
+        "ExpertStep": "Experts",
+        "BeverageStep": "Beverages",
+        "RouteStep": "Routes",
+        "ScheduleStep": "Booking time",
+        "MusicStep": "Music"
+      },
+      "descriptor": {
+        "ExpertStep": "Is used to select expert for test drive.",
+        "BeverageStep": "Is used to select beverage for test drive.",
+        "RouteStep": "Is used to select route for test drive.",
+        "ScheduleStep": "Is used to select a booking time for test drive.",
+        "MusicStep": "Is used to select music for test drive."
+      }
+    }
+  },
   "beverages": {
     "title": "Beverages",
     "table": {

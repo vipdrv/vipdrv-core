@@ -18,6 +18,7 @@ import { SiteDetailsRelationsComponent } from './details/relations/siteDetailsRe
 import { SiteOverviewComponent } from './overview/siteOverview.component';
 import { SiteContactsComponent } from './contacts/siteContacts.component';
 import { SiteWizardComponent } from './wizard/site-wizard.component';
+import { StepsTableComponent } from './stepWizard/step-wizard.component';
 import { SitesComponent } from './sites.component';
 import { routing } from './sites.routing';
 
@@ -51,6 +52,7 @@ import { SiteCardComponent } from './cards/siteCard.component';
         SiteOverviewComponent,
         SiteContactsComponent,
         SiteWizardComponent,
+        StepsTableComponent,
     ],
     declarations: [
         SitesComponent,
@@ -62,6 +64,7 @@ import { SiteCardComponent } from './cards/siteCard.component';
         SiteOverviewComponent,
         SiteContactsComponent,
         SiteWizardComponent,
+        StepsTableComponent,
     ],
     providers: []
 })

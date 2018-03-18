@@ -8,6 +8,7 @@ import { LeadValidationService } from './concrete/entity/lead/lead.validation-se
 import { RouteValidationService } from './concrete/entity/route/route.validation-service';
 import { SiteValidationService } from './concrete/entity/site/site.validation-service';
 import { UserValidationService } from './concrete/entity/user/user.validation-service';
+import { StepValidationService } from './concrete/entity/step/step.validation-service';
 @NgModule({
     imports: [
         CommonModule
@@ -24,7 +25,8 @@ import { UserValidationService } from './concrete/entity/user/user.validation-se
         LeadValidationService,
         RouteValidationService,
         SiteValidationService,
-        UserValidationService
+        UserValidationService,
+        StepValidationService
     ]
 })
 export class ValidationModule {}
