@@ -50,8 +50,8 @@
                     <tbody>
                     <tr class="steps-table-body-row"
                         [ngClass]="getClassesForTableRow(item)"
-                        *ngFor="let item of items"
-                        (click)="tryInfoModalOpen(item)">
+                        *ngFor="let item of items">
+                        <!--(click)="tryInfoModalOpen(item)"-->
                         <td class="steps-table-body-column steps-table-body-column-body-name"
                             translate>
                             {{'steps.concrete.name.' + item.name}}

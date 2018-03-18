@@ -12,8 +12,6 @@ namespace QuantumLogic.WebApi.DataModels.Dtos.Widget.Steps
         public int Order { get; set; }
         public bool IsActive { get; set; }
 
-        public string SiteName { get; set; }
-
         #region Mapping
 
         public override void MapFromEntity(Step entity)
@@ -24,7 +22,6 @@ namespace QuantumLogic.WebApi.DataModels.Dtos.Widget.Steps
             Name = entity.Name;
             Order = entity.Order;
             IsActive = entity.IsActive;
-            SiteName = entity.Site.Name;
         }
         public override Step MapToEntity()
         {

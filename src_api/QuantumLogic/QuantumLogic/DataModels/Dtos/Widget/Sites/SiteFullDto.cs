@@ -1,5 +1,6 @@
 ﻿using QuantumLogic.Core.Domain.Entities.WidgetModule;
 using QuantumLogic.Core.Utils.Scheduling.Week;
+using QuantumLogic.WebApi.DataModels.Dtos.Widget.Steps;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,6 +22,7 @@ namespace QuantumLogic.WebApi.DataModels.Dtos.Widget.Sites
         public int RouteStepOrder { get; set; }
 
         public IList<DayOfWeekInterval> WorkingHours { get; set; }
+        public IList<StepDto> Steps { get; set; }
 
         public override void MapFromEntity(Site entity)
         {
@@ -35,6 +37,17 @@ namespace QuantumLogic.WebApi.DataModels.Dtos.Widget.Sites
             BeverageStepOrder = entity.BeverageStepOrder;
             ExpertStepOrder = entity.ExpertStepOrder;
             RouteStepOrder = entity.RouteStepOrder;
+            Steps = entity.Steps
+                .Select(r => new StepDto()
+                {
+                    Id = r.Id,
+                    Descriptor = r.Descriptor,
+                    IsActive = r.IsActive,
+                    Name = r.Name,
+                    SiteId = r.SiteId,
+                    Order = r.Order
+                })
+                .ToList();
         }
 
         public override Site MapToEntity()
