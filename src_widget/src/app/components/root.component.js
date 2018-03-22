@@ -156,12 +156,21 @@
 
 
                 self.parseQuery = function (queryString) {
+                    // TODO: obmanka for ImgaURL
+
                     var query = {};
                     var pairs = (queryString[0] === '?' ? queryString.substr(1) : queryString).split('&');
                     for (var i = 0; i < pairs.length; i++) {
                         var pair = pairs[i].split('=');
                         query[decodeURIComponent(pair[0])] = decodeURIComponent(pair[1] || '');
                     }
+
+                    if (queryString.indexOf('imageUrl') > -1) {
+                        var imageUlrChunks = queryString.split('imageUrl');
+                        var imageUlr  = imageUlrChunks[1].substr(1); // remove '='
+                        query.imageUrl = imageUlr.split('--ImgUrlEnd--')[0]; // take ImgUrl by --ImgUrlEnd--
+                    }
+
                     return query;
                 }
             },
@@ -192,7 +201,7 @@
                 }
 
                 var arr = vehicleTitleStr.split(' ');
-                if (arr.length <= 3) {
+                if (arr.length <= 4) {
                     return vehicleTitleStr;
                 }
 

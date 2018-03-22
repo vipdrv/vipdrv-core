@@ -107,10 +107,20 @@
                      role="tabpanel"
                      aria-labelledby="wizard-tab">
                     <div class="site-relation-container">
-                        <site-wizard [entity]="entity">
-                        </site-wizard>
+                        <steps-table [siteEntity]="entity"
+                                     [siteId]="entity.id">
+                        </steps-table>
                     </div>
                 </div>
+                <!--<div id="wizard"-->
+                     <!--class="tab-pane fade show"-->
+                     <!--role="tabpanel"-->
+                     <!--aria-labelledby="wizard-tab">-->
+                    <!--<div class="site-relation-container">-->
+                        <!--<site-wizard [entity]="entity">-->
+                        <!--</site-wizard>-->
+                    <!--</div>-->
+                <!--</div>-->
                 <div id="experts"
                      class="tab-pane fade show"
                      role="tabpanel"

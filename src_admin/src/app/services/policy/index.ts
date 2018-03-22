@@ -13,3 +13,5 @@ export * from './concrete/widget/route/routeEntity.policy-service';
 export * from './concrete/widget/route/i-routeEntity.policy-service';
 export * from './concrete/widget/site/siteEntity.policy-service';
 export * from './concrete/widget/site/i-siteEntity.policy-service';
+export * from './concrete/widget/step/stepEntity.policy-service';
+export * from './concrete/widget/step/i-stepEntity.policy-service';

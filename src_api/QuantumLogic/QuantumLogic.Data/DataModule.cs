@@ -10,7 +10,6 @@ using QuantumLogic.Core.Domain.Repositories.WidgetModule;
 using QuantumLogic.Core.Domain.UnitOfWorks;
 using QuantumLogic.Core.Utils.Modules;
 using QuantumLogic.Core.Utils.Modules.Attributes;
-using QuantumLogic.Data.Configurations;
 using QuantumLogic.Data.Configurations.Connection;
 using QuantumLogic.Data.EFContext;
 using QuantumLogic.Data.EFUnitOfWork;
@@ -69,6 +68,8 @@ namespace QuantumLogic.Data
             services.AddTransient<IRouteRepository, RouteRepository>();
             services.AddTransient<IQLRepository<Site, int>, SiteRepository>();
             services.AddTransient<ISiteRepository, SiteRepository>();
+            services.AddTransient<IQLRepository<Step, int>, StepRepository>();
+            services.AddTransient<IStepRepository, StepRepository>();
 
             #endregion
         }

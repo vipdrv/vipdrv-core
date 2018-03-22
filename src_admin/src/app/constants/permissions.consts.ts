@@ -63,6 +63,14 @@ export const permissionNames = {
     canDeleteLead: 'CanDeleteLead',
     canRetrieveOwnLead: 'CanRetrieveOwnLead',
     canUpdateOwnLead: 'CanUpdateOwnLead',
-    canDeleteOwnLead: 'CanDeleteOwnLead'
+    canDeleteOwnLead: 'CanDeleteOwnLead',
 
+    // step
+    canAllStep: 'CanAllStep',
+    canRetrieveStep: 'CanRetrieveStep',
+    canCreateStep: 'CanCreateStep',
+    canUpdateStep: 'CanUpdateStep',
+    canDeleteStep: 'CanDeleteStep',
+    canUpdateOwnStep: 'CanUpdateOwnStep',
+    canDeleteOwnStep: 'CanDeleteOwnStep',
 };

@@ -60,6 +60,7 @@ namespace QuantumLogic.Core.Utils.Sms.Templates
                    $"Expert: {ExpertName} \n" +
                    $"Beverage: {BeverageName} \n" +
                    $"Route: {RoadName} \n\n" +
+                   // TODO: customer comment
                    $"{DealerName} \n" +
                    $"{DealerPhone} \n";
         }

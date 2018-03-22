@@ -26,3 +26,5 @@ export * from './widget/sites/i-site.api-service';
 export * from './widget/sites/site.api-service';
 export * from './widget/themes/i-widgetTheme.api-service';
 export * from './widget/themes/widgetTheme.api-service';
+export * from './widget/steps/i-step.api-service';
+export * from './widget/steps/step.api-service';

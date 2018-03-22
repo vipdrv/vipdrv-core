@@ -9,6 +9,7 @@ import { LeadApiService } from './widget/leads/lead.api-service';
 import { RouteApiService } from './widget/routes/route.api-service';
 import { SiteApiService } from './widget/sites/site.api-service';
 import { WidgetThemeApiService } from './widget/themes/widgetTheme.api-service';
+import { StepApiService } from './widget/steps/step.api-service';
 @NgModule({
     imports: [
         CommonModule
@@ -23,7 +24,8 @@ import { WidgetThemeApiService } from './widget/themes/widgetTheme.api-service';
         LeadApiService,
         RouteApiService,
         SiteApiService,
-        WidgetThemeApiService
+        WidgetThemeApiService,
+        StepApiService
     ]
 })
 export class ServerApiModule {}
