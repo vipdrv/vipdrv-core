@@ -8,7 +8,7 @@ namespace QuantumLogic.Core.Utils.Email
 {
     public class TestDriveEmailService : ITestDriveEmailService
     {
-        protected const string CompleteBookingSubject = "You Upcoming Test Drive";
+        protected const string CompleteBookingSubject = "Your Upcoming Test Drive";
         protected const string NewLeadNotificationSubject = "New Lead!";
         protected const string DealerInvitationSubject = "Welcome to TetsDrive";
         protected const string AdfEmailSubject = "ADF XML";
