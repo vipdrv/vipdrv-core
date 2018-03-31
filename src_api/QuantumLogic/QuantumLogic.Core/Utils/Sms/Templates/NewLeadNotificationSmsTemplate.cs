@@ -64,9 +64,13 @@ namespace QuantumLogic.Core.Utils.Sms.Templates
 
         public string AsPlainText()
         {
-            string bookingDateTime = BookingDateTimeUtc.GetValueOrDefault()
-                .Add(new TimeSpan(0, -TimeZoneOffset, 0))
-                .ToString(QuantumLogicConstants.UsaTimeFormat, CultureInfo.InvariantCulture);
+            string bookingDateTime = "Skipped by customer";
+            if (BookingDateTimeUtc != null)
+            {
+                bookingDateTime = BookingDateTimeUtc.GetValueOrDefault()
+                    .Add(new TimeSpan(0, -TimeZoneOffset, 0))
+                    .ToString(QuantumLogicConstants.UsaTimeFormat, CultureInfo.InvariantCulture);
+            }
 
             return $"New Lead for {DealerName}! \n\n" +
                    

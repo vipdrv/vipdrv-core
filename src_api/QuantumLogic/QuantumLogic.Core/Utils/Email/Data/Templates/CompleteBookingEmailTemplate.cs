@@ -92,9 +92,16 @@ namespace QuantumLogic.Core.Utils.Email.Data.Templates
             #endregion
 
             #region Booking
-            html = html.Replace("{{bookingDateTime}}", _bookingDateTime.GetValueOrDefault()
-                .Add(new TimeSpan(0, -_timeZoneOffset, 0))
-                .ToString(QuantumLogicConstants.UsaTimeFormat, CultureInfo.InvariantCulture));
+
+            string bookingDateTime = "Skipped by customer";
+            if (_bookingDateTime != null)
+            {
+                bookingDateTime = _bookingDateTime.GetValueOrDefault()
+                    .Add(new TimeSpan(0, -_timeZoneOffset, 0))
+                    .ToString(QuantumLogicConstants.UsaTimeFormat, CultureInfo.InvariantCulture);
+            }
+
+            html = html.Replace("{{bookingDateTime}}", bookingDateTime);
             html = html.Replace("{{expertName}}", _expertName);
             html = html.Replace("{{beverageName}}", _beverageName);
             html = html.Replace("{{roadName}}", _roadName);

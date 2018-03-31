@@ -115,10 +115,10 @@ namespace QuantumLogic.Core.Utils.Email.Data.Templates
         protected string BookingDataTxt(string bookingDateTime, string expertName, string beverageName, string routeName, string userComments)
         {
             string bookingDateTimeNode = !String.IsNullOrEmpty(bookingDateTime) ? $"Test Drive DateTime: {bookingDateTime};  " : "";
-            string expertNameNode = !String.IsNullOrEmpty(expertName) ? $"Sales Person: {expertName};  " : "";
-            string beverageNameNode = !String.IsNullOrEmpty(beverageName) ? $"Beverage: {beverageName};  " : "";
-            string routeNameNode = !String.IsNullOrEmpty(routeName) ? $"Route: {routeName};  " : "";
-            string userCommentsNode = !String.IsNullOrEmpty(userComments) ? $"User Comments: {userComments};  " : "";
+            string expertNameNode = !String.IsNullOrEmpty(expertName) ? $"Sales Person: {expertName};  \n" : "";
+            string beverageNameNode = !String.IsNullOrEmpty(beverageName) ? $"Beverage: {beverageName};  \n" : "";
+            string routeNameNode = !String.IsNullOrEmpty(routeName) ? $"Route: {routeName};  \n" : "";
+            string userCommentsNode = !String.IsNullOrEmpty(userComments) ? $"User Comments: {userComments};  \n" : "";
 
             string result = bookingDateTimeNode +
                             expertNameNode +
@@ -135,9 +135,13 @@ namespace QuantumLogic.Core.Utils.Email.Data.Templates
                 .Add(new TimeSpan(0, -TimeZoneOffset, 0))
                 .ToString(QuantumLogicConstants.OutputDateTimeFormat, CultureInfo.InvariantCulture);
 
-            string bookingDateTime = BookingDateTimeUtc.GetValueOrDefault()
-                .Add(new TimeSpan(0, -TimeZoneOffset, 0))
-                .ToString(QuantumLogicConstants.UsaTimeFormat, CultureInfo.InvariantCulture);
+            string bookingDateTime = null;
+            if (BookingDateTimeUtc != null)
+            {
+                bookingDateTime = BookingDateTimeUtc.GetValueOrDefault()
+                    .Add(new TimeSpan(0, -TimeZoneOffset, 0))
+                    .ToString(QuantumLogicConstants.UsaTimeFormat, CultureInfo.InvariantCulture);
+            }
 
             string vehicleXmlNode = VehicleXmlNode(Vehicle);
             string bookingDataTxt = BookingDataTxt(bookingDateTime, ExpertName, BeverageName, RouteTitle, UserComments);
