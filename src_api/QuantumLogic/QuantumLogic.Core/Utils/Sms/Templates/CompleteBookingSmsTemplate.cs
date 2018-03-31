@@ -49,12 +49,16 @@ namespace QuantumLogic.Core.Utils.Sms.Templates
 
         public string AsPlainText()
         {
-            string bookingDateTime = BookingDateTimeUtc.GetValueOrDefault()
-                .Add(new TimeSpan(0, -TimeZoneOffset, 0))
-                .ToString(QuantumLogicConstants.UsaTimeFormat, CultureInfo.InvariantCulture);
+            string bookingDateTime = "Skipped";
+            if (BookingDateTimeUtc != null)
+            {
+                bookingDateTime = BookingDateTimeUtc.GetValueOrDefault()
+                    .Add(new TimeSpan(0, -TimeZoneOffset, 0))
+                    .ToString(QuantumLogicConstants.UsaTimeFormat, CultureInfo.InvariantCulture);
+            }
 
             return $"Thank you! \n" +
-                   $"Your Upcoming VIPdrv Test Drive is Scheduled \n \n" +
+                   $"Your Upcoming VIP Test Drive is Scheduled \n \n" +
                    $"Vehicle: {VehicleTitle} \n" +
                    $"Date & Time: {bookingDateTime} \n" +
                    $"Expert: {ExpertName} \n" +
