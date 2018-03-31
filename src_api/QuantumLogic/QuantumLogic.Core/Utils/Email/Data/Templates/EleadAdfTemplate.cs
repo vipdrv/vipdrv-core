@@ -135,7 +135,7 @@ namespace QuantumLogic.Core.Utils.Email.Data.Templates
                 .Add(new TimeSpan(0, -TimeZoneOffset, 0))
                 .ToString(QuantumLogicConstants.OutputDateTimeFormat, CultureInfo.InvariantCulture);
 
-            string bookingDateTime = null;
+            string bookingDateTime = "Skipped by customer";
             if (BookingDateTimeUtc != null)
             {
                 bookingDateTime = BookingDateTimeUtc.GetValueOrDefault()

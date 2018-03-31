@@ -66,9 +66,9 @@ namespace QuantumLogic.Core.Utils.Email.Data.Templates
             _customerComment = lead.UserComment;
             _bookingDateTime = lead.BookingDateTimeUtc;
             _timeZoneOffset = timeZoneOffset;
-            _expertName = (lead.Expert != null) ? lead.Expert.Name : "Skipped by customer";
-            _beverageName = (lead.Beverage != null) ? lead.Beverage.Name : "Skipped by customer";
-            _roadName = (lead.Route != null) ? lead.Route.Name : "Skipped by customer";
+            _expertName = (lead.Expert != null) ? lead.Expert.Name : "Skipped";
+            _beverageName = (lead.Beverage != null) ? lead.Beverage.Name : "Skipped";
+            _roadName = (lead.Route != null) ? lead.Route.Name : "Skipped";
             _dealerName = lead.Site.DealerName;
             _dealerAddress = lead.Site.DealerAddress;
             _dealerPhone = lead.Site.DealerPhone;
@@ -93,7 +93,7 @@ namespace QuantumLogic.Core.Utils.Email.Data.Templates
 
             #region Booking
 
-            string bookingDateTime = "Skipped by customer";
+            string bookingDateTime = "Skipped";
             if (_bookingDateTime != null)
             {
                 bookingDateTime = _bookingDateTime.GetValueOrDefault()
