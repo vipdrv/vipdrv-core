@@ -455,6 +455,15 @@ export class LeadsTableComponent implements OnInit {
         return !entity.isNew || this.isNewPatchInProgress.indexOf(entity.id) > -1;
     }
     /// helpers
+    protected getLeadFullName(entity: LeadEntity): string {
+        let fullName: string;
+        if (Variable.isNotNullOrUndefined(entity)) {
+            fullName = `${Variable.isNotNullOrUndefinedOrEmptyString(entity.firstName) ? entity.firstName : ''} ${Variable.isNotNullOrUndefinedOrEmptyString(entity.secondName) ? entity.secondName : ''}`;
+        } else {
+            fullName = '';
+        }
+        return fullName;
+    }
     protected loadDetalizedEntity(id: number): Promise<LeadEntity> {
         const self = this;
         self.logger.logTrase(`LeadsTableComponent: Get detalized entity (id = ${id}) called.`);
