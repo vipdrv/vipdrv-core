@@ -16,6 +16,7 @@ using System;
 using QuantumLogic.Core.Utils.Email;
 using QuantumLogic.Core.Domain.Services.Main.Roles;
 using QuantumLogic.Core.Domain.Services.Widget.Steps;
+using QuantumLogic.Core.Domain.Services.Widget.Vehicles;
 
 namespace QuantumLogic.Core
 {
@@ -59,6 +60,8 @@ namespace QuantumLogic.Core
             services.AddScoped<ISiteDomainService, SiteDomainService>();
             services.AddScoped<IEntityDomainService<Step, int>, StepDomainService>();
             services.AddScoped<IStepDomainService, StepDomainService>();
+            services.AddScoped<IEntityDomainService<Vehicle, int>, VehicleDomainService>();
+            services.AddScoped<IVehicleDomainService, VehicleDomainService>();
 
             #endregion
 

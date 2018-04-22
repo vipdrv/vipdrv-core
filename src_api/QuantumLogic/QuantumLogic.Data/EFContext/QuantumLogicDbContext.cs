@@ -34,6 +34,7 @@ namespace QuantumLogic.Data.EFContext
         public virtual DbSet<Expert> Experts { get; set; }
         public virtual DbSet<Route> Routes { get; set; }
         public virtual DbSet<WidgetTheme> WidgetThemes { get; set; }
+        public virtual DbSet<Vehicle> Vehicles { get; set; }
 
         #endregion
 
@@ -228,6 +229,17 @@ namespace QuantumLogic.Data.EFContext
                 entity
                     .HasOne(e => e.Site)
                     .WithMany(b => b.Steps)
+                    .HasForeignKey(r => r.SiteId)
+                    .OnDelete(DeleteBehavior.Cascade);
+            });
+
+            modelBuilder.Entity<Vehicle>(entity =>
+            {
+                entity.ToTable("Vehicle");
+                entity.HasKey(c => c.Id);
+                entity
+                    .HasOne(e => e.Site)
+                    .WithMany()
                     .HasForeignKey(r => r.SiteId)
                     .OnDelete(DeleteBehavior.Cascade);
             });
