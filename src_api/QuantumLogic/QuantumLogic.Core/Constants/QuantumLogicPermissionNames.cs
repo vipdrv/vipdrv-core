@@ -95,6 +95,14 @@ namespace QuantumLogic.Core.Constants
         public const string CanUpdateOwnStep = "CanUpdateOwnStep";
         public const string CanDeleteOwnStep = "CanDeleteOwnStep";
 
+        public const string CanAllVehicle = "CanAllVehicle";
+        public const string CanRetrieveVehicle = "CanRetrieveVehicle";
+        public const string CanCreateVehicle = "CanCreateVehicle";
+        public const string CanUpdateVehicle = "CanUpdateVehicle";
+        public const string CanDeleteVehicle = "CanDeleteVehicle";
+        public const string CanUpdateOwnVehicle = "CanUpdateOwnVehicle";
+        public const string CanDeleteOwnVehicle = "CanDeleteOwnVehicle";
+
         #endregion
 
         #region QuantumLogic menu visibility permissions

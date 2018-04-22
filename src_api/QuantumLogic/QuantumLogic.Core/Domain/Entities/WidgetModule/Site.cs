@@ -28,6 +28,10 @@ namespace QuantumLogic.Core.Domain.Entities.WidgetModule
         public int ExpertStepOrder { get; set; }
         public int RouteStepOrder { get; set; }
 
+        public string CrmProvider { get; set; }
+        public string SiteProvider { get; set; }
+        public string FeedFormat { get; set; }
+
         #endregion
 
         #region Relation

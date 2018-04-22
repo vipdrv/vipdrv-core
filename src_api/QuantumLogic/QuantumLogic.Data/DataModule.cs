@@ -70,6 +70,8 @@ namespace QuantumLogic.Data
             services.AddTransient<ISiteRepository, SiteRepository>();
             services.AddTransient<IQLRepository<Step, int>, StepRepository>();
             services.AddTransient<IStepRepository, StepRepository>();
+            services.AddTransient<IQLRepository<Vehicle, int>, VehicleRepository>();
+            services.AddTransient<IVehicleRepository, VehicleRepository>();
 
             #endregion
         }

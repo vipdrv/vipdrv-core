@@ -69,6 +69,8 @@ namespace QuantumLogic.WebApi
             services.AddScoped<ISitePolicy, SitePolicy>();
             services.AddScoped<IEntityPolicy<Step, int>, StepPolicy>();
             services.AddScoped<IStepPolicy, StepPolicy>();
+            services.AddScoped<IEntityPolicy<Vehicle, int>, VehiclePolicy>();
+            services.AddScoped<IVehiclePolicy, VehiclePolicy>();
 
             #endregion
 
@@ -98,6 +100,8 @@ namespace QuantumLogic.WebApi
             services.AddScoped<ISiteValidationService, SiteValidationService>();
             services.AddScoped<IEntityValidationService<Step, int>, StepValidationService>();
             services.AddScoped<IStepValidationService, StepValidationService>();
+            services.AddScoped<IEntityValidationService<Vehicle, int>, VehicleValidationService>();
+            services.AddScoped<IVehicleValidationService, VehicleValidationService>();
 
             #endregion
         }

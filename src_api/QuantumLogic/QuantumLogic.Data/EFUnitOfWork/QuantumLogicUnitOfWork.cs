@@ -1,5 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Storage;
+﻿using Microsoft.EntityFrameworkCore.Storage;
 using QuantumLogic.Core.Domain.UnitOfWorks;
 using QuantumLogic.Data.EFContext;
 using System;
