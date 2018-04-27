@@ -176,6 +176,9 @@ namespace QuantumLogic.Core.Utils.Email.Data.Templates
                               $"<salesperson>" +
                                 $"<id source=\"DealerPeak\">{DealerPeakSalesId}</id>" +
                               $"</salesperson>" +
+                              $"<agent>" + 
+                                $"{DealerPeakSalesId}" +
+                              $"</agent>" +
                           $"</prospect>" +
                       $"</adf>";
 
