@@ -14,6 +14,7 @@ namespace QuantumLogic.WebApi.DataModels.Dtos.Widget.Vehicles
         public string Condition { get; set; }
         public string VIN { get; set; }
         public string Stock { get; set; }
+        public string Trim { get; set; }
 
         #region Mapping
 
@@ -29,6 +30,7 @@ namespace QuantumLogic.WebApi.DataModels.Dtos.Widget.Vehicles
             Condition = entity.Condition.ToString();
             VIN = entity.VIN;
             Stock = entity.Stock;
+            Trim = entity.Trim;
         }
         public override Vehicle MapToEntity()
         {
@@ -42,6 +44,7 @@ namespace QuantumLogic.WebApi.DataModels.Dtos.Widget.Vehicles
             entity.Condition = (VehicleConditions)Enum.Parse(typeof(VehicleConditions), Condition, true);
             entity.VIN = VIN;
             entity.Stock = Stock;
+            entity.Trim = Trim;
             return entity;
         }
 

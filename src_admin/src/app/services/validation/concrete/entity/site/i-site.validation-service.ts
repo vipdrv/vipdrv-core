@@ -5,7 +5,9 @@ export interface ISiteValidationService extends IValidationService<SiteEntity> {
     isOwnerValid(site: SiteEntity): boolean;
     isUrlValid(site: SiteEntity): boolean;
     isImageUrlValid(entity: SiteEntity): boolean;
+    isWASPUrlValid(site: SiteEntity): boolean;
     getInvalidNameMessageKey(site: SiteEntity): string;
     getInvalidOwnerMessageKey(site: SiteEntity): string;
     getInvalidUrlMessageKey(site: SiteEntity): string;
+    getInvalidWASPUrlMessageKey(site: SiteEntity): string;
 }

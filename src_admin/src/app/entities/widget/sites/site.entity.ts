@@ -35,6 +35,8 @@ export class SiteEntity extends Entity {
     expertStepOrder: number;
     routeStepOrder: number;
 
+    widgetAsSeparatePageUrl: string;
+
     /// ctor
     constructor() {
         super();
@@ -64,6 +66,7 @@ export class SiteEntity extends Entity {
         this.dealerName = mock.dealerName;
         this.dealerAddress = mock.dealerAddress;
         this.dealerPhone = mock.dealerPhone;
+        this.widgetAsSeparatePageUrl = mock.widgetAsSeparatePageUrl;
         this.workingHours = WorkingInterval.initializeManyFromDto(dto.workingHours);
 
         this.useExpertStep = mock.useExpertStep;
