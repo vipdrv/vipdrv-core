@@ -15,7 +15,7 @@ namespace QuantumLogic.WebApi.DataModels.Dtos.Widget.Experts
         {
             base.MapFromEntity(entity);
             UrlToSeparatedPage = String.IsNullOrWhiteSpace(entity.Site.WidgetAsSeparatePageUrl) ? null :
-                $"{entity.Site.WidgetAsSeparatePageUrl}/#{Id}";
+                $"{entity.Site.WidgetAsSeparatePageUrl}/#expertId={Id}";
             WorkingHours = DayOfWeekInterval.Parse(entity.WorkingHours);
         }
         public override Expert MapToEntity()
