@@ -9,9 +9,10 @@ using QuantumLogic.Core.Domain.Entities.WidgetModule;
 namespace QuantumLogic.Data.Migrations
 {
     [DbContext(typeof(QuantumLogicDbContext))]
-    partial class QuantumLogicDbContextModelSnapshot : ModelSnapshot
+    [Migration("20180430183713_AddedWidgetAsSeparatePageUrl")]
+    partial class AddedWidgetAsSeparatePageUrl
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "1.1.2")

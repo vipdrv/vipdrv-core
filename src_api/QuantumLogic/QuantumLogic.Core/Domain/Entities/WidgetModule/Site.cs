@@ -19,6 +19,7 @@ namespace QuantumLogic.Core.Domain.Entities.WidgetModule
         public string DealerAddress { get; set; }
         public string DealerPhone { get; set; }
         public string WorkingHours { get; set; }
+        public string WidgetAsSeparatePageUrl { get; set; }
 
         public bool UseExpertStep { get; set; }
         public bool UseBeverageStep { get; set; }
@@ -159,6 +160,7 @@ namespace QuantumLogic.Core.Domain.Entities.WidgetModule
             DealerAddress = actualEntity.DealerAddress;
             DealerPhone = actualEntity.DealerPhone;
             WorkingHours = actualEntity.WorkingHours;
+            WidgetAsSeparatePageUrl = actualEntity.WidgetAsSeparatePageUrl;
         }
 
         #endregion

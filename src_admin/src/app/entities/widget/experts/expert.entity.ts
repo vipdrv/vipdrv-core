@@ -17,6 +17,7 @@ export class ExpertEntity extends Entity implements IPassivable, IOrderable {
     isPartOfTeamUsedCars: boolean;
     isPartOfTeamCPO: boolean;
     employeeId: string;
+    urlToSeparatedPage: string;
     /// ctoe
     constructor() {
         super();
@@ -44,5 +45,6 @@ export class ExpertEntity extends Entity implements IPassivable, IOrderable {
         this.isPartOfTeamUsedCars = mock.isPartOfTeamUsedCars;
         this.isPartOfTeamCPO = mock.isPartOfTeamCPO;
         this.employeeId = mock.employeeId;
+        this.urlToSeparatedPage = mock.urlToSeparatedPage;
     }
 }

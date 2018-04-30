@@ -37,25 +37,25 @@
             <span class="badge badge-danger"
                   *ngIf="showNoBeverages()"
                   translate>
-        sites.overview.noBeverages
-    </span>
+                sites.overview.noBeverages
+            </span>
             <span class="badge badge-success"
                   *ngIf="showActiveBeveragesAmount()"
                   [translateParams]="{ amount: entity.activeBeveragesAmount }"
                   translate>
-        sites.overview.activeBeverages_amount
-    </span>
+                sites.overview.activeBeverages_amount
+            </span>
             <span class="badge badge-danger"
                   *ngIf="showNoActiveBeveragesAmount()"
                   translate>
-        sites.overview.noActiveBeverages
-    </span>
+                sites.overview.noActiveBeverages
+            </span>
             <span class="badge badge-warning"
                   *ngIf="showNotActiveBeveragesAmount()"
                   [translateParams]="{ amount: entity.beveragesAmount - entity.activeBeveragesAmount }"
                   translate>
-        sites.overview.notActiveBeverages_amount
-    </span>
+                sites.overview.notActiveBeverages_amount
+            </span>
         </div>
     </div>
     <div class="row entity-property-row">

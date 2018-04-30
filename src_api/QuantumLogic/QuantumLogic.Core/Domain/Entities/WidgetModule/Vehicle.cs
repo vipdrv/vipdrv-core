@@ -13,7 +13,8 @@
         public VehicleConditions Condition { get; set; }
         public string VIN { get; set; }
         public string Stock { get; set; }
-        
+        public string Trim { get; set; }
+
         #endregion
 
         #region Relations
@@ -60,6 +61,7 @@
             Condition = actualEntity.Condition;
             VIN = actualEntity.VIN;
             Stock = actualEntity.Stock;
+            Trim = actualEntity.Trim;
         }
 
         #endregion

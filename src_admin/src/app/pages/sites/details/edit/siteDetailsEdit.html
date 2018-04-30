@@ -17,7 +17,7 @@
     <hr>
     <div class="row test-drive-modal-body-edit-entity-container-row-input"
          *ngIf="entityPolicyService.canManageOtherOwnerSites()">
-        <div class="col-sm-12 col-md-12 col-lg-12">
+        <div class="col-sm-12 col-md-6 col-lg-6">
             <div class="form-group">
                 <label for="site-name"
                        class="test-drive-input-label"
@@ -43,6 +43,31 @@
                        *ngIf="isValidationActive() && !isSiteOwnerValid()"
                        translate>
                     {{ getSiteOwnerInvalidMessageKey() }}
+                </small>
+            </div>
+        </div>
+        <div class="col-sm-12 col-md-6 col-lg-6">
+            <div class="form-group">
+                <label for="site-url"
+                       class="test-drive-input-label"
+                       translate>
+                    sites.modal.siteWidgetAsSeparatePageUrl
+                </label>
+                <input id="widget-page-url"
+                       type="text"
+                       class="form-control"
+                       [ngClass]="extensions.getInputValidationClass(isValidationActive(), isSiteWASPUrlValid())"
+                       [disabled]="isSiteWASPUrlInputDisabled()"
+                       [(ngModel)]="entity.widgetAsSeparatePageUrl">
+                <small class="form-text text-muted"
+                       *ngIf="!isValidationActive() || isSiteWASPUrlValid()"
+                       translate>
+                    sites.modal.siteWidgetAsSeparatePageUrlHelp
+                </small>
+                <small class="form-text test-drive-validation-message"
+                       *ngIf="isValidationActive() && !isSiteWASPUrlValid()"
+                       translate>
+                    {{ getSiteWASPUrlInvalidMessageKey() }}
                 </small>
             </div>
         </div>

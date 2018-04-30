@@ -31,6 +31,10 @@ export class SiteValidationService
         return Variable.isNotNullOrUndefined(entity) &&
             Variable.isNotNullOrUndefinedOrEmptyString(entity.url);
     }
+    isWASPUrlValid(entity: SiteEntity): boolean {
+        return Variable.isNotNullOrUndefined(entity); // &&
+            // Variable.isNotNullOrUndefinedOrEmptyString(entity.widgetAsSeparatePageUrl);
+    }
     isImageUrlValid(entity: SiteEntity): boolean {
         return Variable.isNotNullOrUndefined(entity) &&
             Variable.isNotNullOrUndefinedOrEmptyString(entity.imageUrl);
@@ -43,5 +47,8 @@ export class SiteValidationService
     }
     getInvalidUrlMessageKey(entity: SiteEntity): string {
         return 'validation.sites.invalidUrlMessage';
+    }
+    getInvalidWASPUrlMessageKey(entity: SiteEntity): string {
+        return 'validation.sites.invalidWASPUrlMessage';
     }
 }

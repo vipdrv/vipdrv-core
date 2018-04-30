@@ -99,4 +99,14 @@ export class SiteDetailsEditComponent {
     protected getWeekScheduleDefaultClass() {
         return this.isWeekScheduleOpenedByDefault ? 'show' : '';
     }
+    // WASP
+    protected isSiteWASPUrlInputDisabled(): boolean {
+        return this.isReadOnly;
+    }
+    protected isSiteWASPUrlValid(): boolean {
+        return this.siteValidationService.isWASPUrlValid(this.entity);
+    }
+    protected getSiteWASPUrlInvalidMessageKey(): string {
+        return this.siteValidationService.getInvalidWASPUrlMessageKey(this.entity);
+    }
 }
