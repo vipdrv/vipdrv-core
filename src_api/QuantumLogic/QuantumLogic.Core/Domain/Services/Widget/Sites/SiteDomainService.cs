@@ -13,11 +13,19 @@ namespace QuantumLogic.Core.Domain.Services.Widget.Sites
 {
     public class SiteDomainService : EntityDomainService<Site, int>, ISiteDomainService
     {
+        #region Injected dependencies
+
+        protected readonly ILeadRepository LeadRepository;
+
+        #endregion
+
         #region Ctors
 
-        public SiteDomainService(ISiteRepository repository, ISitePolicy policy, ISiteValidationService validationService)
+        public SiteDomainService(ISiteRepository repository, ISitePolicy policy, ISiteValidationService validationService, ILeadRepository leadRepository)
             : base(repository, policy, validationService)
-        { }
+        {
+            LeadRepository = leadRepository;
+        }
 
         #endregion
 
@@ -139,7 +147,7 @@ namespace QuantumLogic.Core.Domain.Services.Widget.Sites
 
         protected override Task CascadeDeleteActionAsync(Site entity)
         {
-            return Task.CompletedTask;
+            return LeadRepository.DeleteRange(entitySet => entitySet.Where(r => r.SiteId == entity.Id));
         }
         internal override IEnumerable<LoadEntityRelationAction<Site>> GetLoadEntityRelationActions()
         {

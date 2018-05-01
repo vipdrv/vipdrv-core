@@ -238,6 +238,23 @@ namespace QuantumLogic.Data.Repositories
                 }
             }
         }
+        public virtual async Task DeleteRange(Func<IQueryable<TEntity>, IQueryable<TEntity>> queryBuilder)
+        {
+            bool createdNew = false;
+            try
+            {
+                var entities = await GetAllAsync(queryBuilder);
+                DbContextManager.BuildOrCurrentContext(out createdNew).RemoveRange(entities);
+            }
+            finally
+            {
+                if (createdNew)
+                {
+                    await DbContextManager.CurrentContext.SaveChangesAsync();
+                    DbContextManager.DisposeContext();
+                }
+            }
+        }
 
         #region Helpers
 

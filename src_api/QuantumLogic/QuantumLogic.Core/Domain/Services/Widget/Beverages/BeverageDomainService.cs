@@ -14,17 +14,25 @@ namespace QuantumLogic.Core.Domain.Services.Widget.Beverages
     {
         public override int DefaultOrder => 1;
 
+        #region Injected dependencies
+
+        protected readonly ILeadRepository LeadRepository;
+
+        #endregion
+
         #region Ctors
 
-        public BeverageDomainService(IBeverageRepository repository, IBeveragePolicy policy, IBeverageValidationService validationService)
+        public BeverageDomainService(IBeverageRepository repository, IBeveragePolicy policy, IBeverageValidationService validationService, ILeadRepository leadRepository)
             : base(repository, policy, validationService)
-        { }
+        {
+            LeadRepository = leadRepository;
+        }
 
         #endregion
 
         protected override Task CascadeDeleteActionAsync(Beverage entity)
         {
-            return Task.CompletedTask;
+            return LeadRepository.NullifyBeverageRelation(entitySet => entitySet.Where(r => r.BeverageId == entity.Id));
         }
         internal override IEnumerable<LoadEntityRelationAction<Beverage>> GetLoadEntityRelationActions()
         {
