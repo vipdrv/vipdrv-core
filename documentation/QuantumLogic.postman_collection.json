@@ -1,0 +1,2293 @@
+{
+	"variables": [],
+	"info": {
+		"name": "QuantumLogic",
+		"_postman_id": "aca1cecc-83aa-df65-2013-d95ae5f05220",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Authorization",
+			"description": "",
+			"item": [
+				{
+					"name": "Get identity info",
+					"request": {
+						"url": "{{ApplicationEndpoint}}/identity-info",
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{AuthTokenType}} {{AuthTokenValue}}",
+								"description": ""
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"login\": \"admin\",\n\t\"password\": \"P@ssw0rd\",\n\t\"grantType\": \"username\"\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Authenticate (create token)",
+					"request": {
+						"url": "{{ApplicationEndpoint}}/token",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"login\": \"Admin\",\n\t\"password\": \"P@ssw0rd\",\n\t\"grantType\": \"username\"\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Main",
+			"description": "",
+			"item": [
+				{
+					"name": "Api status",
+					"description": "",
+					"item": [
+						{
+							"name": "Application info",
+							"request": {
+								"url": "{{ApplicationEndpoint}}",
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"description": ""
+									}
+								],
+								"body": {},
+								"description": ""
+							},
+							"response": []
+						}
+					],
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "Role",
+					"description": "",
+					"item": [
+						{
+							"name": "Get all",
+							"request": {
+								"url": {
+									"raw": "{{ApplicationEndpoint}}/{{ApiResource}}/role/get-all?page=0&pageSize=5",
+									"host": [
+										"{{ApplicationEndpoint}}"
+									],
+									"path": [
+										"{{ApiResource}}",
+										"role",
+										"get-all"
+									],
+									"query": [
+										{
+											"key": "page",
+											"value": "0",
+											"equals": true,
+											"description": ""
+										},
+										{
+											"key": "pageSize",
+											"value": "5",
+											"equals": true,
+											"description": ""
+										}
+									],
+									"variable": []
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"description": ""
+									},
+									{
+										"key": "Authorization",
+										"value": "{{AuthTokenType}} {{AuthTokenValue}}",
+										"description": ""
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"sorting\": \"canBeUsedForInvitation asc, name asc\"\n}"
+								},
+								"description": ""
+							},
+							"response": []
+						},
+						{
+							"name": "Get",
+							"request": {
+								"url": "{{ApplicationEndpoint}}/{{ApiResource}}/role/1",
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"description": ""
+									},
+									{
+										"key": "Authorization",
+										"value": "{{AuthTokenType}} {{AuthTokenValue}}",
+										"description": ""
+									}
+								],
+								"body": {},
+								"description": ""
+							},
+							"response": []
+						},
+						{
+							"name": "Create",
+							"request": {
+								"url": "{{ApplicationEndpoint}}/{{ApiResource}}/role",
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"description": ""
+									},
+									{
+										"key": "Authorization",
+										"value": "{{AuthTokenType}} {{AuthTokenValue}}",
+										"description": ""
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"Supervisor\",\n    \"canBeUsedForInvitation\": false\n}"
+								},
+								"description": ""
+							},
+							"response": []
+						},
+						{
+							"name": "Update",
+							"request": {
+								"url": "{{ApplicationEndpoint}}/{{ApiResource}}/role/1",
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"description": ""
+									},
+									{
+										"key": "Authorization",
+										"value": "{{AuthTokenType}} {{AuthTokenValue}}",
+										"description": ""
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"Supervisor\",\n    \"canBeUsedForInvitation\": false\n}"
+								},
+								"description": ""
+							},
+							"response": []
+						},
+						{
+							"name": "Delete",
+							"request": {
+								"url": "{{ApplicationEndpoint}}/{{ApiResource}}/role/1",
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"description": ""
+									},
+									{
+										"key": "Authorization",
+										"value": "{{AuthTokenType}} {{AuthTokenValue}}",
+										"description": ""
+									}
+								],
+								"body": {},
+								"description": ""
+							},
+							"response": []
+						}
+					],
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "User",
+					"description": "",
+					"item": [
+						{
+							"name": "Get all",
+							"request": {
+								"url": {
+									"raw": "{{ApplicationEndpoint}}/{{ApiResource}}/user/get-all?page=0&pageSize=5",
+									"host": [
+										"{{ApplicationEndpoint}}"
+									],
+									"path": [
+										"{{ApiResource}}",
+										"user",
+										"get-all"
+									],
+									"query": [
+										{
+											"key": "page",
+											"value": "0",
+											"equals": true,
+											"description": ""
+										},
+										{
+											"key": "pageSize",
+											"value": "5",
+											"equals": true,
+											"description": ""
+										}
+									],
+									"variable": []
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"description": ""
+									},
+									{
+										"key": "Authorization",
+										"value": "{{AuthTokenType}} {{AuthTokenValue}}",
+										"description": ""
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"sorting\": \"maxSitesCount desc, id asc\"\n}"
+								},
+								"description": ""
+							},
+							"response": []
+						},
+						{
+							"name": "Get",
+							"request": {
+								"url": "{{ApplicationEndpoint}}/{{ApiResource}}/user/1",
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"description": ""
+									},
+									{
+										"key": "Authorization",
+										"value": "{{AuthTokenType}} {{AuthTokenValue}}",
+										"description": ""
+									}
+								],
+								"body": {},
+								"description": ""
+							},
+							"response": []
+						},
+						{
+							"name": "Check username (is username free to use)",
+							"request": {
+								"url": "{{ApplicationEndpoint}}/{{ApiResource}}/user/is-username-valid/dasad",
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"description": ""
+									}
+								],
+								"body": {},
+								"description": ""
+							},
+							"response": []
+						},
+						{
+							"name": "Create",
+							"request": {
+								"url": "{{ApplicationEndpoint}}/{{ApiResource}}/user",
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"description": ""
+									},
+									{
+										"key": "Authorization",
+										"value": "{{AuthTokenType}} {{AuthTokenValue}}",
+										"description": ""
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"roleIds\": [\n        1\n    ],\n    \"username\": \"TestFromPostman\",\n    \"email\": \"postman@testdrive.com\",\n    \"phoneNumber\": \"+1 (333) 333-3333\",\n    \"password\": \"P@ssw0rd\",\n    \"firstName\": \"Postman\",\n    \"secondName\": \"Postman\",\n    \"maxSitesCount\": 3,\n    \"avatarUrl\": \"http://via.placeholder.com/300x300\"\n}"
+								},
+								"description": ""
+							},
+							"response": []
+						},
+						{
+							"name": "Register",
+							"request": {
+								"url": "{{ApplicationEndpoint}}/{{ApiResource}}/user/286fe6eb-1213-49d9-bb9d-1de616c4895c",
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"description": ""
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"username\": \"registered-user-2\",\n    \"email\": \"postman-test@test\",\n    \"password\": \"1\",\n    \"firstName\": \"first-name\",\n    \"secondName\": \"second-name\",\n    \"avatarUrl\": \"\",\n    \"maxSitesCount\": 54\n}"
+								},
+								"description": ""
+							},
+							"response": []
+						},
+						{
+							"name": "Update",
+							"request": {
+								"url": "{{ApplicationEndpoint}}/{{ApiResource}}/user",
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"description": ""
+									},
+									{
+										"key": "Authorization",
+										"value": "{{AuthTokenType}} {{AuthTokenValue}}",
+										"description": ""
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"roleIds\": [],\n    \"username\": \"TestFromPostman\",\n    \"email\": \"postman@testdrive.com\",\n    \"phoneNumber\": \"+1 (333) 333-3333\",\n    \"password\": \"P@ssw0rd\",\n    \"firstName\": \"Postman\",\n    \"secondName\": \"Postman\",\n    \"avatarUrl\": \"http://via.placeholder.com/300x300\",\n    \"maxSitesCount\": 3,\n    \"id\": 1024\n}"
+								},
+								"description": ""
+							},
+							"response": []
+						},
+						{
+							"name": "Patch password",
+							"request": {
+								"url": "{{ApplicationEndpoint}}/{{ApiResource}}/user/1/patch-password",
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"description": ""
+									},
+									{
+										"key": "Authorization",
+										"value": "{{AuthTokenType}} {{AuthTokenValue}}",
+										"description": ""
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"oldPassword\": \"P@ssw0rd\",\n\t\"newPassword\": \"P@ssw0rd\"\n}"
+								},
+								"description": ""
+							},
+							"response": []
+						},
+						{
+							"name": "Patch avatar",
+							"request": {
+								"url": "{{ApplicationEndpoint}}/{{ApiResource}}/user/1/patch-avatar",
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"description": ""
+									},
+									{
+										"key": "Authorization",
+										"value": "{{AuthTokenType}} {{AuthTokenValue}}",
+										"description": ""
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"newAvatarUrl\": \"http://via.placeholder.com/300x300\"\n}"
+								},
+								"description": ""
+							},
+							"response": []
+						},
+						{
+							"name": "Patch personal info",
+							"request": {
+								"url": "{{ApplicationEndpoint}}/{{ApiResource}}/user/1/patch-personal-info",
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"description": ""
+									},
+									{
+										"key": "Authorization",
+										"value": "{{AuthTokenType}} {{AuthTokenValue}}",
+										"description": ""
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"firstName\": \"FirstName\",\n\t\"secondName\": \"SecondName\",\n\t\"email\": \"postman@email.com\",\n\t\"phoneNumber\": \"+1 (333) 333-3333\"\n}"
+								},
+								"description": ""
+							},
+							"response": []
+						},
+						{
+							"name": "Delete",
+							"request": {
+								"url": "{{ApplicationEndpoint}}/{{ApiResource}}/user/5",
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"description": ""
+									},
+									{
+										"key": "Authorization",
+										"value": "{{AuthTokenType}} {{AuthTokenValue}}",
+										"description": ""
+									}
+								],
+								"body": {},
+								"description": ""
+							},
+							"response": []
+						},
+						{
+							"name": "Get all invitations",
+							"request": {
+								"url": "{{ApplicationEndpoint}}/{{ApiResource}}/user/1/invitation/0/100",
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"description": ""
+									},
+									{
+										"key": "Authorization",
+										"value": "{{AuthTokenType}} {{AuthTokenValue}}",
+										"description": ""
+									}
+								],
+								"body": {},
+								"description": ""
+							},
+							"response": []
+						},
+						{
+							"name": "Create invitation (send invite)",
+							"request": {
+								"url": "{{ApplicationEndpoint}}/{{ApiResource}}/user/invitation",
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"description": ""
+									},
+									{
+										"key": "Authorization",
+										"value": "{{AuthTokenType}} {{AuthTokenValue}}",
+										"description": ""
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"email\": \"ultramarine256@gmail.com\",\n    \"availableSitesCount\": 5,\n    \"roleId\": 2\n}"
+								},
+								"description": ""
+							},
+							"response": []
+						},
+						{
+							"name": "Delete invitation",
+							"request": {
+								"url": "{{ApplicationEndpoint}}/{{ApiResource}}/user/invitation/5",
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"description": ""
+									},
+									{
+										"key": "Authorization",
+										"value": "{{AuthTokenType}} {{AuthTokenValue}}",
+										"description": ""
+									}
+								],
+								"body": {},
+								"description": ""
+							},
+							"response": []
+						}
+					],
+					"_postman_isSubFolder": true
+				}
+			]
+		},
+		{
+			"name": "Widget",
+			"description": "",
+			"item": [
+				{
+					"name": "Beverage",
+					"description": "",
+					"item": [
+						{
+							"name": "Get all",
+							"request": {
+								"url": {
+									"raw": "{{ApplicationEndpoint}}/{{ApiResource}}/beverage/get-all?page=0&pageSize=5",
+									"host": [
+										"{{ApplicationEndpoint}}"
+									],
+									"path": [
+										"{{ApiResource}}",
+										"beverage",
+										"get-all"
+									],
+									"query": [
+										{
+											"key": "page",
+											"value": "0",
+											"equals": true,
+											"description": ""
+										},
+										{
+											"key": "pageSize",
+											"value": "5",
+											"equals": true,
+											"description": ""
+										}
+									],
+									"variable": []
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"description": ""
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"sorting\": \"name asc\"\n}"
+								},
+								"description": ""
+							},
+							"response": []
+						},
+						{
+							"name": "Get",
+							"request": {
+								"url": "{{ApplicationEndpoint}}/{{ApiResource}}/beverage/1",
+								"method": "GET",
+								"header": [],
+								"body": {},
+								"description": ""
+							},
+							"response": []
+						},
+						{
+							"name": "Create",
+							"request": {
+								"url": "{{ApplicationEndpoint}}/{{ApiResource}}/beverage",
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"description": ""
+									},
+									{
+										"key": "Authorization",
+										"value": "{{AuthTokenType}} {{AuthTokenValue}}",
+										"description": ""
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"siteId\": 1,\n    \"name\": \"postman-test-name\",\n    \"description\": \"postman-test-description\",\n    \"photoUrl\": \"http://via.placeholder.com/300x300\",\n    \"order\": 1,\n    \"isActive\": true\n}"
+								},
+								"description": ""
+							},
+							"response": []
+						},
+						{
+							"name": "Update",
+							"request": {
+								"url": "{{ApplicationEndpoint}}/{{ApiResource}}/beverage",
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"description": ""
+									},
+									{
+										"key": "Authorization",
+										"value": "{{AuthTokenType}} {{AuthTokenValue}}",
+										"description": ""
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"id\": 1,\n    \"siteId\": 1,\n    \"name\": \"postman-test-name\",\n    \"description\": \"postman-test-description\",\n    \"photoUrl\": \"http://via.placeholder.com/300x300\",\n    \"order\": 1,\n    \"isActive\": true\n}"
+								},
+								"description": ""
+							},
+							"response": []
+						},
+						{
+							"name": "Delete",
+							"request": {
+								"url": "{{ApplicationEndpoint}}/{{ApiResource}}/beverage/1",
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{AuthTokenType}} {{AuthTokenValue}}",
+										"description": ""
+									}
+								],
+								"body": {},
+								"description": ""
+							},
+							"response": []
+						},
+						{
+							"name": "Patch activity",
+							"request": {
+								"url": "{{ApplicationEndpoint}}/{{ApiResource}}/beverage/change-activity/13",
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"description": ""
+									},
+									{
+										"key": "Authorization",
+										"value": "{{AuthTokenType}} {{AuthTokenValue}}",
+										"description": ""
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"value\": true\n}"
+								},
+								"description": ""
+							},
+							"response": []
+						},
+						{
+							"name": "Patch order",
+							"request": {
+								"url": "{{ApplicationEndpoint}}/{{ApiResource}}/beverage/change-order/13",
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"description": ""
+									},
+									{
+										"key": "Authorization",
+										"value": "{{AuthTokenType}} {{AuthTokenValue}}",
+										"description": ""
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"value\": 1\n}"
+								},
+								"description": ""
+							},
+							"response": []
+						},
+						{
+							"name": "Swap orders",
+							"request": {
+								"url": "{{ApplicationEndpoint}}/{{ApiResource}}/beverage/swap-orders",
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"description": ""
+									},
+									{
+										"key": "Authorization",
+										"value": "{{AuthTokenType}} {{AuthTokenValue}}",
+										"description": ""
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"key1\": 13,\n\t\"key2\": 14\n}"
+								},
+								"description": ""
+							},
+							"response": []
+						}
+					],
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "Expert",
+					"description": "",
+					"item": [
+						{
+							"name": "Get all",
+							"request": {
+								"url": {
+									"raw": "{{ApplicationEndpoint}}/{{ApiResource}}/expert/get-all?page=0&pageSize=5",
+									"host": [
+										"{{ApplicationEndpoint}}"
+									],
+									"path": [
+										"{{ApiResource}}",
+										"expert",
+										"get-all"
+									],
+									"query": [
+										{
+											"key": "page",
+											"value": "0",
+											"equals": true,
+											"description": ""
+										},
+										{
+											"key": "pageSize",
+											"value": "5",
+											"equals": true,
+											"description": ""
+										}
+									],
+									"variable": []
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"description": ""
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"sorting\": \"name asc\"\n}"
+								},
+								"description": ""
+							},
+							"response": []
+						},
+						{
+							"name": "Get",
+							"request": {
+								"url": "{{ApplicationEndpoint}}/{{ApiResource}}/expert/13",
+								"method": "GET",
+								"header": [],
+								"body": {},
+								"description": ""
+							},
+							"response": []
+						},
+						{
+							"name": "Create",
+							"request": {
+								"url": "{{ApplicationEndpoint}}/{{ApiResource}}/expert",
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"description": ""
+									},
+									{
+										"key": "Authorization",
+										"value": "{{AuthTokenType}} {{AuthTokenValue}}",
+										"description": ""
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"siteId\": 1,\n    \"name\": \"postman-test-name\",\n    \"description\": \"postman-test-description\",\n    \"photoUrl\": \"http://via.placeholder.com/300x300\",\n    \"facebookUrl\": \"https://www.facebook.com/\",\n    \"linkedinUrl\": \"https://www.linkedin.com/\",\n    \"workingHours\": \"\",\n    \"order\": 1,\n    \"isActive\": true\n}"
+								},
+								"description": ""
+							},
+							"response": []
+						},
+						{
+							"name": "Update",
+							"request": {
+								"url": "{{ApplicationEndpoint}}/{{ApiResource}}/expert",
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"description": ""
+									},
+									{
+										"key": "Authorization",
+										"value": "{{AuthTokenType}} {{AuthTokenValue}}",
+										"description": ""
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"id\": 1,\n    \"siteId\": 1,\n    \"name\": \"postman-test-name\",\n    \"description\": \"postman-test-description\",\n    \"photoUrl\": \"http://via.placeholder.com/300x300\",\n    \"facebookUrl\": \"https://www.facebook.com/\",\n    \"linkedinUrl\": \"https://www.linkedin.com/\",\n    \"workingHours\": \"\",\n    \"order\": 1,\n    \"isActive\": true\n}"
+								},
+								"description": ""
+							},
+							"response": []
+						},
+						{
+							"name": "Delete",
+							"request": {
+								"url": "{{ApplicationEndpoint}}/{{ApiResource}}/expert/1",
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{AuthTokenType}} {{AuthTokenValue}}",
+										"description": ""
+									}
+								],
+								"body": {},
+								"description": ""
+							},
+							"response": []
+						},
+						{
+							"name": "Patch activity",
+							"request": {
+								"url": "{{ApplicationEndpoint}}/{{ApiResource}}/expert/change-activity/13",
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"description": ""
+									},
+									{
+										"key": "Authorization",
+										"value": "{{AuthTokenType}} {{AuthTokenValue}}",
+										"description": ""
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"value\": true\n}"
+								},
+								"description": ""
+							},
+							"response": []
+						},
+						{
+							"name": "Patch order",
+							"request": {
+								"url": "{{ApplicationEndpoint}}/{{ApiResource}}/expert/change-order/13",
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"description": ""
+									},
+									{
+										"key": "Authorization",
+										"value": "{{AuthTokenType}} {{AuthTokenValue}}",
+										"description": ""
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"value\": 1\n}"
+								},
+								"description": ""
+							},
+							"response": []
+						},
+						{
+							"name": "Swap orders",
+							"request": {
+								"url": "{{ApplicationEndpoint}}/{{ApiResource}}/expert/swap-orders",
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"description": ""
+									},
+									{
+										"key": "Authorization",
+										"value": "{{AuthTokenType}} {{AuthTokenValue}}",
+										"description": ""
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"key1\": 13,\n\t\"key2\": 14\n}"
+								},
+								"description": ""
+							},
+							"response": []
+						}
+					],
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "Lead",
+					"description": "",
+					"item": [
+						{
+							"name": "Get all",
+							"request": {
+								"url": {
+									"raw": "{{ApplicationEndpoint}}/{{ApiResource}}/lead/get-all?page=0&pageSize=5",
+									"host": [
+										"{{ApplicationEndpoint}}"
+									],
+									"path": [
+										"{{ApiResource}}",
+										"lead",
+										"get-all"
+									],
+									"query": [
+										{
+											"key": "page",
+											"value": "0",
+											"equals": true,
+											"description": ""
+										},
+										{
+											"key": "pageSize",
+											"value": "5",
+											"equals": true,
+											"description": ""
+										}
+									],
+									"variable": []
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"description": ""
+									},
+									{
+										"key": "Authorization",
+										"value": "{{AuthTokenType}} {{AuthTokenValue}}",
+										"description": ""
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"sorting\": \"siteId asc\"\n}"
+								},
+								"description": ""
+							},
+							"response": []
+						},
+						{
+							"name": "Export as excel file",
+							"request": {
+								"url": {
+									"raw": "{{ApplicationEndpoint}}/{{ApiResource}}/lead/export/excel?page=0&pageSize=15",
+									"host": [
+										"{{ApplicationEndpoint}}"
+									],
+									"path": [
+										"{{ApiResource}}",
+										"lead",
+										"export",
+										"excel"
+									],
+									"query": [
+										{
+											"key": "page",
+											"value": "0",
+											"equals": true,
+											"description": ""
+										},
+										{
+											"key": "pageSize",
+											"value": "15",
+											"equals": true,
+											"description": ""
+										}
+									],
+									"variable": []
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"description": ""
+									},
+									{
+										"key": "Authorization",
+										"value": "{{AuthTokenType}} {{AuthTokenValue}}",
+										"description": ""
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"sorting\": \"siteId asc\"\n}"
+								},
+								"description": ""
+							},
+							"response": []
+						},
+						{
+							"name": "Get",
+							"request": {
+								"url": "{{ApplicationEndpoint}}/{{ApiResource}}/lead/158",
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"description": ""
+									},
+									{
+										"key": "Authorization",
+										"value": "{{AuthTokenType}} {{AuthTokenValue}}",
+										"description": ""
+									}
+								],
+								"body": {},
+								"description": ""
+							},
+							"response": []
+						},
+						{
+							"name": "Create",
+							"request": {
+								"url": "{{ApplicationEndpoint}}/{{ApiResource}}/lead",
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"description": ""
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"siteId\": 13,\n    \"expertId\": 13,\n    \"beverageId\": 13,\n    \"routeId\": 23,\n    \"FirstName\": \"John\",\n    \"SecondName\": \"DOE\",\n    \"userPhone\": \"0123456789\",\n    \"userEmail\": \"user.email@test\",\n    \"UserComment\": \"test comment\"\n}"
+								},
+								"description": ""
+							},
+							"response": []
+						},
+						{
+							"name": "Complete booking",
+							"request": {
+								"url": "{{ApplicationEndpoint}}/{{ApiResource}}/lead/13/complete-booking",
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"description": ""
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"expertId\": 13,\n    \"beverageId\": 13,\n    \"routeId\": 23,\n    \"BookingDateTime\": null,\n    \"BookingUser\": {\n    \t\"FirstName\":\"testFirstName\",\n    \t\"LastName\":\"testLastName\",\n    \t\"Phone\":\"testPhone\",\n    \t\"Email\": \"testEmail\",\n    \t\"Comment\": \"testComment\"\n    },\n    \"BookingVehicle\": {\n    \t\"Vin\":\"test\",\n    \t\"Stock\":\"test\",\n    \t\"Year\":\"test\",\n    \t\"Make\":\"test\",\n    \t\"Model\":\"test\",\n    \t\"Body\":\"test\",\n    \t\"Title\":\"test\",\n    \t\"Engine\":\"test\",\n    \t\"Exterior\":\"test\",\n    \t\"Interior\":\"test\",\n    \t\"Drivetrain\":\"test\",\n    \t\"Transmission\":\"test\",\n    \t\"Msrp\":\"test\",\n    \t\"ImageUrl\":\"test\",\n    \t\"VdpUrl\":\"test\"\n    }\n}"
+								},
+								"description": ""
+							},
+							"response": []
+						},
+						{
+							"name": "Send sms",
+							"request": {
+								"url": "http://localhost:5000/api/lead/28/send-sms",
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"description": ""
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"phone\": \"+380666159567\",\r\n  \"bookingDateTime\": \"2018-02-15 18:00\",\r\n  \"vehicleTitle\": \"Good\",\r\n  \"expertName\": \"Rhoda Hogan\",\r\n  \"beverageName\": \"Italian Espresso\",\r\n  \"roadName\": \"Weekend Warrior\",\r\n  \"dealerName\": \"Nissan of Bowie\",\r\n  \"dealerPhone\": \"+1-202-555-0177\"\r\n}"
+								},
+								"description": ""
+							},
+							"response": []
+						},
+						{
+							"name": "Update",
+							"request": {
+								"url": "{{ApplicationEndpoint}}/{{ApiResource}}/lead",
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"description": ""
+									},
+									{
+										"key": "Authorization",
+										"value": "{{AuthTokenType}} {{AuthTokenValue}}",
+										"description": ""
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"id\": 1,\n    \"siteId\": 13,\n    \"expertId\": 13,\n    \"beverageId\": 13,\n    \"routeId\": 23,\n    \"FirstName\": \"John\",\n    \"SecondName\": \"DOE\",\n    \"userPhone\": \"0123456789\",\n    \"userEmail\": \"user.email@test\",\n    \"UserComment\": \"test comment\"\n}"
+								},
+								"description": ""
+							},
+							"response": []
+						},
+						{
+							"name": "Delete",
+							"request": {
+								"url": "{{ApplicationEndpoint}}/{{ApiResource}}/lead/1",
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{AuthTokenType}} {{AuthTokenValue}}",
+										"description": ""
+									}
+								],
+								"body": {},
+								"description": ""
+							},
+							"response": []
+						},
+						{
+							"name": "Patch is new property",
+							"request": {
+								"url": "{{ApplicationEndpoint}}/{{ApiResource}}/lead/patch-is-new/1",
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"description": ""
+									},
+									{
+										"key": "Authorization",
+										"value": "{{AuthTokenType}} {{AuthTokenValue}}",
+										"description": ""
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"value\": false\n}"
+								},
+								"description": ""
+							},
+							"response": []
+						},
+						{
+							"name": "Patch is reached by manager property",
+							"request": {
+								"url": "{{ApplicationEndpoint}}/{{ApiResource}}/lead/patch-is-reached-by-manager/1",
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"description": ""
+									},
+									{
+										"key": "Authorization",
+										"value": "{{AuthTokenType}} {{AuthTokenValue}}",
+										"description": ""
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"value\": true\n}"
+								},
+								"description": ""
+							},
+							"response": []
+						}
+					],
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "Route",
+					"description": "",
+					"item": [
+						{
+							"name": "Get all",
+							"request": {
+								"url": {
+									"raw": "{{ApplicationEndpoint}}/{{ApiResource}}/route/get-all?page=0&pageSize=5",
+									"host": [
+										"{{ApplicationEndpoint}}"
+									],
+									"path": [
+										"{{ApiResource}}",
+										"route",
+										"get-all"
+									],
+									"query": [
+										{
+											"key": "page",
+											"value": "0",
+											"equals": true,
+											"description": ""
+										},
+										{
+											"key": "pageSize",
+											"value": "5",
+											"equals": true,
+											"description": ""
+										}
+									],
+									"variable": []
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"description": ""
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"sorting\": \"name asc\"\n}"
+								},
+								"description": ""
+							},
+							"response": []
+						},
+						{
+							"name": "Get",
+							"request": {
+								"url": "{{ApplicationEndpoint}}/{{ApiResource}}/route/24",
+								"method": "GET",
+								"header": [],
+								"body": {},
+								"description": ""
+							},
+							"response": []
+						},
+						{
+							"name": "Create",
+							"request": {
+								"url": "{{ApplicationEndpoint}}/{{ApiResource}}/route",
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"description": ""
+									},
+									{
+										"key": "Authorization",
+										"value": "{{AuthTokenType}} {{AuthTokenValue}}",
+										"description": ""
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"siteId\": 1,\n    \"name\": \"postman-test-name\",\n    \"description\": \"postman-test-description\",\n    \"photoUrl\": \"http://via.placeholder.com/300x300\",\n    \"order\": 1,\n    \"isActive\": true\n}"
+								},
+								"description": ""
+							},
+							"response": []
+						},
+						{
+							"name": "Update",
+							"request": {
+								"url": "{{ApplicationEndpoint}}/{{ApiResource}}/route",
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"description": ""
+									},
+									{
+										"key": "Authorization",
+										"value": "{{AuthTokenType}} {{AuthTokenValue}}",
+										"description": ""
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"id\": 1,\n    \"siteId\": 1,\n    \"name\": \"postman-test-name\",\n    \"description\": \"postman-test-description\",\n    \"photoUrl\": \"http://via.placeholder.com/300x300\",\n    \"order\": 1,\n    \"isActive\": true\n}"
+								},
+								"description": ""
+							},
+							"response": []
+						},
+						{
+							"name": "Delete",
+							"request": {
+								"url": "{{ApplicationEndpoint}}/{{ApiResource}}/route/1",
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{AuthTokenType}} {{AuthTokenValue}}",
+										"description": ""
+									}
+								],
+								"body": {},
+								"description": ""
+							},
+							"response": []
+						},
+						{
+							"name": "Patch activity",
+							"request": {
+								"url": "{{ApplicationEndpoint}}/{{ApiResource}}/route/change-activity/13",
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"description": ""
+									},
+									{
+										"key": "Authorization",
+										"value": "{{AuthTokenType}} {{AuthTokenValue}}",
+										"description": ""
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"value\": true\n}"
+								},
+								"description": ""
+							},
+							"response": []
+						},
+						{
+							"name": "Patch order",
+							"request": {
+								"url": "{{ApplicationEndpoint}}/{{ApiResource}}/route/change-order/13",
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"description": ""
+									},
+									{
+										"key": "Authorization",
+										"value": "{{AuthTokenType}} {{AuthTokenValue}}",
+										"description": ""
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"value\": 1\n}"
+								},
+								"description": ""
+							},
+							"response": []
+						},
+						{
+							"name": "Swap orders",
+							"request": {
+								"url": "{{ApplicationEndpoint}}/{{ApiResource}}/route/swap-orders",
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"description": ""
+									},
+									{
+										"key": "Authorization",
+										"value": "{{AuthTokenType}} {{AuthTokenValue}}",
+										"description": ""
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"key1\": 23,\n\t\"key2\": 24\n}"
+								},
+								"description": ""
+							},
+							"response": []
+						}
+					],
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "Site",
+					"description": "",
+					"item": [
+						{
+							"name": "Get all",
+							"request": {
+								"url": {
+									"raw": "{{ApplicationEndpoint}}/{{ApiResource}}/site/get-all?page=0&pageSize=5",
+									"host": [
+										"{{ApplicationEndpoint}}"
+									],
+									"path": [
+										"{{ApiResource}}",
+										"site",
+										"get-all"
+									],
+									"query": [
+										{
+											"key": "page",
+											"value": "0",
+											"equals": true,
+											"description": ""
+										},
+										{
+											"key": "pageSize",
+											"value": "5",
+											"equals": true,
+											"description": ""
+										}
+									],
+									"variable": []
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"description": ""
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"sorting\": \"name asc\"\n}"
+								},
+								"description": ""
+							},
+							"response": []
+						},
+						{
+							"name": "Get",
+							"request": {
+								"url": "{{ApplicationEndpoint}}/{{ApiResource}}/site/28",
+								"method": "GET",
+								"header": [],
+								"body": {},
+								"description": ""
+							},
+							"response": []
+						},
+						{
+							"name": "Get week schedule",
+							"request": {
+								"url": "{{ApplicationEndpoint}}/{{ApiResource}}/site/28/week-schedule",
+								"method": "GET",
+								"header": [],
+								"body": {},
+								"description": ""
+							},
+							"response": []
+						},
+						{
+							"name": "Get aggregated info",
+							"request": {
+								"url": "{{ApplicationEndpoint}}/{{ApiResource}}/site/28/aggregated-info",
+								"method": "GET",
+								"header": [],
+								"body": {},
+								"description": ""
+							},
+							"response": []
+						},
+						{
+							"name": "Create",
+							"request": {
+								"url": "{{ApplicationEndpoint}}/{{ApiResource}}/site",
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"description": ""
+									},
+									{
+										"key": "Authorization",
+										"value": "{{AuthTokenType}} {{AuthTokenValue}}",
+										"description": ""
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"UserId\": 1,\n    \"BeautyId\": \"BeautyId\",\n    \"Name\": \"Name\",\n    \"Url\": \"Url\",\n    \"NotificationContacts\": \"\",\n    \"ImageUrl\": \"http://via.placeholder.com/300x200\",\n    \"DealerName\": \"DealerName\",\n    \"DealerAddress\": \"\",\n    \"DealerPhone\": \"\",\n    \"UseExpertStep\": true,\n    \"UseBeverageStep\": true,\n    \"UseRouteStep\": true,\n    \"WorkingHours\": \"\"\n}"
+								},
+								"description": ""
+							},
+							"response": []
+						},
+						{
+							"name": "Update",
+							"request": {
+								"url": "{{ApplicationEndpoint}}/{{ApiResource}}/site",
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"description": ""
+									},
+									{
+										"key": "Authorization",
+										"value": "{{AuthTokenType}} {{AuthTokenValue}}",
+										"description": ""
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"id\": 1,\n\t\"UserId\": 1,\n    \"BeautyId\": \"BeautyId\",\n    \"Name\": \"Name\",\n    \"Url\": \"Url\",\n    \"NotificationContacts\": \"\",\n    \"ImageUrl\": \"http://via.placeholder.com/300x200\",\n    \"DealerName\": \"DealerName\",\n    \"DealerAddress\": \"\",\n    \"DealerPhone\": \"\",\n    \"UseExpertStep\": true,\n    \"UseBeverageStep\": true,\n    \"UseRouteStep\": true,\n    \"WorkingHours\": \"\"\n}"
+								},
+								"description": ""
+							},
+							"response": []
+						},
+						{
+							"name": "Delete",
+							"request": {
+								"url": "{{ApplicationEndpoint}}/{{ApiResource}}/site/1",
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{AuthTokenType}} {{AuthTokenValue}}",
+										"description": ""
+									}
+								],
+								"body": {},
+								"description": ""
+							},
+							"response": []
+						},
+						{
+							"name": "Patch contacts",
+							"request": {
+								"url": "{{ApplicationEndpoint}}/{{ApiResource}}/site/change-contacts/13",
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"description": ""
+									},
+									{
+										"key": "Authorization",
+										"value": "{{AuthTokenType}} {{AuthTokenValue}}",
+										"description": ""
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"value\": \"\"\n}"
+								},
+								"description": ""
+							},
+							"response": []
+						},
+						{
+							"name": "Patch use expert step property",
+							"request": {
+								"url": "{{ApplicationEndpoint}}/{{ApiResource}}/site/change-use-expert-step/13",
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"description": ""
+									},
+									{
+										"key": "Authorization",
+										"value": "{{AuthTokenType}} {{AuthTokenValue}}",
+										"description": ""
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"value\": true\n}"
+								},
+								"description": ""
+							},
+							"response": []
+						},
+						{
+							"name": "Patch use beverage step property",
+							"request": {
+								"url": "{{ApplicationEndpoint}}/{{ApiResource}}/site/change-use-beverage-step/13",
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"description": ""
+									},
+									{
+										"key": "Authorization",
+										"value": "{{AuthTokenType}} {{AuthTokenValue}}",
+										"description": ""
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"value\": true\n}"
+								},
+								"description": ""
+							},
+							"response": []
+						},
+						{
+							"name": "Patch use route step property",
+							"request": {
+								"url": "{{ApplicationEndpoint}}/{{ApiResource}}/site/change-use-route-step/13",
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"description": ""
+									},
+									{
+										"key": "Authorization",
+										"value": "{{AuthTokenType}} {{AuthTokenValue}}",
+										"description": ""
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"value\": true\n}"
+								},
+								"description": ""
+							},
+							"response": []
+						},
+						{
+							"name": "Swap step order: beverage <=> expert",
+							"request": {
+								"url": "{{ApplicationEndpoint}}/{{ApiResource}}/site/swap-step-order-beverage-expert/13",
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"description": ""
+									},
+									{
+										"key": "Authorization",
+										"value": "{{AuthTokenType}} {{AuthTokenValue}}",
+										"description": ""
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{}"
+								},
+								"description": ""
+							},
+							"response": []
+						},
+						{
+							"name": "Swap step order: beverage <=> route",
+							"request": {
+								"url": "{{ApplicationEndpoint}}/{{ApiResource}}/site/swap-step-order-beverage-route/13",
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"description": ""
+									},
+									{
+										"key": "Authorization",
+										"value": "{{AuthTokenType}} {{AuthTokenValue}}",
+										"description": ""
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{}"
+								},
+								"description": ""
+							},
+							"response": []
+						},
+						{
+							"name": "Swap step order: expert <=> route",
+							"request": {
+								"url": "{{ApplicationEndpoint}}/{{ApiResource}}/site/swap-step-order-expert-route/13",
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"description": ""
+									},
+									{
+										"key": "Authorization",
+										"value": "{{AuthTokenType}} {{AuthTokenValue}}",
+										"description": ""
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{}"
+								},
+								"description": ""
+							},
+							"response": []
+						}
+					],
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "Step",
+					"description": "",
+					"item": [
+						{
+							"name": "Get all",
+							"request": {
+								"url": {
+									"raw": "{{ApplicationEndpoint}}/{{ApiResource}}/step/get-all?page=0&pageSize=5",
+									"host": [
+										"{{ApplicationEndpoint}}"
+									],
+									"path": [
+										"{{ApiResource}}",
+										"step",
+										"get-all"
+									],
+									"query": [
+										{
+											"key": "page",
+											"value": "0",
+											"equals": true,
+											"description": ""
+										},
+										{
+											"key": "pageSize",
+											"value": "5",
+											"equals": true,
+											"description": ""
+										}
+									],
+									"variable": []
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"description": ""
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"sorting\": \"order asc\",\n\t\"siteId\": 28\n}"
+								},
+								"description": ""
+							},
+							"response": []
+						},
+						{
+							"name": "Get",
+							"request": {
+								"url": "{{ApplicationEndpoint}}/{{ApiResource}}/step/1",
+								"method": "GET",
+								"header": [],
+								"body": {},
+								"description": ""
+							},
+							"response": []
+						},
+						{
+							"name": "Create",
+							"request": {
+								"url": "{{ApplicationEndpoint}}/{{ApiResource}}/step",
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"description": ""
+									},
+									{
+										"key": "Authorization",
+										"value": "{{AuthTokenType}} {{AuthTokenValue}}",
+										"description": ""
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"siteId\": 28,\n    \"name\": \"ExpertStep\",\n    \"descriptor\": \"ExpertStep\",\n    \"order\": 1,\n    \"isActive\": true\n}"
+								},
+								"description": ""
+							},
+							"response": []
+						},
+						{
+							"name": "Update",
+							"request": {
+								"url": "{{ApplicationEndpoint}}/{{ApiResource}}/step",
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"description": ""
+									},
+									{
+										"key": "Authorization",
+										"value": "{{AuthTokenType}} {{AuthTokenValue}}",
+										"description": ""
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"id\": 1,\n    \"siteId\": 1,\n    \"name\": \"ExpertStep\",\n    \"descriptor\": \"ExpertStep\",\n    \"order\": 1,\n    \"isActive\": true\n}"
+								},
+								"description": ""
+							},
+							"response": []
+						},
+						{
+							"name": "Delete",
+							"request": {
+								"url": "{{ApplicationEndpoint}}/{{ApiResource}}/step/1",
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{AuthTokenType}} {{AuthTokenValue}}",
+										"description": ""
+									}
+								],
+								"body": {},
+								"description": ""
+							},
+							"response": []
+						},
+						{
+							"name": "Patch activity",
+							"request": {
+								"url": "{{ApplicationEndpoint}}/{{ApiResource}}/step/change-activity/13",
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"description": ""
+									},
+									{
+										"key": "Authorization",
+										"value": "{{AuthTokenType}} {{AuthTokenValue}}",
+										"description": ""
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"value\": true\n}"
+								},
+								"description": ""
+							},
+							"response": []
+						},
+						{
+							"name": "Patch order",
+							"request": {
+								"url": "{{ApplicationEndpoint}}/{{ApiResource}}/step/change-order/13",
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"description": ""
+									},
+									{
+										"key": "Authorization",
+										"value": "{{AuthTokenType}} {{AuthTokenValue}}",
+										"description": ""
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"value\": 1\n}"
+								},
+								"description": ""
+							},
+							"response": []
+						},
+						{
+							"name": "Swap orders",
+							"request": {
+								"url": "{{ApplicationEndpoint}}/{{ApiResource}}/step/swap-orders",
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"description": ""
+									},
+									{
+										"key": "Authorization",
+										"value": "{{AuthTokenType}} {{AuthTokenValue}}",
+										"description": ""
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"key1\": 13,\n\t\"key2\": 14\n}"
+								},
+								"description": ""
+							},
+							"response": []
+						}
+					],
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "Vehicle",
+					"description": "",
+					"item": [
+						{
+							"name": "Get all",
+							"request": {
+								"url": {
+									"raw": "{{ApplicationEndpoint}}/{{ApiResource}}/vehicle/get-all?page=0&pageSize=5",
+									"host": [
+										"{{ApplicationEndpoint}}"
+									],
+									"path": [
+										"{{ApiResource}}",
+										"vehicle",
+										"get-all"
+									],
+									"query": [
+										{
+											"key": "page",
+											"value": "0",
+											"equals": true,
+											"description": ""
+										},
+										{
+											"key": "pageSize",
+											"value": "5",
+											"equals": true,
+											"description": ""
+										}
+									],
+									"variable": []
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"description": ""
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"sorting\": \"title asc\"\n}"
+								},
+								"description": ""
+							},
+							"response": []
+						},
+						{
+							"name": "Get",
+							"request": {
+								"url": "{{ApplicationEndpoint}}/{{ApiResource}}/vehicle/1",
+								"method": "GET",
+								"header": [],
+								"body": {},
+								"description": ""
+							},
+							"response": []
+						},
+						{
+							"name": "Create",
+							"request": {
+								"url": "{{ApplicationEndpoint}}/{{ApiResource}}/vehicle",
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"description": ""
+									},
+									{
+										"key": "Authorization",
+										"value": "{{AuthTokenType}} {{AuthTokenValue}}",
+										"description": ""
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"siteId\": 28,\n    \"title\": \"TestVehicle\",\n    \"imageUrl\": \"http://via.placeholder.com/350x150\",\n    \"year\": 2017,\n    \"make\": \"BMW\",\n    \"model\": \"X6\",\n    \"condition\": \"new\",\n    \"VIN\": \"VehicleVIN\",\n    \"stock\": \"Stock\"\n}"
+								},
+								"description": ""
+							},
+							"response": []
+						},
+						{
+							"name": "Update",
+							"request": {
+								"url": "{{ApplicationEndpoint}}/{{ApiResource}}/vehicle",
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"description": ""
+									},
+									{
+										"key": "Authorization",
+										"value": "{{AuthTokenType}} {{AuthTokenValue}}",
+										"description": ""
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"siteId\": 28,\n    \"title\": \"TestVehicle\",\n    \"imageUrl\": \"http://via.placeholder.com/350x150\",\n    \"year\": 2016,\n    \"make\": \"BMW\",\n    \"model\": \"X6\",\n    \"condition\": \"Used\",\n    \"vin\": \"VehicleVIN\",\n    \"stock\": \"Stock\",\n    \"id\": 1\n}"
+								},
+								"description": ""
+							},
+							"response": []
+						},
+						{
+							"name": "Delete",
+							"request": {
+								"url": "{{ApplicationEndpoint}}/{{ApiResource}}/vehicle/1",
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{AuthTokenType}} {{AuthTokenValue}}",
+										"description": ""
+									}
+								],
+								"body": {},
+								"description": ""
+							},
+							"response": []
+						},
+						{
+							"name": "Get makes",
+							"request": {
+								"url": "{{ApplicationEndpoint}}/{{ApiResource}}/vehicle/28/makes",
+								"method": "GET",
+								"header": [],
+								"body": {},
+								"description": ""
+							},
+							"response": []
+						},
+						{
+							"name": "Get models",
+							"request": {
+								"url": {
+									"raw": "{{ApplicationEndpoint}}/{{ApiResource}}/vehicle/28/models?make=BMW",
+									"host": [
+										"{{ApplicationEndpoint}}"
+									],
+									"path": [
+										"{{ApiResource}}",
+										"vehicle",
+										"28",
+										"models"
+									],
+									"query": [
+										{
+											"key": "make",
+											"value": "BMW",
+											"equals": true,
+											"description": ""
+										}
+									],
+									"variable": []
+								},
+								"method": "GET",
+								"header": [],
+								"body": {},
+								"description": ""
+							},
+							"response": []
+						},
+						{
+							"name": "Get years",
+							"request": {
+								"url": {
+									"raw": "{{ApplicationEndpoint}}/{{ApiResource}}/vehicle/28/years?make=BMW&model=X6",
+									"host": [
+										"{{ApplicationEndpoint}}"
+									],
+									"path": [
+										"{{ApiResource}}",
+										"vehicle",
+										"28",
+										"years"
+									],
+									"query": [
+										{
+											"key": "make",
+											"value": "BMW",
+											"equals": true,
+											"description": ""
+										},
+										{
+											"key": "model",
+											"value": "X6",
+											"equals": true,
+											"description": ""
+										}
+									],
+									"variable": []
+								},
+								"method": "GET",
+								"header": [],
+								"body": {},
+								"description": ""
+							},
+							"response": []
+						},
+						{
+							"name": "Get vehicles",
+							"request": {
+								"url": {
+									"raw": "{{ApplicationEndpoint}}/{{ApiResource}}/vehicle/28/images?make=BMW&model=X6&year=2016",
+									"host": [
+										"{{ApplicationEndpoint}}"
+									],
+									"path": [
+										"{{ApiResource}}",
+										"vehicle",
+										"28",
+										"images"
+									],
+									"query": [
+										{
+											"key": "make",
+											"value": "BMW",
+											"equals": true,
+											"description": ""
+										},
+										{
+											"key": "model",
+											"value": "X6",
+											"equals": true,
+											"description": ""
+										},
+										{
+											"key": "year",
+											"value": "2016",
+											"equals": true,
+											"description": ""
+										}
+									],
+									"variable": []
+								},
+								"method": "GET",
+								"header": [],
+								"body": {},
+								"description": ""
+							},
+							"response": []
+						},
+						{
+							"name": "Get vehicles search",
+							"request": {
+								"url": {
+									"raw": "{{ApplicationEndpoint}}/{{ApiResource}}/vehicle/28/search?filter=hi",
+									"host": [
+										"{{ApplicationEndpoint}}"
+									],
+									"path": [
+										"{{ApiResource}}",
+										"vehicle",
+										"28",
+										"search"
+									],
+									"query": [
+										{
+											"key": "filter",
+											"value": "hi",
+											"equals": true,
+											"description": ""
+										}
+									],
+									"variable": []
+								},
+								"method": "GET",
+								"header": [],
+								"body": {},
+								"description": ""
+							},
+							"response": []
+						}
+					],
+					"_postman_isSubFolder": true
+				}
+			]
+		}
+	]
+}

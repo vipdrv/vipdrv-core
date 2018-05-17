@@ -13,7 +13,10 @@
         public VehicleConditions Condition { get; set; }
         public string VIN { get; set; }
         public string Stock { get; set; }
+        public string VIN { get; set; }
+        public string Stock { get; set; }
         public string Trim { get; set; }
+
 
         #endregion
 
@@ -25,9 +28,32 @@
 
         #region Ctors
 
-        public Vehicle()
+        public Vehicle() : base()
+        {
+        }
+
+        public Vehicle(
+            int siteId,
+            string title, 
+            string imageUrl, 
+            int year, 
+            string make, 
+            string model,
+            VehicleConditions condition, 
+            string vin, 
+            string stock)
             : base()
-        { }
+        {
+            SiteId = siteId;
+            Title = title;
+            ImageUrl = imageUrl;
+            Year = year;
+            Make = make;
+            Model = model;
+            Condition = condition;
+            Vin = vin;
+            Stock = stock;
+        }
 
         #endregion
 
