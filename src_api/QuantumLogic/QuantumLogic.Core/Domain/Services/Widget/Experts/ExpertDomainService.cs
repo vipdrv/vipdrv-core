@@ -14,17 +14,25 @@ namespace QuantumLogic.Core.Domain.Services.Widget.Experts
     {
         public override int DefaultOrder => 1;
 
+        #region Injected dependencies
+
+        protected readonly ILeadRepository LeadRepository;
+
+        #endregion
+
         #region Ctors
 
-        public ExpertDomainService(IExpertRepository repository, IExpertPolicy policy, IExpertValidationService validationService)
+        public ExpertDomainService(IExpertRepository repository, IExpertPolicy policy, IExpertValidationService validationService, ILeadRepository leadRepository)
             : base(repository, policy, validationService)
-        { }
+        {
+            LeadRepository = leadRepository;
+        }
 
         #endregion
 
         protected override Task CascadeDeleteActionAsync(Expert entity)
         {
-            return Task.CompletedTask;
+            return LeadRepository.NullifyExpertRelation(entitySet => entitySet.Where(r => r.ExpertId == entity.Id));
         }
         internal override IEnumerable<LoadEntityRelationAction<Expert>> GetLoadEntityRelationActions()
         {

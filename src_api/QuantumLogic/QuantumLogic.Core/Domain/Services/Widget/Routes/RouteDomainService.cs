@@ -14,17 +14,25 @@ namespace QuantumLogic.Core.Domain.Services.Widget.Routes
     {
         public override int DefaultOrder => 1;
 
+        #region Injected dependencies
+
+        protected readonly ILeadRepository LeadRepository;
+
+        #endregion
+
         #region Ctors
 
-        public RouteDomainService(IRouteRepository repository, IRoutePolicy policy, IRouteValidationService validationService)
+        public RouteDomainService(IRouteRepository repository, IRoutePolicy policy, IRouteValidationService validationService, ILeadRepository leadRepository)
             : base(repository, policy, validationService)
-        { }
+        {
+            LeadRepository = leadRepository;
+        }
 
         #endregion
 
         protected override Task CascadeDeleteActionAsync(Route entity)
         {
-            return Task.CompletedTask;
+            return LeadRepository.NullifyExpertRelation(entitySet => entitySet.Where(r => r.RouteId == entity.Id));
         }
         internal override IEnumerable<LoadEntityRelationAction<Route>> GetLoadEntityRelationActions()
         {

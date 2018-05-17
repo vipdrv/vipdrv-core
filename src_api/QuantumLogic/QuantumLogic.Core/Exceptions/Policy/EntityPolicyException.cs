@@ -6,7 +6,7 @@ namespace QuantumLogic.Core.Exceptions.Policy
     /// <summary>
     /// Is used when need to deny access for operation via policy
     /// </summary>
-#warning Policy exception should not be AuthorizationException (remove this inheritance after adding support for forbitten on client side)
+#warning Policy exception should not be AuthorizationException (remove this inheritance after adding support for forbitten on ftpClient side)
     public class EntityPolicyException : AuthorizationException
     {
         public string UserfriendlyMessage

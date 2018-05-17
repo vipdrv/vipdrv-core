@@ -108,8 +108,9 @@
       "weekSchedule": "Working hours",
       "dealerName": "Dealer Name",
       "dealerPhone": "Dealer Phone",
-      "dealerAddress": "Dealer Address"
-
+      "dealerAddress": "Dealer Address",
+      "siteWidgetAsSeparatePageUrl": "Site widget as separate page url",
+      "siteWidgetAsSeparatePageUrlHelp": "Enter the url of the site widget as separate page."
     },
     "table": {
       "headerText_siteId": "Site id",
@@ -404,7 +405,8 @@
     "sites": {
       "invalidNameMessage": "Site name is not valid!",
       "invalidUrlMessage": "Site url is not valid!",
-      "invalidOwnerMessage": "Site owner is not valid (this field is required)!"
+      "invalidOwnerMessage": "Site owner is not valid (this field is required)!",
+      "invalidWASPUrlMessage": "Site widget as separated page url is not valid!"
     },
     "registrationModel": {
       "invalidEmailMessage": "Email address is not valid!",

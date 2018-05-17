@@ -108,6 +108,11 @@ namespace QuantumLogic.Data.EFContext
             }
         }
 
+        public DbContext BuildNewContext()
+        {
+            return CreateContext();
+        }
+
         private DbContext CreateContext()
         {
             return (DbContext)ServiceProvider.GetService(typeof(QuantumLogicDbContext));

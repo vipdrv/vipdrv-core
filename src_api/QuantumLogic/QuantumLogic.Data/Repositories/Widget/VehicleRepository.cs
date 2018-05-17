@@ -26,25 +26,30 @@ namespace QuantumLogic.Data.Repositories.Widget
 
         public Task<VehicleMakesModel> GetMakes(Expression<Func<Vehicle, bool>> predicate)
         {
-            Func<Vehicle, bool> isNew = (entity) => entity.Id == 0;
-            List<Tuple<string, VehicleConditions>> data = ((QuantumLogicDbContext)DbContextManager.BuildOrCurrentContext(out bool createdNew))
+            List<Tuple<string, VehicleConditions>> dataAll = ((QuantumLogicDbContext)DbContextManager.BuildOrCurrentContext(out bool createdNew))
                .Vehicles
                .Where(predicate)
                .Select(entity => new Tuple<string, VehicleConditions>(entity.Make, entity.Condition))
 #warning distinct should be here but not supported yet
                //.Distinct(new MakesEqualityComparer())
-               .ToList()
-               .Distinct(new MakesEqualityComparer())
                .ToList();
+            List<Tuple<string, VehicleConditions, int>> data = new List<Tuple<string, VehicleConditions, int>>();
+            foreach (var make in dataAll.Distinct(new MakesEqualityComparer()))
+            {
+                data.Add(new Tuple<string, VehicleConditions, int>(
+                        make.Item1,
+                        make.Item2,
+                        dataAll.Where(r => r.Item1 == make.Item1 && r.Item2 == make.Item2).Count()));
 
+            }
             if (createdNew)
             {
                 DbContextManager.DisposeContext();
             }
 
             return Task.FromResult(new VehicleMakesModel(
-                data.Where(r => r.Item2 == VehicleConditions.New).Select(r => r.Item1).OrderBy(r => r),
-                data.Where(r => r.Item2 == VehicleConditions.Used).Select(r => r.Item1).OrderBy(r => r)));
+                data.Where(r => r.Item2 == VehicleConditions.New).OrderBy(r => r.Item3).Select(r => r.Item1),
+                data.Where(r => r.Item2 == VehicleConditions.Used).OrderBy(r => r.Item3).Select(r => r.Item1)));
         }
 
         public Task<IEnumerable<string>> GetModels(Expression<Func<Vehicle, bool>> predicate)

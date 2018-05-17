@@ -22,5 +22,6 @@ namespace QuantumLogic.Core.Domain.Repositories
         Task CreateAsync(TEntity entity);
         Task UpdateAsync(TEntity entity);
         Task DeleteAsync(TEntity entity);
+        Task DeleteRange(Func<IQueryable<TEntity>, IQueryable<TEntity>> queryBuilder);
     }
 }
