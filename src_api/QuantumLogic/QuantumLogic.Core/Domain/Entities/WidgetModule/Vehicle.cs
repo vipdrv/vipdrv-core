@@ -13,10 +13,7 @@
         public VehicleConditions Condition { get; set; }
         public string VIN { get; set; }
         public string Stock { get; set; }
-        public string VIN { get; set; }
-        public string Stock { get; set; }
         public string Trim { get; set; }
-
 
         #endregion
 
@@ -51,7 +48,7 @@
             Make = make;
             Model = model;
             Condition = condition;
-            Vin = vin;
+            VIN = vin;
             Stock = stock;
         }
 
