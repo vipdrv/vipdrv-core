@@ -1,6 +1,7 @@
 ﻿using QuantumLogic.Core.Domain.Entities.WidgetModule;
 using QuantumLogic.Core.Domain.Policy.WidgetModule;
 using QuantumLogic.Core.Domain.Repositories.WidgetModule;
+using QuantumLogic.Core.Domain.Services.Shared.Urls;
 using QuantumLogic.Core.Domain.Validation.Widget;
 using QuantumLogic.Core.Utils.Scheduling.Week;
 using System;
@@ -16,24 +17,47 @@ namespace QuantumLogic.Core.Domain.Services.Widget.Sites
         #region Injected dependencies
 
         protected readonly ILeadRepository LeadRepository;
+        protected readonly IImageUrlService ImageUrlService;
 
         #endregion
 
         #region Ctors
 
-        public SiteDomainService(ISiteRepository repository, ISitePolicy policy, ISiteValidationService validationService, ILeadRepository leadRepository)
+        public SiteDomainService(ISiteRepository repository, ISitePolicy policy, ISiteValidationService validationService, ILeadRepository leadRepository, IImageUrlService imageUrlService)
             : base(repository, policy, validationService)
         {
             LeadRepository = leadRepository;
+            ImageUrlService = imageUrlService;
         }
 
         #endregion
 
-        public override Task<Site> CreateAsync(Site entity)
+        public override async Task<Site> CreateAsync(Site entity)
         {
             entity.Steps = CreateSteps(entity);
-            return base.CreateAsync(entity);
+            entity.ImageUrl = await ImageUrlService.Transform(entity.ImageUrl);
+            return await base.CreateAsync(entity);
         }
+        public override async Task<Site> UpdateAsync(Site entity)
+        {
+            entity.ImageUrl = await ImageUrlService.Transform(entity.ImageUrl);
+            return await base.UpdateAsync(entity);
+        }
+
+        public async Task ChangeContactsAsync(int id, string newValue)
+        {
+            Site entity = await RetrieveAsync(id);
+            ((ISitePolicy)Policy).CanUpdate(entity);
+            entity.NotificationContacts = newValue;
+            ((ISiteValidationService)ValidationService).ValidateChangeContacts(entity);
+            await Repository.UpdateAsync(entity);
+        }
+        public async Task<IList<DayOfWeekInterval>> RetrieveWeekSchedule(int id)
+        {
+            return DayOfWeekInterval.Purify((await RetrieveAsync(id)).Experts.Where(r => r.IsActive).SelectMany(r => DayOfWeekInterval.Parse(r.WorkingHours)).ToList());
+        }
+
+        #region Helpers
 
         protected virtual List<Step> CreateSteps(Site entity)
         {
@@ -76,78 +100,11 @@ namespace QuantumLogic.Core.Domain.Services.Widget.Sites
                 }
             };
         }
-
-        public async Task SwapBeverageExpertStepOrder(int id)
-        {
-            Site entity = await RetrieveAsync(id);
-            ((ISitePolicy)Policy).CanUpdate(entity);
-            int stub = entity.BeverageStepOrder;
-            entity.BeverageStepOrder = entity.ExpertStepOrder;
-            entity.ExpertStepOrder = stub;
-            ((ISiteValidationService)ValidationService).ValidateEntity(entity);
-            await Repository.UpdateAsync(entity);
-        }
-        public async Task SwapBeverageRouteStepOrder(int id)
-        {
-            Site entity = await RetrieveAsync(id);
-            ((ISitePolicy)Policy).CanUpdate(entity);
-            int stub = entity.BeverageStepOrder;
-            entity.BeverageStepOrder = entity.RouteStepOrder;
-            entity.RouteStepOrder = stub;
-            ((ISiteValidationService)ValidationService).ValidateEntity(entity);
-            await Repository.UpdateAsync(entity);
-        }
-        public async Task SwapExpertRouteStepOrder(int id)
-        {
-            Site entity = await RetrieveAsync(id);
-            ((ISitePolicy)Policy).CanUpdate(entity);
-            int stub = entity.RouteStepOrder;
-            entity.RouteStepOrder = entity.ExpertStepOrder;
-            entity.ExpertStepOrder = stub;
-            ((ISiteValidationService)ValidationService).ValidateEntity(entity);
-            await Repository.UpdateAsync(entity);
-        }
-
-        public async Task ChangeContactsAsync(int id, string newValue)
-        {
-            Site entity = await RetrieveAsync(id);
-            ((ISitePolicy)Policy).CanUpdate(entity);
-            entity.NotificationContacts = newValue;
-            ((ISiteValidationService)ValidationService).ValidateChangeContacts(entity);
-            await Repository.UpdateAsync(entity);
-        }
-        public async Task<IList<DayOfWeekInterval>> RetrieveWeekSchedule(int id)
-        {
-            return DayOfWeekInterval.Purify((await RetrieveAsync(id)).Experts.Where(r => r.IsActive).SelectMany(r => DayOfWeekInterval.Parse(r.WorkingHours)).ToList());
-        }
-        public async Task ChangeUseExpertStepAsync(int id, bool newValue)
-        {
-            Site entity = await RetrieveAsync(id);
-            ((ISitePolicy)Policy).CanUpdate(entity);
-            entity.UseExpertStep = newValue;
-            ((ISiteValidationService)ValidationService).ValidateEntity(entity);
-            await Repository.UpdateAsync(entity);
-        }
-        public async Task ChangeUseBeverageStepAsync(int id, bool newValue)
-        {
-            Site entity = await RetrieveAsync(id);
-            ((ISitePolicy)Policy).CanUpdate(entity);
-            entity.UseBeverageStep = newValue;
-            ((ISiteValidationService)ValidationService).ValidateEntity(entity);
-            await Repository.UpdateAsync(entity);
-        }
-        public async Task ChangeUseRouteStepAsync(int id, bool newValue)
-        {
-            Site entity = await RetrieveAsync(id);
-            ((ISitePolicy)Policy).CanUpdate(entity);
-            entity.UseRouteStep = newValue;
-            ((ISiteValidationService)ValidationService).ValidateEntity(entity);
-            await Repository.UpdateAsync(entity);
-        }
-
         protected override Task CascadeDeleteActionAsync(Site entity)
         {
-            return LeadRepository.DeleteRange(entitySet => entitySet.Where(r => r.SiteId == entity.Id));
+            return Task.WhenAll(
+                LeadRepository.DeleteRange(entitySet => entitySet.Where(r => r.SiteId == entity.Id)),
+                ImageUrlService.RemoveAsync(entity.ImageUrl));
         }
         internal override IEnumerable<LoadEntityRelationAction<Site>> GetLoadEntityRelationActions()
         {
@@ -181,5 +138,7 @@ namespace QuantumLogic.Core.Domain.Services.Widget.Sites
             }
             .ToArray();
         }
+
+        #endregion
     }
 }
