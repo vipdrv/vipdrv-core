@@ -72,7 +72,7 @@ namespace QuantumLogic.Core.Utils.Export.Entity.Concrete.Excel
                     take -= currentRequestTake;
                 }
                 fileUri = await settings.ContentManager
-                    .SaveFileToStorage(package.GetAsByteArray(), $"{settings.FileName}{settings.FileExtension}", settings.FileContentType);
+                    .SaveFile(package.GetAsByteArray(), $"{settings.FileName}{settings.FileExtension}", settings.FileContentType);
             }
             return fileUri;
         }

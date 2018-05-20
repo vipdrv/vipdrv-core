@@ -15,7 +15,7 @@ using QuantumLogic.Core.Utils.Inventory.InventoryProviders.vAuto;
 namespace QuantumLogic.Tests.Core.Utils.Inventory
 {
     [TestFixture]
-    public class FtpTests
+    public class InventoryTests
     {
         private IList<SiteFeed> DevDealerFeed()
         {

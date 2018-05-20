@@ -4,7 +4,6 @@ using QuantumLogic.Core.Domain.Policy.WidgetModule;
 using QuantumLogic.Core.Domain.Repositories.WidgetModule;
 using QuantumLogic.Core.Domain.Validation.Widget;
 using QuantumLogic.Core.Extensions.DateTimeEx;
-using QuantumLogic.Core.Utils.ContentManager;
 using System;
 using System.Collections.Generic;
 using System.IO;

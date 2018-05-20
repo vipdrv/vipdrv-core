@@ -2,7 +2,7 @@
 using System.IO;
 using System.Threading.Tasks;
 
-namespace QuantumLogic.Core.Utils.ContentManager
+namespace QuantumLogic.Core.Utils.Storage
 {
     /// <summary>
     /// Is used to operate with files via Azure storage 
@@ -10,18 +10,18 @@ namespace QuantumLogic.Core.Utils.ContentManager
     public interface IContentManager
     {
         /// <summary>
-        /// Is used to save file to Azure storage with public access
+        /// Is used to save file to storage
         /// </summary>
         /// <param name="fileStream"></param>
-        /// <param name="blobName"></param>
-        /// <param name="contentType"></param>
+        /// <param name="blobName">File name</param>
+        /// <param name="contentType">For exmaple: image/jpeg </param>
         /// <returns>
         /// returns Url to created file
         /// </returns>
-        Task<Uri> SaveFileToStorage(Stream fileStream, string blobName, string contentType);
+        Task<Uri> SaveFile(Stream fileStream, string blobName, string contentType);
 
         /// <summary>
-        /// Is used to save file to Azure storage with public access
+        /// Is used to save file to storage
         /// </summary>
         /// <param name="content"></param>
         /// <param name="blobName"></param>
@@ -29,6 +29,6 @@ namespace QuantumLogic.Core.Utils.ContentManager
         /// <returns>
         /// returns Url to created file
         /// </returns>
-        Task<Uri> SaveFileToStorage(byte[] content, string blobName, string contentType);
+        Task<Uri> SaveFile(byte[] content, string blobName, string contentType);
     }
 }
