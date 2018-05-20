@@ -1,21 +1,22 @@
-﻿using NUnit.Framework;
+﻿using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using NUnit.Framework;
+using QuantumLogic.Core.Domain.Entities.WidgetModule;
 using QuantumLogic.Core.Utils.Email;
 using QuantumLogic.Core.Utils.Email.Data;
 using QuantumLogic.Core.Utils.Email.Data.Templates;
-using SendGrid.Helpers.Mail;
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using QuantumLogic.Core.Domain.Entities.WidgetModule;
 using QuantumLogic.Core.Utils.Email.Data.Templates.Arguments;
 using QuantumLogic.WebApi.DataModels.Requests.Widget.Booking;
+using SendGrid.Helpers.Mail;
 
-namespace QuantumLogic.Tests.Core.Utils.Email
+namespace QuantumLogic.xUnitTests.Core.Utils.Email
 {
     [TestFixture]
     public sealed class EmailManagerTests
     {
         [Test]
+        [Ignore("Real email sending")]
         public Task EmailWithADFContent__ShouldSendViaEmail()
         {
             ITestDriveEmailService testDriveEmailService = new TestDriveEmailService();
@@ -42,6 +43,7 @@ namespace QuantumLogic.Tests.Core.Utils.Email
         }
 
         [Test]
+        [Ignore("Is used to debug Email content")]
         public void EmailWithADFContent__ShouldGenerateValidXML()
         {
             ITestDriveEmailService testDriveEmailService = new TestDriveEmailService();

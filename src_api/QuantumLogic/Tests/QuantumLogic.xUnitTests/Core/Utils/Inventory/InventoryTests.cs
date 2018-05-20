@@ -1,18 +1,16 @@
-﻿using System;
+﻿using System.Collections.Generic;
+using System.Linq;
 using NUnit.Framework;
 using QuantumLogic.Core.Domain.Entities.WidgetModule;
 using QuantumLogic.Core.Utils.Ftp;
 using QuantumLogic.Core.Utils.Inventory;
 using QuantumLogic.Core.Utils.Inventory.Data;
-using QuantumLogic.Core.Utils.Inventory.InventoryProviders.Truckworld;
-using QuantumLogic.Data.EFContext;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Dynamic.Core;
 using QuantumLogic.Core.Utils.Inventory.InventoryProviders.Homenet;
+using QuantumLogic.Core.Utils.Inventory.InventoryProviders.Truckworld;
 using QuantumLogic.Core.Utils.Inventory.InventoryProviders.vAuto;
+using QuantumLogic.Data.EFContext;
 
-namespace QuantumLogic.Tests.Core.Utils.Inventory
+namespace QuantumLogic.xUnitTests.Core.Utils.Inventory
 {
     [TestFixture]
     public class InventoryTests
@@ -56,6 +54,7 @@ namespace QuantumLogic.Tests.Core.Utils.Inventory
         }
 
         [Test]
+        [Ignore("Read database usage")]
         public void ParseFeed__ShouldWork()
         {
             IList<SiteFeed> devDealerFeed = DevDealerFeed();
