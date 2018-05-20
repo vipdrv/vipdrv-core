@@ -2,6 +2,7 @@
 using QuantumLogic.Core.Domain.Policy.Main;
 using QuantumLogic.Core.Domain.Repositories.Main;
 using QuantumLogic.Core.Domain.Services.Main.Users.Models;
+using QuantumLogic.Core.Domain.Services.Shared.Urls;
 using QuantumLogic.Core.Domain.Validation.Main;
 using QuantumLogic.Core.Exceptions.Authorization;
 using System;
@@ -14,11 +15,19 @@ namespace QuantumLogic.Core.Domain.Services.Main.Users
 {
     public class UserDomainService : EntityDomainService<User, int>, IUserDomainService
     {
+        #region Injected dependencies
+
+        protected readonly IImageUrlService ImageUrlService;
+
+        #endregion
+
         #region Ctors
 
-        public UserDomainService(IUserRepository repository, IUserPolicy policy, IUserValidationService validationService)
+        public UserDomainService(IUserRepository repository, IUserPolicy policy, IUserValidationService validationService, IImageUrlService imageUrlService)
             : base(repository, policy, validationService)
-        { }
+        {
+            ImageUrlService = imageUrlService;
+        }
 
         #endregion
 
@@ -72,14 +81,16 @@ namespace QuantumLogic.Core.Domain.Services.Main.Users
         {
             User entity = await Repository.GetAsync(userId);
             Policy.PolicyUpdate(entity);
-            entity.AvatarUrl = newAvatarUrl;
+            entity.AvatarUrl = await ImageUrlService.Transform(newAvatarUrl);
             ValidationService.ValidateEntity(entity);
             await Repository.UpdateAsync(entity);
         }
 
+        #region Helpers
+
         protected override Task CascadeDeleteActionAsync(User entity)
         {
-            return Task.CompletedTask;
+            return ImageUrlService.RemoveAsync(entity.AvatarUrl);
         }
         internal override IEnumerable<LoadEntityRelationAction<User>> GetLoadEntityRelationActions()
         {
@@ -102,5 +113,7 @@ namespace QuantumLogic.Core.Domain.Services.Main.Users
             }
             .ToArray();
         }
+
+        #endregion
     }
 }
