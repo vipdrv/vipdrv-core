@@ -109,4 +109,24 @@ export class SiteDetailsEditComponent {
     protected getSiteWASPUrlInvalidMessageKey(): string {
         return this.siteValidationService.getInvalidWASPUrlMessageKey(this.entity);
     }
+    // zip code
+    protected isZipCodeInputDisabled(): boolean {
+        return this.isReadOnly;
+    }
+    protected isZipCodeValid(): boolean {
+        return this.siteValidationService.isZipCodeValid(this.entity);
+    }
+    protected getZipCodeInvalidMessageKey(): string {
+        return this.siteValidationService.getInvalidZipCodeMessageKey(this.entity);
+    }
+    // zip code
+    protected isAvailableTestDriveFromHomeInputDisabled(): boolean {
+        return this.isReadOnly;
+    }
+    protected isAvailableTestDriveFromHomeValid(): boolean {
+        return this.siteValidationService.isAvailableTestDriveFromHomeValid(this.entity);
+    }
+    protected getAvailableTestDriveFromHomeInvalidMessageKey(): string {
+        return this.siteValidationService.getInvalidAvailableTestDriveFromHomeMessageKey(this.entity);
+    }
 }

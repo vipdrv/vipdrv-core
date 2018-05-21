@@ -21,4 +21,8 @@ INSERT INTO [dbo].[Step] ([Descriptor] ,[IsActive] ,[Name] ,[Order] ,[SiteId])
 SELECT 'MusicStep' as Descriptor, 0 as IsActive, 'MusicStep' as [Name], 5 as [Order], Id as SiteId
 FROM [dbo].[Site]
 
+INSERT INTO [dbo].[Step] ([Descriptor] ,[IsActive] ,[Name] ,[Order] ,[SiteId])
+SELECT 'TestDriveFromHomeStep' as Descriptor, 0 as IsActive, 'TestDriveFromHomeStep' as [Name], 6 as [Order], Id as SiteId
+FROM [dbo].[Site]
+
 GO

@@ -150,6 +150,60 @@
             </div>
         </div>
     </div>
+    <div class="row test-drive-modal-body-edit-entity-container-row-input">
+        <div class="col-sm-12 col-md-6 col-lg-6">
+            <div class="form-group">
+                <label for="zip-code"
+                       class="test-drive-input-label"
+                       translate>
+                    sites.modal.zipCode
+                </label>
+                <input id="zip-code"
+                       type="text"
+                       class="form-control"
+                       [ngClass]="extensions.getInputValidationClass(isValidationActive(), isZipCodeValid())"
+                       [disabled]="isZipCodeInputDisabled()"
+                       [(ngModel)]="entity.zipCode">
+                <small class="form-text text-muted"
+                       *ngIf="!isValidationActive() || isZipCodeValid()"
+                       translate>
+                    sites.modal.zipCodeHelp
+                </small>
+                <small class="form-text test-drive-validation-message"
+                       *ngIf="isValidationActive() && !isZipCodeValid()"
+                       translate>
+                    {{ getZipCodeInvalidMessageKey() }}
+                </small>
+            </div>
+        </div>
+        <div class="col-sm-12 col-md-6 col-lg-6">
+            <div class="form-group" style="margin-top: 38px;">
+                <label class="custom-control custom-checkbox">
+                    <input type="checkbox"
+                           name="availableTestDriveFromHome"
+                           class="custom-control-input"
+                           [ngClass]="extensions.getInputValidationClass(isValidationActive(), isAvailableTestDriveFromHomeValid())"
+                           [disabled]="isAvailableTestDriveFromHomeInputDisabled()"
+                           [(ngModel)]="entity.availableTestDriveFromHome">
+                    <span class="custom-control-indicator"></span>
+                    <span class="custom-control-description"
+                          translate>
+                        sites.modal.availableTestDriveFromHome
+                    </span>
+                </label>
+                <small class="form-text text-muted"
+                       *ngIf="!isValidationActive() || isAvailableTestDriveFromHomeValid()"
+                       translate>
+                    sites.modal.availableTestDriveFromHomeHelp
+                </small>
+                <small class="form-text test-drive-validation-message"
+                       *ngIf="isValidationActive() && !isAvailableTestDriveFromHomeValid()"
+                       translate>
+                    {{ getAvailableTestDriveFromHomeInvalidMessageKey() }}
+                </small>
+            </div>
+        </div>
+    </div>
     <hr>
     <div class="row test-drive-modal-body-edit-entity-container-row-input">
         <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">

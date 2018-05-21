@@ -9,6 +9,7 @@ namespace QuantumLogic.Core.Domain.Entities.WidgetModule
         public static string DescriptorStepRoute = "RouteStep";
         public static string DescriptorStepSchedule = "ScheduleStep";
         public static string DescriptorStepMusic = "MusicStep";
+        public static string DescriptorStepTestDriveFromHome = "TestDriveFromHomeStep";
 
         #region Fields
 
