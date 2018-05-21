@@ -2,7 +2,7 @@
 	"variables": [],
 	"info": {
 		"name": "QuantumLogic",
-		"_postman_id": "aca1cecc-83aa-df65-2013-d95ae5f05220",
+		"_postman_id": "4d93a169-df33-c628-bb44-7f8034e15e34",
 		"description": "",
 		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
 	},
@@ -78,7 +78,10 @@
 										"description": ""
 									}
 								],
-								"body": {},
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
 								"description": ""
 							},
 							"response": []
@@ -157,7 +160,10 @@
 										"description": ""
 									}
 								],
-								"body": {},
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
 								"description": ""
 							},
 							"response": []
@@ -229,7 +235,10 @@
 										"description": ""
 									}
 								],
-								"body": {},
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
 								"description": ""
 							},
 							"response": []
@@ -308,7 +317,10 @@
 										"description": ""
 									}
 								],
-								"body": {},
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
 								"description": ""
 							},
 							"response": []
@@ -325,7 +337,10 @@
 										"description": ""
 									}
 								],
-								"body": {},
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
 								"description": ""
 							},
 							"response": []
@@ -492,7 +507,10 @@
 										"description": ""
 									}
 								],
-								"body": {},
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
 								"description": ""
 							},
 							"response": []
@@ -514,7 +532,10 @@
 										"description": ""
 									}
 								],
-								"body": {},
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
 								"description": ""
 							},
 							"response": []
@@ -561,7 +582,10 @@
 										"description": ""
 									}
 								],
-								"body": {},
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
 								"description": ""
 							},
 							"response": []
@@ -630,7 +654,10 @@
 								"url": "{{ApplicationEndpoint}}/{{ApiResource}}/beverage/1",
 								"method": "GET",
 								"header": [],
-								"body": {},
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
 								"description": ""
 							},
 							"response": []
@@ -697,7 +724,10 @@
 										"description": ""
 									}
 								],
-								"body": {},
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
 								"description": ""
 							},
 							"response": []
@@ -835,7 +865,10 @@
 								"url": "{{ApplicationEndpoint}}/{{ApiResource}}/expert/13",
 								"method": "GET",
 								"header": [],
-								"body": {},
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
 								"description": ""
 							},
 							"response": []
@@ -902,7 +935,10 @@
 										"description": ""
 									}
 								],
-								"body": {},
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
 								"description": ""
 							},
 							"response": []
@@ -1107,7 +1143,10 @@
 										"description": ""
 									}
 								],
-								"body": {},
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
 								"description": ""
 							},
 							"response": []
@@ -1209,7 +1248,10 @@
 										"description": ""
 									}
 								],
-								"body": {},
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
 								"description": ""
 							},
 							"response": []
@@ -1322,7 +1364,10 @@
 								"url": "{{ApplicationEndpoint}}/{{ApiResource}}/route/24",
 								"method": "GET",
 								"header": [],
-								"body": {},
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
 								"description": ""
 							},
 							"response": []
@@ -1389,7 +1434,10 @@
 										"description": ""
 									}
 								],
-								"body": {},
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
 								"description": ""
 							},
 							"response": []
@@ -1527,7 +1575,10 @@
 								"url": "{{ApplicationEndpoint}}/{{ApiResource}}/site/28",
 								"method": "GET",
 								"header": [],
-								"body": {},
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
 								"description": ""
 							},
 							"response": []
@@ -1538,7 +1589,10 @@
 								"url": "{{ApplicationEndpoint}}/{{ApiResource}}/site/28/week-schedule",
 								"method": "GET",
 								"header": [],
-								"body": {},
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
 								"description": ""
 							},
 							"response": []
@@ -1549,7 +1603,10 @@
 								"url": "{{ApplicationEndpoint}}/{{ApiResource}}/site/28/aggregated-info",
 								"method": "GET",
 								"header": [],
-								"body": {},
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
 								"description": ""
 							},
 							"response": []
@@ -1573,7 +1630,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n\t\"UserId\": 1,\n    \"BeautyId\": \"BeautyId\",\n    \"Name\": \"Name\",\n    \"Url\": \"Url\",\n    \"NotificationContacts\": \"\",\n    \"ImageUrl\": \"http://via.placeholder.com/300x200\",\n    \"DealerName\": \"DealerName\",\n    \"DealerAddress\": \"\",\n    \"DealerPhone\": \"\",\n    \"UseExpertStep\": true,\n    \"UseBeverageStep\": true,\n    \"UseRouteStep\": true,\n    \"WorkingHours\": \"\"\n}"
+									"raw": "{\n\t\"UserId\": 1,\n    \"BeautyId\": \"BeautyId\",\n    \"Name\": \"Name\",\n    \"Url\": \"Url\",\n    \"NotificationContacts\": \"\",\n    \"ImageUrl\": \"http://via.placeholder.com/300x200\",\n    \"DealerName\": \"DealerName\",\n    \"DealerAddress\": \"\",\n    \"DealerPhone\": \"\",\n    \"WorkingHours\": \"\",\n    \"ZipCode\": \"12345\",\n    \"AvailableTestDriveFromHome\": false\n}"
 								},
 								"description": ""
 							},
@@ -1598,7 +1655,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n\t\"id\": 1,\n\t\"UserId\": 1,\n    \"BeautyId\": \"BeautyId\",\n    \"Name\": \"Name\",\n    \"Url\": \"Url\",\n    \"NotificationContacts\": \"\",\n    \"ImageUrl\": \"http://via.placeholder.com/300x200\",\n    \"DealerName\": \"DealerName\",\n    \"DealerAddress\": \"\",\n    \"DealerPhone\": \"\",\n    \"UseExpertStep\": true,\n    \"UseBeverageStep\": true,\n    \"UseRouteStep\": true,\n    \"WorkingHours\": \"\"\n}"
+									"raw": "{\n\t\"id\": 1,\n\t\"UserId\": 1,\n    \"BeautyId\": \"BeautyId\",\n    \"Name\": \"Name\",\n    \"Url\": \"Url\",\n    \"NotificationContacts\": \"\",\n    \"ImageUrl\": \"http://via.placeholder.com/300x200\",\n    \"DealerName\": \"DealerName\",\n    \"DealerAddress\": \"\",\n    \"DealerPhone\": \"\",\n    \"UseExpertStep\": true,\n    \"UseBeverageStep\": true,\n    \"UseRouteStep\": true,\n    \"WorkingHours\": \"\",\n    \"ZipCode\": \"12345\",\n    \"AvailableTestDriveFromHome\": false\n}"
 								},
 								"description": ""
 							},
@@ -1616,7 +1673,10 @@
 										"description": ""
 									}
 								],
-								"body": {},
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
 								"description": ""
 							},
 							"response": []
@@ -1641,156 +1701,6 @@
 								"body": {
 									"mode": "raw",
 									"raw": "{\n\t\"value\": \"\"\n}"
-								},
-								"description": ""
-							},
-							"response": []
-						},
-						{
-							"name": "Patch use expert step property",
-							"request": {
-								"url": "{{ApplicationEndpoint}}/{{ApiResource}}/site/change-use-expert-step/13",
-								"method": "PATCH",
-								"header": [
-									{
-										"key": "Content-Type",
-										"value": "application/json",
-										"description": ""
-									},
-									{
-										"key": "Authorization",
-										"value": "{{AuthTokenType}} {{AuthTokenValue}}",
-										"description": ""
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n\t\"value\": true\n}"
-								},
-								"description": ""
-							},
-							"response": []
-						},
-						{
-							"name": "Patch use beverage step property",
-							"request": {
-								"url": "{{ApplicationEndpoint}}/{{ApiResource}}/site/change-use-beverage-step/13",
-								"method": "PATCH",
-								"header": [
-									{
-										"key": "Content-Type",
-										"value": "application/json",
-										"description": ""
-									},
-									{
-										"key": "Authorization",
-										"value": "{{AuthTokenType}} {{AuthTokenValue}}",
-										"description": ""
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n\t\"value\": true\n}"
-								},
-								"description": ""
-							},
-							"response": []
-						},
-						{
-							"name": "Patch use route step property",
-							"request": {
-								"url": "{{ApplicationEndpoint}}/{{ApiResource}}/site/change-use-route-step/13",
-								"method": "PATCH",
-								"header": [
-									{
-										"key": "Content-Type",
-										"value": "application/json",
-										"description": ""
-									},
-									{
-										"key": "Authorization",
-										"value": "{{AuthTokenType}} {{AuthTokenValue}}",
-										"description": ""
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n\t\"value\": true\n}"
-								},
-								"description": ""
-							},
-							"response": []
-						},
-						{
-							"name": "Swap step order: beverage <=> expert",
-							"request": {
-								"url": "{{ApplicationEndpoint}}/{{ApiResource}}/site/swap-step-order-beverage-expert/13",
-								"method": "PATCH",
-								"header": [
-									{
-										"key": "Content-Type",
-										"value": "application/json",
-										"description": ""
-									},
-									{
-										"key": "Authorization",
-										"value": "{{AuthTokenType}} {{AuthTokenValue}}",
-										"description": ""
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "{}"
-								},
-								"description": ""
-							},
-							"response": []
-						},
-						{
-							"name": "Swap step order: beverage <=> route",
-							"request": {
-								"url": "{{ApplicationEndpoint}}/{{ApiResource}}/site/swap-step-order-beverage-route/13",
-								"method": "PATCH",
-								"header": [
-									{
-										"key": "Content-Type",
-										"value": "application/json",
-										"description": ""
-									},
-									{
-										"key": "Authorization",
-										"value": "{{AuthTokenType}} {{AuthTokenValue}}",
-										"description": ""
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "{}"
-								},
-								"description": ""
-							},
-							"response": []
-						},
-						{
-							"name": "Swap step order: expert <=> route",
-							"request": {
-								"url": "{{ApplicationEndpoint}}/{{ApiResource}}/site/swap-step-order-expert-route/13",
-								"method": "PATCH",
-								"header": [
-									{
-										"key": "Content-Type",
-										"value": "application/json",
-										"description": ""
-									},
-									{
-										"key": "Authorization",
-										"value": "{{AuthTokenType}} {{AuthTokenValue}}",
-										"description": ""
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "{}"
 								},
 								"description": ""
 							},
@@ -1854,7 +1764,10 @@
 								"url": "{{ApplicationEndpoint}}/{{ApiResource}}/step/1",
 								"method": "GET",
 								"header": [],
-								"body": {},
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
 								"description": ""
 							},
 							"response": []
@@ -1921,7 +1834,10 @@
 										"description": ""
 									}
 								],
-								"body": {},
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
 								"description": ""
 							},
 							"response": []
@@ -2059,7 +1975,10 @@
 								"url": "{{ApplicationEndpoint}}/{{ApiResource}}/vehicle/1",
 								"method": "GET",
 								"header": [],
-								"body": {},
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
 								"description": ""
 							},
 							"response": []
@@ -2126,7 +2045,10 @@
 										"description": ""
 									}
 								],
-								"body": {},
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
 								"description": ""
 							},
 							"response": []
@@ -2137,7 +2059,10 @@
 								"url": "{{ApplicationEndpoint}}/{{ApiResource}}/vehicle/28/makes",
 								"method": "GET",
 								"header": [],
-								"body": {},
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
 								"description": ""
 							},
 							"response": []
@@ -2168,7 +2093,10 @@
 								},
 								"method": "GET",
 								"header": [],
-								"body": {},
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
 								"description": ""
 							},
 							"response": []
@@ -2205,7 +2133,10 @@
 								},
 								"method": "GET",
 								"header": [],
-								"body": {},
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
 								"description": ""
 							},
 							"response": []
@@ -2248,7 +2179,10 @@
 								},
 								"method": "GET",
 								"header": [],
-								"body": {},
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
 								"description": ""
 							},
 							"response": []
@@ -2279,7 +2213,10 @@
 								},
 								"method": "GET",
 								"header": [],
-								"body": {},
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
 								"description": ""
 							},
 							"response": []
