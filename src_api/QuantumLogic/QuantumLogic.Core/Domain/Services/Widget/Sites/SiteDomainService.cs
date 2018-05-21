@@ -97,6 +97,13 @@ namespace QuantumLogic.Core.Domain.Services.Widget.Sites
                     Name = Step.DescriptorStepMusic,
                     Order = 5,
                     IsActive = false
+                },
+                new Step()
+                {
+                    Descriptor = Step.DescriptorStepTestDriveFromHome,
+                    Name = Step.DescriptorStepTestDriveFromHome,
+                    Order = 6,
+                    IsActive = false
                 }
             };
         }

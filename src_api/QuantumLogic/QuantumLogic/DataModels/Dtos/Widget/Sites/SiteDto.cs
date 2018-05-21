@@ -16,11 +16,10 @@ namespace QuantumLogic.WebApi.DataModels.Dtos.Widget.Sites
         public string DealerName { get; set; }
         public string DealerAddress { get; set; }
         public string DealerPhone { get; set; }
-        public bool UseExpertStep { get; set; }
-        public bool UseBeverageStep { get; set; }
-        public bool UseRouteStep { get; set; }
         public string OwnerName { get; set; }
         public string WidgetAsSeparatePageUrl { get; set; }
+        public string ZipCode { get; set; }
+        public bool AvailableTestDriveFromHome { get; set; }
 
         #region Mapping
 
@@ -38,11 +37,10 @@ namespace QuantumLogic.WebApi.DataModels.Dtos.Widget.Sites
             DealerName = entity.DealerName;
             DealerAddress = entity.DealerAddress;
             DealerPhone = entity.DealerPhone;
-            UseExpertStep = entity.UseExpertStep;
-            UseBeverageStep = entity.UseBeverageStep;
-            UseRouteStep = entity.UseRouteStep;
             OwnerName = entity.User.FullName;
             WidgetAsSeparatePageUrl = entity.WidgetAsSeparatePageUrl;
+            ZipCode = entity.ZipCode;
+            AvailableTestDriveFromHome = entity.AvailableTestDriveFromHome;
         }
         public override Site MapToEntity()
         {
@@ -56,10 +54,9 @@ namespace QuantumLogic.WebApi.DataModels.Dtos.Widget.Sites
             entity.DealerName = DealerName;
             entity.DealerAddress = DealerAddress;
             entity.DealerPhone = DealerPhone;
-            entity.UseExpertStep = UseExpertStep;
-            entity.UseBeverageStep = UseBeverageStep;
-            entity.UseRouteStep = UseRouteStep;
             entity.WidgetAsSeparatePageUrl = WidgetAsSeparatePageUrl;
+            entity.ZipCode = ZipCode;
+            entity.AvailableTestDriveFromHome = AvailableTestDriveFromHome;
             return entity;
         }
 

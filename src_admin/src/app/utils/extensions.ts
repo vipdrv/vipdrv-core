@@ -110,4 +110,9 @@ export namespace Extensions {
             .toString(16)
             .substring(1);
     }
+
+    /// zip code generateGuid
+    export function isValidZipCode(value: string): boolean {
+        return true;
+    }
 }

@@ -34,9 +34,6 @@ namespace QuantumLogic.WebApi.DataModels.Dtos.Widget.Sites
             ActiveBeveragesAmount = entity.Beverages.Where(r => r.IsActive).Count();
             ActiveRoutesAmount = entity.Routes.Where(r => r.IsActive).Count();
             WorkingHours = DayOfWeekInterval.Parse(entity.WorkingHours);
-            BeverageStepOrder = entity.BeverageStepOrder;
-            ExpertStepOrder = entity.ExpertStepOrder;
-            RouteStepOrder = entity.RouteStepOrder;
             Steps = entity.Steps
                 .Select(r => new StepDto()
                 {

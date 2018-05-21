@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
-import { Variable, ConsoleLogger } from './../../../../../utils/index';
+import { Variable, ConsoleLogger, Extensions } from './../../../../../utils/index';
 import { SiteEntity } from './../../../../../entities/index';
 import { ObjectValidationService } from './../../../object.validation-service';
 import { ISiteValidationService } from './i-site.validation-service';
+
 @Injectable()
 export class SiteValidationService
     extends ObjectValidationService<SiteEntity>
@@ -39,6 +40,14 @@ export class SiteValidationService
         return Variable.isNotNullOrUndefined(entity) &&
             Variable.isNotNullOrUndefinedOrEmptyString(entity.imageUrl);
     }
+    isZipCodeValid(entity: SiteEntity): boolean {
+        return Variable.isNotNullOrUndefined(entity) &&
+            Extensions.isValidZipCode(entity.zipCode);
+    }
+    isAvailableTestDriveFromHomeValid(entity: SiteEntity): boolean {
+        return Variable.isNotNullOrUndefined(entity);
+    }
+
     getInvalidNameMessageKey(entity: SiteEntity): string {
         return 'validation.sites.invalidNameMessage';
     }
@@ -50,5 +59,11 @@ export class SiteValidationService
     }
     getInvalidWASPUrlMessageKey(entity: SiteEntity): string {
         return 'validation.sites.invalidWASPUrlMessage';
+    }
+    getInvalidZipCodeMessageKey(entity: SiteEntity): string {
+        return 'validation.sites.invalidZipCodeMessage';
+    }
+    getInvalidAvailableTestDriveFromHomeMessageKey(entity: SiteEntity): string {
+        return 'validation.sites.invalidAvailableTestDriveFromHomeMessage';
     }
 }

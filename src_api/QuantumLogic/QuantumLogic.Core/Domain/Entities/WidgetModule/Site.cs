@@ -20,18 +20,11 @@ namespace QuantumLogic.Core.Domain.Entities.WidgetModule
         public string DealerPhone { get; set; }
         public string WorkingHours { get; set; }
         public string WidgetAsSeparatePageUrl { get; set; }
-
-        public bool UseExpertStep { get; set; }
-        public bool UseBeverageStep { get; set; }
-        public bool UseRouteStep { get; set; }
-
-        public int BeverageStepOrder { get; set; }
-        public int ExpertStepOrder { get; set; }
-        public int RouteStepOrder { get; set; }
-
         public string CrmProvider { get; set; }
         public string SiteProvider { get; set; }
         public string FeedFormat { get; set; }
+        public string ZipCode { get; set; }
+        public bool AvailableTestDriveFromHome { get; set; }
 
         #endregion
 
@@ -110,23 +103,6 @@ namespace QuantumLogic.Core.Domain.Entities.WidgetModule
             Steps = new HashSet<Step>();
         }
 
-        public Site(
-            int id,
-            int userId,
-            string beautyId,
-            string name,
-            string url,
-            string notificationContacts)
-            : this()
-        {
-            Id = id;
-            UserId = userId;
-            BeautyId = beautyId;
-            Name = name;
-            Url = url;
-            NotificationContacts = notificationContacts;
-        }
-
         #endregion
 
         #region IValidable implementation
@@ -161,6 +137,8 @@ namespace QuantumLogic.Core.Domain.Entities.WidgetModule
             DealerPhone = actualEntity.DealerPhone;
             WorkingHours = actualEntity.WorkingHours;
             WidgetAsSeparatePageUrl = actualEntity.WidgetAsSeparatePageUrl;
+            ZipCode = actualEntity.ZipCode;
+            AvailableTestDriveFromHome = actualEntity.AvailableTestDriveFromHome;
         }
 
         #endregion

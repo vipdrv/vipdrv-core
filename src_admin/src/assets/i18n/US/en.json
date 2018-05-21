@@ -110,7 +110,11 @@
       "dealerPhone": "Dealer Phone",
       "dealerAddress": "Dealer Address",
       "siteWidgetAsSeparatePageUrl": "Site widget as separate page url",
-      "siteWidgetAsSeparatePageUrlHelp": "Enter the url of the site widget as separate page."
+      "siteWidgetAsSeparatePageUrlHelp": "Enter the url of the site widget as separate page.",
+      "availableTestDriveFromHome": "Allow test drive from home",
+      "availableTestDriveFromHomeHelp": "Enable or disable test drive from home",
+      "zipCode": "Zip code",
+      "zipCodeHelp": "Enter the zip code"
     },
     "table": {
       "headerText_siteId": "Site id",
@@ -254,14 +258,16 @@
         "BeverageStep": "Beverages",
         "RouteStep": "Routes",
         "ScheduleStep": "Booking time",
-        "MusicStep": "Music"
+        "MusicStep": "Music",
+        "TestDriveFromHomeStep": "Test drive from home"
       },
       "descriptor": {
         "ExpertStep": "Is used to select expert for test drive.",
         "BeverageStep": "Is used to select beverage for test drive.",
         "RouteStep": "Is used to select route for test drive.",
         "ScheduleStep": "Is used to select a booking time for test drive.",
-        "MusicStep": "Is used to select music for test drive."
+        "MusicStep": "Is used to select music for test drive.",
+        "TestDriveFromHomeStep": "Is used to select home location for test drive."
       }
     }
   },
@@ -406,7 +412,9 @@
       "invalidNameMessage": "Site name is not valid!",
       "invalidUrlMessage": "Site url is not valid!",
       "invalidOwnerMessage": "Site owner is not valid (this field is required)!",
-      "invalidWASPUrlMessage": "Site widget as separated page url is not valid!"
+      "invalidWASPUrlMessage": "Site widget as separated page url is not valid!",
+      "invalidZipCodeMessage": "Zip code is not valid (should be like 1111)!",
+      "invalidAvailableTestDriveFromHomeMessage": "This value is not valid!"
     },
     "registrationModel": {
       "invalidEmailMessage": "Email address is not valid!",
