@@ -35,26 +35,44 @@ namespace QuantumLogic.xUnitTests.Core.Utils.Inventory
                 new SiteFeed()
                 {
                     SiteId = 28,
-                    FeedFolder = "/SiteFeed/28-TruckWorld",
+                    FeedFolder = "/DealerFeed/28-TruckWorld",
                     FeedProvider = new TruckworldInventoryProvider()
                 },
                 new SiteFeed()
                 {
                     SiteId = 36,
-                    FeedFolder = "/SiteFeed/36-MBRVC",
+                    FeedFolder = "/DealerFeed/36-MBRVC",
                     FeedProvider = new HomenetInventoryProvider()
                 },
                 new SiteFeed()
                 {
                     SiteId = 47,
-                    FeedFolder = "/SiteFeed/47-Downey Nissan",
+                    FeedFolder = "/DealerFeed/47-Downey Nissan",
                     FeedProvider = new VAutoInventoryProvider()
+                },
+                new SiteFeed()
+                {
+                    SiteId = 54,
+                    FeedFolder = "/DealerFeed/54-tafel-motors",
+                    FeedProvider = new HomenetInventoryProvider()
+                },
+                new SiteFeed()
+                {
+                    SiteId = 55,
+                    FeedFolder = "/DealerFeed/55-mb-cincy",
+                    FeedProvider = new HomenetInventoryProvider()
+                },
+                new SiteFeed()
+                {
+                    SiteId = 56,
+                    FeedFolder = "/DealerFeed/56-mb-west-chester",
+                    FeedProvider = new HomenetInventoryProvider()
                 }
             };
         }
 
         [Test]
-        [Ignore("Read database usage")]
+        
         public void ParseFeed__ShouldWork()
         {
             IList<SiteFeed> devDealerFeed = DevDealerFeed();
@@ -77,10 +95,10 @@ namespace QuantumLogic.xUnitTests.Core.Utils.Inventory
 
             string tempoparyPathToSaveFile = @"C:\Temp\test.csv"; // Path.GetTempPath();
             InventoryService inventoryService = new InventoryService(new FtpService(), tempoparyPathToSaveFile);
-            IList<Vehicle> allVehiclesFromFeedFiles = inventoryService.GetVehiclesListFromFeedFiles(DevDealerFeed());
+            IList<Vehicle> allVehiclesFromFeedFiles = inventoryService.GetVehiclesListFromFeedFiles(prodDealerFeed);
 
             QuantumLogicDbContext quantumLogicDbContext = new QuantumLogicDbContext();
-            IQueryable<Vehicle> oldVehicles = quantumLogicDbContext.Vehicles.Where(r => devDealerWebsiteIds.Contains(r.SiteId));
+            IQueryable<Vehicle> oldVehicles = quantumLogicDbContext.Vehicles.Where(r => prodDealerWebsiteIds.Contains(r.SiteId));
 
             foreach (var vehicle in oldVehicles)
             {
