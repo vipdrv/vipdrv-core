@@ -129,4 +129,14 @@ export class SiteDetailsEditComponent {
     protected getAvailableTestDriveFromHomeInvalidMessageKey(): string {
         return this.siteValidationService.getInvalidAvailableTestDriveFromHomeMessageKey(this.entity);
     }
+    // max delivery distance
+    protected isMaxDeliveryDistanceInputDisabled(): boolean {
+        return this.isReadOnly;
+    }
+    protected isMaxDeliveryDistanceValid(): boolean {
+        return this.siteValidationService.isMaxDeliveryDistanceValid(this.entity);
+    }
+    protected getMaxDeliveryDistanceInvalidMessageKey(): string {
+        return this.siteValidationService.getInvalidMaxDeliveryDistanceMessageKey(this.entity);
+    }
 }

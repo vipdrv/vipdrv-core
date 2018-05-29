@@ -114,7 +114,9 @@
       "availableTestDriveFromHome": "Allow test drive from home",
       "availableTestDriveFromHomeHelp": "Enable or disable test drive from home",
       "zipCode": "Zip code",
-      "zipCodeHelp": "Enter the zip code"
+      "zipCodeHelp": "Enter the zip code",
+      "maxVehicleDeliveryDistance": "Maximum vehicle delivery distance (miles)",
+      "maxVehicleDeliveryDistanceHelp": "Enter the maximum vehicle delivery distance in miles."
     },
     "table": {
       "headerText_siteId": "Site id",
@@ -414,7 +416,8 @@
       "invalidOwnerMessage": "Site owner is not valid (this field is required)!",
       "invalidWASPUrlMessage": "Site widget as separated page url is not valid!",
       "invalidZipCodeMessage": "Zip code is not valid (should be like 1111)!",
-      "invalidAvailableTestDriveFromHomeMessage": "This value is not valid!"
+      "invalidAvailableTestDriveFromHomeMessage": "This value is not valid!",
+      "invalidMaxDeliveryDistanceMessage": "Max vehicle delivery distance must be a non negative number!"
     },
     "registrationModel": {
       "invalidEmailMessage": "Email address is not valid!",

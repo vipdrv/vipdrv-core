@@ -26,6 +26,7 @@ export class SiteEntity extends Entity {
     widgetAsSeparatePageUrl: string;
     zipCode: string;
     availableTestDriveFromHome: boolean;
+    maxVehicleDeliveryDistance: number;
     /// ctor
     constructor() {
         super();
@@ -59,5 +60,6 @@ export class SiteEntity extends Entity {
         this.workingHours = WorkingInterval.initializeManyFromDto(dto.workingHours);
         this.zipCode = mock.zipCode;
         this.availableTestDriveFromHome = mock.availableTestDriveFromHome;
+        this.maxVehicleDeliveryDistance = mock.maxVehicleDeliveryDistance;
     }
 }
