@@ -5,8 +5,6 @@ using QuantumLogic.Core.Domain.Entities.WidgetModule;
 using QuantumLogic.Core.Utils.Ftp;
 using QuantumLogic.Core.Utils.Inventory;
 using QuantumLogic.Core.Utils.Inventory.Data;
-using QuantumLogic.Core.Utils.Inventory.InventoryProviders.Homenet;
-using QuantumLogic.Core.Utils.Inventory.InventoryProviders.Truckworld;
 using QuantumLogic.Core.Utils.Inventory.InventoryProviders.vAuto;
 using QuantumLogic.Data.EFContext;
 
@@ -23,7 +21,7 @@ namespace QuantumLogic.xUnitTests.Core.Utils.Inventory
                 {
                     SiteId = 28,
                     FeedFolder = "/SiteFeed/28-TruckWorld",
-                    FeedProvider = new TruckworldInventoryProvider()
+                    FeedProvider = new VAutoInventoryProvider()
                 }
             };
         }
@@ -36,13 +34,13 @@ namespace QuantumLogic.xUnitTests.Core.Utils.Inventory
                 {
                     SiteId = 28,
                     FeedFolder = "/DealerFeed/28-TruckWorld",
-                    FeedProvider = new TruckworldInventoryProvider()
+                    FeedProvider = new VAutoInventoryProvider()
                 },
                 new SiteFeed()
                 {
                     SiteId = 36,
                     FeedFolder = "/DealerFeed/36-MBRVC",
-                    FeedProvider = new HomenetInventoryProvider()
+                    FeedProvider = new VAutoInventoryProvider()
                 },
                 new SiteFeed()
                 {
@@ -54,25 +52,24 @@ namespace QuantumLogic.xUnitTests.Core.Utils.Inventory
                 {
                     SiteId = 54,
                     FeedFolder = "/DealerFeed/54-tafel-motors",
-                    FeedProvider = new HomenetInventoryProvider()
+                    FeedProvider = new VAutoInventoryProvider()
                 },
                 new SiteFeed()
                 {
                     SiteId = 55,
                     FeedFolder = "/DealerFeed/55-mb-cincy",
-                    FeedProvider = new HomenetInventoryProvider()
+                    FeedProvider = new VAutoInventoryProvider()
                 },
                 new SiteFeed()
                 {
                     SiteId = 56,
                     FeedFolder = "/DealerFeed/56-mb-west-chester",
-                    FeedProvider = new HomenetInventoryProvider()
+                    FeedProvider = new VAutoInventoryProvider()
                 }
             };
         }
 
-        [Test]
-        
+        [Test, MaxTime(360000)]
         public void ParseFeed__ShouldWork()
         {
             IList<SiteFeed> devDealerFeed = DevDealerFeed();
