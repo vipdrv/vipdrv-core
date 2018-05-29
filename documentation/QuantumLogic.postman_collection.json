@@ -2,7 +2,7 @@
 	"variables": [],
 	"info": {
 		"name": "QuantumLogic",
-		"_postman_id": "4d93a169-df33-c628-bb44-7f8034e15e34",
+		"_postman_id": "8b0d104a-c779-d405-56e2-4ceb80a4456f",
 		"description": "",
 		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
 	},
@@ -1630,7 +1630,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n\t\"UserId\": 1,\n    \"BeautyId\": \"BeautyId\",\n    \"Name\": \"Name\",\n    \"Url\": \"Url\",\n    \"NotificationContacts\": \"\",\n    \"ImageUrl\": \"http://via.placeholder.com/300x200\",\n    \"DealerName\": \"DealerName\",\n    \"DealerAddress\": \"\",\n    \"DealerPhone\": \"\",\n    \"WorkingHours\": \"\",\n    \"ZipCode\": \"12345\",\n    \"AvailableTestDriveFromHome\": false\n}"
+									"raw": "{\n\t\"UserId\": 1,\n    \"BeautyId\": \"BeautyId\",\n    \"Name\": \"Name\",\n    \"Url\": \"Url\",\n    \"NotificationContacts\": \"\",\n    \"ImageUrl\": \"http://via.placeholder.com/300x200\",\n    \"DealerName\": \"DealerName\",\n    \"DealerAddress\": \"\",\n    \"DealerPhone\": \"\",\n    \"WorkingHours\": \"\",\n    \"ZipCode\": \"12345\",\n    \"AvailableTestDriveFromHome\": false,\n    \"MaxVehicleDeliveryDistance\": 5\n}"
 								},
 								"description": ""
 							},
@@ -1655,7 +1655,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n\t\"id\": 1,\n\t\"UserId\": 1,\n    \"BeautyId\": \"BeautyId\",\n    \"Name\": \"Name\",\n    \"Url\": \"Url\",\n    \"NotificationContacts\": \"\",\n    \"ImageUrl\": \"http://via.placeholder.com/300x200\",\n    \"DealerName\": \"DealerName\",\n    \"DealerAddress\": \"\",\n    \"DealerPhone\": \"\",\n    \"UseExpertStep\": true,\n    \"UseBeverageStep\": true,\n    \"UseRouteStep\": true,\n    \"WorkingHours\": \"\",\n    \"ZipCode\": \"12345\",\n    \"AvailableTestDriveFromHome\": false\n}"
+									"raw": "{\n\t\"id\": 1,\n\t\"UserId\": 1,\n    \"BeautyId\": \"BeautyId\",\n    \"Name\": \"Name\",\n    \"Url\": \"Url\",\n    \"NotificationContacts\": \"\",\n    \"ImageUrl\": \"http://via.placeholder.com/300x200\",\n    \"DealerName\": \"DealerName\",\n    \"DealerAddress\": \"\",\n    \"DealerPhone\": \"\",\n    \"UseExpertStep\": true,\n    \"UseBeverageStep\": true,\n    \"UseRouteStep\": true,\n    \"WorkingHours\": \"\",\n    \"ZipCode\": \"12345\",\n    \"AvailableTestDriveFromHome\": false,\n    \"MaxVehicleDeliveryDistance\": 10\n}"
 								},
 								"description": ""
 							},
