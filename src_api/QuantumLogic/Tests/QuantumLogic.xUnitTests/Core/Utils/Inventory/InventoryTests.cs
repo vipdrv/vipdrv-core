@@ -5,8 +5,6 @@ using QuantumLogic.Core.Domain.Entities.WidgetModule;
 using QuantumLogic.Core.Utils.Ftp;
 using QuantumLogic.Core.Utils.Inventory;
 using QuantumLogic.Core.Utils.Inventory.Data;
-using QuantumLogic.Core.Utils.Inventory.InventoryProviders.Homenet;
-using QuantumLogic.Core.Utils.Inventory.InventoryProviders.Truckworld;
 using QuantumLogic.Core.Utils.Inventory.InventoryProviders.vAuto;
 using QuantumLogic.Data.EFContext;
 
@@ -23,7 +21,7 @@ namespace QuantumLogic.xUnitTests.Core.Utils.Inventory
                 {
                     SiteId = 28,
                     FeedFolder = "/SiteFeed/28-TruckWorld",
-                    FeedProvider = new TruckworldInventoryProvider()
+                    FeedProvider = new VAutoInventoryProvider()
                 }
             };
         }
@@ -35,26 +33,43 @@ namespace QuantumLogic.xUnitTests.Core.Utils.Inventory
                 new SiteFeed()
                 {
                     SiteId = 28,
-                    FeedFolder = "/SiteFeed/28-TruckWorld",
-                    FeedProvider = new TruckworldInventoryProvider()
+                    FeedFolder = "/DealerFeed/28-TruckWorld",
+                    FeedProvider = new VAutoInventoryProvider()
                 },
                 new SiteFeed()
                 {
                     SiteId = 36,
-                    FeedFolder = "/SiteFeed/36-MBRVC",
-                    FeedProvider = new HomenetInventoryProvider()
+                    FeedFolder = "/DealerFeed/36-MBRVC",
+                    FeedProvider = new VAutoInventoryProvider()
                 },
                 new SiteFeed()
                 {
                     SiteId = 47,
-                    FeedFolder = "/SiteFeed/47-Downey Nissan",
+                    FeedFolder = "/DealerFeed/47-Downey Nissan",
+                    FeedProvider = new VAutoInventoryProvider()
+                },
+                new SiteFeed()
+                {
+                    SiteId = 54,
+                    FeedFolder = "/DealerFeed/54-tafel-motors",
+                    FeedProvider = new VAutoInventoryProvider()
+                },
+                new SiteFeed()
+                {
+                    SiteId = 55,
+                    FeedFolder = "/DealerFeed/55-mb-cincy",
+                    FeedProvider = new VAutoInventoryProvider()
+                },
+                new SiteFeed()
+                {
+                    SiteId = 56,
+                    FeedFolder = "/DealerFeed/56-mb-west-chester",
                     FeedProvider = new VAutoInventoryProvider()
                 }
             };
         }
 
-        [Test]
-        [Ignore("Read database usage")]
+        [Test, MaxTime(360000)]
         public void ParseFeed__ShouldWork()
         {
             IList<SiteFeed> devDealerFeed = DevDealerFeed();
@@ -77,10 +92,10 @@ namespace QuantumLogic.xUnitTests.Core.Utils.Inventory
 
             string tempoparyPathToSaveFile = @"C:\Temp\test.csv"; // Path.GetTempPath();
             InventoryService inventoryService = new InventoryService(new FtpService(), tempoparyPathToSaveFile);
-            IList<Vehicle> allVehiclesFromFeedFiles = inventoryService.GetVehiclesListFromFeedFiles(DevDealerFeed());
+            IList<Vehicle> allVehiclesFromFeedFiles = inventoryService.GetVehiclesListFromFeedFiles(prodDealerFeed);
 
             QuantumLogicDbContext quantumLogicDbContext = new QuantumLogicDbContext();
-            IQueryable<Vehicle> oldVehicles = quantumLogicDbContext.Vehicles.Where(r => devDealerWebsiteIds.Contains(r.SiteId));
+            IQueryable<Vehicle> oldVehicles = quantumLogicDbContext.Vehicles.Where(r => prodDealerWebsiteIds.Contains(r.SiteId));
 
             foreach (var vehicle in oldVehicles)
             {
