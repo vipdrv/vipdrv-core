@@ -18,7 +18,11 @@ export class SiteValidationService
         return this.isNameValid(entity) &&
             this.isOwnerValid(entity) &&
             this.isUrlValid(entity) &&
-            this.isImageUrlValid(entity);
+            this.isImageUrlValid(entity) &&
+            this.isWASPUrlValid(entity) &&
+            this.isZipCodeValid(entity) &&
+            this.isAvailableTestDriveFromHomeValid(entity) &&
+            this.isMaxDeliveryDistanceValid(entity);
     }
     isNameValid(entity: SiteEntity): boolean {
         return Variable.isNotNullOrUndefined(entity) &&
@@ -47,6 +51,11 @@ export class SiteValidationService
     isAvailableTestDriveFromHomeValid(entity: SiteEntity): boolean {
         return Variable.isNotNullOrUndefined(entity);
     }
+    isMaxDeliveryDistanceValid(entity: SiteEntity): boolean {
+        return Variable.isNotNullOrUndefined(entity) &&
+            (!Variable.isNotNullOrUndefined(entity) ||
+                entity.maxVehicleDeliveryDistance >= 0);
+    }
 
     getInvalidNameMessageKey(entity: SiteEntity): string {
         return 'validation.sites.invalidNameMessage';
@@ -65,5 +74,8 @@ export class SiteValidationService
     }
     getInvalidAvailableTestDriveFromHomeMessageKey(entity: SiteEntity): string {
         return 'validation.sites.invalidAvailableTestDriveFromHomeMessage';
+    }
+    getInvalidMaxDeliveryDistanceMessageKey(entity: SiteEntity): string {
+        return 'validation.sites.invalidMaxDeliveryDistanceMessage';
     }
 }

@@ -20,6 +20,7 @@ namespace QuantumLogic.WebApi.DataModels.Dtos.Widget.Sites
         public string WidgetAsSeparatePageUrl { get; set; }
         public string ZipCode { get; set; }
         public bool AvailableTestDriveFromHome { get; set; }
+        public int MaxVehicleDeliveryDistance { get; set; }
 
         #region Mapping
 
@@ -41,6 +42,7 @@ namespace QuantumLogic.WebApi.DataModels.Dtos.Widget.Sites
             WidgetAsSeparatePageUrl = entity.WidgetAsSeparatePageUrl;
             ZipCode = entity.ZipCode;
             AvailableTestDriveFromHome = entity.AvailableTestDriveFromHome;
+            MaxVehicleDeliveryDistance = entity.MaxVehicleDeliveryDistance;
         }
         public override Site MapToEntity()
         {
@@ -57,6 +59,7 @@ namespace QuantumLogic.WebApi.DataModels.Dtos.Widget.Sites
             entity.WidgetAsSeparatePageUrl = WidgetAsSeparatePageUrl;
             entity.ZipCode = ZipCode;
             entity.AvailableTestDriveFromHome = AvailableTestDriveFromHome;
+            entity.MaxVehicleDeliveryDistance = MaxVehicleDeliveryDistance;
             return entity;
         }
 

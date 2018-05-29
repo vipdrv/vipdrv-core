@@ -25,6 +25,7 @@ namespace QuantumLogic.Core.Domain.Entities.WidgetModule
         public string FeedFormat { get; set; }
         public string ZipCode { get; set; }
         public bool AvailableTestDriveFromHome { get; set; }
+        public int MaxVehicleDeliveryDistance { get; set; }
 
         #endregion
 
@@ -139,6 +140,7 @@ namespace QuantumLogic.Core.Domain.Entities.WidgetModule
             WidgetAsSeparatePageUrl = actualEntity.WidgetAsSeparatePageUrl;
             ZipCode = actualEntity.ZipCode;
             AvailableTestDriveFromHome = actualEntity.AvailableTestDriveFromHome;
+            MaxVehicleDeliveryDistance = actualEntity.MaxVehicleDeliveryDistance;
         }
 
         #endregion

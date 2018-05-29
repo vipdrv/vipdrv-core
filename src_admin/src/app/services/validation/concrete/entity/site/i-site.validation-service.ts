@@ -8,10 +8,12 @@ export interface ISiteValidationService extends IValidationService<SiteEntity> {
     isWASPUrlValid(site: SiteEntity): boolean;
     isZipCodeValid(site: SiteEntity): boolean;
     isAvailableTestDriveFromHomeValid(site: SiteEntity): boolean;
+    isMaxDeliveryDistanceValid(site: SiteEntity): boolean;
     getInvalidNameMessageKey(site: SiteEntity): string;
     getInvalidOwnerMessageKey(site: SiteEntity): string;
     getInvalidUrlMessageKey(site: SiteEntity): string;
     getInvalidWASPUrlMessageKey(site: SiteEntity): string;
     getInvalidZipCodeMessageKey(site: SiteEntity): string;
     getInvalidAvailableTestDriveFromHomeMessageKey(site: SiteEntity): string;
+    getInvalidMaxDeliveryDistanceMessageKey(site: SiteEntity): string;
 }

@@ -141,7 +141,9 @@
                        [(ngModel)]="entity.dealerPhone">
             </div>
         </div>
-        <div class="col-12">
+    </div>
+    <div class="row test-drive-modal-body-edit-entity-container-row-input">
+        <div class="col-sm-12 col-md-8 col-lg-8">
             <div class="form-group">
                 <label translate>sites.modal.dealerAddress</label>
                 <input type="text"
@@ -149,9 +151,7 @@
                        [(ngModel)]="entity.dealerAddress">
             </div>
         </div>
-    </div>
-    <div class="row test-drive-modal-body-edit-entity-container-row-input">
-        <div class="col-sm-12 col-md-6 col-lg-6">
+        <div class="col-sm-12 col-md-4 col-lg-4">
             <div class="form-group">
                 <label for="zip-code"
                        class="test-drive-input-label"
@@ -173,6 +173,35 @@
                        *ngIf="isValidationActive() && !isZipCodeValid()"
                        translate>
                     {{ getZipCodeInvalidMessageKey() }}
+                </small>
+            </div>
+        </div>
+    </div>
+    <div class="row test-drive-modal-body-edit-entity-container-row-input">
+        <div class="col-sm-12 col-md-6 col-lg-6">
+            <div class="form-group">
+                <label for="delivery-distance"
+                       class="test-drive-input-label"
+                       translate>
+                    sites.modal.maxVehicleDeliveryDistance
+                </label>
+                <input id="delivery-distance"
+                       type="number"
+                       min="0"
+                       step="1"
+                       class="form-control"
+                       [ngClass]="extensions.getInputValidationClass(isValidationActive(), isMaxDeliveryDistanceValid())"
+                       [disabled]="isMaxDeliveryDistanceInputDisabled()"
+                       [(ngModel)]="entity.maxVehicleDeliveryDistance">
+                <small class="form-text text-muted"
+                       *ngIf="!isValidationActive() || isMaxDeliveryDistanceValid()"
+                       translate>
+                    sites.modal.maxVehicleDeliveryDistanceHelp
+                </small>
+                <small class="form-text test-drive-validation-message"
+                       *ngIf="isValidationActive() && !isMaxDeliveryDistanceValid()"
+                       translate>
+                    {{ getMaxDeliveryDistanceInvalidMessageKey() }}
                 </small>
             </div>
         </div>

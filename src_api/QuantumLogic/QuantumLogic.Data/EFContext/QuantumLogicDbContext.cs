@@ -38,7 +38,7 @@ namespace QuantumLogic.Data.EFContext
 
         #endregion
 
-        //// Uncomment to use EF migrations
+        /// Uncomment to use EF migrations
         // protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         // {
         //     optionsBuilder.UseSqlServer(
