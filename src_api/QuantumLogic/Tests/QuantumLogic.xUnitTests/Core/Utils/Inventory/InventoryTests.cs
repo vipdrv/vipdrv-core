@@ -62,6 +62,12 @@ namespace QuantumLogic.xUnitTests.Core.Utils.Inventory
                 },
                 new SiteFeed()
                 {
+                    SiteId = 49,
+                    FeedFolder = "/DealerFeed/49-Keffer Kia",
+                    FeedProvider = new VAutoInventoryProvider()
+                },
+                new SiteFeed()
+                {
                     SiteId = 56,
                     FeedFolder = "/DealerFeed/56-mb-west-chester",
                     FeedProvider = new VAutoInventoryProvider()
