@@ -14,6 +14,8 @@ namespace QuantumLogic.WebApi.DataModels.Requests.Widget.Booking
         public BookingUser BookingUser { get; set; }
         public DateTime? BookingDateTimeUtc { get; set; }
         public BookingVehicle BookingVehicle { get; set; }
+        public TestDriveLocation TestDriveLocation { get; set; }
+
         public int? ExpertId { get; set; }
         public int? BeverageId { get; set; }
         public int? RoadId { get; set; }
@@ -23,10 +25,12 @@ namespace QuantumLogic.WebApi.DataModels.Requests.Widget.Booking
         {
             BookingUser = new BookingUser();
             BookingVehicle = new BookingVehicle();
+            TestDriveLocation = new TestDriveLocation();
         }
 
         public virtual LeadFullDto MapToLeadFullDto(int siteId)
         {
+            // TODO: Add TestDriveLocation to LeadFullDto and Admin Panel
             return new LeadFullDto(
                 id: 0,
                 siteId: siteId,
@@ -43,8 +47,18 @@ namespace QuantumLogic.WebApi.DataModels.Requests.Widget.Booking
                 carVin: BookingVehicle.Vin,
                 vdpUrl: BookingVehicle.VdpUrl,
                 bookingDateTimeUtc: BookingDateTimeUtc,
-                isNew: true);
+                isNew: true,
+                showLocationInfo: TestDriveLocation.ShowLocationInfo,
+                locationType: TestDriveLocation.LocationType,
+                locationAddress: TestDriveLocation.LocationAddress);
         }
+    }
+
+    public class TestDriveLocation
+    {
+        public bool ShowLocationInfo { get; set; }
+        public string LocationType { get; set; }
+        public string LocationAddress { get; set; }
     }
 
     public class BookingUser
