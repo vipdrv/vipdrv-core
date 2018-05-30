@@ -9,9 +9,10 @@ using QuantumLogic.Core.Domain.Entities.WidgetModule;
 namespace QuantumLogic.Data.Migrations
 {
     [DbContext(typeof(QuantumLogicDbContext))]
-    partial class QuantumLogicDbContextModelSnapshot : ModelSnapshot
+    [Migration("20180521180758_SiteEntityExtended")]
+    partial class SiteEntityExtended
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "1.1.2")
@@ -251,17 +252,11 @@ namespace QuantumLogic.Data.Migrations
 
                     b.Property<bool>("IsReachedByManager");
 
-                    b.Property<string>("LocationAddress");
-
-                    b.Property<string>("LocationType");
-
                     b.Property<DateTime>("RecievedUtc");
 
                     b.Property<int?>("RouteId");
 
                     b.Property<string>("SecondName");
-
-                    b.Property<bool>("ShowLocationInfo");
 
                     b.Property<int>("SiteId");
 
@@ -330,8 +325,6 @@ namespace QuantumLogic.Data.Migrations
                     b.Property<string>("FeedFormat");
 
                     b.Property<string>("ImageUrl");
-
-                    b.Property<int>("MaxVehicleDeliveryDistance");
 
                     b.Property<string>("Name");
 

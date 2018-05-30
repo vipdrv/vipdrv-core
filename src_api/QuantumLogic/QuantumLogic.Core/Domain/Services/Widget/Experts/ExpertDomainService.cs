@@ -1,6 +1,7 @@
 ﻿using QuantumLogic.Core.Domain.Entities.WidgetModule;
 using QuantumLogic.Core.Domain.Policy.WidgetModule;
 using QuantumLogic.Core.Domain.Repositories.WidgetModule;
+using QuantumLogic.Core.Domain.Services.Shared.Urls;
 using QuantumLogic.Core.Domain.Validation.Widget;
 using System;
 using System.Collections.Generic;
@@ -17,22 +18,39 @@ namespace QuantumLogic.Core.Domain.Services.Widget.Experts
         #region Injected dependencies
 
         protected readonly ILeadRepository LeadRepository;
+        protected readonly IImageUrlService ImageUrlService;
 
         #endregion
 
         #region Ctors
 
-        public ExpertDomainService(IExpertRepository repository, IExpertPolicy policy, IExpertValidationService validationService, ILeadRepository leadRepository)
+        public ExpertDomainService(IExpertRepository repository, IExpertPolicy policy, IExpertValidationService validationService, ILeadRepository leadRepository, IImageUrlService imageUrlService)
             : base(repository, policy, validationService)
         {
             LeadRepository = leadRepository;
+            ImageUrlService = imageUrlService;
         }
 
         #endregion
 
+        public override async Task<Expert> CreateAsync(Expert entity)
+        {
+            entity.PhotoUrl = await ImageUrlService.Transform(entity.PhotoUrl);
+            return await base.CreateAsync(entity);
+        }
+        public override async Task<Expert> UpdateAsync(Expert entity)
+        {
+            entity.PhotoUrl = await ImageUrlService.Transform(entity.PhotoUrl);
+            return await base.UpdateAsync(entity);
+        }
+
+        #region Helpers
+
         protected override Task CascadeDeleteActionAsync(Expert entity)
         {
-            return LeadRepository.NullifyExpertRelation(entitySet => entitySet.Where(r => r.ExpertId == entity.Id));
+            return Task.WhenAll(
+                LeadRepository.NullifyExpertRelation(entitySet => entitySet.Where(r => r.ExpertId == entity.Id)),
+                ImageUrlService.RemoveAsync(entity.PhotoUrl));
         }
         internal override IEnumerable<LoadEntityRelationAction<Expert>> GetLoadEntityRelationActions()
         {
@@ -60,5 +78,7 @@ namespace QuantumLogic.Core.Domain.Services.Widget.Experts
                     .GetMaxExistedOrder((qb) => qb.Where(r => r.SiteId == entity.SiteId))) + 1 ??
                 DefaultOrder;
         }
+
+        #endregion
     }
 }

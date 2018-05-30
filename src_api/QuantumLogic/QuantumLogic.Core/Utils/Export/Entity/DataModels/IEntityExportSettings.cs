@@ -1,9 +1,9 @@
 ﻿using QuantumLogic.Core.Domain.Services;
-using QuantumLogic.Core.Utils.ContentManager;
 using QuantumLogic.Core.Utils.Export.Entity.DataModels;
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
+using QuantumLogic.Core.Utils.Storage;
 
 namespace QuantumLogic.Core.Utils.Export.DataModels.Entity
 {

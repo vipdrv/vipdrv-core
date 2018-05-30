@@ -109,4 +109,34 @@ export class SiteDetailsEditComponent {
     protected getSiteWASPUrlInvalidMessageKey(): string {
         return this.siteValidationService.getInvalidWASPUrlMessageKey(this.entity);
     }
+    // zip code
+    protected isZipCodeInputDisabled(): boolean {
+        return this.isReadOnly;
+    }
+    protected isZipCodeValid(): boolean {
+        return this.siteValidationService.isZipCodeValid(this.entity);
+    }
+    protected getZipCodeInvalidMessageKey(): string {
+        return this.siteValidationService.getInvalidZipCodeMessageKey(this.entity);
+    }
+    // zip code
+    protected isAvailableTestDriveFromHomeInputDisabled(): boolean {
+        return this.isReadOnly;
+    }
+    protected isAvailableTestDriveFromHomeValid(): boolean {
+        return this.siteValidationService.isAvailableTestDriveFromHomeValid(this.entity);
+    }
+    protected getAvailableTestDriveFromHomeInvalidMessageKey(): string {
+        return this.siteValidationService.getInvalidAvailableTestDriveFromHomeMessageKey(this.entity);
+    }
+    // max delivery distance
+    protected isMaxDeliveryDistanceInputDisabled(): boolean {
+        return this.isReadOnly;
+    }
+    protected isMaxDeliveryDistanceValid(): boolean {
+        return this.siteValidationService.isMaxDeliveryDistanceValid(this.entity);
+    }
+    protected getMaxDeliveryDistanceInvalidMessageKey(): string {
+        return this.siteValidationService.getInvalidMaxDeliveryDistanceMessageKey(this.entity);
+    }
 }

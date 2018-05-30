@@ -38,13 +38,13 @@ namespace QuantumLogic.Data.EFContext
 
         #endregion
 
-        //// Uncomment to use EF migrations
-        //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        //{
-        //    optionsBuilder.UseSqlServer(
-        //        "Server=mssql-ukr.elrondsoft.com;Database=dev_testdrive;User Id=sa; Password=zmgPe89AnGFtPPb5;");
-        //    base.OnConfiguring(optionsBuilder);
-        //}
+        /// Uncomment to use EF migrations
+        // protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        // {
+        //     optionsBuilder.UseSqlServer(
+        //         "Server=mssql-ukr.elrondsoft.com;Database=dev_testdrive;User Id=sa; Password=zmgPe89AnGFtPPb5;");
+        //     base.OnConfiguring(optionsBuilder);
+        // }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

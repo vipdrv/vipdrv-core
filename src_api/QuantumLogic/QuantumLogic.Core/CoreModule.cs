@@ -9,14 +9,14 @@ using QuantumLogic.Core.Domain.Services.Widget.Experts;
 using QuantumLogic.Core.Domain.Services.Widget.Leads;
 using QuantumLogic.Core.Domain.Services.Widget.Routes;
 using QuantumLogic.Core.Domain.Services.Widget.Sites;
-using QuantumLogic.Core.Utils.ContentManager;
-using QuantumLogic.Core.Utils.ContentManager.Providers;
 using QuantumLogic.Core.Utils.Modules;
 using System;
 using QuantumLogic.Core.Utils.Email;
 using QuantumLogic.Core.Domain.Services.Main.Roles;
 using QuantumLogic.Core.Domain.Services.Widget.Steps;
 using QuantumLogic.Core.Domain.Services.Widget.Vehicles;
+using QuantumLogic.Core.Utils.Storage;
+using QuantumLogic.Core.Domain.Services.Shared.Urls;
 
 namespace QuantumLogic.Core
 {
@@ -27,8 +27,9 @@ namespace QuantumLogic.Core
 
         protected override void ConfigureServices(IServiceCollection services)
         {
-            services.AddScoped<IContentManager, BlobProvider>();
+            services.AddScoped<IContentManager, ContentManager>();
             services.AddScoped<ITestDriveEmailService, TestDriveEmailService>();
+            services.AddScoped<IImageUrlService, ImageUrlService>();
 
             #region Domain services
 

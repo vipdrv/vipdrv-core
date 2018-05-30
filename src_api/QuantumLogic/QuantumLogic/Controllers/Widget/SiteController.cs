@@ -10,7 +10,6 @@ using QuantumLogic.WebApi.DataModels.Dtos.Widget.Beverages;
 using QuantumLogic.WebApi.DataModels.Dtos.Widget.Experts;
 using QuantumLogic.WebApi.DataModels.Dtos.Widget.Routes;
 using QuantumLogic.WebApi.DataModels.Dtos.Widget.Sites;
-using QuantumLogic.WebApi.DataModels.Requests;
 using QuantumLogic.WebApi.DataModels.Requests.Widget.Sites;
 using QuantumLogic.WebApi.DataModels.Responses;
 using QuantumLogic.WebApi.DataModels.Responses.Widget.Site;
@@ -145,72 +144,7 @@ namespace QuantumLogic.WebApi.Controllers.Widget
                 await uow.CompleteAsync();
             }
         }
-        [Authorize]
-        [HttpPatch("change-use-expert-step/{id}")]
-        public async Task ChangeUseExpertStepAsync(int id, [FromBody]ChangeActivityRequest request)
-        {
-            using (var uow = UowManager.CurrentOrCreateNew(true))
-            {
-                await ((ISiteDomainService)DomainService).ChangeUseExpertStepAsync(id, request.Value);
-                await uow.CompleteAsync();
-            }
-        }
-        [Authorize]
-        [HttpPatch("change-use-beverage-step/{id}")]
-        public async Task ChangeUseBeverageStepAsync(int id, [FromBody]ChangeActivityRequest request)
-        {
-            using (var uow = UowManager.CurrentOrCreateNew(true))
-            {
-                await ((ISiteDomainService)DomainService).ChangeUseBeverageStepAsync(id, request.Value);
-                await uow.CompleteAsync();
-            }
-        }
-        [Authorize]
-        [HttpPatch("change-use-route-step/{id}")]
-        public async Task ChangeUseRouteStepAsync(int id, [FromBody]ChangeActivityRequest request)
-        {
-            using (var uow = UowManager.CurrentOrCreateNew(true))
-            {
-                await ((ISiteDomainService)DomainService).ChangeUseRouteStepAsync(id, request.Value);
-                await uow.CompleteAsync();
-            }
-        }
-
-        #region Step ordering
-
-        [Authorize]
-        [HttpPatch("swap-step-order-beverage-expert/{id}")]
-        public async Task SwapStepOrderExpertsBeverages(int id)
-        {
-            using (var uow = UowManager.CurrentOrCreateNew(true))
-            {
-                await((ISiteDomainService)DomainService).SwapBeverageExpertStepOrder(id);
-                await uow.CompleteAsync();
-            }
-        }
-        [Authorize]
-        [HttpPatch("swap-step-order-expert-route/{id}")]
-        public async Task SwapStepOrderExpertsRoutes(int id)
-        {
-            using (var uow = UowManager.CurrentOrCreateNew(true))
-            {
-                await((ISiteDomainService)DomainService).SwapExpertRouteStepOrder(id);
-                await uow.CompleteAsync();
-            }
-        }
-        [Authorize]
-        [HttpPatch("swap-step-order-beverage-route/{id}")]
-        public async Task SwapStepOrderBeveragesRoutes(int id)
-        {
-            using (var uow = UowManager.CurrentOrCreateNew(true))
-            {
-                await((ISiteDomainService)DomainService).SwapBeverageRouteStepOrder(id);
-                await uow.CompleteAsync();
-            }
-        }
-
-        #endregion
-
+        
         #endregion
     }
 }

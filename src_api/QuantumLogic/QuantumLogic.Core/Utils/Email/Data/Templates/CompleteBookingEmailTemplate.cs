@@ -13,7 +13,7 @@ namespace QuantumLogic.Core.Utils.Email.Data.Templates
         private readonly string _customerLastName;
         private readonly string _customerComment;
         private DateTime? _bookingDateTime;
-        private int _timeZoneOffset;
+        private readonly int _timeZoneOffset;
         private readonly string _vehicleImgUrl;
         private readonly string _vehicleTitle;
         private readonly string _vdpUrl;
@@ -24,6 +24,9 @@ namespace QuantumLogic.Core.Utils.Email.Data.Templates
         private readonly string _dealerAddress;
         private readonly string _dealerPhone;
         private readonly string _dealerSiteUrl;
+        private readonly bool _showLocationInfo;
+        private readonly string _locationType;
+        private readonly string _locationAddress;
 
         public CompleteBookingEmailTemplate(
             string customerFirstName,
@@ -38,7 +41,10 @@ namespace QuantumLogic.Core.Utils.Email.Data.Templates
             string dealerName,
             string dealerAddress,
             string dealerPhone,
-            string dealerSiteUrl
+            string dealerSiteUrl,
+            bool showLocationInfo,
+            string locationType,
+            string locationAddress
             )
         {
             _vehicleTitle = vehicleTitle;
@@ -54,6 +60,9 @@ namespace QuantumLogic.Core.Utils.Email.Data.Templates
             _dealerAddress = dealerAddress;
             _dealerPhone = dealerPhone;
             _dealerSiteUrl = dealerSiteUrl;
+            _showLocationInfo = showLocationInfo;
+            _locationType = locationType;
+            _locationAddress = locationAddress;
         }
 
         public CompleteBookingEmailTemplate(Lead lead, int timeZoneOffset = 0)
@@ -73,6 +82,9 @@ namespace QuantumLogic.Core.Utils.Email.Data.Templates
             _dealerAddress = lead.Site.DealerAddress;
             _dealerPhone = lead.Site.DealerPhone;
             _dealerSiteUrl = lead.Site.Url;
+            _showLocationInfo = lead.ShowLocationInfo;
+            _locationType = lead.LocationType;
+            _locationAddress = lead.LocationAddress;
         }
 
         public string AsHtml()
@@ -105,6 +117,21 @@ namespace QuantumLogic.Core.Utils.Email.Data.Templates
             html = html.Replace("{{expertName}}", _expertName);
             html = html.Replace("{{beverageName}}", _beverageName);
             html = html.Replace("{{roadName}}", _roadName);
+            #endregion
+
+            #region Test Drive from home
+
+            if (_showLocationInfo)
+            {
+                html = html.Replace("{{showLocationInfo}}", "block");
+                html = html.Replace("{{locationType}}", _locationType);
+                html = html.Replace("{{locationAddress}}", _locationAddress);
+            }
+            else
+            {
+                html = html.Replace("{{showLocationInfo}}", "none");
+            }
+
             #endregion
 
             #region Dealer info

@@ -30,7 +30,11 @@ namespace QuantumLogic.WebApi.DataModels.Dtos.Widget.Leads
             string carVin,
             string vdpUrl,
             DateTime? bookingDateTimeUtc,
-            bool isNew)
+            bool isNew,
+            bool showLocationInfo,
+            string locationType,
+            string locationAddress
+            )
             : base(
                   id: id,
                   siteId: siteId,
@@ -45,8 +49,11 @@ namespace QuantumLogic.WebApi.DataModels.Dtos.Widget.Leads
                   carTitle: carTitle,
                   carVin: carVin,
                   vdpUrl: vdpUrl,
-                  bookingDateTimeUtc: bookingDateTimeUtc, 
-                  isNew: isNew)
+                  bookingDateTimeUtc: bookingDateTimeUtc,
+                  isNew: isNew,
+                  showLocationInfo: showLocationInfo,
+                  locationType: locationType,
+                  locationAddress: locationAddress)
         {
             CarImageUrl = carImageUrl;
         }

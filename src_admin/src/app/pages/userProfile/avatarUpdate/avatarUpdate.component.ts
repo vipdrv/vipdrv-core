@@ -40,19 +40,23 @@ export class AvatarUpdateComponent implements OnInit{
         self.forceAcceptImage = true;
         setTimeout(
             function () {
-                self.patchAvatarPromise = self.userApiService
-                    .patchAvatar(self.userId, self.newAvatarUrl)
-                    .then(function(): void {
-                        self.avatarUrlPatched.emit(self.newAvatarUrl);
-                    })
-                    .then(
-                        () => {
-                            self.patchAvatarPromise = null;
-                        },
-                        () => {
-                            self.patchAvatarPromise = null;
-                        },
-                    );
+                if (Variable.isNullOrUndefinedOrEmptyString(self.newAvatarUrl)) {
+                    self.newAvatarUrl = self.avatarUrl;
+                } else {
+                    self.patchAvatarPromise = self.userApiService
+                        .patchAvatar(self.userId, self.newAvatarUrl)
+                        .then(function (): void {
+                            self.avatarUrlPatched.emit(self.newAvatarUrl);
+                        })
+                        .then(
+                            () => {
+                                self.patchAvatarPromise = null;
+                            },
+                            () => {
+                                self.patchAvatarPromise = null;
+                            },
+                        );
+                }
             },
             0);
     }
