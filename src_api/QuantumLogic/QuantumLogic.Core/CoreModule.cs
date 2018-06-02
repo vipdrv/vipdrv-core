@@ -17,6 +17,7 @@ using QuantumLogic.Core.Domain.Services.Widget.Steps;
 using QuantumLogic.Core.Domain.Services.Widget.Vehicles;
 using QuantumLogic.Core.Utils.Storage;
 using QuantumLogic.Core.Domain.Services.Shared.Urls;
+using QuantumLogic.Core.Utils.VehicleMakes;
 
 namespace QuantumLogic.Core
 {
@@ -30,7 +31,7 @@ namespace QuantumLogic.Core
             services.AddScoped<IContentManager, ContentManager>();
             services.AddScoped<ITestDriveEmailService, TestDriveEmailService>();
             services.AddScoped<IImageUrlService, ImageUrlService>();
-
+            
             #region Domain services
 
             #region Main
@@ -67,6 +68,8 @@ namespace QuantumLogic.Core
             #endregion
 
             #endregion
+
+            services.AddSingleton<VehicleMakesImageManager, VehicleMakesImageManager>();
         }
     }
 }

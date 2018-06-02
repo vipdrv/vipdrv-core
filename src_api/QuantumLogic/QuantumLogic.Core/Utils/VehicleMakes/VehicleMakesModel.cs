@@ -4,15 +4,15 @@ namespace QuantumLogic.Core.Utils.VehicleMakes
 {
     public class VehicleMakesModel
     {
-        public IEnumerable<string> New { get; set; }
-        public IEnumerable<string> Used { get; set; }
+        public IEnumerable<VehicleMake> New { get; set; }
+        public IEnumerable<VehicleMake> Used { get; set; }
 
         #region Ctors
 
         public VehicleMakesModel()
         { }
 
-        public VehicleMakesModel(IEnumerable<string> @new, IEnumerable<string> used)
+        public VehicleMakesModel(IEnumerable<VehicleMake> @new, IEnumerable<VehicleMake> used)
         {
             New = @new;
             Used = used;

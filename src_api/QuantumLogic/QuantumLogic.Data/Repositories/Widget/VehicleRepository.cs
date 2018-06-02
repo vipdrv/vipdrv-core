@@ -12,15 +12,25 @@ namespace QuantumLogic.Data.Repositories.Widget
 {
     public class VehicleRepository : EFRepository<Vehicle, int>, IVehicleRepository
     {
+        #region Injected dependencies
+
+        protected readonly VehicleMakesImageManager VehicleMakesImageManager;
+
+        #endregion
+
         #region Ctors
 
-        public VehicleRepository(DbContextManager dbContextManager)
+        public VehicleRepository(DbContextManager dbContextManager, VehicleMakesImageManager vehicleMakesImageManager)
             : base(dbContextManager)
-        { }
+        {
+            VehicleMakesImageManager = vehicleMakesImageManager;
+        }
 
-        public VehicleRepository(DbContextManager dbContextManager, bool onSystemFilters)
+        public VehicleRepository(DbContextManager dbContextManager, bool onSystemFilters, VehicleMakesImageManager vehicleMakesImageManager)
             : base(dbContextManager, onSystemFilters)
-        { }
+        {
+            VehicleMakesImageManager = vehicleMakesImageManager;
+        }
 
         #endregion
 
@@ -47,9 +57,12 @@ namespace QuantumLogic.Data.Repositories.Widget
                 DbContextManager.DisposeContext();
             }
 
-            return Task.FromResult(new VehicleMakesModel(
-                data.Where(r => r.Item2 == VehicleConditions.New).OrderBy(r => r.Item3).Select(r => r.Item1),
-                data.Where(r => r.Item2 == VehicleConditions.Used).OrderBy(r => r.Item3).Select(r => r.Item1)));
+            return Task.FromResult(
+                new VehicleMakesModel(
+                    data.Where(r => r.Item2 == VehicleConditions.New)
+                        .Select(r => new VehicleMake(r.Item1, r.Item3, VehicleMakesImageManager.GetImageForMake(r.Item1))),
+                    data.Where(r => r.Item2 == VehicleConditions.Used)
+                        .Select(r => new VehicleMake(r.Item1, r.Item3, VehicleMakesImageManager.GetImageForMake(r.Item1)))));
         }
 
         public Task<IEnumerable<string>> GetModels(Expression<Func<Vehicle, bool>> predicate)

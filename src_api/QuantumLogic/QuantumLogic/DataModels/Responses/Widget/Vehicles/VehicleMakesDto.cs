@@ -1,26 +1,28 @@
 ﻿using QuantumLogic.Core.Utils.VehicleMakes;
+using QuantumLogic.WebApi.DataModels.Dtos.Widget.VehicleMakes;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace QuantumLogic.WebApi.DataModels.Responses.Widget.Vehicles
 {
     public class VehicleMakesDto
     {
-        public IEnumerable<string> New { get; set; }
-        public IEnumerable<string> Used { get; set; }
+        public IEnumerable<VehicleMakeDto> New { get; set; }
+        public IEnumerable<VehicleMakeDto> Used { get; set; }
 
         #region Ctors
 
         public VehicleMakesDto()
         { }
 
-        public VehicleMakesDto(IEnumerable<string> @new, IEnumerable<string> used)
+        public VehicleMakesDto(IEnumerable<VehicleMakeDto> @new, IEnumerable<VehicleMakeDto> used)
         {
-            New = @new;
-            Used = used;
+            New = @new.OrderByDescending(r => r.Count);
+            Used = used.OrderByDescending(r => r.Count);
         }
 
         public VehicleMakesDto(VehicleMakesModel model)
-            : this(model.New, model.Used)
+            : this(model.New.Select(r => new VehicleMakeDto(r)), model.Used.Select(r => new VehicleMakeDto(r)))
         { }
 
         #endregion
