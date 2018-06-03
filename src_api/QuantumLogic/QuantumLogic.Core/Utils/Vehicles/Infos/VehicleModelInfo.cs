@@ -1,6 +1,6 @@
-﻿namespace QuantumLogic.Core.Utils.VehicleMakes
+﻿namespace QuantumLogic.Core.Utils.Vehicles.Infos
 {
-    public class VehicleMake
+    public class VehicleModelInfo
     {
         public string Name { get; set; }
         public int Count { get; set; }
@@ -8,10 +8,10 @@
 
         #region Ctors
 
-        public VehicleMake()
+        public VehicleModelInfo()
         { }
 
-        public VehicleMake(string name, int count, string imageUrl)
+        public VehicleModelInfo(string name, int count, string imageUrl)
         {
             Name = name;
             Count = count;

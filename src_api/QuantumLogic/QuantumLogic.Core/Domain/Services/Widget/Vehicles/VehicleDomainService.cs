@@ -2,7 +2,8 @@
 using QuantumLogic.Core.Domain.Policy.WidgetModule;
 using QuantumLogic.Core.Domain.Repositories.WidgetModule;
 using QuantumLogic.Core.Domain.Validation.Widget;
-using QuantumLogic.Core.Utils.VehicleMakes;
+using QuantumLogic.Core.Utils.Vehicles;
+using QuantumLogic.Core.Utils.Vehicles.Infos;
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
@@ -27,14 +28,14 @@ namespace QuantumLogic.Core.Domain.Services.Widget.Vehicles
             Expression<Func<Vehicle, bool>> lambda = Expression.Lambda<Func<Vehicle, bool>>(body, filterExpression.Parameters[0]);
             return ((IVehicleRepository)Repository).GetMakes(lambda);
         }
-        public Task<IEnumerable<string>> GetModels(int siteId, string make)
+        public Task<IEnumerable<VehicleModelInfo>> GetModels(int siteId, string make)
         {
             Expression<Func<Vehicle, bool>> filterExpression = ((entity) => entity.SiteId == siteId && entity.Make == make);
             Expression body = Expression.AndAlso(((IVehiclePolicy)Policy).GetRetrieveAllExpression().Body, filterExpression.Body);
             Expression<Func<Vehicle, bool>> lambda = Expression.Lambda<Func<Vehicle, bool>>(body, filterExpression.Parameters[0]);
             return ((IVehicleRepository)Repository).GetModels(lambda);
         }
-        public Task<IEnumerable<int>> GetYears(int siteId, string make, string model)
+        public Task<IEnumerable<VehicleYearInfo>> GetYears(int siteId, string make, string model)
         {
             Expression<Func<Vehicle, bool>> filterExpression = ((entity) => entity.SiteId == siteId && entity.Make == make && entity.Model == model);
             Expression body = Expression.AndAlso(((IVehiclePolicy)Policy).GetRetrieveAllExpression().Body, filterExpression.Body);
