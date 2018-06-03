@@ -4,12 +4,14 @@ using QuantumLogic.Core.Domain.Entities.WidgetModule;
 using QuantumLogic.Core.Domain.Services.Widget.Vehicles;
 using QuantumLogic.Core.Domain.UnitOfWorks;
 using QuantumLogic.WebApi.DataModels.Dtos.Widget.Vehicles;
+using QuantumLogic.WebApi.DataModels.Dtos.Widget.Vehicles.Infos;
 using QuantumLogic.WebApi.DataModels.Requests.Widget.Vehicles;
 using QuantumLogic.WebApi.DataModels.Responses;
 using QuantumLogic.WebApi.DataModels.Responses.Widget.Vehicles;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 
@@ -77,20 +79,24 @@ namespace QuantumLogic.WebApi.Controllers.Widget
         }
 
         [HttpGet("{siteId}/models/{make?}")]
-        public Task<IEnumerable<string>> GetVehicleModels(int siteId, string make)
+        public async Task<IEnumerable<VehicleModelInfoDto>> GetVehicleModels(int siteId, string make)
         {
             using (var uow = UowManager.CurrentOrCreateNew(true))
             {
-                return ((IVehicleDomainService)DomainService).GetModels(siteId, make);
+                return (await ((IVehicleDomainService)DomainService)
+                    .GetModels(siteId, make))
+                    .Select(vehicleModelInfo => new VehicleModelInfoDto(vehicleModelInfo));
             }
         }
 
         [HttpGet("{siteId}/years/{make?}/{model?}")]
-        public Task<IEnumerable<int>> GetVehicleYears(int siteId, string make, string model)
+        public async Task<IEnumerable<VehicleYearInfoDto>> GetVehicleYears(int siteId, string make, string model)
         {
             using (var uow = UowManager.CurrentOrCreateNew(true))
             {
-                return ((IVehicleDomainService)DomainService).GetYears(siteId, make, model);
+                return (await ((IVehicleDomainService)DomainService)
+                    .GetYears(siteId, make, model))
+                    .Select(vehicleYearInfo => new VehicleYearInfoDto(vehicleYearInfo));
             }
         }
 

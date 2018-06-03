@@ -1,6 +1,7 @@
 ﻿using QuantumLogic.Core.Domain.Entities.WidgetModule;
 using QuantumLogic.Core.Domain.Repositories.WidgetModule;
-using QuantumLogic.Core.Utils.VehicleMakes;
+using QuantumLogic.Core.Utils.Vehicles;
+using QuantumLogic.Core.Utils.Vehicles.Infos;
 using QuantumLogic.Data.EFContext;
 using System;
 using System.Collections.Generic;
@@ -12,15 +13,25 @@ namespace QuantumLogic.Data.Repositories.Widget
 {
     public class VehicleRepository : EFRepository<Vehicle, int>, IVehicleRepository
     {
+        #region Injected dependencies
+
+        protected readonly VehicleMakesImageManager VehicleMakesImageManager;
+
+        #endregion
+
         #region Ctors
 
-        public VehicleRepository(DbContextManager dbContextManager)
+        public VehicleRepository(DbContextManager dbContextManager, VehicleMakesImageManager vehicleMakesImageManager)
             : base(dbContextManager)
-        { }
+        {
+            VehicleMakesImageManager = vehicleMakesImageManager;
+        }
 
-        public VehicleRepository(DbContextManager dbContextManager, bool onSystemFilters)
+        public VehicleRepository(DbContextManager dbContextManager, bool onSystemFilters, VehicleMakesImageManager vehicleMakesImageManager)
             : base(dbContextManager, onSystemFilters)
-        { }
+        {
+            VehicleMakesImageManager = vehicleMakesImageManager;
+        }
 
         #endregion
 
@@ -47,18 +58,22 @@ namespace QuantumLogic.Data.Repositories.Widget
                 DbContextManager.DisposeContext();
             }
 
-            return Task.FromResult(new VehicleMakesModel(
-                data.Where(r => r.Item2 == VehicleConditions.New).OrderBy(r => r.Item3).Select(r => r.Item1),
-                data.Where(r => r.Item2 == VehicleConditions.Used).OrderBy(r => r.Item3).Select(r => r.Item1)));
+            return Task.FromResult(
+                new VehicleMakesModel(
+                    data.Where(r => r.Item2 == VehicleConditions.New)
+                        .Select(r => new VehicleMakeInfo(r.Item1, r.Item3, VehicleMakesImageManager.GetImageForMake(r.Item1))),
+                    data.Where(r => r.Item2 == VehicleConditions.Used)
+                        .Select(r => new VehicleMakeInfo(r.Item1, r.Item3, VehicleMakesImageManager.GetImageForMake(r.Item1)))));
         }
 
-        public Task<IEnumerable<string>> GetModels(Expression<Func<Vehicle, bool>> predicate)
+        public Task<IEnumerable<VehicleModelInfo>> GetModels(Expression<Func<Vehicle, bool>> predicate)
         {
-            IEnumerable<string> data = ((QuantumLogicDbContext)DbContextManager.BuildOrCurrentContext(out bool createdNew))
+            IEnumerable<VehicleModelInfo> data = ((QuantumLogicDbContext)DbContextManager.BuildOrCurrentContext(out bool createdNew))
                .Vehicles
                .Where(predicate)
-               .Select(entity => entity.Model)
-               .Distinct()
+               .OrderBy(r=>r.Id)
+               .GroupBy(entity => entity.Model.ToUpperInvariant())
+               .Select(grouping => new VehicleModelInfo(grouping.Last().Model, grouping.Count(), grouping.Last().ImageUrl))
                .ToList();
 
             if (createdNew)
@@ -69,13 +84,14 @@ namespace QuantumLogic.Data.Repositories.Widget
             return Task.FromResult(data);
         }
 
-        public Task<IEnumerable<int>> GetYears(Expression<Func<Vehicle, bool>> predicate)
+        public Task<IEnumerable<VehicleYearInfo>> GetYears(Expression<Func<Vehicle, bool>> predicate)
         {
-            IEnumerable<int> data = ((QuantumLogicDbContext)DbContextManager.BuildOrCurrentContext(out bool createdNew))
+            IEnumerable<VehicleYearInfo> data = ((QuantumLogicDbContext)DbContextManager.BuildOrCurrentContext(out bool createdNew))
                .Vehicles
                .Where(predicate)
-               .Select(entity => entity.Year)
-               .Distinct()
+               .OrderBy(r => r.Id)
+               .GroupBy(entity => entity.Year)
+               .Select(grouping => new VehicleYearInfo(grouping.Last().Year, grouping.Count()))
                .ToList();
 
             if (createdNew)
