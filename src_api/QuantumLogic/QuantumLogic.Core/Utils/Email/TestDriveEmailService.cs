@@ -9,10 +9,11 @@ namespace QuantumLogic.Core.Utils.Email
     public class TestDriveEmailService : ITestDriveEmailService
     {
         protected const string CompleteBookingSubject = "Your Upcoming Test Drive";
-        protected const string NewLeadNotificationSubject = "New Lead!";
+        protected const string NewLeadNotificationSubject = "New Test Drive Appointment";
+        protected const string ExpertNotificationSubject = "New Test Drive Appointment";
         protected const string DealerInvitationSubject = "Welcome to TetsDrive";
         protected const string AdfEmailSubject = "ADF XML";
-        protected EmailAddress EmailFrom = new EmailAddress("no-reply@vipdrv.com", "VIPdrv - VIP Test Drive");
+        protected EmailAddress EmailFrom = new EmailAddress("testdrive@vipdrv.com", "VIPdrv - VIP Test Drive");
         protected readonly ISendGridClient SendGridClient;
 
         public TestDriveEmailService()
@@ -33,6 +34,12 @@ namespace QuantumLogic.Core.Utils.Email
         }
 
         public Task<Response> SendNewLeadNotificationEmail(List<EmailAddress> emailTo, IEmailTemplate emailTemplate)
+        {
+            SendGridMessage message = MailHelper.CreateSingleEmailToMultipleRecipients(EmailFrom, emailTo, NewLeadNotificationSubject, emailTemplate.AsPlainText(), emailTemplate.AsHtml());
+            return SendGridClient.SendEmailAsync(message);
+        }
+
+        public Task<Response> SendExpertNotificationEmail(List<EmailAddress> emailTo, IEmailTemplate emailTemplate)
         {
             SendGridMessage message = MailHelper.CreateSingleEmailToMultipleRecipients(EmailFrom, emailTo, NewLeadNotificationSubject, emailTemplate.AsPlainText(), emailTemplate.AsHtml());
             return SendGridClient.SendEmailAsync(message);
