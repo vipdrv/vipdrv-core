@@ -30,48 +30,66 @@ namespace QuantumLogic.xUnitTests.Core.Utils.Inventory
         {
             return new List<SiteFeed>()
             {
+                //new SiteFeed()
+                //{
+                //    SiteId = 28,
+                //    FeedFolder = "/DealerFeed/28-TruckWorld",
+                //    FeedProvider = new VAutoInventoryProvider()
+                //},
+                //new SiteFeed()
+                //{
+                //    SiteId = 36,
+                //    FeedFolder = "/DealerFeed/36-MBRVC",
+                //    FeedProvider = new VAutoInventoryProvider()
+                //},
+                //new SiteFeed()
+                //{
+                //    SiteId = 40,
+                //    FeedFolder = "/DealerFeed/40-Rick Hill (Group)",
+                //    FeedProvider = new VAutoInventoryProvider()
+                //},
+                //new SiteFeed()
+                //{
+                //    SiteId = 47,
+                //    FeedFolder = "/DealerFeed/47-Downey Nissan",
+                //    FeedProvider = new VAutoInventoryProvider()
+                //},
+                //new SiteFeed()
+                //{
+                //    SiteId = 54,
+                //    FeedFolder = "/DealerFeed/54-tafel-motors",
+                //    FeedProvider = new VAutoInventoryProvider()
+                //},
+                //new SiteFeed()
+                //{
+                //    SiteId = 55,
+                //    FeedFolder = "/DealerFeed/55-mb-cincy",
+                //    FeedProvider = new VAutoInventoryProvider()
+                //},
+                //new SiteFeed()
+                //{
+                //    SiteId = 49,
+                //    FeedFolder = "/DealerFeed/49-Keffer Kia",
+                //    FeedProvider = new VAutoInventoryProvider()
+                //},
+                //new SiteFeed()
+                //{
+                //    SiteId = 56,
+                //    FeedFolder = "/DealerFeed/56-mb-west-chester",
+                //    FeedProvider = new VAutoInventoryProvider()
+                //},
                 new SiteFeed()
                 {
-                    SiteId = 28,
-                    FeedFolder = "/DealerFeed/28-TruckWorld",
+                    SiteId = 45,
+                    FeedFolder = "/DealerFeed/45-Four Season Ford",
                     FeedProvider = new VAutoInventoryProvider()
                 },
-                new SiteFeed()
-                {
-                    SiteId = 36,
-                    FeedFolder = "/DealerFeed/36-MBRVC",
-                    FeedProvider = new VAutoInventoryProvider()
-                },
-                new SiteFeed()
-                {
-                    SiteId = 47,
-                    FeedFolder = "/DealerFeed/47-Downey Nissan",
-                    FeedProvider = new VAutoInventoryProvider()
-                },
-                new SiteFeed()
-                {
-                    SiteId = 54,
-                    FeedFolder = "/DealerFeed/54-tafel-motors",
-                    FeedProvider = new VAutoInventoryProvider()
-                },
-                new SiteFeed()
-                {
-                    SiteId = 55,
-                    FeedFolder = "/DealerFeed/55-mb-cincy",
-                    FeedProvider = new VAutoInventoryProvider()
-                },
-                new SiteFeed()
-                {
-                    SiteId = 49,
-                    FeedFolder = "/DealerFeed/49-Keffer Kia",
-                    FeedProvider = new VAutoInventoryProvider()
-                },
-                new SiteFeed()
-                {
-                    SiteId = 56,
-                    FeedFolder = "/DealerFeed/56-mb-west-chester",
-                    FeedProvider = new VAutoInventoryProvider()
-                }
+                //new SiteFeed()
+                //{
+                //    SiteId = 57,
+                //    FeedFolder = "/DealerFeed/57-toyota-of-sarasota",
+                //    FeedProvider = new VAutoInventoryProvider()
+                //}
             };
         }
 
