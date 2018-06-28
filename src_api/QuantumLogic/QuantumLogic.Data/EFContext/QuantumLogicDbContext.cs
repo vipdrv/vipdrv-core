@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore.Metadata;
 using QuantumLogic.Core.Domain.Entities.MainModule;
 using QuantumLogic.Core.Domain.Entities.WidgetModule;
+using QuantumLogic.Core.Domain.Entities.WidgetModule.Vehicles;
 
 namespace QuantumLogic.Data.EFContext
 {

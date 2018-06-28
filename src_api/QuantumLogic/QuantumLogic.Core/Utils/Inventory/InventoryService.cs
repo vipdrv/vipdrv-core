@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Text;
-using Csv;
-using QuantumLogic.Core.Domain.Entities.WidgetModule;
+﻿using QuantumLogic.Core.Domain.Entities.WidgetModule.Vehicles;
 using QuantumLogic.Core.Utils.Ftp;
 using QuantumLogic.Core.Utils.Inventory.Data;
+using System.Collections.Generic;
+using System.IO;
 
 namespace QuantumLogic.Core.Utils.Inventory
 {

@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using NUnit.Framework;
-using QuantumLogic.Core.Domain.Entities.WidgetModule;
+using QuantumLogic.Core.Domain.Entities.WidgetModule.Vehicles;
 using QuantumLogic.Core.Utils.Ftp;
 using QuantumLogic.Core.Utils.Inventory;
 using QuantumLogic.Core.Utils.Inventory.Data;

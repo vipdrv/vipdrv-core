@@ -1,6 +1,6 @@
 ﻿using QuantumLogic.Core.Authorization;
 using QuantumLogic.Core.Constants;
-using QuantumLogic.Core.Domain.Entities.WidgetModule;
+using QuantumLogic.Core.Domain.Entities.WidgetModule.Vehicles;
 using QuantumLogic.Core.Domain.Policy.WidgetModule;
 using QuantumLogic.Core.Exceptions.Policy;
 using System;

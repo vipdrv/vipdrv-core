@@ -1,4 +1,4 @@
-﻿using QuantumLogic.Core.Domain.Entities.WidgetModule;
+﻿using QuantumLogic.Core.Domain.Entities.WidgetModule.Vehicles;
 using QuantumLogic.Core.Domain.Repositories.WidgetModule;
 using QuantumLogic.Core.Utils.Vehicles;
 using QuantumLogic.Core.Utils.Vehicles.Infos;

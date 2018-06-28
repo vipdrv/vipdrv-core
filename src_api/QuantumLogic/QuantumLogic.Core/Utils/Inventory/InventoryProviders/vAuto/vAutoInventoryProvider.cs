@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Csv;
-using QuantumLogic.Core.Domain.Entities.WidgetModule;
+using QuantumLogic.Core.Domain.Entities.WidgetModule.Vehicles;
 
 namespace QuantumLogic.Core.Utils.Inventory.InventoryProviders.vAuto
 {

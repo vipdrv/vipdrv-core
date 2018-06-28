@@ -1,4 +1,4 @@
-﻿namespace QuantumLogic.Core.Domain.Entities.WidgetModule
+﻿namespace QuantumLogic.Core.Domain.Entities.WidgetModule.Vehicles
 {
     public class Vehicle : Entity<int>, IValidable, IUpdatableFrom<Vehicle>
     {
@@ -25,9 +25,9 @@
 
         #region Ctors
 
-        public Vehicle() : base()
-        {
-        }
+        public Vehicle() 
+            : base()
+        { }
 
         public Vehicle(
             int siteId,
