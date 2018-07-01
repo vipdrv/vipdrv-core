@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using FluentFTP;
+using Microsoft.Extensions.DependencyInjection;
 using QuantumLogic.Core.Domain.Entities.MainModule;
 using QuantumLogic.Core.Domain.Entities.WidgetModule;
 using QuantumLogic.Core.Domain.Entities.WidgetModule.Vehicles;
@@ -14,11 +15,18 @@ using QuantumLogic.Core.Domain.Services.Widget.Routes;
 using QuantumLogic.Core.Domain.Services.Widget.Sites;
 using QuantumLogic.Core.Domain.Services.Widget.Steps;
 using QuantumLogic.Core.Domain.Services.Widget.Vehicles;
+using QuantumLogic.Core.Domain.Services.Widget.Vehicles.Import;
+using QuantumLogic.Core.Domain.Services.Widget.Vehicles.Import.Factories;
+using QuantumLogic.Core.Domain.Services.Widget.Vehicles.Import.Factories.Models;
+using QuantumLogic.Core.Domain.Services.Widget.Vehicles.Import.Providers;
+using QuantumLogic.Core.Shared.Factories;
+using QuantumLogic.Core.Shared.Providers;
 using QuantumLogic.Core.Utils.Email;
 using QuantumLogic.Core.Utils.Modules;
 using QuantumLogic.Core.Utils.Storage;
 using QuantumLogic.Core.Utils.Vehicles;
 using System;
+using System.Collections.Generic;
 
 namespace QuantumLogic.Core
 {
@@ -67,6 +75,16 @@ namespace QuantumLogic.Core
             services.AddScoped<IVehicleDomainService, VehicleDomainService>();
 
             #endregion
+
+            #endregion
+
+            #region Import
+
+            services.AddScoped<VehiclesFromFtpImportService, VehiclesFromFtpImportService>();
+            services.AddTransient<IInstantFactory<IFtpClient>, VehicleImportFtpClientInstantFactory>();
+            services.AddTransient<IFactory<IEnumerable<Vehicle>, VehicleFromCsvFileBulkFactorySettings>, VehicleFromCsvFileBulkFactory>();
+            services.AddTransient<IFactory<Vehicle, VehicleFromCsvLineFactorySettings>, VehicleFromCsvLineFactory>();
+            services.AddSingleton<IProvider<IDictionary<string, IEnumerable<string>>>, VehicleImportFromCsvFilePossibleHeadersProvider>();
 
             #endregion
 

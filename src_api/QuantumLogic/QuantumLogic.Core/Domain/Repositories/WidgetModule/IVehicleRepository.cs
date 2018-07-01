@@ -10,6 +10,7 @@ namespace QuantumLogic.Core.Domain.Repositories.WidgetModule
 {
     public interface IVehicleRepository : IQLRepository<Vehicle, int>
     {
+        Task RefreshEntitiesForSiteAsync(int siteId, IEnumerable<Vehicle> actualVehicles);
         Task<VehicleMakesModel> GetMakes(Expression<Func<Vehicle, bool>> predicate);
         Task<IEnumerable<VehicleModelInfo>> GetModels(Expression<Func<Vehicle, bool>> predicate);
         Task<IEnumerable<VehicleYearInfo>> GetYears(Expression<Func<Vehicle, bool>> predicate);

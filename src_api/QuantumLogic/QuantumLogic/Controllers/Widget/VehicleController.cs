@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using QuantumLogic.Core.Domain.Entities.WidgetModule;
 using QuantumLogic.Core.Domain.Entities.WidgetModule.Vehicles;
 using QuantumLogic.Core.Domain.Services.Widget.Vehicles;
+using QuantumLogic.Core.Domain.Services.Widget.Vehicles.Import.Models;
 using QuantumLogic.Core.Domain.UnitOfWorks;
 using QuantumLogic.WebApi.DataModels.Dtos.Widget.Vehicles;
 using QuantumLogic.WebApi.DataModels.Dtos.Widget.Vehicles.Infos;
@@ -11,6 +12,7 @@ using QuantumLogic.WebApi.DataModels.Responses;
 using QuantumLogic.WebApi.DataModels.Responses.Widget.Vehicles;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
 using System.Linq.Expressions;
@@ -138,6 +140,28 @@ namespace QuantumLogic.WebApi.Controllers.Widget
                     )
                 );
             return InnerGetAllAsync(expression, "Title asc", 0, Int32.MaxValue);
+        }
+
+        #endregion
+
+        #region Import
+
+        [HttpPost("import/{siteId}")]
+        public async Task<VehicleImportResultDto> ImportEntitiesForSiteAsync(int siteId)
+        {
+            VehicleImportForSiteResult importResult;
+
+            Stopwatch stopWatch = new Stopwatch();
+            stopWatch.Start();
+
+            using (var uow = UowManager.CurrentOrCreateNew(true))
+            {
+                importResult = await((IVehicleDomainService)DomainService).ImportEntitiesForSiteAsync(siteId);
+                await uow.CompleteAsync();
+            }
+
+            stopWatch.Stop();
+            return new VehicleImportResultDto(stopWatch.Elapsed, new List<VehicleImportForSiteResult>() { importResult });
         }
 
         #endregion

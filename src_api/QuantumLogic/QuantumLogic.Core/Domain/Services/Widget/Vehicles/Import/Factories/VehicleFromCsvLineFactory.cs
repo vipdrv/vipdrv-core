@@ -1,11 +1,12 @@
 ﻿using QuantumLogic.Core.Domain.Entities.WidgetModule.Vehicles;
+using QuantumLogic.Core.Domain.Services.Widget.Vehicles.Import.Factories.Models;
 using QuantumLogic.Core.Shared.Factories;
 using System;
 using System.Collections.Generic;
 
-namespace QuantumLogic.Core.Domain.Services.Widget.Vehicles
+namespace QuantumLogic.Core.Domain.Services.Widget.Vehicles.Import.Factories
 {
-    public class VehicleFromCsvLineFactory : IFactory<Vehicle, VehicleInfoFromCsvFile>
+    public class VehicleFromCsvLineFactory : IFactory<Vehicle, VehicleFromCsvLineFactorySettings>
     { 
         #region Settings
 
@@ -13,7 +14,7 @@ namespace QuantumLogic.Core.Domain.Services.Widget.Vehicles
 
         #endregion
 
-        public Vehicle Create(VehicleInfoFromCsvFile settings)
+        public Vehicle Create(VehicleFromCsvLineFactorySettings settings)
         {
             Vehicle vehicle = new Vehicle();
             vehicle.SiteId = settings.SiteId;

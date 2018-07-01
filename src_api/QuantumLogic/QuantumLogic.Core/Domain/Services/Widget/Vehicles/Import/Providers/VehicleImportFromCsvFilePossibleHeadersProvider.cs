@@ -2,7 +2,7 @@
 using QuantumLogic.Core.Shared.Providers;
 using System.Collections.Generic;
 
-namespace QuantumLogic.Core.Domain.Services.Widget.Vehicles
+namespace QuantumLogic.Core.Domain.Services.Widget.Vehicles.Import.Providers
 {
     public class VehicleImportFromCsvFilePossibleHeadersProvider : IProvider<IDictionary<string, IEnumerable<string>>>
     {

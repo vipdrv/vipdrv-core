@@ -35,6 +35,13 @@ namespace QuantumLogic.Data.Repositories.Widget
 
         #endregion
 
+        public Task RefreshEntitiesForSiteAsync(int siteId, IEnumerable<Vehicle> actualEntities)
+        {
+            QuantumLogicDbContext context = ((QuantumLogicDbContext)DbContextManager.BuildOrCurrentContext(out bool createdNew));
+            context.Vehicles.RemoveRange(context.Vehicles.Where(r => r.SiteId == siteId));
+            return context.Vehicles.AddRangeAsync(actualEntities);
+        }
+
         public Task<VehicleMakesModel> GetMakes(Expression<Func<Vehicle, bool>> predicate)
         {
             List<Tuple<string, VehicleConditions>> dataAll = ((QuantumLogicDbContext)DbContextManager.BuildOrCurrentContext(out bool createdNew))

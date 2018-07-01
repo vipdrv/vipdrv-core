@@ -1,4 +1,5 @@
 ﻿using QuantumLogic.Core.Domain.Entities.WidgetModule.Vehicles;
+using QuantumLogic.Core.Domain.Services.Widget.Vehicles.Import.Models;
 using QuantumLogic.Core.Utils.Vehicles;
 using QuantumLogic.Core.Utils.Vehicles.Infos;
 using System.Collections.Generic;
@@ -11,5 +12,6 @@ namespace QuantumLogic.Core.Domain.Services.Widget.Vehicles
         Task<VehicleMakesModel> GetMakes(int siteId);
         Task<IEnumerable<VehicleModelInfo>> GetModels(int siteId, string make);
         Task<IEnumerable<VehicleYearInfo>> GetYears(int siteId, string make, string model);
+        Task<VehicleImportForSiteResult> ImportEntitiesForSiteAsync(int siteId);
     }
 }

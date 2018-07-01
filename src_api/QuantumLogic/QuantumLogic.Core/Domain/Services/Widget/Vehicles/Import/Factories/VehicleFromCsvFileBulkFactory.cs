@@ -1,20 +1,20 @@
 ﻿using Csv;
 using QuantumLogic.Core.Domain.Entities.WidgetModule.Vehicles;
+using QuantumLogic.Core.Domain.Services.Widget.Vehicles.Import.Factories.Models;
 using QuantumLogic.Core.Shared.Factories;
 using QuantumLogic.Core.Shared.Providers;
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 
-namespace QuantumLogic.Core.Domain.Services.Widget.Vehicles
+namespace QuantumLogic.Core.Domain.Services.Widget.Vehicles.Import.Factories
 {
-    public class VehicleFromCsvFileBulkFactory : IFactory<IEnumerable<Vehicle>, VehicleFromFileImportSettings>
+    public class VehicleFromCsvFileBulkFactory : IFactory<IEnumerable<Vehicle>, VehicleFromCsvFileBulkFactorySettings>
     {
         #region Injected dependencies
 
         protected readonly IProvider<IDictionary<string, IEnumerable<string>>> VehicleImportFromCsvFilePossibleHeadersProvider;
-        protected readonly VehicleFromCsvLineFactory VehicleFactory;
+        protected readonly IFactory<Vehicle, VehicleFromCsvLineFactorySettings> VehicleFactory;
 
         #endregion
 
@@ -22,7 +22,7 @@ namespace QuantumLogic.Core.Domain.Services.Widget.Vehicles
 
         public VehicleFromCsvFileBulkFactory(
             IProvider<IDictionary<string, IEnumerable<string>>> vehicleImportFromCsvFilePossibleHeadersProvider,
-            VehicleFromCsvLineFactory vehicleFactory)
+            IFactory<Vehicle, VehicleFromCsvLineFactorySettings> vehicleFactory)
         {
             VehicleImportFromCsvFilePossibleHeadersProvider = vehicleImportFromCsvFilePossibleHeadersProvider;
             VehicleFactory = vehicleFactory;
@@ -30,14 +30,13 @@ namespace QuantumLogic.Core.Domain.Services.Widget.Vehicles
 
         #endregion
 
-        public IEnumerable<Vehicle> Create(VehicleFromFileImportSettings settings)
+        public IEnumerable<Vehicle> Create(VehicleFromCsvFileBulkFactorySettings settings)
         {
             IEnumerable<Vehicle> data;
-            IEnumerable<ICsvLine> csvLines = CsvReader.ReadFromText(File.ReadAllText(settings.FilePath));
-            IEnumerator<ICsvLine> csvLinesEnumerator = csvLines.GetEnumerator();
-            if (csvLinesEnumerator.MoveNext())
+            IList<ICsvLine> csvLines = CsvReader.ReadFromStream(settings.CsvFileStream).ToList();
+            if (csvLines.Count > 0)
             {
-                IEnumerable<string> headers = csvLinesEnumerator.Current.Headers;
+                IEnumerable<string> headers = csvLines.First().Headers;
                 IDictionary<string, string> mapping = VehicleImportFromCsvFilePossibleHeadersProvider
                     .Provide()
                     .Select(
@@ -46,7 +45,7 @@ namespace QuantumLogic.Core.Domain.Services.Widget.Vehicles
                             mappingItem.Value.Intersect(headers).FirstOrDefault()))
                     .Where(r => !String.IsNullOrWhiteSpace(r.Value))
                     .ToDictionary(r => r.Key, r => r.Value);
-                data = csvLines.Select(csvLine => VehicleFactory.Create(new VehicleInfoFromCsvFile(settings.SiteId, csvLine, mapping)));
+                data = csvLines.Select(csvLine => VehicleFactory.Create(new VehicleFromCsvLineFactorySettings(settings.SiteId, csvLine, mapping)));
             }
             else
             {

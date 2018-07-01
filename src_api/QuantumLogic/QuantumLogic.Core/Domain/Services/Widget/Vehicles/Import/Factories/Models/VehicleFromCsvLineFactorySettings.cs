@@ -1,9 +1,9 @@
 ﻿using Csv;
 using System.Collections.Generic;
 
-namespace QuantumLogic.Core.Domain.Services.Widget.Vehicles
+namespace QuantumLogic.Core.Domain.Services.Widget.Vehicles.Import.Factories.Models
 {
-    public class VehicleInfoFromCsvFile
+    public class VehicleFromCsvLineFactorySettings
     {
         public int SiteId { get; private set; }
         public ICsvLine CsvLine { get; private set; }
@@ -11,7 +11,7 @@ namespace QuantumLogic.Core.Domain.Services.Widget.Vehicles
 
         #region Ctors
 
-        public VehicleInfoFromCsvFile(int siteId, ICsvLine csvLine, IDictionary<string, string> propertyMapping)
+        public VehicleFromCsvLineFactorySettings(int siteId, ICsvLine csvLine, IDictionary<string, string> propertyMapping)
         {
             SiteId = siteId;
             CsvLine = csvLine;
