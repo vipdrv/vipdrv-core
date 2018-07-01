@@ -5,7 +5,7 @@ using QuantumLogic.Core.Domain.Entities.WidgetModule;
 using QuantumLogic.Core.Domain.Services.Widget.Leads;
 using QuantumLogic.Core.Domain.Services.Widget.Sites;
 using QuantumLogic.Core.Domain.UnitOfWorks;
-using QuantumLogic.Core.Extensions.DateTimeEx;
+using QuantumLogic.Core.Extensions;
 using QuantumLogic.Core.Utils.Email;
 using QuantumLogic.Core.Utils.Email.Data.Templates;
 using QuantumLogic.Core.Utils.Export.Entity.Concrete.Excel;

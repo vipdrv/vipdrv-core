@@ -24,6 +24,8 @@ namespace QuantumLogic.WebApi.DataModels.Dtos.Widget.Sites
         public IList<DayOfWeekInterval> WorkingHours { get; set; }
         public IList<StepDto> Steps { get; set; }
 
+        public string ImportRelativeFtpPath { get; set; }
+
         public override void MapFromEntity(Site entity)
         {
             base.MapFromEntity(entity);
@@ -34,6 +36,7 @@ namespace QuantumLogic.WebApi.DataModels.Dtos.Widget.Sites
             ActiveBeveragesAmount = entity.Beverages.Where(r => r.IsActive).Count();
             ActiveRoutesAmount = entity.Routes.Where(r => r.IsActive).Count();
             WorkingHours = DayOfWeekInterval.Parse(entity.WorkingHours);
+            ImportRelativeFtpPath = entity.ImportRelativeFtpPath;
             Steps = entity.Steps
                 .Select(r => new StepDto()
                 {
@@ -51,6 +54,7 @@ namespace QuantumLogic.WebApi.DataModels.Dtos.Widget.Sites
         {
             Site entity = base.MapToEntity();
             entity.WorkingHours = String.Join(DayOfWeekInterval.DayOfWeekIntervalsSeparator.ToString(), DayOfWeekInterval.Purify(WorkingHours).Select(r => r.ToString()));
+            entity.ImportRelativeFtpPath = ImportRelativeFtpPath;
             return entity;
         }
     }

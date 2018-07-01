@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 
-namespace QuantumLogic.Core.Extensions.CollectionEx
+namespace QuantumLogic.Core.Extensions
 {
     public static partial class QuantumLogicExtensions
     {

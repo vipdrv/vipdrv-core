@@ -1,13 +1,16 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using QuantumLogic.Core.Domain.Entities.WidgetModule;
 using QuantumLogic.Core.Domain.Services.Widget.Beverages;
 using QuantumLogic.Core.Domain.Services.Widget.Experts;
 using QuantumLogic.Core.Domain.Services.Widget.Routes;
 using QuantumLogic.Core.Domain.Services.Widget.Sites;
+using QuantumLogic.Core.Domain.Services.Widget.Vehicles.Import.Enums;
 using QuantumLogic.Core.Domain.Services.Widget.Vehicles.Import.Models;
 using QuantumLogic.Core.Domain.UnitOfWorks;
+using QuantumLogic.WebApi.Configurations.Reporting;
 using QuantumLogic.WebApi.DataModels.Dtos.Widget.Beverages;
 using QuantumLogic.WebApi.DataModels.Dtos.Widget.Experts;
 using QuantumLogic.WebApi.DataModels.Dtos.Widget.Routes;
@@ -41,14 +44,16 @@ namespace QuantumLogic.WebApi.Controllers.Widget
         protected readonly IBeverageDomainService BeverageDomainService;
         protected readonly IExpertDomainService ExpertDomainService;
         protected readonly IRouteDomainService RouteDomainService;
+        protected readonly RemoteReportingConfiguration RemoteReportingConfiguration;
 
         #endregion
 
         #region Ctors
 
-        public SiteController(IQLUnitOfWorkManager uowManager, ISiteDomainService domainService, IBeverageDomainService beverageDomainService, IExpertDomainService expertDomainService, IRouteDomainService routeDomainService)
+        public SiteController(IQLUnitOfWorkManager uowManager, ISiteDomainService domainService, IBeverageDomainService beverageDomainService, IExpertDomainService expertDomainService, IRouteDomainService routeDomainService, IOptions<RemoteReportingConfiguration> remoteReportingConfigurationOptions)
             : base(uowManager, domainService)
         {
+            RemoteReportingConfiguration = remoteReportingConfigurationOptions.Value;
             BeverageDomainService = beverageDomainService;
             ExpertDomainService = expertDomainService;
             RouteDomainService = routeDomainService;
@@ -186,37 +191,60 @@ namespace QuantumLogic.WebApi.Controllers.Widget
         [HttpPost("{siteId}/import-vehicles")]
         public async Task<ImportVehiclesShapshot> ImportVehiclesAsync(int siteId)
         {
+            string message;
+            ImportStatusEnum status;
+            ImportVehiclesForSiteResult importResult;
             Stopwatch stopWatch = new Stopwatch();
             stopWatch.Start();
-            ImportVehiclesForSiteResult importResult;
-            using (var uow = UowManager.CurrentOrCreateNew(true))
+            try
             {
-                importResult = await ((ISiteDomainService)DomainService).ImportVehiclesAsync(siteId);
-                await uow.CompleteAsync();
+                using (var uow = UowManager.CurrentOrCreateNew(true))
+                {
+                    importResult = await ((ISiteDomainService)DomainService).ImportVehiclesAsync(siteId);
+                    await uow.CompleteAsync();
+                }
+                status = ImportStatusEnum.Success;
+                message = null;
+            }
+            catch (Exception ex)
+            {
+                status = ImportStatusEnum.Failed;
+                message = ex.Message;
+                importResult = null;
             }
             stopWatch.Stop();
             ImportVehiclesShapshot importSnapshot = new ImportVehiclesShapshot(
-                stopWatch.Elapsed, 
+                stopWatch.Elapsed, status, message,
                 new List<ImportVehiclesForSiteResultDto>() { new ImportVehiclesForSiteResultDto(importResult) });
-#warning uncomment after adding correct logging
-            // do not await this
-            // LogImportSnapshot(importSnapshot);
             return importSnapshot;
         }
 
         protected virtual async Task<ImportVehiclesShapshot> InnerImportVehiclesAsync()
         {
+            string message;
+            ImportStatusEnum status;
+            IEnumerable<ImportVehiclesForSiteResult> importResults;
             Stopwatch stopWatch = new Stopwatch();
             stopWatch.Start();
-            IEnumerable<ImportVehiclesForSiteResult> importResults;
-            using (var uow = UowManager.CurrentOrCreateNew(true))
+            try
             {
-                importResults = await ((ISiteDomainService)DomainService).ImportVehiclesAsync();
-                await uow.CompleteAsync();
+                using (var uow = UowManager.CurrentOrCreateNew(true))
+                {
+                    importResults = await ((ISiteDomainService)DomainService).ImportVehiclesAsync();
+                    await uow.CompleteAsync();
+                }
+                status = ImportStatusEnum.Success;
+                message = null;
+            }
+            catch (Exception ex)
+            {
+                status = ImportStatusEnum.Failed;
+                message = ex.Message;
+                importResults = null;
             }
             stopWatch.Stop();
             ImportVehiclesShapshot importSnapshot = new ImportVehiclesShapshot(
-                stopWatch.Elapsed,
+                stopWatch.Elapsed, status, message,
                 importResults.Select(importResult => new ImportVehiclesForSiteResultDto(importResult)));
             // do not await this
             LogImportSnapshot(importSnapshot);
@@ -226,11 +254,14 @@ namespace QuantumLogic.WebApi.Controllers.Widget
         protected async Task LogImportSnapshot(ImportVehiclesShapshot snapshot)
         {
 #warning stub implementation - should be reworked
-            string url = "https://api.keyvalue.xyz/bba53077/vehicleFeedParseSnapshot";
-            using (var httpClient = new HttpClient())
+            try
             {
-                await httpClient.PostAsync($"{url}/{JsonConvert.SerializeObject(snapshot)}", null);
+                using (var httpClient = new HttpClient())
+                {
+                    await httpClient.PostAsync($"{RemoteReportingConfiguration.VehicleImportForAllSitesReportingUrl}/{JsonConvert.SerializeObject(snapshot)}", null);
+                }
             }
+            catch { }
         }
 
         #endregion

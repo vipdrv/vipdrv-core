@@ -1,4 +1,5 @@
-﻿using QuantumLogic.Core.Domain.Entities.WidgetModule;
+﻿using QuantumLogic.Core.Configurations;
+using QuantumLogic.Core.Domain.Entities.WidgetModule;
 using QuantumLogic.Core.Domain.Entities.WidgetModule.Vehicles;
 using QuantumLogic.Core.Domain.Services.Widget.Vehicles.Import;
 using QuantumLogic.Core.Domain.Services.Widget.Vehicles.Import.Enums;
@@ -6,8 +7,10 @@ using QuantumLogic.Core.Domain.Services.Widget.Vehicles.Import.Factories;
 using QuantumLogic.Core.Domain.Services.Widget.Vehicles.Import.Factories.Models;
 using QuantumLogic.Core.Domain.Services.Widget.Vehicles.Import.Models;
 using QuantumLogic.Core.Domain.Services.Widget.Vehicles.Import.Providers;
+using QuantumLogic.Core.Extensions;
 using QuantumLogic.Core.Shared.Factories;
 using QuantumLogic.xUnitTests.Core.Utils.Import.Mocks;
+using QuantumLogic.xUnitTests.Mocks.Configurations.Options;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -56,6 +59,12 @@ namespace QuantumLogic.xUnitTests.Core.Utils.Import
         public async Task VahicleImportService_ShouldNotThrowEx_Performance()
         {
             int expectedSpeed = 50;
+            VehicleImportFtpServerConfiguration ftpConfiguration = new VehicleImportFtpServerConfiguration()
+            {
+                Host = "ftp://ftp.testdrive.pw",
+                Username = "root",
+                Password = "6gfb9P3xE2jAw7Sd",
+            };
             Site mockSite = new Site()
             {
                 Id = 1,
@@ -69,7 +78,8 @@ namespace QuantumLogic.xUnitTests.Core.Utils.Import
                 ImportVehiclesForSiteResult importResult;
                 VehiclesFromFtpImportService importService = new VehiclesFromFtpImportService(
                     new MockVehicleRepository(),
-                    new VehicleImportFtpClientInstantFactory(),
+                    new VehicleImportFtpClientInstantFactory(
+                        new MockOptions<VehicleImportFtpServerConfiguration>(ftpConfiguration)),
                     new VehicleFromCsvFileBulkFactory(
                         new VehicleImportFromCsvFilePossibleHeadersProvider(),
                         new VehicleFromCsvLineFactory()));

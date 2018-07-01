@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace QuantumLogic.Core.Configurations
+﻿namespace QuantumLogic.Core.Configurations
 {
     public class CoreConfiguration
     {
+        public VehicleImportFtpServerConfiguration VehicleImportFtpServer { get; set; }
     }
 }
