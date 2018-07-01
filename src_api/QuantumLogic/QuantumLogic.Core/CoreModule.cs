@@ -80,7 +80,7 @@ namespace QuantumLogic.Core
 
             #region Import
 
-            services.AddScoped<VehiclesFromFtpImportService, VehiclesFromFtpImportService>();
+            services.AddScoped<IVehiclesImportService, VehiclesFromFtpImportService>();
             services.AddTransient<IInstantFactory<IFtpClient>, VehicleImportFtpClientInstantFactory>();
             services.AddTransient<IFactory<IEnumerable<Vehicle>, VehicleFromCsvFileBulkFactorySettings>, VehicleFromCsvFileBulkFactory>();
             services.AddTransient<IFactory<Vehicle, VehicleFromCsvLineFactorySettings>, VehicleFromCsvLineFactory>();

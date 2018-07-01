@@ -3,7 +3,8 @@
     public enum ImportStatusEnum
     {
         Undefined = 0,
-        Success = 1,
-        Failed = 2,
+        NotStarted = 1,
+        Success = 2,
+        Failed = 3,
     }
 }

@@ -1,6 +1,7 @@
 ﻿using QuantumLogic.Core.Domain.Entities.WidgetModule;
 using QuantumLogic.Core.Domain.Entities.WidgetModule.Vehicles;
 using QuantumLogic.Core.Domain.Services.Widget.Vehicles.Import;
+using QuantumLogic.Core.Domain.Services.Widget.Vehicles.Import.Enums;
 using QuantumLogic.Core.Domain.Services.Widget.Vehicles.Import.Factories;
 using QuantumLogic.Core.Domain.Services.Widget.Vehicles.Import.Factories.Models;
 using QuantumLogic.Core.Domain.Services.Widget.Vehicles.Import.Models;
@@ -63,22 +64,28 @@ namespace QuantumLogic.xUnitTests.Core.Utils.Import
             };
             try
             {
-                VehicleImportForSiteResult importResult;
                 Stopwatch stopWatch = new Stopwatch();
+
+                ImportVehiclesForSiteResult importResult;
                 VehiclesFromFtpImportService importService = new VehiclesFromFtpImportService(
                     new MockVehicleRepository(),
                     new VehicleImportFtpClientInstantFactory(),
                     new VehicleFromCsvFileBulkFactory(
                         new VehicleImportFromCsvFilePossibleHeadersProvider(),
                         new VehicleFromCsvLineFactory()));
+
                 stopWatch.Start();
-                importResult = await importService.ImportVehiclesForSite(mockSite);
+                importResult = (await importService.Import(mockSite)).First();
                 stopWatch.Stop();
-                int speed = (int)(importResult.ProcessedEntitiesCount / stopWatch.Elapsed.TotalSeconds);
+
+                Assert.Equal(ImportStatusEnum.Success, importResult.Status);
+                
+                /// performance
+                int speed = (int)(importResult.ProcessedVehiclesCount / stopWatch.Elapsed.TotalSeconds);
                 bool passed = speed >= expectedSpeed;
                 string message = passed ?
-                        $"Performance: {speed} entities/second. Elapsed {stopWatch.ElapsedMilliseconds} milliseconds to create {importResult.ProcessedEntitiesCount} vehicles." :
-                        $"Performance failed! Expected: {expectedSpeed} entities/second. Actual: {speed} entities/second. Elapsed {stopWatch.ElapsedMilliseconds} milliseconds to create {importResult.ProcessedEntitiesCount} vehicles.";
+                        $"Performance: {speed} entities/second. Elapsed {stopWatch.ElapsedMilliseconds} milliseconds to create {importResult.ProcessedVehiclesCount} vehicles." :
+                        $"Performance failed! Expected: {expectedSpeed} entities/second. Actual: {speed} entities/second. Elapsed {stopWatch.ElapsedMilliseconds} milliseconds to create {importResult.ProcessedVehiclesCount} vehicles.";
                 Assert.True(passed, message);
             }
             catch (Exception ex)

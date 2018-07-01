@@ -12,6 +12,5 @@ namespace QuantumLogic.Core.Domain.Services.Widget.Vehicles
         Task<VehicleMakesModel> GetMakes(int siteId);
         Task<IEnumerable<VehicleModelInfo>> GetModels(int siteId, string make);
         Task<IEnumerable<VehicleYearInfo>> GetYears(int siteId, string make, string model);
-        Task<VehicleImportForSiteResult> ImportEntitiesForSiteAsync(int siteId);
     }
 }

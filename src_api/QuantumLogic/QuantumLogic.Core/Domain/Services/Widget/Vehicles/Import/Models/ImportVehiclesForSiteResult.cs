@@ -2,17 +2,17 @@
 
 namespace QuantumLogic.Core.Domain.Services.Widget.Vehicles.Import.Models
 {
-    public class VehicleImportForSiteResult
+    public class ImportVehiclesForSiteResult
     {
         public ImportStatusEnum Status { get; private set; }
         public string Message { get; private set; }
         public int SiteId { get; private set; }
         public string SiteName { get; private set; }
-        public int ProcessedEntitiesCount { get; set; }
+        public int ProcessedVehiclesCount { get; private set; }
 
         #region Ctors
 
-        public VehicleImportForSiteResult(int siteId, string siteName, string message)
+        public ImportVehiclesForSiteResult(int siteId, string siteName, string message, ImportStatusEnum status = ImportStatusEnum.Failed)
         {
             Status = ImportStatusEnum.Failed;
             SiteId = siteId;
@@ -20,12 +20,12 @@ namespace QuantumLogic.Core.Domain.Services.Widget.Vehicles.Import.Models
             Message = message;
         }
 
-        public VehicleImportForSiteResult(int siteId, string siteName, int processedEntitiesCount, string message = null)
+        public ImportVehiclesForSiteResult(int siteId, string siteName, int processedVehiclesCount, string message = null)
         {
             Status = ImportStatusEnum.Success;
             SiteId = siteId;
             SiteName = siteName;
-            ProcessedEntitiesCount = processedEntitiesCount;
+            ProcessedVehiclesCount = processedVehiclesCount;
             Message = message;
         }
 

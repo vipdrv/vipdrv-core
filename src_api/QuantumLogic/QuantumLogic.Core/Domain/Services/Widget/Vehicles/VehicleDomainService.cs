@@ -1,9 +1,6 @@
-﻿using QuantumLogic.Core.Domain.Entities.WidgetModule;
-using QuantumLogic.Core.Domain.Entities.WidgetModule.Vehicles;
+﻿using QuantumLogic.Core.Domain.Entities.WidgetModule.Vehicles;
 using QuantumLogic.Core.Domain.Policy.WidgetModule;
 using QuantumLogic.Core.Domain.Repositories.WidgetModule;
-using QuantumLogic.Core.Domain.Services.Widget.Vehicles.Import;
-using QuantumLogic.Core.Domain.Services.Widget.Vehicles.Import.Models;
 using QuantumLogic.Core.Domain.Validation.Widget;
 using QuantumLogic.Core.Utils.Vehicles;
 using QuantumLogic.Core.Utils.Vehicles.Infos;
@@ -16,30 +13,13 @@ namespace QuantumLogic.Core.Domain.Services.Widget.Vehicles
 {
     public class VehicleDomainService : EntityDomainService<Vehicle, int>, IVehicleDomainService
     {
-        #region Injected dependencies
-
-        protected readonly VehiclesFromFtpImportService ImportService;
-        protected readonly ISiteRepository SiteRepository;
-
-        #endregion
-
         #region Ctors
 
-        public VehicleDomainService(IVehicleRepository repository, IVehiclePolicy policy, IVehicleValidationService validationService, VehiclesFromFtpImportService importService, ISiteRepository siteRepository)
+        public VehicleDomainService(IVehicleRepository repository, IVehiclePolicy policy, IVehicleValidationService validationService)
             : base(repository, policy, validationService)
-        {
-            ImportService = importService;
-            SiteRepository = siteRepository;
-        }
+        { }
 
         #endregion
-
-        public async Task<VehicleImportForSiteResult> ImportEntitiesForSiteAsync(int siteId)
-        {
-            Site site = await SiteRepository.GetAsync(siteId);
-            ((IVehiclePolicy)Policy).PolicyImport(site);
-            return await ImportService.ImportVehiclesForSite(site);
-        }
 
         public Task<VehicleMakesModel> GetMakes(int siteId)
         {

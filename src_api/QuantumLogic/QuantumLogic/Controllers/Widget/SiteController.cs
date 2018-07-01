@@ -5,16 +5,20 @@ using QuantumLogic.Core.Domain.Services.Widget.Beverages;
 using QuantumLogic.Core.Domain.Services.Widget.Experts;
 using QuantumLogic.Core.Domain.Services.Widget.Routes;
 using QuantumLogic.Core.Domain.Services.Widget.Sites;
+using QuantumLogic.Core.Domain.Services.Widget.Vehicles.Import.Models;
 using QuantumLogic.Core.Domain.UnitOfWorks;
 using QuantumLogic.WebApi.DataModels.Dtos.Widget.Beverages;
 using QuantumLogic.WebApi.DataModels.Dtos.Widget.Experts;
 using QuantumLogic.WebApi.DataModels.Dtos.Widget.Routes;
 using QuantumLogic.WebApi.DataModels.Dtos.Widget.Sites;
+using QuantumLogic.WebApi.DataModels.Dtos.Widget.Sites.Import;
 using QuantumLogic.WebApi.DataModels.Requests.Widget.Sites;
 using QuantumLogic.WebApi.DataModels.Responses;
 using QuantumLogic.WebApi.DataModels.Responses.Widget.Site;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 
@@ -23,6 +27,13 @@ namespace QuantumLogic.WebApi.Controllers.Widget
     [Route("api/site")]
     public class SiteController : EntityController<Site, int, SiteDto, SiteFullDto>
     {
+        #region Syncronization
+
+        private static readonly object _syncRoot = new object();
+        private static Task<ImportVehiclesShapshot> _importEntitiesForSiteTask = null;
+
+        #endregion
+
         #region Injected dependencies
 
         protected readonly IBeverageDomainService BeverageDomainService;
@@ -144,7 +155,76 @@ namespace QuantumLogic.WebApi.Controllers.Widget
                 await uow.CompleteAsync();
             }
         }
+
+        #endregion
+
+        #region Import
+
+        [HttpPost("import-vehicles")]
+        public Task<ImportVehiclesShapshot> ImportVehiclesAsync()
+        {
+            if (_importEntitiesForSiteTask == null)
+            {
+                lock (_syncRoot)
+                {
+                    if (_importEntitiesForSiteTask == null)
+                    {
+                        _importEntitiesForSiteTask = InnerImportVehiclesAsync()
+                            .ContinueWith(pt => {
+                                _importEntitiesForSiteTask = null;
+                                return pt.Result;
+                            });
+                    }
+                }
+            }
+
+            return _importEntitiesForSiteTask;
+        }
         
+        [HttpPost("{siteId}/import-vehicles")]
+        public async Task<ImportVehiclesShapshot> ImportVehiclesAsync(int siteId)
+        {
+            Stopwatch stopWatch = new Stopwatch();
+            stopWatch.Start();
+            ImportVehiclesForSiteResult importResult;
+            using (var uow = UowManager.CurrentOrCreateNew(true))
+            {
+                importResult = await ((ISiteDomainService)DomainService).ImportVehiclesAsync(siteId);
+                await uow.CompleteAsync();
+            }
+            stopWatch.Stop();
+            ImportVehiclesShapshot importSnapshot = new ImportVehiclesShapshot(
+                stopWatch.Elapsed, 
+                new List<ImportVehiclesForSiteResultDto>() { new ImportVehiclesForSiteResultDto(importResult) });
+            // do not await this
+            LogImportSnapshot(importSnapshot);
+            return importSnapshot;
+        }
+
+        protected virtual async Task<ImportVehiclesShapshot> InnerImportVehiclesAsync()
+        {
+            Stopwatch stopWatch = new Stopwatch();
+            stopWatch.Start();
+            IEnumerable<ImportVehiclesForSiteResult> importResults;
+            using (var uow = UowManager.CurrentOrCreateNew(true))
+            {
+                importResults = await ((ISiteDomainService)DomainService).ImportVehiclesAsync();
+                await uow.CompleteAsync();
+            }
+            stopWatch.Stop();
+            ImportVehiclesShapshot importSnapshot = new ImportVehiclesShapshot(
+                stopWatch.Elapsed,
+                importResults.Select(importResult => new ImportVehiclesForSiteResultDto(importResult)));
+            // do not await this
+            LogImportSnapshot(importSnapshot);
+            return importSnapshot;
+        }
+
+        protected async Task LogImportSnapshot(ImportVehiclesShapshot snapshot)
+        {
+            await Task.Delay(1000);
+        }
+
         #endregion
     }
 }

@@ -91,21 +91,5 @@ namespace QuantumLogic.WebApi.Policy.Widget
 
             return result;
         }
-
-        public void PolicyImport(Site site)
-        {
-            bool result = PermissionChecker.IsGranted(QuantumLogicPermissionNames.CanAllAll) ||
-                          PermissionChecker.IsGranted(QuantumLogicPermissionNames.CanAllVehicle) ||
-                          PermissionChecker.IsGranted(QuantumLogicPermissionNames.CanImportVehicles) ||
-                          Session.UserId.HasValue &&
-                          Session.UserId.Value == site.UserId &&
-                          (PermissionChecker.IsGranted(QuantumLogicPermissionNames.CanAllOwn) ||
-                           PermissionChecker.IsGranted(QuantumLogicPermissionNames.CanImportOwnVehicles));
-
-            if (!result)
-            {
-                throw new EntityPolicyException();
-            }
-        }
     }
 }
