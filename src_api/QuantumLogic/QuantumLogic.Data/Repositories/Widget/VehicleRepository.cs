@@ -1,4 +1,4 @@
-﻿using QuantumLogic.Core.Domain.Entities.WidgetModule;
+﻿using QuantumLogic.Core.Domain.Entities.WidgetModule.Vehicles;
 using QuantumLogic.Core.Domain.Repositories.WidgetModule;
 using QuantumLogic.Core.Utils.Vehicles;
 using QuantumLogic.Core.Utils.Vehicles.Infos;
@@ -34,6 +34,13 @@ namespace QuantumLogic.Data.Repositories.Widget
         }
 
         #endregion
+
+        public Task RefreshEntitiesForSiteAsync(int siteId, IEnumerable<Vehicle> actualEntities)
+        {
+            QuantumLogicDbContext context = ((QuantumLogicDbContext)DbContextManager.BuildOrCurrentContext(out bool createdNew));
+            context.Vehicles.RemoveRange(context.Vehicles.Where(r => r.SiteId == siteId));
+            return context.Vehicles.AddRangeAsync(actualEntities);
+        }
 
         public Task<VehicleMakesModel> GetMakes(Expression<Func<Vehicle, bool>> predicate)
         {

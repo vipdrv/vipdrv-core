@@ -1,6 +1,7 @@
 ﻿using QuantumLogic.Core.Configurations;
 using QuantumLogic.Data.Configurations;
 using QuantumLogic.WebApi.Configurations.Logging;
+using QuantumLogic.WebApi.Configurations.Reporting;
 
 namespace QuantumLogic.WebApi.Configurations
 {
@@ -14,5 +15,6 @@ namespace QuantumLogic.WebApi.Configurations
         public CoreConfiguration Core { get; set; }
         public DataConfiguration Data { get; set; }
         public LoggingConfiguration Logging { get; set; }
+        public RemoteReportingConfiguration RemoteReporting { get; set; }
     }
 }

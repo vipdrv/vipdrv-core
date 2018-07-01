@@ -1,6 +1,5 @@
-﻿using System;
-using NUnit.Framework;
-using QuantumLogic.Core.Utils.Storage;
+﻿using QuantumLogic.Core.Utils.Storage;
+using System;
 using Xunit;
 using Assert = NUnit.Framework.Assert;
 

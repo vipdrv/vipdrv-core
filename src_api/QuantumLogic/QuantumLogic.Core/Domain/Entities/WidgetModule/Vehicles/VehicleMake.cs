@@ -1,4 +1,4 @@
-﻿namespace QuantumLogic.Core.Domain.Entities.WidgetModule
+﻿namespace QuantumLogic.Core.Domain.Entities.WidgetModule.Vehicles
 {
     public class VehicleMake : Entity<int>
     {

@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using QuantumLogic.Data.EFContext;
-using QuantumLogic.Core.Domain.Entities.WidgetModule;
+using QuantumLogic.Core.Domain.Entities.WidgetModule.Vehicles;
 
 namespace QuantumLogic.Data.Migrations
 {
@@ -331,6 +331,8 @@ namespace QuantumLogic.Data.Migrations
 
                     b.Property<string>("ImageUrl");
 
+                    b.Property<string>("ImportRelativeFtpPath");
+
                     b.Property<int>("MaxVehicleDeliveryDistance");
 
                     b.Property<string>("Name");
@@ -378,7 +380,7 @@ namespace QuantumLogic.Data.Migrations
                     b.ToTable("Step");
                 });
 
-            modelBuilder.Entity("QuantumLogic.Core.Domain.Entities.WidgetModule.Vehicle", b =>
+            modelBuilder.Entity("QuantumLogic.Core.Domain.Entities.WidgetModule.Vehicles.Vehicle", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
@@ -548,7 +550,7 @@ namespace QuantumLogic.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("QuantumLogic.Core.Domain.Entities.WidgetModule.Vehicle", b =>
+            modelBuilder.Entity("QuantumLogic.Core.Domain.Entities.WidgetModule.Vehicles.Vehicle", b =>
                 {
                     b.HasOne("QuantumLogic.Core.Domain.Entities.WidgetModule.Site", "Site")
                         .WithMany()

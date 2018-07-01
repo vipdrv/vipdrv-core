@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
 
-namespace QuantumLogic.Core.Extensions.StringEx
+namespace QuantumLogic.Core.Extensions
 {
     public static partial class Extensions
     {

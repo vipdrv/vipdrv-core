@@ -26,6 +26,7 @@ namespace QuantumLogic.Core.Domain.Entities.WidgetModule
         public string ZipCode { get; set; }
         public bool AvailableTestDriveFromHome { get; set; }
         public int MaxVehicleDeliveryDistance { get; set; }
+        public string ImportRelativeFtpPath { get; set; }
 
         #endregion
 
@@ -141,6 +142,7 @@ namespace QuantumLogic.Core.Domain.Entities.WidgetModule
             ZipCode = actualEntity.ZipCode;
             AvailableTestDriveFromHome = actualEntity.AvailableTestDriveFromHome;
             MaxVehicleDeliveryDistance = actualEntity.MaxVehicleDeliveryDistance;
+            ImportRelativeFtpPath = actualEntity.ImportRelativeFtpPath;
         }
 
         #endregion

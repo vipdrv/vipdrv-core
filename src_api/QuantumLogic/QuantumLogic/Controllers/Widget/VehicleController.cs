@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using QuantumLogic.Core.Domain.Entities.WidgetModule;
+using QuantumLogic.Core.Domain.Entities.WidgetModule.Vehicles;
 using QuantumLogic.Core.Domain.Services.Widget.Vehicles;
 using QuantumLogic.Core.Domain.UnitOfWorks;
 using QuantumLogic.WebApi.DataModels.Dtos.Widget.Vehicles;

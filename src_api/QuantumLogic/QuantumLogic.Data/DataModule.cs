@@ -4,6 +4,7 @@ using Microsoft.Extensions.Options;
 using QuantumLogic.Core;
 using QuantumLogic.Core.Domain.Entities.MainModule;
 using QuantumLogic.Core.Domain.Entities.WidgetModule;
+using QuantumLogic.Core.Domain.Entities.WidgetModule.Vehicles;
 using QuantumLogic.Core.Domain.Repositories;
 using QuantumLogic.Core.Domain.Repositories.Main;
 using QuantumLogic.Core.Domain.Repositories.WidgetModule;

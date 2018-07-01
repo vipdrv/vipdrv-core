@@ -4,6 +4,7 @@ using QuantumLogic.Core;
 using QuantumLogic.Core.Authorization;
 using QuantumLogic.Core.Domain.Entities.MainModule;
 using QuantumLogic.Core.Domain.Entities.WidgetModule;
+using QuantumLogic.Core.Domain.Entities.WidgetModule.Vehicles;
 using QuantumLogic.Core.Domain.Policy;
 using QuantumLogic.Core.Domain.Policy.Main;
 using QuantumLogic.Core.Domain.Policy.WidgetModule;

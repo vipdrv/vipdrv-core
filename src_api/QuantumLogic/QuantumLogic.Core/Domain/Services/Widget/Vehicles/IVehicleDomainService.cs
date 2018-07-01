@@ -1,4 +1,5 @@
-﻿using QuantumLogic.Core.Domain.Entities.WidgetModule;
+﻿using QuantumLogic.Core.Domain.Entities.WidgetModule.Vehicles;
+using QuantumLogic.Core.Domain.Services.Widget.Vehicles.Import.Models;
 using QuantumLogic.Core.Utils.Vehicles;
 using QuantumLogic.Core.Utils.Vehicles.Infos;
 using System.Collections.Generic;
