@@ -6,6 +6,7 @@ using QuantumLogic.Core.Domain.Services.Widget.Vehicles.Import.Enums;
 using QuantumLogic.Core.Domain.Services.Widget.Vehicles.Import.Factories.Models;
 using QuantumLogic.Core.Domain.Services.Widget.Vehicles.Import.Models;
 using QuantumLogic.Core.Shared.Factories;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -67,37 +68,44 @@ namespace QuantumLogic.Core.Domain.Services.Widget.Vehicles.Import
         protected virtual async Task<ImportVehiclesForSiteResult> InternalImportForSiteAsync(Site site, IFtpClient ftpClient)
         {
             ImportVehiclesForSiteResult importResult;
-            if (site.ImportRelativeFtpPath != null)
-            {
-                if (ftpClient.DirectoryExists(site.ImportRelativeFtpPath))
+            try
+            { 
+                if (site.ImportRelativeFtpPath != null)
                 {
-                    FtpListItem lastModifiedFileInfo = (await ftpClient.GetListingAsync(site.ImportRelativeFtpPath, FtpListOption.Auto))
-                        .Where(r => r.Type == FtpFileSystemObjectType.File)
-                        .OrderByDescending(r => r.Modified)
-                        .FirstOrDefault();
-                    if (lastModifiedFileInfo != null)
+                    if (ftpClient.DirectoryExists(site.ImportRelativeFtpPath))
                     {
-                        IEnumerable<Vehicle> vehicles;
-                        using (var csvFileStream = new MemoryStream(await ftpClient.DownloadAsync(lastModifiedFileInfo.FullName)))
+                        FtpListItem lastModifiedFileInfo = (await ftpClient.GetListingAsync(site.ImportRelativeFtpPath, FtpListOption.Auto))
+                            .Where(r => r.Type == FtpFileSystemObjectType.File)
+                            .OrderByDescending(r => r.Modified)
+                            .FirstOrDefault();
+                        if (lastModifiedFileInfo != null)
                         {
-                            vehicles = VehicleBulkFactory.Create(new VehicleFromCsvFileBulkFactorySettings(site.Id, csvFileStream));
+                            IEnumerable<Vehicle> vehicles;
+                            using (var csvFileStream = new MemoryStream(await ftpClient.DownloadAsync(lastModifiedFileInfo.FullName)))
+                            {
+                                vehicles = VehicleBulkFactory.Create(new VehicleFromCsvFileBulkFactorySettings(site.Id, csvFileStream));
+                            }
+                            await VehicleRepository.RefreshEntitiesForSiteAsync(site.Id, vehicles);
+                            importResult = new ImportVehiclesForSiteResult(site.Id, site.Name, vehicles.Count());
                         }
-                        await VehicleRepository.RefreshEntitiesForSiteAsync(site.Id, vehicles);
-                        importResult = new ImportVehiclesForSiteResult(site.Id, site.Name, vehicles.Count());
+                        else
+                        {
+                            importResult = new ImportVehiclesForSiteResult(site.Id, site.Name, $"No files in specified folder ({site.ImportRelativeFtpPath}).", ImportStatusEnum.NotStarted);
+                        }
                     }
                     else
                     {
-                        importResult = new ImportVehiclesForSiteResult(site.Id, site.Name, $"No files in specified folder ({site.ImportRelativeFtpPath}).", ImportStatusEnum.NotStarted);
+                        importResult = new ImportVehiclesForSiteResult(site.Id, site.Name, $"The specified folder ({site.ImportRelativeFtpPath}) was not found.", ImportStatusEnum.NotStarted);
                     }
                 }
                 else
                 {
-                    importResult = new ImportVehiclesForSiteResult(site.Id, site.Name, $"The specified folder ({site.ImportRelativeFtpPath}) was not found.", ImportStatusEnum.NotStarted);
+                    importResult = new ImportVehiclesForSiteResult(site.Id, site.Name, $"The specified folder is not defined.", ImportStatusEnum.NotStarted);
                 }
             }
-            else
+            catch (Exception ex)
             {
-                importResult = new ImportVehiclesForSiteResult(site.Id, site.Name, $"The specified folder is not defined.", ImportStatusEnum.NotStarted);
+                importResult = new ImportVehiclesForSiteResult(site.Id, site.Name, ex.Message, ImportStatusEnum.Failed);
             }
             return importResult;
         }

@@ -14,7 +14,7 @@ namespace QuantumLogic.Core.Domain.Services.Widget.Vehicles.Import.Models
 
         public ImportVehiclesForSiteResult(int siteId, string siteName, string message, ImportStatusEnum status = ImportStatusEnum.Failed)
         {
-            Status = ImportStatusEnum.Failed;
+            Status = status;
             SiteId = siteId;
             SiteName = siteName;
             Message = message;

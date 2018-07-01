@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using QuantumLogic.Core.Domain.Entities.WidgetModule;
 using QuantumLogic.Core.Domain.Services.Widget.Beverages;
 using QuantumLogic.Core.Domain.Services.Widget.Experts;
@@ -20,6 +21,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Net.Http;
 using System.Threading.Tasks;
 
 namespace QuantumLogic.WebApi.Controllers.Widget
@@ -196,8 +198,9 @@ namespace QuantumLogic.WebApi.Controllers.Widget
             ImportVehiclesShapshot importSnapshot = new ImportVehiclesShapshot(
                 stopWatch.Elapsed, 
                 new List<ImportVehiclesForSiteResultDto>() { new ImportVehiclesForSiteResultDto(importResult) });
+#warning uncomment after adding correct logging
             // do not await this
-            LogImportSnapshot(importSnapshot);
+            // LogImportSnapshot(importSnapshot);
             return importSnapshot;
         }
 
@@ -222,7 +225,12 @@ namespace QuantumLogic.WebApi.Controllers.Widget
 
         protected async Task LogImportSnapshot(ImportVehiclesShapshot snapshot)
         {
-            await Task.Delay(1000);
+#warning stub implementation - should be reworked
+            string url = "https://api.keyvalue.xyz/bba53077/vehicleFeedParseSnapshot";
+            using (var httpClient = new HttpClient())
+            {
+                await httpClient.PostAsync($"{url}/{JsonConvert.SerializeObject(snapshot)}", null);
+            }
         }
 
         #endregion
