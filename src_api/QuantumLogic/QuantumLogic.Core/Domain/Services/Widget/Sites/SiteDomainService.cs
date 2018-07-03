@@ -2,6 +2,8 @@
 using QuantumLogic.Core.Domain.Policy.WidgetModule;
 using QuantumLogic.Core.Domain.Repositories.WidgetModule;
 using QuantumLogic.Core.Domain.Services.Shared.Urls;
+using QuantumLogic.Core.Domain.Services.Widget.Vehicles.Import;
+using QuantumLogic.Core.Domain.Services.Widget.Vehicles.Import.Models;
 using QuantumLogic.Core.Domain.Validation.Widget;
 using QuantumLogic.Core.Utils.Scheduling.Week;
 using System;
@@ -18,19 +20,40 @@ namespace QuantumLogic.Core.Domain.Services.Widget.Sites
 
         protected readonly ILeadRepository LeadRepository;
         protected readonly IImageUrlService ImageUrlService;
+        protected readonly IVehiclesImportService VehiclesImportService;
 
         #endregion
 
         #region Ctors
 
-        public SiteDomainService(ISiteRepository repository, ISitePolicy policy, ISiteValidationService validationService, ILeadRepository leadRepository, IImageUrlService imageUrlService)
+        public SiteDomainService(ISiteRepository repository, ISitePolicy policy, ISiteValidationService validationService, ILeadRepository leadRepository, IImageUrlService imageUrlService, IVehiclesImportService vehiclesImportService)
             : base(repository, policy, validationService)
         {
             LeadRepository = leadRepository;
             ImageUrlService = imageUrlService;
+            VehiclesImportService = vehiclesImportService;
         }
 
         #endregion
+
+        public virtual async Task<IEnumerable<ImportVehiclesForSiteResult>> ImportVehiclesAsync()
+        {
+            IList<Site> sites = await Repository.GetAllAsync(
+                (entitySet) =>
+                {
+                    entitySet = ((ISitePolicy)Policy).ImportVehiclesAllFilter(entitySet);
+                    return entitySet;
+                },
+                RetrieveAllEntityIncludes);
+            return await VehiclesImportService.Import(sites.ToArray());
+        }
+
+        public virtual async Task<ImportVehiclesForSiteResult> ImportVehiclesAsync(int id)
+        {
+            Site site = await Repository.GetAsync(id);
+            ((ISitePolicy)Policy).PolicyImportVehicles(site);
+            return (await VehiclesImportService.Import(site)).First();
+        }
 
         public override async Task<Site> CreateAsync(Site entity)
         {

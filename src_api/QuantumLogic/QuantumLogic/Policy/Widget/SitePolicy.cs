@@ -3,6 +3,7 @@ using QuantumLogic.Core.Constants;
 using QuantumLogic.Core.Domain.Entities.WidgetModule;
 using QuantumLogic.Core.Domain.Policy.WidgetModule;
 using QuantumLogic.Core.Exceptions.Policy;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace QuantumLogic.WebApi.Policy.Widget
@@ -16,6 +17,28 @@ namespace QuantumLogic.WebApi.Policy.Widget
         { }
 
         #endregion
+
+        public IQueryable<Site> ImportVehiclesAllFilter(IQueryable<Site> query)
+        {
+            query = (PermissionChecker.IsGranted(QuantumLogicPermissionNames.CanAllAll) || PermissionChecker.IsGranted(QuantumLogicPermissionNames.CanImportVehicles)) ? 
+                query :
+                (PermissionChecker.IsGranted(QuantumLogicPermissionNames.CanAllOwn) || PermissionChecker.IsGranted(QuantumLogicPermissionNames.CanImportOwnVehicles)) && Session.UserId.HasValue ? 
+                    query.Where(r => r.UserId == Session.UserId.Value) :
+                    query.Where(r => false);
+            return query;
+        }
+
+        public void PolicyImportVehicles(Site entity)
+        {
+            CanImportVehicles(entity, true);
+        }
+
+        public bool CanImportVehicles(Site entity)
+        {
+            return CanImportVehicles(entity, false);
+        }
+
+        #region Helpers
 
         protected override IQueryable<Site> InnerRetrieveAllFilter(IQueryable<Site> query)
         {
@@ -77,5 +100,17 @@ namespace QuantumLogic.WebApi.Policy.Widget
 
             return result;
         }
+
+        protected virtual bool CanImportVehicles(Site entity, bool throwEntityPolicyException)
+        {
+            bool result = ImportVehiclesAllFilter(new List<Site>() { entity }.AsQueryable()).Any();
+            if (!result && throwEntityPolicyException)
+            {
+                throw new EntityPolicyException();
+            }
+            return result;
+        }
+
+        #endregion
     }
 }

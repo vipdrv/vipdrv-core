@@ -1,4 +1,4 @@
-﻿using QuantumLogic.Core.Domain.Entities.WidgetModule;
+﻿using QuantumLogic.Core.Domain.Entities.WidgetModule.Vehicles;
 using System;
 
 namespace QuantumLogic.WebApi.DataModels.Dtos.Widget.Vehicles

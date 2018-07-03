@@ -5,7 +5,7 @@ using QuantumLogic.Core.Domain.Entities.WidgetModule;
 using QuantumLogic.Core.Domain.Services.Widget.Leads;
 using QuantumLogic.Core.Domain.Services.Widget.Sites;
 using QuantumLogic.Core.Domain.UnitOfWorks;
-using QuantumLogic.Core.Extensions.DateTimeEx;
+using QuantumLogic.Core.Extensions;
 using QuantumLogic.Core.Utils.Email;
 using QuantumLogic.Core.Utils.Email.Data.Templates;
 using QuantumLogic.Core.Utils.Export.Entity.Concrete.Excel;
@@ -191,6 +191,23 @@ namespace QuantumLogic.WebApi.Controllers.Widget
 
             #endregion
 
+            #region Sales person notifications
+
+            if (createdLead.Expert != null && !String.IsNullOrWhiteSpace(createdLead.Expert.Email))
+            {
+                await TestDriveEmailService.SendNewLeadNotificationEmail(
+                        new List<EmailAddress>() { new EmailAddress(createdLead.Expert.Email) },
+                        new ExpertNotificationEmailTemplate(createdLead, request.TimeZoneOffset));
+            }
+
+            if (createdLead.Expert != null && !String.IsNullOrWhiteSpace(createdLead.Expert.PhoneNumber))
+            {
+                await SmsService.SendSms(new List<string>() { createdLead.Expert.PhoneNumber },
+                    new NewLeadNotificationSmsTemplate(createdLead, request.TimeZoneOffset));
+            }
+
+            #endregion
+
             return createLeadFullDto;
         }
 
@@ -206,7 +223,7 @@ namespace QuantumLogic.WebApi.Controllers.Widget
                 new List<string>()
                 {
                     request.Phone
-                }, 
+                },
                 new CompleteBookingSmsTemplate(
                     request.VehicleTitle,
                     request.BookingDateTimeUtc,

@@ -1,4 +1,4 @@
-﻿using QuantumLogic.Core.Domain.Entities.WidgetModule;
+﻿using QuantumLogic.Core.Domain.Entities.WidgetModule.Vehicles;
 using QuantumLogic.Core.Domain.Validation.Widget;
 
 namespace QuantumLogic.WebApi.Validation.Widget

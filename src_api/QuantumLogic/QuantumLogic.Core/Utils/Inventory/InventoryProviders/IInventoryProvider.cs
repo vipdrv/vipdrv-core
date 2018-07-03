@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using QuantumLogic.Core.Domain.Entities.WidgetModule;
+using QuantumLogic.Core.Domain.Entities.WidgetModule.Vehicles;
 
 namespace QuantumLogic.Core.Utils.Inventory.InventoryProviders
 {

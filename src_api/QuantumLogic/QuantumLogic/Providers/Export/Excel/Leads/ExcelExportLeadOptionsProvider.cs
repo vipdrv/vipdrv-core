@@ -1,5 +1,5 @@
 ﻿using QuantumLogic.Core.Domain.Entities.WidgetModule;
-using QuantumLogic.Core.Extensions.DateTimeEx;
+using QuantumLogic.Core.Extensions;
 using QuantumLogic.WebApi.Providers.Export.Excel.DataModels;
 using System;
 using System.Collections.Generic;

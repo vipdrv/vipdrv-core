@@ -1,11 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace QuantumLogic.WebApi.Configurations
+﻿namespace QuantumLogic.WebApi.Configurations
 {
     public class WebApiConfiguration
-    {
-    }
+    { }
 }
