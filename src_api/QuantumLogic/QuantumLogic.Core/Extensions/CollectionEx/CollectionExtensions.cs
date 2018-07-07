@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace QuantumLogic.Core.Extensions
@@ -50,6 +51,19 @@ namespace QuantumLogic.Core.Extensions
             foreach (var addCandidate in addCandidates)
             {
                 collention.Add(addCandidate);
+            }
+        }
+
+        public static void Shuffle<TElement>(this IList<TElement> list)
+        {
+            Random random = new Random();
+            int n = list.Count;
+            for (int i = 0; i < n; i++)
+            {
+                int r = i + random.Next(n - i);
+                TElement stub = list[r];
+                list[r] = list[i];
+                list[i] = stub;
             }
         }
     }

@@ -10,6 +10,7 @@ using QuantumLogic.Core.Domain.Services.Widget.Sites;
 using QuantumLogic.Core.Domain.Services.Widget.Vehicles.Import.Enums;
 using QuantumLogic.Core.Domain.Services.Widget.Vehicles.Import.Models;
 using QuantumLogic.Core.Domain.UnitOfWorks;
+using QuantumLogic.Core.Extensions;
 using QuantumLogic.WebApi.Configurations.Reporting;
 using QuantumLogic.WebApi.DataModels.Dtos.Widget.Beverages;
 using QuantumLogic.WebApi.DataModels.Dtos.Widget.Experts;
@@ -140,12 +141,16 @@ namespace QuantumLogic.WebApi.Controllers.Widget
                 await Task.WhenAll(getSiteEntityTask, getBeverageEntitiesTask, getExpertEntitiesTask, getRouteEntitiesTask);
                 siteEntity = await getSiteEntityTask;
                 beverageEntities = await getBeverageEntitiesTask;
-                expertEntities = await getExpertEntitiesTask;
+                expertEntities = (await getExpertEntitiesTask);
                 routeEntities = await getRouteEntitiesTask;
             }
             SiteFullDto siteDto = new SiteFullDto();
             siteDto.MapFromEntity(siteEntity);
             siteDto.NormalizeAsResponse();
+            if (siteEntity.ShuffleExperts)
+            {
+                expertEntities.Shuffle();
+            }
             return new SiteAggregatedInfoDto(
                 siteDto,
                 MapEntitiesToDtos<Beverage, BeverageDto>(beverageEntities),
