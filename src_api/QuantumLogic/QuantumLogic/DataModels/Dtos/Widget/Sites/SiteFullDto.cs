@@ -25,6 +25,7 @@ namespace QuantumLogic.WebApi.DataModels.Dtos.Widget.Sites
         public IList<StepDto> Steps { get; set; }
 
         public string ImportRelativeFtpPath { get; set; }
+        public bool ShuffleExperts { get; set; }
 
         public override void MapFromEntity(Site entity)
         {
@@ -37,6 +38,7 @@ namespace QuantumLogic.WebApi.DataModels.Dtos.Widget.Sites
             ActiveRoutesAmount = entity.Routes.Where(r => r.IsActive).Count();
             WorkingHours = DayOfWeekInterval.Parse(entity.WorkingHours);
             ImportRelativeFtpPath = entity.ImportRelativeFtpPath;
+            ShuffleExperts = entity.ShuffleExperts;
             Steps = entity.Steps
                 .Select(r => new StepDto()
                 {
@@ -55,6 +57,7 @@ namespace QuantumLogic.WebApi.DataModels.Dtos.Widget.Sites
             Site entity = base.MapToEntity();
             entity.WorkingHours = String.Join(DayOfWeekInterval.DayOfWeekIntervalsSeparator.ToString(), DayOfWeekInterval.Purify(WorkingHours).Select(r => r.ToString()));
             entity.ImportRelativeFtpPath = ImportRelativeFtpPath;
+            entity.ShuffleExperts = ShuffleExperts;
             return entity;
         }
     }
