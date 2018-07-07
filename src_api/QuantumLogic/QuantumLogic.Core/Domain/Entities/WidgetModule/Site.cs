@@ -27,6 +27,7 @@ namespace QuantumLogic.Core.Domain.Entities.WidgetModule
         public bool AvailableTestDriveFromHome { get; set; }
         public int MaxVehicleDeliveryDistance { get; set; }
         public string ImportRelativeFtpPath { get; set; }
+        public bool ShuffleExperts { get; set; }
 
         #endregion
 
@@ -143,6 +144,7 @@ namespace QuantumLogic.Core.Domain.Entities.WidgetModule
             AvailableTestDriveFromHome = actualEntity.AvailableTestDriveFromHome;
             MaxVehicleDeliveryDistance = actualEntity.MaxVehicleDeliveryDistance;
             ImportRelativeFtpPath = actualEntity.ImportRelativeFtpPath;
+            ShuffleExperts = actualEntity.ShuffleExperts;
         }
 
         #endregion
