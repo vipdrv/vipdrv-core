@@ -2,15 +2,16 @@
 using QuantumLogic.Core.Domain.Services.Widget.Vehicles.Import.Factories.Models;
 using QuantumLogic.Core.Shared.Factories;
 using System;
-using System.Collections.Generic;
+using System.Linq;
 
 namespace QuantumLogic.Core.Domain.Services.Widget.Vehicles.Import.Factories
 {
     public class VehicleFromCsvLineFactory : IFactory<Vehicle, VehicleFromCsvLineFactorySettings>
-    { 
+    {
         #region Settings
 
-        private readonly IEnumerable<char> _imageUrlSeparators = new List<char>() { '|', '.', ',' };
+        private readonly string[] _imageUrlSeparators = new string[] { "|", ".", "," };
+        private readonly string[] _availableImageUrlStarts = new string[] { "http://", "https://" };
 
         #endregion
 
@@ -51,14 +52,18 @@ namespace QuantumLogic.Core.Domain.Services.Widget.Vehicles.Import.Factories
 
         protected virtual string CreateImageUrl(string imageUrlAsStringValue)
         {
-            if (!String.IsNullOrWhiteSpace(imageUrlAsStringValue))
+            string usedImageStart = _availableImageUrlStarts.FirstOrDefault(r => imageUrlAsStringValue.StartsWith(r));
+            if (usedImageStart != null)
             {
-                foreach (char separator in _imageUrlSeparators)
+                string[] splits = imageUrlAsStringValue.Split(_availableImageUrlStarts, StringSplitOptions.None);
+                if (splits.Count() > 1)
                 {
-                    if (imageUrlAsStringValue.IndexOf(separator) > -1)
+                    string firstImgUrl = splits[1];
+                    if (_imageUrlSeparators.Any(urlSep => firstImgUrl.EndsWith(urlSep)))
                     {
-                        return imageUrlAsStringValue.Split(separator)[0];
+                        firstImgUrl = firstImgUrl.Remove(firstImgUrl.Length - 1);
                     }
+                    return $"{usedImageStart}{firstImgUrl}";
                 }
             }
             return String.Empty;

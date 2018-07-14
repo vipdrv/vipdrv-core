@@ -26,8 +26,8 @@ namespace QuantumLogic.xUnitTests.Core.Utils.Import
         [Fact]
         public void VehicleFromCsvFileBulkFactory_ShouldNotThrowEx_Performance()
         {
-            string filePath = @"C:\Temp\test.csv";
-            int expectedSpeed = 10000;
+            string filePath = @"C:\Temp\toyotaofsarasota.csv";
+            int expectedSpeed = 150;
             try
             {
                 IEnumerable<Vehicle> vehicles;
@@ -38,7 +38,7 @@ namespace QuantumLogic.xUnitTests.Core.Utils.Import
                 using (var csvFileStream = new MemoryStream(File.ReadAllBytes(filePath)))
                 {
                     stopWatch.Start();
-                    vehicles = vehicleBulkFactory.Create(new VehicleFromCsvFileBulkFactorySettings(1, csvFileStream));
+                    vehicles = vehicleBulkFactory.Create(new VehicleFromCsvFileBulkFactorySettings(1, csvFileStream)).ToList();
                     stopWatch.Stop();
                 }
                 int entitiesCount = vehicles.Count();
