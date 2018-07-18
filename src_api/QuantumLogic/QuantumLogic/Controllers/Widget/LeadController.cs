@@ -165,16 +165,10 @@ namespace QuantumLogic.WebApi.Controllers.Widget
 
             #region Send EMAIL notifications
 
-            // TODO: disaster govnocode!
-            Task<SendGrid.Response> sendCompleteBookingEmailTask = new Task<SendGrid.Response>(null);
-
-            if (createdLead.SiteId != 50)
-            {
-                sendCompleteBookingEmailTask = TestDriveEmailService
+            Task<SendGrid.Response> sendCompleteBookingEmailTask = TestDriveEmailService
                 .SendCompleteBookingEmail(
                     new EmailAddress(createdLead.UserEmail, $"{createdLead.FirstName} {createdLead.SecondName}"),
                     new CompleteBookingEmailTemplate(createdLead, request.TimeZoneOffset));
-            }
 
             Task<SendGrid.Response> sendNewLeadNotificationEmailTask = TestDriveEmailService
                 .SendNewLeadNotificationEmail(
