@@ -27,6 +27,14 @@ namespace QuantumLogic.WebApi.DataModels.Dtos.Widget.Sites
         public string ImportRelativeFtpPath { get; set; }
         public bool ShuffleExperts { get; set; }
 
+        public string FtpLogin { get; set; }
+        public string FtpPassword { get; set; }
+        public bool SendEmailNotificationsToCustomer { get; set; }
+        public bool InjectButtonToSrp { get; set; }
+        public bool InjectButtonToVdp { get; set; }
+        public bool InjectButtonToSidebar { get; set; }
+        public bool InjectWidgetToSaw { get; set; }
+
         public override void MapFromEntity(Site entity)
         {
             base.MapFromEntity(entity);
@@ -50,6 +58,14 @@ namespace QuantumLogic.WebApi.DataModels.Dtos.Widget.Sites
                     Order = r.Order
                 })
                 .ToList();
+
+            FtpLogin = entity.FtpLogin;
+            FtpPassword = entity.FtpPassword;
+            SendEmailNotificationsToCustomer = entity.SendEmailNotificationsToCustomer;
+            InjectButtonToSrp = entity.InjectButtonToSrp;
+            InjectButtonToVdp = entity.InjectButtonToVdp;
+            InjectButtonToSidebar = entity.InjectButtonToSidebar;
+            InjectWidgetToSaw = entity.InjectWidgetToSaw;
         }
 
         public override Site MapToEntity()
@@ -58,6 +74,15 @@ namespace QuantumLogic.WebApi.DataModels.Dtos.Widget.Sites
             entity.WorkingHours = String.Join(DayOfWeekInterval.DayOfWeekIntervalsSeparator.ToString(), DayOfWeekInterval.Purify(WorkingHours).Select(r => r.ToString()));
             entity.ImportRelativeFtpPath = ImportRelativeFtpPath;
             entity.ShuffleExperts = ShuffleExperts;
+
+            entity.FtpLogin = FtpLogin;
+            entity.FtpPassword = FtpPassword;
+            entity.SendEmailNotificationsToCustomer = SendEmailNotificationsToCustomer;
+            entity.InjectButtonToSrp = InjectButtonToSrp;
+            entity.InjectButtonToVdp = InjectButtonToVdp;
+            entity.InjectButtonToSidebar = InjectButtonToSidebar;
+            entity.InjectWidgetToSaw = InjectWidgetToSaw;
+
             return entity;
         }
     }

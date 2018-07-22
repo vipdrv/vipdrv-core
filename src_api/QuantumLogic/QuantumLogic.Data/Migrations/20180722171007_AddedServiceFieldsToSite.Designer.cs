@@ -9,9 +9,10 @@ using QuantumLogic.Core.Domain.Entities.WidgetModule.Vehicles;
 namespace QuantumLogic.Data.Migrations
 {
     [DbContext(typeof(QuantumLogicDbContext))]
-    partial class QuantumLogicDbContextModelSnapshot : ModelSnapshot
+    [Migration("20180722171007_AddedServiceFieldsToSite")]
+    partial class AddedServiceFieldsToSite
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "1.1.2")
