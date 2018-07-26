@@ -97,7 +97,8 @@ namespace QuantumLogic.WebApi.Controllers.Widget
             {
                 return (await ((IVehicleDomainService)DomainService)
                     .GetYears(siteId, make, model))
-                    .Select(vehicleYearInfo => new VehicleYearInfoDto(vehicleYearInfo));
+                    .Select(vehicleYearInfo => new VehicleYearInfoDto(vehicleYearInfo))
+                    .OrderByDescending(r => r.Name);
             }
         }
 
