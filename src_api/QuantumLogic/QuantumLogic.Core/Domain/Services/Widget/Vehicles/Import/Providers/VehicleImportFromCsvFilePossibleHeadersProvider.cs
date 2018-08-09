@@ -13,13 +13,13 @@ namespace QuantumLogic.Core.Domain.Services.Widget.Vehicles.Import.Providers
         public VehicleImportFromCsvFilePossibleHeadersProvider()
         {
             IDictionary<string, IEnumerable<string>> mapping = new Dictionary<string, IEnumerable<string>>();
-            mapping.Add(new KeyValuePair<string, IEnumerable<string>>(nameof(Vehicle.VIN), new List<string>() { "VIN" }));
-            mapping.Add(new KeyValuePair<string, IEnumerable<string>>(nameof(Vehicle.Stock), new List<string>() { "Stock", "Stock #", "StockNumber" }));
+            mapping.Add(new KeyValuePair<string, IEnumerable<string>>(nameof(Vehicle.VIN), new List<string>() { "VIN", "VIN_No" }));
+            mapping.Add(new KeyValuePair<string, IEnumerable<string>>(nameof(Vehicle.Stock), new List<string>() { "Stock", "Stock #", "StockNumber", "Stock_No" }));
             mapping.Add(new KeyValuePair<string, IEnumerable<string>>(nameof(Vehicle.Year), new List<string>() { "Year" }));
             mapping.Add(new KeyValuePair<string, IEnumerable<string>>(nameof(Vehicle.Make), new List<string>() { "Make" }));
             mapping.Add(new KeyValuePair<string, IEnumerable<string>>(nameof(Vehicle.Model), new List<string>() { "Model" }));
-            mapping.Add(new KeyValuePair<string, IEnumerable<string>>(nameof(Vehicle.Condition), new List<string>() { "New/Used", "UsedNew", "Type" }));
-            mapping.Add(new KeyValuePair<string, IEnumerable<string>>(nameof(Vehicle.ImageUrl), new List<string>() { "Photo Url List", "ImageURLs", "ImageList" }));
+            mapping.Add(new KeyValuePair<string, IEnumerable<string>>(nameof(Vehicle.Condition), new List<string>() { "New/Used", "UsedNew", "Type", "New_Used" }));
+            mapping.Add(new KeyValuePair<string, IEnumerable<string>>(nameof(Vehicle.ImageUrl), new List<string>() { "Photo Url List", "ImageURLs", "ImageList", "Photo_URLs" }));
             _possibleHeadersMapping = mapping;
         }
 
