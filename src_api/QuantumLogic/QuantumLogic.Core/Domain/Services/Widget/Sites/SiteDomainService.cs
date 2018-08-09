@@ -45,14 +45,33 @@ namespace QuantumLogic.Core.Domain.Services.Widget.Sites
                     return entitySet;
                 },
                 RetrieveAllEntityIncludes);
-            return await VehiclesImportService.Import(sites.ToArray());
+            IEnumerable<ImportVehiclesForSiteResult> importResults = await VehiclesImportService.Import(sites.ToArray());
+            foreach(var importResult in importResults)
+            {
+                if (importResult.Status == Vehicles.Import.Enums.ImportStatusEnum.Success)
+                {
+                    Site site = sites.FirstOrDefault(r => r.Id == importResult.SiteId);
+                    if (site != null)
+                    {
+                        site.NewVehiclesCount = importResult.ProcessedNewVehiclesCount;
+                        site.UsedVehiclesCount = importResult.ProcessedUsedVehiclesCount;
+                    }
+                }
+            }
+            return importResults;
         }
 
         public virtual async Task<ImportVehiclesForSiteResult> ImportVehiclesAsync(int id)
         {
             Site site = await Repository.GetAsync(id);
             ((ISitePolicy)Policy).PolicyImportVehicles(site);
-            return (await VehiclesImportService.Import(site)).First();
+            ImportVehiclesForSiteResult importResult = (await VehiclesImportService.Import(site)).First();
+            if (importResult.Status == Vehicles.Import.Enums.ImportStatusEnum.Success)
+            {
+                site.NewVehiclesCount = importResult.ProcessedNewVehiclesCount;
+                site.UsedVehiclesCount = importResult.ProcessedUsedVehiclesCount;
+            }
+            return importResult;
         }
 
         public override async Task<Site> CreateAsync(Site entity)
@@ -61,6 +80,7 @@ namespace QuantumLogic.Core.Domain.Services.Widget.Sites
             entity.ImageUrl = await ImageUrlService.Transform(entity.ImageUrl);
             return await base.CreateAsync(entity);
         }
+
         public override async Task<Site> UpdateAsync(Site entity)
         {
             entity.ImageUrl = await ImageUrlService.Transform(entity.ImageUrl);

@@ -9,6 +9,8 @@ namespace QuantumLogic.WebApi.DataModels.Dtos.Widget.Sites.Import
         public int SiteId { get; private set; }
         public string SiteName { get; private set; }
         public int ProcessedVehiclesCount { get; private set; }
+        public int ProcessedNewVehiclesCount { get; private set; }
+        public int ProcessedUsedVehiclesCount { get; private set; }
 
         #region Ctors
 
@@ -19,6 +21,8 @@ namespace QuantumLogic.WebApi.DataModels.Dtos.Widget.Sites.Import
             SiteId = entity.SiteId;
             SiteName = entity.SiteName;
             ProcessedVehiclesCount = entity.ProcessedVehiclesCount;
+            ProcessedNewVehiclesCount = entity.ProcessedNewVehiclesCount;
+            ProcessedUsedVehiclesCount = entity.ProcessedUsedVehiclesCount;
         }
 
         #endregion

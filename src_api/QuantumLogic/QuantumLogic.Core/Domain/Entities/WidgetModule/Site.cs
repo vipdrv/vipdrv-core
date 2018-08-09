@@ -29,6 +29,17 @@ namespace QuantumLogic.Core.Domain.Entities.WidgetModule
         public string ImportRelativeFtpPath { get; set; }
         public bool ShuffleExperts { get; set; }
 
+        public string FtpLogin { get; set; }
+        public string FtpPassword { get; set; }
+        public bool SendEmailNotificationsToCustomer { get; set; }
+        public bool InjectButtonToSrp { get; set; }
+        public bool InjectButtonToVdp { get; set; }
+        public bool InjectButtonToSidebar { get; set; }
+        public bool InjectWidgetToSaw { get; set; }
+
+        public int UsedVehiclesCount { get; set; }
+        public int NewVehiclesCount { get; set; }
+
         #endregion
 
         #region Relation
@@ -145,6 +156,13 @@ namespace QuantumLogic.Core.Domain.Entities.WidgetModule
             MaxVehicleDeliveryDistance = actualEntity.MaxVehicleDeliveryDistance;
             ImportRelativeFtpPath = actualEntity.ImportRelativeFtpPath;
             ShuffleExperts = actualEntity.ShuffleExperts;
+            FtpLogin = actualEntity.FtpLogin;
+            FtpPassword = actualEntity.FtpPassword;
+            SendEmailNotificationsToCustomer = actualEntity.SendEmailNotificationsToCustomer;
+            InjectButtonToSrp = actualEntity.InjectButtonToSrp;
+            InjectButtonToVdp = actualEntity.InjectButtonToVdp;
+            InjectButtonToSidebar = actualEntity.InjectButtonToSidebar;
+            InjectWidgetToSaw = actualEntity.InjectWidgetToSaw;
         }
 
         #endregion

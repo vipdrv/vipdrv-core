@@ -2,7 +2,7 @@
 	"variables": [],
 	"info": {
 		"name": "QuantumLogic",
-		"_postman_id": "8f0eb7e5-29aa-bc8a-1f40-dfa14be3c38d",
+		"_postman_id": "7c6011ef-b378-f4b4-c89b-88f1314bddb7",
 		"description": "",
 		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
 	},
@@ -1630,7 +1630,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n\t\"UserId\": 1,\n    \"BeautyId\": \"BeautyId\",\n    \"Name\": \"Name\",\n    \"Url\": \"Url\",\n    \"NotificationContacts\": \"\",\n    \"ImageUrl\": \"http://via.placeholder.com/300x200\",\n    \"DealerName\": \"DealerName\",\n    \"DealerAddress\": \"\",\n    \"DealerPhone\": \"\",\n    \"WorkingHours\": \"\",\n    \"ZipCode\": \"12345\",\n    \"AvailableTestDriveFromHome\": false,\n    \"MaxVehicleDeliveryDistance\": 5,\n    \"ImportRelativeFtpPath\": \"\"\n}"
+									"raw": "{\n\t\"UserId\": 1,\n    \"BeautyId\": \"BeautyId\",\n    \"Name\": \"Name\",\n    \"Url\": \"Url\",\n    \"NotificationContacts\": \"\",\n    \"ImageUrl\": \"http://via.placeholder.com/300x200\",\n    \"DealerName\": \"DealerName\",\n    \"DealerAddress\": \"\",\n    \"DealerPhone\": \"\",\n    \"WorkingHours\": \"\",\n    \"ZipCode\": \"12345\",\n    \"AvailableTestDriveFromHome\": false,\n    \"MaxVehicleDeliveryDistance\": 5,\n    \"ImportRelativeFtpPath\": \"\",\n    \"FtpLogin\": null,\n    \"FtpPassword\": null,\n    \"SendEmailNotificationsToCustomer\": false,\n    \"InjectButtonToSrp\": false,\n    \"InjectButtonToVdp\": false,\n    \"InjectButtonToSidebar\": false,\n    \"InjectWidgetToSaw\": false\n}"
 								},
 								"description": ""
 							},
@@ -1655,7 +1655,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n\t\"id\": 1,\n\t\"UserId\": 1,\n    \"BeautyId\": \"BeautyId\",\n    \"Name\": \"Name\",\n    \"Url\": \"Url\",\n    \"NotificationContacts\": \"\",\n    \"ImageUrl\": \"http://via.placeholder.com/300x200\",\n    \"DealerName\": \"DealerName\",\n    \"DealerAddress\": \"\",\n    \"DealerPhone\": \"\",\n    \"UseExpertStep\": true,\n    \"UseBeverageStep\": true,\n    \"UseRouteStep\": true,\n    \"WorkingHours\": \"\",\n    \"ZipCode\": \"12345\",\n    \"AvailableTestDriveFromHome\": false,\n    \"MaxVehicleDeliveryDistance\": 10,\n    \"ImportRelativeFtpPath\": \"\"\n}"
+									"raw": "{\n\t\"id\": 1,\n\t\"UserId\": 1,\n    \"BeautyId\": \"BeautyId\",\n    \"Name\": \"Name\",\n    \"Url\": \"Url\",\n    \"NotificationContacts\": \"\",\n    \"ImageUrl\": \"http://via.placeholder.com/300x200\",\n    \"DealerName\": \"DealerName\",\n    \"DealerAddress\": \"\",\n    \"DealerPhone\": \"\",\n    \"UseExpertStep\": true,\n    \"UseBeverageStep\": true,\n    \"UseRouteStep\": true,\n    \"WorkingHours\": \"\",\n    \"ZipCode\": \"12345\",\n    \"AvailableTestDriveFromHome\": false,\n    \"MaxVehicleDeliveryDistance\": 10,\n    \"ImportRelativeFtpPath\": \"\",\n    \"FtpLogin\": null,\n    \"FtpPassword\": null,\n    \"SendEmailNotificationsToCustomer\": false,\n    \"InjectButtonToSrp\": false,\n    \"InjectButtonToVdp\": false,\n    \"InjectButtonToSidebar\": false,\n    \"InjectWidgetToSaw\": false\n}"
 								},
 								"description": ""
 							},

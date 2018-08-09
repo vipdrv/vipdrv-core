@@ -86,7 +86,10 @@ namespace QuantumLogic.Core.Domain.Services.Widget.Vehicles.Import
                                 vehicles = VehicleBulkFactory.Create(new VehicleFromCsvFileBulkFactorySettings(site.Id, csvFileStream));
                             }
                             await VehicleRepository.RefreshEntitiesForSiteAsync(site.Id, vehicles);
-                            importResult = new ImportVehiclesForSiteResult(site.Id, site.Name, vehicles.Count());
+                            importResult = new ImportVehiclesForSiteResult(
+                                site.Id, site.Name, vehicles.Count(),
+                                vehicles.Count(r => r.Condition == VehicleConditions.New),
+                                vehicles.Count(r => r.Condition == VehicleConditions.Used));
                         }
                         else
                         {
