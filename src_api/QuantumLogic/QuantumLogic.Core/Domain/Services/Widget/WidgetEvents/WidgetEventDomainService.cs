@@ -21,7 +21,7 @@ namespace QuantumLogic.Core.Domain.Services.Widget.WidgetEvents
         
         public async Task ChangeIsResolvedAsync(int id, bool value)
         {
-            WidgetEvent entity = await RetrieveAsync(id);
+            WidgetEvent entity = await Repository.GetAsync(id, RetrieveEntityIncludes);
             entity.IsResolved = value;
             await Repository.UpdateAsync(entity);
         }

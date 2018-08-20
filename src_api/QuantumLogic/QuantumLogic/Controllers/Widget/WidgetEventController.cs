@@ -33,9 +33,20 @@ namespace QuantumLogic.WebApi.Controllers.Widget
             return InnerGetAsync(id);
         }
         [HttpPost]
-        public Task<WidgetEventFullDto> CreateAsync([FromBody]WidgetEventFullDto request)
+        public async Task CreateAsync([FromBody]WidgetEventFullDto request)
         {
-            return InnerCreateAsync(request);
+            if (request == null)
+            {
+                throw new ArgumentNullException(nameof(request));
+            }
+
+            request.NormalizeAsRequest();
+
+            using (var uow = UowManager.CurrentOrCreateNew(true))
+            {
+                await DomainService.CreateAsync(request.MapToEntity());
+                await uow.CompleteAsync();
+            }
         }
         [Authorize]
         [HttpPut]

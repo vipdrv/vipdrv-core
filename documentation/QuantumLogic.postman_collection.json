@@ -2358,11 +2358,6 @@
 										"key": "Content-Type",
 										"value": "application/json",
 										"description": ""
-									},
-									{
-										"key": "Authorization",
-										"value": "{{AuthTokenType}} {{AuthTokenValue}}",
-										"description": ""
 									}
 								],
 								"body": {
@@ -2427,11 +2422,6 @@
 									{
 										"key": "Content-Type",
 										"value": "application/json",
-										"description": ""
-									},
-									{
-										"key": "Authorization",
-										"value": "{{AuthTokenType}} {{AuthTokenValue}}",
 										"description": ""
 									}
 								],
