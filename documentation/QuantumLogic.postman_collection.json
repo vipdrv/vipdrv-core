@@ -2,7 +2,7 @@
 	"variables": [],
 	"info": {
 		"name": "QuantumLogic",
-		"_postman_id": "7c6011ef-b378-f4b4-c89b-88f1314bddb7",
+		"_postman_id": "c53361c6-04b2-b08f-da93-5c3cb90712ac",
 		"description": "",
 		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
 	},
@@ -2266,6 +2266,178 @@
 								"body": {
 									"mode": "raw",
 									"raw": ""
+								},
+								"description": ""
+							},
+							"response": []
+						}
+					],
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "Widget event",
+					"description": "",
+					"item": [
+						{
+							"name": "Get all",
+							"request": {
+								"url": {
+									"raw": "{{ApplicationEndpoint}}/{{ApiResource}}/widget-event/get-all?page=0&pageSize=5",
+									"host": [
+										"{{ApplicationEndpoint}}"
+									],
+									"path": [
+										"{{ApiResource}}",
+										"widget-event",
+										"get-all"
+									],
+									"query": [
+										{
+											"key": "page",
+											"value": "0",
+											"equals": true,
+											"description": ""
+										},
+										{
+											"key": "pageSize",
+											"value": "5",
+											"equals": true,
+											"description": ""
+										}
+									],
+									"variable": []
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"description": ""
+									},
+									{
+										"key": "Authorization",
+										"value": "{{AuthTokenType}} {{AuthTokenValue}}",
+										"description": ""
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"sorting\": \"recievedUtc asc\",\n\t\"siteId\": 28\n}"
+								},
+								"description": ""
+							},
+							"response": []
+						},
+						{
+							"name": "Get",
+							"request": {
+								"url": "{{ApplicationEndpoint}}/{{ApiResource}}/widget-event/1",
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{AuthTokenType}} {{AuthTokenValue}}",
+										"description": ""
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"description": ""
+							},
+							"response": []
+						},
+						{
+							"name": "Create",
+							"request": {
+								"url": "{{ApplicationEndpoint}}/{{ApiResource}}/widget-event",
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"description": ""
+									},
+									{
+										"key": "Authorization",
+										"value": "{{AuthTokenType}} {{AuthTokenValue}}",
+										"description": ""
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"siteId\": 28,\n    \"RecievedUtc\": \"2018-08-21 00:03:00\",\n    \"EventTitle\": \"Event title\",\n    \"EventLevel\": \"Event level\",\n    \"EventDetails\": \"Event details\",\n    \"isActive\": false\n}"
+								},
+								"description": ""
+							},
+							"response": []
+						},
+						{
+							"name": "Update",
+							"request": {
+								"url": "{{ApplicationEndpoint}}/{{ApiResource}}/widget-event",
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"description": ""
+									},
+									{
+										"key": "Authorization",
+										"value": "{{AuthTokenType}} {{AuthTokenValue}}",
+										"description": ""
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"id\": 1,\n    \"siteId\": 28,\n    \"RecievedUtc\": \"2018-08-21 00:03:00\",\n    \"EventTitle\": \"Event title\",\n    \"EventLevel\": \"Event level\",\n    \"EventDetails\": \"Event details\",\n    \"isActive\": false\n}"
+								},
+								"description": ""
+							},
+							"response": []
+						},
+						{
+							"name": "Delete",
+							"request": {
+								"url": "{{ApplicationEndpoint}}/{{ApiResource}}/widget-event/1",
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{AuthTokenType}} {{AuthTokenValue}}",
+										"description": ""
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"description": ""
+							},
+							"response": []
+						},
+						{
+							"name": "Patch IsResolved",
+							"request": {
+								"url": "{{ApplicationEndpoint}}/{{ApiResource}}/widget-event/change-is-resolved/1",
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"description": ""
+									},
+									{
+										"key": "Authorization",
+										"value": "{{AuthTokenType}} {{AuthTokenValue}}",
+										"description": ""
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"value\": true\n}"
 								},
 								"description": ""
 							},
