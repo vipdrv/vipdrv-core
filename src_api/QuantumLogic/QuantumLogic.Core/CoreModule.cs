@@ -19,6 +19,7 @@ using QuantumLogic.Core.Domain.Services.Widget.Vehicles.Import;
 using QuantumLogic.Core.Domain.Services.Widget.Vehicles.Import.Factories;
 using QuantumLogic.Core.Domain.Services.Widget.Vehicles.Import.Factories.Models;
 using QuantumLogic.Core.Domain.Services.Widget.Vehicles.Import.Providers;
+using QuantumLogic.Core.Domain.Services.Widget.WidgetEvents;
 using QuantumLogic.Core.Shared.Factories;
 using QuantumLogic.Core.Shared.Providers;
 using QuantumLogic.Core.Utils.Email;
@@ -73,6 +74,7 @@ namespace QuantumLogic.Core
             services.AddScoped<IStepDomainService, StepDomainService>();
             services.AddScoped<IEntityDomainService<Vehicle, int>, VehicleDomainService>();
             services.AddScoped<IVehicleDomainService, VehicleDomainService>();
+            services.AddScoped<IWidgetEventDomainService, WidgetEventDomainService>();
 
             #endregion
 

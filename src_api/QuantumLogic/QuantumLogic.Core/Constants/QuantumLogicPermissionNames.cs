@@ -104,7 +104,9 @@ namespace QuantumLogic.Core.Constants
         public const string CanDeleteOwnVehicle = "CanDeleteOwnVehicle";
         public const string CanImportVehicles = "CanImportVehicles";
         public const string CanImportOwnVehicles = "CanImportOwnVehicles";
-
+        
+        public const string CanAllWidgetEvent = "CanAllWidgetEvent";
+        
         #endregion
 
         #region QuantumLogic menu visibility permissions
