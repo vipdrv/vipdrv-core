@@ -15,6 +15,7 @@ using System.Globalization;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
+using System.Linq.Dynamic.Core;
 
 namespace QuantumLogic.WebApi.Controllers.Widget
 {
@@ -79,42 +80,45 @@ namespace QuantumLogic.WebApi.Controllers.Widget
             }
         }
 
-        [HttpGet("{siteId}/models/{make?}")]
-        public async Task<IEnumerable<VehicleModelInfoDto>> GetVehicleModels(int siteId, string make)
+        [HttpGet("{siteId}/models/{make?}/{sorting?}")]
+        public async Task<IEnumerable<VehicleModelInfoDto>> GetVehicleModels(int siteId, string make, string sorting = "Name asc")
         {
             using (var uow = UowManager.CurrentOrCreateNew(true))
             {
                 return (await ((IVehicleDomainService)DomainService)
                     .GetModels(siteId, make))
-                    .Select(vehicleModelInfo => new VehicleModelInfoDto(vehicleModelInfo));
+                    .Select(vehicleModelInfo => new VehicleModelInfoDto(vehicleModelInfo))
+                    .AsQueryable()
+                    .OrderBy(sorting);
             }
         }
 
-        [HttpGet("{siteId}/years/{make?}/{model?}")]
-        public async Task<IEnumerable<VehicleYearInfoDto>> GetVehicleYears(int siteId, string make, string model)
+        [HttpGet("{siteId}/years/{make?}/{model?}/{sorting?}")]
+        public async Task<IEnumerable<VehicleYearInfoDto>> GetVehicleYears(int siteId, string make, string model, string sorting = "Name desc")
         {
             using (var uow = UowManager.CurrentOrCreateNew(true))
             {
                 return (await ((IVehicleDomainService)DomainService)
                     .GetYears(siteId, make, model))
                     .Select(vehicleYearInfo => new VehicleYearInfoDto(vehicleYearInfo))
-                    .OrderByDescending(r => r.Name);
+                    .AsQueryable()
+                    .OrderBy(sorting);
             }
         }
 
-        [HttpGet("{siteId}/images/{make?}/{model?}/{year?}")]
-        public Task<GetAllResponse<VehicleDto>> GetVehicles(int siteId, string make, string model, int? year)
+        [HttpGet("{siteId}/images/{make?}/{model?}/{year?}/{sorting?}")]
+        public Task<GetAllResponse<VehicleDto>> GetVehicles(int siteId, string make, string model, int? year, string sorting = "Title asc")
         {
             Expression<Func<Vehicle, bool>> filter = (entity) => 
                 entity.SiteId == siteId &&
                 (String.IsNullOrEmpty(make) || entity.Make == make) &&
                 (String.IsNullOrEmpty(model) || entity.Model == model) &&
                 (!year.HasValue || entity.Year == year);
-            return InnerGetAllAsync(filter, "Title asc", 0, Int32.MaxValue);
+            return InnerGetAllAsync(filter, sorting, 0, Int32.MaxValue);
         }
 
-        [HttpGet("{siteId}/search/{filter?}")]
-        public Task<GetAllResponse<VehicleDto>> GetVehicles(int siteId, string filter)
+        [HttpGet("{siteId}/search/{filter?}/{sorting?}")]
+        public Task<GetAllResponse<VehicleDto>> GetVehicles(int siteId, string filter, string sorting = "Title asc")
         {
             Expression<Func<Vehicle, bool>> expression = (entity) =>
                 entity.SiteId == siteId &&
@@ -138,7 +142,7 @@ namespace QuantumLogic.WebApi.Controllers.Widget
                         CultureInfo.InvariantCulture.CompareInfo.IndexOf(entity.Year.ToString(), filter, CompareOptions.IgnoreCase) >= 0
                     )
                 );
-            return InnerGetAllAsync(expression, "Title asc", 0, Int32.MaxValue);
+            return InnerGetAllAsync(expression, sorting, 0, Int32.MaxValue);
         }
 
         #endregion
