@@ -24,7 +24,6 @@ namespace QuantumLogic.Core.Utils.Email.Data.Templates
         private readonly string _dealerAddress;
         private readonly string _dealerPhone;
         private readonly string _dealerSiteUrl;
-        private readonly bool _showLocationInfo;
         private readonly string _locationType;
         private readonly string _locationAddress;
 
@@ -60,7 +59,6 @@ namespace QuantumLogic.Core.Utils.Email.Data.Templates
             _dealerAddress = dealerAddress;
             _dealerPhone = dealerPhone;
             _dealerSiteUrl = dealerSiteUrl;
-            _showLocationInfo = showLocationInfo;
             _locationType = locationType;
             _locationAddress = locationAddress;
         }
@@ -82,7 +80,6 @@ namespace QuantumLogic.Core.Utils.Email.Data.Templates
             _dealerAddress = lead.Site.DealerAddress;
             _dealerPhone = lead.Site.DealerPhone;
             _dealerSiteUrl = lead.Site.Url;
-            _showLocationInfo = lead.ShowLocationInfo;
             _locationType = lead.LocationType;
             _locationAddress = lead.LocationAddress;
         }
@@ -121,16 +118,8 @@ namespace QuantumLogic.Core.Utils.Email.Data.Templates
 
             #region Test Drive from home
 
-            if (_showLocationInfo)
-            {
-                html = html.Replace("{{showLocationInfo}}", "block");
-                html = html.Replace("{{locationType}}", _locationType);
-                html = html.Replace("{{locationAddress}}", _locationAddress);
-            }
-            else
-            {
-                html = html.Replace("{{showLocationInfo}}", "none");
-            }
+            html = html.Replace("{{locationType}}", _locationType);
+            html = html.Replace("{{locationAddress}}", _locationAddress);
 
             #endregion
 

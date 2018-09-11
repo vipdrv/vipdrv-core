@@ -25,7 +25,6 @@ namespace QuantumLogic.WebApi.DataModels.Dtos.Widget.Leads
         public DateTime? BookingDateTimeUtc { get; set; }
         public bool IsNew { get; set; }
         public bool IsReachedByManager { get; set; }
-        public bool ShowLocationInfo { get; set; }
         public string LocationType { get; set; }
         public string LocationAddress { get; set; }
         #endregion
@@ -79,7 +78,6 @@ namespace QuantumLogic.WebApi.DataModels.Dtos.Widget.Leads
             VdpUrl = vdpUrl;
             BookingDateTimeUtc = bookingDateTimeUtc;
             IsNew = isNew;
-            ShowLocationInfo = showLocationInfo;
             LocationType = locationType;
             LocationAddress = locationAddress;
         }
@@ -111,7 +109,6 @@ namespace QuantumLogic.WebApi.DataModels.Dtos.Widget.Leads
             ExpertName = (entity.Expert != null) ? entity.Expert.Name : "Skipped by customer";
             BeverageName = (entity.Beverage != null) ? entity.Beverage.Name : "Skipped by customer";
             RouteName = (entity.Route != null) ? entity.Route.Name : "Skipped by customer";
-            ShowLocationInfo = entity.ShowLocationInfo;
             LocationType = entity.LocationType;
             LocationAddress = entity.LocationAddress;
         }
@@ -133,7 +130,6 @@ namespace QuantumLogic.WebApi.DataModels.Dtos.Widget.Leads
             entity.VdpUrl = VdpUrl;
             entity.BookingDateTimeUtc = BookingDateTimeUtc;
             entity.IsNew = IsNew;
-            entity.ShowLocationInfo = ShowLocationInfo;
             entity.LocationType = LocationType;
             entity.LocationAddress = LocationAddress;
 
