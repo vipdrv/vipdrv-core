@@ -23,7 +23,6 @@ namespace QuantumLogic.Core.Utils.Email.Data.Templates
         private readonly string _expertName;
         private readonly string _beverageName;
         private readonly string _roadName;
-        private readonly bool _showLocationInfo;
         private readonly string _locationType;
         private readonly string _locationAddress;
 
@@ -40,7 +39,6 @@ namespace QuantumLogic.Core.Utils.Email.Data.Templates
             string expertName,
             string beverageName,
             string roadName,
-            bool showLocationInfo,
             string locationType,
             string locationAddress)
         {
@@ -56,7 +54,6 @@ namespace QuantumLogic.Core.Utils.Email.Data.Templates
             _expertName = expertName;
             _beverageName = beverageName;
             _roadName = roadName;
-            _showLocationInfo = showLocationInfo;
             _locationType = locationType;
             _locationAddress = locationAddress;
         }
@@ -77,7 +74,6 @@ namespace QuantumLogic.Core.Utils.Email.Data.Templates
             _expertName = (lead.Expert != null) ? lead.Expert.Name : "Skipped by customer";
             _beverageName = (lead.Beverage != null) ? lead.Beverage.Name : "Skipped by customer";
             _roadName = (lead.Route != null) ? lead.Route.Name : "Skipped by customer";
-            _showLocationInfo = lead.ShowLocationInfo;
             _locationType = lead.LocationType;
             _locationAddress = lead.LocationAddress;
         }
@@ -111,17 +107,11 @@ namespace QuantumLogic.Core.Utils.Email.Data.Templates
             html = html.Replace("{{beverageName}}", _beverageName);
             html = html.Replace("{{roadName}}", _roadName);
 
-            #region Test Drive from home
-            if (_showLocationInfo)
-            {
-                html = html.Replace("{{showLocationInfo}}", "block");
-                html = html.Replace("{{locationType}}", _locationType);
-                html = html.Replace("{{locationAddress}}", _locationAddress);
-            }
-            else
-            {
-                html = html.Replace("{{showLocationInfo}}", "none");
-            }
+            #region Test Drive from home    
+
+            html = html.Replace("{{locationType}}", _locationType);
+            html = html.Replace("{{locationAddress}}", _locationAddress);
+            
             #endregion
 
             return html;
