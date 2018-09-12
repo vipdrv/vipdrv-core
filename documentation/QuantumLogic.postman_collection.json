@@ -2121,7 +2121,7 @@
 							"name": "Get models",
 							"request": {
 								"url": {
-									"raw": "{{ApplicationEndpoint}}/{{ApiResource}}/vehicle/28/models?make=BMW",
+									"raw": "{{ApplicationEndpoint}}/{{ApiResource}}/vehicle/28/models?make=BMW&sorting=name asc",
 									"host": [
 										"{{ApplicationEndpoint}}"
 									],
@@ -2135,6 +2135,12 @@
 										{
 											"key": "make",
 											"value": "BMW",
+											"equals": true,
+											"description": ""
+										},
+										{
+											"key": "sorting",
+											"value": "name asc",
 											"equals": true,
 											"description": ""
 										}
@@ -2155,7 +2161,7 @@
 							"name": "Get years",
 							"request": {
 								"url": {
-									"raw": "{{ApplicationEndpoint}}/{{ApiResource}}/vehicle/28/years?make=BMW&model=X6",
+									"raw": "{{ApplicationEndpoint}}/{{ApiResource}}/vehicle/28/years?make=BMW&model=X6&sorting=name desc",
 									"host": [
 										"{{ApplicationEndpoint}}"
 									],
@@ -2177,6 +2183,12 @@
 											"value": "X6",
 											"equals": true,
 											"description": ""
+										},
+										{
+											"key": "sorting",
+											"value": "name desc",
+											"equals": true,
+											"description": ""
 										}
 									],
 									"variable": []
@@ -2195,7 +2207,7 @@
 							"name": "Get vehicles",
 							"request": {
 								"url": {
-									"raw": "{{ApplicationEndpoint}}/{{ApiResource}}/vehicle/28/images?make=BMW&model=X6&year=2016",
+									"raw": "{{ApplicationEndpoint}}/{{ApiResource}}/vehicle/28/images?make=BMW&model=X6&year=2016&sorting=title asc",
 									"host": [
 										"{{ApplicationEndpoint}}"
 									],
@@ -2223,6 +2235,12 @@
 											"value": "2016",
 											"equals": true,
 											"description": ""
+										},
+										{
+											"key": "sorting",
+											"value": "title asc",
+											"equals": true,
+											"description": ""
 										}
 									],
 									"variable": []
@@ -2241,7 +2259,7 @@
 							"name": "Get vehicles search",
 							"request": {
 								"url": {
-									"raw": "{{ApplicationEndpoint}}/{{ApiResource}}/vehicle/28/search?filter=hi",
+									"raw": "{{ApplicationEndpoint}}/{{ApiResource}}/vehicle/28/search?filter=hi&sorting=title asc",
 									"host": [
 										"{{ApplicationEndpoint}}"
 									],
@@ -2255,6 +2273,12 @@
 										{
 											"key": "filter",
 											"value": "hi",
+											"equals": true,
+											"description": ""
+										},
+										{
+											"key": "sorting",
+											"value": "title asc",
 											"equals": true,
 											"description": ""
 										}

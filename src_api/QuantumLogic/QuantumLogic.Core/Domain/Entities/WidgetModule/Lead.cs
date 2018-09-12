@@ -23,7 +23,6 @@ namespace QuantumLogic.Core.Domain.Entities.WidgetModule
         public DateTime? BookingDateTimeUtc { get; set; }
         public bool IsNew { get; set; }
         public bool IsReachedByManager { get; set; }
-        public bool ShowLocationInfo { get; set; }
         public string LocationType { get; set; }
         public string LocationAddress { get; set; }
         #endregion
