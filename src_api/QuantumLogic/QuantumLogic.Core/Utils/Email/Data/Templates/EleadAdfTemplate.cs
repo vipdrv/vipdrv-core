@@ -164,14 +164,16 @@ namespace QuantumLogic.Core.Utils.Email.Data.Templates
                                     bookingDataTxt +
                                   $"</comments>" +
                               $"</customer>" +
+                              $"<vendorname>" +
+                                $"{DealerName} [Attn: {ExpertName}]" +
+                              $"</vendorname>" + 
                               $"<vendor>" +
                                   $"<contact>" +
                                       $"<name part=\"full\">{DealerName}</name>" +
                                   $"</contact>" +
                               $"</vendor>" +
                               $"<provider>" +
-                                $"<name>VIP Test Drive - {SiteName}</name>" + // TODO: special request from Boardwalk NissanBoardwalk Nissan Boardwalk Nissan
-                                                                              // $"<url>https://www.vipdrv.com</url>" +
+                                $"<name>VIP Test Drive - {SiteName}</name>" + 
                               $"</provider>" +
                               $"<salesperson>" +
                                 $"<id source=\"DealerPeak\">{DealerPeakSalesId}</id>" +
