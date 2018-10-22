@@ -173,7 +173,7 @@ namespace QuantumLogic.Core.Utils.Email.Data.Templates
                                   $"</contact>" +
                               $"</vendor>" +
                               $"<provider>" +
-                                $"<name>VIP Test Drive - {SiteName}</name>" + 
+                                $"<name>VIPdrv Test Drive</name>" + 
                               $"</provider>" +
                               $"<salesperson>" +
                                 $"<id source=\"DealerPeak\">{DealerPeakSalesId}</id>" +
@@ -183,7 +183,6 @@ namespace QuantumLogic.Core.Utils.Email.Data.Templates
                               $"</agent>" +
                           $"</prospect>" +
                       $"</adf>";
-
 
             return xml;
         }
