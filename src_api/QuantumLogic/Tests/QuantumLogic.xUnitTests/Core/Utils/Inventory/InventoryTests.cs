@@ -94,6 +94,7 @@ namespace QuantumLogic.xUnitTests.Core.Utils.Inventory
         }
 
         [Test, MaxTime(360000)]
+        [Ignore("")]
         public void ParseFeed__ShouldWork()
         {
             IList<SiteFeed> devDealerFeed = DevDealerFeed();

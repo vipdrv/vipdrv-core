@@ -47,8 +47,21 @@ namespace QuantumLogic.Core.Utils.Email
 
         public Task<Response> SendAdfEmail(List<EmailAddress> emailTo, IEmailTemplate emailTemplate)
         {
-            SendGridMessage message = MailHelper.CreateSingleEmailToMultipleRecipients(EmailFrom, emailTo, AdfEmailSubject, emailTemplate.AsPlainText(), emailTemplate.AsPlainText());
-            return SendGridClient.SendEmailAsync(message);
+            SendGridMessage message = MailHelper.CreateSingleEmailToMultipleRecipients(EmailFrom, emailTo, AdfEmailSubject, emailTemplate.AsPlainText(), null);
+
+            SendGridMessage sendGridMessage = new SendGridMessage();
+            sendGridMessage.SetFrom(EmailFrom);
+            sendGridMessage.SetGlobalSubject(AdfEmailSubject);
+            if (!string.IsNullOrEmpty(emailTemplate.AsPlainText()))
+                sendGridMessage.AddContent(MimeType.Text, emailTemplate.AsPlainText());
+            //if (!string.IsNullOrEmpty(htmlContent))
+            //    sendGridMessage.AddContent(MimeType.Html, htmlContent);
+            for (int personalizationIndex = 0; personalizationIndex < emailTo.Count; ++personalizationIndex)
+                sendGridMessage.AddTo(emailTo[personalizationIndex], personalizationIndex, (Personalization)null);
+            // return sendGridMessage;
+
+
+            return SendGridClient.SendEmailAsync(sendGridMessage);
         }
     }
 }
