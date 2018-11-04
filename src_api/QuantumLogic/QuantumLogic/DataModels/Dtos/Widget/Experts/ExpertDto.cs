@@ -16,6 +16,8 @@ namespace QuantumLogic.WebApi.DataModels.Dtos.Widget.Experts
         public string PhoneNumber { get; set; }
         public string FacebookUrl { get; set; }
         public string LinkedinUrl { get; set; }
+        public string DealerraterUrl { get; set; }
+        
         public IList<DayOfWeekInterval> WorkingHours { get; set; }
         public int Order { get; set; }
         public bool IsActive { get; set; }
@@ -47,6 +49,7 @@ namespace QuantumLogic.WebApi.DataModels.Dtos.Widget.Experts
             IsPartOfTeamUsedCars = entity.IsPartOfTeamUsedCars;
             IsPartOfTeamCPO = entity.IsPartOfTeamCPO;
             EmployeeId = entity.EmployeeId;
+            DealerraterUrl = entity.DealerraterUrl;
         }
         public override Expert MapToEntity()
         {
@@ -66,6 +69,7 @@ namespace QuantumLogic.WebApi.DataModels.Dtos.Widget.Experts
             entity.IsPartOfTeamUsedCars = IsPartOfTeamUsedCars;
             entity.IsPartOfTeamCPO = IsPartOfTeamCPO;
             entity.EmployeeId = EmployeeId;
+            entity.DealerraterUrl = DealerraterUrl;
             return entity;
         }
 

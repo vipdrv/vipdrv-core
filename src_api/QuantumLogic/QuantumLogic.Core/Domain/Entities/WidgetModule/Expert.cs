@@ -23,6 +23,8 @@
 
         public string EmployeeId { get; set; }
 
+        public string DealerraterUrl { get; set; }
+
         #endregion
 
         #region Relations
@@ -91,6 +93,7 @@
             IsPartOfTeamUsedCars = actualEntity.IsPartOfTeamUsedCars;
             IsPartOfTeamCPO = actualEntity.IsPartOfTeamCPO;
             EmployeeId = actualEntity.EmployeeId;
+            DealerraterUrl = actualEntity.DealerraterUrl;
         }
 
         #endregion
