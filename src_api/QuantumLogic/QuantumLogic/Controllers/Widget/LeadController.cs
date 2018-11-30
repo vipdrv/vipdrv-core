@@ -200,7 +200,7 @@ namespace QuantumLogic.WebApi.Controllers.Widget
                         new ExpertNotificationEmailTemplate(createdLead, request.TimeZoneOffset));
             }
 
-            if (createdLead.Expert != null && !String.IsNullOrWhiteSpace(createdLead.Expert.PhoneNumber) && createdLead.Site.Id != 1069)
+            if (createdLead.Expert != null && !String.IsNullOrWhiteSpace(createdLead.Expert.PhoneNumber) && createdLead.Site.Id != 1070)
             {
                 await SmsService.SendSms(new List<string>() { createdLead.Expert.PhoneNumber },
                     new NewLeadNotificationSmsTemplate(createdLead, request.TimeZoneOffset));
