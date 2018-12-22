@@ -12,6 +12,7 @@ namespace QuantumLogic.Core.Utils.Sms.Templates
         public string CustomerLastName { get; }
         public string CustomerPhone { get; }
         public string CustomerEmail { get; }
+        public string CustomerComment { get; set; }
         public string VehicleTitle { get; }
         public string VehicleVin { get; }
         public DateTime? BookingDateTimeUtc { get; }
@@ -53,6 +54,7 @@ namespace QuantumLogic.Core.Utils.Sms.Templates
             CustomerLastName = lead.SecondName;
             CustomerPhone = lead.UserPhone;
             CustomerEmail = lead.UserEmail;
+            CustomerComment = lead.UserComment;
             VehicleTitle = lead.CarTitle;
             VehicleVin = lead.CarVin;
             BookingDateTimeUtc = lead.BookingDateTimeUtc;
@@ -71,9 +73,10 @@ namespace QuantumLogic.Core.Utils.Sms.Templates
                     .Add(new TimeSpan(0, -TimeZoneOffset, 0))
                     .ToString(QuantumLogicConstants.UsaTimeFormat, CultureInfo.InvariantCulture);
             }
+            CustomerComment = !string.IsNullOrEmpty(CustomerComment) ? CustomerComment : "";
 
             return $"New Lead for {DealerName}! \n\n" +
-                   
+
                    $"Vehicle: {VehicleTitle} \n" +
                    $"Vin: {VehicleVin} \n\n" +
 
@@ -81,12 +84,13 @@ namespace QuantumLogic.Core.Utils.Sms.Templates
                    $"Name: {CustomerFirstName} {CustomerLastName} \n" +
                    $"Phone: {CustomerPhone} \n" +
                    $"Email: {CustomerEmail} \n\n" +
-                   
+
                    "Booking details \n" +
                    $"Date & Time: {bookingDateTime} \n" +
                    $"Expert: {ExpertTitle} \n" +
                    $"Beverage: {BeverageTitle} \n" +
-                   $"Route: {RoadTitle} \n";
+                   $"Route: {RoadTitle} \n" +
+                   $"Comment: {CustomerComment} \n";
         }
     }
 }

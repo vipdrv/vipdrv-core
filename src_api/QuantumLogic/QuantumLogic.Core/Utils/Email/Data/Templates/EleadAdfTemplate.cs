@@ -67,9 +67,9 @@ namespace QuantumLogic.Core.Utils.Email.Data.Templates
             UserComments = lead.UserComment;
             SiteName = lead.Site?.Name;
             DealerName = lead.Site?.DealerName;
-            ExpertName = (lead.Expert != null) ? lead.Expert.Name : "Skipped by customer";
-            BeverageName = (lead.Beverage != null) ? lead.Beverage.Name : "Skipped by customer";
-            RouteTitle = (lead.Route != null) ? lead.Route.Name : "Skipped by customer";
+            ExpertName = (lead.Expert != null) ? lead.Expert.Name : null;
+            BeverageName = (lead.Beverage != null) ? lead.Beverage.Name : null;
+            RouteTitle = (lead.Route != null) ? lead.Route.Name : null;
             DealerPeakSalesId = (lead.Expert != null) ? lead.Expert.EmployeeId : string.Empty;
             Vehicle = vehicle;
         }
@@ -92,13 +92,18 @@ namespace QuantumLogic.Core.Utils.Email.Data.Templates
 
         protected string BookingDataAsComment(string bookingDateTime, string expertName, string beverageName, string routeName, string userComments)
         {
-            string bookingDateTimeNode = !string.IsNullOrEmpty(bookingDateTime) ? $"Test Drive DateTime: {bookingDateTime};" : "";
-            string expertNameNode = !string.IsNullOrEmpty(expertName) ? $"Sales Person: {expertName};" : "";
-            string beverageNameNode = !string.IsNullOrEmpty(beverageName) ? $"Beverage: {beverageName};" : "";
-            string routeNameNode = !string.IsNullOrEmpty(routeName) ? $"Test Drive Route: {routeName};" : "";
+            string bookingDateTimeNode = !string.IsNullOrEmpty(bookingDateTime) ? $"Test Drive DateTime: {bookingDateTime};" : "Skipped by customer";
+            string expertNameNode = !string.IsNullOrEmpty(expertName) ? $"Sales Person: {expertName};" : "Skipped by customer";
+            string beverageNameNode = !string.IsNullOrEmpty(beverageName) ? $"Beverage: {beverageName};" : "Skipped by customer";
+            string routeNameNode = !string.IsNullOrEmpty(routeName) ? $"Test Drive Route: {routeName};" : "Skipped by customer";
             string userCommentsNode = !string.IsNullOrEmpty(userComments) ? $"User Comments: {userComments};" : "";
 
             return $"{bookingDateTimeNode} {expertNameNode} {beverageNameNode} {routeNameNode} {userCommentsNode}";
+        }
+
+        public string VendorName(string dealerName, string expertName)
+        {
+            return !string.IsNullOrEmpty(expertName) ? $"<vendorname>{DealerName} [Attn: {ExpertName}]</vendorname>" : "";
         }
 
         public string AsHtml()
@@ -146,7 +151,7 @@ namespace QuantumLogic.Core.Utils.Email.Data.Templates
                                   $"</comments>" +
                               $"</customer>" +
                               $"<vendor>" +
-                                  $"<vendorname>{DealerName} [Attn: {ExpertName}]</vendorname>" +
+                                    VendorName(DealerName, ExpertName) +
                                   //$"<contact>" +
                                   //    $"<name part=\"full\">{DealerName}</name>" +
                                   //$"</contact>" +
