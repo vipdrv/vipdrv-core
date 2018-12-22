@@ -70,11 +70,11 @@ namespace QuantumLogic.Core.Utils.Email.Data.Templates
             ExpertName = (lead.Expert != null) ? lead.Expert.Name : "Skipped by customer";
             BeverageName = (lead.Beverage != null) ? lead.Beverage.Name : "Skipped by customer";
             RouteTitle = (lead.Route != null) ? lead.Route.Name : "Skipped by customer";
-            DealerPeakSalesId = (lead.Expert != null) ? lead.Expert.EmployeeId : String.Empty;
+            DealerPeakSalesId = (lead.Expert != null) ? lead.Expert.EmployeeId : string.Empty;
             Vehicle = vehicle;
         }
 
-        protected string VehiclePriceNode(IVehicle vehicle)
+        protected string VehiclePriceXmlNode(IVehicle vehicle)
         {
             // < !-- numeric, e.g. 19500 --> <!-- type:quote|offer|msrp|invoice|call|appraisal|asking; currency:ISO 4217 3-letter code; delta:absolute|relative|percentage; relativeto:msrp|invoice; source:free text; -->
 
@@ -90,43 +90,15 @@ namespace QuantumLogic.Core.Utils.Email.Data.Templates
             return $"<price type=\"{type}\" currency=\"{currency}\" delta=\"\" relativeto=\"\" source=\"\">{price}</price>";
         }
 
-        protected string VehicleXmlNode(IVehicle vehicle)
+        protected string BookingDataAsComment(string bookingDateTime, string expertName, string beverageName, string routeName, string userComments)
         {
-            string vehiclePriceXmlNode = VehiclePriceNode(vehicle);
-            string xml = $"<vehicle interest=\"test-drive\" status=\"{vehicle.Condition}\">" + // < !-- interest:buy|lease|sell|trade-in|test-drive; status:new|used; -->
-                             $"<vin>{vehicle.Vin}</vin>" +
-                             $"<year>{vehicle.Year}</year>" +
-                             $"<make>{vehicle.Make}</make>" +
-                             $"<model>{vehicle.Model}</model>" +
-                             $"<stock>{vehicle.Stock}</stock>" +
-                             $"<trim></trim>" +
-                             $"<odometer status=\"\" units=\"\"></odometer>" + // < !-- status:unknown|rolledover|replaced|original; units:km|mi; -->
-                             $"<colorcombination>" +
-                                $"<interiorcolor>{vehicle.Interior}</interiorcolor>" +
-                                $"<exteriorcolor>{vehicle.Exterior}</exteriorcolor>" +
-                                $"<preference></preference>" + // < !-- 1-n -->
-                             $"</colorcombination>" +
-                              vehiclePriceXmlNode +
-                         $"</vehicle>";
+            string bookingDateTimeNode = !string.IsNullOrEmpty(bookingDateTime) ? $"Test Drive DateTime: {bookingDateTime};" : "";
+            string expertNameNode = !string.IsNullOrEmpty(expertName) ? $"Sales Person: {expertName};" : "";
+            string beverageNameNode = !string.IsNullOrEmpty(beverageName) ? $"Beverage: {beverageName};" : "";
+            string routeNameNode = !string.IsNullOrEmpty(routeName) ? $"Test Drive Route: {routeName};" : "";
+            string userCommentsNode = !string.IsNullOrEmpty(userComments) ? $"User Comments: {userComments};" : "";
 
-            return xml;
-        }
-
-        protected string BookingDataTxt(string bookingDateTime, string expertName, string beverageName, string routeName, string userComments)
-        {
-            string bookingDateTimeNode = !String.IsNullOrEmpty(bookingDateTime) ? $"Test Drive DateTime: {bookingDateTime};  " : "";
-            string expertNameNode = !String.IsNullOrEmpty(expertName) ? $"Sales Person: {expertName};  \n" : "";
-            string beverageNameNode = !String.IsNullOrEmpty(beverageName) ? $"Beverage: {beverageName};  \n" : "";
-            string routeNameNode = !String.IsNullOrEmpty(routeName) ? $"Route: {routeName};  \n" : "";
-            string userCommentsNode = !String.IsNullOrEmpty(userComments) ? $"User Comments: {userComments};  \n" : "";
-
-            string result = bookingDateTimeNode +
-                            expertNameNode +
-                            beverageNameNode +
-                            routeNameNode +
-                            userCommentsNode;
-
-            return result;
+            return $"{bookingDateTimeNode} {expertNameNode} {beverageNameNode} {routeNameNode} {userCommentsNode}";
         }
 
         public string AsHtml()
@@ -143,16 +115,25 @@ namespace QuantumLogic.Core.Utils.Email.Data.Templates
                     .ToString(QuantumLogicConstants.UsaTimeFormat, CultureInfo.InvariantCulture);
             }
 
-            string vehicleXmlNode = VehicleXmlNode(Vehicle);
-            string bookingDataTxt = BookingDataTxt(bookingDateTime, ExpertName, BeverageName, RouteTitle, UserComments);
-
             var xml = $"<?xml version=\"1.0\" encoding=\"UTF-8\"?>" +
                       $"<?adf version=\"1.0\"?>" +
                       $"<adf>" +
                           $"<prospect status=\"new\">" +
                               $"<id sequence=\"{DealerName}\" source=\"{SiteName}\"></id>" +
-                                //$"<requestdate>{recieveDateTime}</requestdate>" +
-                                vehicleXmlNode +
+                              $"<vehicle interest=\"test-drive\" status=\"{Vehicle.Condition}\">" + // < !-- interest:buy|lease|sell|trade-in|test-drive; status:new|used; -->
+                                  $"<vin>{Vehicle.Vin}</vin>" +
+                                  //$"<year>{Vehicle.Year}</year>" +
+                                  //$"<make>{Vehicle.Make}</make>" +
+                                  //$"<model>{Vehicle.Model}</model>" +
+                                  $"<stock>{Vehicle.Stock}</stock>" +
+                                  //$"<trim></trim>" +
+                                  //$"<odometer status=\"\" units=\"\"></odometer>" + // < !-- status:unknown|rolledover|replaced|original; units:km|mi; -->
+                                  //$"<colorcombination>" +
+                                  //    $"<interiorcolor>{Vehicle.Interior}</interiorcolor>" +
+                                  //    $"<exteriorcolor>{Vehicle.Exterior}</exteriorcolor>" +
+                                  //$"</colorcombination>" +
+                                  //VehiclePriceXmlNode(Vehicle) +
+                              $"</vehicle>" +
                               $"<customer>" +
                                   $"<contact>" +
                                       $"<name part=\"first\">{FirstName}</name>" +
@@ -161,16 +142,14 @@ namespace QuantumLogic.Core.Utils.Email.Data.Templates
                                       $"<email>{UserEmail}</email>" +
                                   $"</contact>" +
                                   $"<comments>" +
-                                    bookingDataTxt +
+                                        BookingDataAsComment(bookingDateTime, ExpertName, BeverageName, RouteTitle, UserComments) +
                                   $"</comments>" +
                               $"</customer>" +
-                              $"<vendorname>" +
-                                $"{DealerName} [Attn: {ExpertName}]" +
-                              $"</vendorname>" + 
                               $"<vendor>" +
-                                  $"<contact>" +
-                                      $"<name part=\"full\">{DealerName}</name>" +
-                                  $"</contact>" +
+                                  $"<vendorname>{DealerName} [Attn: {ExpertName}]</vendorname>" +
+                                  //$"<contact>" +
+                                  //    $"<name part=\"full\">{DealerName}</name>" +
+                                  //$"</contact>" +
                               $"</vendor>" +
                               $"<provider>" +
                                 $"<name>VIPdrv Test Drive</name>" + 

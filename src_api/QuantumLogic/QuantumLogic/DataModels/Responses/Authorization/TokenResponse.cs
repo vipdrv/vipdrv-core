@@ -14,15 +14,38 @@ namespace QuantumLogic.WebApi.DataModels.Responses.Authorization
 
         #region Ctors
 
-        public TokenResponse(string issuer, IList<string> audiences, string token, string tokenType, string sub, DateTime expireDateTimeUtc, IdentityInfo userIdentityInfo)
+        public TokenResponse(
+            string issuer,
+            IList<string> audiences,
+            string token,
+            string tokenType,
+            string sub,
+            DateTime expireDateTimeUtc,
+            IdentityInfo userIdentityInfo)
             : this(
-                  issuer, audiences, token, tokenType, sub, expireDateTimeUtc, userIdentityInfo.UserId, userIdentityInfo.Username,
-                  userIdentityInfo.GrantedRoles, userIdentityInfo.GrantedPermissions)
+                  issuer, 
+                  audiences, 
+                  token, 
+                  tokenType, 
+                  sub, 
+                  expireDateTimeUtc, 
+                  userIdentityInfo.UserId, 
+                  userIdentityInfo.Username,
+                  userIdentityInfo.GrantedRoles, 
+                  userIdentityInfo.GrantedPermissions)
         { }
 
         public TokenResponse(
-            string issuer, IList<string> audiences, string token, string tokenType, string sub, DateTime expireDateTimeUtc, 
-            int userId, string username, IList<string> grantedRoles, IList<string> grantedPermissions)
+            string issuer, 
+            IList<string> audiences, 
+            string token, 
+            string tokenType, 
+            string sub,
+            DateTime expireDateTimeUtc,
+            int userId,
+            string username,
+            IList<string> grantedRoles,
+            IList<string> grantedPermissions)
             : base(userId, username, grantedRoles, grantedPermissions)
         {
             Issuer = issuer;
