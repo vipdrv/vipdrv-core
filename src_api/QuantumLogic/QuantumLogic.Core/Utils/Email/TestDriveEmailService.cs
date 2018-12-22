@@ -53,11 +53,14 @@ namespace QuantumLogic.Core.Utils.Email
             sendGridMessage.SetFrom(EmailFrom);
             sendGridMessage.SetGlobalSubject(AdfEmailSubject);
             if (!string.IsNullOrEmpty(emailTemplate.AsPlainText()))
-                sendGridMessage.AddContent(MimeType.Text, emailTemplate.AsPlainText());
+            {
+                sendGridMessage.AddContent("text/xml", emailTemplate.AsPlainText());
+            }
+            
             //if (!string.IsNullOrEmpty(htmlContent))
             //    sendGridMessage.AddContent(MimeType.Html, htmlContent);
             for (int personalizationIndex = 0; personalizationIndex < emailTo.Count; ++personalizationIndex)
-                sendGridMessage.AddTo(emailTo[personalizationIndex], personalizationIndex, (Personalization)null);
+                sendGridMessage.AddTo(emailTo[personalizationIndex], personalizationIndex);
             // return sendGridMessage;
 
 
