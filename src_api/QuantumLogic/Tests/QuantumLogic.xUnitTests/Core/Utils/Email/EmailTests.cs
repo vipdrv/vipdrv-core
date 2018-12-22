@@ -16,7 +16,6 @@ namespace QuantumLogic.xUnitTests.Core.Utils.Email
     public sealed class EmailManagerTests
     {
         [Test]
-        [Ignore("Real email sending")]
         public Task EmailWithADFContent__ShouldSendViaEmail()
         {
             ITestDriveEmailService testDriveEmailService = new TestDriveEmailService();
@@ -24,22 +23,28 @@ namespace QuantumLogic.xUnitTests.Core.Utils.Email
             {
                 new EmailAddress("ultramarine256@gmail.com")
             };
-            IEmailTemplate AdfEmailTemplate = new EleadAdfTemplate(
+
+            var vehicle = new BookingVehicle();
+            vehicle.Title = "2018 New BMW X5";
+            vehicle.Vin = "WAUJT68E23A269563";
+            vehicle.Stock = "FC7310B";
+
+            IEmailTemplate adfEmailTemplate = new EleadAdfTemplate(
                 DateTime.Now, 
                 0, 
-                firstName: "CAR TITLE", 
-                secondName: "Evgeny",
-                userPhone: "Platonov",
-                userEmail: "+380666159567",
-                userComments: "Test user comments",
-                siteName: "ultramarine256@gmail.com",
+                firstName: "Evgeny", 
+                secondName: "Platonov",
+                userPhone: "+380666159567",
+                userEmail: "ultramarine256@gmail.com",
+                userComments: "Test User comments",
+                siteName: "Truck World",
                 dealerName: "Truck World",
-                expertName: "VIN-111",
-                beverageName: "DealerEmpire", 
-                routeTitle: "ROUTE",
+                expertName: "Expert Name",
+                beverageName: "Beverage Name", 
+                routeTitle: "Route Name",
                 dealerPeakSalesId: "000", 
-                vehicle: new BookingVehicle());
-            return testDriveEmailService.SendAdfEmail(recipientsList, AdfEmailTemplate);
+                vehicle: vehicle);
+            return testDriveEmailService.SendAdfEmail(recipientsList, adfEmailTemplate);
         }
 
         [Test]
@@ -53,10 +58,9 @@ namespace QuantumLogic.xUnitTests.Core.Utils.Email
             };
 
             IVehicle vehicle = new BookingVehicle();
-            vehicle.Title = "BMW X5";
-            vehicle.Make = "BMW";
-            vehicle.Model = "X5";
-            vehicle.Year = "2016";
+            vehicle.Title = "2018 New BMW X5";
+            vehicle.Vin = "WAUJT68E23A269563";
+            vehicle.Stock = "FC7310B";
 
             Lead lead = new Lead();
 
