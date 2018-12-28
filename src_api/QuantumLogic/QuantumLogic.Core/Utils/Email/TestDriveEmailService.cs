@@ -54,7 +54,7 @@ namespace QuantumLogic.Core.Utils.Email
             sendGridMessage.SetGlobalSubject(AdfEmailSubject);
             if (!string.IsNullOrEmpty(emailTemplate.AsPlainText()))
             {
-                sendGridMessage.AddContent("text/xml", emailTemplate.AsPlainText());
+                sendGridMessage.AddContent("text/plain", emailTemplate.AsPlainText());
             }
             
             //if (!string.IsNullOrEmpty(htmlContent))
