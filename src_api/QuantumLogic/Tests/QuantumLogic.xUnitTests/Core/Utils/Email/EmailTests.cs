@@ -48,7 +48,7 @@ namespace QuantumLogic.xUnitTests.Core.Utils.Email
         }
 
         [Test]
-        [Ignore("Is used to debug Email content")]
+        // [Ignore("Is used to debug Email content")]
         public void EmailWithADFContent__ShouldGenerateValidXML()
         {
             ITestDriveEmailService testDriveEmailService = new TestDriveEmailService();
@@ -65,10 +65,10 @@ namespace QuantumLogic.xUnitTests.Core.Utils.Email
             Lead lead = new Lead();
 
             IEmailTemplate eleadAdfTemplate = new EleadAdfTemplate(lead, vehicle, -120);
-            string html = eleadAdfTemplate.AsHtml();
+            string xml = eleadAdfTemplate.AsPlainText();
 
             testDriveEmailService.SendAdfEmail(recipientsList, eleadAdfTemplate);
-            Console.WriteLine(html);
+            Console.WriteLine(xml);
         }
     }
 }

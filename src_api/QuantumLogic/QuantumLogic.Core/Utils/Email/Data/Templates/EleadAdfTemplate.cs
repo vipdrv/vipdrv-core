@@ -92,13 +92,13 @@ namespace QuantumLogic.Core.Utils.Email.Data.Templates
 
         protected string BookingDataAsComment(string bookingDateTime, string expertName, string beverageName, string routeName, string userComments)
         {
-            string bookingDateTimeNode = !string.IsNullOrEmpty(bookingDateTime) ? $"Test Drive DateTime: {bookingDateTime};" : "Skipped by customer";
-            string expertNameNode = !string.IsNullOrEmpty(expertName) ? $"Sales Person: {expertName};" : "Skipped by customer";
-            string beverageNameNode = !string.IsNullOrEmpty(beverageName) ? $"Beverage: {beverageName};" : "Skipped by customer";
-            string routeNameNode = !string.IsNullOrEmpty(routeName) ? $"Test Drive Route: {routeName};" : "Skipped by customer";
-            string userCommentsNode = !string.IsNullOrEmpty(userComments) ? $"User Comments: {userComments};" : "";
+            string bookingDateTimeNode = !string.IsNullOrEmpty(bookingDateTime) ? $"{bookingDateTime}" : "Skipped by customer";
+            string expertNameNode = !string.IsNullOrEmpty(expertName) ? $"{expertName};" : "Skipped by customer";
+            string beverageNameNode = !string.IsNullOrEmpty(beverageName) ? $"{beverageName};" : "Skipped by customer";
+            string routeNameNode = !string.IsNullOrEmpty(routeName) ? $"{routeName};" : "Skipped by customer";
+            string userCommentsNode = !string.IsNullOrEmpty(userComments) ? $"{userComments};" : "-";
 
-            return $"{bookingDateTimeNode} {expertNameNode} {beverageNameNode} {routeNameNode} {userCommentsNode}";
+            return $"Test Drive DateTime: {bookingDateTimeNode}; Sales Person: {expertNameNode}; Beverage: {beverageNameNode}; Test Drive Route: {routeNameNode}; User Comments: {userCommentsNode};";
         }
 
         public string VendorName(string dealerName, string expertName)
@@ -120,24 +120,18 @@ namespace QuantumLogic.Core.Utils.Email.Data.Templates
                     .ToString(QuantumLogicConstants.UsaTimeFormat, CultureInfo.InvariantCulture);
             }
 
-            var xml = $"<?xml version=\"1.0\" encoding=\"UTF-8\"?>" +
+            var xml = $"<?xml version=\"1.0\"?>" +
                       $"<?adf version=\"1.0\"?>" +
                       $"<adf>" +
-                          $"<prospect status=\"new\">" +
+                          $"<prospect status=\"\">" +
                               $"<id sequence=\"{DealerName}\" source=\"{SiteName}\"></id>" +
+                              $"<requestdate>{recieveDateTime}</requestdate>" +
                               $"<vehicle interest=\"test-drive\" status=\"{Vehicle.Condition}\">" + // < !-- interest:buy|lease|sell|trade-in|test-drive; status:new|used; -->
-                                  $"<vin>{Vehicle.Vin}</vin>" +
-                                  //$"<year>{Vehicle.Year}</year>" +
-                                  //$"<make>{Vehicle.Make}</make>" +
-                                  //$"<model>{Vehicle.Model}</model>" +
+                                  $"<year>{Vehicle.Year}</year>" +
+                                  $"<make>{Vehicle.Make}</make>" +
+                                  $"<model>{Vehicle.Model}</model>" +
                                   $"<stock>{Vehicle.Stock}</stock>" +
-                                  //$"<trim></trim>" +
-                                  //$"<odometer status=\"\" units=\"\"></odometer>" + // < !-- status:unknown|rolledover|replaced|original; units:km|mi; -->
-                                  //$"<colorcombination>" +
-                                  //    $"<interiorcolor>{Vehicle.Interior}</interiorcolor>" +
-                                  //    $"<exteriorcolor>{Vehicle.Exterior}</exteriorcolor>" +
-                                  //$"</colorcombination>" +
-                                  //VehiclePriceXmlNode(Vehicle) +
+                                  $"<vin>{Vehicle.Vin}</vin>" +
                               $"</vehicle>" +
                               $"<customer>" +
                                   $"<contact>" +
