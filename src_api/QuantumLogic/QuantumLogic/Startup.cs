@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.DotNet.PlatformAbstractions;
 using Microsoft.Extensions.Configuration;
@@ -30,11 +30,11 @@ namespace QuantumLogic.WebApi
 
         public Startup(IHostingEnvironment env)
         {
-#warning appsettings.Development.json replaces to appsettings.Production.json during deploy on production 
+#warning appsettings.Production.json replaces to appsettings.Production.json during deploy on production 
             IConfigurationBuilder builder = new ConfigurationBuilder()
                 .SetBasePath(env.ContentRootPath)
                 .AddJsonFile("appsettings.json")
-                .AddJsonFile($"appsettings.Development.json", optional: true);
+                .AddJsonFile($"appsettings.Production.json", optional: true);
             builder.AddEnvironmentVariables();
             Configuration = builder.Build();
             mainModule = new WebApiModule();

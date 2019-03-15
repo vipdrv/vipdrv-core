@@ -54,8 +54,11 @@ namespace QuantumLogic.xUnitTests.Core.Utils.Email
             ITestDriveEmailService testDriveEmailService = new TestDriveEmailService();
             List<EmailAddress> recipientsList = new List<EmailAddress>()
             {
+                new EmailAddress("ultramarine256@gmail.com"),
                 new EmailAddress("ultramarine256@gmail.com")
             };
+
+            // xmlmethod1@dealersocket.dsmessage.com
 
             IVehicle vehicle = new BookingVehicle();
             vehicle.Title = "2018 New BMW X5";
@@ -63,6 +66,7 @@ namespace QuantumLogic.xUnitTests.Core.Utils.Email
             vehicle.Stock = "FC7310B";
 
             Lead lead = new Lead();
+            
 
             IEmailTemplate eleadAdfTemplate = new EleadAdfTemplate(lead, vehicle, -120);
             string xml = eleadAdfTemplate.AsPlainText();

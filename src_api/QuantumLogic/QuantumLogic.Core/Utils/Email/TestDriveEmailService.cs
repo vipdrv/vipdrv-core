@@ -12,7 +12,7 @@ namespace QuantumLogic.Core.Utils.Email
         protected const string NewLeadNotificationSubject = "New Test Drive Appointment";
         protected const string ExpertNotificationSubject = "New Test Drive Appointment";
         protected const string DealerInvitationSubject = "Welcome to TetsDrive";
-        protected const string AdfEmailSubject = "ADF XML";
+        protected const string AdfEmailSubject = "VIPdrv Test Drive";
         protected EmailAddress EmailFrom = new EmailAddress("testdrive@vipdrv.com", "VIPdrv - VIP Test Drive");
         protected readonly ISendGridClient SendGridClient;
 
