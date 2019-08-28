@@ -1,0 +1,253 @@
+<div class="site-notifications-template">
+    <div class="row">
+        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
+            <div class="row site-notifications-email-label-row">
+                <div class="col-xl-12">
+                    <span translate>sites.details.notifications.emails</span>:
+                </div>
+            </div>
+            <div class="row site-notifications-email-entity-row" *ngFor="let item of emailEntities">
+                <div class="col-xl-1 col-lg-1 col-md-1 col-sm-1 col-1"></div>
+                <div class="col-xl-8 col-lg-8 col-md-10 col-sm-10 col-10">
+                    <div class="input-group input-group-sm">
+                        <span class="input-group-btn" *ngIf="policyService.canUpdateContacts()">
+                            <button class="btn btn-sm btn-primary site-notifications-email-entity-start-edit-btn"
+                                    type="button"
+                                    *ngIf="!item.isEditProcessing"
+                                    [disabled]="isSaveProcessing()"
+                                    (click)="item.startEdit()">
+                                <i class="fa fa-edit"></i>
+                            </button>
+                            <button class="btn btn-sm btn-secondary site-notifications-email-entity-undo-btn"
+                                    type="button"
+                                    *ngIf="item.isEditProcessing"
+                                    [disabled]="isSaveProcessing()"
+                                    (click)="item.undoEdit()">
+                                <i class="fa fa-undo"></i>
+                            </button>
+                        </span>
+                        <input class="form-control form-control-sm"
+                               type="email"
+                               *ngIf="!item.isEditProcessing"
+                               disabled
+                               [(ngModel)]="item.value"/>
+                        <input class="form-control form-control-sm"
+                               type="email"
+                               *ngIf="item.isEditProcessing"
+                               [disabled]="isSaveProcessing()"
+                               [(ngModel)]="item.editValue"/>
+                        <span class="input-group-btn" *ngIf="policyService.canUpdateContacts()">
+                            <button class="btn btn-sm btn-danger site-notifications-email-entity-remove-btn"
+                                    type="button"
+                                    *ngIf="!item.isEditProcessing"
+                                    [disabled]="isSaveProcessing()"
+                                    (click)="deleteEmailFromContacts(item)">
+                                <i class="fa fa-times"></i>
+                            </button>
+                            <button class="btn btn-sm btn-success site-notifications-email-entity-commit-edit-btn"
+                                    type="button"
+                                    *ngIf="item.isEditProcessing"
+                                    [disabled]="isSaveProcessing() || !isEmailValid(item.editValue)"
+                                    (click)="item.commitEdit()">
+                                <i class="fa fa-check"></i>
+                            </button>
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="row site-notifications-email-entity-row" *ngIf="policyService.canUpdateContacts()">
+                <div class="col-xl-1 col-lg-1 col-md-1 col-sm-1 col-1"></div>
+                <div class="col-xl-8 col-lg-8 col-md-10 col-sm-10 col-10">
+                    <hr>
+                    <div class="input-group input-group-sm">
+                        <input type="email"
+                               [disabled]="isSaveProcessing()"
+                               class="form-control form-control-sm"
+                               [(ngModel)]="newEmailEntity.value"/>
+                        <span class="input-group-btn">
+                            <button class="btn btn-sm btn-success site-notifications-email-entity-commit-add-btn"
+                                    type="button"
+                                    [disabled]="isSaveProcessing() || !isEmailValid(newEmailEntity.value)"
+                                    (click)="addNewEmailEntity()">
+                                <i class="fa fa-plus"></i>
+                            </button>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
+            <div class="row site-notifications-sms-label-row">
+                <div class="col-xl-12">
+                    <span translate>sites.details.notifications.sms</span>:
+                </div>
+            </div>
+
+            <div class="row site-notifications-sms-entity-row" *ngFor="let item of smsEntities">
+                <div class="col-xl-1 col-lg-1 col-md-1 col-sm-1 col-1"></div>
+                <div class="col-xl-8 col-lg-8 col-md-10 col-sm-10 col-10">
+                    <div class="input-group input-group-sm">
+                        <span class="input-group-btn" *ngIf="policyService.canUpdateContacts()">
+                            <button class="btn btn-sm btn-primary site-notifications-sms-entity-start-edit-btn"
+                                    type="button"
+                                    *ngIf="!item.isEditProcessing"
+                                    [disabled]="isSaveProcessing()"
+                                    (click)="item.startEdit()">
+                                <i class="fa fa-edit"></i>
+                            </button>
+                            <button class="btn btn-sm btn-secondary site-notifications-sms-entity-undo-btn"
+                                    type="button"
+                                    *ngIf="item.isEditProcessing"
+                                    [disabled]="isSaveProcessing()"
+                                    (click)="item.undoEdit()">
+                                <i class="fa fa-undo"></i>
+                            </button>
+                        </span>
+                        <input class="form-control form-control-sm"
+                               type="tel"
+                               *ngIf="!item.isEditProcessing"
+                               disabled
+                               [(ngModel)]="item.value"/>
+                        <input class="form-control form-control-sm"
+                               type="tel"
+                               *ngIf="item.isEditProcessing"
+                               [disabled]="isSaveProcessing()"
+                               [textMask]="{mask: usaPhoneMask}"
+                               [(ngModel)]="item.editValue"/>
+                        <span class="input-group-btn" *ngIf="policyService.canUpdateContacts()">
+                            <button class="btn btn-sm btn-danger site-notifications-sms-entity-remove-btn"
+                                    type="button"
+                                    *ngIf="!item.isEditProcessing"
+                                    [disabled]="isSaveProcessing()"
+                                    (click)="deleteSMSFromContacts(item)">
+                                <i class="fa fa-times"></i>
+                            </button>
+                            <button class="btn btn-sm btn-success site-notifications-sms-entity-commit-edit-btn"
+                                    type="button"
+                                    *ngIf="item.isEditProcessing"
+                                    [disabled]="isSaveProcessing() || !isSMSValid(item.editValue)"
+                                    (click)="item.commitEdit()">
+                                <i class="fa fa-check"></i>
+                            </button>
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row site-notifications-sms-entity-row" *ngIf="policyService.canUpdateContacts()">
+                <div class="col-xl-1 col-lg-1 col-md-1 col-sm-1 col-1"></div>
+                <div class="col-xl-8 col-lg-8 col-md-10 col-sm-10 col-10">
+                    <hr>
+                    <div class="input-group input-group-sm">
+                        <input type="tel"
+                               [textMask]="{mask: usaPhoneMask}"
+                               [disabled]="isSaveProcessing()"
+                               class="form-control form-control-sm"
+                               [(ngModel)]="newSMSEntity.value"/>
+                        <span class="input-group-btn">
+                            <button class="btn btn-sm btn-success site-notifications-sms-entity-commit-add-btn"
+                                    type="button"
+                                    [disabled]="isSaveProcessing() || !isSMSValid(newSMSEntity.value)"
+                                    (click)="addNewSMSEntity()">
+                                <i class="fa fa-plus"></i>
+                            </button>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
+            <div class="row site-notifications-email-label-row">
+                <div class="col-xl-12">
+                    <span translate>sites.details.notifications.adf</span>:
+                </div>
+            </div>
+            <div class="row site-notifications-email-entity-row" *ngFor="let item of adfEmailEntities">
+                <div class="col-xl-1 col-lg-1 col-md-1 col-sm-1 col-1"></div>
+                <div class="col-xl-8 col-lg-8 col-md-10 col-sm-10 col-10">
+                    <div class="input-group input-group-sm">
+                        <span class="input-group-btn" *ngIf="policyService.canUpdateContacts()">
+                            <button class="btn btn-sm btn-primary site-notifications-email-entity-start-edit-btn"
+                                    type="button"
+                                    *ngIf="!item.isEditProcessing"
+                                    [disabled]="isSaveProcessing()"
+                                    (click)="item.startEdit()">
+                                <i class="fa fa-edit"></i>
+                            </button>
+                            <button class="btn btn-sm btn-secondary site-notifications-email-entity-undo-btn"
+                                    type="button"
+                                    *ngIf="item.isEditProcessing"
+                                    [disabled]="isSaveProcessing()"
+                                    (click)="item.undoEdit()">
+                                <i class="fa fa-undo"></i>
+                            </button>
+                        </span>
+                        <input class="form-control form-control-sm"
+                               type="email"
+                               *ngIf="!item.isEditProcessing"
+                               disabled
+                               [(ngModel)]="item.value"/>
+                        <input class="form-control form-control-sm"
+                               type="email"
+                               *ngIf="item.isEditProcessing"
+                               [disabled]="isSaveProcessing()"
+                               [(ngModel)]="item.editValue"/>
+                        <span class="input-group-btn" *ngIf="policyService.canUpdateContacts()">
+                            <button class="btn btn-sm btn-danger site-notifications-email-entity-remove-btn"
+                                    type="button"
+                                    *ngIf="!item.isEditProcessing"
+                                    [disabled]="isSaveProcessing()"
+                                    (click)="deleteAdfEmailFromContacts(item)">
+                                <i class="fa fa-times"></i>
+                            </button>
+                            <button class="btn btn-sm btn-success site-notifications-email-entity-commit-edit-btn"
+                                    type="button"
+                                    *ngIf="item.isEditProcessing"
+                                    [disabled]="isSaveProcessing() || !isAdfEmailValid(item.editValue)"
+                                    (click)="item.commitEdit()">
+                                <i class="fa fa-check"></i>
+                            </button>
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="row site-notifications-email-entity-row" *ngIf="policyService.canUpdateContacts()">
+                <div class="col-xl-1 col-lg-1 col-md-1 col-sm-1 col-1"></div>
+                <div class="col-xl-8 col-lg-8 col-md-10 col-sm-10 col-10">
+                    <hr>
+                    <div class="input-group input-group-sm">
+                        <input type="email"
+                               [disabled]="isSaveProcessing()"
+                               class="form-control form-control-sm"
+                               [(ngModel)]="newAdfEmailEntity.value"/>
+                        <span class="input-group-btn">
+                            <button class="btn btn-sm btn-success site-notifications-email-entity-commit-add-btn"
+                                    type="button"
+                                    [disabled]="isSaveProcessing() || !isAdfEmailValid(newAdfEmailEntity.value)"
+                                    (click)="addNewAdfEmailEntity()">
+                                <i class="fa fa-plus"></i>
+                            </button>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="site-notifications-template-footer" *ngIf="policyService.canUpdateContacts()">
+        <button class="btn btn-primary pull-right site-notifications-template-footer-btn"
+                type="button"
+                [disabled]="isSaveProcessing()"
+                (click)="saveSiteContacts()">
+            <i class="fa fa-spinner fa-pulse" *ngIf="isSaveProcessing()"></i>
+            <i class="fa fa-save" *ngIf="!isSaveProcessing()"></i>
+            <span translate>general.actions.text_save</span>
+        </button>
+        <button class="btn btn-secondary pull-right site-notifications-template-footer-btn"
+                type="button"
+                [disabled]="isSaveProcessing()"
+                (click)="resetSiteContacts()">
+            <i class="fa fa-undo"></i>
+            <span translate>general.actions.text_reset</span>
+        </button>
+    </div>
+</div>

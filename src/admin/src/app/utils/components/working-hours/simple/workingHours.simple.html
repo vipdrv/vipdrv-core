@@ -1,0 +1,47 @@
+<div class="week-schedule-template">
+    <div class="row">
+        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+            <div *ngIf="actualEntities && actualEntities.length">
+                <div class="row week-schedule-row"
+                     *ngFor="let item of actualEntities">
+                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                        <div class="input-group input-group-sm">
+                            <span class="day-of-week-span" translate>
+                                {{item.getDayOfWeekEntity().localizationKey}}
+                            </span>
+                            <select class="form-control form-control-sm"
+                                    [disabled]="isSelectStartTimeDisabled(item)"
+                                    (change)="changedStartTimeForTimeInterval(item)"
+                                    [(ngModel)]="item.editStartTime">
+                                <option *ngFor="let option of getStartTimeSelectOptions(item)"
+                                        [ngValue]="option.value">
+                                    <span translate>{{option.displayText}}</span>
+                                </option>
+                            </select>
+                            <span class="input-group-addon week-schedule-minus-text-addon">-</span>
+                            <select class="form-control form-control-sm"
+                                    [disabled]="isSelectEndTimeDisabled(item)"
+                                    (change)="changedEndTimeForTimeInterval(item)"
+                                    [(ngModel)]="item.editEndTime">
+                                <option *ngFor="let option of getEndTimeSelectOptions(item)"
+                                        [ngValue]="option.value">
+                                    <span translate>{{option.displayText}}</span>
+                                </option>
+                            </select>
+                            <label class="custom-control custom-checkbox mb-2 mr-sm-2 mb-sm-0"
+                                   style="cursor: default; margin-left: 5px;"
+                                   (click)="changedIsActiveForTimeInterval(item); $event.stopPropagation();">
+                                <input type="checkbox"
+                                       class="custom-control-input"
+                                       [disabled]="isCheckboxDisabled(item)"
+                                       [ngModel]="item.isActive">
+                                <span class="custom-control-indicator"></span>
+                                <span class="custom-control-description"></span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

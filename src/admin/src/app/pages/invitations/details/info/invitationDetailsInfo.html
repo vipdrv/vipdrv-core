@@ -1,0 +1,39 @@
+<div class="row">
+    <label class="col-4 invitations-modal-body-label" translate>invitations.modal.invitationCode</label>
+    <div class="col-8 invitations-modal-body-text">{{entity.invitationCode}}</div>
+</div>
+<div class="row">
+    <label class="col-4 invitations-modal-body-label" translate>invitations.modal.email</label>
+    <div class="col-8 invitations-modal-body-text">{{entity.email}}</div>
+</div>
+<div class="row">
+    <label class="col-4 invitations-modal-body-label" translate>invitations.modal.phoneNumber</label>
+    <div class="col-8 invitations-modal-body-text">{{entity.phoneNumber}}</div>
+</div>
+<div class="row">
+    <label class="col-4 invitations-modal-body-label" translate>invitations.modal.role</label>
+    <div class="col-8 invitations-modal-body-text">{{entity.role}}</div>
+</div>
+<div class="row">
+    <label class="col-4 invitations-modal-body-label" translate>invitations.modal.availableSitesCount</label>
+    <div class="col-8 invitations-modal-body-text">{{entity.availableSitesCount}}</div>
+</div>
+<div class="row">
+    <label class="col-4 invitations-modal-body-label" translate>invitations.modal.used</label>
+    <div class="col-8 invitations-modal-body-text">
+        <span *ngIf="!entity.used" translate>invitations.status.pending</span>
+        <span *ngIf="!!entity.used" translate>invitations.status.accepted</span>
+    </div>
+</div>
+<div class="row">
+    <label class="col-4 invitations-modal-body-label" translate>invitations.modal.invitator</label>
+    <div class="col-8 invitations-modal-body-text">{{entity.invitator}}</div>
+</div>
+<div class="row">
+    <label class="col-4 invitations-modal-body-label" translate>invitations.modal.createdTime</label>
+    <div class="col-8 invitations-modal-body-text">{{entity.createdTime}}</div>
+</div>
+<div class="row">
+    <label class="col-4 invitations-modal-body-label" translate>invitations.modal.usedTime</label>
+    <div class="col-8 invitations-modal-body-text">{{entity.usedTime}}</div>
+</div>
