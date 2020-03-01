@@ -1,0 +1,317 @@
+<div class="test-drive-modal-body-edit-entity-container">
+    <div class="row test-drive-modal-body-edit-entity-container-row-image">
+        <div class="col-12">
+            <image-select [isReadOnly]="isImageComponentReadOnly()"
+                          [imageUrl]="entity.imageUrl"
+                          [defaultImageUrl]="defaultImageUrl"
+                          [imageWidth]="imageWidth"
+                          [imageHeight]="imageHeight"
+                          [isRounded]="isImageRounded"
+                          [imageAlt]="imageAlt"
+                          [columnRules]="columnRules"
+                          [forceAcceptImage]="forceAcceptImage"
+                          (imageUrlSelected)="onNewSiteImageSelected($event)"
+                          (resetForceAcceptImage)="onResetForceAcceptImage($event)"></image-select>
+        </div>
+    </div>
+    <hr>
+    <div class="row test-drive-modal-body-edit-entity-container-row-input"
+         *ngIf="entityPolicyService.canManageOtherOwnerSites()">
+        <div class="col-sm-12 col-md-6 col-lg-6">
+            <div class="form-group">
+                <label for="site-name"
+                       class="test-drive-input-label"
+                       translate>
+                    sites.modal.siteOwner
+                </label>
+                <select id="site-owner"
+                        class="form-control"
+                        [ngClass]="extensions.getInputValidationClass(isValidationActive(), isSiteOwnerValid())"
+                        [disabled]="isSiteOwnerInputDisabled()"
+                        [(ngModel)]="entity.userId">
+                    <option *ngFor="let option of getOwnerOptions()"
+                            [ngValue]="option.value">
+                        <span translate>{{option.displayText}}</span>
+                    </option>
+                </select>
+                <small class="form-text text-muted"
+                       *ngIf="!isValidationActive() || isSiteOwnerValid()"
+                       translate>
+                    sites.modal.siteOwnerHelp
+                </small>
+                <small class="form-text test-drive-validation-message"
+                       *ngIf="isValidationActive() && !isSiteOwnerValid()"
+                       translate>
+                    {{ getSiteOwnerInvalidMessageKey() }}
+                </small>
+            </div>
+        </div>
+        <div class="col-sm-12 col-md-6 col-lg-6">
+            <div class="form-group">
+                <label for="site-url"
+                       class="test-drive-input-label"
+                       translate>
+                    sites.modal.siteWidgetAsSeparatePageUrl
+                </label>
+                <input id="widget-page-url"
+                       type="text"
+                       class="form-control"
+                       [ngClass]="extensions.getInputValidationClass(isValidationActive(), isSiteWASPUrlValid())"
+                       [disabled]="isSiteWASPUrlInputDisabled()"
+                       [(ngModel)]="entity.widgetAsSeparatePageUrl">
+                <small class="form-text text-muted"
+                       *ngIf="!isValidationActive() || isSiteWASPUrlValid()"
+                       translate>
+                    sites.modal.siteWidgetAsSeparatePageUrlHelp
+                </small>
+                <small class="form-text test-drive-validation-message"
+                       *ngIf="isValidationActive() && !isSiteWASPUrlValid()"
+                       translate>
+                    {{ getSiteWASPUrlInvalidMessageKey() }}
+                </small>
+            </div>
+        </div>
+    </div>
+    <div class="row test-drive-modal-body-edit-entity-container-row-input">
+        <div class="col-sm-12 col-md-6 col-lg-6">
+            <div class="form-group">
+                <label for="site-name"
+                       class="test-drive-input-label"
+                       translate>
+                    sites.modal.siteName
+                </label>
+                <input id="site-name"
+                       type="text"
+                       class="form-control"
+                       [ngClass]="extensions.getInputValidationClass(isValidationActive(), isSiteNameValid())"
+                       [disabled]="isSiteNameInputDisabled()"
+                       [(ngModel)]="entity.name">
+                <small class="form-text text-muted"
+                       *ngIf="!isValidationActive() || isSiteNameValid()"
+                       translate>
+                    sites.modal.siteNameHelp
+                </small>
+                <small class="form-text test-drive-validation-message"
+                       *ngIf="isValidationActive() && !isSiteNameValid()"
+                       translate>
+                    {{ getSiteNameInvalidMessageKey() }}
+                </small>
+            </div>
+        </div>
+        <div class="col-sm-12 col-md-6 col-lg-6">
+            <div class="form-group">
+                <label for="site-url"
+                       class="test-drive-input-label"
+                       translate>
+                    sites.modal.siteUrl
+                </label>
+                <input id="site-url"
+                       type="text"
+                       class="form-control"
+                       [ngClass]="extensions.getInputValidationClass(isValidationActive(), isSiteUrlValid())"
+                       [disabled]="isSiteUrlInputDisabled()"
+                       [(ngModel)]="entity.url">
+                <small class="form-text text-muted"
+                       *ngIf="!isValidationActive() || isSiteUrlValid()"
+                       translate>
+                    sites.modal.siteUrlHelp
+                </small>
+                <small class="form-text test-drive-validation-message"
+                       *ngIf="isValidationActive() && !isSiteUrlValid()"
+                       translate>
+                    {{ getSiteUrlInvalidMessageKey() }}
+                </small>
+            </div>
+        </div>
+    </div>
+    <div class="row test-drive-modal-body-edit-entity-container-row-input">
+        <div class="col-sm-12 col-md-6 col-lg-6">
+            <div class="form-group">
+                <label translate>sites.modal.dealerName</label>
+                <input type="text"
+                       class="form-control"
+                       [(ngModel)]="entity.dealerName">
+            </div>
+        </div>
+        <div class="col-sm-12 col-md-6 col-lg-6">
+            <div class="form-group">
+                <label translate>sites.modal.dealerPhone</label>
+                <input type="text"
+                       class="form-control"
+                       [(ngModel)]="entity.dealerPhone">
+            </div>
+        </div>
+    </div>
+    <div class="row test-drive-modal-body-edit-entity-container-row-input">
+        <div class="col-sm-12 col-md-8 col-lg-8">
+            <div class="form-group">
+                <label translate>sites.modal.dealerAddress</label>
+                <input type="text"
+                       class="form-control"
+                       [(ngModel)]="entity.dealerAddress">
+            </div>
+        </div>
+        <div class="col-sm-12 col-md-4 col-lg-4">
+            <div class="form-group">
+                <label for="zip-code"
+                       class="test-drive-input-label"
+                       translate>
+                    sites.modal.zipCode
+                </label>
+                <input id="zip-code"
+                       type="text"
+                       class="form-control"
+                       [ngClass]="extensions.getInputValidationClass(isValidationActive(), isZipCodeValid())"
+                       [disabled]="isZipCodeInputDisabled()"
+                       [(ngModel)]="entity.zipCode">
+                <small class="form-text text-muted"
+                       *ngIf="!isValidationActive() || isZipCodeValid()"
+                       translate>
+                    sites.modal.zipCodeHelp
+                </small>
+                <small class="form-text test-drive-validation-message"
+                       *ngIf="isValidationActive() && !isZipCodeValid()"
+                       translate>
+                    {{ getZipCodeInvalidMessageKey() }}
+                </small>
+            </div>
+        </div>
+    </div>
+    <div class="row test-drive-modal-body-edit-entity-container-row-input">
+        <div class="col-sm-12 col-md-6 col-lg-6">
+            <div class="form-group">
+                <label for="delivery-distance"
+                       class="test-drive-input-label"
+                       translate>
+                    sites.modal.maxVehicleDeliveryDistance
+                </label>
+                <input id="delivery-distance"
+                       type="number"
+                       min="0"
+                       step="1"
+                       class="form-control"
+                       [ngClass]="extensions.getInputValidationClass(isValidationActive(), isMaxDeliveryDistanceValid())"
+                       [disabled]="isMaxDeliveryDistanceInputDisabled()"
+                       [(ngModel)]="entity.maxVehicleDeliveryDistance">
+                <small class="form-text text-muted"
+                       *ngIf="!isValidationActive() || isMaxDeliveryDistanceValid()"
+                       translate>
+                    sites.modal.maxVehicleDeliveryDistanceHelp
+                </small>
+                <small class="form-text test-drive-validation-message"
+                       *ngIf="isValidationActive() && !isMaxDeliveryDistanceValid()"
+                       translate>
+                    {{ getMaxDeliveryDistanceInvalidMessageKey() }}
+                </small>
+            </div>
+        </div>
+        <div class="col-sm-12 col-md-6 col-lg-6">
+            <div class="form-group" style="margin-top: 38px;">
+                <label class="custom-control custom-checkbox">
+                    <input type="checkbox"
+                           name="availableTestDriveFromHome"
+                           class="custom-control-input"
+                           [ngClass]="extensions.getInputValidationClass(isValidationActive(), isAvailableTestDriveFromHomeValid())"
+                           [disabled]="isAvailableTestDriveFromHomeInputDisabled()"
+                           [(ngModel)]="entity.availableTestDriveFromHome">
+                    <span class="custom-control-indicator"></span>
+                    <span class="custom-control-description"
+                          translate>
+                        sites.modal.availableTestDriveFromHome
+                    </span>
+                </label>
+                <small class="form-text text-muted"
+                       *ngIf="!isValidationActive() || isAvailableTestDriveFromHomeValid()"
+                       translate>
+                    sites.modal.availableTestDriveFromHomeHelp
+                </small>
+                <small class="form-text test-drive-validation-message"
+                       *ngIf="isValidationActive() && !isAvailableTestDriveFromHomeValid()"
+                       translate>
+                    {{ getAvailableTestDriveFromHomeInvalidMessageKey() }}
+                </small>
+            </div>
+        </div>
+    </div>
+    <div class="row test-drive-modal-body-edit-entity-container-row-input">
+        <div class="col-sm-12 col-md-6 col-lg-6">
+            <div class="form-group">
+                <label for="ftp-import-relative-path"
+                       class="test-drive-input-label"
+                       translate>
+                    sites.modal.importRelativeFtpPath
+                </label>
+                <input id="ftp-import-relative-path"
+                       type="text"
+                       class="form-control"
+                       [ngClass]="extensions.getInputValidationClass(isValidationActive(), isImportRelativeFtpPathValid())"
+                       [disabled]="isImportRelativeFtpPathInputDisabled()"
+                       [(ngModel)]="entity.importRelativeFtpPath">
+                <small class="form-text text-muted"
+                       *ngIf="!isValidationActive() || isImportRelativeFtpPathValid()"
+                       translate>
+                    sites.modal.importRelativeFtpPathHelp
+                </small>
+                <small class="form-text test-drive-validation-message"
+                       *ngIf="isValidationActive() && !isImportRelativeFtpPathValid()"
+                       translate>
+                    {{ getInvalidImportRelativeFtpPathMessageKey() }}
+                </small>
+            </div>
+        </div>
+        <div class="col-sm-12 col-md-6 col-lg-6">
+            <div class="form-group" style="margin-top: 38px;">
+                <label class="custom-control custom-checkbox">
+                    <input type="checkbox"
+                           name="shuffleExperts"
+                           class="custom-control-input"
+                           [ngClass]="extensions.getInputValidationClass(isValidationActive(), isShuffleExpertsValid())"
+                           [disabled]="isShuffleExpertsInputDisabled()"
+                           [(ngModel)]="entity.shuffleExperts">
+                    <span class="custom-control-indicator"></span>
+                    <span class="custom-control-description"
+                          translate>
+                        sites.modal.shuffleExperts
+                    </span>
+                </label>
+                <small class="form-text text-muted"
+                       *ngIf="!isValidationActive() || isShuffleExpertsValid()"
+                       translate>
+                    sites.modal.shuffleExpertsHelp
+                </small>
+                <small class="form-text test-drive-validation-message"
+                       *ngIf="isValidationActive() && !isShuffleExpertsValid()"
+                       translate>
+                    {{ getShuffleExpertsInvalidMessageKey() }}
+                </small>
+            </div>
+        </div>
+    </div>
+    <hr>
+    <div class="row test-drive-modal-body-edit-entity-container-row-input">
+        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+            <div class="row">
+                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                    <button class="btn btn-sm btn-info pull-left sites-week-intervals-accordion-control-btn"
+                            type="button"
+                            data-toggle="collapse"
+                            data-target="#collapseWeekSchedule"
+                            aria-expanded="false"
+                            aria-controls="collapseWeekSchedule">
+                        <i class="fa fa-list-alt"></i>
+                        <span translate>sites.modal.weekSchedule</span>
+                    </button>
+                </div>
+            </div>
+            <div id="collapseWeekSchedule"
+                 class="collapse {{getWeekScheduleDefaultClass()}}">
+                <div class="card card-block">
+                    <working-hours-simple [workingHours]="entity.workingHours"
+                                          [isComponentReadonly]="isWeekScheduleComponentReadOnly(entity)"
+                                          (workingHoursChanged)='onActualizeWorkingHours($event)'>
+                    </working-hours-simple>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

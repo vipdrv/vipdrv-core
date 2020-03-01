@@ -1,0 +1,85 @@
+<div class="background">
+    <div class="hidden-sm-down login-form-top-spacing"></div>
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12 col-md-6 offset-md-3 col-lg-4 offset-lg-4 mt-4">
+                <div class="td-loginform__container rounded p-3">
+                    <form class="">
+                        <div class="text-center">
+                            <img src="../../../assets/img/logo-login.png" class="img-fluid">
+                        </div>
+                        <hr>
+                        <div class="alert alert-danger alert-dismissible fade show"
+                             role="alert"
+                             style="margin-top: 10px;"
+                             *ngIf="!!errorMessage">
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close"
+                                    (click)="errorMessage = null;">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                            {{errorMessage}}
+                        </div>
+                        <!--<div style="margin-top: 10px; height: 56px;" *ngIf="!errorMessage"></div>-->
+                        <div class="input-group" style="margin-top: 10px;">
+                            <span id="username-addon" class="input-group-addon">
+                                <i class="fa fa-user"></i>
+                            </span>
+                                <input type="text"
+                                       class="form-control"
+                                       name="username"
+                                       placeholder="Username"
+                                       required=""
+                                       autofocus=""
+                                       aria-label="Username"
+                                       aria-describedby="username-addon"
+                                       [disabled]="loading"
+                                       [(ngModel)]="model.username">
+                        </div>
+                        <div class="input-group" style="margin-top: 5px;">
+                            <span id="password-addon"
+                                  class="input-group-addon">
+                                <i class="fa fa-lock"></i>
+                            </span>
+                            <input type="password"
+                                   class="form-control"
+                                   name="password"
+                                   placeholder="Password"
+                                   required=""
+                                   autofocus=""
+                                   aria-label="Password"
+                                   aria-describedby="password-addon"
+                                   [disabled]="loading"
+                                   [(ngModel)]="model.password">
+                        </div>
+                        <div class="mt-2">
+                            <label class="custom-control custom-checkbox mb-2 mr-sm-2 mb-sm-0">
+                                <input type="checkbox"
+                                       name="rememberMe"
+                                       class="custom-control-input"
+                                       [disabled]="loading"
+                                       [(ngModel)]="model.isPersist">
+                                <span class="custom-control-indicator"></span>
+                                <span class="custom-control-description"
+                                      translate>
+                                    general.actions.rememberMe
+                                </span>
+                            </label>
+                        </div>
+                        <div class="mt-2">
+                            <button class="btn btn-primary pull-right"
+                                    type="submit"
+                                    [disabled]="loading"
+                                    (click)="login()">
+                                <i class="fa fa-spinner fa-pulse" *ngIf="!!loading"></i>
+                                <i class="fa fa-sign-in" *ngIf="!loading"></i>
+                                <span translate>
+                                    general.actions.login
+                                </span>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

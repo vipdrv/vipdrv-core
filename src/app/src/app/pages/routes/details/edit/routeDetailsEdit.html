@@ -1,0 +1,75 @@
+<div class="test-drive-modal-body-edit-entity-container">
+    <div class="row test-drive-modal-body-edit-entity-container-row-image">
+        <div class="col-12">
+            <image-select [isReadOnly]="isImageComponentReadOnly()"
+                          [imageUrl]="entity.photoUrl"
+                          [defaultImageUrl]="defaultImageUrl"
+                          [imageWidth]="imageWidth"
+                          [imageHeight]="imageHeight"
+                          [isRounded]="isImageRounded"
+                          [imageAlt]="imageAlt"
+                          [columnRules]="columnRules"
+                          [forceAcceptImage]="forceAcceptImage"
+                          (imageUrlSelected)="onNewImageSelected($event)"
+                          (resetForceAcceptImage)="onResetForceAcceptImage($event)"></image-select>
+        </div>
+    </div>
+    <hr>
+    <div class="row test-drive-modal-body-edit-entity-container-row-input">
+        <div class="col-12">
+            <div class="form-group">
+                <label for="routeName"
+                       class="test-drive-input-label"
+                       translate>
+                    routes.modal.routeName
+                </label>
+                <input id="routeName"
+                       name="routeName"
+                       type="text"
+                       class="form-control"
+                       [ngClass]="extensions.getInputValidationClass(isValidationActive(), validationService.isValidName(entity))"
+                       [disabled]="isComponentReadOnly()"
+                       [(ngModel)]="entity.name">
+                <small class="form-text text-muted"
+                       *ngIf="!isValidationActive() || validationService.isValidName(entity)"
+                       translate>
+                    routes.modal.routeNameHelp
+                </small>
+                <small class="form-text test-drive-validation-message"
+                       *ngIf="isValidationActive() && !validationService.isValidName(entity)"
+                       translate>
+                    {{ validationService.getInvalidNameMessageKey(entity) }}
+                </small>
+            </div>
+        </div>
+    </div>
+    <div class="row test-drive-modal-body-edit-entity-container-row-input">
+        <div class="col-12">
+            <div class="form-group">
+                <label for="routeDescription"
+                       class="test-drive-input-label"
+                       translate>
+                    routes.modal.routeDescription
+                </label>
+                <textarea id="routeDescription"
+                          name="routeDescription"
+                          type="text"
+                          rows="3"
+                          class="form-control"
+                          [ngClass]="extensions.getInputValidationClass(isValidationActive(), validationService.isValidDescription(entity))"
+                          [disabled]="isComponentReadOnly()"
+                          [(ngModel)]="entity.description"></textarea>
+                <small class="form-text text-muted"
+                       *ngIf="!isValidationActive() || validationService.isValidDescription(entity)"
+                       translate>
+                    routes.modal.routeDescriptionHelp
+                </small>
+                <small class="form-text test-drive-validation-message"
+                       *ngIf="isValidationActive() && !validationService.isValidDescription(entity)"
+                       translate>
+                    {{ validationService.getInvalidDescriptionMessageKey(entity) }}
+                </small>
+            </div>
+        </div>
+    </div>
+</div>
