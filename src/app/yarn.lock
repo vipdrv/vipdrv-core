@@ -293,11 +293,21 @@ amdefine@>=0.0.4:
   version "3.21.0"
   resolved "https://codeload.github.com/amcharts/ammap3/tar.gz/00086807e39549325fe361336b2289d8fc524753"
 
+angular2-busy@^2.0.4:
+  version "2.0.4"
+  resolved "https://registry.yarnpkg.com/angular2-busy/-/angular2-busy-2.0.4.tgz#82e4b1fbbcaf97bcfac09d237489cfe9e8c4b9f3"
+
 angular2-datatable@0.6.0:
   version "0.6.0"
   resolved "https://registry.yarnpkg.com/angular2-datatable/-/angular2-datatable-0.6.0.tgz#ca008f74087f0cb87da5709ed2f2d1d061772632"
   dependencies:
     lodash "^4.0.0"
+
+angular2-text-mask@^8.0.4:
+  version "8.0.5"
+  resolved "https://registry.yarnpkg.com/angular2-text-mask/-/angular2-text-mask-8.0.5.tgz#e08ad1c1898e9468a6d6983cbf1c83289d5e654d"
+  dependencies:
+    text-mask-core "^5.0.0"
 
 animate.css@3.5.2:
   version "3.5.2"
@@ -4179,7 +4189,7 @@ modify-values@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/modify-values/-/modify-values-1.0.0.tgz#e2b6cdeb9ce19f99317a53722f3dbf5df5eaaab2"
 
-moment@2.x, moment@>=2.14.0, moment@^2.13.0, moment@^2.9.0:
+moment@2.18.1, moment@2.x, moment@>=2.14.0, moment@^2.13.0, moment@^2.9.0:
   version "2.18.1"
   resolved "https://registry.yarnpkg.com/moment/-/moment-2.18.1.tgz#c36193dd3ce1c2eed2adb7c802dbbc77a81b1c0f"
 
@@ -4226,6 +4236,16 @@ negotiator@0.6.1:
   version "0.6.1"
   resolved "https://registry.yarnpkg.com/negotiator/-/negotiator-0.6.1.tgz#2b327184e8992101177b28563fb5e7102acd0ca9"
 
+ng2-bootstrap@^1.6.3:
+  version "1.6.3"
+  resolved "https://registry.yarnpkg.com/ng2-bootstrap/-/ng2-bootstrap-1.6.3.tgz#8bef6179d7436ba547901447f18fee8fff4355c2"
+  dependencies:
+    moment "2.18.1"
+
+ng2-bs3-modal@^0.10.4:
+  version "0.10.4"
+  resolved "https://registry.yarnpkg.com/ng2-bs3-modal/-/ng2-bs3-modal-0.10.4.tgz#80f350cd3f7346193c8f9324c899d58db1714581"
+
 ng2-ckeditor@1.1.6:
   version "1.1.6"
   resolved "https://registry.yarnpkg.com/ng2-ckeditor/-/ng2-ckeditor-1.1.6.tgz#fa3afb86982b725f7f3a609924c64821c2719875"
@@ -4240,6 +4260,10 @@ ng2-handsontable@0.48.0:
   dependencies:
     handsontable "^0.31.1"
 
+ng2-img-cropper@^0.9.0:
+  version "0.9.0"
+  resolved "https://registry.yarnpkg.com/ng2-img-cropper/-/ng2-img-cropper-0.9.0.tgz#305337e669c4e5adc876d628dcae0bca4d10d1c3"
+
 ng2-slim-loading-bar@4.0.0:
   version "4.0.0"
   resolved "https://registry.yarnpkg.com/ng2-slim-loading-bar/-/ng2-slim-loading-bar-4.0.0.tgz#7256fdde7c058f14955a3ef2e65afafb5b664603"
@@ -4251,9 +4275,17 @@ ng2-smart-table@1.0.3:
     lodash "^4.17.4"
     ng2-completer "^1.2.2"
 
+ng2-table@^1.3.2:
+  version "1.3.2"
+  resolved "https://registry.yarnpkg.com/ng2-table/-/ng2-table-1.3.2.tgz#2ae8d3c4bec4ca8c476c685c41ec4a3a4414c2d4"
+
 ng2-tree@2.0.0-alpha.5:
   version "2.0.0-alpha.5"
   resolved "https://registry.yarnpkg.com/ng2-tree/-/ng2-tree-2.0.0-alpha.5.tgz#197f33af92f16f4a9168a3394ed0cbf9c1708a4a"
+
+ngx-ui-switch@1.4.4:
+  version "1.4.4"
+  resolved "https://registry.yarnpkg.com/ngx-ui-switch/-/ngx-ui-switch-1.4.4.tgz#1ffcdeab6f773730dbe3a607f5fad619d69fbe4e"
 
 ngx-uploader@2.2.5:
   version "2.2.5"
@@ -6332,8 +6364,8 @@ string_decoder@~1.0.0:
     buffer-shims "~1.0.0"
 
 stringstream@~0.0.4:
-  version "0.0.5"
-  resolved "https://registry.yarnpkg.com/stringstream/-/stringstream-0.0.5.tgz#4e484cd4de5a0bbbee18e46307710a8a81621878"
+  version "0.0.6"
+  resolved "https://registry.yarnpkg.com/stringstream/-/stringstream-0.0.6.tgz#7880225b0d4ad10e30927d167a1d6f2fd3b33a72"
 
 strip-ansi@^3.0.0, strip-ansi@^3.0.1:
   version "3.0.1"
@@ -6547,6 +6579,10 @@ tether@^1.4.0:
 text-extensions@^1.0.0:
   version "1.4.0"
   resolved "https://registry.yarnpkg.com/text-extensions/-/text-extensions-1.4.0.tgz#c385d2e80879fe6ef97893e1709d88d9453726e9"
+
+text-mask-core@^5.0.0:
+  version "5.1.2"
+  resolved "https://registry.yarnpkg.com/text-mask-core/-/text-mask-core-5.1.2.tgz#80dd5ebe04825757e46619e691407a9f8b3c1b6f"
 
 text-table@^0.2.0, text-table@~0.2.0:
   version "0.2.0"
