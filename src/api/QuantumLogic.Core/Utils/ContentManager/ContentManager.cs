@@ -17,10 +17,10 @@ namespace QuantumLogic.Core.Utils.Storage
             // TODO: move StorageCredentials and ContainerName to appsettings.json
             StorageAccount = new CloudStorageAccount(
                 new Microsoft.WindowsAzure.Storage.Auth.StorageCredentials(
-                    "generalstandart256",
-                    "ynoR7rDt9T1VRXhpuxfFLg70ySvHOSi6Eq6pOEyqacHyX4YkmLuoZuB66gjhn2b2xrvfoRtbe+iNXfeeSnmePg=="), true);
+                    "doodle",
+                    "doodle-passs"), true);
             BlobClient = StorageAccount.CreateCloudBlobClient();
-            BlobContainer = BlobClient.GetContainerReference("prod-testdrive");
+            BlobContainer = BlobClient.GetContainerReference("doodle");
         }
 
         public async Task<Uri> SaveFile(Stream stream, string fileName, string contentType)

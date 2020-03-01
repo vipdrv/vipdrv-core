@@ -1,0 +1,418 @@
+.fusion-builder-wrap {
+  max-width: 1100px;
+}
+.fusion-builder-wrap h2.nav-tab-wrapper {
+  margin-bottom: 30px;
+}
+.fusion-builder-wrap iframe {
+  max-width: 100%;
+  width: 100%;
+}
+.fusion-builder-wrap .fusion-builder-logo {
+  background: #ffffff url("../images/icons/fb_logo.svg") no-repeat center;
+  border: none;
+  -webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, .2);
+          box-shadow: 0 1px 3px rgba(0, 0, 0, .2);
+  display: inline-block;
+  font-size: 14px;
+  font-weight: 600;
+  height: 30px;
+  margin: 5px 0 0;
+  padding-top: 100px;
+  position: absolute;
+  right: 0;
+  text-align: center;
+  text-rendering: optimizeLegibility;
+  top: 0;
+  width: 150px;
+}
+.fusion-builder-wrap .fusion-builder-version {
+  background: #2d2d2d;
+  -webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, .2);
+          box-shadow: 0 1px 3px rgba(0, 0, 0, .2);
+  color: #ffffff;
+  display: block;
+  margin-top: 30px;
+  padding: 10px 0;
+  text-align: center;
+}
+.fusion-builder-wrap .fusion-builder-important-notice {
+  background: #ffffff;
+  margin: 0 0 30px;
+  padding: 30px;
+}
+.fusion-builder-wrap .fusion-builder-important-notice .about-description {
+  margin: 0;
+  max-width: 100%;
+}
+.fusion-builder-wrap .fusion-builder-important-notice p.error-invalid-token {
+  background-color: #cc0000;
+  color: #ffffff;
+  margin: 1em 0 0;
+  padding: 1em;
+  text-align: center;
+  max-width: 100%;
+}
+.fusion-builder-wrap .registration-form-container .about-description {
+  margin-bottom: 20px;
+  margin-top: 0;
+}
+.fusion-builder-wrap #fusion_builder_product_registration {
+  display: -ms-flexbox;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display:         flex;
+}
+.fusion-builder-wrap #fusion_builder_product_registration p.submit {
+  margin: 0;
+  padding: 0;
+}
+.fusion-builder-wrap #fusion_builder_product_registration .dashicons {
+  color: #333333;
+  font-size: 36px;
+  height: 40px;
+  line-height: 40px;
+  margin: 0;
+  width: 46px;
+}
+.fusion-builder-wrap #fusion_builder_product_registration .dashicons-yes {
+  color: #43a047;
+}
+.fusion-builder-wrap #fusion_builder_product_registration .dashicons-no {
+  color: #cc0000;
+}
+.fusion-builder-wrap .fusion-builder-registration-form input {
+  height: 40px;
+  margin: 0 1em;
+  padding: 10px 15px;
+  width: 100%;
+}
+.fusion-builder-wrap .fusion-builder-registration-form input#submit {
+  margin: 0;
+  width: auto;
+}
+.fusion-builder-wrap .fusion-builder-loader {
+  display: none;
+}
+.fusion-builder-wrap .fusion-builder-loader > .loader-icon {
+  -webkit-animation: spin 2s infinite linear;
+          animation: spin 2s infinite linear;
+  display: inline-block !important;
+  font-size: 32px;
+  height: 32px;
+  line-height: 32px;
+  margin: 0;
+  padding: 0;
+  text-align: center;
+  width: 32px;
+}
+.fusion-builder-wrap .fusion-builder-thanks {
+  border-top: 1px solid #dddddd;
+  float: left;
+  margin-top: 30px;
+  width: 100%;
+}
+.fusion-builder-wrap .fusion-builder-thanks p {
+  padding: 20px 0;
+}
+.fusion-builder-wrap .fusion-builder-large-button {
+  padding: 15px 20px !important;
+  height: 40px !important;
+  line-height: 7px !important;
+}
+.fusion-builder-wrap .three-col .col {
+  float: left;
+  margin-bottom: 30px;
+  margin-right: 4.999999999%;
+  position: relative;
+  min-width: 29.95%;
+}
+.fusion-builder-wrap .three-col .col .title {
+  font-size: 1em;
+}
+.fusion-builder-wrap .three-col .col .title span {
+  margin-right: 8px;
+}
+.fusion-builder-wrap .three-col .col.last-feature {
+  margin-right: 0;
+}
+.fusion-builder-wrap .feature-section {
+  float: left;
+  width: 100%;
+}
+.fusion-builder-wrap .fusion-builder-addons {
+  float: none;
+  margin: 0 -1%;
+  width: auto;
+}
+.fusion-builder-wrap .fusion-builder-addons .fusion-admin-box {
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  float: left;
+  margin: 0 0 2% 0;
+  padding: 0 1%;
+  width: 25%;
+}
+.fusion-builder-wrap .fusion-builder-addons .fusion-admin-box .theme-wrapper {
+  border: 1px solid #dedede;
+  -webkit-box-shadow: 0 1px 1px -1px rgba(0, 0, 0, .1);
+          box-shadow: 0 1px 1px -1px rgba(0, 0, 0, .1);
+}
+#wpwrap .fusion-builder-wrap .fusion-builder-addons .fusion-admin-box .theme {
+  float: none;
+  margin: 0;
+  width: 100%;
+  border: none;
+  -webkit-box-shadow: none;
+          box-shadow: none;
+}
+.fusion-builder-wrap .fusion-builder-addons .fusion-admin-box .theme:hover img,
+.fusion-builder-wrap .fusion-builder-addons .fusion-admin-box .theme:focus img {
+  opacity: .3;
+  -webkit-transform: scale(1.1);
+      -ms-transform: scale(1.1);
+          transform: scale(1.1);
+}
+.fusion-builder-wrap .fusion-builder-addons .fusion-admin-box .theme .theme-screenshot {
+  background-color: #000000;
+}
+.fusion-builder-wrap .fusion-builder-addons .fusion-admin-box .theme .theme-screenshot:after {
+  padding-top: 74.9%;
+}
+.fusion-builder-wrap .fusion-builder-addons .fusion-admin-box .theme .theme-name {
+  line-height: 18px;
+  font-weight: 600;
+}
+.fusion-builder-wrap .fusion-builder-addons .fusion-admin-box .theme .theme-actions {
+  z-index: 1;
+  height: 30px;
+  top: 50%;
+  right: auto;
+  left: 50%;
+  -webkit-transform: translate3d(-50%, -43px, 0px);
+          transform: translate3d(-50%, -43px, 0px);
+  padding: 0;
+  border: none;
+  background: transparent;
+  display: block;
+}
+.fusion-builder-wrap .fusion-builder-addons .fusion-admin-box .theme .button-primary {
+  display: block;
+  margin: 0;
+  text-align: center;
+}
+.fusion-builder-wrap .fusion-builder-addons .fusion-admin-box .theme .plugin-required {
+  position: absolute;
+  top: 1px;
+  padding: 5px;
+  background: rgba(213, 78, 33, .95);
+  text-transform: uppercase;
+  color: #ffffff;
+}
+.fusion-builder-wrap .fusion-builder-addons .fusion-admin-box img {
+  -webkit-transform: translateZ(0);
+          transform: translateZ(0);
+  -webkit-transform-style: preserve-3d;
+  -webkit-backface-visibility: hidden;
+  border: none;
+  -webkit-transition: opacity .2s ease-in-out 0s, transform .2s ease-in-out 0s;
+  -webkit-transition: opacity .2s ease-in-out 0s, -webkit-transform .2s ease-in-out 0s;
+          transition: opacity .2s ease-in-out 0s, -webkit-transform .2s ease-in-out 0s;
+          transition: opacity .2s ease-in-out 0s, transform .2s ease-in-out 0s;
+          transition: opacity .2s ease-in-out 0s, transform .2s ease-in-out 0s, -webkit-transform .2s ease-in-out 0s;
+}
+@media only screen and (max-width: 1190px) {
+  .fusion-builder-wrap .fusion-builder-addons {
+    margin: 0 -1.5%;
+  }
+  .fusion-builder-wrap .fusion-builder-addons .fusion-admin-box {
+    margin-bottom: 3%;
+    padding: 0 1.5%;
+    width: 33.33333%;
+  }
+}
+@media only screen and (max-width: 830px) {
+  .fusion-builder-wrap .fusion-builder-addons {
+    margin: 0 -2.5%;
+  }
+  .fusion-builder-wrap .fusion-builder-addons .fusion-admin-box {
+    margin-bottom: 5%;
+    padding: 0 2.5%;
+    width: 50%;
+  }
+}
+@media only screen and (max-width: 600px) {
+  .fusion-builder-wrap .fusion-builder-addons {
+    margin: 0;
+  }
+  .fusion-builder-wrap .fusion-builder-addons .fusion-admin-box {
+    margin-bottom: 5%;
+    padding: 0;
+    width: 100%;
+  }
+}
+.fusion-builder-settings {
+  float: left;
+  width: 100%;
+}
+.fusion-builder-settings .about-description .avada-large-button {
+  margin-top: 20px;
+}
+.fusion-builder-settings .fusion-builder-option {
+  border-bottom: 1px solid #dddddd;
+  float: left;
+  padding: 40px 0;
+  width: 100%;
+}
+.fusion-builder-settings .fusion-builder-option .fusion-builder-option-title {
+  float: left;
+  margin-right: 10%;
+  width: 35%;
+}
+.fusion-builder-settings .fusion-builder-option .fusion-builder-option-title h3 {
+  margin-top: 0;
+}
+.fusion-builder-settings .fusion-builder-option .fusion-builder-option-label {
+  color: #777777;
+}
+.fusion-builder-settings .fusion-builder-option .fusion-builder-option-field {
+  float: right;
+  width: 55%;
+}
+.fusion-builder-settings .fusion-builder-option .fusion-builder-option-field ul li {
+  float: left;
+  margin-bottom: 10px;
+  width: 33.333%;
+}
+.fusion-builder-settings .fusion-builder-option .fusion-builder-option-field .button {
+  margin-right: 10px;
+}
+.fusion-builder-settings .fusion-builder-option .fusion-check-all,
+.fusion-builder-settings .fusion-builder-option .fusion-uncheck-all {
+  margin-top: .8em;
+}
+.fusion-builder-settings .fusion-builder-save-settings {
+  float: left;
+  margin-top: 30px;
+}
+.fusion-builder-settings .ui-button {
+  background: #f5f5f5;
+  border-bottom-color: #bbbbbb;
+  border-radius: 0;
+  border: 1px solid #cccccc;
+  -webkit-box-shadow: inset 0 1px 0 rgba(255, 255, 255, .2), 0 1px 2px rgba(0, 0, 0, .05);
+          box-shadow: inset 0 1px 0 rgba(255, 255, 255, .2), 0 1px 2px rgba(0, 0, 0, .05);
+  color: #333333;
+  cursor: pointer;
+  display: block;
+  float: left;
+  font-size: 13px;
+  height: auto;
+  line-height: normal;
+  margin-right: -1px;
+  overflow: visible;
+  padding: 7px 14px 8px;
+  text-decoration: none;
+  text-shadow: 0 1px 1px rgba(255, 255, 255, .75);
+  -webkit-transition: all 200ms ease-in-out;
+          transition: all 200ms ease-in-out;
+  vertical-align: middle;
+  z-index: 1;
+}
+.fusion-builder-settings .ui-button .ui-button-text {
+  display: block;
+  line-height: 1.4;
+  padding: 0;
+}
+.fusion-builder-settings .ui-buttonset .ui-state-active {
+  background-color: #00a0d2 !important;
+  background-image: none !important;
+  border-color: #0064cd #0064cd #003f81;
+  border-color: rgba(0, 0, 0, .1) !important;
+  -webkit-box-shadow: none !important;
+          box-shadow: none !important;
+  color: #ffffff;
+  text-shadow: 0 -1px 0 rgba(0, 0, 0, .25);
+}
+.fusion-builder-settings .ui-buttonset.enable-builder-ui .ui-state-active[data-value="0"] {
+  background-color: #222222 !important;
+}
+.avada-large-button {
+  height: 40px !important;
+  line-height: 7px !important;
+  padding: 15px 20px !important;
+}
+.fusion-builder-admin-toggle {
+  margin-bottom: 20px;
+}
+.fusion-builder-admin-toggle .fusion-builder-admin-toggle-heading {
+  -ms-flex-align: center;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+          align-items: center;
+  background-color: #fafafa;
+  border: 1px solid #dfdfdf;
+  cursor: pointer;
+  display: -ms-flexbox;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display:         flex;
+  -ms-flex-pack: justify;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+          justify-content: space-between;
+  padding: 10px 25px;
+}
+.fusion-builder-admin-toggle .fusion-builder-admin-toggle-heading h3 {
+  margin: 0;
+}
+.fusion-builder-admin-toggle .fusion-builder-admin-toggle-content {
+  -moz-border-bottom-colors: none;
+  -moz-border-left-colors: none;
+  -moz-border-right-colors: none;
+  -moz-border-top-colors: none;
+  background: #ffffff none repeat scroll 0 0;
+  border-color: -moz-use-text-color #dfdfdf #dfdfdf;
+  -webkit-border-image: none;
+          border-image: none;
+  border: 1px solid #dfdfdf;
+  border-style: none solid solid;
+  border-width: medium 1px 1px;
+  -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, .04);
+          box-shadow: 0 1px 1px rgba(0, 0, 0, .04);
+  display: none;
+  padding: 25px;
+}
+.fusion-builder-admin-toggle .fusion-builder-admin-toggle-content li {
+  margin-bottom: 15px;
+}
+.fusion-builder-import-success {
+  color: green;
+  display: none;
+  padding: 1em 0;
+  width: 100%;
+}
+input[type="file"]::-webkit-file-upload-button {
+  color: #555555;
+  border-color: #cccccc;
+  background: #f7f7f7;
+  margin-right: 10px;
+  display: inline-block;
+  text-decoration: none;
+  font-size: 13px;
+  line-height: 26px;
+  height: 28px;
+  margin: 0;
+  padding: 0 10px 1px;
+  cursor: pointer;
+  border-width: 1px;
+  border-style: solid;
+  border-radius: 3px;
+  white-space: nowrap;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  -webkit-appearance: none;
+  -webkit-box-shadow: 0 1px 0 #cccccc;
+          box-shadow: 0 1px 0 #cccccc;
+  vertical-align: top;
+}

@@ -1,0 +1,295 @@
+/**
+* ------------------------------------------------------------------------
+* Global
+* ------------------------------------------------------------------------
+*/
+
+a[href], input[type='submit'], input[type='image'], label[for], select, button, .pointer {
+  cursor: pointer;
+}
+
+.text-overflow__ellipsis {
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+.td-spinner {
+  margin: 20% auto 0%;
+  display: table;
+}
+
+html, body {
+  height: 100%;
+  margin: 0;
+}
+
+.position-fixed {
+  position: fixed !important;
+}
+
+/**
+* ------------------------------------------------------------------------
+* Root
+* ------------------------------------------------------------------------
+*/
+
+.vipdrv-root {
+  height: 100%;
+  overflow: auto;
+}
+
+/**
+* ------------------------------------------------------------------------
+* Header
+* ------------------------------------------------------------------------
+*/
+
+.vipdrv-header {
+  height: 105px;
+  margin: -105px 0px 0px 0px;
+  padding: 105px 0px 0px 0px;
+}
+
+.vipdrv-title {
+  height: 50px;
+  background-color: $theme-main-color;
+  color: #fff;
+  font-weight: 300;
+  font-size: 20px;
+  text-shadow: 0px 1px 1px #868686;
+  overflow: hidden;
+}
+
+.vipdrv-title__text {
+  margin-left: 5%;
+  width: 90%;
+  text-align: center;
+  float: left;
+  line-height: 50px;
+}
+
+@media (max-width: 1022px) {
+  .vipdrv-title__text {
+    width: 70%;
+    margin-left: 15%;
+  }
+}
+
+/**
+* ------------------------------------------------------------------------
+* Content
+* ------------------------------------------------------------------------
+*/
+
+.vipdrv-content {
+  padding: 105px 0px 0px 0px;
+  height: 100%;
+}
+
+/**
+* ------------------------------------------------------------------------
+* Scrollable content
+* ------------------------------------------------------------------------
+*/
+
+.vipdrv-scrollable__wrapper {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.vipdrv-scrollable__content {
+  flex: 1;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+/**
+* ------------------------------------------------------------------------
+* Tabs Navigation
+* ------------------------------------------------------------------------
+*/
+
+.vipdrv-tabs-container {
+  background-color: #f3f3f3;
+}
+
+.wizard-navigation-tab {
+  cursor: pointer;
+  margin-bottom: 5px;
+  background-color: $theme-main-color;
+}
+
+.wizard-navigation-tab__content {
+  height: 50px;
+}
+
+.wizard-navigation-tab__text {
+  text-align: center;
+  line-height: 45px;
+}
+
+.wizard-navigation-tab__icon {
+  text-align: center;
+  line-height: 45px;
+}
+
+.wizard-navigation-tab__icon img {
+  height: 36px;
+}
+
+.wizard-navigation-tab--active {
+  box-shadow: 0 5px 0 transparentize($theme-select-color, 0.1);
+  font-weight: 400;
+}
+
+.wizard-navigation-tab--completed {
+  box-shadow: 0 5px 0 $theme-select-color;
+}
+
+.wizard-navigation-tab--locked {
+  cursor: default;
+}
+
+.vipdrv-button {
+  background-color: $button-background;
+  border: 1px solid $button-border;
+  color: #fff;
+}
+
+.vipdrv-button:hover {
+  background-color: $button-background--hover;
+  border: 1px solid $button-border--hover;
+}
+
+.vipdrv-button:disabled {
+  background-color: $button-background--disabled;
+  border: 1px solid $button-border--disabled;
+}
+
+/**
+* ------------------------------------------------------------------------
+* Tabs content
+* ------------------------------------------------------------------------
+*/
+
+.wizard-tab-content__title {
+  margin-top: 1rem;
+  margin-bottom: .5rem;
+  font-weight: 300;
+}
+
+// =======================================================================//
+// wizard-card                                                            //
+// =======================================================================//
+
+.td-card__content {
+  padding: 1em;
+  cursor: pointer;
+  min-height: 104px;
+}
+
+.td-card__body {
+  line-height: 1.3;
+  font-size: 11pt;
+}
+
+.td-card__border--selected {
+  border: 1px solid $theme-select-color !important;
+}
+
+.td-card__text--selected {
+  color: $theme-select-color;
+}
+
+// =======================================================================//
+// time-intervals                                                         //
+// =======================================================================//
+
+.td-time__item {
+  text-align: center;
+  border: 1px solid #e6e6e6;
+  background-color: #ffffff;
+  height: 44px;
+  line-height: 44px;
+  cursor: pointer;
+}
+
+.td-time__item--active {
+  // color: $theme-main-color;
+  // border: 1px solid $theme-main-color;
+  color: $theme-select-color;
+  border: 1px solid $theme-select-color;
+}
+
+.td-time__item--disabled {
+  color: #dfdede;
+  border: 1px solid #eee;
+  cursor: default;
+}
+
+// =======================================================================//
+// complete-booking                                                       //
+// =======================================================================//
+
+.disclaimer-text {
+  font-size: 10pt;
+}
+
+.complete-booking-table__header {
+  font-weight: 600;
+  font-size: 14pt;
+  vertical-align: middle !important;
+  text-align: center;
+}
+
+.complete-booking-table__image {
+  height: 80px;
+}
+
+// =======================================================================//
+// Moment Picker                                                          //
+// =======================================================================//
+
+.moment-picker td.selected {
+  background-image: linear-gradient($theme-main-color, $theme-main-color) !important;
+}
+
+.moment-picker td.selected {
+  background-color: $theme-select-color !important;
+}
+
+.moment-picker td.highlighted {
+  background-image: none !important;
+}
+
+/**
+* ------------------------------------------------------------------------
+* Sidebar
+* ------------------------------------------------------------------------
+*/
+
+.td-sidebar__car-image {
+  max-height: 158px;
+  margin: 0 auto;
+  overflow: hidden;
+}
+
+.sidebar-media-item__body {
+  line-height: 1.8;
+}
+
+.sidebar__vehicle-title {
+  color: $theme-main-color;
+}
+
+/**
+* ------------------------------------------------------------------------
+* Add to calendar
+* ------------------------------------------------------------------------
+*/
+
+.copyx {
+  display: none !important;
+}

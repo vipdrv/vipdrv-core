@@ -1,0 +1,209 @@
+.woocommerce button.fusion-button {
+  text-transform: uppercase;
+  text-align: center;
+  margin: 0;
+  cursor: pointer;
+}
+.cart-collaterals .cart_totals .fusion-button {
+  clear: both;
+  float: right;
+}
+.coupon .fusion-button {
+  float: right;
+}
+.cart-totals-container .fusion-button {
+  display: block;
+}
+.cart-totals-buttons .fusion-button {
+  float: right;
+  display: block;
+}
+.cart-loading .fusion-icon-spinner {
+  -webkit-animation: mask 3s infinite alternate;
+          animation: mask 3s infinite alternate;
+  display: inline-block;
+  line-height: 70px;
+}
+.cart-loading .fusion-icon-check-square-o {
+  display: inline-block;
+  line-height: 70px;
+}
+.fusion-grid-list-view {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  border: 1px solid #ddd;
+  box-sizing: content-box;
+}
+.fusion-grid-list-view li {
+  height: 100%;
+  width: 39px;
+  float: left;
+  text-align: center;
+  background-color: #fbfaf9;
+}
+.fusion-grid-list-view li a:hover {
+  color: #333;
+}
+.fusion-grid-list-view li:hover {
+  background-color: #ffffff;
+  cursor: pointer;
+}
+.fusion-grid-view,
+.fusion-list-view {
+  display: block;
+}
+.fusion-grid-view {
+  position: relative;
+  font-size: 22px;
+}
+.fusion-grid-view .fusion-icon-grid {
+  display: block;
+  margin-top: 50%;
+  position: absolute;
+  top: -11px;
+  width: 100%;
+}
+.fusion-list-view {
+  font-size: 14px;
+}
+.fusion-grid-view-li {
+  border-right: 1px solid #ddd;
+}
+.fusion-grid-list-view li.active-view a i {
+  color: rgba(51, 51, 51, 0.45);
+}
+.woocommerce-checkout-payment .place-order {
+  zoom: 1;
+}
+.fusion-woo-product-design-clean .products .product .product-buttons {
+  display: none;
+}
+.fusion-widget-cart-icon {
+  display: inline-block;
+}
+.fusion-widget-cart-icon:after {
+  content: '\f07a';
+  font-family: 'IcoMoon';
+}
+.fusion-widget-cart-number {
+  display: inline-block;
+  border-radius: 100%;
+  line-height: normal;
+  text-align: center;
+  padding: 2px 7px;
+}
+/*
+* Clean Design
+*/
+.fusion-woo-product-design-clean .products .product-details-container,
+.fusion-woo-product-design-clean .slides .product-details-container {
+  text-align: center;
+}
+.fusion-woo-product-design-clean .products .product-title,
+.fusion-woo-product-design-clean .slides .product-title {
+  font-style: italic;
+}
+.fusion-woo-product-design-clean .products .fusion-rollover .star-rating,
+.fusion-woo-product-design-clean .slides .fusion-rollover .star-rating {
+  margin: 0 auto;
+}
+.fusion-woo-product-design-clean .products .fusion-rollover .fusion-rollover-content .fusion-product-buttons a,
+.fusion-woo-product-design-clean .slides .fusion-rollover .fusion-rollover-content .fusion-product-buttons a {
+  padding: 0;
+}
+.fusion-woo-product-design-clean .products .fusion-rollover-content .fusion-product-buttons a:hover,
+.fusion-woo-product-design-clean .slides .fusion-rollover-content .fusion-product-buttons a:hover {
+  opacity: 0.6;
+}
+.fusion-woo-product-design-clean .products .fusion-rollover-content .fusion-product-buttons .wc-forward,
+.fusion-woo-product-design-clean .slides .fusion-rollover-content .fusion-product-buttons .wc-forward {
+  display: none;
+}
+.fusion-woo-product-design-clean .products .fusion-rollover-content .fusion-rollover-linebreak,
+.fusion-woo-product-design-clean .slides .fusion-rollover-content .fusion-rollover-linebreak {
+  margin: 0 10px;
+}
+.fusion-woo-product-design-clean .products .fusion-product-buttons,
+.fusion-woo-product-design-clean .slides .fusion-product-buttons {
+  margin-top: 10px;
+  text-transform: uppercase;
+}
+.fusion-woo-product-design-clean .products .fusion-product-buttons a,
+.fusion-woo-product-design-clean .slides .fusion-product-buttons a {
+  display: inline;
+  float: none;
+  padding: 0;
+  letter-spacing: 1px;
+}
+.fusion-woo-product-design-clean .products .fusion-product-buttons a:after,
+.fusion-woo-product-design-clean .slides .fusion-product-buttons a:after,
+.fusion-woo-product-design-clean .products .fusion-product-buttons a:before,
+.fusion-woo-product-design-clean .slides .fusion-product-buttons a:before {
+  display: none;
+}
+.fusion-woo-product-design-clean .products .product-details-container .clearfix,
+.fusion-woo-product-design-clean .slides .product-details-container .clearfix {
+  display: block;
+}
+.fusion-woo-product-design-clean .products .product-list-view .product-details-container,
+.fusion-woo-product-design-clean .slides .product-list-view .product-details-container,
+.fusion-woo-product-design-clean .products .product-list-view .product-excerpt-container,
+.fusion-woo-product-design-clean .slides .product-list-view .product-excerpt-container {
+  text-align: left;
+}
+.fusion-woo-product-design-clean .products .product-list-view .onsale,
+.fusion-woo-product-design-clean .slides .product-list-view .onsale {
+  top: 70px;
+}
+.fusion-woo-product-design-clean .products .product-list-view .price,
+.fusion-woo-product-design-clean .slides .product-list-view .price {
+  font-style: normal;
+}
+.fusion-woo-product-design-clean .products .product-list-view .fusion-clean-product-image-wrapper,
+.fusion-woo-product-design-clean .slides .product-list-view .fusion-clean-product-image-wrapper {
+  display: inline-block;
+  float: left;
+  margin-right: 2%;
+  min-height: 100px;
+  width: 23%;
+  max-width: 23%;
+}
+.fusion-clean-product-image-wrapper {
+  position: relative;
+}
+.fusion-clean-product-image-wrapper .cart-loading {
+  position: relative;
+  top: 0;
+  bottom: auto;
+  right: auto;
+  left: 0;
+  margin: 0 0 5px;
+  height: 100%;
+  width: 100%;
+  border-radius: 0;
+  background-clip: padding-box;
+  font-size: 14px;
+  line-height: normal;
+  text-transform: uppercase;
+}
+.fusion-clean-product-image-wrapper .cart-loading:hover {
+  opacity: 0.6;
+}
+#wrapper .fusion-clean-product-image-wrapper .cart-loading {
+  background-color: transparent;
+}
+.fusion-clean-product-image-wrapper .cart-loading i {
+  font-size: 32px;
+  line-height: 70px;
+}
+.fusion-clean-product-image-wrapper .cart-loading .view-cart {
+  display: none;
+}
+.fusion-clean-product-image-wrapper.fusion-item-in-cart .cart-loading .view-cart {
+  display: block;
+}
+.fusion-item-in-cart .fusion-rollover-content .star-rating,
+.fusion-item-in-cart .fusion-rollover-content .fusion-product-buttons {
+  display: none;
+}
