@@ -18,7 +18,7 @@ namespace QuantumLogic.Core.Utils.Email
 
         public TestDriveEmailService()
         {
-            SendGridClient = new SendGridClient("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");
+            SendGridClient = new SendGridClient("doodle");
         }
 
         public Task<Response> SendDealerInvitationEmail(EmailAddress emailTo, IEmailTemplate emailTemplate)

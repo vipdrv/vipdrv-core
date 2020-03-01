@@ -1,0 +1,25 @@
+/**
+* ------------------------------------------------------------------------
+* Theme styles
+* ------------------------------------------------------------------------
+*/
+
+$theme-main-color: #007bff;
+$theme-select-color: #28a745;
+
+$button-border: #007bff;
+$button-background: #007bff;
+
+$button-border--hover: #0062cc;
+$button-background--hover: #0069d9;
+
+$button-border--disabled: #007bff;
+$button-background--disabled: #007bff;
+
+/**
+* ------------------------------------------------------------------------
+* Widget Styles
+* ------------------------------------------------------------------------
+*/
+
+@import '../root';

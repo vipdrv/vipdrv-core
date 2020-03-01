@@ -1,0 +1,118 @@
+.fusionredux-container {
+    .fusionredux-action_bar {
+        float: left;
+    }
+}
+
+.fusionredux-container #expand_options,
+.fusionredux-sidebar,
+.cb-enable,
+.cb-disable,
+.cb-enable span,
+.cb-disable span,
+#fusionredux-footer #fusionredux-share {
+    float: right;
+}
+
+.fusionredux-main {
+    border-left: 0px;
+    margin-left: 0px;
+    border-right: 1px solid #d8d8d8;
+    margin-right: 201px;
+}
+
+.fusionredux-group-tab-link-a {
+    padding-left: 0px;
+    padding-right: 30px;
+
+    i {
+        padding-left: 10px;
+        padding-right: 5px;
+    }
+
+    span.group_title {
+        padding-left: 0px;
+        padding-right: 30px;
+    }
+}
+
+.fusionredux-container .expand_options,
+.fusionredux-sidebar,
+.cb-enable,
+.cb-disable,
+.cb-enable span,
+.cb-disable span,
+#fusionredux-footer #fusionredux-share{
+    float:right;
+}
+
+.fusionredux_slider {
+    margin-left: 0px;
+    margin-right: 15px;
+}
+
+.fusionredux-action_bar {
+    float: left !important;
+}
+
+.expand_options {
+    float: right !important;
+    border:1px solid #f00;
+}
+
+.fusionredux_field_th{
+    padding:20px 0 20px 10px !important;
+}
+
+.field-desc {
+    text-align: right;
+}
+
+.fusionredux-container-ace_editor,
+.fusionredux-container-border,
+.fusionredux-container-spacing,
+.fusionredux-container-dimensions {
+    direction: ltr !important;
+}
+
+.fusionredux-container-border .field-border-input,
+.fusionredux-container-border .fusionredux-color-init,
+.fusionredux-container-border .fusionredux-border-style,
+.fusionredux-container-sorter,
+.fusionredux-container-border,
+.fusionredux-container-spacing,
+.fusionredux-container-spacing .field-spacing-input,
+.fusionredux-container-dimensions .fusionredux-dimensions-container,
+.fusionredux-container-text label,
+.fusionredux-container-checkbox input,
+.typography-font-bar,
+.typography-style-bar,
+.fusionredux-color.fusionredux-typography-color,
+.fusionredux-typography-subsets {
+    float:right !important;
+}
+
+.input-append{
+    margin-right:10px; direction:ltr !important;
+}
+
+.fusionredux-container-slider,
+.fusionredux-container-spinner,
+.fusionredux-container-switch {
+    direction:ltr !important;
+    float:right;
+    margin:0;
+}
+
+.fusionredux-main .fusionredux-typography-container .typography-preview {
+    text-align: center !important;
+    direction: ltr !important;
+}
+
+.fusionredux-info-field .fusionredux-info-icon {
+  margin-left: 15px;
+}
+
+#fusionredux-share {
+    float:right !important;
+}

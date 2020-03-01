@@ -1,0 +1,26 @@
+.fusionredux-container-ace_editor .ace-wrapper {
+  position: static
+}
+
+.fusionredux-container-ace_editor .ace_editor {
+  height: 200px;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px
+}
+
+.fusionredux-container-ace_editor .ace_gutter {
+  z-index: 1 !important
+}
+
+.fusionredux-container-ace_editor .ace_search_field {
+  height: 22px !important;
+}
+
+.fusionredux-container-ace_editor .ace_search_form button[action="findAll"] {
+  display: none;
+}
+
+.fusionredux-container-ace_editor .ace_search_options {
+  display: none;
+}

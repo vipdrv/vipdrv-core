@@ -1,0 +1,1 @@
+jQuery(document).ready(function(){jQuery("body").each(function(){var a='<style type="text/css">';jQuery(this).find("style").each(function(){a+=jQuery(this).html(),jQuery(this).remove()}),a+="</style>",jQuery(this).prepend(a)})});

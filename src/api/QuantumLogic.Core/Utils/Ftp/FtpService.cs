@@ -14,7 +14,7 @@ namespace QuantumLogic.Core.Utils.Ftp
         {
             //TODO: Move FTP credetials to appsettings.json
             FtpClient = new FtpClient("ftp://ftp.testdrive.pw");
-            FtpClient.Credentials = new NetworkCredential("root", "6gfb9P3xE2jAw7Sd");
+            FtpClient.Credentials = new NetworkCredential("doodle-login", "doodle-pass");
             FtpClient.Connect();
         }
 

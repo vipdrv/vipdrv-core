@@ -15,8 +15,8 @@ namespace QuantumLogic.Core.Utils.Sms
         public TwilioSmsService()
         {
             _httpClient = new HttpClient();
-            _httpClient.DefaultRequestHeaders.Add("Authorization", "Basic QUM5NTRlNDM2MjY5ZjczYzMxMmY4YWUwZDg3ZWM4ODZiZTpiODIzNWM1ZGRjM2EwMWQwMmI2YzFmNjhlZGVjZWM4Ng==");
-            _apiUrl = "https://api.twilio.com/2010-04-01/Accounts/AC954e436269f73c312f8ae0d87ec886be/Messages.json";
+            _httpClient.DefaultRequestHeaders.Add("Authorization", "doodle-basic-auth");
+            _apiUrl = "https://api.twilio.com/doodle-account";
         }
 
         public Task SendSms(IList<string> phoneNumbers, ISmsTemplate smsTemplate)
