@@ -5,7 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\QuantumLogic.Core\QuantumLogic.Core.csproj" />
+    <ProjectReference Include="..\QuantumLogic.Core\VIPdrv.Core.csproj" />
   </ItemGroup>
 
   <ItemGroup>
