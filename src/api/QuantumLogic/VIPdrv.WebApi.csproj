@@ -30,8 +30,8 @@
     <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="1.0.1" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\QuantumLogic.Core\QuantumLogic.Core.csproj" />
-    <ProjectReference Include="..\QuantumLogic.Data\QuantumLogic.Data.csproj" />
+    <ProjectReference Include="..\QuantumLogic.Core\VIPdrv.Core.csproj" />
+    <ProjectReference Include="..\QuantumLogic.Data\VIPdrv.Data.csproj" />
   </ItemGroup>
 
 </Project>
