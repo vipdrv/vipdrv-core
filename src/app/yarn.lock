@@ -293,11 +293,21 @@ amdefine@>=0.0.4:
   version "3.21.0"
   resolved "https://codeload.github.com/amcharts/ammap3/tar.gz/00086807e39549325fe361336b2289d8fc524753"
 
+angular2-busy@^2.0.4:
+  version "2.0.4"
+  resolved "https://registry.yarnpkg.com/angular2-busy/-/angular2-busy-2.0.4.tgz#82e4b1fbbcaf97bcfac09d237489cfe9e8c4b9f3"
+
 angular2-datatable@0.6.0:
   version "0.6.0"
   resolved "https://registry.yarnpkg.com/angular2-datatable/-/angular2-datatable-0.6.0.tgz#ca008f74087f0cb87da5709ed2f2d1d061772632"
   dependencies:
     lodash "^4.0.0"
+
+angular2-text-mask@^8.0.4:
+  version "8.0.5"
+  resolved "https://registry.yarnpkg.com/angular2-text-mask/-/angular2-text-mask-8.0.5.tgz#e08ad1c1898e9468a6d6983cbf1c83289d5e654d"
+  dependencies:
+    text-mask-core "^5.0.0"
 
 animate.css@3.5.2:
   version "3.5.2"
@@ -926,13 +936,29 @@ character-parser@1.2.1:
   version "1.2.1"
   resolved "https://registry.yarnpkg.com/character-parser/-/character-parser-1.2.1.tgz#c0dde4ab182713b919b970959a123ecc1a30fcd6"
 
-chart.js@1.1.1:
-  version "1.1.1"
-  resolved "https://registry.yarnpkg.com/chart.js/-/chart.js-1.1.1.tgz#a9b17054220bd45cbdb176fd6bcb8783ef871a7d"
+chart.js@2.9.4:
+  version "2.9.4"
+  resolved "https://registry.yarnpkg.com/chart.js/-/chart.js-2.9.4.tgz#0827f9563faffb2dc5c06562f8eb10337d5b9684"
+  dependencies:
+    chartjs-color "^2.1.0"
+    moment "^2.10.2"
 
 chartist@0.10.1:
   version "0.10.1"
   resolved "https://registry.yarnpkg.com/chartist/-/chartist-0.10.1.tgz#3dd513d531dfca6b78e777fe0500d9c7e6406931"
+
+chartjs-color-string@^0.6.0:
+  version "0.6.0"
+  resolved "https://registry.yarnpkg.com/chartjs-color-string/-/chartjs-color-string-0.6.0.tgz#1df096621c0e70720a64f4135ea171d051402f71"
+  dependencies:
+    color-name "^1.0.0"
+
+chartjs-color@^2.1.0:
+  version "2.4.1"
+  resolved "https://registry.yarnpkg.com/chartjs-color/-/chartjs-color-2.4.1.tgz#6118bba202fe1ea79dd7f7c0f9da93467296c3b0"
+  dependencies:
+    chartjs-color-string "^0.6.0"
+    color-convert "^1.9.3"
 
 chokidar@^1.4.1, chokidar@^1.4.3, chokidar@^1.6.0:
   version "1.6.1"
@@ -1105,9 +1131,19 @@ color-convert@^1.3.0:
   dependencies:
     color-name "^1.1.1"
 
+color-convert@^1.9.3:
+  version "1.9.3"
+  resolved "https://registry.yarnpkg.com/color-convert/-/color-convert-1.9.3.tgz#bb71850690e1f136567de629d2d5471deda4c1e8"
+  dependencies:
+    color-name "1.1.3"
+
 color-diff@^0.1.3:
   version "0.1.7"
   resolved "https://registry.yarnpkg.com/color-diff/-/color-diff-0.1.7.tgz#6db78cd9482a8e459d40821eaf4b503283dcb8e2"
+
+color-name@1.1.3:
+  version "1.1.3"
+  resolved "https://registry.yarnpkg.com/color-name/-/color-name-1.1.3.tgz#a7d0558bd89c42f795dd42328f740831ca53bc25"
 
 color-name@^1.0.0, color-name@^1.1.1:
   version "1.1.2"
@@ -4179,9 +4215,13 @@ modify-values@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/modify-values/-/modify-values-1.0.0.tgz#e2b6cdeb9ce19f99317a53722f3dbf5df5eaaab2"
 
-moment@2.x, moment@>=2.14.0, moment@^2.13.0, moment@^2.9.0:
+moment@2.18.1:
   version "2.18.1"
   resolved "https://registry.yarnpkg.com/moment/-/moment-2.18.1.tgz#c36193dd3ce1c2eed2adb7c802dbbc77a81b1c0f"
+
+moment@2.x, moment@>=2.14.0, moment@^2.10.2, moment@^2.13.0, moment@^2.9.0:
+  version "2.29.1"
+  resolved "https://registry.yarnpkg.com/moment/-/moment-2.29.1.tgz#b2be769fa31940be9eeea6469c075e35006fa3d3"
 
 ms@0.7.1:
   version "0.7.1"
@@ -4226,6 +4266,16 @@ negotiator@0.6.1:
   version "0.6.1"
   resolved "https://registry.yarnpkg.com/negotiator/-/negotiator-0.6.1.tgz#2b327184e8992101177b28563fb5e7102acd0ca9"
 
+ng2-bootstrap@^1.6.3:
+  version "1.6.3"
+  resolved "https://registry.yarnpkg.com/ng2-bootstrap/-/ng2-bootstrap-1.6.3.tgz#8bef6179d7436ba547901447f18fee8fff4355c2"
+  dependencies:
+    moment "2.18.1"
+
+ng2-bs3-modal@^0.10.4:
+  version "0.10.4"
+  resolved "https://registry.yarnpkg.com/ng2-bs3-modal/-/ng2-bs3-modal-0.10.4.tgz#80f350cd3f7346193c8f9324c899d58db1714581"
+
 ng2-ckeditor@1.1.6:
   version "1.1.6"
   resolved "https://registry.yarnpkg.com/ng2-ckeditor/-/ng2-ckeditor-1.1.6.tgz#fa3afb86982b725f7f3a609924c64821c2719875"
@@ -4240,6 +4290,10 @@ ng2-handsontable@0.48.0:
   dependencies:
     handsontable "^0.31.1"
 
+ng2-img-cropper@^0.9.0:
+  version "0.9.0"
+  resolved "https://registry.yarnpkg.com/ng2-img-cropper/-/ng2-img-cropper-0.9.0.tgz#305337e669c4e5adc876d628dcae0bca4d10d1c3"
+
 ng2-slim-loading-bar@4.0.0:
   version "4.0.0"
   resolved "https://registry.yarnpkg.com/ng2-slim-loading-bar/-/ng2-slim-loading-bar-4.0.0.tgz#7256fdde7c058f14955a3ef2e65afafb5b664603"
@@ -4251,9 +4305,17 @@ ng2-smart-table@1.0.3:
     lodash "^4.17.4"
     ng2-completer "^1.2.2"
 
+ng2-table@^1.3.2:
+  version "1.3.2"
+  resolved "https://registry.yarnpkg.com/ng2-table/-/ng2-table-1.3.2.tgz#2ae8d3c4bec4ca8c476c685c41ec4a3a4414c2d4"
+
 ng2-tree@2.0.0-alpha.5:
   version "2.0.0-alpha.5"
   resolved "https://registry.yarnpkg.com/ng2-tree/-/ng2-tree-2.0.0-alpha.5.tgz#197f33af92f16f4a9168a3394ed0cbf9c1708a4a"
+
+ngx-ui-switch@1.4.4:
+  version "1.4.4"
+  resolved "https://registry.yarnpkg.com/ngx-ui-switch/-/ngx-ui-switch-1.4.4.tgz#1ffcdeab6f773730dbe3a607f5fad619d69fbe4e"
 
 ngx-uploader@2.2.5:
   version "2.2.5"
@@ -6547,6 +6609,10 @@ tether@^1.4.0:
 text-extensions@^1.0.0:
   version "1.4.0"
   resolved "https://registry.yarnpkg.com/text-extensions/-/text-extensions-1.4.0.tgz#c385d2e80879fe6ef97893e1709d88d9453726e9"
+
+text-mask-core@^5.0.0:
+  version "5.1.2"
+  resolved "https://registry.yarnpkg.com/text-mask-core/-/text-mask-core-5.1.2.tgz#80dd5ebe04825757e46619e691407a9f8b3c1b6f"
 
 text-table@^0.2.0, text-table@~0.2.0:
   version "0.2.0"
